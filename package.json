@@ -6,8 +6,12 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint:prettify": "prettier --check \"**/*.{ts,tsx,json,md,css,html,js,jsx}\"",
+    "prettify": "prettier --write \"**/*.{ts,tsx,json,md,css,html,js,jsx}\"",
+    "lint:css": "npx stylelint \"src/**/*.css\"",
+    "lint:js": "npx eslint \"src/**/*.{ts,tsx,js,jsx}\"",
+    "lint": "npm run lint:css && npm run lint:js"
   },
   "dependencies": {
     "gadget-house": "file:",
