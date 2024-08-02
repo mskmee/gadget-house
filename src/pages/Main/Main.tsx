@@ -1,3 +1,9 @@
+import SliderNav from '../../componets/SliderNav/SliderNav';
+
 export default function Main() {
-  return <div>Main</div>;
+  return (
+    <div>
+      <SliderNav text="Smartphones" />
+    </div>
+  );
 }

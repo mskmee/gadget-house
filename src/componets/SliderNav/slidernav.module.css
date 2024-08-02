@@ -1,0 +1,56 @@
+.sliderText {
+  padding-left: 50px;
+  padding-top: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 24px;
+  position: relative;
+}
+
+.sliderText h2 {
+  font-weight: 500;
+  font-size: 42px;
+}
+
+.buttonContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  cursor: pointer;
+  margin-top: -7px;
+  text-decoration: none;
+}
+
+span {
+  text-decoration: none;
+}
+
+.buttonLink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-direction: row;
+  height: 24px;
+  font-weight: 400;
+  word-spacing: 0.2px;
+  font-size: 16px;
+  color: var(--green-color);
+  text-decoration: none;
+  margin-top: 4px;
+}
+
+.buttonLinkActive {
+  color: var(--theme-color);
+}
+
+.buttonHr {
+  border: 0.5px solid #00820d;
+  width: 100%;
+  margin: 0;
+}
+
+.buttonHrActive {
+  border: 0.5px solid #6f4c9a;
+}
