@@ -54,3 +54,22 @@ span {
 .buttonHrActive {
   border: 0.5px solid #6f4c9a;
 }
+
+@media (max-width: 1024px) {
+  /* For screens smaller than 1024px */
+  .sliderText {
+    justify-content: space-between;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+}
+
+@media (max-width: 450px) {
+  .sliderText h2 {
+    font-size: 24px;
+  }
+
+  .buttonLink {
+    font-size: 12px;
+  }
+}

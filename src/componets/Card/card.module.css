@@ -1,0 +1,15 @@
+.cardConatiner {
+  margin-right: 40px;
+}
+
+@media (max-width: 1024px) {
+  .cardConatiner {
+    margin-right: 20px;
+  }
+}
+
+@media (max-width: 340px) {
+  .cardConatiner {
+    margin-right: 8px;
+  }
+}

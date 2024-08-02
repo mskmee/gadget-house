@@ -1,0 +1,17 @@
+.carouselContainer {
+  background-color: var(--carousel-theme-color);
+  padding-left: 50px;
+  padding-top: 50px;
+  padding-right: 50px;
+  padding-bottom: 24px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1040px) {
+  .carouselContainer {
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-bottom: 16px;
+    padding-top: 24px;
+  }
+}
