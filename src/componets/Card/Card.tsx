@@ -1,4 +1,3 @@
-import React from 'react';
 import { Card } from 'antd';
 import styles from './card.module.css';
 

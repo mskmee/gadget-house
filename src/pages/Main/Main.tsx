@@ -4,7 +4,7 @@ import SliderNav from '../../componets/SliderNav/SliderNav';
 export default function Main() {
   return (
     <div>
-      <SliderNav text="Smartphones" />
+      <SliderNav text="Smartphones" link="/smartphones" />
       <Carousels />
     </div>
   );

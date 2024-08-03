@@ -6,11 +6,12 @@ import {
   RightArrowSliderClick,
 } from '../../assets/constants';
 
-type Text = {
+type TextLink = {
   text: string;
+  link: string;
 };
 
-export default function SliderNav({ text }: Text) {
+export default function SliderNav({ text, link }: TextLink) {
   const [isClicked, setIsClicked] = useState(false);
 
   const handleClick = (event: React.MouseEvent) => {
@@ -20,7 +21,7 @@ export default function SliderNav({ text }: Text) {
   return (
     <div className={styles.sliderText}>
       <h2>{text}</h2>
-      <Link to="/" className={styles.buttonContent} onClick={handleClick}>
+      <Link to={link} className={styles.buttonContent} onClick={handleClick}>
         <div
           className={`${styles.buttonLink} ${isClicked ? styles.buttonLinkActive : ''}`}
         >
