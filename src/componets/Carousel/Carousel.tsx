@@ -46,42 +46,28 @@ const Carousels: React.FC = () => {
           {
             breakpoint: 3200,
             settings: {
-              slidesToShow: 8,
-              slidesToScroll: 1,
-            },
-          },
-          {
-            breakpoint: 2600,
-            settings: {
-              slidesToShow: 7,
-              slidesToScroll: 1,
-            },
-          },
-          {
-            breakpoint: 2100,
-            settings: {
-              slidesToShow: 6,
-              slidesToScroll: 1,
-            },
-          },
-          {
-            breakpoint: 1550,
-            settings: {
               slidesToShow: 5,
               slidesToScroll: 1,
             },
           },
           {
-            breakpoint: 1024,
+            breakpoint: 1420,
             settings: {
               slidesToShow: 4,
               slidesToScroll: 1,
             },
           },
           {
-            breakpoint: 450,
+            breakpoint: 1024,
             settings: {
               slidesToShow: 3,
+              slidesToScroll: 1,
+            },
+          },
+          {
+            breakpoint: 450,
+            settings: {
+              slidesToShow: 2,
               slidesToScroll: 1,
             },
           },

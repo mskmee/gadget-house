@@ -8,3 +8,7 @@ body {
   color: var(--text-color);
   font-family: "Inter", sans-serif;
 }
+
+:where(.css-dev-only-do-not-override-1pg9a38).ant-card .ant-card-body {
+  padding: 0;
+}

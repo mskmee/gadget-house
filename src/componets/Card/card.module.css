@@ -1,5 +1,90 @@
 .cardConatiner {
+  font-family: "Inter", sans-serif;
   margin-right: 40px;
+  padding: 16px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  height: auto;
+  border: 2px solid #5a3e7d07;
+  transition: all 0.2s;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.cardConatiner:hover {
+  cursor: pointer;
+  transform: scale(1.02);
+}
+
+/* #region container top */
+.cardContainerTop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  padding: 0;
+}
+
+.productImage {
+  width: 90%;
+  height: 100%;
+}
+
+.cardConatinerLike {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 60px;
+  flex-wrap: nowrap;
+}
+
+.colorPalette {
+  width: 24px;
+  height: 88px;
+}
+
+/* #endregion */
+
+.cardContainerBottom {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  flex-direction: column;
+}
+.cardContainerBottom h3,
+.cardPriceContainer p {
+  font-size: 24px;
+  font-weight: normal;
+  line-height: 150%;
+  margin-bottom: 0;
+}
+
+.cardRate {
+  color: #6f4c9a;
+  font-size: 17px;
+  padding-top: 4px;
+}
+
+.cardPriceContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 100%;
+  margin-top: 35px;
+}
+
+.cardPriceContainer p {
+  font-size: 24px;
+  font-weight: normal;
+  line-height: 150%;
+  margin-bottom: 0;
+  margin: 0;
 }
 
 @media (max-width: 1024px) {
@@ -8,8 +93,49 @@
   }
 }
 
-@media (max-width: 340px) {
+@media (max-width: 450px) {
   .cardConatiner {
     margin-right: 8px;
+  }
+
+  .productImage {
+    width: 100%;
+    height: auto;
+  }
+
+  .likeIcon {
+    height: 24px;
+    width: 24px;
+  }
+
+  .colorPalette {
+    width: 12px;
+    height: 44px;
+  }
+
+  .cardContainerBottom h3,
+  .cardPriceContainer p {
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 150%;
+    margin-bottom: 0;
+  }
+
+  .cardRate {
+    font-size: 12px;
+    padding-top: 6px;
+  }
+
+  .cardPriceContainer {
+    margin-top: 18px;
+  }
+
+  .cardPriceContainer p {
+    margin-top: 23px;
+  }
+
+  .cardPriceContainer img {
+    width: 48px;
+    height: 48px;
   }
 }
