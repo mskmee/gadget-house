@@ -4,7 +4,7 @@ import Smartphones from './pages/Smartphones/Smartphones';
 import Laptops from './pages/Laptops/Laptops';
 import Viewed from './pages/Viewed/Viewed';
 import './styles/globals.css';
-import AppRoute from './/routes/Route';
+import AppRoute from './enums/enum';
 
 function App() {
   return (

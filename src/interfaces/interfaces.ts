@@ -1,7 +1,6 @@
-export interface ResponsiveSettings {
-  breakpoint: number;
-  settings: {
-    slidesToShow: number;
-    slidesToScroll: number;
-  };
+export interface SliderButtonProps {
+  handlePrevClick: (event: React.MouseEvent) => void;
+  handleNextClick: (event: React.MouseEvent) => void;
+  isFirstSlick: any;
+  isLastSlick: any;
 }

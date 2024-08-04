@@ -5,7 +5,7 @@ import {
   RightArrowSlider,
   RightArrowSliderClick,
 } from '../../assets/constants';
-import { TextLink } from '../../types/types';
+import { TextLink } from '../../types/TextLink';
 
 export default function SliderNav({ text, link }: TextLink) {
   const [isClicked, setIsClicked] = useState(false);

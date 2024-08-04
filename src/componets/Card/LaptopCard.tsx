@@ -39,7 +39,7 @@ export default function LaptopCard() {
   return (
     <div>
       {laptopData.map((item) => (
-        <Card className={styles.cardConatiner}>
+        <Card className={styles.cardConatiner} key={item.id}>
           <div className={styles.cardContainerTop}>
             <img src={item.img} className={styles.productImage} />
             <div

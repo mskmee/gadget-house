@@ -1,1 +1,3 @@
-export * from '../routes/Route';
+import AppRoute from './Route';
+
+export default AppRoute;

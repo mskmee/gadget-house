@@ -38,7 +38,7 @@ const ProductCard = () => {
   return (
     <>
       {data.map((item) => (
-        <Card className={styles.cardConatiner}>
+        <Card className={styles.cardConatiner} key={item.id}>
           <div className={styles.cardContainerTop}>
             <img src={item.img} className={styles.productImage} />
             <div className={styles.cardConatinerLike}>

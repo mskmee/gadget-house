@@ -1,12 +1,6 @@
 import React from 'react';
 import styles from './carousel.module.css';
-
-interface SliderButtonProps {
-  handlePrevClick: (event: React.MouseEvent) => void;
-  handleNextClick: (event: React.MouseEvent) => void;
-  isFirstSlick: any;
-  isLastSlick: any;
-}
+import { SliderButtonProps } from '../../interfaces/interfaces';
 
 const SliderButtons: React.FC<SliderButtonProps> = ({
   handlePrevClick,
