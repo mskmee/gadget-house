@@ -4,8 +4,9 @@ import { CarouselRef } from 'antd/es/carousel';
 import styles from './carousel.module.css';
 import ProductCard from '../Card/Card';
 import SliderButtons from './SliderButtons';
+import { ChildCard } from '../../types/types';
 
-const Carousels: React.FC = () => {
+const Carousels = ({ children, className, responsive }: ChildCard) => {
   const ref = useRef<CarouselRef | null>(null);
   const [prevClick, setPrevClick] = useState(false);
   const [nextClick, setNextClick] = useState(false);
@@ -31,7 +32,9 @@ const Carousels: React.FC = () => {
   };
 
   return (
-    <div className={styles.carouselContainer}>
+    <div
+      className={`${styles.carouselContainer} ${className ? styles[className] : ''}`}
+    >
       <AntCarousel
         ref={ref}
         afterChange={onChange}
@@ -42,41 +45,41 @@ const Carousels: React.FC = () => {
         initialSlide={0}
         className={styles.carousel}
         arrows={false} // Disable default arrows to use custom ones
-        responsive={[
-          {
-            breakpoint: 3200,
-            settings: {
-              slidesToShow: 5,
-              slidesToScroll: 1,
+        responsive={
+          responsive || [
+            {
+              breakpoint: 3200,
+              settings: {
+                slidesToShow: 5,
+                slidesToScroll: 1,
+              },
             },
-          },
-          {
-            breakpoint: 1420,
-            settings: {
-              slidesToShow: 4,
-              slidesToScroll: 1,
+            {
+              breakpoint: 1420,
+              settings: {
+                slidesToShow: 4,
+                slidesToScroll: 1,
+              },
             },
-          },
-          {
-            breakpoint: 1024,
-            settings: {
-              slidesToShow: 3,
-              slidesToScroll: 1,
+            {
+              breakpoint: 1024,
+              settings: {
+                slidesToShow: 3,
+                slidesToScroll: 1,
+              },
             },
-          },
-          {
-            breakpoint: 450,
-            settings: {
-              slidesToShow: 2,
-              slidesToScroll: 1,
+            {
+              breakpoint: 450,
+              settings: {
+                slidesToShow: 2,
+                slidesToScroll: 1,
+              },
             },
-          },
-        ]}
+          ]
+        }
       >
         {Array.from(Array(8), (_, i) => (
-          <div key={i}>
-            <ProductCard />
-          </div>
+          <div key={i}>{children}</div>
         ))}
       </AntCarousel>
       <SliderButtons
