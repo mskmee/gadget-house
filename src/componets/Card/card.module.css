@@ -105,6 +105,14 @@
   .cardConatiner {
     margin-right: 20px;
   }
+
+  .cardConatinerLike {
+    gap: 50px;
+  }
+
+  .cardConatinerLikeLaptop {
+    gap: 100px;
+  }
 }
 
 @media (max-width: 450px) {
@@ -125,6 +133,10 @@
   .colorPalette {
     width: 12px;
     height: 44px;
+  }
+
+  .cardConatinerLikeLaptop {
+    gap: 80px;
   }
 
   .cardContainerBottom h3,

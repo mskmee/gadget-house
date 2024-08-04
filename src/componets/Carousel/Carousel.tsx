@@ -13,7 +13,7 @@ const Carousels = ({ children, className, responsive }: ChildCard) => {
 
   const [isLastSlick, setIsLastSlick] = useState(Boolean);
   const [isFirstSlick, setIsFirstSlick] = useState(Boolean);
-  // const [currentSlickIndex, setCurrentSlickIndex] = useState(0);
+  const [currentSlickIndex, setCurrentSlickIndex] = useState(0);
 
   const handlePrevClick = () => {
     setPrevClick(true);
@@ -30,6 +30,46 @@ const Carousels = ({ children, className, responsive }: ChildCard) => {
   const onChange = (currentSlide: number) => {
     console.log(currentSlide);
   };
+
+  useEffect(() => {
+    const allSlicks = document.querySelectorAll<HTMLElement>(
+      `.${styles.carouselContainer} .slick-slide`,
+    );
+    const filteredElements = Array.from(allSlicks).filter(
+      (element) => !element.classList.contains('slick-cloned'),
+    );
+
+    const activeSlicks = document.querySelectorAll<HTMLElement>(
+      `.${styles.carouselContainer} .slick-active`,
+    );
+
+    const currentSlickElement = document.querySelector<HTMLElement>(
+      `.${styles.carouselContainer} .slick-current`,
+    );
+
+    const currentSlickIndex = currentSlickElement
+      ? Number(currentSlickElement.getAttribute('data-index'))
+      : -1;
+
+    const currentSlickIndex2 =
+      activeSlicks.length > 0
+        ? Number(
+            activeSlicks[activeSlicks.length - 1].getAttribute('data-index'),
+          )
+        : -1;
+
+    if (currentSlickIndex2 >= filteredElements.length - 1) {
+      setIsLastSlick(true);
+    } else {
+      setIsLastSlick(false);
+    }
+
+    if (currentSlickIndex === 0) {
+      setIsFirstSlick(true);
+    } else {
+      setIsFirstSlick(false);
+    }
+  }, [prevClick, nextClick]);
 
   return (
     <div
