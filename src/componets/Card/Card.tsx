@@ -23,7 +23,11 @@ const ProductCard = () => {
       {data.map((item) => (
         <Card className={styles.cardConatiner} key={item.id}>
           <div className={styles.cardContainerTop}>
-            <img src={item.img} className={styles.productImage} />
+            <img
+              src={item.img}
+              className={styles.productImage}
+              alt="Product image"
+            />
             <div className={styles.cardConatinerLike}>
               <img
                 onClick={handleClickLike}
@@ -31,7 +35,11 @@ const ProductCard = () => {
                 alt="Like"
                 className={styles.likeIcon}
               />
-              <img src={item.colorPalette} className={styles.colorPalette} />
+              <img
+                src={item.colorPalette}
+                className={styles.colorPalette}
+                alt="Palette image"
+              />
             </div>
           </div>
           <div className={styles.cardContainerBottom}>

@@ -23,7 +23,11 @@ export default function LaptopCard() {
       {laptopData.map((item) => (
         <Card className={styles.cardConatiner} key={item.id}>
           <div className={styles.cardContainerTop}>
-            <img src={item.img} className={styles.productImage} />
+            <img
+              src={item.img}
+              className={styles.productImage}
+              alt="Product image"
+            />
             <div
               className={`${styles.cardConatinerLike} ${styles.cardConatinerLikeLaptop}`}
             >
@@ -36,6 +40,7 @@ export default function LaptopCard() {
               <img
                 src={item.colorPalette}
                 className={`${styles.colorPalette} ${styles.colorPaletteLaptop}`}
+                alt="Palette image"
               />
             </div>
           </div>
