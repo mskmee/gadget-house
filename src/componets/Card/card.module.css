@@ -1,18 +1,24 @@
 .cardConatiner {
   font-family: "Inter", sans-serif;
   margin-right: 40px;
-  padding: 16px;
+  padding: 0 16px 0 16px;
   border-radius: 20px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   flex-direction: column;
-  height: auto;
+  gap: 16px; /* Застосування gap */
+  height: 480px;
   border: 2px solid #5a3e7d07;
   transition: all 0.2s;
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
   margin-top: 5px;
   margin-bottom: 5px;
+}
+
+.cardBrandConatiner {
+  height: 100%;
+  padding: 16px;
 }
 
 .cardConatiner:hover {
@@ -30,7 +36,7 @@
 }
 
 .productImage {
-  width: 90%;
+  width: 95%;
   height: 100%;
 }
 
@@ -101,9 +107,14 @@
   object-fit: cover;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1070px) {
   .cardConatiner {
+    height: 430px;
     margin-right: 20px;
+  }
+
+  .cardBrandConatiner {
+    height: 100%;
   }
 
   .cardConatinerLike {
@@ -115,9 +126,14 @@
   }
 }
 
-@media (max-width: 450px) {
+@media (max-width: 460px) {
   .cardConatiner {
     margin-right: 8px;
+    height: 287px;
+  }
+
+  .cardBrandConatiner {
+    height: 100%;
   }
 
   .productImage {
@@ -135,8 +151,12 @@
     height: 44px;
   }
 
+  .cardConatinerLike {
+    gap: 20px;
+  }
+
   .cardConatinerLikeLaptop {
-    gap: 80px;
+    gap: 40px;
   }
 
   .cardContainerBottom h3,

@@ -2,39 +2,22 @@ import { Card, Rate } from 'antd';
 import styles from './card.module.css';
 import { data } from './constants';
 import { useState } from 'react';
+import useProductCardHandlers from '../../hooks/useProductCardHandlers';
 
 const ProductCard = () => {
-  const [isHovered, setIsHovered] = useState(false);
-  const [isClicked, setIsClicked] = useState(false);
-  const [isLiked, setIsLiked] = useState(true);
-  const [isMouseDown, setIsMouseDown] = useState(false);
+  const {
+    isHovered,
+    isClicked,
+    isLiked,
+    isMouseDown,
+    handleClickBuy,
+    handleMouseDown,
+    handleMouseUp,
+    handleMouseLeave,
+    handleMouseEnter,
+    handleClickLike,
+  } = useProductCardHandlers();
 
-  const handleClickBuy = () => {
-    setIsClicked(true);
-    setTimeout(() => {
-      setIsClicked(false);
-    }, 150);
-  };
-
-  const handleMouseDown = () => {
-    setIsMouseDown(true);
-  };
-
-  const handleMouseUp = () => {
-    setIsMouseDown(false);
-  };
-
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-  };
-
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-  };
-
-  const handleClickLike = () => {
-    setIsLiked((prevState) => !prevState);
-  };
   return (
     <>
       {data.map((item) => (

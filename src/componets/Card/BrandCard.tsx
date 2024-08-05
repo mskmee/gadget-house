@@ -6,7 +6,10 @@ export default function BrandCard() {
   return (
     <>
       {brandData.map((item) => (
-        <Card className={styles.cardConatiner} key={item.id}>
+        <Card
+          className={`${styles.cardConatiner} ${styles.cardBrandConatiner} `}
+          key={item.id}
+        >
           <img src={item.img} className={styles.brandImg} />
         </Card>
       ))}

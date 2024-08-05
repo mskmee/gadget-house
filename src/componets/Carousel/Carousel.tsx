@@ -46,21 +46,21 @@ const Carousels = ({ children, className, responsive }: ChildCard) => {
               },
             },
             {
-              breakpoint: 1420,
+              breakpoint: 1700,
               settings: {
                 slidesToShow: 4,
                 slidesToScroll: 1,
               },
             },
             {
-              breakpoint: 1024,
+              breakpoint: 1070,
               settings: {
                 slidesToShow: 3,
                 slidesToScroll: 1,
               },
             },
             {
-              breakpoint: 450,
+              breakpoint: 700,
               settings: {
                 slidesToShow: 2,
                 slidesToScroll: 1,
