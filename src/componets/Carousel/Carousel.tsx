@@ -10,18 +10,39 @@ const Carousels = ({ children, className, responsive }: ChildCard) => {
   const [prevClick, setPrevClick] = useState(false);
   const [nextClick, setNextClick] = useState(false);
 
-  const [isLastSlick, setIsLastSlick] = useState(Boolean);
-  const [isFirstSlick, setIsFirstSlick] = useState(Boolean);
+  const [isLastSlick, setIsLastSlick] = useState(false);
+  const [isFirstSlick, setIsFirstSlick] = useState(true); // Initialize as true because we start at the first slide
+  const [currentSlickIndex, setCurrentSlickIndex] = useState(0);
 
   const handlePrevClick = () => {
     setPrevClick(true);
     ref.current?.prev();
+    setTimeout(() => setPrevClick(false), 0);
   };
 
   const handleNextClick = () => {
     setNextClick(true);
     ref.current?.next();
+    setTimeout(() => setNextClick(false), 0);
   };
+
+  useEffect(() => {
+    const a = document.querySelector<HTMLElement>(
+      `${styles.carouselContainer}`,
+    );
+    const b = document.body.offsetWidth + 16;
+
+    if (a) {
+      if (b > 1550 && b < 2100) {
+        a.style.marginRight = `calc(1px + (30 - 0) * ((100vw - 1550px) / (${b} - 1540)))`;
+      }
+    }
+
+    // Update indicators based on current slide index
+    const totalSlides = Array.isArray(children) ? children.length : 0;
+    setIsFirstSlick(currentSlickIndex === 0);
+    setIsLastSlick(currentSlickIndex === totalSlides - 1);
+  }, [prevClick, nextClick, currentSlickIndex, children]);
 
   return (
     <div
@@ -35,7 +56,8 @@ const Carousels = ({ children, className, responsive }: ChildCard) => {
         dots={false}
         initialSlide={0}
         className={styles.carousel}
-        arrows={false} // Disable default arrows to use custom ones
+        arrows={false}
+        beforeChange={(current, next) => setCurrentSlickIndex(next)}
         responsive={
           responsive || [
             {
