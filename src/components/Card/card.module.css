@@ -1,11 +1,11 @@
 .cardConatiner {
   font-family: "Inter", sans-serif;
   margin-right: 40px;
-  padding: 0 16px 0 16px;
+  padding: 16px;
   border-radius: 20px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   flex-direction: column;
   gap: 16px; /* Застосування gap */
   height: 480px;
