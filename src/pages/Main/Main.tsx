@@ -1,8 +1,8 @@
-import Benefits from "../../components/benefitsList/benefits";
-import Footer from "../../components/footer/footer";
-import BrandCard from '../../componets/Card/BrandCard';
-import ProductCard from '../../componets/Card/Card';
-import LaptopCard from '../../componets/Card/LaptopCard';
+import Benefits from '../../components/benefitsList/benefits';
+import Footer from '../../components/footer/footer';
+import BrandCard from '../../components/Card/BrandCard';
+import ProductCard from '../../components/Card/Card';
+import LaptopCard from '../../components/Card/LaptopCard';
 import Carousels from '../../componets/Carousel/Carousel';
 import SliderNav from '../../componets/SliderNav/SliderNav';
 
@@ -54,8 +54,8 @@ export default function Main() {
 
       <SliderNav text="Previously reviewed offers" link="/viewed" />
       <Carousels children={<ProductCard />} />
-      <Benefits/>
-      <Footer/>
+      <Benefits />
+      <Footer />
     </div>
   );
 }
