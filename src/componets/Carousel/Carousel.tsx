@@ -10,8 +10,8 @@ const Carousels = ({ children, className, responsive }: ChildCard) => {
   const [prevClick, setPrevClick] = useState(false);
   const [nextClick, setNextClick] = useState(false);
 
-  const [isLastSlick, setIsLastSlick] = useState(Boolean);
-  const [isFirstSlick, setIsFirstSlick] = useState(Boolean);
+  const [isLastSlick, setIsLastSlick] = useState(false);
+  const [isFirstSlick, setIsFirstSlick] = useState(true);
   const [currentSlickIndex, setCurrentSlickIndex] = useState(0);
 
   const handlePrevClick = () => {
@@ -27,33 +27,31 @@ const Carousels = ({ children, className, responsive }: ChildCard) => {
   };
 
   useEffect(() => {
-    const allSlicks = document.querySelectorAll<HTMLElement>(
-      `.${styles.carouselContainer} .slick-slide`,
+    const allSlicks = document.querySelectorAll(
+      `${styles.carouselContainer} .slick-slide`,
     );
     const filteredElements = Array.from(allSlicks).filter(
       (element) => !element.classList.contains('slick-cloned'),
     );
-    const activeSlicks = document.querySelectorAll<HTMLElement>(
-      `.${styles.carouselContainer}  .slick-active`,
+    const activeSlicks = document.querySelectorAll(
+      `${styles.carouselContainer} .slick-active`,
     );
-    const currentSlickElement = document.querySelector<HTMLElement>(
-      `.${styles.carouselContainer} .slick-current`,
-    );
+    const currentSlickIndex = document
+      .querySelectorAll(`.${styles.carouselContainer} .slick-current`)?.[0]
+      .getAttribute('data-index');
 
-    const currentSlickIndex = currentSlickElement?.getAttribute('data-index');
-    const lastActiveSlickIndex =
-      activeSlicks[activeSlicks.length - 1]?.getAttribute('data-index');
+    const currentSlickIndex2 =
+      activeSlicks[activeSlicks?.length - 1]?.getAttribute('data-index');
 
     if (
-      lastActiveSlickIndex &&
-      +lastActiveSlickIndex === filteredElements.length - 1
+      currentSlickIndex2 != null &&
+      +currentSlickIndex2 >= filteredElements?.length - 1
     ) {
       setIsLastSlick(true);
     } else {
       setIsLastSlick(false);
     }
-
-    if (currentSlickIndex && +currentSlickIndex === 0) {
+    if (currentSlickIndex != null && +currentSlickIndex === 0) {
       setIsFirstSlick(true);
     } else {
       setIsFirstSlick(false);
