@@ -25,7 +25,7 @@ export default function LaptopCard() {
           <div className={styles.cardContainerTop}>
             <img
               src={item.img}
-              className={styles.productImage}
+              className={`${styles.productImage} ${styles.productImageLaptop}`}
               alt="Product image"
             />
             <div
