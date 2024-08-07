@@ -36,7 +36,7 @@
 }
 
 .productImage {
-  width: 95%;
+  width: 90%;
   height: 100%;
 }
 
@@ -69,6 +69,10 @@
   align-items: start;
   justify-content: space-between;
   flex-direction: column;
+}
+
+.cardContainerBottom h3 {
+  margin-top: 24px;
 }
 .cardContainerBottom h3,
 .cardPriceContainer p {
