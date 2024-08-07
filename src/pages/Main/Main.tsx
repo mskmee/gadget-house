@@ -1,3 +1,5 @@
+import Benefits from "../../components/benefitsList/benefits";
+import Footer from "../../components/footer/footer";
 import BrandCard from '../../componets/Card/BrandCard';
 import ProductCard from '../../componets/Card/Card';
 import LaptopCard from '../../componets/Card/LaptopCard';
@@ -52,6 +54,8 @@ export default function Main() {
 
       <SliderNav text="Previously reviewed offers" link="/viewed" />
       <Carousels children={<ProductCard />} />
+      <Benefits/>
+      <Footer/>
     </div>
   );
 }
