@@ -10,8 +10,8 @@ const Carousels = ({ children, className, responsive }: ChildCard) => {
   const [prevClick, setPrevClick] = useState(false);
   const [nextClick, setNextClick] = useState(false);
 
-  const [isLastSlick, setIsLastSlick] = useState(false);
-  const [isFirstSlick, setIsFirstSlick] = useState(true); // Initialize as true because we start at the first slide
+  const [isLastSlick, setIsLastSlick] = useState(Boolean);
+  const [isFirstSlick, setIsFirstSlick] = useState(Boolean);
   const [currentSlickIndex, setCurrentSlickIndex] = useState(0);
 
   const handlePrevClick = () => {
@@ -27,22 +27,38 @@ const Carousels = ({ children, className, responsive }: ChildCard) => {
   };
 
   useEffect(() => {
-    const a = document.querySelector<HTMLElement>(
-      `${styles.carouselContainer}`,
+    const allSlicks = document.querySelectorAll<HTMLElement>(
+      `.${styles.carouselContainer} .slick-slide`,
     );
-    const b = document.body.offsetWidth + 16;
+    const filteredElements = Array.from(allSlicks).filter(
+      (element) => !element.classList.contains('slick-cloned'),
+    );
+    const activeSlicks = document.querySelectorAll<HTMLElement>(
+      `.${styles.carouselContainer}  .slick-active`,
+    );
+    const currentSlickElement = document.querySelector<HTMLElement>(
+      `.${styles.carouselContainer} .slick-current`,
+    );
 
-    if (a) {
-      if (b > 1550 && b < 2100) {
-        a.style.marginRight = `calc(1px + (30 - 0) * ((100vw - 1550px) / (${b} - 1540)))`;
-      }
+    const currentSlickIndex = currentSlickElement?.getAttribute('data-index');
+    const lastActiveSlickIndex =
+      activeSlicks[activeSlicks.length - 1]?.getAttribute('data-index');
+
+    if (
+      lastActiveSlickIndex &&
+      +lastActiveSlickIndex === filteredElements.length - 1
+    ) {
+      setIsLastSlick(true);
+    } else {
+      setIsLastSlick(false);
     }
 
-    // Update indicators based on current slide index
-    const totalSlides = Array.isArray(children) ? children.length : 0;
-    setIsFirstSlick(currentSlickIndex === 0);
-    setIsLastSlick(currentSlickIndex === totalSlides - 1);
-  }, [prevClick, nextClick, currentSlickIndex, children]);
+    if (currentSlickIndex && +currentSlickIndex === 0) {
+      setIsFirstSlick(true);
+    } else {
+      setIsFirstSlick(false);
+    }
+  }, [prevClick, nextClick, currentSlickIndex]);
 
   return (
     <div
@@ -54,10 +70,10 @@ const Carousels = ({ children, className, responsive }: ChildCard) => {
         slidesToScroll={1}
         autoplay={false}
         dots={false}
+        beforeChange={(next) => setCurrentSlickIndex(next)}
         initialSlide={0}
         className={styles.carousel}
         arrows={false}
-        beforeChange={(current, next) => setCurrentSlickIndex(next)}
         responsive={
           responsive || [
             {

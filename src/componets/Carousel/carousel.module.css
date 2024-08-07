@@ -34,6 +34,13 @@
   outline: none;
 }
 
+.slick-slide {
+  padding: 10px;
+  box-sizing: border-box;
+  outline: none; /* Видалення обведення при фокусі */
+  transition: transform 0.3s ease; /* Додавання плавного переходу для анімацій */
+}
+
 .btnArrowNext {
   width: 32px;
   height: 32px;
