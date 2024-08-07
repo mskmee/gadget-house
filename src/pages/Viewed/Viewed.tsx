@@ -1,3 +1,3 @@
 export default function Viewed() {
-  return <div></div>;
+  return <div>Viewed</div>;
 }
