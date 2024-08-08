@@ -10,6 +10,7 @@ import BasketIcon from './icons/basket-icon.svg';
 import BasketIconHover from './icons/basket-icon-hover.svg';
 import BasketIconClick from './icons/basket-icon-active.svg';
 import SamsungImg from './images/samsung-img.png';
+import CatalogIcon from './icons/catalog-icon.svg';
 
 export {
   RightArrowSlider,
@@ -24,4 +25,5 @@ export {
   PhonePalette,
   LaptopPalette,
   SamsungImg,
+  CatalogIcon,
 };

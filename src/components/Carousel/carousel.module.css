@@ -1,0 +1,133 @@
+.carouselContainer {
+  background-color: var(--carousel-theme-color);
+  padding-left: 50px;
+  padding-top: 50px;
+  padding-right: 50px;
+  padding-bottom: 24px;
+  box-sizing: border-box;
+}
+
+.brandsCarousel {
+  background-color: var(--bg-color);
+}
+
+/* #region Slider Buttons */
+
+.sliderButtons {
+  display: flex;
+  justify-content: end;
+  align-items: end;
+  margin-top: 24px;
+}
+
+.btnArrowPrev {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border: 2px solid #00820d;
+  border-right: none;
+  outline: none;
+}
+
+.slick-slide {
+  padding: 10px;
+  box-sizing: border-box;
+  outline: none; /* Видалення обведення при фокусі */
+  transition: transform 0.3s ease; /* Додавання плавного переходу для анімацій */
+}
+
+.btnArrowNext {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border: 2px solid #00820d;
+  border-left: none;
+  outline: none;
+}
+
+.btnArrowPrev:hover,
+.btnArrowNext:hover {
+  cursor: pointer;
+}
+
+.btnArrowPrev:hover {
+  border: 3px solid #4da856 !important;
+  border-right: none !important;
+}
+
+.btnArrowNext:hover {
+  border: 3px solid #4da856 !important;
+  border-left: none !important;
+}
+
+.btnArrowPrev:active {
+  border: 3px solid #00680a !important;
+  border-right: none !important;
+  outline: none;
+}
+
+.btnArrowNext:active {
+  border: 3px solid #00680a !important;
+  border-left: none !important;
+  outline: none;
+}
+
+.btnArrowNext:active svg path,
+.btnArrowPrev:active svg path {
+  stroke-width: 2.5px;
+  stroke: #00680a !important;
+}
+
+.btnArrowNext.disabled {
+  border: 2px solid #c3c3c5 !important;
+  border-right: none !important;
+  cursor: not-allowed;
+}
+
+.btnArrowPrev.disabled {
+  border: 2px solid #c3c3c5 !important;
+  border-left: none !important;
+  cursor: not-allowed;
+}
+
+.btnArrowPrev.disabled:hover {
+  border: 3px solid #c3c3c5 !important;
+  border-right: none !important;
+}
+
+.btnArrowNext.disabled:hover {
+  border: 3px solid #c3c3c5 !important;
+  border-left: none !important;
+}
+
+.btnArrowNext.disabled svg path,
+.btnArrowPrev.disabled svg path {
+  stroke: #c3c3c5 !important;
+}
+
+@media (max-width: 1040px) {
+  .sliderButtons {
+    display: none;
+  }
+}
+
+/* #endregion */
+
+@media (max-width: 1040px) {
+  .carouselContainer {
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-bottom: 16px;
+    padding-top: 24px;
+  }
+}
