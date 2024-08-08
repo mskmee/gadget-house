@@ -3,8 +3,9 @@ import Footer from '../../components/footer/footer';
 import BrandCard from '../../components/Card/BrandCard';
 import ProductCard from '../../components/Card/Card';
 import LaptopCard from '../../components/Card/LaptopCard';
-import Carousels from '../../componets/Carousel/Carousel';
-import SliderNav from '../../componets/SliderNav/SliderNav';
+import Carousels from '../../components/Carousel/Carousel';
+import SliderNav from '../../components/SliderNav/SliderNav';
+import Header from '../../components/Header/Header';
 
 const brandConatinerResponsiveSettings = [
   {
@@ -40,6 +41,7 @@ const brandConatinerResponsiveSettings = [
 export default function Main() {
   return (
     <div>
+      <Header />
       <SliderNav text="Smartphone" link="/smartphones" />
       <Carousels children={<ProductCard />} />
 
