@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styles from './button.module.scss';
 import { ButtonProps } from '../../interfaces/interfaces';
 

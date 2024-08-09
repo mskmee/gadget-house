@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BurgerMenuIcon, RightArrow } from '../../assets/constants';
-import type { DrawerProps, RadioChangeEvent } from 'antd';
-import { Button, Drawer, Radio, Space } from 'antd';
+import type { DrawerProps } from 'antd';
+import { Button, Drawer } from 'antd';
 import styles from './menu.module.scss';
 import { Link } from 'react-router-dom';
 import items from './constants';

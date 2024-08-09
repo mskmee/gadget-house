@@ -5,7 +5,6 @@ import {
   HeartIconWhite,
   UserIcon,
   UserIconWhite,
-  BasketIcon,
   BasketIconBlack,
   BasketIconWhite,
 } from '../assets/constants';

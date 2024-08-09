@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusButtonProps } from '../../interfaces/interfaces';
+import { StatusButtonProps } from '../../../interfaces/interfaces';
 
 const SearchIcon: React.FC<StatusButtonProps> = ({
   width,

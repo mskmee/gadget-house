@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { StatusSearch } from '../types/StatusSearch';
 
 export interface SliderButtonProps {
@@ -19,4 +19,11 @@ export interface ButtonProps {
   icon: string;
   clickImg: string;
   hoverImg: string;
+}
+
+export interface StatusButtonProps {
+  width: string;
+  height: string;
+  color: string;
+  style?: React.CSSProperties;
 }

@@ -33,8 +33,8 @@ function SearchField({ status, onHover }: SearchFieldProps) {
         return {
           suffix: (
             <SearchIcon
-              width={24}
-              height={24}
+              width={'24px'}
+              height={'24px'}
               color="#A5A5A5"
               style={{ cursor: 'not-allowed' }}
             />
