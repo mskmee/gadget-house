@@ -1,13 +1,11 @@
 import { Card, Rate } from 'antd';
 import styles from './card.module.css';
 import { data } from './constants';
-import { useState } from 'react';
 import useProductCardHandlers from '../../hooks/useProductCardHandlers';
 
 const ProductCard = () => {
   const {
     isHovered,
-    isClicked,
     isLiked,
     isMouseDown,
     handleClickBuy,

@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './header.module.scss';
 import style from '../Button/button.module.scss';
 import { CatalogIcon } from '../../assets/constants';
