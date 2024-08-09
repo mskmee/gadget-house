@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { BurgerMenuIcon, RightArrow } from '../../assets/constants';
-import type { DrawerProps } from 'antd';
 import { Button, Drawer } from 'antd';
 import styles from './menu.module.scss';
 import { Link } from 'react-router-dom';
@@ -10,7 +9,6 @@ import buttonData from '../../constants/ButtonConstants';
 
 export default function BurgerMenu() {
   const [open, setOpen] = useState(false);
-  const [placement, setPlacement] = useState<DrawerProps['placement']>('left');
 
   const showDrawer = () => {
     setOpen(true);
@@ -29,7 +27,7 @@ export default function BurgerMenu() {
         closable={false}
         onClose={closeDrawer}
         open={open}
-        placement={placement}
+        placement="left"
       >
         <div>
           <ul className={styles.burgerMenuTop}>
