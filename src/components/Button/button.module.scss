@@ -1,0 +1,21 @@
+.headerButton {
+  width: 45;
+  height: 45px;
+  border-radius: 10px;
+  padding: 12px;
+  border: none;
+  background-color: var(--white-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  border: 1px solid #eae4ee;
+
+  &:hover {
+    background-color: var(--green-color);
+  }
+
+  &:active {
+    background-color: var(--green-active-color);
+  }
+}

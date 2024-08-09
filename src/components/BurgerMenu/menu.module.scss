@@ -1,0 +1,38 @@
+.burgerMenuTop {
+  &Item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: 16px;
+    font-family: 'Inter', sans-serif;
+    color: #000;
+
+    &:hover {
+      color: #000;
+    }
+
+    &Right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: row;
+      gap: 8px;
+      margin-bottom: 8px;
+
+      p {
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+.burgerMenuBottom {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 16px;
+  margin-top: 42px;
+}

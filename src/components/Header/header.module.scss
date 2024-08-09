@@ -1,12 +1,11 @@
 .headerTop {
-  display: flex;
-  align-items: flex-start;
   margin-top: 25px;
   margin-left: 50px;
   margin-right: 50px;
   margin-bottom: 26px;
 
   &Logo {
+    text-align: left;
     font-size: 34px;
     margin: 0;
     line-height: 120%;
@@ -15,9 +14,18 @@
   }
 }
 
-@media (max-width: 1040px) {
+@media (max-width: 1070px) {
   .headerTop {
-    align-items: center;
+    background-color: var(--white-color);
+    margin: 0;
+    padding-top: 25px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 26px;
+
+    &Logo {
+      text-align: center;
+    }
   }
 }
 
@@ -49,5 +57,21 @@
       line-height: 150%;
       color: var(--white-color);
     }
+  }
+
+  &Buttons {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 1070px) {
+  .headerBottom {
+    padding-right: 16px;
+    padding-left: 16px;
+    padding-bottom: 16px;
+    background-color: var(--white-color);
   }
 }
