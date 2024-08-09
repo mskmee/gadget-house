@@ -1,0 +1,20 @@
+.headerBottomSearch {
+  &Input {
+    border-radius: 16px;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    padding-left: 22px;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif !important;
+    color: #808080;
+    width: 600px;
+
+    @media (max-width: 1400px) {
+      width: 400px;
+    }
+
+    @media (max-width: 1200px) {
+      width: 300px;
+    }
+  }
+}

@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { laptopData } from './constants';
 import styles from './card.module.css';
 import { Card, Rate } from 'antd';
@@ -7,7 +6,6 @@ import useProductCardHandlers from '../../hooks/useProductCardHandlers';
 export default function LaptopCard() {
   const {
     isHovered,
-    isClicked,
     isLiked,
     isMouseDown,
     handleClickBuy,
