@@ -1,5 +1,4 @@
 import styles from './header.module.scss';
-import style from '../Button/button.module.scss';
 import { CatalogIcon } from '../../assets/constants';
 import Search from './Search/Search';
 import ButtonNav from '../Button/Button';
