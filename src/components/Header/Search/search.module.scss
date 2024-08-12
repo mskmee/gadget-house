@@ -16,5 +16,11 @@
     @media (max-width: 1200px) {
       width: 300px;
     }
+
+    @media (max-width: 470px) {
+      width: auto;
+      margin-left: 9px;
+      margin-right: 9px;
+    }
   }
 }

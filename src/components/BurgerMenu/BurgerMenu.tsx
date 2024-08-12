@@ -18,7 +18,7 @@ export default function BurgerMenu() {
     setOpen(false);
   };
   return (
-    <div>
+    <>
       <Button onClick={showDrawer} type="text">
         <img src={BurgerMenuIcon} />
       </Button>
@@ -43,7 +43,7 @@ export default function BurgerMenu() {
           </ul>
         </div>
         <div className={styles.burgerMenuBottom}>
-          {buttonData.map((item) => {
+          {buttonData.slice(0, 3).map((item) => {
             return (
               <ButtonNav
                 key={item.id}
@@ -55,6 +55,6 @@ export default function BurgerMenu() {
           })}
         </div>
       </Drawer>
-    </div>
+    </>
   );
 }
