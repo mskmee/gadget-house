@@ -18,7 +18,17 @@ body {
 }
 
 .css-dev-only-do-not-override-1pg9a38 .ant-card .ant-card-body {
+  padding: 16px;
+}
+
+:where(.css-dev-only-do-not-override-1pg9a38).ant-btn {
   padding: 0;
+}
+
+@media (max-width: 1070px) {
+  .css-dev-only-do-not-override-1pg9a38 .ant-card .ant-card-body {
+    padding: 8px;
+  }
 }
 
 .slick-track {

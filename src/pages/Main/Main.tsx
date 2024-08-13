@@ -6,6 +6,7 @@ import LaptopCard from '../../components/Card/LaptopCard';
 import Carousels from '../../components/Carousel/Carousel';
 import SliderNav from '../../components/SliderNav/SliderNav';
 import Header from '../../components/Header/Header';
+import Banner from '../../components/Banner/Banner';
 
 const brandConatinerResponsiveSettings = [
   {
@@ -42,6 +43,7 @@ export default function Main() {
   return (
     <div>
       <Header />
+      <Banner />
       <SliderNav text="Smartphone" link="/smartphones" />
       <Carousels children={<ProductCard />} />
 

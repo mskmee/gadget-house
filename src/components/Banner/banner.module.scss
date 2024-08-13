@@ -1,0 +1,31 @@
+.bannerContainer {
+  padding-left: 50px;
+  padding-right: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+
+  &Left {
+    background-color: #fff;
+    padding: 24px;
+
+    &Item {
+      padding-bottom: 4px;
+      text-decoration: none;
+      color: var(--text-color);
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+      border-bottom: 1px solid #f0f0f0;
+
+      &Right {
+        font-size: 24px;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        gap: 8px;
+      }
+    }
+  }
+}

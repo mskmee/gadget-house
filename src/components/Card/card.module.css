@@ -1,6 +1,5 @@
 .cardConatiner {
   font-family: "Inter", sans-serif;
-  padding: 16px;
   border-radius: 20px;
   display: flex;
   align-items: center;
@@ -17,7 +16,6 @@
 
 .cardBrandConatiner {
   height: 100%;
-  padding: 16px;
 }
 
 .cardConatiner:hover {
