@@ -1,13 +1,12 @@
 .cardConatiner {
   font-family: "Inter", sans-serif;
-  margin-right: 40px;
   padding: 16px;
   border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-direction: column;
-  gap: 16px; /* Застосування gap */
+  gap: 16px;
   height: 480px;
   border: 2px solid #5a3e7d07;
   transition: all 0.2s;
@@ -163,6 +162,10 @@
     gap: 40px;
   }
 
+  .cardContainerBottom h3 {
+    margin-top: 12px;
+  }
+
   .cardContainerBottom h3,
   .cardPriceContainer p {
     font-size: 16px;
@@ -173,7 +176,7 @@
 
   .cardRate {
     font-size: 12px;
-    padding-top: 6px;
+    padding-top: 4px;
   }
 
   .cardPriceContainer {

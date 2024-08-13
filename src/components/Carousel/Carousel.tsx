@@ -70,7 +70,7 @@ const Carousels = ({ children, className, responsive }: ChildCard) => {
         dots={false}
         beforeChange={(next) => setCurrentSlickIndex(next)}
         initialSlide={0}
-        className={styles.carousel}
+        className={styles.slickTrack}
         arrows={false}
         responsive={
           responsive || [

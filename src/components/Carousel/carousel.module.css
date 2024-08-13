@@ -7,10 +7,14 @@
   box-sizing: border-box;
 }
 
+.slickTrack {
+  display: flex !important;
+  gap: 40px !important;
+}
+
 .brandsCarousel {
   background-color: var(--bg-color);
 }
-
 /* #region Slider Buttons */
 
 .sliderButtons {

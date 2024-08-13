@@ -20,3 +20,14 @@ body {
 :where(.css-dev-only-do-not-override-1pg9a38).ant-card .ant-card-body {
   padding: 0;
 }
+
+.slick-track {
+  display: flex !important;
+  gap: 40px !important;
+}
+
+@media (max-width: 1070px) {
+  .slick-track {
+    gap: 8px !important;
+  }
+}
