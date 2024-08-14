@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './search.module.scss';
 import { Input } from 'antd';
 import SearchIcon from './SearchIcon';
@@ -8,6 +8,18 @@ import { SearchFieldProps } from '../../../interfaces/interfaces';
 
 function SearchField({ status, onHover }: SearchFieldProps) {
   const [searchValue, setSeachValue] = useState('');
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 1070);
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize();
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleSearchValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const sanitizedSearchValue = DOMPurify.sanitize(e.target.value);

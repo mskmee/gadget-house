@@ -22,6 +22,32 @@ body {
   gap: 40px !important;
 }
 
+/* Search field styles for mobile version */
+@media (max-width: 1070px) {
+  .ant-input-suffix > svg {
+    width: 48px;
+    height: 48px;
+    padding: 0 12px;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    background-color: #00820d;
+    border: 1px solid #00820d;
+    cursor: pointer;
+  }
+
+  .ant-input-suffix > svg:hover {
+    background-color: var(--green-active-color);
+  }
+
+  .ant-input-suffix > svg:active {
+    background-color: var(--green-color);
+  }
+
+  .ant-input-suffix > svg > path {
+    stroke: #fff;
+  }
+}
+
 @media (max-width: 1070px) {
   .slick-track {
     gap: 8px !important;

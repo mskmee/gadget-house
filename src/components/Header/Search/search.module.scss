@@ -17,6 +17,12 @@
       width: 300px;
     }
 
+    @media (max-width: 1070px) {
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-right: 0;
+    }
+
     @media (max-width: 470px) {
       width: auto;
       margin-left: 9px;
