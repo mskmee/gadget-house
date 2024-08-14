@@ -12,10 +12,14 @@
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.08);
   margin-top: 5px;
   margin-bottom: 5px;
+  background-color: var(--white-color);
+  padding: 16px;
+  padding-bottom: 18px;
 }
 
 .cardBrandConatiner {
   height: 100%;
+  padding: 14px;
 }
 
 .cardConatiner:hover {
@@ -33,7 +37,7 @@
 }
 
 .productImage {
-  width: 90%;
+  width: 80%;
   height: 100%;
 }
 
@@ -112,6 +116,7 @@
   .cardConatiner {
     height: 430px;
     margin-right: 20px;
+    padding: 16px;
   }
 
   .cardBrandConatiner {
@@ -166,10 +171,11 @@
 
   .cardContainerBottom h3,
   .cardPriceContainer p {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: normal;
     line-height: 150%;
     margin-bottom: 0;
+    white-space: inherit;
   }
 
   .cardRate {

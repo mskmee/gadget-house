@@ -1,4 +1,4 @@
-import { Card, Rate } from 'antd';
+import { Rate } from 'antd';
 import styles from './card.module.css';
 import { data } from './constants';
 import useProductCardHandlers from '../../hooks/useProductCardHandlers';
@@ -19,7 +19,7 @@ const ProductCard = () => {
   return (
     <>
       {data.map((item) => (
-        <Card className={styles.cardConatiner} key={item.id}>
+        <div className={styles.cardConatiner} key={item.id}>
           <div className={styles.cardContainerTop}>
             <img
               src={item.img}
@@ -61,7 +61,7 @@ const ProductCard = () => {
               />
             </div>
           </div>
-        </Card>
+        </div>
       ))}
     </>
   );

@@ -1,6 +1,6 @@
 import { laptopData } from './constants';
 import styles from './card.module.css';
-import { Card, Rate } from 'antd';
+import { Rate } from 'antd';
 import useProductCardHandlers from '../../hooks/useProductCardHandlers';
 
 export default function LaptopCard() {
@@ -19,7 +19,7 @@ export default function LaptopCard() {
   return (
     <div>
       {laptopData.map((item) => (
-        <Card className={styles.cardConatiner} key={item.id}>
+        <div className={styles.cardConatiner} key={item.id}>
           <div className={styles.cardContainerTop}>
             <img
               src={item.img}
@@ -63,7 +63,7 @@ export default function LaptopCard() {
               />
             </div>
           </div>
-        </Card>
+        </div>
       ))}
     </div>
   );
