@@ -1,12 +1,12 @@
 .sliderText {
-  padding-left: 50px;
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 24px;
   padding-top: 48px;
   padding-bottom: 19px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 24px;
-  position: relative;
+  padding-left: 50px;
 }
 
 .sliderText h2 {
@@ -16,12 +16,11 @@
 
 .buttonContent {
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: column;
-  cursor: pointer;
+  align-items: center;
   margin-top: -7px;
   text-decoration: none;
+  cursor: pointer;
 }
 
 span {
@@ -31,15 +30,15 @@ span {
 .buttonLink {
   display: flex;
   flex-direction: column;
-  align-items: center;
   flex-direction: row;
+  align-items: center;
   height: 24px;
-  font-weight: 400;
-  word-spacing: 0.2px;
-  font-size: 16px;
-  color: var(--green-color);
-  text-decoration: none;
   margin-top: 4px;
+  color: var(--green-color);
+  font-weight: 400;
+  font-size: 16px;
+  text-decoration: none;
+  word-spacing: 0.2px;
 }
 
 .buttonLinkActive {
@@ -47,25 +46,25 @@ span {
 }
 
 .buttonHr {
-  border: 0.5px solid #00820d;
   width: 100%;
   margin: 0;
+  border: 0.5px solid #00820d;
 }
 
 .buttonHrActive {
   border: 0.5px solid #6f4c9a;
 }
 
-@media (max-width: 1024px) {
+@media (width <= 1024px) {
   /* For screens smaller than 1024px */
   .sliderText {
     justify-content: space-between;
-    padding-left: 24px;
     padding-right: 24px;
+    padding-left: 24px;
   }
 }
 
-@media (max-width: 450px) {
+@media (width <= 450px) {
   .sliderText h2 {
     font-size: 24px;
   }

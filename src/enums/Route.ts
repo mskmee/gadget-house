@@ -3,8 +3,6 @@ const AppRoute = {
   SMARTPHONES: '/smartphones',
   LAPTOPS: '/laptops',
   VIEWED: '/viewed',
-};
+} as const;
 
-type AppRoute = (typeof AppRoute)[keyof typeof AppRoute];
-
-export default AppRoute;
+export { AppRoute };

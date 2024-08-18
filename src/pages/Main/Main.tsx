@@ -47,19 +47,26 @@ export default function Main() {
       <Header />
       <Banner />
       <SliderNav text="Smartphone" link="/smartphones" />
-      <Carousels children={<ProductCard />} />
+      <Carousels>
+        <ProductCard />
+      </Carousels>
 
       <Carousels
-        children={<BrandCard />}
         className="brandsCarousel"
         responsive={brandConatinerResponsiveSettings}
-      />
+      >
+        <BrandCard />
+      </Carousels>
 
       <SliderNav text="Laptop" link="/laptops" />
-      <Carousels children={<LaptopCard />} />
+      <Carousels>
+        <LaptopCard />
+      </Carousels>
 
       <SliderNav text="Previously reviewed offers" link="/viewed" />
-      <Carousels children={<ProductCard />} />
+      <Carousels>
+        <ProductCard />
+      </Carousels>
       <Benefits />
       <Footer />
     </div>
