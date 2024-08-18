@@ -25,9 +25,9 @@ const SliderButtons: React.FC<SliderButtonProps> = ({
           <path
             d="M8.00016 1.33331L1.3335 7.99998L8.00016 14.6666"
             stroke="#00820D"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </svg>
       </button>
@@ -46,9 +46,9 @@ const SliderButtons: React.FC<SliderButtonProps> = ({
           <path
             d="M1.3335 1.33331L8.00016 7.99998L1.3335 14.6666"
             stroke="#00820D"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
           />
         </svg>
       </button>
