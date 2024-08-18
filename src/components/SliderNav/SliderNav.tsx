@@ -1,11 +1,8 @@
 import { Link } from 'react-router-dom';
 import styles from './slidernav.module.css';
 import { useState } from 'react';
-import {
-  RightArrowSlider,
-  RightArrowSliderClick,
-} from '../../assets/constants';
-import { TextLink } from '../../types/TextLink';
+import { RightArrowSlider, RightArrowSliderClick } from '@/assets/constants';
+import { TextLink } from '@/types/TextLink';
 
 export default function SliderNav({ text, link }: TextLink) {
   const [isClicked, setIsClicked] = useState(false);

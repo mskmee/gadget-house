@@ -3,7 +3,7 @@ import { Carousel as AntCarousel } from 'antd';
 import { CarouselRef } from 'antd/es/carousel';
 import styles from './carousel.module.css';
 import SliderButtons from './SliderButtons';
-import { ChildCard } from '../../types/ChildCard';
+import { ChildCard } from '@/types/ChildCard';
 
 const Carousels = ({ children, className, responsive }: ChildCard) => {
   const ref = useRef<CarouselRef | null>(null);

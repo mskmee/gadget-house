@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { BurgerMenuIcon, RightArrow } from '../../assets/constants';
+import { BurgerMenuIcon, RightArrow } from '@/assets/constants';
 import { Button, Drawer } from 'antd';
 import styles from './menu.module.scss';
 import { Link } from 'react-router-dom';
 import items from './constants';
 import ButtonNav from '../Button/Button';
-import buttonData from '../../constants/ButtonConstants';
+import buttonData from '@/constants/ButtonConstants';
 
 export default function BurgerMenu() {
   const [open, setOpen] = useState(false);
@@ -32,7 +32,11 @@ export default function BurgerMenu() {
         <div>
           <ul className={styles.burgerMenuTop}>
             {items.map((item) => (
-              <Link to={item.link} className={styles.burgerMenuTopItem}>
+              <Link
+                key={item.key}
+                to={item.link}
+                className={styles.burgerMenuTopItem}
+              >
                 <div className={styles.burgerMenuTopItemRight}>
                   <img src={item.img} />
                   <p style={item.style}>{item.title}</p>

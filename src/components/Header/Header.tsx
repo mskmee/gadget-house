@@ -1,8 +1,8 @@
 import styles from './header.module.scss';
-import { CatalogIcon } from '../../assets/constants';
+import { CatalogIcon } from '@/assets/constants';
 import Search from './Search/Search';
 import ButtonNav from '../Button/Button';
-import buttonData from '../../constants/ButtonConstants';
+import buttonData from '@/constants/ButtonConstants';
 import { useMediaQuery } from 'react-responsive';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 

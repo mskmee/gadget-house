@@ -1,15 +1,13 @@
 .carouselContainer {
-  background-color: var(--carousel-theme-color);
-  padding-left: 50px;
-  padding-top: 50px;
-  padding-right: 50px;
-  padding-bottom: 24px;
   box-sizing: border-box;
+  padding: 50px 50px 24px;
+  background-color: var(--carousel-theme-color);
 }
 
 .brandsCarousel {
   background-color: var(--bg-color);
 }
+
 /* #region Slider Buttons */
 
 .sliderButtons {
@@ -20,37 +18,37 @@
 }
 
 .btnArrowPrev {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 32px;
   height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border: 2px solid #00820d;
+  border-right: none;
   border-radius: 12px;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
-  border: 2px solid #00820d;
-  border-right: none;
   outline: none;
 }
 
 .slick-slide {
-  padding: 10px;
   box-sizing: border-box;
+  padding: 10px;
   outline: none; /* Видалення обведення при фокусі */
   transition: transform 0.3s ease; /* Додавання плавного переходу для анімацій */
 }
 
 .btnArrowNext {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 32px;
   height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border: 2px solid #00820d;
+  border-left: none;
   border-radius: 12px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  border: 2px solid #00820d;
-  border-left: none;
   outline: none;
 }
 
@@ -114,7 +112,7 @@
   stroke: #c3c3c5 !important;
 }
 
-@media (max-width: 1040px) {
+@media (width <= 1040px) {
   .sliderButtons {
     display: none;
   }
@@ -122,11 +120,8 @@
 
 /* #endregion */
 
-@media (max-width: 1040px) {
+@media (width <= 1040px) {
   .carouselContainer {
-    padding-left: 24px;
-    padding-right: 24px;
-    padding-bottom: 16px;
-    padding-top: 24px;
+    padding: 24px 24px 16px;
   }
 }

@@ -5,15 +5,15 @@
 
 html,
 body {
-  background-color: var(--bg-color);
   color: var(--text-color);
-  font-family: "Inter", sans-serif;
+  font-family: Inter, sans-serif;
+  background-color: var(--bg-color);
 }
 
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
   list-style: none;
 }
 
@@ -23,15 +23,15 @@ body {
 }
 
 /* Search field styles for mobile version */
-@media (max-width: 1070px) {
+@media (width <= 1070px) {
   .ant-input-suffix > svg {
     width: 48px;
     height: 48px;
     padding: 0 12px;
-    border-top-right-radius: 16px;
-    border-bottom-right-radius: 16px;
     background-color: #00820d;
     border: 1px solid #00820d;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
     cursor: pointer;
   }
 
@@ -44,11 +44,11 @@ body {
   }
 
   .ant-input-suffix > svg > path {
-    stroke: #fff;
+    stroke: #ffffff;
   }
 }
 
-@media (max-width: 1070px) {
+@media (width <= 1070px) {
   .slick-track {
     gap: 8px !important;
   }

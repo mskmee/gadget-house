@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styles from './banner.module.scss';
 import items from '../BurgerMenu/constants';
-import { RightArrow } from '../../assets/constants';
+import { RightArrow } from '@/assets/constants';
 
 export default function Banner() {
   return (
@@ -9,7 +9,11 @@ export default function Banner() {
       <div className={styles.bannerContainerLeft}>
         <ul>
           {items.map((item) => (
-            <Link to={item.link} className={styles.bannerContainerLeftItem}>
+            <Link
+              key={item.key}
+              to={item.link}
+              className={styles.bannerContainerLeftItem}
+            >
               <div className={styles.bannerContainerLeftItemRight}>
                 <img src={item.img} />
                 <p style={item.style}>{item.title}</p>

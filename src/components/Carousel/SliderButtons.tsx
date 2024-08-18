@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './carousel.module.css';
-import { SliderButtonProps } from '../../interfaces/interfaces';
+import { SliderButtonProps } from '@/interfaces/interfaces';
 
 const SliderButtons: React.FC<SliderButtonProps> = ({
   handlePrevClick,

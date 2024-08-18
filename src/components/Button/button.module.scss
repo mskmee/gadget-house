@@ -1,15 +1,15 @@
 .headerButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   width: 45;
   height: 45px;
-  border-radius: 10px;
   padding: 12px;
-  border: none;
   background-color: var(--white-color);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
+  border: none;
   border: 1px solid #eae4ee;
+  border-radius: 10px;
+  cursor: pointer;
 
   &:hover {
     background-color: var(--green-color);

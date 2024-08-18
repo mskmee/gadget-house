@@ -3,8 +3,8 @@ import styles from './search.module.scss';
 import { Input } from 'antd';
 import SearchIcon from './SearchIcon';
 import DOMPurify from 'dompurify';
-import { StatusSearch } from '../../../types/StatusSearch';
-import { SearchFieldProps } from '../../../interfaces/interfaces';
+import { StatusSearch } from '@/types/StatusSearch';
+import { SearchFieldProps } from '@/interfaces/interfaces';
 
 function SearchField({ status, onHover }: SearchFieldProps) {
   const [searchValue, setSeachValue] = useState('');
