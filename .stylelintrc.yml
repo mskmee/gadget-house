@@ -4,6 +4,9 @@ extends:
 plugins:
   - stylelint-order
 
+ignoreFiles:
+  - '*/**/normalise.css'
+
 rules:
   selector-class-pattern: null
   color-hex-length: long
