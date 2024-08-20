@@ -10,7 +10,7 @@ import {
   Photo,
   Kids,
   Sale,
-} from '../../assets/constants';
+} from '@/assets/constants';
 
 const items = [
   { key: '1', title: 'Smartphone', img: Smartphone, link: '/smartphones' },

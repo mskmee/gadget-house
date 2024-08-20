@@ -5,6 +5,7 @@ import ButtonNav from '../Button/Button';
 import buttonData from '@/constants/ButtonConstants';
 import { useMediaQuery } from 'react-responsive';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
   const isMaxWidth1070 = useMediaQuery({
@@ -13,7 +14,9 @@ export default function Header() {
   return (
     <>
       <div className={styles.headerTop}>
-        <h1 className={styles.headerTopLogo}>GadgetHouse</h1>
+        <Link to="/" className={styles.headerTopLogo}>
+          GadgetHouse
+        </Link>
       </div>
       <div className={styles.headerBottom}>
         {!isMaxWidth1070 && (

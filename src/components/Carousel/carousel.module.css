@@ -1,118 +1,14 @@
 .carouselContainer {
-  box-sizing: border-box;
-  padding: 50px 50px 24px;
   background-color: var(--carousel-theme-color);
+  padding: 50px 30px 24px 20px;
+  box-sizing: border-box;
 }
 
 .brandsCarousel {
   background-color: var(--bg-color);
 }
 
-/* #region Slider Buttons */
-
-.sliderButtons {
-  display: flex;
-  justify-content: end;
-  align-items: end;
-  margin-top: 24px;
-}
-
-.btnArrowPrev {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 32px;
-  height: 32px;
-  border: 2px solid #00820d;
-  border-right: none;
-  border-radius: 12px;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  outline: none;
-}
-
-.slick-slide {
-  box-sizing: border-box;
-  padding: 10px;
-  outline: none; /* Видалення обведення при фокусі */
-  transition: transform 0.3s ease; /* Додавання плавного переходу для анімацій */
-}
-
-.btnArrowNext {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 32px;
-  height: 32px;
-  border: 2px solid #00820d;
-  border-left: none;
-  border-radius: 12px;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  outline: none;
-}
-
-.btnArrowPrev:hover,
-.btnArrowNext:hover {
-  cursor: pointer;
-}
-
-.btnArrowPrev:hover {
-  border: 3px solid #4da856 !important;
-  border-right: none !important;
-}
-
-.btnArrowNext:hover {
-  border: 3px solid #4da856 !important;
-  border-left: none !important;
-}
-
-.btnArrowPrev:active {
-  border: 3px solid #00680a !important;
-  border-right: none !important;
-  outline: none;
-}
-
-.btnArrowNext:active {
-  border: 3px solid #00680a !important;
-  border-left: none !important;
-  outline: none;
-}
-
-.btnArrowNext:active svg path,
-.btnArrowPrev:active svg path {
-  stroke-width: 2.5px;
-  stroke: #00680a !important;
-}
-
-.btnArrowNext.disabled {
-  border: 2px solid #c3c3c5 !important;
-  border-right: none !important;
-  cursor: not-allowed;
-}
-
-.btnArrowPrev.disabled {
-  border: 2px solid #c3c3c5 !important;
-  border-left: none !important;
-  cursor: not-allowed;
-}
-
-.btnArrowPrev.disabled:hover {
-  border: 3px solid #c3c3c5 !important;
-  border-right: none !important;
-}
-
-.btnArrowNext.disabled:hover {
-  border: 3px solid #c3c3c5 !important;
-  border-left: none !important;
-}
-
-.btnArrowNext.disabled svg path,
-.btnArrowPrev.disabled svg path {
-  stroke: #c3c3c5 !important;
-}
-
-@media (width <= 1040px) {
+@media (max-width: 1040px) {
   .sliderButtons {
     display: none;
   }
@@ -120,8 +16,11 @@
 
 /* #endregion */
 
-@media (width <= 1040px) {
+@media (max-width: 1040px) {
   .carouselContainer {
-    padding: 24px 24px 16px;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-bottom: 16px;
+    padding-top: 24px;
   }
 }

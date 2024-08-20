@@ -4,6 +4,6 @@ import { ResponsiveSettings } from './responsive';
 
 export type ChildCard = {
   children: ReactNode;
-  className?: keyof typeof styles;
+  classname?: keyof typeof styles;
   responsive?: ResponsiveSettings[];
 };

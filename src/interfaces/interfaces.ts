@@ -27,3 +27,23 @@ export interface StatusButtonProps {
   color: string;
   style?: React.CSSProperties;
 }
+
+export interface ISmartphone {
+  id: number;
+  title: string;
+  img: string;
+  likeIcon: string;
+  likeIconClick: string;
+  colorPalette?: string;
+  basketIcon: string;
+  basketIconClick: string;
+  basketIconHover: string;
+  price: string;
+}
+
+export interface IAccessory extends ISmartphone {
+  hasAnotherColor?: boolean | string[];
+  isLiked?: boolean;
+  rate?: number;
+  code?: string;
+}
