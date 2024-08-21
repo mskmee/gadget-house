@@ -1,13 +1,14 @@
 import { Suspense, lazy } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import './styles/globals.css';
 import Main from './pages/Main/Main';
 import Smartphones from './pages/Smartphones/Smartphones';
 import Laptops from './pages/Laptops/Laptops';
 import Viewed from './pages/Viewed/Viewed';
-const SingleProduct = lazy(() => import('./pages/SingleProduct/index'));
-import './styles/globals.css';
 import AppRoute from './enums/enum';
 import { Layout } from './pages/Layout';
+import LoadingSpinner from './components/LoadingSpinner';
+const SingleProductLazy = lazy(() => import('./pages/SingleProduct/index'));
 
 function App() {
   return (
@@ -21,8 +22,8 @@ function App() {
           <Route
             path={AppRoute.SINGLE_PRODUCT}
             element={
-              <Suspense fallback={<div>Loading...</div>}>
-                <SingleProduct />
+              <Suspense fallback={<LoadingSpinner />}>
+                <SingleProductLazy />
               </Suspense>
             }
           />

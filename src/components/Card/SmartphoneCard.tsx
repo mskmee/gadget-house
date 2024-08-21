@@ -1,94 +1,71 @@
 import { FC } from 'react';
 import { Rate } from 'antd';
 import styles from './card.module.css';
-import { rateImg, rateEmptyImg } from '../../assets/constants';
+import { rateImg, rateEmptyImg } from '@/assets/constants';
 import { Link } from 'react-router-dom';
-import useProductCardHandlers from '../../hooks/useProductCardHandlers';
+import useProductCardHandlers from '@/hooks/useProductCardHandlers';
 import { IAccessory } from '@/interfaces/interfaces';
+import { BasketIcon } from '@/assets/icons/BasketIcon';
 
 interface ISmartphoneCard {
   product: IAccessory;
   classname: string;
 }
 
-const SmartphoneCard: FC<ISmartphoneCard> = ({ product, classname }) => {
-  const {
-    isHovered,
-    isLiked,
-    isMouseDown,
-    handleClickBuy,
-    handleMouseDown,
-    handleMouseUp,
-    handleMouseLeave,
-    handleMouseEnter,
-    handleClickLike,
-  } = useProductCardHandlers();
+export const SmartphoneCard: FC<ISmartphoneCard> = ({ product, classname }) => {
+  const { isLiked, handleClickBuy, handleClickLike } = useProductCardHandlers();
 
-  const accessoryProduct = product as IAccessory;
-  const productRating = accessoryProduct.rate ?? 0;
+  const productRating = product.rate ?? 0;
 
   return (
     <>
       <Link
         className={`${styles.cardConatiner} ${classname} `}
-        key={accessoryProduct?.id}
+        key={product?.id}
         to="/smartphone/apple iPhone 15 Pro 256Gb Blue Titanium"
       >
         <div
-          className={styles.cardContainerTop}
-          style={
-            Array.isArray(accessoryProduct?.hasAnotherColor)
-              ? { alignItems: 'center' }
-              : { alignItems: 'start' }
-          }
+          className={`${styles.cardContainerTop} ${
+            Array.isArray(product?.hasAnotherColor)
+              ? styles.alignCenter
+              : styles.alignStart
+          }`}
         >
-          <img
-            src={accessoryProduct?.img}
-            className={styles.productImage}
-            alt="Product image"
-          />
+          <div className={styles.productImage}>
+            <img src={product?.img} alt="Product image" />
+          </div>
+
           <div
-            className={styles.cardConatinerLike}
-            style={
-              !Array.isArray(accessoryProduct?.hasAnotherColor)
-                ? { marginTop: '20px' }
-                : {}
-            }
+            className={`${styles.cardConatinerLike} ${
+              !Array.isArray(product?.hasAnotherColor) ? styles.marginTop : ''
+            }`}
           >
             <img
               onClick={handleClickLike}
-              src={
-                isLiked
-                  ? accessoryProduct?.likeIcon
-                  : accessoryProduct?.likeIconClick
-              }
+              src={isLiked ? product?.likeIcon : product?.likeIconClick}
               alt="Like"
               className={styles.likeIcon}
             />
-            {accessoryProduct?.colorPalette ? (
+            {product?.colorPalette ? (
               <img
-                src={accessoryProduct?.colorPalette}
+                src={product?.colorPalette}
                 className={styles.colorPalette}
                 alt="Palette image"
               />
-            ) : Array.isArray(accessoryProduct?.hasAnotherColor) ? (
-              <div className={styles['accessories-colors']}>
-                {accessoryProduct?.hasAnotherColor?.map((color: string) => (
-                  <div
-                    key={color}
-                    style={{
-                      backgroundColor: color,
-                    }}
-                  ></div>
-                ))}
-              </div>
             ) : (
-              <span></span>
+              Array.isArray(product?.hasAnotherColor) &&
+              product?.hasAnotherColor.length > 0 && (
+                <div className={styles['accessories-colors']}>
+                  {product?.hasAnotherColor.map((color: string) => (
+                    <div key={color} style={{ backgroundColor: color }}></div>
+                  ))}
+                </div>
+              )
             )}
           </div>
         </div>
         <div className={styles.cardContainerBottom}>
-          <h3>{accessoryProduct?.title}</h3>
+          <h3>{product?.title}</h3>
           <div className={styles.cardRate}>
             <Rate
               className="reviews_rate-stars"
@@ -105,25 +82,12 @@ const SmartphoneCard: FC<ISmartphoneCard> = ({ product, classname }) => {
             />
             <div className={styles['card-code']}>
               <span>code:</span>
-              <span>{accessoryProduct?.code}</span>
+              <span>{product?.code}</span>
             </div>
           </div>
           <div className={styles.cardPriceContainer}>
-            <p>{accessoryProduct?.price}</p>
-            <img
-              onClick={handleClickBuy}
-              onMouseDown={handleMouseDown}
-              onMouseUp={handleMouseUp}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
-              src={
-                isMouseDown
-                  ? accessoryProduct?.basketIconClick
-                  : isHovered
-                    ? accessoryProduct?.basketIconHover
-                    : accessoryProduct?.basketIcon
-              }
-            />
+            <p>{product?.price}</p>
+            <BasketIcon handleClickBuy={handleClickBuy} />
           </div>
         </div>
       </Link>

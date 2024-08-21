@@ -1,10 +1,10 @@
-import Benefits from '../../components/benefitsList/benefits';
-import BrandCard from '../../components/Card/BrandCard';
-import LaptopCard from '../../components/Card/LaptopCard';
-import Carousels from '../../components/Carousel/Carousel';
-import SliderNav from '../../components/SliderNav/SliderNav';
-import SmartphoneCard from '../../components/Card/SmartphoneCard';
-import { data } from '../../components/Card/constants';
+import Benefits from '@/components/benefitsList/benefits';
+import BrandCard from '@/components/Card/BrandCard';
+import { LaptopCard } from '@/components/Card/LaptopCard';
+import Carousels from '@/components/Carousel/Carousel';
+import SliderNav from '@/components/SliderNav/SliderNav';
+import SmartphoneCard from '@/components/Card/SmartphoneCard';
+import { data, laptopData } from '@/components/Card/constants';
 
 const brandConatinerResponsiveSettings = [
   {
@@ -74,7 +74,7 @@ export default function Main() {
       >
         {Array.from(Array(8), (_, i) => (
           <div key={i}>
-            <LaptopCard />
+            <LaptopCard product={laptopData[0]} />
           </div>
         ))}
       </Carousels>

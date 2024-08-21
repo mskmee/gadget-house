@@ -28,22 +28,19 @@ export interface StatusButtonProps {
   style?: React.CSSProperties;
 }
 
-export interface ISmartphone {
+export interface ICard {
   id: number;
   title: string;
   img: string;
   likeIcon: string;
   likeIconClick: string;
   colorPalette?: string;
-  basketIcon: string;
-  basketIconClick: string;
-  basketIconHover: string;
+  rate: number;
   price: string;
+  code: string;
 }
 
-export interface IAccessory extends ISmartphone {
+export interface IAccessory extends ICard {
   hasAnotherColor?: boolean | string[];
   isLiked?: boolean;
-  rate?: number;
-  code?: string;
 }

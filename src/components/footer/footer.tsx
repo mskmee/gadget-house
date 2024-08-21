@@ -15,7 +15,6 @@ import { useState } from 'react';
 const Footer = () => {
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
-  //
   window.addEventListener('resize', () => {
     const windowSize = window.innerWidth;
     if (windowSize > 878 || windowSize < 350) {

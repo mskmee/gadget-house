@@ -1,7 +1,7 @@
 .carouselContainer {
-  background-color: var(--carousel-theme-color);
-  padding: 50px 30px 24px 20px;
   box-sizing: border-box;
+  padding: 50px 30px 24px 20px;
+  background-color: var(--carousel-theme-color);
 }
 
 .brandsCarousel {
@@ -14,13 +14,8 @@
   }
 }
 
-/* #endregion */
-
-@media (max-width: 1040px) {
+@media (min-width: 768px) and (max-width: 1040px) {
   .carouselContainer {
-    padding-left: 24px;
-    padding-right: 24px;
-    padding-bottom: 16px;
-    padding-top: 24px;
+    padding: 24px 24px 16px 24px;
   }
 }

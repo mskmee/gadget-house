@@ -7,8 +7,6 @@ import LikeIconClick from './icons/Heart 5.svg';
 import PhonePalette from './images/phone-palette.svg';
 import LaptopPalette from './images/laptop-palette.svg';
 import BasketIcon from './icons/basket-icon.svg';
-import BasketIconHover from './icons/basket-icon-hover.svg';
-import BasketIconClick from './icons/basket-icon-active.svg';
 import SamsungImg from './images/samsung-img.png';
 import CatalogIcon from './icons/catalog-icon.svg';
 import PhoneIcon from './icons/phone-icon.svg';
@@ -60,8 +58,6 @@ export {
   LikeIcon,
   LikeIconClick,
   BasketIcon,
-  BasketIconHover,
-  BasketIconClick,
   PhonePalette,
   LaptopPalette,
   SamsungImg,

@@ -25,8 +25,7 @@ const Carousels: FC<ICarouselsProps> = ({
   const [nextClick, setNextClick] = useState(false);
   const [isFirstSlick, setIsFirstSlick] = useState(true);
   const [isLastSlick, setIsLastSlick] = useState(false);
-
-  console.log(children);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const handlePrevClick = () => {
     setPrevClick(true);
@@ -39,38 +38,36 @@ const Carousels: FC<ICarouselsProps> = ({
     ref.current?.next();
     setTimeout(() => setNextClick(false), 0); // Reset click state after 0s
   };
+
   useEffect(() => {
-    const allSlicks = document.querySelectorAll(`.${classname} .slick-slide`);
-
-    const filteredElements = Array.from(allSlicks).filter(
-      (element) => !element.classList.contains('slick-cloned'),
-    );
-    const activeSlicks = document.querySelectorAll(
-      `.${classname} .slick-active`,
-    );
-
-    const currentSlickIndex = document
-      .querySelector(`.${classname} .slick-current`)
-      ?.getAttribute('data-index');
-
-    const currentSlickIndex2 =
-      activeSlicks[activeSlicks?.length - 1]?.getAttribute('data-index');
-
-    if (currentSlickIndex2 !== null) {
-      setIsLastSlick(
-        +currentSlickIndex2 >= (filteredElements?.length ?? 0) - 1,
+    if (containerRef.current) {
+      const allSlicks = containerRef.current.querySelectorAll('.slick-slide');
+      const filteredElements = Array.from(allSlicks).filter(
+        (element) => !element.classList.contains('slick-cloned'),
       );
-    } else {
-      setIsLastSlick(false);
-    }
-    if (
-      currentSlickIndex !== null &&
-      currentSlickIndex !== undefined &&
-      +currentSlickIndex === 0
-    ) {
-      setIsFirstSlick(true);
-    } else {
-      setIsFirstSlick(false);
+
+      const activeSlicks =
+        containerRef.current.querySelectorAll('.slick-active');
+      const currentSlickElement =
+        containerRef.current.querySelector('.slick-current');
+      const currentSlickIndex = currentSlickElement?.getAttribute('data-index');
+      const currentSlickIndex2 =
+        activeSlicks[activeSlicks.length - 1]?.getAttribute('data-index');
+
+      if (currentSlickIndex2 !== null && currentSlickIndex2 !== undefined) {
+        setIsLastSlick(+currentSlickIndex2 >= filteredElements.length - 1);
+      } else {
+        setIsLastSlick(false);
+      }
+      if (
+        currentSlickIndex !== null &&
+        currentSlickIndex !== undefined &&
+        +currentSlickIndex === 0
+      ) {
+        setIsFirstSlick(true);
+      } else {
+        setIsFirstSlick(false);
+      }
     }
   }, [prevClick, nextClick]);
 
@@ -82,6 +79,7 @@ const Carousels: FC<ICarouselsProps> = ({
           ? { backgroundColor: 'transparent' }
           : {}
       }
+      ref={containerRef}
     >
       <Carousel
         className={sliderClassName}

@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import style from './SingleProduct.module.scss';
 
 const menuItems = [
@@ -11,18 +11,17 @@ const menuItems = [
 
 export const MenuItems: FC = () => {
   const [selectedMenu, setSelectedMenu] = useState('About the product');
+  const refs = useRef<Record<string, HTMLDivElement | null>>({});
 
-  const handleMenuClick = (menuTitle: string, href: string) => {
-    return () => {
-      setSelectedMenu(menuTitle);
-      const targetElement = document.querySelector<HTMLElement>(href);
-      if (targetElement) {
-        window.scrollTo({
-          top: targetElement.offsetTop,
-          behavior: 'smooth',
-        });
-      }
-    };
+  const handleMenuClick = (menuTitle: string, refKey: string) => () => {
+    setSelectedMenu(menuTitle);
+    const targetRef = refs.current[refKey];
+    if (targetRef) {
+      window.scrollTo({
+        top: targetRef.offsetTop,
+        behavior: 'smooth',
+      });
+    }
   };
   return (
     <section className={style['single-product__menu']}>
