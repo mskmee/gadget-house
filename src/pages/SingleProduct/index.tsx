@@ -16,7 +16,7 @@ import { useDocumentTitle } from '@/hooks/useDocumentTitle';
 export interface IProductContext {
   storageValue: TReview[];
   allProductReviews: TReview[];
-  setValue: (newValue: any) => void;
+  setValue: (newValue: TReview[]) => void;
 }
 
 export const ProductContext = createContext<IProductContext>({
@@ -26,7 +26,10 @@ export const ProductContext = createContext<IProductContext>({
 });
 
 export const SingleProductPage = () => {
-  const [storageValue, setValue] = useSessionStorage('product_reviews', []);
+  const [storageValue, setValue] = useSessionStorage<TReview[]>(
+    'product_reviews',
+    [],
+  );
   const allProductReviews = currentProduct?.[0]?.reviews?.concat(storageValue);
   useDocumentTitle(currentProduct?.[0]?.title);
 

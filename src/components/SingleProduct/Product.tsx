@@ -69,7 +69,7 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
         nextArrowRef.current.style.filter = 'none';
       }
     }
-  }, [currentSlide?.id]);
+  }, [currentSlide?.id, currentProductImages?.length]);
 
   const changeProductCharacteristics =
     (value: string, inStock = true, type: string) =>

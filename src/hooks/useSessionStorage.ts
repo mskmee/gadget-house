@@ -1,8 +1,7 @@
 import { useState } from 'react';
-import { TReview } from '../types/Review.type';
 
-export const useSessionStorage = (keyName: string, defaultValue: []) => {
-  const [storageValue, setStorageValue] = useState(() => {
+export const useSessionStorage = <T>(keyName: string, defaultValue: T) => {
+  const [storageValue, setStorageValue] = useState<T>(() => {
     try {
       const value = sessionStorage.getItem(keyName);
 
@@ -17,12 +16,15 @@ export const useSessionStorage = (keyName: string, defaultValue: []) => {
     }
   });
 
-  const setValue = (newValue: TReview) => {
+  const setValue = (newValue: T) => {
     try {
       sessionStorage.setItem(keyName, JSON.stringify(newValue));
-    } catch (err) {}
+    } catch (err) {
+      return;
+    }
     setStorageValue(newValue);
   };
+  console.log(storageValue);
 
   return [storageValue, setValue] as const;
 };

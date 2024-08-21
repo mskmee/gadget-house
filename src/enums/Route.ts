@@ -6,6 +6,6 @@ const AppRoute = {
   SINGLE_PRODUCT: '/:smartphone/:title',
 };
 
-type AppRoute = (typeof AppRoute)[keyof typeof AppRoute];
+export type RoutePath = (typeof AppRoute)[keyof typeof AppRoute];
 
-export default AppRoute;
+export { AppRoute };

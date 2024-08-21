@@ -7,8 +7,8 @@ html,
 body {
   scroll-behavior: smooth;
   color: var(--text-color);
-  background-color: var(--bg-color);
   font-family: Inter, sans-serif;
+  background-color: var(--bg-color);
 }
 
 * {
@@ -31,6 +31,10 @@ body {
 .reviews_rate-stars > li,
 .product_rate-stars > li {
   margin-inline-end: 0 !important;
+}
+
+.arrow-container > div {
+  display: flex;
 }
 
 .reviews_rate-stars > li div:hover,
@@ -59,10 +63,6 @@ body {
   align-items: end;
   margin-top: 24px;
   margin-right: 20px;
-}
-
-.arrow-container > div {
-  display: flex;
 }
 
 .btn-arrow-prev {

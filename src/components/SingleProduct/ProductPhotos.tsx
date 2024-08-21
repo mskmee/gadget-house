@@ -7,7 +7,7 @@ import {
   productImg4,
   productImg5,
   productImg6,
-} from '../../assets/constants';
+} from '@/assets/constants';
 
 import Carousels from '../Carousel/Carousel';
 import { photosResponsive } from '@/constants/carouselResponsive';
@@ -45,7 +45,7 @@ export const ProductPhotos: FC = () => {
           </Carousels>
         </>
       ) : (
-        <p>There are any product's photo</p>
+        <p>There are any photo</p>
       )}
     </section>
   );

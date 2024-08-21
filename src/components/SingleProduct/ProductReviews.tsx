@@ -2,10 +2,10 @@ import {
   FC,
   ChangeEventHandler,
   FormEvent,
-  useCallback,
   useContext,
   useRef,
   useState,
+  useMemo,
 } from 'react';
 import style from './SingleProduct.module.scss';
 import { rateImg, rateEmptyImg } from '../../assets/constants';
@@ -18,7 +18,7 @@ import { ProductContext } from '@/pages/SingleProduct';
 
 export const ProductReviews: FC = () => {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const { storageValue, allProductReviews, setValue } =
+  const { allProductReviews, setValue, storageValue } =
     useContext(ProductContext);
   const [review, setReview] = useState({ text: '', rateValue: 0 });
   const [visibleReviewsCount, setVisibleReviewsCount] = useState(2);
@@ -26,14 +26,19 @@ export const ProductReviews: FC = () => {
     currentProduct?.[0]?.reviews.length > 2 ? true : false,
   );
 
-  const callbackDebounce = useCallback(
-    debounce((textValue: string, rateValue: number) => {
-      setReview({ ...review, text: textValue, rateValue: rateValue });
-    }, 500),
+  const debouncedCallback = useMemo(
+    () =>
+      debounce((textValue: string, rateValue: number) => {
+        setReview((prevReview) => ({
+          ...prevReview,
+          text: textValue,
+          rateValue: rateValue,
+        }));
+      }, 500),
     [],
   );
   const changeReviewText: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
-    callbackDebounce(e.target.value, review?.rateValue);
+    debouncedCallback(e.target.value, review?.rateValue);
   };
 
   const changeRateValue = (value: number) => {

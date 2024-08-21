@@ -8,14 +8,14 @@
   background-color: var(--bg-color);
 }
 
-@media (max-width: 1040px) {
+@media screen and (320px <= width <= 1040px) {
   .sliderButtons {
     display: none;
   }
 }
 
-@media (min-width: 768px) and (max-width: 1040px) {
+@media screen and (7680px <= width <= 1040px) {
   .carouselContainer {
-    padding: 24px 24px 16px 24px;
+    padding: 24px 24px 16px;
   }
 }

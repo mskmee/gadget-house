@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useParams } from 'react-router-dom';
 import { Breadcrumb } from 'antd';
 import style from './SingleProduct.module.scss';
-import AppRoute from '@/enums/Route';
+import { AppRoute } from '@/enums/Route';
 
 export const CustomBreadcrumbs: FC = () => {
   const { smartphone, title } = useParams();
