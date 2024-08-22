@@ -1,13 +1,13 @@
 import {
-  PhoneIcon,
-  PhoneIconWhite,
-  HeartIcon,
-  HeartIconWhite,
-  UserIcon,
-  UserIconWhite,
   BasketIconBlack,
   BasketIconWhite,
-} from '../assets/constants';
+  HeartIcon,
+  HeartIconWhite,
+  PhoneIcon,
+  PhoneIconWhite,
+  UserIcon,
+  UserIconWhite,
+} from '@/assets/constants';
 
 const buttonData = [
   {

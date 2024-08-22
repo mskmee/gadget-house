@@ -1,14 +1,10 @@
-import {
-  Banner,
-  Header,
-  SliderNav,
-  Carousels,
-  ProductCard,
-  LaptopCard,
-  BrandCard,
-  Footer,
-  Benefits,
-} from '@/components/components';
+import Benefits from '@/components/benefitsList/benefits';
+import BrandCard from '@/components/Card/BrandCard';
+import { LaptopCard } from '@/components/Card/LaptopCard';
+import Carousels from '@/components/Carousel/Carousel';
+import SliderNav from '@/components/SliderNav/SliderNav';
+import SmartphoneCard from '@/components/Card/SmartphoneCard';
+import { data, laptopData } from '@/components/Card/constants';
 
 const brandConatinerResponsiveSettings = [
   {
@@ -43,29 +39,62 @@ const brandConatinerResponsiveSettings = [
 
 export default function Main() {
   return (
-    <div>
-      <Header />
-      <Banner />
+    <>
       <SliderNav text="Smartphone" link="/smartphones" />
-      <Carousels>
-        <ProductCard />
-      </Carousels>
       <Carousels
-        className="brandsCarousel"
+        classname="mobile-carousel"
+        sliderClassName="mobile-slider"
+        countSlideToShow={4}
+      >
+        {Array.from(Array(8), (_, i) => (
+          <div key={i}>
+            <SmartphoneCard product={data[0]} classname="smartphone" />
+          </div>
+        ))}
+      </Carousels>
+
+      <Carousels
+        classname="brands-carousel"
+        sliderClassName="brands-slider"
+        countSlideToShow={5}
         responsive={brandConatinerResponsiveSettings}
       >
-        <BrandCard />
+        {Array.from(Array(9), (_, i) => (
+          <div key={i}>
+            <BrandCard />
+          </div>
+        ))}
       </Carousels>
+
       <SliderNav text="Laptop" link="/laptops" />
-      <Carousels>
-        <LaptopCard />
+      <Carousels
+        classname="laptop-carousel"
+        sliderClassName="laptop-slider"
+        countSlideToShow={4}
+      >
+        {Array.from(Array(8), (_, i) => (
+          <div key={i}>
+            <LaptopCard product={laptopData[0]} />
+          </div>
+        ))}
       </Carousels>
+
       <SliderNav text="Previously reviewed offers" link="/viewed" />
-      <Carousels>
-        <ProductCard />
+      <Carousels
+        classname="viewed-carousel"
+        sliderClassName="viewed-slider"
+        countSlideToShow={4}
+      >
+        {Array.from(Array(8), (_, i) => (
+          <div key={i}>
+            <SmartphoneCard
+              product={data[0]}
+              classname="viewed-carousel"
+            ></SmartphoneCard>
+          </div>
+        ))}
       </Carousels>
       <Benefits />
-      <Footer />
-    </div>
+    </>
   );
 }

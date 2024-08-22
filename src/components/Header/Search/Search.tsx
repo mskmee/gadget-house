@@ -52,6 +52,7 @@ function SearchField({ status, onHover }: SearchFieldProps) {
       }
     >
       <Input
+        name="header_search"
         onFocus={() => onHover('Active')}
         onBlur={() => onHover('Disable')}
         placeholder={status === 'Active' ? undefined : 'Searching...'}

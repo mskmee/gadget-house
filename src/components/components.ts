@@ -1,8 +1,8 @@
 import Benefits from '@/components/benefitsList/benefits';
 import Footer from '@/components/footer/footer';
 import BrandCard from '@/components/Card/BrandCard';
-import ProductCard from '@/components/Card/Card';
-import LaptopCard from '@/components/Card/LaptopCard';
+import { SmartphoneCard } from '../components/Card/SmartphoneCard';
+import { LaptopCard } from '@/components/Card/LaptopCard';
 import Carousels from '@/components/Carousel/Carousel';
 import SliderNav from '@/components/SliderNav/SliderNav';
 import Header from '@/components/Header/Header';
@@ -13,7 +13,7 @@ export {
   Header,
   SliderNav,
   Carousels,
-  ProductCard,
+  SmartphoneCard,
   LaptopCard,
   BrandCard,
   Benefits,

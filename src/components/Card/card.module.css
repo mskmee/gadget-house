@@ -2,24 +2,33 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
   gap: 16px;
-  height: 480px;
   margin-top: 5px;
   margin-bottom: 5px;
-  padding: 16px;
-  padding-bottom: 18px;
+  padding: 0 16px 16px;
   font-family: Inter, sans-serif;
-  background-color: var(--white-color);
+  background-color: #ffffff;
   border: 2px solid #5a3e7d07;
   border-radius: 20px;
-  box-shadow: 0 0 8px 0 rgb(0 0 0 / 8%);
+  box-shadow: 0 0 8px 0 hsla(0deg 0% 0% / 10%);
   transition: all 0.2s;
 }
 
 .cardBrandConatiner {
   height: 100%;
-  padding: 14px;
+  padding: 16px;
+}
+
+.alignCenter {
+  align-items: center;
+}
+
+.alignStart {
+  align-items: start;
+}
+
+.marginTop {
+  margin-top: 20px;
 }
 
 .cardConatiner:hover {
@@ -27,26 +36,28 @@
   transform: scale(1.02);
 }
 
-/* #region container top */
 .cardContainerTop {
   display: flex;
-  flex-direction: row;
   justify-content: center;
-  align-items: center;
   padding: 0;
 }
 
 .productImage {
-  width: 80%;
-  height: 100%;
+  width: 100%;
+  max-width: 234px;
+
+  > img {
+    height: 100%;
+    margin: 0 auto;
+  }
 }
 
 .cardConatinerLike {
   display: flex;
-  flex-flow: column nowrap;
+  flex-flow: column wrap;
   justify-content: space-between;
   align-items: center;
-  gap: 90px;
+  gap: 34px;
 }
 
 .cardConatinerLikeLaptop {
@@ -62,7 +73,22 @@
   height: auto;
 }
 
-/* #endregion */
+.accessories-colors {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  > div {
+    width: 24px;
+    height: 24px;
+    border: 0.5px solid #ed7b23;
+    border-radius: 50%;
+  }
+}
+
+.accessories-colors > div:hover {
+  box-shadow: -1px 1px 21px -5px color(display-p3 0.23 0.26 0.84 / 80%);
+}
 
 .cardContainerBottom {
   display: flex;
@@ -72,30 +98,40 @@
 }
 
 .cardContainerBottom h3 {
-  margin-top: 24px;
+  margin-top: 4px;
 }
 
 .cardContainerBottom h3,
 .cardPriceContainer p {
   margin-bottom: 0;
+  color: #1c1817;
   font-weight: normal;
   font-size: 24px;
   line-height: 150%;
 }
 
 .cardRate {
-  padding-top: 4px;
-  color: #6f4c9a;
-  font-size: 17px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 4px;
+
+  .card-code {
+    color: #808080;
+  }
 }
 
 .cardPriceContainer {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   margin-top: 35px;
+
+  & > svg:hover rect {
+    fill: #00670b;
+  }
 }
 
 .cardPriceContainer p {
@@ -112,11 +148,10 @@
   object-fit: cover;
 }
 
-@media (width <= 1070px) {
+@media screen and (600px <= width <= 1070px) {
   .cardConatiner {
     height: 430px;
     margin-right: 20px;
-    padding: 16px;
   }
 
   .cardBrandConatiner {
@@ -132,7 +167,7 @@
   }
 }
 
-@media (width <= 460px) {
+@media screen and (300px <= width <= 460px) {
   .cardConatiner {
     height: 287px;
     margin-right: 8px;
@@ -158,29 +193,25 @@
   }
 
   .cardConatinerLike {
-    gap: 40px;
+    gap: 20px;
   }
 
   .cardConatinerLikeLaptop {
-    gap: 30px;
-  }
-
-  .cardContainerBottom h3 {
-    margin-top: 12px;
+    gap: 40px;
   }
 
   .cardContainerBottom h3,
   .cardPriceContainer p {
     margin-bottom: 0;
     font-weight: normal;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 150%;
-    white-space: inherit;
   }
 
   .cardRate {
-    padding-top: 4px;
-    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .cardPriceContainer {
