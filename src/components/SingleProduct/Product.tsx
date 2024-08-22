@@ -1,6 +1,6 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import style from './SingleProduct.module.scss';
-import { Rate } from 'antd';
+import { Image, Modal, Rate } from 'antd';
 import { currentProduct } from '@/constants/singleProduct';
 import {
   arrowImg,
@@ -27,6 +27,10 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
     selectedModel: 'Apple iPhone 15 Pro',
     selectedMemory: '256GB',
   });
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [modalImageSrc, setModalImageSrc] = useState<string | null>(null);
+
   const handlePrevClick = () => {
     if (currentSlide?.id !== 1) {
       setCurrentSlide(currentProductImages?.[currentSlide?.id - 2]);
@@ -93,6 +97,15 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
         });
       }
     };
+  const openImageModal = (imageSrc: string) => {
+    setModalImageSrc(imageSrc);
+    setIsModalVisible(true);
+  };
+
+  const handleModalCancel = () => {
+    setIsModalVisible(false);
+    setModalImageSrc(null);
+  };
 
   return (
     <section className={style['product']} id="product">
@@ -104,7 +117,11 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
             ref={prevArrowRef}
             onClick={handlePrevClick}
           />
-          <img src={currentSlide?.img} alt="current product picture" />
+          <img
+            src={currentSlide?.img}
+            alt="current product picture"
+            onClick={() => openImageModal(currentSlide?.img)}
+          />
           <img
             src={arrowImg}
             alt="next image arrow"
@@ -265,6 +282,23 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
           </div>
         </div>
       </div>
+      <Modal
+        className="product-page-photo-modal"
+        open={isModalVisible}
+        footer={null}
+        onCancel={handleModalCancel}
+        centered
+        width="auto"
+      >
+        {modalImageSrc && (
+          <Image
+            src={modalImageSrc}
+            alt="Zoomed product image"
+            width={500}
+            preview={false}
+          />
+        )}
+      </Modal>
     </section>
   );
 };

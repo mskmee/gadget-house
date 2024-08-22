@@ -92,7 +92,6 @@
 .product {
   margin-top: 24px;
   display: flex;
-
   gap: 24px;
 
   &_custom-carousel-wrap {
@@ -110,13 +109,13 @@
     .product_carousel-current-picture > img {
       max-width: 514px;
       width: 100%;
+      cursor: pointer;
     }
     .product_carousel-current-picture img:first-child,
     .product_carousel-current-picture img:last-child {
       display: inline-block;
       width: 48px;
       height: 48px;
-      cursor: pointer;
     }
     .product_carousel-current-picture img:last-child {
       transform: rotate(180deg);
