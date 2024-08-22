@@ -3,6 +3,9 @@ const AppRoute = {
   SMARTPHONES: '/smartphones',
   LAPTOPS: '/laptops',
   VIEWED: '/viewed',
-} as const;
+  SINGLE_PRODUCT: '/:smartphone/:title',
+};
+
+export type RoutePath = (typeof AppRoute)[keyof typeof AppRoute];
 
 export { AppRoute };

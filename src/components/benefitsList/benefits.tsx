@@ -14,8 +14,6 @@ const Benefit: FC<BenefitItem> = ({ imageUri, text, imageAlt }) => {
   );
 };
 
-//TODO: separate into different files
-
 const Benefits = () => {
   return (
     <section className={styles.wrapper}>

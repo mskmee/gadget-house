@@ -1,76 +1,94 @@
-import { useEffect, useRef, useState } from 'react';
-import { Carousel as AntCarousel } from 'antd';
-import { CarouselRef } from 'antd/es/carousel';
-import styles from './carousel.module.css';
+import { FC, ReactNode, useEffect, useRef, useState } from 'react';
+import style from './carousel.module.css';
+import { Carousel } from 'antd';
 import SliderButtons from './SliderButtons';
-import { ChildCard } from '@/types/ChildCard';
+import { ResponsiveSettings } from '../../types/responsive';
+import type { CarouselRef } from 'antd/es/carousel';
 
-const Carousels = ({ children, className, responsive }: ChildCard) => {
-  const ref = useRef<CarouselRef | null>(null);
+interface ICarouselsProps {
+  children: ReactNode;
+  classname: string;
+  sliderClassName: string;
+  countSlideToShow: number;
+  responsive?: ResponsiveSettings[];
+}
+
+const Carousels: FC<ICarouselsProps> = ({
+  children,
+  classname,
+  sliderClassName,
+  countSlideToShow,
+  responsive,
+}) => {
+  const ref = useRef<CarouselRef>(null);
   const [prevClick, setPrevClick] = useState(false);
   const [nextClick, setNextClick] = useState(false);
-
-  const [isLastSlick, setIsLastSlick] = useState(false);
   const [isFirstSlick, setIsFirstSlick] = useState(true);
-  const [currentSlickIndex, setCurrentSlickIndex] = useState(0);
+  const [isLastSlick, setIsLastSlick] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const handlePrevClick = () => {
     setPrevClick(true);
     ref.current?.prev();
-    setTimeout(() => setPrevClick(false), 0);
+    setTimeout(() => setPrevClick(false), 0); // Reset click state after 0s
   };
 
   const handleNextClick = () => {
     setNextClick(true);
     ref.current?.next();
-    setTimeout(() => setNextClick(false), 0);
+    setTimeout(() => setNextClick(false), 0); // Reset click state after 0s
   };
 
   useEffect(() => {
-    const allSlicks = document.querySelectorAll(
-      `${styles.carouselContainer} .slick-slide`,
-    );
-    const filteredElements = Array.from(allSlicks).filter(
-      (element) => !element.classList.contains('slick-cloned'),
-    );
-    const activeSlicks = document.querySelectorAll(
-      `${styles.carouselContainer} .slick-active`,
-    );
-    const currentSlickIndex = document
-      .querySelectorAll(`.${styles.carouselContainer} .slick-current`)?.[0]
-      .getAttribute('data-index');
+    if (containerRef.current) {
+      const allSlicks = containerRef.current.querySelectorAll('.slick-slide');
+      const filteredElements = Array.from(allSlicks).filter(
+        (element) => !element.classList.contains('slick-cloned'),
+      );
 
-    const currentSlickIndex2 =
-      activeSlicks[activeSlicks?.length - 1]?.getAttribute('data-index');
+      const activeSlicks =
+        containerRef.current.querySelectorAll('.slick-active');
+      const currentSlickElement =
+        containerRef.current.querySelector('.slick-current');
+      const currentSlickIndex = currentSlickElement?.getAttribute('data-index');
+      const currentSlickIndex2 =
+        activeSlicks[activeSlicks.length - 1]?.getAttribute('data-index');
 
-    if (
-      currentSlickIndex2 != null &&
-      +currentSlickIndex2 >= filteredElements?.length - 1
-    ) {
-      setIsLastSlick(true);
-    } else {
-      setIsLastSlick(false);
+      if (currentSlickIndex2 !== null && currentSlickIndex2 !== undefined) {
+        setIsLastSlick(+currentSlickIndex2 >= filteredElements.length - 1);
+      } else {
+        setIsLastSlick(false);
+      }
+      if (
+        currentSlickIndex !== null &&
+        currentSlickIndex !== undefined &&
+        +currentSlickIndex === 0
+      ) {
+        setIsFirstSlick(true);
+      } else {
+        setIsFirstSlick(false);
+      }
     }
-    if (currentSlickIndex != null && +currentSlickIndex === 0) {
-      setIsFirstSlick(true);
-    } else {
-      setIsFirstSlick(false);
-    }
-  }, [prevClick, nextClick, currentSlickIndex]);
+  }, [prevClick, nextClick]);
 
   return (
     <div
-      className={`${styles.carouselContainer} ${className ? styles[className] : ''}`}
+      className={`${style.carouselContainer} ${classname}`}
+      style={
+        classname === 'photos-carousel'
+          ? { backgroundColor: 'transparent' }
+          : {}
+      }
+      ref={containerRef}
     >
-      <AntCarousel
+      <Carousel
+        className={sliderClassName}
         ref={ref}
-        slidesToShow={5}
+        slidesToShow={countSlideToShow}
         slidesToScroll={1}
         autoplay={false}
         dots={false}
-        beforeChange={(next) => setCurrentSlickIndex(next)}
         initialSlide={0}
-        className={styles.slickTrack}
         arrows={false}
         responsive={
           responsive || [
@@ -105,10 +123,8 @@ const Carousels = ({ children, className, responsive }: ChildCard) => {
           ]
         }
       >
-        {Array.from(Array(8), (_, i) => (
-          <div key={i}>{children}</div>
-        ))}
-      </AntCarousel>
+        {children}
+      </Carousel>
       <SliderButtons
         handleNextClick={handleNextClick}
         handlePrevClick={handlePrevClick}

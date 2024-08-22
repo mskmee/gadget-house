@@ -27,3 +27,20 @@ export interface StatusButtonProps {
   color: string;
   style?: React.CSSProperties;
 }
+
+export interface ICard {
+  id: number;
+  title: string;
+  img: string;
+  likeIcon: string;
+  likeIconClick: string;
+  colorPalette?: string;
+  rate: number;
+  price: string;
+  code: string;
+}
+
+export interface IAccessory extends ICard {
+  hasAnotherColor?: boolean | string[];
+  isLiked?: boolean;
+}

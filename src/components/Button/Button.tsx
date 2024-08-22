@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './button.module.scss';
-import { ButtonProps } from '../../interfaces/interfaces';
+import { ButtonProps } from '@/interfaces/interfaces';
 
 export default function ButtonNav({ icon, clickImg, hoverImg }: ButtonProps) {
   const [isHovered, setIsHovered] = useState(false);
