@@ -16,13 +16,13 @@ export const useSessionStorage = <T>(keyName: string, defaultValue: T) => {
     }
   });
 
-  const setValue = (newValue: T) => {
+  const setValue = (value: T) => {
     try {
-      sessionStorage.setItem(keyName, JSON.stringify(newValue));
+      sessionStorage.setItem(keyName, JSON.stringify(value));
     } catch (err) {
       return;
     }
-    setStorageValue(newValue);
+    setStorageValue(value);
   };
   console.log(storageValue);
 

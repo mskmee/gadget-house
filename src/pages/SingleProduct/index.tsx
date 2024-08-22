@@ -1,57 +1,195 @@
 import style from '@/components/SingleProduct/SingleProduct.module.scss';
 import { currentProduct } from '@/constants/singleProduct';
 import { useSessionStorage } from '@/hooks/useSessionStorage';
-import { createContext } from 'react';
+import {
+  ChangeEventHandler,
+  FormEvent,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { TReview } from '@/types/Review.type';
 import { CustomBreadcrumbs } from '@/components/SingleProduct/CustomBreadcrumbs';
 import { MenuItems } from '@/components/SingleProduct/MenuItems';
 import { Product } from '@/components/SingleProduct/Product';
 import { ProductCharacteristics } from '@/components/SingleProduct/ProductCharacteristics';
-import { ProductReviews } from '@/components/SingleProduct/ProductReviews';
 import { ProductPhotos } from '@/components/SingleProduct/ProductPhotos';
 import { ProductAccessories } from '@/components/SingleProduct/ProductAccessories';
 import Benefits from '@/components/benefitsList/benefits';
 import { useDocumentTitle } from '@/hooks/useDocumentTitle';
-
-export interface IProductContext {
-  storageValue: TReview[];
-  allProductReviews: TReview[];
-  setValue: (newValue: TReview[]) => void;
-}
-
-export const ProductContext = createContext<IProductContext>({
-  storageValue: [],
-  allProductReviews: [],
-  setValue: () => {},
-});
+import { Bounce, toast } from 'react-toastify';
+import debounce from 'lodash.debounce';
+import { Rate } from 'antd';
+import { rateEmptyImg, rateImg } from '@/assets/constants';
+import { formatDate } from '@/utils/formatDate';
 
 export const SingleProductPage = () => {
+  useDocumentTitle(currentProduct?.[0]?.title);
+
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
   const [storageValue, setValue] = useSessionStorage<TReview[]>(
     'product_reviews',
     [],
   );
   const allProductReviews = currentProduct?.[0]?.reviews?.concat(storageValue);
-  useDocumentTitle(currentProduct?.[0]?.title);
+  const [review, setReview] = useState({ text: '', rateValue: 0 });
+  const [visibleReviewsCount, setVisibleReviewsCount] = useState(2);
+  const [isAllReviewsBtnVisible, setIisAllReviewsBtnVisible] = useState(
+    currentProduct?.[0]?.reviews.length > 2 ? true : false,
+  );
+
+  const debouncedCallback = useMemo(
+    () =>
+      debounce((textValue: string, rateValue: number) => {
+        setReview((prevReview) => ({
+          ...prevReview,
+          text: textValue,
+          rateValue: rateValue,
+        }));
+      }, 500),
+    [],
+  );
+  const changeReviewText: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
+    debouncedCallback(e.target.value, review?.rateValue);
+  };
+
+  const changeRateValue = (value: number) => {
+    setReview({ ...review, rateValue: value });
+  };
+
+  const changeVisibleReviewsCount = () => {
+    setVisibleReviewsCount(allProductReviews?.length);
+    setIisAllReviewsBtnVisible(false);
+  };
+
+  const saveReview = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setValue([
+      ...storageValue,
+      {
+        id: allProductReviews?.length + 1,
+        author: 'Your name',
+        rate: review?.rateValue,
+        created_date: new Date().getTime(),
+        review_text: review?.text,
+      },
+    ]);
+    if (textareaRef.current) {
+      textareaRef.current.value = '';
+    }
+    setReview({ text: '', rateValue: 0 });
+
+    !isAllReviewsBtnVisible &&
+      setVisibleReviewsCount(allProductReviews?.length + 1);
+
+    toast.success('Review succesfully added!', {
+      position: 'top-center',
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+      transition: Bounce,
+    });
+  };
+
+  const isBtnDisabled = !review?.text && !review?.rateValue;
 
   return (
-    <ProductContext.Provider
-      value={{ storageValue, allProductReviews, setValue }}
-    >
-      <div className={style['single-product']}>
-        <div className={style['single-product__wrap']}>
-          <CustomBreadcrumbs />
-        </div>
-        <MenuItems />
-        <div className={style['single-product__wrap']}>
-          <Product reviewsLength={allProductReviews?.length} />
-          <ProductCharacteristics />
-          <ProductReviews />
-          <ProductPhotos />
-        </div>
-        <ProductAccessories />
-        <Benefits />
+    <div className={style['single-product']}>
+      <div className={style['single-product__wrap']}>
+        <CustomBreadcrumbs />
       </div>
-    </ProductContext.Provider>
+      <MenuItems />
+      <div className={style['single-product__wrap']}>
+        <Product reviewsLength={allProductReviews?.length} />
+        <ProductCharacteristics />
+
+        <section className={style['reviews']} id="product-reviews">
+          <div className={style['reviews_wrap']}>
+            <h2>Reviews</h2>
+            <h3>
+              Customer reviews about <span>{currentProduct?.[0]?.title}</span>
+            </h3>
+            <div className={style['reviews_rate']}>
+              <span>Rate:</span>
+              <Rate
+                className="reviews_rate-stars"
+                onChange={changeRateValue}
+                character={({ index = 0 }) => {
+                  return (
+                    <img
+                      src={index < review?.rateValue ? rateImg : rateEmptyImg}
+                      alt="product rate star"
+                      width={24}
+                      height={24}
+                    />
+                  );
+                }}
+              />
+            </div>
+            <form
+              className={style['review_leave-review']}
+              onSubmit={saveReview}
+            >
+              <textarea
+                placeholder="Your review"
+                onChange={changeReviewText}
+                ref={textareaRef}
+                name="user_review"
+              />
+              <button type="submit" disabled={isBtnDisabled}>
+                Leave a review
+              </button>
+            </form>
+            <div className={style['review_users-review']} id="users-review">
+              {currentProduct?.[0]?.reviews?.length ? (
+                <ul>
+                  {allProductReviews
+                    ?.slice(0, visibleReviewsCount)
+                    ?.map((review) => (
+                      <li key={review?.id}>
+                        <div>
+                          <h3>{review?.author}</h3>
+                          <span>{formatDate(review?.created_date)}</span>
+                        </div>
+                        <Rate
+                          className="product_rate-stars"
+                          defaultValue={review?.rate}
+                          character={({ index = 0 }) => {
+                            return (
+                              <img
+                                src={
+                                  index < review?.rate ? rateImg : rateEmptyImg
+                                }
+                                alt="product rate star"
+                              />
+                            );
+                          }}
+                        />
+                        <p>{review?.review_text}</p>
+                      </li>
+                    ))}
+                </ul>
+              ) : (
+                <span>There are no reviews yet!</span>
+              )}
+
+              {isAllReviewsBtnVisible && (
+                <button onClick={changeVisibleReviewsCount}>All reviews</button>
+              )}
+            </div>
+          </div>
+        </section>
+
+        <ProductPhotos />
+      </div>
+      <ProductAccessories />
+      <Benefits />
+    </div>
   );
 };
 

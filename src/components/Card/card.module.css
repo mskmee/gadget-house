@@ -76,6 +76,7 @@
 .accessories-colors {
   display: flex;
   flex-direction: column;
+  gap: 8px;
 
   > div {
     width: 24px;
@@ -86,7 +87,7 @@
 }
 
 .accessories-colors > div:hover {
-  box-shadow: -1px 1px 21px -5px color(display-p3 113 67 206 / 80%);
+  box-shadow: -1px 1px 21px -5px color(display-p3 0.23 0.26 0.84 / 80%);
 }
 
 .cardContainerBottom {
