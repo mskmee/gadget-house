@@ -1,3 +1,8 @@
+.searchIcon {
+  @media (width <= 470px) {
+    background-color: #00820d;
+  }
+}
 .headerBottomSearch {
   &Input {
     width: 600px;
@@ -25,6 +30,7 @@
 
     @media (width <= 470px) {
       width: auto;
+      height: 48px;
       margin-right: 9px;
       margin-left: 9px;
     }
