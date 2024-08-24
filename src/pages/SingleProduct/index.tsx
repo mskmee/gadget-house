@@ -22,6 +22,7 @@ import debounce from 'lodash.debounce';
 import { Rate } from 'antd';
 import { rateEmptyImg, rateImg } from '@/assets/constants';
 import { formatDate } from '@/utils/formatDate';
+import DOMPurify from 'dompurify';
 
 export const SingleProductPage = () => {
   useDocumentTitle(currentProduct?.[0]?.title);
@@ -38,6 +39,8 @@ export const SingleProductPage = () => {
   const [isAllReviewsBtnVisible, setIisAllReviewsBtnVisible] = useState(
     currentProduct?.[0]?.reviews.length > 2 ? true : false,
   );
+  const maxLength = 300;
+  const leftCharactersCount = maxLength - review?.text?.length;
 
   const debouncedCallback = useMemo(
     () =>
@@ -72,7 +75,7 @@ export const SingleProductPage = () => {
         author: 'Your name',
         rate: review?.rateValue,
         created_date: new Date().getTime(),
-        review_text: review?.text,
+        review_text: DOMPurify.sanitize(review?.text),
       },
     ]);
     if (textareaRef.current) {
@@ -97,6 +100,7 @@ export const SingleProductPage = () => {
   };
 
   const isBtnDisabled = !review?.text && !review?.rateValue;
+  console.log(maxLength);
 
   return (
     <div className={style['single-product']}>
@@ -139,8 +143,18 @@ export const SingleProductPage = () => {
                 placeholder="Your review"
                 onChange={changeReviewText}
                 ref={textareaRef}
+                maxLength={maxLength}
                 name="user_review"
               />
+              {leftCharactersCount > 0 ? (
+                <div className={style['review_character-counter']}>
+                  {leftCharactersCount} characters left
+                </div>
+              ) : (
+                <span className={style['review_error-text']}>
+                  The length of the review text should not exceed 300 letters.
+                </span>
+              )}
               <button type="submit" disabled={isBtnDisabled}>
                 Leave a review
               </button>

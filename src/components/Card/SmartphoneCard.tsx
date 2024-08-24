@@ -16,13 +16,14 @@ export const SmartphoneCard: FC<ISmartphoneCard> = ({ product, classname }) => {
   const { isLiked, handleClickBuy, handleClickLike } = useProductCardHandlers();
 
   const productRating = product.rate ?? 0;
+  const encodedTitle = encodeURIComponent(product?.title || '');
 
   return (
     <>
       <Link
         className={`${styles.cardConatiner} ${classname} `}
         key={product?.id}
-        to="/smartphone/apple iPhone 15 Pro 256Gb Blue Titanium"
+        to={`/smartphone/${encodedTitle}`}
       >
         <div
           className={`${styles.cardContainerTop} ${
