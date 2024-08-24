@@ -3,6 +3,7 @@ import { currentProduct } from '@/constants/singleProduct';
 import { useSessionStorage } from '@/hooks/useSessionStorage';
 import {
   ChangeEventHandler,
+  FC,
   FormEvent,
   useMemo,
   useRef,
@@ -24,7 +25,7 @@ import { rateEmptyImg, rateImg } from '@/assets/constants';
 import { formatDate } from '@/utils/formatDate';
 import DOMPurify from 'dompurify';
 
-export const SingleProductPage = () => {
+export const SingleProductPage: FC = () => {
   useDocumentTitle(currentProduct?.[0]?.title);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -100,7 +101,6 @@ export const SingleProductPage = () => {
   };
 
   const isBtnDisabled = !review?.text && !review?.rateValue;
-  console.log(maxLength);
 
   return (
     <div className={style['single-product']}>
@@ -206,5 +206,3 @@ export const SingleProductPage = () => {
     </div>
   );
 };
-
-export default SingleProductPage;

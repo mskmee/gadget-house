@@ -5,11 +5,9 @@ import Main from './pages/Main/Main';
 import Smartphones from './pages/Smartphones/Smartphones';
 import Laptops from './pages/Laptops/Laptops';
 import Viewed from './pages/Viewed/Viewed';
-import { Suspense, lazy } from 'react';
-import LoadingSpinner from './components/LoadingSpinner';
-const SingleProductLazy = lazy(() => import('./pages/SingleProduct/index'));
+import { SingleProductPage } from './pages/SingleProduct';
 
-export const route = createBrowserRouter([
+export const routes = createBrowserRouter([
   {
     path: AppRoute?.ROOT,
     element: <Layout />,
@@ -20,11 +18,7 @@ export const route = createBrowserRouter([
       { path: AppRoute?.VIEWED, element: <Viewed /> },
       {
         path: AppRoute?.SINGLE_PRODUCT,
-        element: (
-          <Suspense fallback={<LoadingSpinner />}>
-            <SingleProductLazy />
-          </Suspense>
-        ),
+        element: <SingleProductPage />,
       },
     ],
   },

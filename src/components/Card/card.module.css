@@ -109,9 +109,10 @@
   font-size: 24px;
   line-height: 150%;
 }
+
 .cardContainer:focus-visible {
-  outline: 2px solid #007bff; /* Customize the focus outline */
-  outline-offset: 4px; /* Adjust to your liking */
+  outline: 2px solid #007bff;
+  outline-offset: 4px;
 }
 
 .cardRate {
