@@ -95,7 +95,7 @@ export const productAccessories = [
     likeIcon: LikeIcon,
     likeIconClick: LikeIconClick,
     basketIcon: BasketIcon,
-    hasAnotherColor: ['#fff', '#00BFFF', '#3EB489', '#FFCBDB', '#C8A2C8'],
+    hasAnotherColor: ['#ffffff', '#00BFFF', '#3EB489', '#FFCBDB', '#C8A2C8'],
     isLiked: false,
     rate: 5,
     price: '2 799 ₴',

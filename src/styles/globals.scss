@@ -156,3 +156,28 @@ body {
 .slick-slide-active .product-photo {
   cursor: pointer;
 }
+
+.review_users-review-pagination {
+  justify-content: center;
+  margin-top: 20px;
+
+  .ant-pagination-item-active {
+    position: relative;
+    border: none !important;
+
+    > a {
+      color: #808080 !important;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 7px;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 1.5px;
+      width: 12px;
+      background-color: #808080;
+    }
+  }
+}

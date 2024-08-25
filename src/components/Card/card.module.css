@@ -8,7 +8,6 @@
   padding: 0 16px 16px;
   font-family: Inter, sans-serif;
   background-color: #ffffff;
-  border: 2px solid #5a3e7d07;
   border-radius: 20px;
   box-shadow: 0 0 8px 0 hsla(0deg 0% 0% / 10%);
   transition: all 0.2s;
@@ -81,8 +80,11 @@
   > div {
     width: 24px;
     height: 24px;
-    border: 0.5px solid #ed7b23;
     border-radius: 50%;
+  }
+
+  > div.hasBorder {
+    border: 0.5px solid #808080;
   }
 }
 
@@ -135,7 +137,11 @@
   margin-top: 35px;
 
   & > svg:hover rect {
-    fill: #00670b;
+    fill: #4da856;
+  }
+
+  & > svg:active rect {
+    fill: #00680a;
   }
 }
 

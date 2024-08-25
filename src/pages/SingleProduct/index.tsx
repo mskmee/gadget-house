@@ -20,10 +20,11 @@ import Benefits from '@/components/benefitsList/benefits';
 import { useDocumentTitle } from '@/hooks/useDocumentTitle';
 import { Bounce, toast } from 'react-toastify';
 import debounce from 'lodash.debounce';
-import { Rate } from 'antd';
+import { Pagination, Rate } from 'antd';
 import { rateEmptyImg, rateImg } from '@/assets/constants';
 import { formatDate } from '@/utils/formatDate';
 import DOMPurify from 'dompurify';
+import classNames from 'classnames';
 
 export const SingleProductPage: FC = () => {
   useDocumentTitle(currentProduct?.[0]?.title);
@@ -40,8 +41,18 @@ export const SingleProductPage: FC = () => {
   const [isAllReviewsBtnVisible, setIisAllReviewsBtnVisible] = useState(
     currentProduct?.[0]?.reviews.length > 2 ? true : false,
   );
-  const maxLength = 300;
+  const maxLength = 500;
   const leftCharactersCount = maxLength - review?.text?.length;
+
+  const isBtnDisabled = !review?.text && !review?.rateValue;
+
+  const [itemOffset, setItemOffset] = useState(0);
+  const [itemsPerPage, setItemsPerPage] = useState(
+    isAllReviewsBtnVisible ? 2 : 8,
+  );
+
+  const endOffset = itemOffset + itemsPerPage;
+  const currentItems = allProductReviews?.slice(itemOffset, endOffset);
 
   const debouncedCallback = useMemo(
     () =>
@@ -65,6 +76,7 @@ export const SingleProductPage: FC = () => {
   const changeVisibleReviewsCount = () => {
     setVisibleReviewsCount(allProductReviews?.length);
     setIisAllReviewsBtnVisible(false);
+    setItemsPerPage(8);
   };
 
   const saveReview = (e: FormEvent<HTMLFormElement>) => {
@@ -100,7 +112,19 @@ export const SingleProductPage: FC = () => {
     });
   };
 
-  const isBtnDisabled = !review?.text && !review?.rateValue;
+  const handlePageChange = (page: number) => {
+    const newOffset = ((page - 1) * itemsPerPage) % allProductReviews?.length;
+    setItemOffset(newOffset);
+    setTimeout(() => {
+      const element = document.getElementById('users-review');
+      if (element) {
+        window.scrollTo({
+          top: element.offsetTop - 20, // Adjust this value as needed
+          behavior: 'smooth', // Smooth scroll
+        });
+      }
+    }, 0);
+  };
 
   return (
     <div className={style['single-product']}>
@@ -139,30 +163,31 @@ export const SingleProductPage: FC = () => {
               className={style['review_leave-review']}
               onSubmit={saveReview}
             >
-              <textarea
-                placeholder="Your review"
-                onChange={changeReviewText}
-                ref={textareaRef}
-                maxLength={maxLength}
-                name="user_review"
-              />
-              {leftCharactersCount > 0 ? (
-                <div className={style['review_character-counter']}>
-                  {leftCharactersCount} characters left
-                </div>
-              ) : (
-                <span className={style['review_error-text']}>
-                  The length of the review text should not exceed 300 letters.
+              <div className={style['review_text-area-box']}>
+                <textarea
+                  placeholder="Your review"
+                  onChange={changeReviewText}
+                  ref={textareaRef}
+                  maxLength={maxLength}
+                  name="user_review"
+                />
+                <span
+                  className={classNames(style['review_character-counter'], {
+                    [style['notice']]: leftCharactersCount <= 10,
+                  })}
+                >
+                  {leftCharactersCount}
                 </span>
-              )}
+              </div>
+
               <button type="submit" disabled={isBtnDisabled}>
                 Leave a review
               </button>
             </form>
             <div className={style['review_users-review']} id="users-review">
               {currentProduct?.[0]?.reviews?.length ? (
-                <ul>
-                  {allProductReviews
+                <ul className={style['review_users-review-list']}>
+                  {currentItems
                     ?.slice(0, visibleReviewsCount)
                     ?.map((review) => (
                       <li key={review?.id}>
@@ -192,8 +217,15 @@ export const SingleProductPage: FC = () => {
                 <span>There are no reviews yet!</span>
               )}
 
-              {isAllReviewsBtnVisible && (
+              {isAllReviewsBtnVisible ? (
                 <button onClick={changeVisibleReviewsCount}>All reviews</button>
+              ) : (
+                <Pagination
+                  total={allProductReviews?.length}
+                  pageSize={itemsPerPage}
+                  onChange={handlePageChange}
+                  className="review_users-review-pagination"
+                />
               )}
             </div>
           </div>
