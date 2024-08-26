@@ -9,15 +9,15 @@ import { SingleProductPage } from './pages/SingleProduct';
 
 export const routes = createBrowserRouter([
   {
-    path: AppRoute?.ROOT,
+    path: AppRoute.ROOT,
     element: <Layout />,
     children: [
-      { path: AppRoute?.ROOT, element: <Main /> },
-      { path: AppRoute?.SMARTPHONES, element: <Smartphones /> },
-      { path: AppRoute?.LAPTOPS, element: <Laptops /> },
-      { path: AppRoute?.VIEWED, element: <Viewed /> },
+      { path: AppRoute.ROOT, element: <Main /> },
+      { path: AppRoute.SMARTPHONES, element: <Smartphones /> },
+      { path: AppRoute.LAPTOPS, element: <Laptops /> },
+      { path: AppRoute.VIEWED, element: <Viewed /> },
       {
-        path: AppRoute?.SINGLE_PRODUCT,
+        path: AppRoute.SINGLE_PRODUCT,
         element: <SingleProductPage />,
       },
     ],

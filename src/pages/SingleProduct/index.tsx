@@ -5,6 +5,7 @@ import {
   ChangeEventHandler,
   FC,
   FormEvent,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -26,6 +27,8 @@ import { formatDate } from '@/utils/formatDate';
 import DOMPurify from 'dompurify';
 import classNames from 'classnames';
 
+const maxLength = 500;
+
 export const SingleProductPage: FC = () => {
   useDocumentTitle(currentProduct?.[0]?.title);
 
@@ -41,7 +44,6 @@ export const SingleProductPage: FC = () => {
   const [isAllReviewsBtnVisible, setIisAllReviewsBtnVisible] = useState(
     currentProduct?.[0]?.reviews.length > 2 ? true : false,
   );
-  const maxLength = 500;
   const leftCharactersCount = maxLength - review?.text?.length;
 
   const isBtnDisabled = !review?.text && !review?.rateValue;
@@ -54,6 +56,8 @@ export const SingleProductPage: FC = () => {
   const endOffset = itemOffset + itemsPerPage;
   const currentItems = allProductReviews?.slice(itemOffset, endOffset);
 
+  const reviewsRate = useRef<HTMLLIElement>(null);
+
   const debouncedCallback = useMemo(
     () =>
       debounce((textValue: string, rateValue: number) => {
@@ -65,6 +69,14 @@ export const SingleProductPage: FC = () => {
       }, 500),
     [],
   );
+
+  useEffect(() => {
+    if (reviewsRate.current) {
+      const listItems = reviewsRate.current?.querySelector('li');
+      console.log(listItems);
+    }
+  }, []);
+
   const changeReviewText: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
     debouncedCallback(e.target.value, review?.rateValue);
   };
@@ -190,12 +202,13 @@ export const SingleProductPage: FC = () => {
                   {currentItems
                     ?.slice(0, visibleReviewsCount)
                     ?.map((review) => (
-                      <li key={review?.id}>
+                      <li key={review?.id} ref={reviewsRate}>
                         <div>
                           <h3>{review?.author}</h3>
                           <span>{formatDate(review?.created_date)}</span>
                         </div>
                         <Rate
+                          ref={reviewsRate}
                           className="product_rate-stars"
                           defaultValue={review?.rate}
                           character={({ index = 0 }) => {
