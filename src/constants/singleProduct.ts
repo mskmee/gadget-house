@@ -36,7 +36,7 @@ export const currentProduct = [
     ],
     characteristics: {
       screen: [
-        { id: 1, name: 'Display diagonal', value: '6,1' },
+        { id: 1, name: 'Display diagonal', value: `6,1"` },
         { id: 2, name: 'Screen resolution', value: '2556x1179' },
         { id: 3, name: 'Screen type', value: 'Super Retina XDR' },
         { id: 4, name: 'Screen refresh rate', value: '120 Hz' },

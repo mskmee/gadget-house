@@ -24,7 +24,6 @@ export const useSessionStorage = <T>(keyName: string, defaultValue: T) => {
     }
     setStorageValue(value);
   };
-  console.log(storageValue);
 
   return [storageValue, setValue] as const;
 };
