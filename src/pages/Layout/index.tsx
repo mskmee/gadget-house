@@ -3,7 +3,7 @@ import Header from '@/components/Header/Header';
 import Footer from '@/components/footer/footer';
 import style from './Layout.module.scss';
 
-export const Layout = () => {
+const Layout = () => {
   return (
     <>
       <Header />
@@ -14,3 +14,5 @@ export const Layout = () => {
     </>
   );
 };
+
+export default Layout;

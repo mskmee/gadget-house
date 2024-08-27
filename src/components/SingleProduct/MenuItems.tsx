@@ -1,5 +1,6 @@
 import { FC, useRef, useState } from 'react';
 import style from './SingleProduct.module.scss';
+import classNames from 'classnames';
 
 const menuItems = [
   { id: 1, title: 'About the product', href: '#product' },
@@ -36,11 +37,9 @@ export const MenuItems: FC = () => {
           >
             <a
               href={item?.href}
-              style={
-                item?.title === selectedMenu
-                  ? { color: '#00820D', transform: 'none' }
-                  : {}
-              }
+              className={classNames({
+                [style['selected-menu']]: item?.title === selectedMenu,
+              })}
             >
               {item?.title}
             </a>

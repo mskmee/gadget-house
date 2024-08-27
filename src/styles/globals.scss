@@ -1,7 +1,7 @@
-@import url("./variables.css");
-@import url("./normalise.css");
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import url('./variables.css');
+@import url('./normalise.css');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 html,
 body {
@@ -155,4 +155,29 @@ body {
 
 .slick-slide-active .product-photo {
   cursor: pointer;
+}
+
+.review_users-review-pagination {
+  justify-content: center;
+  margin-top: 20px;
+
+  .ant-pagination-item-active {
+    position: relative;
+    border: none !important;
+
+    > a {
+      color: #808080 !important;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 7px;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 1.5px;
+      width: 12px;
+      background-color: #808080;
+    }
+  }
 }
