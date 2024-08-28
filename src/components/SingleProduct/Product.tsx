@@ -12,6 +12,7 @@ import {
   returnImg,
   reviewImg,
 } from '@/assets/constants';
+import classNames from 'classnames';
 
 interface IProductProps {
   reviewsLength: number;
@@ -51,11 +52,10 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
 
   useEffect(() => {
     if (currentSlide?.id === 1 && prevArrowRef.current) {
-      prevArrowRef.current.style.cursor = 'not-allowed';
-      prevArrowRef.current.style.filter =
-        'invert(34%) sepia(96%) saturate(1949%) hue-rotate(345deg) brightness(99%) contrast(103%)';
+      prevArrowRef.current.style.visibility = 'hidden';
     } else {
       if (prevArrowRef.current) {
+        prevArrowRef.current.style.visibility = 'visible';
         prevArrowRef.current.style.cursor = 'pointer';
         prevArrowRef.current.style.filter = 'none';
       }
@@ -64,11 +64,10 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
       currentSlide?.id === currentProductImages?.length &&
       nextArrowRef.current
     ) {
-      nextArrowRef.current.style.cursor = 'not-allowed';
-      nextArrowRef.current.style.filter =
-        'invert(34%) sepia(96%) saturate(1949%) hue-rotate(345deg) brightness(99%) contrast(103%)';
+      nextArrowRef.current.style.visibility = 'hidden';
     } else {
       if (nextArrowRef.current) {
+        nextArrowRef.current.style.visibility = 'visible';
         nextArrowRef.current.style.cursor = 'pointer';
         nextArrowRef.current.style.filter = 'none';
       }
@@ -134,17 +133,10 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
             {currentProductImages?.map((item) => (
               <li
                 key={item?.id}
+                className={classNames({
+                  [style['selected-photo']]: currentSlide?.id === item?.id,
+                })}
                 onClick={selectCurrentSlideByClick(item?.id)}
-                style={
-                  currentSlide?.id === item?.id
-                    ? {
-                        maxHeight: '130px',
-                        padding: '5px 0',
-                        border: '1px solid #00820D',
-                        borderRadius: '12px',
-                      }
-                    : { border: 'none' }
-                }
               >
                 <img src={item?.img} alt="product slick picture" />
               </li>
@@ -180,23 +172,13 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
               {currentProduct?.[0]?.productColors?.map(({ color, inStock }) => (
                 <li
                   key={color}
-                  style={
-                    productCharacteristics?.selectedColor === color && inStock
-                      ? {
-                          backgroundColor: color,
-                          transform: 'scale(1.2)',
-                          border: '3px solid #808080',
-                        }
-                      : !inStock
-                        ? {
-                            border: '1px solid #808080',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            cursor: 'not-allowed',
-                          }
-                        : { backgroundColor: color }
-                  }
+                  className={classNames({
+                    [style['selected-color']]:
+                      productCharacteristics?.selectedColor === color &&
+                      inStock,
+                    [style['not-available']]: !inStock,
+                  })}
+                  style={{ backgroundColor: color }}
                   onClick={changeProductCharacteristics(
                     color,
                     inStock,
@@ -222,14 +204,10 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
               {currentProduct?.[0]?.otherModels?.map(({ model }) => (
                 <li
                   key={model}
-                  style={
-                    productCharacteristics?.selectedModel === model
-                      ? {
-                          color: '#00680A',
-                          borderColor: '#00680A',
-                        }
-                      : { color: '#1C1817', borderColor: '#808080' }
-                  }
+                  className={classNames({
+                    [style['selected-model']]:
+                      productCharacteristics?.selectedModel === model,
+                  })}
                   onClick={changeProductCharacteristics(model, true, 'model')}
                 >
                   {model}
@@ -243,11 +221,10 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
               {currentProduct?.[0]?.memoryCards?.map(({ memory }) => (
                 <li
                   key={memory}
-                  style={
-                    productCharacteristics?.selectedMemory === memory
-                      ? { color: '#00680A', borderColor: '#00680A' }
-                      : { color: '#1C1817', borderColor: '#808080' }
-                  }
+                  className={classNames({
+                    [style['selected-memory']]:
+                      productCharacteristics?.selectedMemory === memory,
+                  })}
                   onClick={changeProductCharacteristics(memory, true, 'memory')}
                 >
                   {memory}

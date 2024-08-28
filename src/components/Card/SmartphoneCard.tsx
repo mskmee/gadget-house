@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import useProductCardHandlers from '@/hooks/useProductCardHandlers';
 import { IAccessory } from '@/interfaces/interfaces';
 import { BasketIcon } from '@/assets/icons/BasketIcon';
+import classNames from 'classnames';
 
 interface ISmartphoneCard {
   product: IAccessory;
@@ -16,13 +17,14 @@ export const SmartphoneCard: FC<ISmartphoneCard> = ({ product, classname }) => {
   const { isLiked, handleClickBuy, handleClickLike } = useProductCardHandlers();
 
   const productRating = product.rate ?? 0;
+  const encodedTitle = encodeURIComponent(product?.title || '');
 
   return (
     <>
       <Link
         className={`${styles.cardConatiner} ${classname} `}
         key={product?.id}
-        to="/smartphone/apple iPhone 15 Pro 256Gb Blue Titanium"
+        to={`/smartphone/${encodedTitle}`}
       >
         <div
           className={`${styles.cardContainerTop} ${
@@ -57,7 +59,13 @@ export const SmartphoneCard: FC<ISmartphoneCard> = ({ product, classname }) => {
               product?.hasAnotherColor.length > 0 && (
                 <div className={styles['accessories-colors']}>
                   {product?.hasAnotherColor.map((color: string) => (
-                    <div key={color} style={{ backgroundColor: color }}></div>
+                    <div
+                      key={color}
+                      style={{ backgroundColor: color }}
+                      className={classNames({
+                        [styles['hasBorder']]: color === '#ffffff',
+                      })}
+                    ></div>
                   ))}
                 </div>
               )
