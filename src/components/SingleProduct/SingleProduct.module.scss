@@ -314,6 +314,11 @@
       display: flex;
       justify-content: center;
       align-items: center;
+
+      &:focus-visible {
+        margin: 5px;
+        outline: 1px solid #000;
+      }
     }
 
     button > div {
@@ -464,8 +469,10 @@
           &::placeholder {
             color: #808080;
           }
+          &:focus-visible,
           &:active {
-            border: inherit;
+            border: 1px solid #d8d8d8;
+            outline: none;
           }
         }
         .review_character-counter {
