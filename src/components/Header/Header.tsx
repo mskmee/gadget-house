@@ -1,17 +1,34 @@
-import styles from './header.module.scss';
-import { CatalogIcon } from '@/assets/constants';
-import Search from './Search/Search';
-import ButtonNav from '../Button/Button';
-import buttonData from '@/constants/ButtonConstants';
+// hooks
+import { useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
-import BurgerMenu from '../BurgerMenu/BurgerMenu';
+// components
+import Search from '@/components/Header/Search/Search';
+import ButtonNav from '@/components/Button/Button';
+import BurgerMenu from '@/components/BurgerMenu/BurgerMenu';
+import CardTooltip from '@/components/CardTooltip/CardTooltip';
 import { Link } from 'react-router-dom';
+// constants
 import { AppRoute } from '@/enums/Route';
+import buttonData from '@/constants/ButtonConstants';
+// assets
+import { CatalogIcon } from '@/assets/constants';
+import { BasketIconBlack, BasketIconWhite } from '@/assets/constants';
+// styles
+import styles from './header.module.scss';
+
+const iconsWithoutCard = buttonData.slice(0, -1);
 
 export default function Header() {
   const isMaxWidth1070 = useMediaQuery({
     query: '(max-width: 1070px)',
   });
+
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouse = (isEnter: boolean) => {
+    setIsHovered(isEnter);
+  };
+
   return (
     <>
       <div className={styles.headerTop}>
@@ -31,17 +48,8 @@ export default function Header() {
 
         <div className={styles.headerBottomButtons}>
           {isMaxWidth1070
-            ? buttonData.slice(3, 4).map((item) => {
-                return (
-                  <ButtonNav
-                    key={item.id}
-                    icon={item.img}
-                    hoverImg={item.hoverImg}
-                    clickImg={item.clickImg}
-                  />
-                );
-              })
-            : buttonData.map((item) => {
+            ? null
+            : iconsWithoutCard.map((item) => {
                 return (
                   <ButtonNav
                     key={item.id}
@@ -51,6 +59,20 @@ export default function Header() {
                   />
                 );
               })}
+          <ButtonNav
+            icon={BasketIconBlack}
+            hoverImg={BasketIconWhite}
+            clickImg={BasketIconWhite}
+            onMouseEnter={() => handleMouse(true)}
+          />
+          {isHovered && (
+            <div
+              className={styles.tooltip}
+              onMouseLeave={() => handleMouse(false)}
+            >
+              <CardTooltip />
+            </div>
+          )}
         </div>
       </div>
     </>

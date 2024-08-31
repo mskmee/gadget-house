@@ -1,0 +1,105 @@
+.container {
+  width: 704px;
+  height: 657px;
+  border-radius: 20px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  background: rgba(234, 228, 238, 0.8);
+
+  .cardsWrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+    padding: 32px;
+    height: 544px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+
+    .card {
+      width: 638px;
+      height: 160px;
+      border-radius: 12px;
+      background-color: var(--white-color);
+      display: flex;
+      padding: 24px;
+
+      .name {
+        color: rgb(28, 24, 23);
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 150%;
+        margin-bottom: 8px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .priceWrapper {
+        display: flex;
+        justify-content: space-between;
+        width: 476px;
+
+        .details {
+          color: rgb(128, 128, 128);
+          font-size: 16px;
+          line-height: 150%;
+        }
+      }
+    }
+  }
+
+  .price {
+    color: rgb(28, 24, 23);
+    font-size: 24px;
+    line-height: 150%;
+  }
+
+  .total {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: 32px;
+    -moz-column-gap: 32px;
+    column-gap: 32px;
+  }
+
+  button {
+    padding: 16px 24px;
+    background-color: var(--green-color);
+    border-radius: 12px;
+    color: var(--white-color);
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--green-active-color);
+    }
+  }
+}
+
+.nameWrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 14px;
+  max-width: 476px;
+}
+
+.cardsWrapper::-webkit-scrollbar {
+  width: 6px;
+}
+
+.cardsWrapper::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.cardsWrapper::-webkit-scrollbar-thumb {
+  background-color: #d1d1d1;
+  border-radius: 10px;
+}
+
+.cardsWrapper::-webkit-scrollbar-thumb:hover {
+  background-color: #a8a8a8;
+  cursor: grab;
+}

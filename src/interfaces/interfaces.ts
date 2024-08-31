@@ -1,5 +1,6 @@
-import React from 'react';
-import { StatusSearch } from '../types/StatusSearch';
+// types
+import type { StatusSearch } from '@/types/StatusSearch';
+import type { ButtonHTMLAttributes } from 'react';
 
 export interface SliderButtonProps {
   handlePrevClick: (event: React.MouseEvent) => void;
@@ -15,7 +16,7 @@ export interface SearchFieldProps {
   ) => void;
 }
 
-export interface ButtonProps {
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   icon: string;
   clickImg: string;
   hoverImg: string;

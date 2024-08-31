@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.4.0",
+    "@reduxjs/toolkit": "^2.2.7",
     "@types/lodash.debounce": "^4.0.9",
     "antd": "^5.19.4",
     "classnames": "^2.5.1",

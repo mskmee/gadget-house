@@ -66,6 +66,13 @@
     align-items: center;
     flex-direction: row;
     gap: 16px;
+
+    .tooltip {
+      top: 119px;
+      right: 46px;
+      z-index: 1;
+      position: absolute;
+    }
   }
 }
 
