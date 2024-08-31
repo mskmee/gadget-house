@@ -20,15 +20,22 @@
   .headerTop {
     background-color: var(--white-color);
     margin: 0;
-    padding-top: 17px;
-    padding-left: 16px;
-    padding-right: 16px;
-    padding-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12;
+    padding: 17px 16px 16px 16px;
 
     &Logo {
+      width: 358px;
+      height: 41px;
+      color: rgb(28, 24, 23);
+      font-family: Nunito;
+      font-size: 34px;
+      font-weight: 800;
+      line-height: 120%;
       text-align: center;
-      display: block;
-      margin: 0 auto;
     }
   }
 }
