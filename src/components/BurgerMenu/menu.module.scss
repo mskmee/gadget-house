@@ -36,3 +36,13 @@
   gap: 16px;
   margin-top: 42px;
 }
+
+@media (max-width: 1070px) {
+  .burgerButton {
+    padding: 0 15px;
+    flex-basis: 48px;
+    max-width: 18px;
+  }
+  .headerMobile {
+  }
+}
