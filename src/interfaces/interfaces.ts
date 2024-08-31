@@ -1,12 +1,12 @@
 // types
 import type { StatusSearch } from '@/types/StatusSearch';
-import type { ButtonHTMLAttributes } from 'react';
+import type { ButtonHTMLAttributes, CSSProperties, MouseEvent } from 'react';
 
 export interface SliderButtonProps {
-  handlePrevClick: (event: React.MouseEvent) => void;
-  handleNextClick: (event: React.MouseEvent) => void;
-  isFirstSlick: any;
-  isLastSlick: any;
+  handlePrevClick: (event: MouseEvent) => void;
+  handleNextClick: (event: MouseEvent) => void;
+  isFirstSlick: boolean;
+  isLastSlick: boolean;
 }
 
 export interface SearchFieldProps {
@@ -26,7 +26,7 @@ export interface StatusButtonProps {
   width: string;
   height: string;
   color: string;
-  style?: React.CSSProperties;
+  style?: CSSProperties;
 }
 
 export interface ICard {
