@@ -21,8 +21,12 @@ export default function BurgerMenu() {
 
   return (
     <>
-      <Button className={styles.burgerButton} onClick={showDrawer} type="text">
-        <img src={BurgerMenuIcon} alt="Menu Icon" />
+      <Button
+        className={styles.burgerButton}
+        onClick={open ? closeDrawer : showDrawer}
+        type="text"
+      >
+        <img src={open ? Vector : BurgerMenuIcon} alt="Menu Icon" />
       </Button>
 
       <Drawer
@@ -31,19 +35,19 @@ export default function BurgerMenu() {
         onClose={closeDrawer}
         open={open}
         placement="left"
+        bodyStyle={{ padding: '0' }}
       >
         <div className={styles.headerMobile}>
           <Header />
-          {
-            <Button
-              className={styles.burgerButton}
-              onClick={closeDrawer}
-              type="text"
-            >
-              <img src={Vector} alt="Close Icon" />
-            </Button>
-          }
+          <Button
+            className={styles.burgerButton}
+            onClick={open ? closeDrawer : showDrawer}
+            type="text"
+          >
+            <img src={open ? Vector : BurgerMenuIcon} alt="Menu Icon" />
+          </Button>
         </div>
+
         <div>
           <ul className={styles.burgerMenuTop}>
             {items.map((item) => (
