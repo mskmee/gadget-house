@@ -1,51 +1,31 @@
-import { useState } from 'react';
-import { BurgerMenuIcon, RightArrow, Vector } from '@/assets/constants';
-import { Button, Drawer } from 'antd';
+import {  RightArrow } from '@/assets/constants';
+import {  Drawer } from 'antd';
 import styles from './menu.module.scss';
 import { Link } from 'react-router-dom';
 import items from './constants';
 import ButtonNav from '../Button/Button';
 import buttonData from '@/constants/ButtonConstants';
 import { Header } from '../components';
+import { useMenuContext } from '@/context/menuContext.ts';
+
+
 
 export default function BurgerMenu() {
-  const [open, setOpen] = useState(false);
-
-  const showDrawer = () => {
-    setOpen(true);
-  };
-
-  const closeDrawer = () => {
-    setOpen(false);
-  };
+  //const [open, setOpen] = useState(false);
+  const {onMenuClose, isMenuOpen} = useMenuContext();
 
   return (
     <>
-      <Button
-        className={styles.burgerButton}
-        onClick={open ? closeDrawer : showDrawer}
-        type="text"
-      >
-        <img src={open ? Vector : BurgerMenuIcon} alt="Menu Icon" />
-      </Button>
-
       <Drawer
         closable={false}
         width={'100vh'}
-        onClose={closeDrawer}
-        open={open}
+        onClose={onMenuClose}
+        open={isMenuOpen}
         placement="left"
         bodyStyle={{ padding: '0' }}
       >
         <div className={styles.headerMobile}>
           <Header />
-          <Button
-            className={styles.burgerButton}
-            onClick={open ? closeDrawer : showDrawer}
-            type="text"
-          >
-            <img src={open ? Vector : BurgerMenuIcon} alt="Menu Icon" />
-          </Button>
         </div>
 
         <div>
