@@ -8,7 +8,6 @@ import { AppRoute } from '@/enums/Route';
 import { Button } from 'antd';
 import { useMenuContext } from '@/context/menuContext.ts';
 
-
 export default function Header() {
   const isMobile = useMediaQuery({ query: '(max-width: 1070px)' });
 
@@ -24,11 +23,20 @@ export default function Header() {
         {isMobile ? (
           <>
             <Button
+              style={{
+                paddingLeft: '0px',
+                paddingRight: '0px',
+                flexBasis: '48px',
+              }}
               className={styles.burgerButton}
               onClick={isMenuOpen ? onMenuClose : onMenuOpen}
               type="text"
             >
-              {isMenuOpen ? <img src={Vector} alt="open menu" /> : <img src={BurgerMenuIcon} alt="open menu" />}
+              {isMenuOpen ? (
+                <img src={Vector} alt="open menu" />
+              ) : (
+                <img src={BurgerMenuIcon} alt="open menu" />
+              )}
             </Button>
           </>
         ) : (
@@ -40,36 +48,24 @@ export default function Header() {
         <Search />
         <div className={styles.headerBottomButtons}>
           {isMobile
-            ? buttonData
-              .slice(3, 4)
-              .map((item) => (
-                <div style={{position: 'relative'}}>
+            ? buttonData.slice(3, 4).map((item) => (
+                <div key={item.id} style={{ position: 'relative' }}>
                   <ButtonNav
-                    key={item.id}
                     icon={item.img}
                     hoverImg={item.hoverImg}
                     clickImg={item.clickImg}
                   />
-                  <span style={{
-                    position: 'absolute',
-                    bottom: 0,
-                    right: 0,
-                    backgroundColor: 'red',
-                    borderRadius: '11px',
-                    color: 'white',
-                    padding: '2px',
-                  }}>13</span>
+                  <span className={styles.badgeCount}>1</span>
                 </div>
-
               ))
             : buttonData.map((item) => (
-              <ButtonNav
-                key={item.id}
-                icon={item.img}
-                hoverImg={item.hoverImg}
-                clickImg={item.clickImg}
-              />
-            ))}
+                <ButtonNav
+                  key={item.id}
+                  icon={item.img}
+                  hoverImg={item.hoverImg}
+                  clickImg={item.clickImg}
+                />
+              ))}
         </div>
       </div>
     </header>

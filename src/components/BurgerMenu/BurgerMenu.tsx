@@ -1,5 +1,5 @@
-import {  RightArrow } from '@/assets/constants';
-import {  Drawer } from 'antd';
+import { RightArrow } from '@/assets/constants';
+import { Drawer } from 'antd';
 import styles from './menu.module.scss';
 import { Link } from 'react-router-dom';
 import items from './constants';
@@ -8,11 +8,9 @@ import buttonData from '@/constants/ButtonConstants';
 import { Header } from '../components';
 import { useMenuContext } from '@/context/menuContext.ts';
 
-
-
 export default function BurgerMenu() {
   //const [open, setOpen] = useState(false);
-  const {onMenuClose, isMenuOpen} = useMenuContext();
+  const { onMenuClose, isMenuOpen } = useMenuContext();
 
   return (
     <>
@@ -24,11 +22,17 @@ export default function BurgerMenu() {
         placement="left"
         bodyStyle={{ padding: '0' }}
       >
-        <div className={styles.headerMobile}>
+        <div>
           <Header />
         </div>
 
-        <div>
+        <div
+          style={{
+            paddingLeft: '24px',
+            paddingRight: '20px',
+            paddingTop: '24px',
+          }}
+        >
           <ul className={styles.burgerMenuTop}>
             {items.map((item) => (
               <Link
