@@ -1,76 +1,75 @@
 .container {
   width: 704px;
-  height: 657px;
+  max-height: 657px;
+  background: #eae4eecc;
+  padding-top: 32px;
   border-radius: 20px;
-  -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
-  background: rgba(234, 228, 238, 0.8);
+  line-height: 150%;
 
-  .cardsWrapper {
-    display: flex;
-    flex-direction: column;
+  .cards {
     row-gap: 16px;
-    padding: 32px;
-    height: 544px;
-    overflow-y: auto;
-    overflow-x: hidden;
+    padding: 0 32px;
+    display: flex;
     position: relative;
+    max-height: 514px;
+    overflow-x: hidden;
+    margin-bottom: 24px;
+    flex-direction: column;
 
     .card {
       width: 638px;
       height: 160px;
-      border-radius: 12px;
-      background-color: var(--white-color);
       display: flex;
       padding: 24px;
+      border-radius: 12px;
+      background-color: var(--white-color);
 
       .name {
-        color: rgb(28, 24, 23);
+        color: var(--text-color);
+        overflow: hidden;
         font-size: 24px;
         font-weight: 500;
-        line-height: 150%;
-        margin-bottom: 8px;
+
         white-space: nowrap;
-        overflow: hidden;
+        margin-bottom: 8px;
         text-overflow: ellipsis;
       }
 
       .priceWrapper {
         display: flex;
-        justify-content: space-between;
         width: 476px;
+        justify-content: space-between;
+
+        .price {
+          color: var(--text-color);
+          font-size: 24px;
+        }
 
         .details {
-          color: rgb(128, 128, 128);
+          color: #808080;
           font-size: 16px;
-          line-height: 150%;
         }
       }
     }
   }
 
-  .price {
-    color: rgb(28, 24, 23);
-    font-size: 24px;
-    line-height: 150%;
-  }
-
   .total {
     display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    margin-right: 32px;
-    -moz-column-gap: 32px;
     column-gap: 32px;
+    align-items: center;
+    margin-right: 32px;
+    padding-bottom: 32px;
+    justify-content: flex-end;
   }
 
   button {
-    padding: 16px 24px;
-    background-color: var(--green-color);
-    border-radius: 12px;
-    color: var(--white-color);
     border: none;
     cursor: pointer;
+    padding: 16px 24px;
+    color: var(--white-color);
+    border-radius: 12px;
+    background-color: var(--green-color);
 
     &:hover {
       background-color: var(--green-active-color);
@@ -80,26 +79,21 @@
 
 .nameWrapper {
   display: flex;
-  flex-direction: column;
-  margin-bottom: 14px;
   max-width: 476px;
+  margin-bottom: 14px;
+  flex-direction: column;
 }
 
-.cardsWrapper::-webkit-scrollbar {
+.cards::-webkit-scrollbar {
   width: 6px;
 }
 
-.cardsWrapper::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
-}
-
-.cardsWrapper::-webkit-scrollbar-thumb {
+.cards::-webkit-scrollbar-thumb {
+  border-radius: 3px;
   background-color: #d1d1d1;
-  border-radius: 10px;
-}
 
-.cardsWrapper::-webkit-scrollbar-thumb:hover {
-  background-color: #a8a8a8;
-  cursor: grab;
+  &:hover {
+    cursor: grab;
+    background-color: #a8a8a8;
+  }
 }

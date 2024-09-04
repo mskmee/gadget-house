@@ -1,44 +1,15 @@
-// assets
-import phoneImage from '@/assets/images/phone-image.png';
+// hooks
+import { useAppSelector } from '@/hooks/reduxCustomHooks';
 // styles
 import styles from './CardTooltip.module.scss';
 
-const mockData = [
-  {
-    name: 'Apple iPhone 15 Pro 256Gb Blue Titanium Apple iPhone 15 Pro 256Gb Blue Titanium',
-    code: '874524',
-    quantity: '1',
-    price: '45999',
-    href: phoneImage,
-  },
-  {
-    name: 'Samsung Galaxy S23FE 8/128Gb Purple',
-    code: '745785',
-    quantity: '1',
-    price: '22299',
-    href: phoneImage,
-  },
-  {
-    name: 'TWS Samsung Galaxy Buds2 Lavender',
-    code: '874774',
-    quantity: '1',
-    price: '4299',
-    href: phoneImage,
-  },
-  {
-    name: 'TWS Samsung Galaxy Buds2 Lavender',
-    code: '874774',
-    quantity: '1',
-    price: '4299',
-    href: phoneImage,
-  },
-];
-
 export default function CardTooltip() {
+  const products = useAppSelector((state) => state.cardReducer) ?? [];
+
   return (
     <div className={styles.container}>
-      <div className={styles.cardsWrapper}>
-        {mockData.map(({ code, name, price, quantity, href }) => (
+      <div className={styles.cards}>
+        {products?.map(({ code, name, price, quantity, href }) => (
           <div key={code} className={styles.card}>
             <img src={href} alt={name} width="100" height="112" />
             <div>
@@ -56,7 +27,7 @@ export default function CardTooltip() {
       </div>
       <div className={styles.total}>
         <span className={styles.price}>
-          {mockData.reduce((acc, { price }) => acc + Number(price), 0)} ₴
+          {products.reduce((acc, { price }) => acc + Number(price), 0)} ₴
         </span>
         <button>Go to basket</button>
       </div>
