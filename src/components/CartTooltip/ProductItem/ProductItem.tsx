@@ -1,4 +1,4 @@
-import type { CardSlice } from '@/types/slices.types';
+import type { CardItem } from '@/types/slices.types';
 import styles from './ProductItem.module.scss';
 
 export default function ProductItem({
@@ -7,7 +7,7 @@ export default function ProductItem({
   name,
   price,
   quantity,
-}: CardSlice) {
+}: CardItem) {
   return (
     <div key={code} className={styles.card}>
       <img src={href} alt={name} width="100" height="112" />

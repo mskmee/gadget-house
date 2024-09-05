@@ -1,39 +1,39 @@
 .container {
   width: 704px;
   max-height: 657px;
-  background: #eae4eecc;
   padding-top: 32px;
+  line-height: 150%;
+  background: #eae4eecc;
   border-radius: 20px;
   backdrop-filter: blur(10px);
-  line-height: 150%;
 
   .cards {
-    row-gap: 16px;
-    padding: 0 32px;
-    display: flex;
     position: relative;
-    max-height: 514px;
-    overflow-x: hidden;
-    margin-bottom: 24px;
+    display: flex;
     flex-direction: column;
+    row-gap: 16px;
+    max-height: 514px;
+    margin-bottom: 24px;
+    padding: 0 32px;
+    overflow-x: hidden;
   }
 
   .total {
     display: flex;
-    column-gap: 32px;
+    justify-content: flex-end;
     align-items: center;
     margin-right: 32px;
     padding-bottom: 32px;
-    justify-content: flex-end;
+    column-gap: 32px;
   }
 
   button {
-    border: none;
-    cursor: pointer;
     padding: 16px 24px;
     color: var(--white-color);
-    border-radius: 12px;
     background-color: var(--green-color);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
 
     &:hover {
       background-color: var(--green-active-color);
@@ -51,11 +51,11 @@
 }
 
 .cards::-webkit-scrollbar-thumb {
-  border-radius: 3px;
   background-color: #d1d1d1;
+  border-radius: 3px;
 
   &:hover {
-    cursor: grab;
     background-color: #a8a8a8;
+    cursor: grab;
   }
 }

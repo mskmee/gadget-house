@@ -1,6 +1,5 @@
 import style from '@/components/SingleProduct/SingleProduct.module.scss';
 import { currentProduct } from '@/constants/singleProduct';
-import { useSessionStorage } from '@/hooks/useSessionStorage';
 import {
   ChangeEventHandler,
   FC,
@@ -18,7 +17,7 @@ import { ProductCharacteristics } from '@/components/SingleProduct/ProductCharac
 import { ProductPhotos } from '@/components/SingleProduct/ProductPhotos';
 import { ProductAccessories } from '@/components/SingleProduct/ProductAccessories';
 import Benefits from '@/components/benefitsList/benefits';
-import { useDocumentTitle } from '@/hooks/useDocumentTitle';
+import { useDocumentTitle, useSessionStorage } from '@/hooks/hooks';
 import { Bounce, toast } from 'react-toastify';
 import debounce from 'lodash.debounce';
 import { Pagination, Rate } from 'antd';

@@ -1,20 +1,19 @@
 import { useMemo } from 'react';
-import { useAppSelector } from '@/hooks/reduxCustomHooks';
+import { useAppSelector } from '@/hooks/hooks';
 import ProductItem from './ProductItem/ProductItem';
-import styles from './CardTooltip.module.scss';
+import styles from './CartTooltip.module.scss';
 
 export default function CardTooltip() {
-  const products = useAppSelector((state) => state.cardReducer) ?? [];
-  // TODO need to remove this code after connect to DB
+  const cartItems = useAppSelector((state) => state.cardReducer.cartItems);
   const totalCardSum = useMemo(
-    () => products.reduce((acc, { price }) => acc + Number(price), 0),
-    [products],
+    () => cartItems.reduce((acc, { price }) => acc + Number(price), 0),
+    [cartItems],
   );
 
   return (
     <div className={styles.container}>
       <div className={styles.cards}>
-        {products?.map(({ code, ...props }) => (
+        {cartItems.map(({ code, ...props }) => (
           <ProductItem code={code} {...props} key={code} />
         ))}
       </div>

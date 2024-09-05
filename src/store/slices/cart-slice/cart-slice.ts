@@ -1,12 +1,12 @@
-// utils
 import { createSlice } from '@reduxjs/toolkit';
-// assets
 import phoneImage from '@/assets/images/phone-image.png';
-// types
-import type { CardSlice } from '@/types/slices.types';
+import type { CartItem } from '@/types/types';
 
-// below is an example for features slices
-export const initialState: CardSlice[] = [
+type State = {
+  cartItems: CartItem[];
+};
+
+const CART_ITEMS: CartItem[] = [
   {
     name: 'Apple iPhone 15 Pro 256Gb Blue Titanium Apple iPhone 15 Pro 256Gb Blue Titanium',
     code: '874524',
@@ -37,12 +37,16 @@ export const initialState: CardSlice[] = [
   },
 ];
 
-export const cardSlice = createSlice({
-  name: 'card',
+const initialState: State = {
+  cartItems: CART_ITEMS,
+};
+
+const { name, actions, reducer } = createSlice({
+  name: 'cart',
   initialState,
   reducers: {
     // reducers
   },
 });
 
-export default cardSlice.reducer;
+export { name, actions, reducer };

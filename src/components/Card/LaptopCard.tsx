@@ -1,7 +1,7 @@
 import { laptopData } from './constants';
 import styles from './card.module.css';
 import { Card, Rate } from 'antd';
-import useProductCardHandlers from '@/hooks/useProductCardHandlers';
+import { useProductCardHandlers } from '@/hooks/hooks';
 import { BasketIcon } from '@/assets/icons/BasketIcon';
 import { rateEmptyImg, rateImg } from '@/assets/constants';
 import { ICard } from '@/interfaces/interfaces';

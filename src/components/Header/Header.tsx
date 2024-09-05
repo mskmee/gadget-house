@@ -1,10 +1,10 @@
 import { useMediaQuery } from 'react-responsive';
-import { useAppSelector } from '@/hooks/reduxCustomHooks';
+import { useAppSelector } from '@/hooks/hooks';
 import { useMemo, useState, useCallback } from 'react';
 import Search from '@/components/Header/Search/Search';
 import ButtonNav from '@/components/Button/Button';
 import BurgerMenu from '@/components/BurgerMenu/BurgerMenu';
-import CardTooltip from '@/components/CardTooltip/CardTooltip';
+import CartTooltip from '@/components/CartTooltip/CartTooltip';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '@/enums/Route';
 import buttonData from '@/constants/ButtonConstants';
@@ -17,7 +17,7 @@ const iconsWithoutCard = buttonData.slice(0, -1);
 
 export default function Header() {
   const [isHovered, setIsHovered] = useState(false);
-  const products = useAppSelector((state) => state.cardReducer);
+  const products = useAppSelector((state) => state.cardReducer.cartItems);
 
   const isMaxWidth1070 = useMediaQuery({
     query: '(max-width: 1070px)',
@@ -51,7 +51,6 @@ export default function Header() {
         )}
         {isMaxWidth1070 && <BurgerMenu />}
         <Search />
-
         <div className={styles.headerBottomButtons}>
           {isMaxWidth1070
             ? null
@@ -80,7 +79,7 @@ export default function Header() {
               className={styles.tooltip}
               onMouseLeave={handleMouse(false)}
             >
-              <CardTooltip />
+              <CartTooltip />
             </motion.div>
           )}
         </div>

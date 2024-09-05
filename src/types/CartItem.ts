@@ -1,4 +1,4 @@
-export interface CardSlice {
+export interface CartItem {
   name: string;
   code: string;
   href: string;

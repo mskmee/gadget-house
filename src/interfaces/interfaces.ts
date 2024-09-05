@@ -1,4 +1,3 @@
-// types
 import type { StatusSearch } from '@/types/StatusSearch';
 import type { ButtonHTMLAttributes, CSSProperties, MouseEvent } from 'react';
 
