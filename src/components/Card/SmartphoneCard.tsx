@@ -3,7 +3,7 @@ import { Rate } from 'antd';
 import styles from './card.module.css';
 import { rateImg, rateEmptyImg } from '@/assets/constants';
 import { Link } from 'react-router-dom';
-import useProductCardHandlers from '@/hooks/useProductCardHandlers';
+import { useProductCardHandlers } from '@/hooks/hooks';
 import { IAccessory } from '@/interfaces/interfaces';
 import { BasketIcon } from '@/assets/icons/BasketIcon';
 import classNames from 'classnames';
