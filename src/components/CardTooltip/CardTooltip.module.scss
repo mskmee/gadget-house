@@ -16,42 +16,6 @@
     overflow-x: hidden;
     margin-bottom: 24px;
     flex-direction: column;
-
-    .card {
-      width: 638px;
-      height: 160px;
-      display: flex;
-      padding: 24px;
-      border-radius: 12px;
-      background-color: var(--white-color);
-
-      .name {
-        color: var(--text-color);
-        overflow: hidden;
-        font-size: 24px;
-        font-weight: 500;
-
-        white-space: nowrap;
-        margin-bottom: 8px;
-        text-overflow: ellipsis;
-      }
-
-      .priceWrapper {
-        display: flex;
-        width: 476px;
-        justify-content: space-between;
-
-        .price {
-          color: var(--text-color);
-          font-size: 24px;
-        }
-
-        .details {
-          color: #808080;
-          font-size: 16px;
-        }
-      }
-    }
   }
 
   .total {
@@ -75,13 +39,11 @@
       background-color: var(--green-active-color);
     }
   }
-}
 
-.nameWrapper {
-  display: flex;
-  max-width: 476px;
-  margin-bottom: 14px;
-  flex-direction: column;
+  .price {
+    color: var(--text-color);
+    font-size: 24px;
+  }
 }
 
 .cards::-webkit-scrollbar {

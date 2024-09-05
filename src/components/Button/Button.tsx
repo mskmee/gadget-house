@@ -1,10 +1,6 @@
-// hooks
 import { useState } from 'react';
-// utils
 import cn from 'classnames';
-// types
 import type { ButtonProps } from '@/interfaces/interfaces';
-// styles
 import styles from './button.module.scss';
 
 export default function ButtonNav({

@@ -6,7 +6,7 @@ import phoneImage from '@/assets/images/phone-image.png';
 import type { CardSlice } from '@/types/slices.types';
 
 // below is an example for features slices
-export const initialState: CardSlice[] | null = [
+export const initialState: CardSlice[] = [
   {
     name: 'Apple iPhone 15 Pro 256Gb Blue Titanium Apple iPhone 15 Pro 256Gb Blue Titanium',
     code: '874524',

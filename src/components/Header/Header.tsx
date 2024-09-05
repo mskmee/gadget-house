@@ -1,29 +1,23 @@
-// hooks
 import { useMediaQuery } from 'react-responsive';
 import { useAppSelector } from '@/hooks/reduxCustomHooks';
 import { useMemo, useState, useCallback } from 'react';
-// components
 import Search from '@/components/Header/Search/Search';
 import ButtonNav from '@/components/Button/Button';
 import BurgerMenu from '@/components/BurgerMenu/BurgerMenu';
 import CardTooltip from '@/components/CardTooltip/CardTooltip';
 import { Link } from 'react-router-dom';
-// constants
 import { AppRoute } from '@/enums/Route';
 import buttonData from '@/constants/ButtonConstants';
-// utils
 import { motion } from 'framer-motion';
-// assets
 import { CatalogIcon } from '@/assets/constants';
 import { BasketIconBlack, BasketIconWhite } from '@/assets/constants';
-// styles
 import styles from './header.module.scss';
 
 const iconsWithoutCard = buttonData.slice(0, -1);
 
 export default function Header() {
   const [isHovered, setIsHovered] = useState(false);
-  const products = useAppSelector((state) => state.cardReducer) ?? [];
+  const products = useAppSelector((state) => state.cardReducer);
 
   const isMaxWidth1070 = useMediaQuery({
     query: '(max-width: 1070px)',
