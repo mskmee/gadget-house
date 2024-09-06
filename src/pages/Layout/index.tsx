@@ -7,7 +7,7 @@ import BurgerMenu from '@/components/BurgerMenu/BurgerMenu.tsx';
 import { MenuContext } from '@/context/menuContext.ts';
 
 const Layout = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleMenuOpen = () => {
     setIsMenuOpen(true);

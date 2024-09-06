@@ -55,7 +55,7 @@ export default function Header() {
                     hoverImg={item.hoverImg}
                     clickImg={item.clickImg}
                   />
-                  <span className={styles.badgeCount}>1</span>
+                  <span className={styles.badgeCount}>999</span>
                 </div>
               ))
             : buttonData.map((item) => (

@@ -38,6 +38,15 @@
   padding-left: 24px;
 }
 
+.paddingContainer {
+  padding: 24px 20px 0 24px;
+}
+
+.drawerBody {
+  padding: 0;
+  overflow-y: auto;
+}
+
 @media (max-width: 1070px) {
   header {
     box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.08);

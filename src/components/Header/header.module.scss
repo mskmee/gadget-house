@@ -85,28 +85,44 @@
     padding-bottom: 16px;
     background-color: var(--white-color);
   }
+  // .badgeCount {
+  //   position: absolute;
+  //   color: white;
+  //   width: 18px;
+  //   height: 18px;
+  //   border-radius: 39px;
+  //   padding: 4px;
+  //   display: flex;
+  //   flex-direction: column;
+  //   justify-content: center;
+  //   align-items: center;
+  //   background: rgb(111, 76, 154);
+  //   bottom: -6px;
+  //   right: -2px;
+  // }
   .badgeCount {
-    position: absolute;
-    color: white;
-    width: 18px;
-    height: 18px;
-    border-radius: 39px;
-    padding: 4px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: rgb(111, 76, 154);
+    background: var(--theme-color);
+    color: var(--white-color);
     bottom: -6px;
-    right: -2px;
+    box-sizing: border-box;
+    outline: none;
+    position: absolute;
+    right: -3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    font:
+      700 9px / 16px 'roboto',
+      'Arial';
+    border-radius: 100%;
   }
 }
 
 @media (max-width: 390px) {
   .headerBottom {
-    padding-right: 16px;
-    padding-left: 0px;
-    padding-bottom: 16px;
+    padding: 0 16px 16px 0;
     background-color: var(--white-color);
   }
 }

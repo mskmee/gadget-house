@@ -9,30 +9,22 @@ import { Header } from '../components';
 import { useMenuContext } from '@/context/menuContext.ts';
 
 export default function BurgerMenu() {
-  //const [open, setOpen] = useState(false);
   const { onMenuClose, isMenuOpen } = useMenuContext();
 
   return (
     <>
       <Drawer
         closable={false}
-        width={'100vh'}
+        width={'100vw'}
         onClose={onMenuClose}
         open={isMenuOpen}
         placement="left"
-        bodyStyle={{ padding: '0', overflowY: 'auto' }}
+        bodyStyle={styles.drawerBody}
       >
         <div>
           <Header />
         </div>
-
-        <div
-          style={{
-            paddingLeft: '24px',
-            paddingRight: '20px',
-            paddingTop: '24px',
-          }}
-        >
+        <div className={styles.paddingContainer}>
           <ul className={styles.burgerMenuTop}>
             {items.map((item) => (
               <Link
@@ -63,3 +55,4 @@ export default function BurgerMenu() {
     </>
   );
 }
+ß;
