@@ -1,0 +1,25 @@
+.container {
+  color: var(--white-color);
+  border: none;
+  cursor: pointer;
+  padding: 16px 32px;
+  font-size: 16px;
+  background: var(--green-color);
+  transition: all ease 0.2s;
+  font-family: Inter;
+  border-radius: 12px;
+  border-radius: 12px;
+
+  &:hover {
+    transition: all ease 0.2s;
+    background-color: var(--green-hover-color);
+  }
+
+  &:active {
+    background: var(--green-active-color);
+  }
+
+  &:disabled {
+    background: var(--green-disabled-color);
+  }
+}

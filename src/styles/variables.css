@@ -1,9 +1,11 @@
 :root {
   --bg-color: #f8f7fa;
   --text-color: #1c1817;
+  --white-color: #ffffff;
   --theme-color: #6f4c9a;
   --green-color: #00820d;
+  --green-disabled-color: #dff2e1;
+  --green-hover-color: #4da856;
   --green-active-color: #00680a;
   --carousel-theme-color: #eae4ee;
-  --white-color: #ffffff;
 }

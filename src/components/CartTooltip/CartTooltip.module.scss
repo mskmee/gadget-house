@@ -27,19 +27,6 @@
     column-gap: 32px;
   }
 
-  button {
-    padding: 16px 24px;
-    color: var(--white-color);
-    background-color: var(--green-color);
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-
-    &:hover {
-      background-color: var(--green-active-color);
-    }
-  }
-
   .price {
     color: var(--text-color);
     font-size: 24px;

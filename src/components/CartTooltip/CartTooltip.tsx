@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { useAppSelector } from '@/hooks/hooks';
+import Button from '@/components/CommonButton/CommonButton';
 import ProductItem from './ProductItem/ProductItem';
 import styles from './CartTooltip.module.scss';
 
@@ -19,7 +20,7 @@ export default function CardTooltip() {
       </div>
       <div className={styles.total}>
         <span className={styles.price}>{totalCardSum} ₴</span>
-        <button>Go to basket</button>
+        <Button>Go to basket</Button>
       </div>
     </div>
   );
