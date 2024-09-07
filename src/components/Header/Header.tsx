@@ -7,17 +7,29 @@ import { useMediaQuery } from 'react-responsive';
 import { AppRoute } from '@/enums/Route';
 import { Button } from 'antd';
 import { useMenuContext } from '@/context/menuContext.ts';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
   const isMobile = useMediaQuery({ query: '(max-width: 1070px)' });
 
   const { onMenuClose, onMenuOpen, isMenuOpen } = useMenuContext();
+
+  const handleRouteChange = () => {
+    if (isMenuOpen) {
+      onMenuClose();
+    }
+  };
+
   return (
     <header>
       <div className={styles.headerTop}>
-        <a href={AppRoute?.ROOT} className={styles.headerTopLogo}>
+        <Link
+          to={AppRoute?.ROOT}
+          className={styles.headerTopLogo}
+          onClick={handleRouteChange}
+        >
           GadgetHouse
-        </a>
+        </Link>
       </div>
       <div className={styles.headerBottom}>
         {isMobile ? (

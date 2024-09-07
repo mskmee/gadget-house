@@ -1,11 +1,12 @@
 import { RightArrow } from '@/assets/constants';
 import { Drawer } from 'antd';
-import styles from './menu.module.scss';
+
+import styles from '@/components/BurgerMenu/menu.module.scss';
 import { Link } from 'react-router-dom';
 import items from './constants';
-import ButtonNav from '../Button/Button';
+import ButtonNav from '@/components/Button/Button';
 import buttonData from '@/constants/ButtonConstants';
-import { Header } from '../components';
+import Header from '@/components/Header/Header';
 import { useMenuContext } from '@/context/menuContext.ts';
 
 export default function BurgerMenu() {
@@ -19,7 +20,7 @@ export default function BurgerMenu() {
         onClose={onMenuClose}
         open={isMenuOpen}
         placement="left"
-        bodyStyle={styles.drawerBody}
+        bodyStyle={{ padding: '0', overflowY: 'auto' }}
       >
         <div>
           <Header />
@@ -27,17 +28,15 @@ export default function BurgerMenu() {
         <div className={styles.paddingContainer}>
           <ul className={styles.burgerMenuTop}>
             {items.map((item) => (
-              <Link
-                key={item.key}
-                to={item.link}
-                className={styles.burgerMenuTopItem}
-              >
-                <div className={styles.burgerMenuTopItemRight}>
-                  <img src={item.img} alt={item.title} />
-                  <p style={item.style}>{item.title}</p>
-                </div>
-                <img src={RightArrow} alt="Right Arrow" />
-              </Link>
+              <li key={item.key}>
+                <Link to={item.link} className={styles.burgerMenuTopItem}>
+                  <div className={styles.burgerMenuTopItemRight}>
+                    <img src={item.img} alt={item.title} />
+                    <p style={item.style}>{item.title}</p>
+                  </div>
+                  <img src={RightArrow} alt="Right Arrow" />
+                </Link>
+              </li>
             ))}
           </ul>
         </div>
