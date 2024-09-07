@@ -1,0 +1,27 @@
+.layout {
+  padding: 38px 50px 135px;
+
+  .container {
+    gap: 24px;
+    display: flex;
+    margin-bottom: 68px;
+    justify-content: space-between;
+
+    & > :first-child {
+      flex-shrink: 0;
+    }
+
+    .cards {
+      display: grid;
+      gap: 40px 10px;
+      width: 100%;
+      justify-items: end;
+      grid-template-columns: repeat(auto-fit, minmax(305px, 1fr));
+    }
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+  }
+}

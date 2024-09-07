@@ -1,0 +1,31 @@
+.container {
+  width: 321px;
+  padding: 24px;
+  box-shadow: var(--card-active-shadow);
+  background: var(--carousel-theme-color);
+  line-height: 150%;
+  font-family: Inter;
+  border-radius: 20px;
+
+  > h2 {
+    font-size: 42px;
+    font-weight: 500;
+  }
+
+  .divider {
+    background-color: var(--gray-500-color);
+  }
+}
+
+h3 {
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.afterOption {
+  margin-left: 3px;
+}
+
+.label {
+  font-size: 18px;
+}

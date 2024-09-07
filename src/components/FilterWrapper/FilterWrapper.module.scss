@@ -1,0 +1,17 @@
+.container {
+  .title {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+    justify-content: space-between;
+
+    > span {
+      user-select: none;
+    }
+  }
+
+  .children {
+    overflow: hidden;
+  }
+}

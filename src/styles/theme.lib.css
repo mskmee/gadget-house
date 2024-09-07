@@ -1,0 +1,64 @@
+/* 
+  Сheckbox customization, classes can be found in the repository
+  https://github.com/ant-design/ant-design
+*/
+.ant-checkbox .ant-checkbox-inner {
+  width: 18px;
+  height: 18px;
+  border-color: #1c1817 !important;
+}
+
+.ant-checkbox-checked .ant-checkbox-inner {
+  width: 18px;
+  height: 18px;
+  background-color: #ffffff !important;
+  border-color: #070707 !important;
+}
+
+.ant-checkbox-wrapper:hover .ant-checkbox-inner {
+  border-color: #1c1817 !important;
+}
+
+.ant-checkbox-checked .ant-checkbox-inner::after {
+  width: 7px;
+  height: 9px;
+  border-color: #00820d;
+}
+
+/* 
+  Pagination customization, classes can be found in the repository
+  https://github.com/ant-design/ant-design
+*/
+.ant-pagination-item {
+  font-size: 24px;
+  background: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+}
+
+.ant-pagination-item-active {
+  border-bottom: 2px solid !important;
+  box-shadow: none !important;
+}
+
+/* 
+  Radiobutton customization, classes can be found in the repository
+  https://github.com/ant-design/ant-design
+*/
+.ant-radio .ant-radio-inner {
+  width: 18px;
+  height: 18px;
+  border-color: #1c1817 !important;
+}
+
+.ant-radio-checked .ant-radio-inner {
+  background-color: #ffffff !important;
+}
+
+.ant-radio-checked .ant-radio-inner::after {
+  top: 5px;
+  left: 5px;
+  width: 22px;
+  height: 22px;
+  background-color: #00820d;
+}

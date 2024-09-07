@@ -1,0 +1,49 @@
+.list {
+  display: flex;
+  row-gap: 8px;
+  user-select: none;
+  flex-direction: column;
+
+  .checkboxContent {
+    gap: 4px;
+    display: flex;
+    font-size: 16px;
+    text-transform: capitalize;
+
+    .label {
+      display: flex;
+      padding: 2px;
+      align-items: center;
+
+      .color {
+        width: 18px;
+        height: 18px;
+        border: 1px solid var(--text-color);
+        margin-right: 8px;
+        border-radius: 3px;
+      }
+
+      .black {
+        background-color: black;
+      }
+      .white {
+        background-color: white;
+      }
+      .blue {
+        background-color: blue;
+      }
+      .red {
+        background-color: red;
+      }
+      .green {
+        background-color: green;
+      }
+      .yellow {
+        background-color: yellow;
+      }
+      .purple {
+        background-color: purple;
+      }
+    }
+  }
+}
