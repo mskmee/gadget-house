@@ -68,7 +68,7 @@
     gap: 16px;
 
     .tooltip {
-      top: 119px;
+      top: 164px;
       right: 46px;
       z-index: 1;
       position: absolute;
@@ -76,6 +76,7 @@
       transition:
         opacity 0.3s ease,
         transform 0.3s ease;
+
     }
   }
 }
