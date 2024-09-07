@@ -6,16 +6,23 @@
   background: #eae4eecc;
   border-radius: 20px;
   backdrop-filter: blur(10px);
-
-  .cards {
-    position: relative;
+  .list {
     display: flex;
-    flex-direction: column;
-    row-gap: 16px;
-    max-height: 514px;
-    margin-bottom: 24px;
-    padding: 0 32px;
-    overflow-x: hidden;
+
+    .cards {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      row-gap: 16px;
+      max-height: 514px;
+      margin-bottom: 24px;
+      padding: 0 32px;
+      overflow-x: hidden;
+    }
+
+    .emptySpace {
+      width: 6px;
+    }
   }
 
   .total {
@@ -35,6 +42,8 @@
 
 .cards::-webkit-scrollbar {
   width: 6px;
+  background-color: var(--white-color);
+  border-radius: 6px;
 }
 
 .cards::-webkit-scrollbar-thumb {

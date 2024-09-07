@@ -14,10 +14,13 @@ export default function CardTooltip() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.cards}>
-        {cartItems.map(({ code, ...props }) => (
-          <ProductItem code={code} {...props} key={code} />
-        ))}
+      <div className={styles.list}>
+        <div className={styles.cards}>
+          {cartItems.map(({ code, ...props }) => (
+            <ProductItem code={code} {...props} key={code} />
+          ))}
+        </div>
+        <div className={styles.emptySpace} />
       </div>
       <div className={styles.total}>
         <span className={styles.price}>{totalCardSum} ₴</span>
