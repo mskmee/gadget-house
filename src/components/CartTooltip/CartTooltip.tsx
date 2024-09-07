@@ -6,6 +6,7 @@ import styles from './CartTooltip.module.scss';
 
 export default function CardTooltip() {
   const cartItems = useAppSelector((state) => state.cardReducer.cartItems);
+
   const totalCardSum = useMemo(
     () => cartItems.reduce((acc, { price }) => acc + Number(price), 0),
     [cartItems],

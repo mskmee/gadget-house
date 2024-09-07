@@ -28,17 +28,18 @@ export default function Header() {
     [isHovered, isMaxWidth1070, products.length],
   );
 
-  const handleMouse = useCallback(
-    (isEnter: boolean) => () => {
-      setIsHovered(isEnter);
-    },
-    [],
-  );
+  const handleMouseEnter = useCallback(() => {
+    setIsHovered(true);
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setIsHovered(false);
+  }, []);
 
   return (
     <>
       <div className={styles.headerTop}>
-        <Link to={AppRoute?.ROOT} className={styles.headerTopLogo}>
+        <Link to={AppRoute.ROOT} className={styles.headerTopLogo}>
           GadgetHouse
         </Link>
       </div>
@@ -68,7 +69,8 @@ export default function Header() {
             icon={BasketIconBlack}
             hoverImg={BasketIconWhite}
             clickImg={BasketIconWhite}
-            onMouseEnter={handleMouse(true)}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
           />
           {isShowCardDialog && (
             <motion.div
@@ -77,7 +79,8 @@ export default function Header() {
               exit={{ opacity: 0 }}
               transition={{ ease: 'easeInOut', duration: 0.4 }}
               className={styles.tooltip}
-              onMouseLeave={handleMouse(false)}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
             >
               <CartTooltip />
             </motion.div>

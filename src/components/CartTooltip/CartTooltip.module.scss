@@ -20,11 +20,11 @@
 
   .total {
     display: flex;
-    justify-content: flex-end;
+    column-gap: 32px;
     align-items: center;
     margin-right: 32px;
     padding-bottom: 32px;
-    column-gap: 32px;
+    justify-content: flex-end;
   }
 
   .price {
