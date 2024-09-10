@@ -31,6 +31,18 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalImageSrc, setModalImageSrc] = useState<string | null>(null);
+  const productRateRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (productRateRef.current) {
+      const listItems = productRateRef.current?.querySelectorAll(
+        '.ant-rate > li > div',
+      );
+      listItems?.forEach((item) => {
+        item.removeAttribute('tabIndex');
+      });
+    }
+  }, []);
 
   const handlePrevClick = () => {
     if (currentSlide?.id !== 1) {
@@ -149,7 +161,7 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
         <div className={style['product_title']}>
           <h1>{currentProduct?.[0]?.title}</h1>
           <div className={style['product_rate-box']}>
-            <div className={style['product_rate']}>
+            <div className={style['product_rate']} ref={productRateRef}>
               <Rate
                 className="product_rate-stars"
                 value={currentProduct?.[0]?.rating}

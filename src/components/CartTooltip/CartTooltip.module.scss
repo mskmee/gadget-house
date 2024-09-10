@@ -1,0 +1,61 @@
+.container {
+  width: 704px;
+  max-height: 657px;
+  padding-top: 32px;
+  line-height: 150%;
+  background: #eae4eecc;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+
+  .cards {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    row-gap: 16px;
+    max-height: 514px;
+    margin-bottom: 24px;
+    padding: 0 32px;
+    overflow-x: hidden;
+  }
+
+  .total {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 32px;
+    padding-bottom: 32px;
+    column-gap: 32px;
+  }
+
+  button {
+    padding: 16px 24px;
+    color: var(--white-color);
+    background-color: var(--green-color);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--green-active-color);
+    }
+  }
+
+  .price {
+    color: var(--text-color);
+    font-size: 24px;
+  }
+}
+
+.cards::-webkit-scrollbar {
+  width: 6px;
+}
+
+.cards::-webkit-scrollbar-thumb {
+  background-color: #d1d1d1;
+  border-radius: 3px;
+
+  &:hover {
+    background-color: #a8a8a8;
+    cursor: grab;
+  }
+}

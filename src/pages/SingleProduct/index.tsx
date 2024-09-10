@@ -1,6 +1,5 @@
 import style from '@/components/SingleProduct/SingleProduct.module.scss';
 import { currentProduct } from '@/constants/singleProduct';
-import { useSessionStorage } from '@/hooks/useSessionStorage';
 import {
   ChangeEventHandler,
   FC,
@@ -18,7 +17,7 @@ import { ProductCharacteristics } from '@/components/SingleProduct/ProductCharac
 import { ProductPhotos } from '@/components/SingleProduct/ProductPhotos';
 import { ProductAccessories } from '@/components/SingleProduct/ProductAccessories';
 import Benefits from '@/components/benefitsList/benefits';
-import { useDocumentTitle } from '@/hooks/useDocumentTitle';
+import { useDocumentTitle, useSessionStorage } from '@/hooks/hooks';
 import { Bounce, toast } from 'react-toastify';
 import debounce from 'lodash.debounce';
 import { Pagination, Rate } from 'antd';
@@ -39,14 +38,19 @@ export const SingleProductPage: FC = () => {
     [],
   );
   const allProductReviews = currentProduct?.[0]?.reviews?.concat(storageValue);
-  const [review, setReview] = useState({ text: '', rateValue: 0 });
+  const [review, setReview] = useState({
+    text: '',
+    rateValue: 0,
+  });
   const [visibleReviewsCount, setVisibleReviewsCount] = useState(2);
   const [isAllReviewsBtnVisible, setIisAllReviewsBtnVisible] = useState(
     currentProduct?.[0]?.reviews.length > 2 ? true : false,
   );
   const leftCharactersCount = maxLength - review?.text?.length;
+  const isEmptyReviewText = review?.text?.trim()?.length;
+  const isEmptyReviewTextBoolean = !!isEmptyReviewText;
 
-  const isBtnDisabled = !review?.text && !review?.rateValue;
+  const [isBtnDisabled, setIsBtnDisabled] = useState(true);
 
   const [itemOffset, setItemOffset] = useState(0);
   const [itemsPerPage, setItemsPerPage] = useState(
@@ -56,7 +60,7 @@ export const SingleProductPage: FC = () => {
   const endOffset = itemOffset + itemsPerPage;
   const currentItems = allProductReviews?.slice(itemOffset, endOffset);
 
-  const reviewsRate = useRef<HTMLLIElement>(null);
+  const reviewsRateRef = useRef<HTMLUListElement>(null);
 
   const debouncedCallback = useMemo(
     () =>
@@ -71,18 +75,37 @@ export const SingleProductPage: FC = () => {
   );
 
   useEffect(() => {
-    if (reviewsRate.current) {
-      const listItems = reviewsRate.current?.querySelector('li');
-      console.log(listItems);
+    if (reviewsRateRef.current) {
+      const listItems = reviewsRateRef.current?.querySelectorAll(
+        '.ant-rate > li > div',
+      );
+      listItems?.forEach((item) => {
+        item.removeAttribute('tabIndex');
+      });
     }
-  }, []);
+  }, [allProductReviews]);
 
   const changeReviewText: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
-    debouncedCallback(e.target.value, review?.rateValue);
+    const value = e.target.value;
+    debouncedCallback(value, review?.rateValue);
+    if (value?.trim()?.length > 0) {
+      setIsBtnDisabled(false);
+    } else {
+      if (review?.rateValue === 0) {
+        setIsBtnDisabled(true);
+      }
+    }
   };
 
   const changeRateValue = (value: number) => {
     setReview({ ...review, rateValue: value });
+    if (value > 0) {
+      setIsBtnDisabled(false);
+    } else {
+      if (isEmptyReviewText === 0) {
+        setIsBtnDisabled(true);
+      }
+    }
   };
 
   const changeVisibleReviewsCount = () => {
@@ -107,6 +130,7 @@ export const SingleProductPage: FC = () => {
       textareaRef.current.value = '';
     }
     setReview({ text: '', rateValue: 0 });
+    setIsBtnDisabled(true);
 
     !isAllReviewsBtnVisible &&
       setVisibleReviewsCount(allProductReviews?.length + 1);
@@ -131,8 +155,8 @@ export const SingleProductPage: FC = () => {
       const element = document.getElementById('users-review');
       if (element) {
         window.scrollTo({
-          top: element.offsetTop - 20, // Adjust this value as needed
-          behavior: 'smooth', // Smooth scroll
+          top: element.offsetTop - 20,
+          behavior: 'smooth',
         });
       }
     }, 0);
@@ -191,6 +215,9 @@ export const SingleProductPage: FC = () => {
                   {leftCharactersCount}
                 </span>
               </div>
+              {!isEmptyReviewTextBoolean &&
+                review?.text?.length !== 0 &&
+                review?.rateValue === 0 && <span>This field is required!</span>}
 
               <button type="submit" disabled={isBtnDisabled}>
                 Leave a review
@@ -198,17 +225,19 @@ export const SingleProductPage: FC = () => {
             </form>
             <div className={style['review_users-review']} id="users-review">
               {currentProduct?.[0]?.reviews?.length ? (
-                <ul className={style['review_users-review-list']}>
+                <ul
+                  className={style['review_users-review-list']}
+                  ref={reviewsRateRef}
+                >
                   {currentItems
                     ?.slice(0, visibleReviewsCount)
                     ?.map((review) => (
-                      <li key={review?.id} ref={reviewsRate}>
+                      <li key={review?.id}>
                         <div>
                           <h3>{review?.author}</h3>
                           <span>{formatDate(review?.created_date)}</span>
                         </div>
                         <Rate
-                          ref={reviewsRate}
                           className="product_rate-stars"
                           defaultValue={review?.rate}
                           character={({ index = 0 }) => {
