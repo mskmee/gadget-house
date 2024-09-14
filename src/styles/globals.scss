@@ -2,6 +2,7 @@
 @import url('./normalise.css');
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import './functions';
 
 html,
 body {
@@ -180,4 +181,21 @@ body {
       background-color: #808080;
     }
   }
+}
+.ant-breadcrumb {
+  font-size: rem(16px);
+  font-family: inherit; // Ensures it uses the global font-family
+
+  > ol li:first-child .ant-breadcrumb-link {
+    font-size: rem(14px);
+  }
+}
+.ant-carousel .slick-slide[tabindex='0'] {
+  border: 2px solid #1890ff; /* Change border color for focused card */
+  outline: none; /* Remove default outline */
+}
+
+.ant-carousel .slick-slide[tabindex='-1'] {
+  border: none;
+  outline: none;
 }

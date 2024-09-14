@@ -25,6 +25,7 @@ export const SmartphoneCard: FC<ISmartphoneCard> = ({ product, classname }) => {
         className={`${styles.cardConatiner} ${classname} `}
         key={product?.id}
         to={`/smartphone/${encodedTitle}`}
+        tabIndex={0}
       >
         <div
           className={`${styles.cardContainerTop} ${
