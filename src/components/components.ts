@@ -1,5 +1,5 @@
 import Benefits from '@/components/benefitsList/benefits';
-import Footer from '@/components/footer/footer';
+import Footer from '@/components/Footer';
 import BrandCard from '@/components/Card/BrandCard';
 import { SmartphoneCard } from '../components/Card/SmartphoneCard';
 import { LaptopCard } from '@/components/Card/LaptopCard';

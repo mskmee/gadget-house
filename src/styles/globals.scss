@@ -190,12 +190,7 @@ body {
     font-size: rem(14px);
   }
 }
-.ant-carousel .slick-slide[tabindex='0'] {
+.ant-carousel .slick-slide a:focus-visible {
   border: 2px solid #1890ff; /* Change border color for focused card */
   outline: none; /* Remove default outline */
-}
-
-.ant-carousel .slick-slide[tabindex='-1'] {
-  border: none;
-  outline: none;
 }
