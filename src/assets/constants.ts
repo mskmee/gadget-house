@@ -1,4 +1,5 @@
 import RightArrowSlider from './icons/right-arrow-slider.svg';
+import Vector from './icons/Vector.svg';
 import RightArrowSliderClick from './icons/right-arrow-slider-click.svg';
 import PhoneImg from './images/phone-image.png';
 import LaptopImg from './images/laptop-img.png';
@@ -52,6 +53,7 @@ import basketImg from '../assets/single_product/basket.svg';
 
 export {
   RightArrowSlider,
+  Vector,
   RightArrowSliderClick,
   PhoneImg,
   LaptopImg,
