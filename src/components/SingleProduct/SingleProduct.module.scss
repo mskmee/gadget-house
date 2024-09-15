@@ -102,6 +102,7 @@
     max-width: 658px;
     width: 100%;
     padding: 10px 24px 48px 24px;
+    user-select: none;
     @include custom-box-shadow;
 
     .product_carousel-current-picture {
