@@ -1,8 +1,15 @@
 import { useState } from 'react';
+import cn from 'classnames';
+import type { ButtonProps } from '@/interfaces/interfaces';
 import styles from './button.module.scss';
-import { ButtonProps } from '@/interfaces/interfaces';
 
-export default function ButtonNav({ icon, clickImg, hoverImg }: ButtonProps) {
+export default function ButtonNav({
+  icon,
+  clickImg,
+  hoverImg,
+  className,
+  ...props
+}: ButtonProps) {
   const [isHovered, setIsHovered] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
 
@@ -21,10 +28,11 @@ export default function ButtonNav({ icon, clickImg, hoverImg }: ButtonProps) {
   return (
     <>
       <button
-        className={styles.headerButton}
+        className={cn(styles.headerButton, className)}
         onClick={handleClick}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        {...props}
       >
         <img src={isHovered ? hoverImg : isClicked ? clickImg : icon} />
       </button>

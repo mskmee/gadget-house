@@ -1,3 +1,13 @@
+<<<<<<< HEAD
+=======
+import { laptopData } from './constants';
+import styles from './card.module.css';
+import { Card, Rate } from 'antd';
+import { useProductCardHandlers } from '@/hooks/hooks';
+import { BasketIcon } from '@/assets/icons/BasketIcon';
+import { rateEmptyImg, rateImg } from '@/assets/constants';
+import { ICard } from '@/interfaces/interfaces';
+>>>>>>> 2168a22063f7f22198c06f90c1d40e57c93c2e4d
 import { FC } from 'react';
 import { Rate } from 'antd';
 import styles from './card.module.css';

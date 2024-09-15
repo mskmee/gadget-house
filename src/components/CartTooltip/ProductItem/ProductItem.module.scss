@@ -1,0 +1,41 @@
+.card {
+  display: flex;
+  width: 638px;
+  height: 160px;
+  padding: 24px;
+  background-color: var(--white-color);
+  border-radius: 12px;
+
+  .name {
+    margin-bottom: 8px;
+    overflow: hidden;
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: 24px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .priceWrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 476px;
+
+    .price {
+      color: var(--text-color);
+      font-size: 24px;
+    }
+
+    .details {
+      color: #808080;
+      font-size: 16px;
+    }
+  }
+}
+
+.nameWrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 476px;
+  margin-bottom: 14px;
+}

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function useProductCardHandlers() {
+export function useProductCardHandlers() {
   const [isClicked, setIsClicked] = useState(false);
   const [isLiked, setIsLiked] = useState(true);
 
