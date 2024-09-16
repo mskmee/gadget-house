@@ -1,19 +1,9 @@
-<<<<<<< HEAD
-=======
-import { laptopData } from './constants';
-import styles from './card.module.css';
-import { Card, Rate } from 'antd';
-import { useProductCardHandlers } from '@/hooks/hooks';
-import { BasketIcon } from '@/assets/icons/BasketIcon';
-import { rateEmptyImg, rateImg } from '@/assets/constants';
-import { ICard } from '@/interfaces/interfaces';
->>>>>>> 2168a22063f7f22198c06f90c1d40e57c93c2e4d
 import { FC } from 'react';
 import { Rate } from 'antd';
 import styles from './card.module.css';
 import { rateImg, rateEmptyImg } from '@/assets/constants';
 import { Link } from 'react-router-dom';
-import useProductCardHandlers from '@/hooks/useProductCardHandlers';
+import { useProductCardHandlers } from '@/hooks/useProductCardHandlers';
 import { IAccessory } from '@/interfaces/interfaces';
 import { BasketIcon } from '@/assets/icons/BasketIcon';
 import classNames from 'classnames';
