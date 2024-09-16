@@ -29,6 +29,11 @@ body {
   min-height: 100dvh;
 }
 
+:root {
+  --main-color: #5a40f0;
+  --border-color: rgba(57, 98, 232, 0.1);
+}
+
 .reviews_rate-stars > li,
 .product_rate-stars > li {
   margin-inline-end: 0 !important;
@@ -190,7 +195,9 @@ body {
     font-size: rem(14px);
   }
 }
+
 .ant-carousel .slick-slide a:focus-visible {
-  border: 2px solid #1890ff; /* Change border color for focused card */
-  outline: none; /* Remove default outline */
+  border: 2px solid #1890ff; 
+  outline: none; 
 }
+
