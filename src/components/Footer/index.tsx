@@ -44,9 +44,9 @@ const Footer = () => {
   return (
     <footer className={styles['footer-wrapper']}>
       <div className={styles['contact-info']}>
-        <a href="/" className={styles['footer-logo']}>
+        <Link to="/" className={styles['footer-logo']}>
           GadgetHouse
-        </a>
+        </Link>
         <div>
           <a href="mailto:GadgetHouse@gmail.com">
             <img src={mailImg} alt="footer phone pic" /> GadgetHouse@gmail.com
@@ -68,9 +68,9 @@ const Footer = () => {
       <div className={styles['client-links']}>
         <h3>To clients</h3>
         <ul>
-          {toClientsMenu?.map((item) => (
-            <li key={item?.id}>
-              <Link to={item?.href}>{item?.menuText}</Link>
+          {toClientsMenu.map((item) => (
+            <li key={item.id}>
+              <Link to={item.href}>{item.menuText}</Link>
             </li>
           ))}
         </ul>
@@ -79,9 +79,9 @@ const Footer = () => {
       <div className={styles['categories']}>
         <h3>Categories</h3>
         <ul>
-          {categoriesMenu?.map((item) => (
-            <li key={item?.id}>
-              <Link to={item?.href}>{item?.menuText}</Link>
+          {categoriesMenu.map((item) => (
+            <li key={item.id}>
+              <Link to={item.href}>{item.menuText}</Link>
             </li>
           ))}
         </ul>
