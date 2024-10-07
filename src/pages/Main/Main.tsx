@@ -48,7 +48,7 @@ export default function Main() {
       >
         {Array.from(Array(8), (_, i) => (
           <div key={i}>
-            <SmartphoneCard product={data[0]} classname="smartphone" />
+            <SmartphoneCard product={data[0]} classname="smartphone-carousel" />
           </div>
         ))}
       </Carousels>
@@ -74,7 +74,7 @@ export default function Main() {
       >
         {Array.from(Array(8), (_, i) => (
           <div key={i}>
-            <LaptopCard product={laptopData[0]} />
+            <LaptopCard product={laptopData[0]} classname="laptop-carousel" />
           </div>
         ))}
       </Carousels>

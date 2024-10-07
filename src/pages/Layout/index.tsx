@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import Header from '@/components/Header/Header';
-import Footer from '@/components/footer/footer';
+import Footer from '@/components/Footer';
 import style from './Layout.module.scss';
 import { useState } from 'react';
 import BurgerMenu from '@/components/BurgerMenu/BurgerMenu.tsx';

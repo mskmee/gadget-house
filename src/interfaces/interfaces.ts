@@ -41,6 +41,6 @@ export interface ICard {
 }
 
 export interface IAccessory extends ICard {
-  hasAnotherColor?: boolean | string[];
-  isLiked?: boolean;
+  anotherColors: string[];
+  isLiked: boolean;
 }

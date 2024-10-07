@@ -10,7 +10,6 @@ import LaptopPalette from './images/laptop-palette.svg';
 import BasketIcon from './icons/basket-icon.svg';
 import SamsungImg from './images/samsung-img.png';
 import CatalogIcon from './icons/catalog-icon.svg';
-import PhoneIcon from './icons/phone-icon.svg';
 import PhoneIconWhite from './icons/Vector(3).svg';
 import HeartIcon from './icons/heart-icon (2).svg';
 import HeartIconWhite from './icons/Vector(2).svg';
@@ -50,6 +49,10 @@ import deliverImg from '../assets/single_product/deliver.svg';
 import returnImg from '../assets/single_product//return.svg';
 import paymentImg from '../assets/single_product/payment.svg';
 import basketImg from '../assets/single_product/basket.svg';
+import mailImg from '../assets/icons/mail.svg';
+import phoneWhiteImg from '../assets/icons/phone-white.svg';
+import phoneBlackImg from '../assets/icons/phone-black.svg';
+import locationImg from '../assets/icons/location.svg';
 
 export {
   RightArrowSlider,
@@ -64,7 +67,6 @@ export {
   LaptopPalette,
   SamsungImg,
   CatalogIcon,
-  PhoneIcon,
   PhoneIconWhite,
   HeartIcon,
   HeartIconWhite,
@@ -104,4 +106,8 @@ export {
   returnImg,
   paymentImg,
   basketImg,
+  mailImg,
+  phoneWhiteImg,
+  phoneBlackImg,
+  locationImg,
 };
