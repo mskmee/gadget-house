@@ -71,6 +71,39 @@ const Carousels: FC<ICarouselsProps> = ({
     }
   }, [prevClick, nextClick]);
 
+  useEffect(() => {
+    const allSlideElements = Array.from(
+      containerRef.current?.querySelectorAll('.slick-track .slick-slide') || [],
+    );
+    const dataIndexLessThanZero = allSlideElements.filter((el) => {
+      const dataIndex = el.getAttribute('data-index');
+      return dataIndex !== null && Number(dataIndex) < 0;
+    });
+
+    const dataIndexMoreThanZero = allSlideElements.filter((el) => {
+      const dataIndex = el.getAttribute('data-index');
+      return dataIndex !== null && Number(dataIndex) >= 0;
+    });
+
+    dataIndexLessThanZero?.map((el) => {
+      el.removeAttribute('tabindex');
+      const childrenWithTabindex2 = el.querySelector('a');
+      childrenWithTabindex2?.remove();
+    });
+
+    dataIndexMoreThanZero?.map((el) => {
+      if (el.classList.contains('slick-active')) {
+        el.removeAttribute('tabindex');
+        const childrenWithTabindex = el.querySelectorAll('[tabindex]');
+        childrenWithTabindex.forEach((el) => el.removeAttribute('tabindex'));
+      } else {
+        el.removeAttribute('tabindex');
+        const childrenWithTabindex2 = el.querySelector('a');
+        childrenWithTabindex2?.remove();
+      }
+    });
+  }, []);
+
   return (
     <div
       className={`${style.carouselContainer} ${classname}`}

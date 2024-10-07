@@ -25,6 +25,7 @@ import { rateEmptyImg, rateImg } from '@/assets/constants';
 import { formatDate } from '@/utils/formatDate';
 import DOMPurify from 'dompurify';
 import classNames from 'classnames';
+import { saveReviews } from '@/utils/saveReview';
 
 const maxLength = 500;
 
@@ -116,6 +117,7 @@ export const SingleProductPage: FC = () => {
 
   const saveReview = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    saveReviews(1, 101, 'Great product! I highly recommend it.');
     setValue([
       ...storageValue,
       {
