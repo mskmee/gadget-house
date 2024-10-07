@@ -17,48 +17,48 @@ export const SmartphoneCard: FC<ISmartphoneCard> = ({ product, classname }) => {
   const { isLiked, handleClickBuy, handleClickLike } = useProductCardHandlers();
 
   const productRating = product.rate ?? 0;
-  const encodedTitle = encodeURIComponent(product?.title || '');
+  const encodedTitle = encodeURIComponent(product.title || '');
 
   return (
     <>
       <Link
         className={`${styles.cardConatiner} ${classname} `}
-        key={product?.id}
+        key={product.id}
         to={`/smartphone/${encodedTitle}`}
+        tabIndex={0}
       >
         <div
-          className={`${styles.cardContainerTop} ${
-            Array.isArray(product?.hasAnotherColor)
-              ? styles.alignCenter
-              : styles.alignStart
-          }`}
+          className={classNames(styles.cardContainerTop, {
+            [styles.alignCenter]: Array.isArray(product.anotherColors),
+            [styles.alignStart]: !Array.isArray(product.anotherColors),
+          })}
         >
           <div className={styles.productImage}>
-            <img src={product?.img} alt="Product image" />
+            <img src={product.img} alt="Product image" />
           </div>
 
           <div
             className={`${styles.cardConatinerLike} ${
-              !Array.isArray(product?.hasAnotherColor) ? styles.marginTop : ''
+              !Array.isArray(product.anotherColors) ? styles.marginTop : ''
             }`}
           >
             <img
               onClick={handleClickLike}
-              src={isLiked ? product?.likeIcon : product?.likeIconClick}
+              src={isLiked ? product.likeIcon : product.likeIconClick}
               alt="Like"
               className={styles.likeIcon}
             />
-            {product?.colorPalette ? (
+            {product.colorPalette ? (
               <img
-                src={product?.colorPalette}
+                src={product.colorPalette}
                 className={styles.colorPalette}
                 alt="Palette image"
               />
             ) : (
-              Array.isArray(product?.hasAnotherColor) &&
-              product?.hasAnotherColor.length > 0 && (
+              Array.isArray(product.anotherColors) &&
+              product.anotherColors.length > 0 && (
                 <div className={styles['accessories-colors']}>
-                  {product?.hasAnotherColor.map((color: string) => (
+                  {product.anotherColors.map((color: string) => (
                     <div
                       key={color}
                       style={{ backgroundColor: color }}
@@ -73,7 +73,9 @@ export const SmartphoneCard: FC<ISmartphoneCard> = ({ product, classname }) => {
           </div>
         </div>
         <div className={styles.cardContainerBottom}>
-          <h3>{product?.title}</h3>
+          <h3>
+            {product.title} {product.id}
+          </h3>
           <div className={styles.cardRate}>
             <Rate
               className="reviews_rate-stars"
@@ -90,11 +92,11 @@ export const SmartphoneCard: FC<ISmartphoneCard> = ({ product, classname }) => {
             />
             <div className={styles['card-code']}>
               <span>code:</span>
-              <span>{product?.code}</span>
+              <span>{product.code}</span>
             </div>
           </div>
           <div className={styles.cardPriceContainer}>
-            <p>{product?.price}</p>
+            <p>{product.price}</p>
             <BasketIcon handleClickBuy={handleClickBuy} />
           </div>
         </div>

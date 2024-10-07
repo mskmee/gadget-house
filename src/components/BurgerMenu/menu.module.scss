@@ -35,4 +35,16 @@
   align-items: center;
   gap: 16px;
   margin-top: 42px;
+  padding-left: 24px;
+}
+
+.paddingContainer {
+  padding: 24px 20px 0 24px;
+}
+
+@media (max-width: 1070px) {
+  header {
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.08);
+    background: rgb(255, 255, 255);
+  }
 }
