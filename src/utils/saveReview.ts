@@ -1,4 +1,8 @@
-export const saveReviews = async (userId, productId, reviewBody) => {
+export const saveReviews = async (
+  userId: number,
+  productId: number,
+  reviewBody: string,
+) => {
   const url = 'https://store-gadget-home.koyeb.app/api/v1/reviews/1';
 
   const data = {

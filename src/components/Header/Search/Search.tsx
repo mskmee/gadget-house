@@ -21,7 +21,6 @@ function SearchField({ status, onHover }: SearchFieldProps) {
           style: { borderColor: '#fff' },
           suffix: (
             <SearchIcon
-              backgroundcolor={'#00820D'}
               width={'24px'}
               height={'24px'}
               color={'#6a0dad'}
@@ -33,7 +32,6 @@ function SearchField({ status, onHover }: SearchFieldProps) {
         return {
           suffix: (
             <SearchIcon
-              backgroundcolor={'#00820D'}
               width={'24px'}
               height={'24px'}
               color="#A5A5A5"
