@@ -1,0 +1,12 @@
+.container {
+  display: block;
+}
+
+.true {
+  transition: all ease 0.2s;
+}
+
+.false {
+  transition: all ease 0.2s;
+  transform: rotate(-180deg);
+}

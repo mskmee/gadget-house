@@ -6,4 +6,8 @@
   --green-active-color: #00680a;
   --carousel-theme-color: #eae4ee;
   --white-color: #ffffff;
+  --gray-100-color: #d4d4d4;
+  --gray-300-color: #b3aeae;
+  --gray-500-color: #808080;
+  --card-active-shadow: 0px 4px 4px 0px #00000040;
 }
