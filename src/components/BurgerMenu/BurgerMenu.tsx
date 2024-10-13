@@ -1,13 +1,10 @@
-import { RightArrow } from '@/assets/constants';
 import { Drawer } from 'antd';
-
 import styles from '@/components/BurgerMenu/menu.module.scss';
-import { Link } from 'react-router-dom';
-import items from './constants';
 import ButtonNav from '@/components/Button/Button';
 import buttonData from '@/constants/ButtonConstants';
 import Header from '@/components/Header/Header';
 import { useMenuContext } from '@/context/menuContext.ts';
+import { ProductList } from './ProductList';
 
 export default function BurgerMenu() {
   const { onMenuClose, isMenuOpen } = useMenuContext();
@@ -25,21 +22,7 @@ export default function BurgerMenu() {
         <div>
           <Header />
         </div>
-        <div className={styles.paddingContainer}>
-          <ul className={styles.burgerMenuTop}>
-            {items.map((item) => (
-              <li key={item.key}>
-                <Link to={item.link} className={styles.burgerMenuTopItem}>
-                  <div className={styles.burgerMenuTopItemRight}>
-                    <img src={item.img} alt={item.title} />
-                    <p style={item.style}>{item.title}</p>
-                  </div>
-                  <img src={RightArrow} alt="Right Arrow" />
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <ProductList isBurgerProductList={true} />
         <div className={styles.burgerMenuBottom}>
           {buttonData.slice(0, 3).map((item) => (
             <ButtonNav

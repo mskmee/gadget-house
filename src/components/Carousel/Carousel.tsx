@@ -71,10 +71,12 @@ const Carousels: FC<ICarouselsProps> = ({
     }
   }, [prevClick, nextClick]);
 
-  useEffect(() => {
+  /*   useEffect(() => {
     const allSlideElements = Array.from(
       containerRef.current?.querySelectorAll('.slick-track .slick-slide') || [],
     );
+    console.log(allSlideElements);
+
     const dataIndexLessThanZero = allSlideElements.filter((el) => {
       const dataIndex = el.getAttribute('data-index');
       return dataIndex !== null && Number(dataIndex) < 0;
@@ -84,6 +86,7 @@ const Carousels: FC<ICarouselsProps> = ({
       const dataIndex = el.getAttribute('data-index');
       return dataIndex !== null && Number(dataIndex) >= 0;
     });
+    console.log(dataIndexMoreThanZero);
 
     dataIndexLessThanZero?.map((el) => {
       el.removeAttribute('tabindex');
@@ -92,6 +95,8 @@ const Carousels: FC<ICarouselsProps> = ({
     });
 
     dataIndexMoreThanZero?.map((el) => {
+      console.log(el);
+
       if (el.classList.contains('slick-active')) {
         el.removeAttribute('tabindex');
         const childrenWithTabindex = el.querySelectorAll('[tabindex]');
@@ -102,11 +107,11 @@ const Carousels: FC<ICarouselsProps> = ({
         childrenWithTabindex2?.remove();
       }
     });
-  }, []);
+  }, []); */
 
   return (
     <div
-      className={`${style.carouselContainer} ${classname}`}
+      className={`${style.carouselContainer} ${style[classname]}`}
       style={
         classname === 'photos-carousel'
           ? { backgroundColor: 'transparent' }
@@ -126,7 +131,7 @@ const Carousels: FC<ICarouselsProps> = ({
         responsive={
           responsive || [
             {
-              breakpoint: 3200,
+              breakpoint: 2520,
               settings: {
                 slidesToShow: 5,
                 slidesToScroll: 1,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styles from './slidernav.module.css';
+import styles from './slidernav.module.scss';
 
 import { useState } from 'react';
 import { RightArrowSlider, RightArrowSliderClick } from '@/assets/constants';

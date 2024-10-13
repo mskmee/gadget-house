@@ -28,7 +28,6 @@ const items = [
     title: 'SALE',
     img: Sale,
     link: '/sale',
-    style: { color: '#F01A1A' },
   },
 ];
 

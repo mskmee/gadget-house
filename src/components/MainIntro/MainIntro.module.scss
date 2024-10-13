@@ -1,0 +1,10 @@
+.product-list {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 0 50px;
+  > img {
+    align-self: flex-end;
+    max-height: 732px;
+  }
+}

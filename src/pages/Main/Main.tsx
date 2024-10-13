@@ -1,21 +1,26 @@
 import Benefits from '@/components/benefitsList/benefits';
-import BrandCard from '@/components/Card/BrandCard';
-import { LaptopCard } from '@/components/Card/LaptopCard';
+import { BrandCard } from '@/components/Card/BrandCard';
 import Carousels from '@/components/Carousel/Carousel';
 import SliderNav from '@/components/SliderNav/SliderNav';
-import SmartphoneCard from '@/components/Card/SmartphoneCard';
-import { data, laptopData } from '@/components/Card/constants';
+import { MyCard } from '@/components/Card/MyCard';
+import {
+  smartphoneData,
+  laptopData,
+  brandData,
+  previouslyReviewedData,
+} from '@/components/Card/constants';
+import { MainIntro } from '@/components/MainIntro';
 
 const brandConatinerResponsiveSettings = [
   {
-    breakpoint: 3200,
+    breakpoint: 2220,
     settings: {
       slidesToShow: 6,
       slidesToScroll: 1,
     },
   },
   {
-    breakpoint: 1420,
+    breakpoint: 1700,
     settings: {
       slidesToShow: 5,
       slidesToScroll: 1,
@@ -40,16 +45,19 @@ const brandConatinerResponsiveSettings = [
 export default function Main() {
   return (
     <>
+      <MainIntro />
       <SliderNav text="Smartphone" link="/smartphones" />
       <Carousels
         classname="mobile-carousel"
         sliderClassName="mobile-slider"
-        countSlideToShow={4}
+        countSlideToShow={5}
       >
-        {Array.from(Array(8), (_, i) => (
-          <div key={i}>
-            <SmartphoneCard product={data[0]} classname="smartphone-carousel" />
-          </div>
+        {Array.from({ length: 8 }, (_, i) => (
+          <MyCard
+            key={`smartphone-${i}`}
+            product={smartphoneData[i % smartphoneData.length]}
+            classname="smartphone"
+          />
         ))}
       </Carousels>
 
@@ -59,10 +67,11 @@ export default function Main() {
         countSlideToShow={5}
         responsive={brandConatinerResponsiveSettings}
       >
-        {Array.from(Array(9), (_, i) => (
-          <div key={i}>
-            <BrandCard />
-          </div>
+        {Array.from({ length: 10 }, (_, i) => (
+          <BrandCard
+            key={`brand-${i}`}
+            product={brandData[i % brandData.length]}
+          />
         ))}
       </Carousels>
 
@@ -70,12 +79,14 @@ export default function Main() {
       <Carousels
         classname="laptop-carousel"
         sliderClassName="laptop-slider"
-        countSlideToShow={4}
+        countSlideToShow={5}
       >
-        {Array.from(Array(8), (_, i) => (
-          <div key={i}>
-            <LaptopCard product={laptopData[0]} classname="laptop-carousel" />
-          </div>
+        {Array.from({ length: 8 }, (_, i) => (
+          <MyCard
+            key={`laptop-${i}`}
+            product={laptopData[i % laptopData.length]}
+            classname="laptop"
+          />
         ))}
       </Carousels>
 
@@ -83,15 +94,15 @@ export default function Main() {
       <Carousels
         classname="viewed-carousel"
         sliderClassName="viewed-slider"
-        countSlideToShow={4}
+        countSlideToShow={5}
       >
         {Array.from(Array(8), (_, i) => (
-          <div key={i}>
-            <SmartphoneCard
-              product={data[0]}
-              classname="viewed-carousel"
-            ></SmartphoneCard>
-          </div>
+          <MyCard
+            key={`reviewed-${i}`}
+            product={previouslyReviewedData[i % previouslyReviewedData.length]}
+            classname="previously-reviewed"
+            index={i}
+          ></MyCard>
         ))}
       </Carousels>
       <Benefits />

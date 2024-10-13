@@ -1,22 +1,15 @@
-import { Card } from 'antd';
-import { brandData } from './constants';
-import styles from './card.module.css';
-import classNames from 'classnames';
+import { FC } from 'react';
+import styles from './card.module.scss';
+import { IBrandCard } from '@/interfaces/interfaces';
 
-export default function BrandCard() {
-  return (
-    <>
-      {brandData.map((item) => (
-        <Card
-          className={classNames(
-            styles.cardConatiner,
-            styles.cardBrandConatiner,
-          )}
-          key={item.id}
-        >
-          <img src={item.img} className={styles.brandImg} alt="brand-images" />
-        </Card>
-      ))}
-    </>
-  );
+interface IBrandCardProps {
+  product: IBrandCard;
 }
+
+export const BrandCard: FC<IBrandCardProps> = ({ product }) => {
+  return (
+    <div className={styles.cardBrandConatiner} key={product.id}>
+      <img src={product.img} className={styles.brandImg} alt="brand-images" />
+    </div>
+  );
+};
