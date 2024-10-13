@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 export function useProductCardHandlers() {
   const [isClicked, setIsClicked] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
 
-  const handleClickBuy = (e) => {
+  const handleClickBuy = (e: React.MouseEvent<SVGSVGElement>) => {
     e.preventDefault();
     setIsClicked(true);
     setTimeout(() => {
@@ -12,7 +12,7 @@ export function useProductCardHandlers() {
     }, 150);
   };
 
-  const handleClickLike = (e) => {
+  const handleClickLike = (e: React.MouseEvent<SVGSVGElement>) => {
     e.preventDefault();
     setIsLiked((prevState) => !prevState);
   };
