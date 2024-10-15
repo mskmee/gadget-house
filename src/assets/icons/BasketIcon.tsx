@@ -12,7 +12,10 @@ export const BasketIcon: FC<IBasketIconProps> = ({ handleClickBuy }) => {
       viewBox="0 0 43 43"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      onClick={handleClickBuy}
+      onClick={(e) => {
+        e.preventDefault();
+        handleClickBuy();
+      }}
     >
       <rect width="43" height="43" rx="10" fill="#00820D" />
       <path

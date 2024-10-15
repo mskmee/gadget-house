@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
-import SmartphoneCard from '../Card/SmartphoneCard';
-import { productAccessories } from '../Card/constants';
+import { productAccessoriesData } from '../Card/constants';
 import Carousels from '../Carousel/Carousel';
 import style from './SingleProduct.module.scss';
+import { MyCard } from '../Card/MyCard';
 
 export const ProductAccessories: FC = () => {
   return (
@@ -15,12 +15,9 @@ export const ProductAccessories: FC = () => {
         sliderClassName="accessories-slider"
         countSlideToShow={4}
       >
-        {productAccessories?.map((accessory) => (
+        {productAccessoriesData?.map((accessory) => (
           <React.Fragment key={accessory?.id}>
-            <SmartphoneCard
-              product={accessory}
-              classname="accessories-colors"
-            />
+            <MyCard product={accessory} classname="accessories-colors" />
           </React.Fragment>
         ))}
       </Carousels>

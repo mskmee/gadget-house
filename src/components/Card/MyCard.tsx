@@ -1,19 +1,21 @@
 import { FC } from 'react';
 import { Rate } from 'antd';
-import styles from './card.module.css';
+import styles from './card.module.scss';
 import { rateImg, rateEmptyImg } from '@/assets/constants';
 import { Link } from 'react-router-dom';
-import { useProductCardHandlers } from '@/hooks/useProductCardHandlers';
+import { useProductCardHandlers } from '@/hooks/hooks';
 import { IAccessory } from '@/interfaces/interfaces';
 import { BasketIcon } from '@/assets/icons/BasketIcon';
 import classNames from 'classnames';
+import { HeartIcon } from '@/assets/icons/HeartIcon';
 
-interface ILaptopCard {
+interface ISmartphoneCard {
   product: IAccessory;
   classname: string;
+  index?: number;
 }
 
-export const LaptopCard: FC<ILaptopCard> = ({ product, classname }) => {
+export const MyCard: FC<ISmartphoneCard> = ({ product, classname, index }) => {
   const { isLiked, handleClickBuy, handleClickLike } = useProductCardHandlers();
 
   const productRating = product.rate ?? 0;
@@ -24,7 +26,7 @@ export const LaptopCard: FC<ILaptopCard> = ({ product, classname }) => {
       <Link
         className={`${styles.cardConatiner} ${classname} `}
         key={product.id}
-        to={`/smartphone/${encodedTitle}`}
+        to={`/${classname}/${encodedTitle}`}
         tabIndex={0}
       >
         <div
@@ -33,7 +35,15 @@ export const LaptopCard: FC<ILaptopCard> = ({ product, classname }) => {
             [styles.alignStart]: !Array.isArray(product.anotherColors),
           })}
         >
-          <div className={styles.productImage}>
+          <div
+            className={
+              classname === 'previously-reviewed' && index !== 2 && index !== 6
+                ? styles.laptopCardImage
+                : classname === 'laptop'
+                  ? styles.laptopCardImage
+                  : styles.cardImage
+            }
+          >
             <img src={product.img} alt="Product image" />
           </div>
 
@@ -42,35 +52,23 @@ export const LaptopCard: FC<ILaptopCard> = ({ product, classname }) => {
               !Array.isArray(product.anotherColors) ? styles.marginTop : ''
             }`}
           >
-            <img
-              onClick={handleClickLike}
-              src={isLiked ? product.likeIcon : product.likeIconClick}
-              alt="Like"
-              className={styles.likeIcon}
-            />
-            {product.colorPalette ? (
-              <img
-                src={product.colorPalette}
-                className={styles.colorPalette}
-                alt="Palette image"
-              />
-            ) : (
-              Array.isArray(product.anotherColors) &&
-              product.anotherColors.length > 0 && (
-                <div className={styles['accessories-colors']}>
-                  {product.anotherColors.map((color: string) => (
-                    <div
-                      key={color}
-                      style={{ backgroundColor: color }}
-                      className={classNames({
-                        [styles['hasBorder']]: color === '#ffffff',
-                      })}
-                    ></div>
-                  ))}
-                </div>
-              )
+            <HeartIcon onClick={handleClickLike} isLiked={isLiked} />
+
+            {product.anotherColors.length > 0 && (
+              <div className={styles['accessories-colors']}>
+                {product.anotherColors.map((color: string) => (
+                  <div
+                    key={crypto.randomUUID()}
+                    style={{ backgroundColor: color }}
+                    className={classNames({
+                      [styles['hasBorder']]: color === '#ffffff',
+                    })}
+                  ></div>
+                ))}
+              </div>
             )}
           </div>
+          <div></div>
         </div>
         <div className={styles.cardContainerBottom}>
           <h3>{product.title}</h3>
@@ -102,5 +100,3 @@ export const LaptopCard: FC<ILaptopCard> = ({ product, classname }) => {
     </>
   );
 };
-
-export default LaptopCard;

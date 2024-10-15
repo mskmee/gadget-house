@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import phoneImage from '@/assets/images/phone-image.png';
 import type { CartItem } from '@/types/types';
+import { smartphoneImg_1 } from '@/assets/constants';
 
 type State = {
   cartItems: CartItem[];
@@ -12,28 +12,28 @@ const CART_ITEMS: CartItem[] = [
     code: '874524',
     quantity: '1',
     price: '45999',
-    href: phoneImage,
+    href: smartphoneImg_1,
   },
   {
     name: 'Samsung Galaxy S23FE 8/128Gb Purple',
     code: '745785',
     quantity: '1',
     price: '22299',
-    href: phoneImage,
+    href: smartphoneImg_1,
   },
   {
     name: 'TWS Samsung Galaxy Buds2 Lavender',
     code: '874774',
     quantity: '1',
     price: '4299',
-    href: phoneImage,
+    href: smartphoneImg_1,
   },
   {
     name: 'TWS Samsung Galaxy Buds2 Lavender',
     code: '874775',
     quantity: '1',
     price: '4299',
-    href: phoneImage,
+    href: smartphoneImg_1,
   },
 ];
 

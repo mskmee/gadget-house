@@ -1,7 +1,7 @@
 import {
   BasketIconBlack,
   BasketIconWhite,
-  HeartIcon,
+  HeartIconBlackBorder,
   HeartIconWhite,
   phoneBlackImg,
   PhoneIconWhite,
@@ -18,7 +18,7 @@ const buttonData = [
   },
   {
     id: '2',
-    img: HeartIcon,
+    img: HeartIconBlackBorder,
     clickImg: HeartIconWhite,
     hoverImg: HeartIconWhite,
   },

@@ -16,7 +16,7 @@ export default function Banner() {
             >
               <div className={styles.bannerContainerLeftItemRight}>
                 <img src={item.img} />
-                <p style={item.style}>{item.title}</p>
+                <p>{item.title}</p>
               </div>
               <img src={RightArrow} />
             </Link>

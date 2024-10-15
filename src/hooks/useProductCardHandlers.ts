@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 export function useProductCardHandlers() {
   const [isClicked, setIsClicked] = useState(false);
-  const [isLiked, setIsLiked] = useState(true);
+  const [isLiked, setIsLiked] = useState(false);
 
   const handleClickBuy = () => {
     setIsClicked(true);

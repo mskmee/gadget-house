@@ -1,17 +1,10 @@
 import RightArrowSlider from './icons/right-arrow-slider.svg';
 import Vector from './icons/Vector.svg';
 import RightArrowSliderClick from './icons/right-arrow-slider-click.svg';
-import PhoneImg from './images/phone-image.png';
-import LaptopImg from './images/laptop-img.png';
-import LikeIcon from './icons/Heart 3.svg';
-import LikeIconClick from './icons/Heart 5.svg';
-import PhonePalette from './images/phone-palette.svg';
-import LaptopPalette from './images/laptop-palette.svg';
 import BasketIcon from './icons/basket-icon.svg';
-import SamsungImg from './images/samsung-img.png';
 import CatalogIcon from './icons/catalog-icon.svg';
 import PhoneIconWhite from './icons/Vector(3).svg';
-import HeartIcon from './icons/heart-icon (2).svg';
+import HeartIconBlackBorder from './icons/heart-icon-black-border.svg';
 import HeartIconWhite from './icons/Vector(2).svg';
 import UserIcon from './icons/user-icon (2).svg';
 import UserIconWhite from './icons/user-icon-white (2).svg';
@@ -53,22 +46,32 @@ import mailImg from '../assets/icons/mail.svg';
 import phoneWhiteImg from '../assets/icons/phone-white.svg';
 import phoneBlackImg from '../assets/icons/phone-black.svg';
 import locationImg from '../assets/icons/location.svg';
+import mainPageIntroImg from '../assets/images/main_intro.webp';
+import smartphoneImg_1 from '../assets/images/smartphones/1.png';
+import smartphoneImg_2 from '../assets/images/smartphones/2.png';
+import smartphoneImg_3 from '../assets/images/smartphones/3.png';
+import smartphoneImg_4 from '../assets/images/smartphones/4.png';
+import laptopImg_1 from '../assets/images/laptops/1.png';
+import laptopImg_2 from '../assets/images/laptops/2.png';
+import laptopImg_3 from '../assets/images/laptops/3.png';
+import laptopImg_4 from '../assets/images/laptops/4.png';
+import brand_samsung from '../assets/images/brands/samsung.png';
+import brand_apple from '../assets/images/brands/apple.png';
+import brand_asus from '../assets/images/brands/asus.png';
+import brand_realme from '../assets/images/brands/realme.png';
+import brand_lenovo from '../assets/images/brands/lenovo.png';
+import previouslyViewed_1 from '../assets/images/previously-viewed/1.png';
+import previouslyViewed_2 from '../assets/images/previously-viewed/2.png';
+import previouslyViewed_3 from '../assets/images/previously-viewed/4.png';
 
 export {
   RightArrowSlider,
   Vector,
   RightArrowSliderClick,
-  PhoneImg,
-  LaptopImg,
-  LikeIcon,
-  LikeIconClick,
   BasketIcon,
-  PhonePalette,
-  LaptopPalette,
-  SamsungImg,
   CatalogIcon,
   PhoneIconWhite,
-  HeartIcon,
+  HeartIconBlackBorder,
   HeartIconWhite,
   UserIcon,
   UserIconWhite,
@@ -110,4 +113,21 @@ export {
   phoneWhiteImg,
   phoneBlackImg,
   locationImg,
+  mainPageIntroImg,
+  smartphoneImg_1,
+  smartphoneImg_2,
+  smartphoneImg_3,
+  smartphoneImg_4,
+  laptopImg_1,
+  laptopImg_2,
+  laptopImg_3,
+  laptopImg_4,
+  brand_apple,
+  brand_asus,
+  brand_lenovo,
+  brand_realme,
+  brand_samsung,
+  previouslyViewed_1,
+  previouslyViewed_2,
+  previouslyViewed_3,
 };
