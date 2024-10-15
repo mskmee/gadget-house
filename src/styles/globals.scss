@@ -62,6 +62,9 @@ body {
   justify-content: space-between;
   gap: 40px;
 }
+.brands-slider .slick-track {
+  gap: 15px;
+}
 
 .arrow-container {
   display: flex;
@@ -197,7 +200,6 @@ body {
 }
 
 .ant-carousel .slick-slide a:focus-visible {
-  border: 2px solid #1890ff; 
-  outline: none; 
+  border: 2px solid #1890ff;
+  outline: none;
 }
-

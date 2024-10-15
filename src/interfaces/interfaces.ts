@@ -32,9 +32,6 @@ export interface ICard {
   id: number;
   title: string;
   img: string;
-  likeIcon: string;
-  likeIconClick: string;
-  colorPalette?: string;
   rate: number;
   price: string;
   code: string;
@@ -43,4 +40,10 @@ export interface ICard {
 export interface IAccessory extends ICard {
   anotherColors: string[];
   isLiked: boolean;
+  isSmartphoneCard?: boolean;
 }
+
+export type IBrandCard = {
+  id: number;
+  img: string;
+};
