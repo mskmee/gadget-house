@@ -17,7 +17,7 @@ export default function BurgerMenu() {
         onClose={onMenuClose}
         open={isMenuOpen}
         placement="left"
-        bodyStyle={{ padding: '0', overflowY: 'auto' }}
+        styles={{ body: { padding: '0', overflowY: 'auto' } }}
       >
         <div>
           <Header />
