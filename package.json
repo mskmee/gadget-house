@@ -10,8 +10,10 @@
     "lint:prettify": "prettier --check \"**/*.{ts,tsx,json,md,css,html,js,jsx}\"",
     "prettify": "prettier --write \"**/*.{ts,tsx,json,md,css,html,js,jsx}\"",
     "lint:css": "npx stylelint \"src/**/*.css\"",
+    "lint:css:fix": "npx stylelint \"src/**/*.css\" --fix",
     "lint:js": "npx eslint \"src/**/*.{ts,tsx,js,jsx}\"",
     "lint": "npm run lint:css && npm run lint:js",
+    "lint:style": "stylelint \"src/**/*.css\"",
     "prepare": "husky install"
   },
   "dependencies": {
