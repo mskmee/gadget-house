@@ -47,3 +47,30 @@ export type IBrandCard = {
   id: number;
   img: string;
 };
+
+export interface IFilterProps {
+  filters: {
+    brands: string[];
+    builtInMemory: string[];
+    rams: string[];
+    colors: string[];
+    cores: string[];
+    screens: string[];
+  }
+  drawerVisible: boolean;
+  toggleDrawer: () => void;
+  onFilter: (
+    selectedOptions: Record<string, string[]>,
+    priceRange: number[],
+    minCameraMP: number,
+    maxCameraMP: number
+  ) => void;
+}
+
+export interface IOption {
+  data: string[],
+  title: string,
+  option: string,
+  btnMore: boolean,
+  optionChange: (option: string, value: string) => void,
+}
