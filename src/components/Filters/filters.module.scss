@@ -196,56 +196,38 @@
 
   &__sliderRange {
     :global {
+      filters__sliderRange.ant-slider:hover .ant-slider-track,
+      filters__sliderRange.ant-slider:hover .ant-slider-handle,
+      filters__sliderRange.ant-slider:hover .ant-tooltip-open {
+        background-color: var(--buttons-and-accent-color);
+        border-color: var(--buttons-and-accent-color);
+      }
       .ant-slider-rail {
         background-color: var(--text-color);
         height: 2px;
-
-        &:hover {
-          background-color: var(--buttons-and-accent-color);
-        }
       }
 
       .ant-slider-handle {
-        background-color: var(--buttons-and-accent-color);
+        width: 14px;
+        height: 14px;
+        inset-block-start: 0px;
+
+        &::after {
+          width: 14px;
+          height: 14px;
+          background-color: var(--buttons-and-accent-color);
+        }
+
+        &::before {
+          inset-inline-start: 0px;
+          inset-block-start: 0px;
+        }
       }
 
       .ant-slider-track {
-        background-color: var(--buttons-and-accent-color);
-
-        &:focus {
-          background-color: var(--buttons-and-accent-color);
-        }
+        height: 2px;
+        background-color: var(--text-color);
       }
-      // .ant-slider-handle {
-      //   background-color: var(--buttons-and-accent-color);
-
-      //   &:after {
-      //     box-shadow: 0 0 0 2px var(--buttons-and-accent-color);
-      //   }
-
-      //   &:focus {
-      //     &::after {
-      //       box-shadow: 0 0 0 2px var(--buttons-and-accent-color);
-      //     }
-      //   }
-      // }
-
-      // .ant-slider-handle {
-      //   &.ant-slider-handle-1,
-      //   &.ant-slider-handle-1 {
-      //     background-color: var(--buttons-and-accent-color);
-      //   }
-
-      //   &:after {
-      //     box-shadow: 0 0 0 2px var(--buttons-and-accent-color);
-      //   }
-
-      //   &:focus {
-      //     &::after {
-      //       box-shadow: 0 0 0 2px var(--buttons-and-accent-color);
-      //     }
-      //   }
-      // }
     }
   }
 
@@ -341,5 +323,24 @@
     padding-bottom: 28px;
     border-bottom: 1px solid var(--secondary-text-color);
     margin-bottom: 25px;
+  }
+}
+
+:global {
+  .ant-slider:hover .ant-slider-track {
+    background-color: var(--text-color);
+    height: 2px;
+  }
+  .ant-slider:hover .ant-tooltip-open {
+    background-color: var(--buttons-and-accent-color);
+  }
+
+  .ant-slider:hover .ant-slider-handle::before {
+    inset-inline-start: 0px;
+    inset-block-start: 0px;
+  }
+
+  .ant-slider:hover .ant-slider-handle::after {
+    box-shadow: 0 0 0 2px var(--buttons-and-accent-color);
   }
 }

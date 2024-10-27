@@ -134,7 +134,7 @@ export const FiltersMobile = ({
           <h4 className={styles.filters__optionName}>Price Range</h4>
           <Slider
             range
-            min={1000}
+            min={50}
             max={100000}
             value={priceRange}
             onChange={handleSliderChange}
@@ -145,8 +145,8 @@ export const FiltersMobile = ({
             <Col span={12}>
               <span className={styles.filters__priceText}>From</span>
               <InputNumber
-                min={1000}
-                max={99900}
+                min={50}
+                max={99999}
                 value={minPrice}
                 controls={false}
                 onChange={handleMinPriceChange}
@@ -166,7 +166,7 @@ export const FiltersMobile = ({
             <Col span={12}>
               <span className={styles.filters__priceText}>To</span>
               <InputNumber
-                min={1100}
+                min={51}
                 max={100000}
                 value={maxPrice}
                 controls={false}

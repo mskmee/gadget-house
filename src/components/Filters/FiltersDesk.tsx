@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Row, Col, InputNumber, Slider } from 'antd';
 
-import { filters } from './consts';
+import { filters, smartData } from './consts';
 import { Option } from './Option';
 
 import styles from './filters.module.scss';
@@ -11,6 +11,8 @@ export const FiltersDesk = () => {
     Record<string, string[]>
   >({});
   const [priceRange, setPriceRange] = useState<number[]>([11770, 65500]);
+  const [filteredProducts, setFilteredProducts] = useState<object[]>([]);
+  console.log('filteredProducts: ', filteredProducts);
   const [minPrice, setMinPrice] = useState<number>(11770);
   const [maxPrice, setMaxPrice] = useState<number>(65500);
   const [minMP, setMinMP] = useState<number>(0);
@@ -71,36 +73,38 @@ export const FiltersDesk = () => {
   const handleFilter = (
     options: Record<string, string[]>,
     priceRange: number[],
-    minMP: number,
-    maxMP: number,
+    minCameraMP: number,
+    maxCameraMP: number,
   ) => {
-    console.log('options: ', options);
-    console.log('priceRange: ', priceRange);
-    console.log('minMP: ', minMP);
-    console.log('maxMP: ', maxMP);
-    // const filtered = products.filter((product: any) => {
-    //   console.log('product: ', product);
+    const filtered = smartData.filter((product: any) => {
+      let isMatch = true;
 
-    //   // Проверка диапазона цен, если он выбран
-    //   if (priceRange && priceRange.length === 2) {
-    //     product.price >= priceRange[0] && product.price <= priceRange[1];
-    //   }
+      // Фильтр по диапазону цен
+      if (priceRange.length === 2) {
+        const [minPrice, maxPrice] = priceRange;
+        isMatch = product.price >= minPrice && product.price <= maxPrice;
+      }
 
-    //   // Проверка мегапикселей камеры, если они заданы
-    //   if (maxMP !== 0) {
-    //     product.cameraMP >= minMP && product.cameraMP <= maxMP;
-    //   }
+      // Фильтр по мегапикселям камеры
+      if (minCameraMP !== undefined && maxCameraMP !== undefined) {
+        isMatch =
+          isMatch &&
+          product.cameraMP >= minCameraMP &&
+          product.cameraMP <= maxCameraMP;
+      }
 
-    //   // Проверка опций (например, бренды, память), если они выбраны
-    //   if (Object.keys(options).length > 0) {
-    //     Object.keys(options).forEach((optionKey) => {
-    //       if (options[optionKey].length > 0) {
-    //         options[optionKey].includes(product[optionKey]);
-    //       }
-    //     });
-    //   }
-    // });
-    //  setFilteredProducts(filtered);
+      // Фильтр по выбранным опциям
+      if (Object.keys(options).length > 0) {
+        Object.keys(options).forEach((optionKey) => {
+          if (options[optionKey].length > 0) {
+            options[optionKey].includes(product[optionKey]);
+          }
+        });
+      }
+
+      return isMatch;
+    });
+    setFilteredProducts(filtered);
   };
 
   return (
@@ -113,7 +117,7 @@ export const FiltersDesk = () => {
           <h4 className={styles.filters__optionName}>Price Range</h4>
           <Slider
             range
-            min={1000}
+            min={50}
             max={100000}
             value={priceRange}
             onChange={handleSliderChange}
@@ -124,8 +128,8 @@ export const FiltersDesk = () => {
             <Col span={12}>
               <span className={styles.filters__priceText}>From</span>
               <InputNumber
-                min={1000}
-                max={99900}
+                min={50}
+                max={99999}
                 value={minPrice}
                 controls={false}
                 onChange={handleMinPriceChange}
@@ -145,7 +149,7 @@ export const FiltersDesk = () => {
             <Col span={12}>
               <span className={styles.filters__priceText}>To</span>
               <InputNumber
-                min={1100}
+                min={51}
                 max={100000}
                 value={maxPrice}
                 controls={false}
@@ -225,8 +229,8 @@ export const FiltersDesk = () => {
             <Col span={12} className={styles.filters__camera}>
               <span className={styles.filters__priceText}>From</span>
               <InputNumber
-                min={1}
-                max={643}
+                min={0}
+                max={644}
                 value={minMP}
                 defaultValue={0}
                 controls={false}
@@ -246,7 +250,7 @@ export const FiltersDesk = () => {
             <Col span={12} className={styles.filters__camera}>
               <span className={styles.filters__priceText}>To</span>
               <InputNumber
-                min={2}
+                min={0}
                 max={644}
                 value={maxMP}
                 defaultValue={0}
