@@ -48,6 +48,24 @@ export type IBrandCard = {
   img: string;
 };
 
+export interface IProduct {
+  id: number;
+  price: number;
+  category: string;
+  title: string;
+  img: string[];
+  basketIcon: string,
+  anotherColors: string[];
+  isLiked: boolean;
+  rate: number;
+  brand: string;
+  ram: number;
+  builtInMemory: number;
+  code: string;
+  cameraMP: number;
+  options?: Record<string, string[]> | undefined,
+}
+
 export interface IFilterProps {
   filters: {
     brands: string[];
@@ -60,10 +78,7 @@ export interface IFilterProps {
   drawerVisible: boolean;
   toggleDrawer: () => void;
   onFilter: (
-    selectedOptions: Record<string, string[]>,
-    priceRange: number[],
-    minCameraMP: number,
-    maxCameraMP: number
+    products: IProduct[],
   ) => void;
 }
 

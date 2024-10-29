@@ -55,20 +55,21 @@ import {
   previouslyViewed_2,
   previouslyViewed_3,
 } from '@/assets/constants';
+import { IProduct } from '@/interfaces/interfaces';
 
-export const smartData = [
+export const smartData: IProduct[] = [
   {
     id: 1,
     title: 'iPhone 15 Pro Silicone Case with MagSafe',
-    img: accessoriesImg1,
+    img: [accessoriesImg1],
     basketIcon: BasketIcon,
     anotherColors: [],
     isLiked: false,
     rate: 5,
     price: 2799,
     brand: 'Apple',
-    ram: 8, // ГБ оперативной памяти
-    builtInMemory: 32, // ГБ встроенной памяти
+    ram: 8,
+    builtInMemory: 32,
     code: '874364',
     category: 'smartphone',
     cameraMP: 15
@@ -76,14 +77,14 @@ export const smartData = [
   {
     id: 2,
     title: 'iPhone 15 Pro Silicone Case with MagSafe',
-    img: accessoriesImg2,
+    img: [accessoriesImg2],
     basketIcon: BasketIcon,
     anotherColors: [],
     isLiked: false,
     rate: 5,
     price: 799,
     brand: 'Apple',
-    ram: 8, // ГБ оперативной памяти
+    ram: 8,
     builtInMemory: 128, // ГБ встроенной памяти
     code: '875496',
     category: 'smartphone',
@@ -92,15 +93,15 @@ export const smartData = [
   {
     id: 3,
     title: 'iPhone 15 Pro Silicone Case with MagSafe',
-    img: accessoriesImg3,
+    img: [accessoriesImg3],
     basketIcon: BasketIcon,
     anotherColors: ['#FFFF00', '#00820D', '#1C1817', '#FFCBDB', '#00BFFF'],
     isLiked: false,
     rate: 5,
     price: 5799,
     brand: 'Apple',
-    ram: 8, // ГБ оперативной памяти
-    builtInMemory: 32, // ГБ встроенной памяти
+    ram: 8,
+    builtInMemory: 32,
     code: '456158',
     category: 'smartphone',
     cameraMP: 45
@@ -108,12 +109,15 @@ export const smartData = [
   {
     id: 4,
     title: 'iPhone 15 Pro Silicone Case with MagSafe',
-    img: accessoriesImg4,
+    img: [accessoriesImg4],
     basketIcon: BasketIcon,
     anotherColors: ['#ffffff', '#00BFFF', '#3EB489', '#FFCBDB', '#C8A2C8'],
     isLiked: false,
     rate: 5,
     price: 6799,
+    brand: 'Apple',
+    ram: 8,
+    builtInMemory: 32,
     code: '557769',
     category: 'smartphone',
     cameraMP: 45
@@ -121,15 +125,15 @@ export const smartData = [
   {
     id: 5,
     title: 'iPhone 15 Pro Silicone Case with MagSafe',
-    img: accessoriesImg2,
+    img: [accessoriesImg2],
     basketIcon: BasketIcon,
     anotherColors: ['#000', '#d84f34', '#236aed', '#FFCBDB', '#C8A2C8'],
     isLiked: false,
     rate: 3,
     price: 7199,
     brand: 'Apple',
-    ram: 8, // ГБ оперативной памяти
-    builtInMemory: 128, // ГБ встроенной памяти
+    ram: 8,
+    builtInMemory: 128,
     code: '173497',
     category: 'smartphone',
     cameraMP: 25
@@ -137,16 +141,15 @@ export const smartData = [
   {
     id: 6,
     title: 'iPhone 15 Pro Silicone Case with MagSafe',
-    img: accessoriesImg4,
-
+    img: [accessoriesImg4],
     basketIcon: BasketIcon,
     anotherColors: [],
     isLiked: false,
     rate: 4,
     price: 8835,
     brand: 'Apple',
-    ram: 8, // ГБ оперативной памяти
-    builtInMemory: 128, // ГБ встроенной памяти
+    ram: 8,
+    builtInMemory: 128,
     code: '157781',
     category: 'smartphone',
     cameraMP: 15

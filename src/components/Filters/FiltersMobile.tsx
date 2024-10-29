@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Drawer, Row, Col, Slider, InputNumber } from 'antd';
 import { DrawerStyles } from 'antd/es/drawer/DrawerPanel';
 
-import { IFilterProps } from '@/interfaces/interfaces';
+import { smartData } from './consts';
+import { IFilterProps, IProduct } from '@/interfaces/interfaces';
 import { Header } from '../components';
 import { Option } from './Option';
+
 import CloseSvg from '@/assets/icons/close.svg';
 
 import styles from './filters.module.scss';
@@ -21,10 +23,9 @@ export const FiltersMobile = ({
   const [priceRange, setPriceRange] = useState<number[]>([11770, 65500]);
   const [minPrice, setMinPrice] = useState<number>(11770);
   const [maxPrice, setMaxPrice] = useState<number>(65500);
-  const [minMP, setMinMP] = useState<number>(5);
-  const [maxMP, setMaxMP] = useState<number>(220);
+  const [minCameraMP, setMinMP] = useState<number>(5);
+  const [maxCameraMP, setMaxMP] = useState<number>(220);
 
-  // Обработчик опций (чекбоксов)
   const handleOptionChange = (optionKey: string, value: string) => {
     setSelectedOptions((prev) => {
       const newOptions = { ...prev };
@@ -40,44 +41,76 @@ export const FiltersMobile = ({
     });
   };
 
-  // Обновление диапазона цен через Slider
   const handleSliderChange = (value: number[]) => {
     setPriceRange(value);
     setMinPrice(value[0]);
     setMaxPrice(value[1]);
   };
 
-  // Обновление минимальной цены через InputNumber
   const handleMinPriceChange = (value: number | null) => {
-    if (value !== null) {
+    if (value) {
       setMinPrice(value);
       setPriceRange([value, maxPrice]);
     }
   };
 
-  // Обновление максимальной цены через InputNumber
   const handleMaxPriceChange = (value: number | null) => {
-    if (value !== null) {
+    if (value) {
       setMaxPrice(value);
       setPriceRange([minPrice, value]);
     }
   };
 
   const handleMinMPChange = (value: number | null) => {
-    if (value !== null) {
+    if (value) {
       setMinMP(value);
     }
   };
 
   const handleMaxMPChange = (value: number | null) => {
-    if (value !== null) {
+    if (value) {
       setMaxMP(value);
     }
   };
 
+  const filteredProducts = useMemo(() => {
+    return smartData.filter((product: IProduct) => {
+      let isMatch = true;
+
+      if (priceRange.length === 2) {
+        const [minPrice, maxPrice] = priceRange;
+        isMatch = product.price >= minPrice && product.price <= maxPrice;
+      }
+
+      if (minCameraMP && maxCameraMP) {
+        isMatch =
+          isMatch &&
+          product.cameraMP >= minCameraMP &&
+          product.cameraMP <= maxCameraMP;
+      }
+
+      if (Object.keys(selectedOptions).length > 0 && product.options) {
+        Object.keys(selectedOptions).forEach((optionKey) => {
+          if (selectedOptions[optionKey].length > 0) {
+            const productOption = product.options?.[optionKey];
+            if (productOption) {
+              isMatch =
+                isMatch &&
+                selectedOptions[optionKey].some((value) =>
+                  productOption.includes(value),
+                );
+            }
+          }
+        });
+      }
+
+      return isMatch;
+    });
+  }, [selectedOptions, priceRange, minCameraMP, maxCameraMP]);
+
   // Применение фильтра
   const applyFilter = () => {
-    onFilter(selectedOptions, priceRange, minMP, maxMP);
+    onFilter(filteredProducts);
     toggleDrawer();
   };
 
@@ -248,7 +281,7 @@ export const FiltersMobile = ({
               <InputNumber
                 min={1}
                 max={643}
-                value={minMP}
+                value={minCameraMP}
                 defaultValue={0}
                 controls={false}
                 onChange={handleMinMPChange}
@@ -269,7 +302,7 @@ export const FiltersMobile = ({
               <InputNumber
                 min={2}
                 max={644}
-                value={maxMP}
+                value={maxCameraMP}
                 defaultValue={0}
                 controls={false}
                 onChange={handleMaxMPChange}

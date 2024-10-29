@@ -1,15 +1,18 @@
 import { FiltersDesk } from '@/components/Filters/FiltersDesk';
+import { Filters } from '@/components/Filters/Filters';
+import { useMediaQuery } from 'react-responsive';
+
+import styles from './smartphones.module.scss';
 
 export default function Smartphones() {
-  return (
-    <div>
-      <div
-        className="container"
-        style={{ width: '1440', padding: '0px 50px', margin: '0 auto' }}
-      >
-        <h2>Smartphones</h2>
+  const isMobile = useMediaQuery({ query: '(max-width: 1070px)' });
 
-        <FiltersDesk />
+  return (
+    <div className={styles.smartpnones}>
+      <div className={`container ${styles.smartpnones__container}`}>
+        <h2 className={styles.smartpnones__title}>Smartphones</h2>
+
+        {isMobile ? <Filters /> : <FiltersDesk />}
       </div>
     </div>
   );

@@ -10,8 +10,6 @@ import {
   previouslyReviewedData,
 } from '@/components/Card/constants';
 import { MainIntro } from '@/components/MainIntro';
-import Filters from '@/components/Filters/Filters';
-import { useMediaQuery } from 'react-responsive';
 
 const brandConatinerResponsiveSettings = [
   {
@@ -45,12 +43,8 @@ const brandConatinerResponsiveSettings = [
 ];
 
 export default function Main() {
-  const isMobile = useMediaQuery({ query: '(max-width: 1070px)' });
-
   return (
     <>
-      {isMobile ? <Filters /> : null}
-
       <MainIntro />
       <SliderNav text="Smartphone" link="/smartphones" />
       <Carousels

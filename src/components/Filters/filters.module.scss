@@ -1,15 +1,8 @@
 .filtersMobile {
-  min-width: 320px;
-  margin-bottom: 24px;
-
-  &__container {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 20px 20px 0px 16px;
-  }
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   &__btn {
     height: 48px;
@@ -55,11 +48,13 @@
       .ant-input-affix-wrapper {
         display: inline-flex;
         height: 48px;
+        margin-right: 7px;
       }
 
       .ant-input-suffix {
         width: 48px;
         background-color: var(--green-color);
+        border-radius: 0 10px 10px 0;
       }
     }
   }

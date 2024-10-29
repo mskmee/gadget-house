@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Row, Col, InputNumber, Slider } from 'antd';
 
+import { IProduct } from '@/interfaces/interfaces';
 import { filters, smartData } from './consts';
 import { Option } from './Option';
 
@@ -11,14 +12,12 @@ export const FiltersDesk = () => {
     Record<string, string[]>
   >({});
   const [priceRange, setPriceRange] = useState<number[]>([11770, 65500]);
-  const [filteredProducts, setFilteredProducts] = useState<object[]>([]);
-  console.log('filteredProducts: ', filteredProducts);
+  const [, setFilteredProducts] = useState<IProduct[]>([]);
   const [minPrice, setMinPrice] = useState<number>(11770);
   const [maxPrice, setMaxPrice] = useState<number>(65500);
-  const [minMP, setMinMP] = useState<number>(0);
-  const [maxMP, setMaxMP] = useState<number>(0);
+  const [minCameraMP, setMinMP] = useState<number>(0);
+  const [maxCameraMP, setMaxMP] = useState<number>(0);
 
-  // Обработчик опций (чекбоксов)
   const handleOptionChange = (optionKey: string, value: string) => {
     setSelectedOptions((prev) => {
       const newOptions = { ...prev };
@@ -34,49 +33,40 @@ export const FiltersDesk = () => {
     });
   };
 
-  // Обновление диапазона цен через Slider
   const handleSliderChange = (value: number[]) => {
     setPriceRange(value);
     setMinPrice(value[0]);
     setMaxPrice(value[1]);
   };
 
-  // Обновление минимальной цены через InputNumber
   const handleMinPriceChange = (value: number | null) => {
-    if (value !== null) {
+    if (value) {
       setMinPrice(value);
       setPriceRange([value, maxPrice]);
     }
   };
 
-  // Обновление максимальной цены через InputNumber
   const handleMaxPriceChange = (value: number | null) => {
-    if (value !== null) {
+    if (value) {
       setMaxPrice(value);
       setPriceRange([minPrice, value]);
     }
   };
 
   const handleMinMPChange = (value: number | null) => {
-    if (value !== null) {
+    if (value) {
       setMinMP(value);
     }
   };
 
   const handleMaxMPChange = (value: number | null) => {
-    if (value !== null) {
+    if (value) {
       setMaxMP(value);
     }
   };
 
-  // Применение фильтра
-  const handleFilter = (
-    options: Record<string, string[]>,
-    priceRange: number[],
-    minCameraMP: number,
-    maxCameraMP: number,
-  ) => {
-    const filtered = smartData.filter((product: any) => {
+  const filteredProducts = useMemo(() => {
+    return smartData.filter((product: IProduct) => {
       let isMatch = true;
 
       // Фильтр по диапазону цен
@@ -86,7 +76,7 @@ export const FiltersDesk = () => {
       }
 
       // Фильтр по мегапикселям камеры
-      if (minCameraMP !== undefined && maxCameraMP !== undefined) {
+      if (minCameraMP && maxCameraMP) {
         isMatch =
           isMatch &&
           product.cameraMP >= minCameraMP &&
@@ -94,18 +84,26 @@ export const FiltersDesk = () => {
       }
 
       // Фильтр по выбранным опциям
-      if (Object.keys(options).length > 0) {
-        Object.keys(options).forEach((optionKey) => {
-          if (options[optionKey].length > 0) {
-            options[optionKey].includes(product[optionKey]);
+      if (Object.keys(selectedOptions).length > 0 && product.options) {
+        Object.keys(selectedOptions).forEach((optionKey) => {
+          if (selectedOptions[optionKey].length > 0) {
+            const productOption = product.options?.[optionKey];
+            if (productOption) {
+              isMatch =
+                isMatch &&
+                selectedOptions[optionKey].some((value) =>
+                  productOption.includes(value),
+                );
+            }
           }
         });
       }
 
       return isMatch;
     });
-    setFilteredProducts(filtered);
-  };
+  }, [selectedOptions, priceRange, minCameraMP, maxCameraMP]);
+
+  const handleFilter = () => setFilteredProducts(filteredProducts);
 
   return (
     <aside className={styles.filtersDesk}>
@@ -231,7 +229,7 @@ export const FiltersDesk = () => {
               <InputNumber
                 min={0}
                 max={644}
-                value={minMP}
+                value={minCameraMP}
                 defaultValue={0}
                 controls={false}
                 onChange={handleMinMPChange}
@@ -252,7 +250,7 @@ export const FiltersDesk = () => {
               <InputNumber
                 min={0}
                 max={644}
-                value={maxMP}
+                value={maxCameraMP}
                 defaultValue={0}
                 controls={false}
                 onChange={handleMaxMPChange}
@@ -297,7 +295,7 @@ export const FiltersDesk = () => {
       <button
         className={styles.filters__apply}
         type="submit"
-        onClick={() => handleFilter(selectedOptions, priceRange, minMP, maxMP)}
+        onClick={() => handleFilter()}
         disabled={!selectedOptions}
       >
         Apply
