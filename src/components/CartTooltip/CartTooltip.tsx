@@ -1,26 +1,32 @@
 import { useMemo } from 'react';
-import { useAppSelector } from '@/hooks/hooks';
-import ProductItem from './ProductItem/ProductItem';
 import styles from './CartTooltip.module.scss';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { ProductItem } from './ProductItem/ProductItem';
 
-export default function CardTooltip() {
-  const cartItems = useAppSelector((state) => state.cardReducer.cartItems);
+export const CardTooltip = () => {
+  const cardItems = useTypedSelector((state) => state.shopping_card.products);
+
   const totalCardSum = useMemo(
-    () => cartItems.reduce((acc, { price }) => acc + Number(price), 0),
-    [cartItems],
+    () =>
+      cardItems.reduce(
+        (acc, { price }) => acc + Number(price.replace(/\s/g, '')),
+        0,
+      ),
+    [cardItems],
   );
+  const formattedPrice = new Intl.NumberFormat('ru-RU').format(totalCardSum);
 
   return (
     <div className={styles.container}>
       <div className={styles.cards}>
-        {cartItems.map(({ code, ...props }) => (
-          <ProductItem code={code} {...props} key={code} />
+        {cardItems.map((product) => (
+          <ProductItem key={product.id} product={product} />
         ))}
       </div>
       <div className={styles.total}>
-        <span className={styles.price}>{totalCardSum} ₴</span>
+        <span className={styles.price}>{formattedPrice} ₴</span>
         <button>Go to basket</button>
       </div>
     </div>
   );
-}
+};

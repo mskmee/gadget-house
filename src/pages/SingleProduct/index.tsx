@@ -1,4 +1,4 @@
-import style from '@/components/SingleProduct/SingleProduct.module.scss';
+import style from '@/components/SingleProduct/Product.module.scss';
 import { currentProduct } from '@/constants/singleProduct';
 import {
   ChangeEventHandler,
@@ -12,7 +12,7 @@ import {
 import { TReview } from '@/types/Review.type';
 import { CustomBreadcrumbs } from '@/components/SingleProduct/CustomBreadcrumbs';
 import { MenuItems } from '@/components/SingleProduct/MenuItems';
-import { Product } from '@/components/SingleProduct/Product';
+import { Product } from '@/components/SingleProduct';
 import { ProductCharacteristics } from '@/components/SingleProduct/ProductCharacteristics';
 import { ProductPhotos } from '@/components/SingleProduct/ProductPhotos';
 import { ProductAccessories } from '@/components/SingleProduct/ProductAccessories';

@@ -1,5 +1,5 @@
 import type { StatusSearch } from '@/types/StatusSearch';
-import type { ButtonHTMLAttributes, CSSProperties, MouseEvent } from 'react';
+import type { ComponentType, CSSProperties, MouseEvent } from 'react';
 
 export interface SliderButtonProps {
   handlePrevClick: (event: MouseEvent) => void;
@@ -15,10 +15,10 @@ export interface SearchFieldProps {
   ) => void;
 }
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  icon: string;
-  clickImg: string;
-  hoverImg: string;
+export interface IButton {
+  id: string;
+  img: ComponentType;
+  href: string;
 }
 
 export interface StatusButtonProps {
@@ -28,19 +28,21 @@ export interface StatusButtonProps {
   style?: CSSProperties;
 }
 
-export interface ICard {
+export interface IProductCard {
   id: number;
   title: string;
+  href?: string;
   img: string;
   rate: number;
   price: string;
   code: string;
-}
-
-export interface IAccessory extends ICard {
   anotherColors: string[];
   isLiked: boolean;
   isSmartphoneCard?: boolean;
+}
+
+export interface IShoppingCard extends IProductCard {
+  quantity: number;
 }
 
 export type IBrandCard = {

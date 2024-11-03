@@ -24,8 +24,13 @@
         line-height: 150%;
         text-decoration: none;
         transition: 0.3s linear;
-        &:hover {
-          color: #a7aeeb;
+
+        > svg {
+          width: 34px;
+
+          path {
+            stroke: #fff;
+          }
         }
       }
     }
@@ -67,9 +72,6 @@
           line-height: 150%;
           text-decoration: none;
           transition: 0.3s linear;
-          &:hover {
-            color: #a7aeeb;
-          }
         }
       }
     }
@@ -88,9 +90,6 @@
         width: 100%;
         color: #f8f7fa;
         transition: 0.3s linear;
-        &:hover {
-          color: #a7aeeb;
-        }
       }
     }
   }
@@ -107,9 +106,6 @@
     text-decoration: none;
     font-size: rem(12px);
     transition: 0.3s linear;
-    &:hover {
-      color: #a7aeeb;
-    }
   }
 }
 

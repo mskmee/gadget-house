@@ -1,26 +1,28 @@
-import type { CartItem } from '@/types/types';
+import { FC } from 'react';
 import styles from './ProductItem.module.scss';
+import { IShoppingCard } from '@/interfaces/interfaces';
 
-export default function ProductItem({
-  code,
-  href,
-  name,
-  price,
-  quantity,
-}: CartItem) {
+interface IProductItemProps {
+  product: IShoppingCard;
+}
+
+export const ProductItem: FC<IProductItemProps> = ({ product }) => {
   return (
-    <div key={code} className={styles.card}>
-      <img src={href} alt={name} width="100" height="112" />
+    <div key={product.id} className={styles.card}>
+      <div>
+        <img src={product.img} alt={product.title} />
+      </div>
+
       <div>
         <div className={styles.nameWrapper}>
-          <span className={styles.name}>{name}</span>
-          <span className={styles.details}>code:{code}</span>
+          <span className={styles.name}>{product.title}</span>
+          <span className={styles.details}>code:{product.code}</span>
         </div>
         <div className={styles.priceWrapper}>
-          <span className={styles.details}>{quantity} piece</span>
-          <span className={styles.price}>{price} ₴</span>
+          <span className={styles.details}>{product.quantity} piece</span>
+          <span className={styles.price}>{product.price} ₴</span>
         </div>
       </div>
     </div>
   );
-}
+};

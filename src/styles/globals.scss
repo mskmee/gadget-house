@@ -73,6 +73,9 @@ body {
   margin-top: 24px;
   margin-right: 20px;
 }
+.ant-dropdown {
+  background: rgba(28, 24, 23, 0.77);
+}
 
 .btn-arrow-prev {
   display: flex;
@@ -92,7 +95,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 32px;
+  width: 36px;
   height: 32px;
   border: 2px solid #00820d;
   border-left: none;
@@ -202,4 +205,23 @@ body {
 .ant-carousel .slick-slide a:focus-visible {
   border: 2px solid #1890ff;
   outline: none;
+}
+
+.product-page-photo-modal {
+  max-width: 1240px;
+  width: 100% !important;
+  .ant-modal-content {
+    margin: 100px 0;
+    padding: 56px !important;
+    .ant-modal-close {
+      top: 56px !important;
+      right: 56px !important;
+      width: 48px;
+      height: 48px;
+      span {
+        font-size: 23px;
+        color: #1c1817;
+      }
+    }
+  }
 }

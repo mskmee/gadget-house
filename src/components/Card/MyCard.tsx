@@ -1,32 +1,49 @@
-import { FC } from 'react';
+import { FC, MouseEvent } from 'react';
 import { Rate } from 'antd';
 import styles from './card.module.scss';
 import { rateImg, rateEmptyImg } from '@/assets/constants';
 import { Link } from 'react-router-dom';
 import { useProductCardHandlers } from '@/hooks/hooks';
-import { IAccessory } from '@/interfaces/interfaces';
+import { IProductCard } from '@/interfaces/interfaces';
 import { BasketIcon } from '@/assets/icons/BasketIcon';
 import classNames from 'classnames';
 import { HeartIcon } from '@/assets/icons/HeartIcon';
+import { useActions } from '@/hooks/useActions';
+import { toast } from 'react-toastify';
 
-interface ISmartphoneCard {
-  product: IAccessory;
+interface ISmartphoneCardProps {
+  product: IProductCard;
   classname: string;
   index?: number;
 }
 
-export const MyCard: FC<ISmartphoneCard> = ({ product, classname, index }) => {
-  const { isLiked, handleClickBuy, handleClickLike } = useProductCardHandlers();
+export const MyCard: FC<ISmartphoneCardProps> = ({
+  product,
+  classname,
+  index,
+}) => {
+  const { isLiked, handleClickLike } = useProductCardHandlers();
+  const { addToStore } = useActions();
 
   const productRating = product.rate ?? 0;
-  const encodedTitle = encodeURIComponent(product.title || '');
+
+  const addToBasket = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    addToStore(product);
+    toast.success('The product has been successfully added to your cart!', {
+      position: 'top-center',
+      type: 'success',
+      autoClose: 4000,
+      theme: 'dark',
+    });
+  };
 
   return (
     <>
       <Link
         className={`${styles.cardConatiner} ${classname} `}
         key={product.id}
-        to={`/${classname}/${encodedTitle}`}
+        to={`/${classname}/${product.id}/${product.href}`}
         tabIndex={0}
       >
         <div
@@ -54,7 +71,7 @@ export const MyCard: FC<ISmartphoneCard> = ({ product, classname, index }) => {
           >
             <HeartIcon onClick={handleClickLike} isLiked={isLiked} />
 
-            {product.anotherColors.length > 0 && (
+            {product.anotherColors?.length > 0 && (
               <div className={styles['accessories-colors']}>
                 {product.anotherColors.map((color: string) => (
                   <div
@@ -92,8 +109,10 @@ export const MyCard: FC<ISmartphoneCard> = ({ product, classname, index }) => {
             </div>
           </div>
           <div className={styles.cardPriceContainer}>
-            <p>{product.price}</p>
-            <BasketIcon handleClickBuy={handleClickBuy} />
+            <p>{product.price} ₴</p>
+            <button onClick={addToBasket}>
+              <BasketIcon />
+            </button>
           </div>
         </div>
       </Link>

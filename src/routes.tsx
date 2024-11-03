@@ -6,6 +6,10 @@ import Smartphones from './pages/Smartphones/Smartphones';
 import Laptops from './pages/Laptops/Laptops';
 import Viewed from './pages/Viewed/Viewed';
 import { SingleProductPage } from './pages/SingleProduct';
+import { SearchResults } from './pages/SearchResults';
+import { UserFavorites } from './pages/Dashboard/Favorites';
+import { SignIn } from './pages/SignIn';
+import { BasketPage } from './pages/Basket';
 
 export const routes = createBrowserRouter([
   {
@@ -19,6 +23,22 @@ export const routes = createBrowserRouter([
       {
         path: AppRoute.SINGLE_PRODUCT,
         element: <SingleProductPage />,
+      },
+      {
+        path: AppRoute.SEARCH_RESULTS,
+        element: <SearchResults />,
+      },
+      {
+        path: AppRoute.USER_FAVORITES,
+        element: <UserFavorites />,
+      },
+      {
+        path: AppRoute.SIGN_IN,
+        element: <SignIn />,
+      },
+      {
+        path: AppRoute.BASKET_PAGE,
+        element: <BasketPage />,
       },
     ],
   },

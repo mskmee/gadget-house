@@ -1,11 +1,9 @@
+@import '@/styles//functions';
+
 .headerTop {
-  margin-top: 25px;
-  margin-left: 50px;
-  margin-right: 50px;
-  margin-bottom: 26px;
+  padding: 25px 50px;
 
   &Logo {
-    text-align: left;
     font-size: 34px;
     margin: 0;
     line-height: 120%;
@@ -43,13 +41,19 @@
 }
 
 .headerBottom {
-  padding-left: 50px;
-  padding-right: 50px;
+  padding: 0 50px;
   background-color: var(--carousel-theme-color);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 40px;
   flex-direction: row;
+  position: relative;
+  z-index: 999;
+
+  &:focus {
+    border: none;
+    outline: none;
+  }
 
   &Catalog {
     padding: 15px 194px 16px 22px;
@@ -58,7 +62,10 @@
     justify-content: center;
     flex-direction: row;
     gap: 10px;
+    border: none;
     background-color: var(--theme-color);
+    position: relative;
+    transition: 0.3s linear;
 
     h1 {
       margin: 0;
@@ -68,24 +75,151 @@
       color: var(--white-color);
     }
   }
-
+  &Catalog__active {
+    cursor: pointer;
+    background-color: #593d7b;
+  }
   &Buttons {
     display: flex;
     align-items: center;
-    flex-direction: row;
     gap: 16px;
+    position: relative;
+    > a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 45px;
+      height: 42px;
+      background-color: #ffffff;
+      border: none;
+      border: 1px solid #eae4ee;
+      border-radius: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      position: relative;
 
+      &:hover {
+        background-color: #4da856;
+        > svg path {
+          stroke: #fff;
+        }
+      }
+
+      &:active {
+        background-color: #00680a;
+      }
+      > div {
+        position: absolute;
+        bottom: 3px;
+        right: 3px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 16px;
+        height: 16px;
+        background-color: #6f4c9a;
+        border-radius: 50%;
+        > span {
+          font-size: rem(10px);
+          color: #fff;
+          line-height: 8px;
+        }
+      }
+    }
+
+    > a svg {
+      path {
+        stroke: #000;
+        stroke-width: 1.5px;
+      }
+    }
+    > a:nth-child(2) {
+      &:hover svg path {
+        stroke-width: 1px;
+        stroke: #fff;
+      }
+      svg {
+        width: 23px;
+        path {
+          stroke: #000;
+          stroke-width: 0.5px;
+        }
+      }
+    }
+
+    > a:nth-child(4) svg {
+      width: 34px;
+      height: 34px;
+      path {
+        stroke-width: 1px;
+      }
+    }
+
+    > a:nth-child(4):hover + div {
+      display: block;
+    }
     .tooltip {
-      top: 119px;
-      right: 46px;
+      display: none;
+      top: 46px;
+      right: 0;
       z-index: 1;
       position: absolute;
       transform: translateY(-10px);
       transition:
         opacity 0.3s ease,
         transform 0.3s ease;
+      &:hover {
+        display: block;
+      }
     }
   }
+}
+
+.fixedHeader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 8%);
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); // Adjust color and opacity
+  opacity: 0;
+  pointer-events: none; // Prevent interactions
+  transition: opacity 0.3s ease;
+  z-index: 998;
+}
+
+.overlay.active {
+  opacity: 1;
+  pointer-events: auto; // Allow interactions when active
+}
+
+.catalogListWrap {
+  position: absolute;
+  left: 0;
+  top: 94px;
+  width: 100%;
+  z-index: 999;
+  overflow-y: scroll;
+  display: none;
+
+  > div {
+    position: absolute;
+    top: 0;
+    left: 50px;
+  }
+}
+.catalogListWrapVisible {
+  display: block;
+  background: rgba(28, 24, 23, 0.77);
 }
 
 .tooltip-visible {
@@ -94,10 +228,13 @@
 
 @media (max-width: 1070px) {
   .headerBottom {
-    padding-right: 16px;
-    padding-left: 16px;
-    padding-bottom: 16px;
+    padding: 0 16px;
     background-color: var(--white-color);
+    .catalogListWrap {
+      > div {
+        left: 16px;
+      }
+    }
   }
 
   .badgeCount {
