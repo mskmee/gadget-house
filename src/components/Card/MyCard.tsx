@@ -75,7 +75,7 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
               <div className={styles['accessories-colors']}>
                 {product.anotherColors.map((color: string) => (
                   <div
-                    key={color}
+                    key={crypto.randomUUID()}
                     style={{ backgroundColor: color }}
                     className={classNames({
                       [styles['hasBorder']]: color === '#ffffff',
