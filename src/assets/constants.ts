@@ -1,15 +1,7 @@
 import RightArrowSlider from './icons/right-arrow-slider.svg';
 import Vector from './icons/Vector.svg';
 import RightArrowSliderClick from './icons/right-arrow-slider-click.svg';
-import BasketIcon from './icons/basket-icon.svg';
 import CatalogIcon from './icons/catalog-icon.svg';
-import PhoneIconWhite from './icons/Vector(3).svg';
-import HeartIconBlackBorder from './icons/heart-icon-black-border.svg';
-import HeartIconWhite from './icons/Vector(2).svg';
-import UserIcon from './icons/user-icon (2).svg';
-import UserIconWhite from './icons/user-icon-white (2).svg';
-import BasketIconBlack from './icons/basket-icon (2).svg';
-import BasketIconWhite from './icons/basket-icon-white (2).svg';
 import BurgerMenuIcon from './icons/burger-menu-icon.svg';
 import RightArrow from './icons/arrow-right.svg';
 import Smartphone from './icons/smartphone.svg';
@@ -41,10 +33,7 @@ import productIsNotAvailableImg from '../assets/single_product/product_not_avail
 import deliverImg from '../assets/single_product/deliver.svg';
 import returnImg from '../assets/single_product//return.svg';
 import paymentImg from '../assets/single_product/payment.svg';
-import basketImg from '../assets/single_product/basket.svg';
 import mailImg from '../assets/icons/mail.svg';
-import phoneWhiteImg from '../assets/icons/phone-white.svg';
-import phoneBlackImg from '../assets/icons/phone-black.svg';
 import locationImg from '../assets/icons/location.svg';
 import mainPageIntroImg from '../assets/images/main_intro.webp';
 import smartphoneImg_1 from '../assets/images/smartphones/1.png';
@@ -63,20 +52,17 @@ import brand_lenovo from '../assets/images/brands/lenovo.png';
 import previouslyViewed_1 from '../assets/images/previously-viewed/1.png';
 import previouslyViewed_2 from '../assets/images/previously-viewed/2.png';
 import previouslyViewed_3 from '../assets/images/previously-viewed/4.png';
+import headphones from './images/basket-products-img/headphones.png';
+import basketPhoneImg from './images/basket-products-img/phone.png';
+import searchInputClear from './icons/search_input_clear.svg';
+import {BasketIcon} from './icons/BasketIcon'
 
 export {
+  BasketIcon,
   RightArrowSlider,
   Vector,
   RightArrowSliderClick,
-  BasketIcon,
   CatalogIcon,
-  PhoneIconWhite,
-  HeartIconBlackBorder,
-  HeartIconWhite,
-  UserIcon,
-  UserIconWhite,
-  BasketIconBlack,
-  BasketIconWhite,
   BurgerMenuIcon,
   RightArrow,
   Smartphone,
@@ -108,10 +94,7 @@ export {
   deliverImg,
   returnImg,
   paymentImg,
-  basketImg,
   mailImg,
-  phoneWhiteImg,
-  phoneBlackImg,
   locationImg,
   mainPageIntroImg,
   smartphoneImg_1,
@@ -130,4 +113,7 @@ export {
   previouslyViewed_1,
   previouslyViewed_2,
   previouslyViewed_3,
+  headphones,
+  basketPhoneImg,
+  searchInputClear,
 };

@@ -1,39 +1,28 @@
-import {
-  BasketIconBlack,
-  BasketIconWhite,
-  HeartIconBlackBorder,
-  HeartIconWhite,
-  phoneBlackImg,
-  PhoneIconWhite,
-  UserIcon,
-  UserIconWhite,
-} from '@/assets/constants';
+import { NavPhoneIcon } from '@/assets/icons/NavPhoneIcon';
+import { BasketIcon } from '../assets/icons/BasketIcon';
+import { NavHeartIcon } from '@/assets/icons/NavHeartIcon';
+import { NavUserIcon } from '@/assets/icons/NavUserIcon';
+import { IButton } from '@/interfaces/interfaces';
 
-const buttonData = [
+export const buttonData: IButton[] = [
   {
     id: '1',
-    img: phoneBlackImg,
-    clickImg: PhoneIconWhite,
-    hoverImg: PhoneIconWhite,
+    img: NavPhoneIcon,
+    href: 'tel:+380573333333',
   },
   {
     id: '2',
-    img: HeartIconBlackBorder,
-    clickImg: HeartIconWhite,
-    hoverImg: HeartIconWhite,
+    img: NavHeartIcon,
+    href: '/dashboard/user-1522/favorites',
   },
   {
     id: '3',
-    img: UserIcon,
-    clickImg: UserIconWhite,
-    hoverImg: UserIconWhite,
+    img: NavUserIcon,
+    href: '/sign-in',
   },
   {
     id: '4',
-    img: BasketIconBlack,
-    clickImg: BasketIconWhite,
-    hoverImg: BasketIconWhite,
+    img: BasketIcon,
+    href: '/basket',
   },
 ];
-
-export default buttonData;

@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 import { currentProduct } from '@/constants/singleProduct';
-import style from './SingleProduct.module.scss';
+import style from './Product.module.scss';
 
 export const ProductCharacteristics: FC = () => {
   const [isShowed, setIsShowed] = useState(false);

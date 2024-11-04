@@ -1,13 +1,17 @@
 import { Outlet } from 'react-router-dom';
-import Header from '@/components/Header/Header';
+import { Header } from '@/components/Header/Header';
 import Footer from '@/components/Footer';
-import style from './Layout.module.scss';
+import styles from './Layout.module.scss';
 import { useState } from 'react';
-import BurgerMenu from '@/components/BurgerMenu/BurgerMenu.tsx';
+import { BurgerMenu } from '@/components/BurgerMenu';
 import { MenuContext } from '@/context/menuContext.ts';
+import { ScrollToTop } from '@/utils/scrollToTop';
+import { useIsFixedHeader } from '@/hooks/useIsFixedHeader';
+import classNames from 'classnames';
 
 const Layout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const isFixedHeader = useIsFixedHeader();
 
   const handleMenuOpen = () => {
     setIsMenuOpen(true);
@@ -28,10 +32,15 @@ const Layout = () => {
         <BurgerMenu />
       </MenuContext.Provider>
 
-      <main className={style['main-content']}>
+      <main
+        className={classNames(styles['main-content'], {
+          [styles.isFixedHeader]: isFixedHeader,
+        })}
+      >
         <Outlet />
       </main>
       <Footer />
+      <ScrollToTop />
     </>
   );
 };

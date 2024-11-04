@@ -1,21 +1,41 @@
 .headerButton {
   display: flex;
-  flex-direction: row;
+  justify-content: center;
   align-items: center;
-  width: 45;
-  height: 45px;
-  padding: 12px;
-  background-color: var(--white-color);
+  width: 45px;
+  height: 42px;
+  background-color: #ffffff;
   border: none;
   border: 1px solid #eae4ee;
   border-radius: 10px;
   cursor: pointer;
 
   &:hover {
-    background-color: var(--green-color);
+    background-color: #4da856;
+    > svg path {
+      stroke: #fff;
+    }
   }
 
   &:active {
-    background-color: var(--green-active-color);
+    background-color: #00680a;
   }
+}
+
+.headerButton svg {
+  path {
+    stroke: #000;
+    stroke-width: 1.5px;
+  }
+}
+.headerButton:nth-child(2) svg {
+  path {
+    stroke: #000;
+    stroke-width: 1px;
+  }
+}
+
+.headerButton:last-child svg {
+  width: 28px;
+  height: 28px;
 }

@@ -1,7 +1,7 @@
 import Benefits from '@/components/benefitsList/benefits';
 import { BrandCard } from '@/components/Card/BrandCard';
 import Carousels from '@/components/Carousel/Carousel';
-import SliderNav from '@/components/SliderNav/SliderNav';
+import { SliderNav } from '@/components/SliderNav/SliderNav';
 import { MyCard } from '@/components/Card/MyCard';
 import {
   smartphoneData,

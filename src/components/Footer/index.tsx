@@ -7,7 +7,8 @@ import {
   FaPinterestP,
   FaFacebookF,
 } from 'react-icons/fa';
-import { mailImg, phoneWhiteImg, locationImg } from '@/assets/constants';
+import { mailImg, locationImg } from '@/assets/constants';
+import { NavPhoneIcon } from '@/assets/icons/NavPhoneIcon';
 
 const toClientsMenu = [
   { id: 1, menuText: 'About company', href: '/about-us' },
@@ -52,11 +53,11 @@ const Footer = () => {
             <img src={mailImg} alt="footer phone pic" /> GadgetHouse@gmail.com
           </a>
           <a href="tel:+380573333333">
-            <img src={phoneWhiteImg} alt="footer phone pic" />
+            <NavPhoneIcon />
             (057) 333 33 33
           </a>
           <a
-            href="https://www.google.co.uk/maps/place/4+Av.+des+Sciences,+91190+Gif-sur-Yvette,+France/@48.7123907,2.1632694,17z/data=!3m1!4b1!4m6!3m5!1s0x47e67f4f661d9579:0x2cf64b4a674b3120!8m2!3d48.7123872!4d2.1658443!16s%2Fg%2F11sxwy7vw9?entry=ttu"
+            href="https://www.google.co.uk/maps/place/Hostynyy+Dvir,+Kontraktova+Square,+4,+Kyiv,+Ukrayna,+02000/@50.464881,30.5144404,17z/data=!3m1!4b1!4m6!3m5!1s0x40d4ce4026cba28f:0xb1e17e87b1141676!8m2!3d50.464881!4d30.5170153!16s%2Fg%2F11c0ptqwyv?entry=ttu&g_ep=EgoyMDI0MTAxNi4wIKXMDSoASAFQAw%3D%3D"
             target="_blank"
           >
             <img src={locationImg} alt="footer phone pic" />

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import style from './SingleProduct.module.scss';
+import style from './Product.module.scss';
 import {
   productImg1,
   productImg2,

@@ -1,35 +1,46 @@
-import React from 'react';
+import { FC, MouseEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './slidernav.module.scss';
 
-import { useState } from 'react';
 import { RightArrowSlider, RightArrowSliderClick } from '@/assets/constants';
-import { TextLink } from '@/types/TextLink';
 
-export default function SliderNav({ text, link }: TextLink) {
+interface ISliderNavProps {
+  text: string;
+  link: string;
+  isVisibleSeeMoreBtn?: boolean;
+}
+
+export const SliderNav: FC<ISliderNavProps> = ({
+  text,
+  link,
+  isVisibleSeeMoreBtn = true,
+}) => {
   const [isClicked, setIsClicked] = useState(false);
 
-  const handleClick = (event: React.MouseEvent) => {
+  const handleClick = (event: MouseEvent) => {
     event.stopPropagation;
     setIsClicked((prevState) => !prevState);
   };
   return (
     <div className={styles.sliderText}>
       <h2>{text}</h2>
-      <Link to={link} className={styles.buttonContent} onClick={handleClick}>
-        <div
-          className={`${styles.buttonLink} ${isClicked ? styles.buttonLinkActive : ''}`}
-        >
-          <p>See more</p>
-          <img
-            src={isClicked ? RightArrowSliderClick : RightArrowSlider}
-            alt="Right icon"
+      {isVisibleSeeMoreBtn && (
+        <Link to={link} className={styles.buttonContent} onClick={handleClick}>
+          <div
+            className={`${styles.buttonLink} ${isClicked ? styles.buttonLinkActive : ''}`}
+          >
+            <p>See more</p>
+            <img
+              src={isClicked ? RightArrowSliderClick : RightArrowSlider}
+              alt="Right icon"
+            />
+          </div>
+
+          <hr
+            className={`${styles.buttonHr} ${isClicked ? styles.buttonHrActive : ''}`}
           />
-        </div>
-        <hr
-          className={`${styles.buttonHr} ${isClicked ? styles.buttonHrActive : ''}`}
-        />
-      </Link>
+        </Link>
+      )}
     </div>
   );
-}
+};
