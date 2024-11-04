@@ -55,8 +55,10 @@ import previouslyViewed_3 from '../assets/images/previously-viewed/4.png';
 import headphones from './images/basket-products-img/headphones.png';
 import basketPhoneImg from './images/basket-products-img/phone.png';
 import searchInputClear from './icons/search_input_clear.svg';
+import {BasketIcon} from './icons/BasketIcon'
 
 export {
+  BasketIcon,
   RightArrowSlider,
   Vector,
   RightArrowSliderClick,
