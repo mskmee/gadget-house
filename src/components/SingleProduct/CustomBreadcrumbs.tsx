@@ -1,11 +1,13 @@
-import { FC } from 'react';
 import { useParams } from 'react-router-dom';
 import { Breadcrumb } from 'antd';
-import style from './SingleProduct.module.scss';
+import style from './Product.module.scss';
 import { AppRoute } from '@/enums/Route';
+import { laptopData, smartphoneData } from '../Card/constants';
 
-export const CustomBreadcrumbs: FC = () => {
-  const { smartphone, title } = useParams();
+export const CustomBreadcrumbs = () => {
+  const { smartphone, id } = useParams();
+  const allProducts = [...smartphoneData, ...laptopData];
+  const currentProduct = allProducts.find((el) => id && el.id === +id);
 
   const breadcrumbItems = [
     {
@@ -17,10 +19,13 @@ export const CustomBreadcrumbs: FC = () => {
       href: '#',
     },
     {
-      title: title?.[0].toUpperCase().concat(title?.slice(1)),
+      title: currentProduct?.title[0]
+        .toUpperCase()
+        .concat(currentProduct.title.slice(1)),
       href: '#',
     },
   ];
+
   return (
     <Breadcrumb
       className={style['single-product__breadcrumb']}

@@ -1,5 +1,5 @@
 import { FC, useRef, useState } from 'react';
-import style from './SingleProduct.module.scss';
+import style from './Product.module.scss';
 import classNames from 'classnames';
 
 const menuItems = [

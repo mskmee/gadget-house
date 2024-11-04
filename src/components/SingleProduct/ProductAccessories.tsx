@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { productAccessoriesData } from '../Card/constants';
 import Carousels from '../Carousel/Carousel';
-import style from './SingleProduct.module.scss';
+import style from './Product.module.scss';
 import { MyCard } from '../Card/MyCard';
 
 export const ProductAccessories: FC = () => {

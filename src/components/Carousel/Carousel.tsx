@@ -1,8 +1,8 @@
 import { FC, ReactNode, useEffect, useRef, useState } from 'react';
-import style from './carousel.module.css';
+import style from './carousel.module.scss';
 import { Carousel } from 'antd';
 import SliderButtons from './SliderButtons';
-import { ResponsiveSettings } from '../../types/responsive';
+import { ResponsiveSettings } from '@/types/responsive';
 import type { CarouselRef } from 'antd/es/carousel';
 
 interface ICarouselsProps {

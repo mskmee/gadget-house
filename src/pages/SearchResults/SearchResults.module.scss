@@ -1,0 +1,32 @@
+@import '@/styles/functions';
+
+.container {
+  margin: 88px 0;
+  padding: 0 50px;
+  display: flex;
+  column-gap: 30px;
+  row-gap: 20px;
+}
+.nothingEntered {
+  width: 100%;
+  text-align: center;
+}
+.nothingFound {
+  margin: 0 auto;
+  max-width: 743px;
+  width: 100%;
+  color: #1c1817;
+  text-align: center;
+
+  > h2 {
+    font-size: rem(42px);
+    font-weight: 500;
+    line-height: 150%;
+    word-wrap: break-word;
+  }
+  > p {
+    margin: 0 auto;
+    width: 65%;
+    line-height: 150%;
+  }
+}

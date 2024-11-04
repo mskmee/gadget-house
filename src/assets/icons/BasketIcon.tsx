@@ -1,36 +1,25 @@
-import { FC } from 'react';
-
-interface IBasketIconProps {
-  handleClickBuy: () => void;
-}
-
-export const BasketIcon: FC<IBasketIconProps> = ({ handleClickBuy }) => {
+export const BasketIcon = () => {
   return (
     <svg
-      width="43"
-      height="43"
-      viewBox="0 0 43 43"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      onClick={(e) => {
-        e.preventDefault();
-        handleClickBuy();
-      }}
     >
-      <rect width="43" height="43" rx="10" fill="#00820D" />
       <path
-        d="M26.4582 15.6339V12.7708C26.4047 10.0851 24.1857 7.95032 21.4998 8.00088C18.814 7.95032 16.595 10.0851 16.5415 12.7708V15.6325"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M5.00063 16.1407C4.96273 18.2335 6.6278 19.9613 8.72063 20.0007H15.2806C17.3735 19.9613 19.0385 18.2335 19.0006 16.1407L18.5636 11.4527C18.4527 9.68529 17.216 8.19053 15.5006 7.75065C15.1432 7.64667 14.7729 7.59348 14.4006 7.59265H9.60063C9.22837 7.59348 8.85808 7.64667 8.50063 7.75065C6.78636 8.19067 5.55026 9.68433 5.43863 11.4507L5.00063 16.1407Z"
         stroke="white"
-        strokeWidth={2}
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M11.5834 25.7436C11.5297 28.7084 13.8886 31.1562 16.8534 31.212H26.1467C29.1117 31.1562 31.4704 28.7084 31.4167 25.7436L30.7976 19.1023C30.6405 16.5985 28.8885 14.4809 26.4584 13.8577C25.9521 13.7104 25.4275 13.6351 24.9 13.6339H18.1001C17.5727 13.6351 17.0481 13.7104 16.5418 13.8577C14.1132 14.4811 12.3621 16.5971 12.2039 19.0995L11.5834 25.7436Z"
+        d="M15.5005 9.38862V7.36762C15.4628 5.4718 13.8964 3.96493 12.0005 4.00062C10.1046 3.96493 8.53823 5.4718 8.50049 7.36762V9.38762"
         stroke="white"
-        strokeWidth={2}
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />

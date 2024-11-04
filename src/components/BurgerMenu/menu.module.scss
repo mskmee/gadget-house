@@ -1,4 +1,4 @@
-@import '../../styles/functions';
+@import '@/styles/functions';
 
 .burgerMenuTop {
   li:last-child p {
@@ -15,8 +15,10 @@
     font-family: Inter, sans-serif;
     border-bottom: 1px solid #f0f0f0;
 
-    &:hover {
-      color: #000000;
+    &:hover,
+    &:active,
+    &:focus-within {
+      width: 102%;
     }
 
     &Right {
@@ -26,10 +28,6 @@
       align-items: center;
       gap: 8px;
       margin-bottom: 8px;
-
-      p {
-        font-size: 16px;
-      }
     }
   }
 }

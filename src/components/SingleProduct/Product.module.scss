@@ -1,11 +1,9 @@
-@import '../../styles//functions';
+@import '@/styles/functions';
 
 @mixin custom-box-shadow {
   background-color: #fff;
   border-radius: 20px;
-  box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.19);
-  -webkit-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.19);
-  -moz-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.19);
+  box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.08);
 }
 
 @mixin btn-style {
@@ -111,18 +109,19 @@
       align-items: center;
       justify-content: center;
     }
-    .product_carousel-current-picture > img {
+
+    .content-img {
       max-width: 514px;
       width: 100%;
       cursor: pointer;
     }
-    .product_carousel-current-picture img:first-child,
-    .product_carousel-current-picture img:last-child {
+    .arrow-left,
+    .arrow-right {
       display: inline-block;
       width: 48px;
       height: 48px;
     }
-    .product_carousel-current-picture img:last-child {
+    .arrow-right {
       transform: rotate(180deg);
     }
     .product_carousel-slicks > ul {
@@ -306,7 +305,6 @@
       z-index: 0;
       background-color: #00820d;
       border-radius: 12px;
-      color: #fff;
       cursor: pointer;
       border: none !important;
       position: relative;
@@ -323,7 +321,7 @@
     }
 
     button > div {
-      padding: 13px 31px;
+      padding: 13px 29px;
       display: flex;
       align-items: center;
       gap: 4px;
@@ -333,6 +331,14 @@
       border-radius: 8px;
       color: white;
       background-color: inherit;
+      > svg {
+        width: 26px;
+        height: 26px;
+      }
+      > span {
+        font-weight: 500;
+        line-height: 150%;
+      }
     }
 
     button::after {
@@ -371,6 +377,118 @@
     }
     button:hover > div {
       background-color: #169d24;
+    }
+  }
+}
+
+// add to basket btn  _normal variant ---start
+.AddToBasketButton {
+  max-height: 56px;
+  padding: 3px;
+  z-index: 0;
+  background-color: #00820d;
+  border-radius: 12px;
+  cursor: pointer;
+  border: none !important;
+  position: relative;
+  overflow: hidden;
+  color: #656565;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover > div {
+    background-color: #169d24;
+  }
+}
+
+.AddToBasketButton > div {
+  padding: 13px 31px;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+  z-index: 1;
+  justify-content: center;
+  border-radius: 8px;
+  color: white;
+  background-color: inherit;
+}
+// add to basket btn  _normal variant ---end
+
+//prodoct photo modal
+.photoModal {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  column-gap: 65px;
+  row-gap: 20px;
+  > div {
+    max-width: initial;
+    padding: 0;
+    box-shadow: none;
+
+    .product_carousel-current-picture {
+      position: relative;
+      justify-content: space-between;
+
+      .content-img {
+        max-width: initial;
+        width: 618px;
+        cursor: default;
+      }
+      .arrow-left,
+      .arrow-right {
+        width: 70px;
+        height: 70px;
+      }
+
+      > span {
+        position: absolute;
+        top: 0;
+        left: 0;
+        font-size: rem(24px);
+        color: #1c1817;
+        line-height: 150%;
+      }
+    }
+
+    .product_carousel-slicks {
+      display: flex;
+      justify-content: flex-end;
+      align-items: end;
+      column-gap: 65px;
+      ul {
+        gap: 24px;
+        li {
+          width: 80px;
+          min-height: 80px !important;
+          height: 80px !important;
+        }
+      }
+    }
+  }
+  .photoModalBottom_right {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 16px;
+    > span {
+      font-size: rem(42px);
+      font-weight: 500;
+      line-height: 150%;
+      color: #1c1817;
+    }
+    > button {
+      padding: 3px 4px;
+      &:hover {
+        background-color: #169d24;
+      }
+      span {
+        font-size: rem(16px);
+        font-weight: 500;
+      }
     }
   }
 }
@@ -578,6 +696,7 @@
   > h2 {
     font-size: rem(42px);
     font-weight: 500;
+    line-height: 150%;
   }
   > ul {
     margin-top: 24px;
