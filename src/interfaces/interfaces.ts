@@ -1,5 +1,5 @@
 import type { StatusSearch } from '@/types/StatusSearch';
-import type { ComponentType, CSSProperties, MouseEvent } from 'react';
+import type { ComponentType, CSSProperties, MouseEvent, ReactElement } from 'react';
 
 export interface SliderButtonProps {
   handlePrevClick: (event: MouseEvent) => void;
@@ -56,7 +56,7 @@ export interface IProduct {
   category: string;
   title: string;
   img: string[];
-  basketIcon: string,
+  basketIcon: () => ReactElement,
   anotherColors: string[];
   isLiked: boolean;
   rate: number;
