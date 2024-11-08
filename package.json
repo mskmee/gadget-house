@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc -b && vite build",
     "preview": "vite preview",
     "lint:prettify": "prettier --check \"**/*.{ts,tsx,json,md,css,html,js,jsx}\"",
     "prettify": "prettier --write \"**/*.{ts,tsx,json,md,css,html,js,jsx}\"",
@@ -19,7 +19,6 @@
     "@reduxjs/toolkit": "^2.2.7",
     "@types/lodash.debounce": "^4.0.9",
     "antd": "^5.19.4",
-    "axios": "^1.7.7",
     "classnames": "^2.5.1",
     "dompurify": "^3.1.6",
     "framer-motion": "^11.5.4",
