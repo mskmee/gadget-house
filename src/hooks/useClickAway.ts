@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, RefObject } from 'react';
 
 /**
  * Custom hook to detect clicks outside of a specified element.
@@ -6,17 +6,17 @@ import { useEffect } from 'react';
  * @param {React.RefObject<HTMLElement>} ref - The reference to the element.
  * @param {Function} onClickAway - The callback function to execute when clicking outside.
  */
-const useClickAway = (ref, onClickAway) => {
+const useClickAway = (ref: RefObject<HTMLElement>, onClickAway: () => void) => {
   useEffect(() => {
     // Function to handle click events
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: MouseEvent ) => {
+      const target = event.target as HTMLElement;
+
       // Check if the click is outside the referenced element
       if (
-        event.target.id !== 'header-logo' ||
-        event.target.id !== 'catalog-list'
+        target.id !== 'header-logo' &&
+        target.id !== 'catalog-list'
       ) {
-        console.log(event.target);
-
         onClickAway();
       }
     };
