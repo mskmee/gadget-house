@@ -1,9 +1,12 @@
 import { useMemo, useState } from 'react';
 import { Row, Col, InputNumber, Slider } from 'antd';
+import cn from 'classnames';
 
 import { IProduct } from '@/interfaces/interfaces';
 import { filters, smartData } from './consts';
 import { Option } from './Option';
+
+import ArrowUpSvg from '@/assets/icons/arrow-up.svg';
 
 import styles from './filters.module.scss';
 
@@ -17,6 +20,11 @@ export const FiltersDesk = () => {
   const [maxPrice, setMaxPrice] = useState<number>(65500);
   const [minCameraMP, setMinMP] = useState<number>(0);
   const [maxCameraMP, setMaxMP] = useState<number>(0);
+  const [showCategory, setShowCategory] = useState(true);
+
+  const toggleShowCategory = () => {
+    setShowCategory(!showCategory);
+  };
 
   const handleOptionChange = (optionKey: string, value: string) => {
     setSelectedOptions((prev) => {
@@ -112,7 +120,7 @@ export const FiltersDesk = () => {
       <div className={styles.filters__wrapper}>
         {/* Price Range */}
         <Col span={24} className={styles.filters__option}>
-          <h4 className={styles.filters__optionName}>Price Range</h4>
+          <h4 className={styles.filters__optionName}>Price</h4>
           <Slider
             range
             min={50}
@@ -123,7 +131,7 @@ export const FiltersDesk = () => {
           />
 
           <Row gutter={16}>
-            <Col span={12}>
+            <Col span={13} style={{ paddingLeft: '6px' }}>
               <span className={styles.filters__priceText}>From</span>
               <InputNumber
                 min={50}
@@ -132,19 +140,20 @@ export const FiltersDesk = () => {
                 controls={false}
                 onChange={handleMinPriceChange}
                 style={{
-                  width: '70px',
+                  width: '75px',
                   border: '1px solid #1c1817',
                   borderRadius: '10px',
                   padding: '4px 0px',
                   backgroundColor: 'white',
                   fontSize: '16px',
                   color: '#1c1817',
+                  textAlign: 'center',
                 }}
               />
               <span className={styles.filters__priceCurrency}>₴</span>
             </Col>
 
-            <Col span={12}>
+            <Col span={11} style={{ paddingLeft: '0px' }}>
               <span className={styles.filters__priceText}>To</span>
               <InputNumber
                 min={51}
@@ -153,7 +162,7 @@ export const FiltersDesk = () => {
                 controls={false}
                 onChange={handleMaxPriceChange}
                 style={{
-                  width: '72px',
+                  width: '75px',
                   border: '1px solid #1c1817',
                   borderRadius: '10px',
                   padding: '4px 0px',
@@ -172,7 +181,7 @@ export const FiltersDesk = () => {
           <Option
             data={filters.brands ?? []}
             option="brands"
-            title="Brands"
+            title="Brand"
             btnMore={true}
             optionChange={handleOptionChange}
           />
@@ -182,9 +191,9 @@ export const FiltersDesk = () => {
         {filters.builtInMemory && (
           <Option
             data={filters.builtInMemory ?? []}
-            title="Built-in Memory"
+            title="Built-in memory"
             option="builtInMemory"
-            btnMore={false}
+            btnMore={true}
             optionChange={handleOptionChange}
           />
         )}
@@ -195,7 +204,7 @@ export const FiltersDesk = () => {
             data={filters.rams ?? []}
             title="RAM"
             option="rams"
-            btnMore={false}
+            btnMore={true}
             optionChange={handleOptionChange}
           />
         )}
@@ -203,7 +212,7 @@ export const FiltersDesk = () => {
         {/* Separate Memory Slot */}
         <Option
           data={['Yes', 'No']}
-          title="Separate Memory Slot"
+          title="Separate slot for memory"
           option="memorySlot"
           btnMore={false}
           optionChange={handleOptionChange}
@@ -222,58 +231,79 @@ export const FiltersDesk = () => {
 
         {/* Main Camera */}
         <div className={styles.filters__option}>
-          <h4 className={styles.filters__optionName}>Main Camera, MP</h4>
-          <Row gutter={16}>
-            <Col span={12} className={styles.filters__camera}>
-              <span className={styles.filters__priceText}>From</span>
-              <InputNumber
-                min={0}
-                max={644}
-                value={minCameraMP}
-                defaultValue={0}
-                controls={false}
-                onChange={handleMinMPChange}
-                style={{
-                  width: '70px',
-                  border: '1px solid #1c1817',
-                  borderRadius: '10px',
-                  padding: '4px 0px',
-                  backgroundColor: 'white',
-                  fontSize: '16px',
-                  color: '#1c1817',
-                  textAlign: 'center',
-                }}
-              />
-            </Col>
-            <Col span={12} className={styles.filters__camera}>
-              <span className={styles.filters__priceText}>To</span>
-              <InputNumber
-                min={0}
-                max={644}
-                value={maxCameraMP}
-                defaultValue={0}
-                controls={false}
-                onChange={handleMaxMPChange}
-                style={{
-                  width: '70px',
-                  border: '1px solid #1c1817',
-                  borderRadius: '10px',
-                  padding: '4px 0px',
-                  backgroundColor: 'white',
-                  fontSize: '16px',
-                  color: '#1c1817',
-                  textAlign: 'center',
-                }}
-              />
-            </Col>
-          </Row>
+          <div
+            className={cn(
+              styles.filters__optionHeader,
+              !showCategory && styles.hide,
+            )}
+            onClick={toggleShowCategory}
+          >
+            <h4 className={styles.filters__optionName}>Main camera</h4>
+
+            <img
+              src={ArrowUpSvg}
+              alt="Arrow Up Icon"
+              className={cn(
+                styles.filters__optionArrow,
+                !showCategory && styles.arrowDown,
+              )}
+            />
+          </div>
+          {showCategory && (
+            <Row gutter={16}>
+              <Col span={12} className={styles.filters__camera}>
+                <span className={styles.filters__priceText}>From</span>
+                <InputNumber
+                  min={0}
+                  max={644}
+                  value={minCameraMP}
+                  defaultValue={0}
+                  controls={false}
+                  onChange={handleMinMPChange}
+                  style={{
+                    width: '74px',
+                    height: '40px',
+                    border: '1px solid #1c1817',
+                    borderRadius: '10px',
+                    padding: '1px 1px',
+                    backgroundColor: 'white',
+                    fontSize: '16px',
+                    color: '#1c1817',
+                    textAlign: 'center',
+                  }}
+                />
+              </Col>
+              <Col span={12} className={styles.filters__camera}>
+                <span className={styles.filters__priceText}>To</span>
+                <InputNumber
+                  min={0}
+                  max={644}
+                  value={maxCameraMP}
+                  defaultValue={0}
+                  controls={false}
+                  onChange={handleMaxMPChange}
+                  style={{
+                    width: '74px',
+                    height: '40px',
+                    border: '1px solid #1c1817',
+                    borderRadius: '10px',
+                    padding: '1px 1px',
+                    backgroundColor: 'white',
+                    fontSize: '16px',
+                    color: '#1c1817',
+                    textAlign: 'center',
+                  }}
+                />
+              </Col>
+            </Row>
+          )}
         </div>
 
         {/* Number of Cores */}
         {filters.cores && (
           <Option
             data={filters.cores}
-            title="Number of Cores"
+            title="Number of cores"
             option="cores"
             btnMore={false}
             optionChange={handleOptionChange}
@@ -284,7 +314,7 @@ export const FiltersDesk = () => {
         {filters.screens && (
           <Option
             data={filters.screens}
-            title="Screen Type"
+            title="Screen type"
             option="screens"
             btnMore={true}
             optionChange={handleOptionChange}

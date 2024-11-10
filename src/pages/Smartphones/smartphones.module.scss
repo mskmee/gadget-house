@@ -1,12 +1,54 @@
 .smartpnones {
   min-width: 320px;
 
+  &_mobile {
+    display: flex;
+    flex-direction: column;
+
+    @media screen and (min-width: 780px) {
+      display: none;
+    }
+  }
+
+  &_desk {
+    display: none;
+
+    @media screen and (min-width: 780px) {
+      display: block;
+      background-color: #f8f7fa;
+    }
+  }
+
+  &__header {
+    background: var(--secondary-background-color);
+  }
+
   &__container {
     max-width: 1440px;
     width: 100%;
-    padding: 0px 50px;
+    padding: 0px 10px;
     margin: 0 auto;
-    padding: 28px 20px 50px 16px;
+
+    @media screen and (min-width: 570px) {
+      padding: 0px 20px;
+    }
+
+    @media screen and (min-width: 1070px) {
+      padding: 0px 50px;
+    }
+  }
+
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0px;
+    padding: 28px 0px 20px 0px;
+
+    @media screen and (min-width: 1070px) {
+      padding: 16px 0;
+      margin-bottom: 32px;
+    }
   }
 
   &__title {
@@ -14,6 +56,13 @@
     font-size: 24px;
     line-height: 150%;
     color: var(--text-color);
-    margin-bottom: 20px;
+
+    @media screen and (min-width: 780px) {
+      font-size: 36px;
+    }
+
+    @media screen and (min-width: 1070px) {
+      font-size: 42px;
+    }
   }
 }
