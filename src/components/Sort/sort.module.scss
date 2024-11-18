@@ -1,0 +1,147 @@
+.sort {
+  &__sortDrawer {
+    position: relative;
+    max-width: 360px;
+    margin: 0 auto !important;
+    background: transparent !important;
+
+    span {
+      width: auto;
+      height: auto;
+      display: inline-block;
+      background: inherit;
+    }
+
+    :global {
+      .ant-drawer-header-title {
+        height: 60px;
+      }
+
+      .ant-drawer-close {
+        display: none;
+      }
+    }
+  }
+
+  &__buttonClose {
+    position: absolute;
+    top: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    border-radius: 30px;
+    padding: 8px;
+    width: 48px;
+    height: 48px;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+    background-color: white;
+  }
+
+  &__radioGroup {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+  }
+
+  &__radioButton {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 48px;
+    border-radius: 12px;
+    padding: 12px 0px;
+    border: 1px solid var(--buttons-and-accent-color);
+    background: transparent;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    text-align: center;
+    color: var(--text-color);
+    cursor: pointer;
+
+    &:hover {
+      background-color: #f0f0f0;
+    }
+  }
+
+  &__active {
+    background-color: #e3ffe6;
+    border-color: var(--green-color);
+    color: var(--green-color);
+  }
+
+  &__checkIcon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-right: 6px;
+  }
+}
+
+.sortDesk {
+  &__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    color: var(--text-color);
+    cursor: pointer;
+
+    img {
+      width: 24px;
+      height: 25px;
+      margin-right: 4px;
+    }
+  }
+
+  &__radio {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    color: var(--text-color);
+    cursor: pointer;
+
+    &:hover {
+      color: var(--theme-color);
+    }
+
+    &.sort__active {
+      color: var(--green-color);
+    }
+  }
+}
+
+:global {
+  .ant-drawer-content-wrapper {
+    box-shadow: none !important;
+  }
+
+  .ant-popover .ant-popover-arrow {
+    display: none;
+  }
+
+  .ant-popover .ant-popover-inner {
+    width: 230px;
+    border-radius: 20px;
+    padding: 22px 20px;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+    background: var(--bg-color);
+    font-family: inherit;
+  }
+}

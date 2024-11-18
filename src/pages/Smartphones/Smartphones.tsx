@@ -1,18 +1,33 @@
 import { FiltersDesk } from '@/components/Filters/FiltersDesk';
 import { Filters } from '@/components/Filters/Filters';
-import { useMediaQuery } from 'react-responsive';
+import { SortingDesk } from '@/components/Sort/SortingDesk';
 
 import styles from './smartphones.module.scss';
 
 export default function Smartphones() {
-  const isMobile = useMediaQuery({ query: '(max-width: 1070px)' });
-
   return (
     <div className={styles.smartpnones}>
-      <div className={`container ${styles.smartpnones__container}`}>
-        <h2 className={styles.smartpnones__title}>Smartphones</h2>
+      <div className={styles.smartpnones_mobile}>
+        <div className={`container ${styles.smartpnones__container}`}>
+          <div className={styles.smartpnones__wrapper}>
+            <h2 className={styles.smartpnones__title}>Smartphone</h2>
+          </div>
 
-        {isMobile ? <Filters /> : <FiltersDesk />}
+          <Filters />
+        </div>
+      </div>
+
+      <div className={styles.smartpnones_desk}>
+        <div className={styles.smartpnones__header}>
+          <div className={`container ${styles.smartpnones__container}`}>
+            <div className={styles.smartpnones__wrapper}>
+              <h2 className={styles.smartpnones__title}>Smartphone</h2>
+              <SortingDesk />
+            </div>
+
+            <FiltersDesk />
+          </div>
+        </div>
       </div>
     </div>
   );

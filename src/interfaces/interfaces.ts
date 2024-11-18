@@ -60,6 +60,7 @@ export interface IProduct {
   anotherColors: string[];
   isLiked: boolean;
   rate: number;
+  popular: number;
   brand: string;
   ram: number;
   builtInMemory: number;
@@ -90,4 +91,31 @@ export interface IOption {
   option: string,
   btnMore: boolean,
   optionChange: (option: string, value: string) => void,
+}
+
+export enum SortOrder {
+  Popularity = 'Popularity',
+  Rating = 'Rating',
+  LowToHigh = 'From Low to High Cost',
+  HighToLow = 'From High to Low Cost',
+}
+
+export interface ISortProps {
+  sortVisible: boolean;
+  toggleSort: () => void;
+  onSort: (
+    sortOrder: SortOrder,
+  ) => void;
+}
+
+export interface SortDrawerProps {
+  onSort: (sortOrder: SortOrder) => void;
+}
+
+export interface ISortOptionProps {
+  label: string;
+  value: SortOrder;
+  isSelected: boolean;
+  classNames: string;
+  onSelect: (value: SortOrder) => void;
 }
