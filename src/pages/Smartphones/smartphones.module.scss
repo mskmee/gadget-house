@@ -1,5 +1,6 @@
 .smartpnones {
   min-width: 320px;
+  // padding: 30px 0;
 
   &__container {
     max-width: 1440px;
@@ -15,5 +16,14 @@
     line-height: 150%;
     color: var(--text-color);
     margin-bottom: 20px;
+  }
+
+  &__content{
+    display: flex;
+    column-gap: 24px;
+
+    @media screen and (max-width: 980px) {
+      flex-direction: column;    
+    }
   }
 }

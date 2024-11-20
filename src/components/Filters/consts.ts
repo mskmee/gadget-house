@@ -1,3 +1,14 @@
+import Smart_1 from '../../assets/images/smartphones/1.png';
+import Smart_2 from '../../assets/images/smartphones/2.png';
+import Smart_3 from '../../assets/images/smartphones/3.png';
+import Smart_4 from '../../assets/images/smartphones/4.png';
+
+// import Laptop_1 from '../../assets/images/laptops/1.png';
+// import Laptop_2 from '../../assets/images/laptops/2.png';
+// import Laptop_3 from '../../assets/images/laptops/3.png';
+// import Laptop_4 from '../../assets/images/laptops/4.png';
+
+
 export const filters = {
   'categories': ['Smartphones', 'Laptops', 'Tablets'],
   'brands': [
@@ -38,7 +49,8 @@ export const filters = {
     'Super Amoled',
     'Fluid Amoled',
     'Dynamic Amoled 2x',
-  ]
+  ],
+  'images': [Smart_1, Smart_2, Smart_3, Smart_4],
 }
 
 import {
