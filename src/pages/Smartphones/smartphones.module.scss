@@ -28,13 +28,16 @@
     width: 100%;
     padding: 0px 10px;
     margin: 0 auto;
+    padding-bottom: 250px;
 
     @media screen and (min-width: 570px) {
       padding: 0px 20px;
+      padding-bottom: 50px;
     }
 
     @media screen and (min-width: 1070px) {
       padding: 0px 50px;
+      padding-bottom: 100px;
     }
   }
 

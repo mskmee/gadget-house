@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Drawer, Row, Col, Slider, InputNumber } from 'antd';
 import { DrawerStyles } from 'antd/es/drawer/DrawerPanel';
 import cn from 'classnames';
@@ -25,8 +25,8 @@ export const FiltersMobile = ({
   const [priceRange, setPriceRange] = useState<number[]>([11770, 65500]);
   const [minPrice, setMinPrice] = useState<number>(11770);
   const [maxPrice, setMaxPrice] = useState<number>(65500);
-  const [minCameraMP, setMinMP] = useState<number>(5);
-  const [maxCameraMP, setMaxMP] = useState<number>(220);
+  const [minCameraMP, setMinMP] = useState<number>(0);
+  const [maxCameraMP, setMaxMP] = useState<number>(0);
   const [showCategory, setShowCategory] = useState(true);
 
   const toggleShowCategory = () => {
@@ -121,9 +121,27 @@ export const FiltersMobile = ({
     toggleDrawer();
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const { key } = event;
+
+    if (
+      !/^\d$/.test(key) &&
+      key !== 'Backspace' &&
+      key !== 'Delete' &&
+      key !== 'Tab' &&
+      key !== 'ArrowLeft' &&
+      key !== 'ArrowRight' &&
+      key !== 'Home' &&
+      key !== 'End'
+    ) {
+      event.preventDefault();
+    }
+  };
+
   const drawerStyles: DrawerStyles = {
     mask: {
-      backdropFilter: 'blur(10px)',
+      // backdropFilter: 'blur(10px)',
+      backgroundColor: 'rgba(28, 24, 23, 0.7)',
     },
     body: {
       background: '#f8f7fa',
@@ -144,7 +162,6 @@ export const FiltersMobile = ({
       placement="left"
       closable={false}
       onClose={toggleDrawer}
-      width={390}
       open={drawerVisible}
       className={styles.filtersMobile__drawer}
       styles={drawerStyles}
@@ -191,12 +208,16 @@ export const FiltersMobile = ({
                 value={minPrice}
                 controls={false}
                 onChange={handleMinPriceChange}
+                inputMode="numeric"
+                stringMode={false}
+                onKeyDown={handleKeyDown}
                 style={{
-                  width: '70px',
+                  width: '75px',
                   border: '1px solid #1c1817',
                   borderRadius: '10px',
                   padding: '4px 0px',
                   backgroundColor: 'white',
+                  fontFamily: 'Inter, sans-serif',
                   fontSize: '16px',
                   color: '#1c1817',
                 }}
@@ -213,12 +234,16 @@ export const FiltersMobile = ({
                 value={maxPrice}
                 controls={false}
                 onChange={handleMaxPriceChange}
+                inputMode="numeric"
+                stringMode={false}
+                onKeyDown={handleKeyDown}
                 style={{
-                  width: '72px',
+                  width: '75px',
                   border: '1px solid #1c1817',
                   borderRadius: '10px',
                   padding: '4px 0px',
                   backgroundColor: 'white',
+                  fontFamily: 'Inter, sans-serif',
                   fontSize: '16px',
                   color: '#1c1817',
                 }}
@@ -290,7 +315,7 @@ export const FiltersMobile = ({
             )}
             onClick={toggleShowCategory}
           >
-            <h4 className={styles.filters__optionName}>Main camera</h4>
+            <h4 className={styles.filters__optionName}>Main camera, MP</h4>
 
             <img
               src={ArrowUpSvg}
@@ -312,6 +337,9 @@ export const FiltersMobile = ({
                   defaultValue={0}
                   controls={false}
                   onChange={handleMinMPChange}
+                  inputMode="numeric"
+                  stringMode={false}
+                  onKeyDown={handleKeyDown}
                   style={{
                     width: '74px',
                     height: '40px',
@@ -319,6 +347,7 @@ export const FiltersMobile = ({
                     borderRadius: '10px',
                     padding: '1px 1px',
                     backgroundColor: 'white',
+                    fontFamily: 'Inter, sans-serif',
                     fontSize: '16px',
                     color: '#1c1817',
                     textAlign: 'center',
@@ -335,6 +364,9 @@ export const FiltersMobile = ({
                   defaultValue={0}
                   controls={false}
                   onChange={handleMaxMPChange}
+                  inputMode="numeric"
+                  stringMode={false}
+                  onKeyDown={handleKeyDown}
                   style={{
                     width: '74px',
                     height: '40px',
@@ -342,6 +374,7 @@ export const FiltersMobile = ({
                     borderRadius: '10px',
                     padding: '1px 1px',
                     backgroundColor: 'white',
+                    fontFamily: 'Inter, sans-serif',
                     fontSize: '16px',
                     color: '#1c1817',
                     textAlign: 'center',
@@ -377,7 +410,7 @@ export const FiltersMobile = ({
 
       <button
         className={styles.filters__apply}
-        type="submit"
+        type="button"
         onClick={applyFilter}
         disabled={!selectedOptions}
       >

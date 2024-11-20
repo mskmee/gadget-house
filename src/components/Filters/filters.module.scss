@@ -150,7 +150,7 @@
     }
 
     &Input:checked + &Text[data-label="memorySlot"]::before {
-      background-image: url("../../assets/icons/checkes-circle.svg");
+      background-image: url("../../assets/icons/checked-circle.svg");
       background-size: contain;
     }
 
@@ -315,7 +315,7 @@
   }
 
   &__apply {
-    width: 273px;
+    width: 100%;
     border: 2px solid #076911;
     outline: 2px solid transparent;
     border-radius: 12px;
@@ -332,10 +332,13 @@
     &:hover {
       background-color: var(--buttons-and-accent-color);
       color: var(--white-color);
+      border-color: transparent;
     }
 
     &:focus {
-      outline-color: var(--theme-color);
+      background-color: #00680a;
+      color: var(--white-color);
+      border-color: transparent;
     }
 
     &:disabled,
@@ -349,6 +352,7 @@
 
 .filtersDesk {
   max-width: 321px;
+  // margin-bottom: 250px;
   padding: 24px;
   padding-bottom: 100px;
   border-radius: 20px;
@@ -369,9 +373,18 @@
       padding-bottom: 28px;
     }
   }
+
+  .filters__apply {
+    width: 273px;
+  }
 }
 
 :global {
+  .ant-drawer {
+    min-width: 360px;
+    width: 100%;
+  }
+
   .ant-slider:hover .ant-slider-track {
     background-color: var(--text-color);
     height: 2px;
@@ -397,6 +410,7 @@
 
   .ant-input-number .ant-input-number-input {
     padding: 4px 8px;
+    font-family: "Inter", sans-serif;
     text-align: center;
   }
 }
