@@ -4,6 +4,7 @@ import { DrawerStyles } from 'antd/es/drawer/DrawerPanel';
 import cn from 'classnames';
 
 import { smartData } from './consts';
+import { checkKeydownEvent } from '@/utils/helpers/checkKeydownEvent';
 import { IFilterProps, IProduct } from '@/interfaces/interfaces';
 import { Header } from '../components';
 import { Option } from './Option';
@@ -122,25 +123,13 @@ export const FiltersMobile = ({
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    const { key } = event;
-
-    if (
-      !/^\d$/.test(key) &&
-      key !== 'Backspace' &&
-      key !== 'Delete' &&
-      key !== 'Tab' &&
-      key !== 'ArrowLeft' &&
-      key !== 'ArrowRight' &&
-      key !== 'Home' &&
-      key !== 'End'
-    ) {
+    if (!checkKeydownEvent(event.key)) {
       event.preventDefault();
     }
   };
 
   const drawerStyles: DrawerStyles = {
     mask: {
-      // backdropFilter: 'blur(10px)',
       backgroundColor: 'rgba(28, 24, 23, 0.7)',
     },
     body: {

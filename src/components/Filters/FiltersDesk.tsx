@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { Row, Col, InputNumber, Slider } from 'antd';
 import cn from 'classnames';
 
+import { checkKeydownEvent } from '@/utils/helpers/checkKeydownEvent';
 import { IProduct } from '@/interfaces/interfaces';
 import { filters, smartData } from './consts';
 import { Option } from './Option';
@@ -114,18 +115,7 @@ export const FiltersDesk = () => {
   const handleFilter = () => setFilteredProducts(filteredProducts);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    const { key } = event;
-
-    if (
-      !/^\d$/.test(key) &&
-      key !== 'Backspace' &&
-      key !== 'Delete' &&
-      key !== 'Tab' &&
-      key !== 'ArrowLeft' &&
-      key !== 'ArrowRight' &&
-      key !== 'Home' &&
-      key !== 'End'
-    ) {
+    if (!checkKeydownEvent(event.key)) {
       event.preventDefault();
     }
   };
@@ -140,7 +130,7 @@ export const FiltersDesk = () => {
           <h4 className={styles.filters__optionName}>Price</h4>
           <Slider
             range
-            min={50}
+            min={0}
             max={100000}
             value={priceRange}
             onChange={handleSliderChange}

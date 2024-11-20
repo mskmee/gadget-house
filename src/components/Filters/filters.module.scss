@@ -230,7 +230,7 @@
         width: 14px;
         height: 14px;
         inset-block-start: 0px;
-        transform: translateX(100%) !important;
+        transform: translate(10%, 0%) !important;
 
         &::after {
           width: 14px;
@@ -352,7 +352,6 @@
 
 .filtersDesk {
   max-width: 321px;
-  // margin-bottom: 250px;
   padding: 24px;
   padding-bottom: 100px;
   border-radius: 20px;
@@ -383,6 +382,11 @@
   .ant-drawer {
     min-width: 360px;
     width: 100%;
+  }
+
+  .ant-slider {
+    width: 95%;
+    margin: 11px 3px 11px 2px;
   }
 
   .ant-slider:hover .ant-slider-track {
