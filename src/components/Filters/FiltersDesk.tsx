@@ -1,7 +1,8 @@
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Row, Col, InputNumber, Slider } from 'antd';
 import cn from 'classnames';
 
+import { checkKeydownEvent } from '@/utils/helpers/checkKeydownEvent';
 import { IProduct } from '@/interfaces/interfaces';
 import { filters, smartData } from './consts';
 import { Option } from './Option';
@@ -113,6 +114,12 @@ export const FiltersDesk = () => {
 
   const handleFilter = () => setFilteredProducts(filteredProducts);
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!checkKeydownEvent(event.key)) {
+      event.preventDefault();
+    }
+  };
+
   return (
     <aside className={styles.filtersDesk}>
       <h2 className={styles.filtersDesk__title}>Filters</h2>
@@ -123,7 +130,7 @@ export const FiltersDesk = () => {
           <h4 className={styles.filters__optionName}>Price</h4>
           <Slider
             range
-            min={50}
+            min={0}
             max={100000}
             value={priceRange}
             onChange={handleSliderChange}
@@ -134,12 +141,16 @@ export const FiltersDesk = () => {
             <Col span={13} style={{ paddingLeft: '6px' }}>
               <span className={styles.filters__priceText}>From</span>
               <InputNumber
-                min={50}
+                min={0}
                 max={99999}
                 value={minPrice}
                 controls={false}
                 onChange={handleMinPriceChange}
+                inputMode="numeric"
+                stringMode={false}
+                onKeyDown={handleKeyDown}
                 style={{
+                  fontFamily: 'Inter, sans-serif',
                   width: '75px',
                   border: '1px solid #1c1817',
                   borderRadius: '10px',
@@ -161,12 +172,16 @@ export const FiltersDesk = () => {
                 value={maxPrice}
                 controls={false}
                 onChange={handleMaxPriceChange}
+                inputMode="numeric"
+                stringMode={false}
+                onKeyDown={handleKeyDown}
                 style={{
                   width: '75px',
                   border: '1px solid #1c1817',
                   borderRadius: '10px',
                   padding: '4px 0px',
                   backgroundColor: 'white',
+                  fontFamily: 'Inter, sans-serif',
                   fontSize: '16px',
                   color: '#1c1817',
                 }}
@@ -238,7 +253,7 @@ export const FiltersDesk = () => {
             )}
             onClick={toggleShowCategory}
           >
-            <h4 className={styles.filters__optionName}>Main camera</h4>
+            <h4 className={styles.filters__optionName}>Main camera, MP</h4>
 
             <img
               src={ArrowUpSvg}
@@ -260,6 +275,9 @@ export const FiltersDesk = () => {
                   defaultValue={0}
                   controls={false}
                   onChange={handleMinMPChange}
+                  inputMode="numeric"
+                  stringMode={false}
+                  onKeyDown={handleKeyDown}
                   style={{
                     width: '74px',
                     height: '40px',
@@ -267,6 +285,7 @@ export const FiltersDesk = () => {
                     borderRadius: '10px',
                     padding: '1px 1px',
                     backgroundColor: 'white',
+                    fontFamily: 'Inter, sans-serif',
                     fontSize: '16px',
                     color: '#1c1817',
                     textAlign: 'center',
@@ -282,6 +301,9 @@ export const FiltersDesk = () => {
                   defaultValue={0}
                   controls={false}
                   onChange={handleMaxMPChange}
+                  inputMode="numeric"
+                  stringMode={false}
+                  onKeyDown={handleKeyDown}
                   style={{
                     width: '74px',
                     height: '40px',
@@ -289,6 +311,7 @@ export const FiltersDesk = () => {
                     borderRadius: '10px',
                     padding: '1px 1px',
                     backgroundColor: 'white',
+                    fontFamily: 'Inter, sans-serif',
                     fontSize: '16px',
                     color: '#1c1817',
                     textAlign: 'center',
