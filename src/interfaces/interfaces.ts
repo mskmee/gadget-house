@@ -43,6 +43,7 @@ export interface IProductCard {
 
 export interface IShoppingCard extends IProductCard {
   quantity: number;
+  totalPrice: string;
 }
 
 export type IBrandCard = {

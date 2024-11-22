@@ -4,17 +4,17 @@ import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { ProductItem } from './ProductItem/ProductItem';
 
 export const CardTooltip = () => {
-  const cardItems = useTypedSelector((state) => state.shopping_card.products);
+  const { products: cardItems, cardTotalAmount } = useTypedSelector((state) => state.shopping_card);
 
-  const totalCardSum = useMemo(
-    () =>
-      cardItems.reduce(
-        (acc, { price }) => acc + Number(price.replace(/\s/g, '')),
-        0,
-      ),
-    [cardItems],
-  );
-  const formattedPrice = new Intl.NumberFormat('ru-RU').format(totalCardSum);
+  // const totalCardSum = useMemo(
+  //   () =>
+  //     cardItems.reduce(
+  //       (acc, { price }) => acc + Number(price.replace(/\s/g, '')),
+  //       0,
+  //     ),
+  //   [cardItems],
+  // );
+  // const formattedPrice = new Intl.NumberFormat('ru-RU').format(totalCardSum);
 
   return (
     <div className={styles.container}>
@@ -24,7 +24,7 @@ export const CardTooltip = () => {
         ))}
       </div>
       <div className={styles.total}>
-        <span className={styles.price}>{formattedPrice} ₴</span>
+        <span className={styles.price}>{cardTotalAmount} ₴</span>
         <button>Go to basket</button>
       </div>
     </div>
