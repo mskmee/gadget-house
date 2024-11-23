@@ -21,4 +21,5 @@ export {
   calculateCartTotalPrice,
   MAX_BASKET_ITEM_QUANTITY,
   calculateItemTotalPrice,
+  convertPriceToNumber,
 };

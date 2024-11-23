@@ -6,6 +6,10 @@ import {
   MAX_BASKET_ITEM_QUANTITY,
 } from '@/utils/helpers/helpers';
 import { Currency, Locale } from '@/enums/enums';
+import {
+  LocalStorageKey,
+  localStorageService,
+} from '@/utils/packages/local-storage';
 
 export interface IInitialState {
   products: IShoppingCard[];
@@ -17,9 +21,16 @@ export interface IInitialState {
 // Locale and Currency should be in the other slice in the future. Something like settings slice.
 
 const initialState: IInitialState = {
-  products: [],
-  cardTotalAmount: 0,
-  cardTotalQuantity: 0,
+  products:
+    localStorageService.getItem<IShoppingCard[]>(
+      LocalStorageKey.CART_PRODUCTS,
+    ) || [],
+  cardTotalAmount: parseFloat(
+    localStorageService.getItem(LocalStorageKey.CART_TOTAL_AMOUNT) || '0',
+  ),
+  cardTotalQuantity: parseInt(
+    localStorageService.getItem(LocalStorageKey.CART_QUANTITY) || '0',
+  ),
   currency: Currency.UAH,
   locale: Locale.UA,
 };
@@ -42,6 +53,7 @@ const shoppingCard_slice = createSlice({
           },
         ];
         state.cardTotalAmount = calculateCartTotalPrice(state.products);
+        state.cardTotalQuantity = state.products.length;
         return;
       }
 
@@ -53,6 +65,7 @@ const shoppingCard_slice = createSlice({
         updatedProduct.price,
       );
       state.cardTotalAmount = calculateCartTotalPrice(state.products);
+      state.cardTotalQuantity = state.products.length;
     },
     deleteFromStore: (state, { payload: productId }: PayloadAction<number>) => {
       const productIndex = state.products.findIndex(
@@ -65,6 +78,7 @@ const shoppingCard_slice = createSlice({
         ];
       }
       state.cardTotalAmount = calculateCartTotalPrice(state.products);
+      state.cardTotalQuantity = state.products.length;
     },
     increaseItemQuantity: (
       state,
@@ -84,6 +98,7 @@ const shoppingCard_slice = createSlice({
         updatedProduct.price,
       );
       state.cardTotalAmount = calculateCartTotalPrice(state.products);
+      state.cardTotalQuantity = state.products.length;
     },
     decreaseItemQuantity: (
       state,
@@ -113,6 +128,7 @@ const shoppingCard_slice = createSlice({
       }
 
       state.cardTotalAmount = calculateCartTotalPrice(state.products);
+      state.cardTotalQuantity = state.products.length;
     },
   },
 });

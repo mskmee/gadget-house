@@ -1,7 +1,10 @@
 import { FC } from 'react';
 import styles from './ProductItem.module.scss';
 import { IShoppingCard } from '@/interfaces/interfaces';
-import { convertPriceToReadable } from '@/utils/helpers/product';
+import {
+  convertPriceToReadable,
+  convertPriceToNumber,
+} from '@/utils/helpers/helpers';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 
 interface IProductItemProps {
@@ -24,7 +27,11 @@ export const ProductItem: FC<IProductItemProps> = ({ product }) => {
         <div className={styles.priceWrapper}>
           <span className={styles.details}>{product.quantity} piece</span>
           <span className={styles.price}>
-            {convertPriceToReadable(product.price, currency, locale)}
+            {convertPriceToReadable(
+              convertPriceToNumber(product.price) * product.quantity,
+              currency,
+              locale,
+            )}
           </span>
         </div>
       </div>
