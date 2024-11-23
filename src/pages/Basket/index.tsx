@@ -5,15 +5,28 @@ import BasketItem from '@/components/BasketItem/BasketItem.tsx';
 import { useTypedSelector } from '@/hooks/useTypedSelector.ts';
 import { CustomBreadcrumbs } from '@/components/SingleProduct/CustomBreadcrumbs.tsx';
 import { convertPriceToReadable } from '@/utils/helpers/product';
+import { useState } from 'react';
+import { SuccessPopUp } from './libs/components/components';
+import { useActions } from '@/hooks/useActions';
 
 export const BasketPage = () => {
+  const [isPopUpOpened, setIsPopUpOpened] = useState(false);
   const navigate = useNavigate();
+  const { clearCart } = useActions();
+
   const { products, cardTotalAmount, currency, locale } = useTypedSelector(
     (state) => state.shopping_card,
   );
 
+  const onPopUpClose = () => setIsPopUpOpened(false);
+  const handleOrderConfirm = () => {
+    setIsPopUpOpened(true);
+    clearCart();
+  };
+
   return (
     <div className={styles.container}>
+      <SuccessPopUp isOpened={isPopUpOpened} onClose={onPopUpClose} />
       <CustomBreadcrumbs />
       <button className={styles.buttonBack} onClick={() => navigate(-1)}>
         <img src={LeftArrow} alt="Right Arrow" />
@@ -45,7 +58,7 @@ export const BasketPage = () => {
                 {convertPriceToReadable(cardTotalAmount, currency, locale)}
               </span>
             </h3>
-            <button>Place the order</button>
+            <button onClick={handleOrderConfirm}>Place the order</button>
           </div>
         </section>
       )}

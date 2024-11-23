@@ -130,6 +130,11 @@ const shoppingCard_slice = createSlice({
       state.cardTotalAmount = calculateCartTotalPrice(state.products);
       state.cardTotalQuantity = state.products.length;
     },
+    clearCart: (state) => {
+      state.products = [];
+      state.cardTotalAmount = 0;
+      state.cardTotalQuantity = 0;
+    },
   },
 });
 

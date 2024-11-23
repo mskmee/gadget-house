@@ -48,7 +48,7 @@
   gap: 40px;
   flex-direction: row;
   position: relative;
-  z-index: 999;
+  z-index: 4;
 
   &:focus {
     border: none;
@@ -180,7 +180,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  z-index: 999;
+  z-index: 4;
   box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 8%);
 }
 
@@ -194,7 +194,7 @@
   opacity: 0;
   pointer-events: none; // Prevent interactions
   transition: opacity 0.3s ease;
-  z-index: 998;
+  z-index: 3;
 }
 
 .overlay.active {
@@ -207,7 +207,7 @@
   left: 0;
   top: 94px;
   width: 100%;
-  z-index: 999;
+  z-index: 3;
   overflow-y: scroll;
   display: none;
 
