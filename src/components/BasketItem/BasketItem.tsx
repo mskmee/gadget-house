@@ -4,17 +4,18 @@ import { deleteFromBasket } from '@/assets/constants.ts';
 import { HeartIcon } from '@/assets/icons/HeartIcon.tsx';
 import { useProductCardHandlers } from '@/hooks/useProductCardHandlers.ts';
 import { useActions } from '@/hooks/useActions.ts';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { convertPriceToReadable } from '@/utils/helpers/product';
 
 interface IBasketItemProps {
-  product: IShoppingCard | null;
+  product: IShoppingCard;
 }
 export default function BasketItem({ product }: IBasketItemProps) {
   const { id, title, code, img, quantity, totalPrice } = product;
   const { isLiked, handleClickLike } = useProductCardHandlers();
-  const { deleteFromStore,
-          increaseItemQuantity,
-          decreaseItemQuantity } = useActions();
-
+  const { deleteFromStore, increaseItemQuantity, decreaseItemQuantity } =
+    useActions();
+  const { locale, currency } = useTypedSelector((state) => state.shopping_card);
 
   return (
     <li className={styles.basketItem}>
@@ -25,8 +26,15 @@ export default function BasketItem({ product }: IBasketItemProps) {
         <p className={styles.productTitle}>{title}</p>
         <p className={styles.productCode}>code:{code}</p>
         <span className={styles.productBottom}>
-          <button onClick={() => deleteFromStore(id)}><img src={ deleteFromBasket } alt="delete" />Delete</button>
-          <HeartIcon onClick={handleClickLike} isLiked={isLiked} type='basket' />
+          <button onClick={() => deleteFromStore(id)}>
+            <img src={deleteFromBasket} alt="delete" />
+            Delete
+          </button>
+          <HeartIcon
+            onClick={handleClickLike}
+            isLiked={isLiked}
+            type="basket"
+          />
         </span>
       </div>
       <div className={styles.productTotals}>
@@ -35,8 +43,10 @@ export default function BasketItem({ product }: IBasketItemProps) {
           <p>{quantity}</p>
           <button onClick={() => increaseItemQuantity(id)}>+</button>
         </div>
-        <p className={styles.productPrice}>{totalPrice} ₴</p>
+        <p className={styles.productPrice}>
+          {convertPriceToReadable(totalPrice, currency, locale)}
+        </p>
       </div>
     </li>
-  )
+  );
 }

@@ -1,5 +1,10 @@
 import type { StatusSearch } from '@/types/StatusSearch';
-import type { ComponentType, CSSProperties, MouseEvent, ReactElement } from 'react';
+import type {
+  ComponentType,
+  CSSProperties,
+  MouseEvent,
+  ReactElement,
+} from 'react';
 
 export interface SliderButtonProps {
   handlePrevClick: (event: MouseEvent) => void;
@@ -43,7 +48,7 @@ export interface IProductCard {
 
 export interface IShoppingCard extends IProductCard {
   quantity: number;
-  totalPrice: string;
+  totalPrice: number;
 }
 
 export type IBrandCard = {
@@ -57,7 +62,7 @@ export interface IProduct {
   category: string;
   title: string;
   img: string[];
-  basketIcon: () => ReactElement,
+  basketIcon: () => ReactElement;
   anotherColors: string[];
   isLiked: boolean;
   rate: number;
@@ -67,7 +72,7 @@ export interface IProduct {
   builtInMemory: number;
   code: string;
   cameraMP: number;
-  options?: Record<string, string[]> | undefined,
+  options?: Record<string, string[]> | undefined;
 }
 
 export interface IFilterProps {
@@ -78,20 +83,18 @@ export interface IFilterProps {
     colors: string[];
     cores: string[];
     screens: string[];
-  }
+  };
   drawerVisible: boolean;
   toggleDrawer: () => void;
-  onFilter: (
-    products: IProduct[],
-  ) => void;
+  onFilter: (products: IProduct[]) => void;
 }
 
 export interface IOption {
-  data: string[],
-  title: string,
-  option: string,
-  btnMore: boolean,
-  optionChange: (option: string, value: string) => void,
+  data: string[];
+  title: string;
+  option: string;
+  btnMore: boolean;
+  optionChange: (option: string, value: string) => void;
 }
 
 export enum SortOrder {
@@ -104,9 +107,7 @@ export enum SortOrder {
 export interface ISortProps {
   sortVisible: boolean;
   toggleSort: () => void;
-  onSort: (
-    sortOrder: SortOrder,
-  ) => void;
+  onSort: (sortOrder: SortOrder) => void;
 }
 
 export interface SortDrawerProps {
