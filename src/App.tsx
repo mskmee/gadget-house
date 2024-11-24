@@ -6,7 +6,7 @@ import { StorageProvider } from './providers/providers';
 function App() {
   return (
     <StorageProvider>
-      <RouterProvider router={routes} />
+      <RouterProvider router={routes} future={{ v7_startTransition: true }} />
     </StorageProvider>
   );
 }
