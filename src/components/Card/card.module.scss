@@ -65,7 +65,13 @@
 }
 
 .likedIcon path:first-child {
-  fill: #3b55b1;
+  fill: rgba(111, 76, 154, 1);
+}
+.basketFavoriteIcon {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: rgba(99, 99, 99, 1);
 }
 
 .accessories-colors {

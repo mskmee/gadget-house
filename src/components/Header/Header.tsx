@@ -36,6 +36,8 @@ export const Header = () => {
   const catalogBtnRef = useRef<HTMLButtonElement>(null);
   const headerBottomRef = useRef<HTMLDivElement>(null);
   const searchFieldRef = useRef<InputRef>(null);
+  const isBasketPage = location.pathname === AppRoute.BASKET_PAGE;
+  const shouldShowCartTooltip = products.length && !isBasketPage;
 
   const handleRouteChange = () => {
     if (isMenuOpen) {
@@ -203,7 +205,7 @@ export const Header = () => {
             <NavButton key={buttonData.id} button={buttonData} />
           ))}
 
-          {products?.length > 0 && (
+          {shouldShowCartTooltip && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
