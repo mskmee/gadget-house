@@ -1,32 +1,25 @@
-import { ApiEndpoint, HttpMethod, request } from '../http';
-import { IProductsService } from './libs/interfaces/interfaces';
+import { IProductsService, IProductsApi } from './libs/interfaces/interfaces';
 import {
   ProductItemResponseDto,
   ProductsResponseDto,
 } from './libs/types/types';
 
 class ProductsService implements IProductsService {
-  constructor() {}
-
-  async getAll(): Promise<ProductsResponseDto> {
-    return request({
-      method: HttpMethod.GET,
-      url: ApiEndpoint.PRODUCTS,
-    });
+  private productsApi: IProductsApi;
+  constructor(productsApi: IProductsApi) {
+    this.productsApi = productsApi;
   }
 
-  async getOne(id: string): Promise<ProductItemResponseDto> {
-    return request({
-      method: HttpMethod.GET,
-      url: `${ApiEndpoint.PRODUCTS}/${id}`,
-    });
+  async getAllProducts(): Promise<ProductsResponseDto> {
+    return this.productsApi.getAll();
   }
 
-  async delete(id: string): Promise<void> {
-    return request({
-      method: HttpMethod.DELETE,
-      url: `${ApiEndpoint.PRODUCTS}/${id}`,
-    });
+  async getOneProductById(id: string): Promise<ProductItemResponseDto> {
+    return this.productsApi.getOne(id);
+  }
+
+  async deleteProduct(id: string): Promise<void> {
+    return this.productsApi.delete(id);
   }
 }
 

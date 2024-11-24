@@ -2,9 +2,9 @@
 import { ProductItemResponseDto, ProductsResponseDto } from '../types/types';
 
 interface IProductsService {
-  getAll: () => Promise<ProductsResponseDto>;
-  getOne: (id: string) => Promise<ProductItemResponseDto>;
-  delete: (id: string) => Promise<any>;
+  getAllProducts: () => Promise<ProductsResponseDto>;
+  getOneProductById: (id: string) => Promise<ProductItemResponseDto>;
+  deleteProduct: (id: string) => Promise<void>;
 }
 
 export { type IProductsService };
