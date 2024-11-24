@@ -17,3 +17,5 @@ export {
   Benefits,
   Footer,
 };
+
+export { PopUp } from './PopUp/PopUp';

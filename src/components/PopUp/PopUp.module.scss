@@ -1,0 +1,51 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: -5000px;
+  z-index: 15;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  transition: all 0.5s ease;
+}
+
+.opened {
+  right: 0;
+  left: 0;
+}
+
+.content {
+  position: relative;
+  width: 80%;
+  height: 80%;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px 0 rgb(0 0 0 / 8%);
+}
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: #333333;
+  font-size: 18px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition:
+    color 0.3s ease,
+    transform 0.2s ease;
+
+  &:hover {
+    color: #ff5a5a;
+  }
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #ff5a5a;
+  }
+}
