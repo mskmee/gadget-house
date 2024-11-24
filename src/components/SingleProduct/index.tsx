@@ -14,12 +14,15 @@ import {
 import classNames from 'classnames';
 import { AddToBasketButton } from './AddToBasketButton';
 import { PhotoModal } from './PhotoModal';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { convertPriceToReadable } from '@/utils/helpers/product';
 
 interface IProductProps {
   reviewsLength: number;
 }
 
 export const Product: FC<IProductProps> = ({ reviewsLength }) => {
+  const { currency, locale } = useTypedSelector((state) => state.shopping_card);
   const currentProductImages = currentProduct?.[0]?.images;
   const [currentSlide, setCurrentSlide] = useState(currentProductImages?.[0]);
   const prevArrowRef = useRef<HTMLImageElement>(null);
@@ -259,7 +262,11 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
           </div>
           <div className={style['product_bottom-section']}>
             <span className={style['product_price']}>
-              {currentProduct?.[0]?.price} ₴
+              {convertPriceToReadable(
+                currentProduct?.[0]?.price || 0,
+                currency,
+                locale,
+              )}
             </span>
             <AddToBasketButton />
           </div>
