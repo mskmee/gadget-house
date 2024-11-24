@@ -1,5 +1,5 @@
 import { createBrowserRouter } from 'react-router-dom';
-import AppRoute from './enums/enum';
+import { AppRoute } from './enums/enums';
 import Layout from './pages/Layout';
 import Main from './pages/Main/Main';
 import Smartphones from './pages/Smartphones/Smartphones';
