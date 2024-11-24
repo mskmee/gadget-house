@@ -57,7 +57,6 @@ export default function Main() {
 
   return (
     <>
-      <button onClick={getAllProducts}>Press me</button>
       <MainIntro />
       {isProductsLoading ? (
         // it's a place holder. Add loader or skeleton here
