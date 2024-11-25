@@ -25,27 +25,29 @@ export const MenuItems: FC = () => {
     }
   };
   return (
-    <section className={style['single-product__menu']}>
-      <ul>
-        {menuItems?.map((item) => (
-          <li
-            className={
-              item?.title === selectedMenu ? 'menu-item active' : 'menu-item'
-            }
-            key={item?.id}
-            onClick={handleMenuClick(item?.title, item?.href)}
-          >
-            <a
-              href={item?.href}
-              className={classNames({
-                [style['selected-menu']]: item?.title === selectedMenu,
-              })}
+    <section className={classNames(style['single-product__menu'])}>
+      <div className="container-xxl">
+        <ul>
+          {menuItems?.map((item) => (
+            <li
+              className={
+                item?.title === selectedMenu ? 'menu-item active' : 'menu-item'
+              }
+              key={item?.id}
+              onClick={handleMenuClick(item?.title, item?.href)}
             >
-              {item?.title}
-            </a>
-          </li>
-        ))}
-      </ul>
+              <a
+                href={item?.href}
+                className={classNames({
+                  [style['selected-menu']]: item?.title === selectedMenu,
+                })}
+              >
+                {item?.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </section>
   );
 };

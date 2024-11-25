@@ -1,13 +1,27 @@
-.carouselContainer {
+.mobile-carousel,
+.laptop-carousel,
+.viewed-carousel {
   box-sizing: border-box;
-  padding: 50px 30px 24px 20px;
-  background-color: var(--carousel-theme-color);
+  margin: 24px auto 0 auto;
+  max-width: 1540px;
+  padding: 0 50px;
+  > div {
+    padding: 50px 10px 24px 10px;
+    background-color: var(--carousel-theme-color);
+    border-radius: 20px;
+  }
 }
 
 .brands-carousel {
-  background-color: var(--bg-color);
-  > div:last-child div button {
-    background-color: #fff;
+  box-sizing: border-box;
+  margin: 48px auto 0 auto;
+  max-width: 1540px;
+  padding: 0 50px;
+  div {
+    background-color: var(--bg-color);
+    > div:last-child div button {
+      background-color: #fff;
+    }
   }
 }
 .photos-carousel {

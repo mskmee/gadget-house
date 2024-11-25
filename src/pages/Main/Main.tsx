@@ -15,17 +15,11 @@ const brandConatinerResponsiveSettings = [
   {
     breakpoint: 2220,
     settings: {
-      slidesToShow: 6,
-      slidesToScroll: 1,
-    },
-  },
-  {
-    breakpoint: 1700,
-    settings: {
       slidesToShow: 5,
       slidesToScroll: 1,
     },
   },
+
   {
     breakpoint: 1024,
     settings: {
@@ -50,7 +44,7 @@ export default function Main() {
       <Carousels
         classname="mobile-carousel"
         sliderClassName="mobile-slider"
-        countSlideToShow={5}
+        countSlideToShow={4}
       >
         {Array.from({ length: 8 }, (_, i) => (
           <MyCard

@@ -1,4 +1,5 @@
 .cardConatiner {
+  max-width: 305px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -171,16 +172,8 @@
   object-fit: cover;
 }
 
-@media screen and (max-width: 2220px) {
-  .brandImg {
-    width: calc(257px + (343 - 257) * ((100vw - 1701px) / (2220 - 1701)));
-  }
-}
-
-@media screen and (max-width: 1700px) {
-  .brandImg {
-    width: calc(259px + (311 - 259) * ((100vw - 1440px) / (1700 - 1440)));
-  }
+.brandImg {
+  max-width: 256px;
 }
 
 @media screen and (600px <= width <= 1070px) {

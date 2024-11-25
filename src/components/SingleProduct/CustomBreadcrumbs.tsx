@@ -1,6 +1,7 @@
+import classNames from 'classnames';
+import style from './Product.module.scss';
 import { useParams } from 'react-router-dom';
 import { Breadcrumb } from 'antd';
-import style from './Product.module.scss';
 import { AppRoute } from '@/enums/Route';
 import { laptopData, smartphoneData } from '../Card/constants';
 
@@ -28,7 +29,7 @@ export const CustomBreadcrumbs = () => {
 
   return (
     <Breadcrumb
-      className={style['single-product__breadcrumb']}
+      className={classNames(style['single-product__breadcrumb'])}
       separator={
         <svg
           width="6"

@@ -4,6 +4,7 @@ import RightArrowSliderClick from './icons/right-arrow-slider-click.svg';
 import CatalogIcon from './icons/catalog-icon.svg';
 import BurgerMenuIcon from './icons/burger-menu-icon.svg';
 import RightArrow from './icons/arrow-right.svg';
+import LeftArrow from './icons/left_arrow.svg';
 import Smartphone from './icons/smartphone.svg';
 import Tablet from './icons/tablet.svg';
 import Laptop from './icons/laptop.svg';
@@ -63,6 +64,7 @@ export {
   CatalogIcon,
   BurgerMenuIcon,
   RightArrow,
+  LeftArrow,
   Smartphone,
   Laptop,
   Watch,

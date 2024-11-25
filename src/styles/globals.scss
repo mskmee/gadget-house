@@ -6,6 +6,7 @@
 
 html,
 body {
+  width: 100%;
   scroll-behavior: smooth;
   color: var(--text-color);
   font-family: Inter, sans-serif;
@@ -211,7 +212,6 @@ body {
   max-width: 1240px;
   width: 100% !important;
   .ant-modal-content {
-    margin: 100px 0;
     padding: 56px !important;
     .ant-modal-close {
       top: 56px !important;
@@ -223,5 +223,52 @@ body {
         color: #1c1817;
       }
     }
+  }
+}
+
+.container-xxl {
+  max-width: 1540px;
+  margin: 0 auto;
+  padding: 0 50px;
+}
+
+.arrow-container {
+  padding: 0 20px;
+  margin: 24px auto 0 auto;
+}
+
+@media screen and (max-width: 1200px) {
+  .container-xxl {
+    padding: 0 20px;
+  }
+}
+@media screen and (max-width: 992px) {
+}
+@media screen and (max-width: 768px) {
+  #header-search {
+    padding-right: 40px;
+  }
+}
+
+@media screen and (max-height: 968px) {
+  .product-page-photo-modal .ant-modal-content {
+    padding: 30px !important;
+  }
+}
+@media screen and (max-height: 770px) {
+  .product-page-photo-modal {
+    max-width: 1000px;
+  }
+  .product-page-photo-modal .ant-modal-content .ant-modal-close {
+    top: 30px !important;
+  }
+}
+@media screen and (max-height: 670px) {
+  .product-page-photo-modal {
+    max-width: 900px;
+  }
+  .product-page-photo-modal .ant-modal-content .ant-modal-close {
+    top: 20px !important;
+    right: 40px !important;
   }
 }

@@ -1,31 +1,31 @@
-import { useMemo } from 'react';
+import { useEffect } from 'react';
 import styles from './CartTooltip.module.scss';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { ProductItem } from './ProductItem/ProductItem';
+import { useActions } from '@/hooks/useActions';
+import { Link } from 'react-router-dom';
 
 export const CardTooltip = () => {
-  const cardItems = useTypedSelector((state) => state.shopping_card.products);
+  const cardItems = useTypedSelector((state) => state.shopping_card);
+  const { getTotal } = useActions();
 
-  const totalCardSum = useMemo(
-    () =>
-      cardItems.reduce(
-        (acc, { price }) => acc + Number(price.replace(/\s/g, '')),
-        0,
-      ),
-    [cardItems],
+  useEffect(() => {
+    getTotal();
+  }, [cardItems.products]);
+
+  const formattedPrice = new Intl.NumberFormat('ru-RU').format(
+    cardItems.cardTotalAmount,
   );
-  const formattedPrice = new Intl.NumberFormat('ru-RU').format(totalCardSum);
-
   return (
     <div className={styles.container}>
       <div className={styles.cards}>
-        {cardItems.map((product) => (
+        {cardItems.products.map((product) => (
           <ProductItem key={product.id} product={product} />
         ))}
       </div>
       <div className={styles.total}>
         <span className={styles.price}>{formattedPrice} ₴</span>
-        <button>Go to basket</button>
+        <Link to="/basket">Go to basket</Link>
       </div>
     </div>
   );

@@ -4,7 +4,9 @@
   justify-content: flex-start;
   align-items: center;
   gap: 24px;
-  padding: 48px 50px 24px 50px;
+  max-width: 1540px;
+  margin: 48px auto 0 auto;
+  padding: 0 50px;
 }
 
 .sliderText h2 {

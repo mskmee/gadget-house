@@ -8,3 +8,12 @@
     max-height: 732px;
   }
 }
+
+@media screen and (max-width: 992px) {
+  .product-list {
+    > div,
+    img {
+      display: none;
+    }
+  }
+}

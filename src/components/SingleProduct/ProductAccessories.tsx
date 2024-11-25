@@ -3,11 +3,14 @@ import { productAccessoriesData } from '../Card/constants';
 import Carousels from '../Carousel/Carousel';
 import style from './Product.module.scss';
 import { MyCard } from '../Card/MyCard';
+import classNames from 'classnames';
 
 export const ProductAccessories: FC = () => {
   return (
     <section className={style['accessories']} id="product-accessories">
-      <div className={style['single-product__wrap']}>
+      <div
+        className={classNames(style['single-product__wrap'], 'container-xxl')}
+      >
         <h2>Accessories</h2>
       </div>
       <Carousels

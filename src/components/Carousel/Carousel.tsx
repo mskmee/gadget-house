@@ -111,7 +111,7 @@ const Carousels: FC<ICarouselsProps> = ({
 
   return (
     <div
-      className={`${style.carouselContainer} ${style[classname]}`}
+      className={`${style.carouselContainer} ${style[classname]} `}
       style={
         classname === 'photos-carousel'
           ? { backgroundColor: 'transparent' }
@@ -119,56 +119,52 @@ const Carousels: FC<ICarouselsProps> = ({
       }
       ref={containerRef}
     >
-      <Carousel
-        className={sliderClassName}
-        ref={ref}
-        slidesToShow={countSlideToShow}
-        slidesToScroll={1}
-        autoplay={false}
-        dots={false}
-        initialSlide={0}
-        arrows={false}
-        responsive={
-          responsive || [
-            {
-              breakpoint: 2520,
-              settings: {
-                slidesToShow: 5,
-                slidesToScroll: 1,
+      <div>
+        <Carousel
+          className={sliderClassName}
+          ref={ref}
+          slidesToShow={countSlideToShow}
+          slidesToScroll={1}
+          autoplay={false}
+          dots={false}
+          initialSlide={0}
+          arrows={false}
+          responsive={
+            responsive || [
+              {
+                breakpoint: 2520,
+                settings: {
+                  slidesToShow: 4,
+                  slidesToScroll: 1,
+                },
               },
-            },
-            {
-              breakpoint: 1700,
-              settings: {
-                slidesToShow: 4,
-                slidesToScroll: 1,
+
+              {
+                breakpoint: 1070,
+                settings: {
+                  slidesToShow: 3,
+                  slidesToScroll: 1,
+                },
               },
-            },
-            {
-              breakpoint: 1070,
-              settings: {
-                slidesToShow: 3,
-                slidesToScroll: 1,
+              {
+                breakpoint: 700,
+                settings: {
+                  slidesToShow: 2,
+                  slidesToScroll: 1,
+                },
               },
-            },
-            {
-              breakpoint: 700,
-              settings: {
-                slidesToShow: 2,
-                slidesToScroll: 1,
-              },
-            },
-          ]
-        }
-      >
-        {children}
-      </Carousel>
-      <SliderButtons
-        handleNextClick={handleNextClick}
-        handlePrevClick={handlePrevClick}
-        isFirstSlick={isFirstSlick}
-        isLastSlick={isLastSlick}
-      />
+            ]
+          }
+        >
+          {children}
+        </Carousel>
+        <SliderButtons
+          handleNextClick={handleNextClick}
+          handlePrevClick={handlePrevClick}
+          isFirstSlick={isFirstSlick}
+          isLastSlick={isLastSlick}
+        />
+      </div>
     </div>
   );
 };

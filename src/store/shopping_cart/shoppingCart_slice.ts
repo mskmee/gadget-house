@@ -38,6 +38,26 @@ const shoppingCard_slice = createSlice({
         state.products = copyCardItems as IShoppingCard[];
       }
     },
+    getTotal: (state) => {
+      let { total, quantity } = state.products.reduce(
+        (totalAmount, item) => {
+          const { price, quantity } = item;
+          const priceRes = price.replace(/\s+/g, '');
+
+          let itemTotalPrice = +priceRes * quantity;
+          totalAmount.total += itemTotalPrice;
+          totalAmount.quantity += quantity;
+          console.log(totalAmount);
+          return totalAmount;
+        },
+        {
+          total: 0,
+          quantity: 0,
+        },
+      );
+      state.cardTotalAmount = total;
+      state.cardTotalQuantity = quantity;
+    },
   },
 });
 export const { actions, reducer } = shoppingCard_slice;
