@@ -60,7 +60,7 @@ export interface IProduct {
   anotherColors: string[];
   isLiked: boolean;
   rate: number;
-  popular: number;
+  popular?: number;
   brand: string;
   ram: number;
   builtInMemory: number;
@@ -94,10 +94,10 @@ export interface IOption {
 }
 
 export enum SortOrder {
-  Popularity = 'Popularity',
-  Rating = 'Rating',
-  LowToHigh = 'From Low to High Cost',
-  HighToLow = 'From High to Low Cost',
+  Popularity = 'By popularity',
+  Rating = 'By rating',
+  LowToHigh = 'From low to high cost',
+  HighToLow = 'From high to low cost',
 }
 
 export interface ISortProps {
@@ -118,4 +118,21 @@ export interface ISortOptionProps {
   isSelected: boolean;
   classNames: string;
   onSelect: (value: SortOrder) => void;
+}
+
+export interface IGadget {
+  id: number;
+  title: string;
+  price: number;
+  category: string;
+  isLiked: boolean,
+  brand: string;
+  rate: number;
+  isPopular: number;
+  anotherColors: string[];
+  ram: number;
+  builtInMemory: number;
+  cameraMP: number;
+  img: string;
+  code: string;
 }

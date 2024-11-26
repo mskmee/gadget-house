@@ -1,3 +1,8 @@
+import Smart_1 from '../../assets/images/smartphones/1.png';
+import Smart_2 from '../../assets/images/smartphones/2.png';
+import Smart_3 from '../../assets/images/smartphones/3.png';
+import Smart_4 from '../../assets/images/smartphones/4.png';
+
 export const filters = {
   'categories': ['Smartphones', 'Laptops', 'Tablets'],
   'brands': [
@@ -24,6 +29,8 @@ export const filters = {
   ],
   'rams': ['1 GB', '2 GB', '3 GB', '4 GB', '8 GB', '12 GB', '16 GB'],
   'colors': ['Black', 'White', 'Red', 'Green', 'Blue', 'Purple ', 'Yellow', 'Gold', 'Orange', 'Pink'],
+  // 'colors': ['black', 'white', 'grey',  'medium grey', 'light green', 'blue', 'light blue', 'gold', 'powder pink', 'light violet'],
+  'colorsHex': ['#1a1b1d', '#ffffff', '#bbb5ad', '#808080', '#71f2a5', '#3997ef', '#32c0f0 ', '#f0e1b9', '#ffccc8', '#e7cefd',],
   'cores': ['10 Cores', '8 Cores', '6 Cores', '4+4 Cores', '4 Cores'],
   'screens': [
     'LTPS',
@@ -38,7 +45,7 @@ export const filters = {
     'Dynamic Amoled 2x',
     'AMOLED',
     'pOLED',
-  ]
+  ], 'images': [Smart_1, Smart_2, Smart_3, Smart_4],
 }
 
 import {

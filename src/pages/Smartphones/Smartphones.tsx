@@ -1,34 +1,28 @@
-import { FiltersDesk } from '@/components/Filters/FiltersDesk';
-import { Filters } from '@/components/Filters/Filters';
-import { SortingDesk } from '@/components/Sort/SortingDesk';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
-import styles from './smartphones.module.scss';
+import { selectProductsByCategory } from '@/store/products/selectors';
+import { PageLayout } from '@/components/PageLayout/PageLayout';
 
 export default function Smartphones() {
+  const location = useLocation();
+  const [isLoading, setIsLoading] = useState(true);
+
+  const category = location.pathname.slice(1);
+  const productsByCategory = useSelector(selectProductsByCategory(category));
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000); // 2 секунды для демонстрации скелетона
+  }, []);
+
   return (
-    <div className={styles.smartpnones}>
-      <div className={styles.smartpnones_mobile}>
-        <div className={`container ${styles.smartpnones__container}`}>
-          <div className={styles.smartpnones__wrapper}>
-            <h2 className={styles.smartpnones__title}>Smartphone</h2>
-          </div>
-
-          <Filters />
-        </div>
-      </div>
-
-      <div className={styles.smartpnones_desk}>
-        <div className={styles.smartpnones__header}>
-          <div className={`container ${styles.smartpnones__container}`}>
-            <div className={styles.smartpnones__wrapper}>
-              <h2 className={styles.smartpnones__title}>Smartphone</h2>
-              <SortingDesk />
-            </div>
-
-            <FiltersDesk />
-          </div>
-        </div>
-      </div>
-    </div>
+    <PageLayout
+      title="Smartphone"
+      data={productsByCategory}
+      isLoading={isLoading}
+    />
   );
 }
