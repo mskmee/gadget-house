@@ -24,12 +24,9 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    gap: 12;
-    padding: 17px 16px 16px 16px;
+    padding: 17px 16px 12px 16px;
 
     &Logo {
-      width: 358px;
-      height: 41px;
       color: rgb(28, 24, 23);
       font-family: Nunito;
       font-size: 34px;
@@ -185,9 +182,13 @@
   position: fixed;
   top: 0;
   left: 0;
+
   z-index: 999;
   width: 100%;
   background-color: #f8f8fa;
+
+  z-index: 4;
+
   box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 8%);
   > div {
     max-width: 1540px;
@@ -222,7 +223,7 @@
   display: block;
   pointer-events: none; // Prevent interactions
   transition: opacity 0.3s ease;
-  z-index: 998;
+  z-index: 3;
 }
 
 .overlay.active {
@@ -232,9 +233,9 @@
 
 .catalogListWrap {
   position: absolute;
-  top: 94px;
-  width: calc(100vw - 16px);
-  z-index: 999;
+  top: 90px;
+  width: 100vw;
+  z-index: 3;
   overflow-y: scroll;
   overflow-x: hidden;
   display: none;
@@ -254,21 +255,51 @@
   transform: translateY(0);
 }
 
-@media (max-width: 1200px) {
-  .fixedHeader {
+@media (max-width: 1440px) {
+  .headerBottomWrap {
+    max-width: initial;
+    background-color: var(--carousel-theme-color);
     > div {
-      padding: 0 30px;
-      > div {
-        padding-right: 8px;
-      }
+      padding-right: 0;
     }
   }
+}
+@media (max-width: 1440px) {
   .headerBottom {
     padding-right: 8px;
     gap: 25px;
     &Catalog {
       padding: 12px 114px 16px 22px;
     }
+  }
+}
+@media screen and ((min-width: 992px )and (max-width: 1250px)) {
+  .catalogListWrap {
+    > div {
+      left: calc(var(--parent-left) - 12px);
+    }
+  }
+}
+
+@media (max-width: 1060px) {
+  .headerBottomCatalog {
+    padding: 12px 94px 16px 22px;
+  }
+}
+
+@media (max-width: 1250px) {
+  .fixedHeader {
+    > div {
+      padding: 0 20px;
+      > div {
+        padding-right: 0;
+      }
+    }
+  }
+  .headerBottom {
+    padding-right: 8px;
+    gap: 25px;
+
     &Buttons {
       gap: 10px;
     }
@@ -279,7 +310,8 @@
   .fixedHeader {
     > div {
       > div {
-        padding-right: 30px;
+        gap: 20px;
+        padding-right: 0;
       }
     }
   }
@@ -288,8 +320,6 @@
     gap: 20px;
     > div {
       > img {
-        width: 55px;
-        height: 55px;
         cursor: pointer;
       }
     }
@@ -328,20 +358,34 @@
     background-color: #fff;
   }
   .headerBottom {
+    min-height: 64px;
+  }
+  .headerBottomWrap {
     background-color: #fff;
     padding: 0;
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.08);
   }
 
   .headerBottomButtons {
-    a:not(:last-child) {
+    a:not(:nth-child(4)) {
       display: none;
+    }
+  }
+  .fixedHeader > div > div {
+    background-color: #fff;
+  }
+}
+
+@media (max-width: 450px) {
+  .fixedHeader {
+    > div {
+      padding: 0 16px;
     }
   }
 }
 
-@media (max-width: 390px) {
+@media (max-width: 380px) {
   .headerBottom {
-    padding: 0 16px 16px 0;
-    background-color: var(--white-color);
+    gap: 10px;
   }
 }

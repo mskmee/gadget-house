@@ -1,4 +1,7 @@
+@import '@/styles/functions';
+
 .cardConatiner {
+  min-width: 305px;
   max-width: 305px;
   display: flex;
   flex-direction: column;
@@ -11,6 +14,7 @@
   border-radius: 20px;
   box-shadow: 0 0 8px 0 hsla(0deg 0% 0% / 10%);
   transition: all 0.2s;
+  text-decoration: none;
 }
 
 .alignCenter {
@@ -59,14 +63,19 @@
   flex-flow: column wrap;
   justify-content: space-between;
   align-items: center;
-  gap: 34px;
   align-self: flex-start;
   padding-bottom: 20px;
   height: 100%;
 }
 
 .likedIcon path:first-child {
-  fill: #3b55b1;
+  fill: rgba(111, 76, 154, 1);
+}
+.basketFavoriteIcon {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: rgba(99, 99, 99, 1);
 }
 
 .accessories-colors {
@@ -175,75 +184,215 @@
 .brandImg {
   max-width: 256px;
 }
-
-@media screen and (600px <= width <= 1070px) {
+@media screen and (min-width: 1440px) {
   .cardConatiner {
-    height: 430px;
-    margin-right: 20px;
-  }
-
-  .cardBrandConatiner {
-    height: 100%;
-  }
-
-  .cardConatinerLike {
-    gap: 50px;
+    min-width: 305px;
   }
 }
 
-@media screen and (300px <= width <= 460px) {
+@media screen and (max-width: 1024px) {
   .cardConatiner {
-    height: 287px;
-    margin-right: 8px;
-  }
-
-  .cardBrandConatiner {
-    height: 100%;
-  }
-
-  .productImage {
-    width: 100%;
-    height: auto;
-  }
-
-  .likeIcon {
-    width: 24px;
-    height: 24px;
-  }
-
-  .colorPalette {
-    width: 12px;
-    height: 44px;
-  }
-
-  .cardConatinerLike {
-    gap: 20px;
-  }
-
-  .cardContainerBottom h3,
-  .cardPriceContainer p {
-    margin-bottom: 0;
-    font-weight: normal;
-    font-size: 16px;
-    line-height: 150%;
-  }
-
-  .cardRate {
+    min-width: 250px;
+    max-width: 305px;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: center;
+    gap: 15px;
+    margin: 5px 0;
+    padding: 16px 16px 16px;
+    font-family: Inter, sans-serif;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 0 8px 0 hsla(0deg 0% 0% / 10%);
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .cardContainerTop {
+    height: 190px;
+    .cardImage {
+      align-self: auto;
+      img {
+        width: 80%;
+      }
+    }
+    .cardConatinerLike {
+      > span svg {
+        width: 30px;
+        height: 30px;
+      }
+      .accessories-colors {
+        > div {
+          width: 18px;
+          height: 18px;
+        }
+      }
+    }
+  }
+  .cardContainerBottom {
+    h3 {
+      font-size: rem(20px);
+    }
+    .cardPriceContainer {
+      p {
+        font-size: rem(18px);
+      }
+    }
+    .cardRate ul li div img {
+      width: 20px;
+      height: 20px;
+    }
+    .card-code {
+      font-size: rem(14px);
+    }
+  }
+  .cardBrandConatiner {
+    > img {
+      max-width: 180px;
+    }
+  }
+}
+@media screen and (max-width: 768px) {
+  .cardConatiner {
+    min-width: 200px;
+    max-width: 305px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 5px 0;
+    padding: 12px;
+    font-family: Inter, sans-serif;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 0 8px 0 hsla(0deg 0% 0% / 10%);
+    transition: all 0.2s;
+    text-decoration: none;
   }
 
-  .cardPriceContainer {
-    margin-top: 18px;
+  .cardContainerTop {
+    height: 150px;
+    .cardImage {
+      align-self: auto;
+      img {
+        width: 70%;
+      }
+    }
+    .cardConatinerLike {
+      padding-bottom: 10px;
+      > span svg {
+        width: 26px;
+        height: 26px;
+      }
+      .accessories-colors {
+        > div {
+          width: 14px;
+          height: 14px;
+        }
+      }
+    }
+  }
+  .cardContainerBottom {
+    h3 {
+      font-size: rem(18px);
+    }
+    .cardPriceContainer {
+      margin-top: 22px;
+      p {
+        font-size: rem(18px);
+      }
+      button {
+        width: 37px;
+        height: 37px;
+        > svg {
+          width: 25px;
+          height: 25px;
+        }
+      }
+    }
+    .cardRate ul li div img {
+      width: 15px;
+      height: 15px;
+    }
+    .card-code {
+      font-size: rem(13px);
+    }
+  }
+  .cardBrandConatiner {
+    > img {
+      max-width: 100px;
+    }
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .cardConatiner {
+    min-width: 175px;
+    max-width: 305px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 5px 0;
+    padding: 12px;
+    font-family: Inter, sans-serif;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 0 8px 0 hsla(0deg 0% 0% / 10%);
+    transition: all 0.2s;
+    text-decoration: none;
   }
 
-  .cardPriceContainer p {
-    margin-top: 23px;
+  .cardContainerTop {
+    height: 124px;
+    .cardImage {
+      align-self: auto;
+      img {
+        width: 65%;
+      }
+    }
+    .cardConatinerLike {
+      padding-bottom: 10px;
+      > span svg {
+        width: 24px;
+        height: 24px;
+      }
+      .accessories-colors {
+        > div {
+          width: 12px;
+          height: 12px;
+        }
+      }
+    }
   }
-
-  .cardPriceContainer img {
-    width: 48px;
-    height: 48px;
+  .cardContainerBottom {
+    h3 {
+      font-size: rem(16px);
+    }
+    .cardPriceContainer {
+      margin-top: 22px;
+      p {
+        font-size: rem(16px);
+      }
+      button {
+        width: 35px;
+        height: 35px;
+        > svg {
+          width: 23px;
+          height: 23px;
+        }
+      }
+    }
+    .cardRate ul li div img {
+      width: 13px;
+      height: 13px;
+    }
+    .card-code {
+      font-size: rem(12px);
+    }
+  }
+  .cardBrandConatiner {
+    > img {
+      max-width: 100px;
+    }
   }
 }

@@ -43,7 +43,6 @@
 }
 
 .container {
-  width: 420px;
   padding: 24px 20px 3px 24px;
   background-color: #fff;
   border-bottom-left-radius: 20px;
@@ -66,10 +65,15 @@
 .catalogListButtons {
   display: none;
 }
+@media (max-width: 1450px) {
+  .burgerMenuTopItem {
+    margin-bottom: 20px;
+  }
+}
 
-@media screen and (max-width: 1200px) {
+@media (max-width: 1060px) {
   .container {
-    width: 340px;
+    padding: 24px 10px 3px 14px;
   }
 }
 

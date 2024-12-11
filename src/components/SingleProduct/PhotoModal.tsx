@@ -5,6 +5,8 @@ import { arrowImg } from '@/assets/constants';
 import { currentProduct } from '@/constants/singleProduct';
 import { Modal } from 'antd';
 import { AddToBasketButton } from './AddToBasketButton';
+import { convertPriceToReadable } from '@/utils/helpers/product';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
 
 interface ICurrentSlide {
   id: number;
@@ -31,6 +33,7 @@ export const PhotoModal: FC<iPhotoModalProps> = ({
   const prevArrowRef = useRef<HTMLImageElement>(null);
   const nextArrowRef = useRef<HTMLImageElement>(null);
   const currentProductImages = currentProduct?.[0]?.images;
+  const { currency, locale } = useTypedSelector((state) => state.shopping_card);
 
   const handlePrevClick = () => {
     if (currentSlide?.id !== 1) {
@@ -132,7 +135,13 @@ export const PhotoModal: FC<iPhotoModalProps> = ({
                   ))}
                 </ul>
                 <div className={style.photoModalBottom_right}>
-                  <span>{currentProduct[0].price} ₴</span>
+                  <span>
+                    {convertPriceToReadable(
+                      currentProduct[0].price,
+                      currency,
+                      locale,
+                    )}
+                  </span>
                   <AddToBasketButton />
                 </div>
               </div>

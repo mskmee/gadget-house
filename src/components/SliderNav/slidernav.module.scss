@@ -5,7 +5,7 @@
   align-items: center;
   gap: 24px;
   max-width: 1540px;
-  margin: 48px auto 0 auto;
+  margin: 48px auto 24px auto;
   padding: 0 50px;
 }
 
@@ -62,12 +62,24 @@ span {
     justify-content: space-between;
     padding-right: 24px;
     padding-left: 24px;
+    margin: 36px auto 18px auto;
+    h2 {
+      font-size: 30px;
+    }
+    .buttonLink {
+      font-size: 14px;
+    }
   }
 }
 
 @media (width <= 450px) {
-  .sliderText h2 {
-    font-size: 24px;
+  .sliderText {
+    margin: 24px auto 21px auto;
+    padding: 0 16px;
+    h2 {
+      max-width: 150px;
+      font-size: 24px;
+    }
   }
 
   .buttonLink {

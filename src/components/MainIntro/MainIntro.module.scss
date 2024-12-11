@@ -3,9 +3,56 @@
   justify-content: space-between;
   gap: 40px;
   padding: 0 50px;
+  > div {
+    min-width: 420px;
+  }
   > img {
     align-self: flex-end;
     max-height: 732px;
+  }
+}
+
+@media (max-width: 1440px) {
+  .product-list {
+    > div {
+      min-width: 340px;
+    }
+    > img {
+      width: 600px;
+      flex-grow: 1;
+    }
+  }
+}
+@media (max-width: 1300px) {
+  .product-list div:first-child > ul li a {
+    margin-bottom: 15px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .product-list {
+    gap: 15px;
+  }
+}
+@media (max-width: 1170px) {
+  .product-list div:first-child > ul li a {
+    margin-bottom: 12px;
+  }
+}
+
+@media (max-width: 1120px) {
+  .product-list div:first-child > ul li a {
+    margin-bottom: 8px;
+  }
+}
+@media (max-width: 1060px) {
+  .product-list {
+    > div {
+      min-width: 320px;
+    }
+    div:first-child > ul li a {
+      margin-bottom: 6px;
+    }
   }
 }
 

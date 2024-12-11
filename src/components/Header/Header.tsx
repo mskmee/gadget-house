@@ -37,9 +37,21 @@ export const Header = () => {
   const catalogBtnRef = useRef<HTMLButtonElement>(null);
   const headerBottomRef = useRef<HTMLDivElement>(null);
   const searchFieldRef = useRef<InputRef>(null);
+
+  const isLargerThan1250px = useMediaQuery({
+    query: '(max-width: 1250px)',
+  });
+
   const isLaptopPage = useMediaQuery({
     query: '(max-width: 992px)',
   });
+
+  const isLargerThan768px = useMediaQuery({
+    query: '(max-width: 768px)',
+  });
+
+  const isBasketPage = location.pathname === AppRoute.BASKET_PAGE;
+  const shouldShowCartTooltip = products.length && !isBasketPage;
 
   const handleRouteChange = () => {
     if (isMenuOpen) {
@@ -75,11 +87,19 @@ export const Header = () => {
           );
         } else {
           if (!isLaptopPage) {
-            catalogListRef.current.style.left = `-51px`;
+            catalogListRef.current.style.left = isLargerThan1250px
+              ? `-37px`
+              : `-51px`;
             catalogListRef.current.style.setProperty('--parent-left', `50px`);
           } else {
-            catalogListRef.current.style.left = `-29px`;
-            catalogListRef.current.style.top = `85px`;
+            catalogListRef.current.style.left = `-20px`;
+            catalogListRef.current.style.top = isLargerThan768px
+              ? isFixedHeader
+                ? `58px`
+                : `66px`
+              : isFixedHeader
+                ? `68px`
+                : `85px`;
             catalogListRef.current.style.setProperty('--parent-left', `0`);
           }
         }
@@ -142,8 +162,6 @@ export const Header = () => {
         (e.target as HTMLElement).id === 'overlay' &&
         searchFieldRef.current
       ) {
-        console.log(888);
-
         setIsOverlayActive(false);
       }
     };
@@ -197,7 +215,7 @@ export const Header = () => {
         </Link>
       </div>
       <div
-        className={classNames({
+        className={classNames(styles.headerBottomWrap, {
           'container-xxl': !isFixedHeader,
           [styles.fixedHeader]: isFixedHeader,
         })}
@@ -245,19 +263,17 @@ export const Header = () => {
                 setIsCatalogListOpen={setIsCatalogListOpen}
               />
             </div>
-
             <Search
               searchFieldRef={searchFieldRef}
               isOverlayActive={isOverlayActive}
               setIsOverlayActive={setIsOverlayActive}
             />
-
             <div className={styles.headerBottomButtons}>
               {buttonData.map((buttonData) => (
                 <NavButton key={buttonData.id} button={buttonData} />
               ))}
 
-              {products?.length > 0 && (
+              {shouldShowCartTooltip !== 0 && (
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -272,7 +288,6 @@ export const Header = () => {
           </div>
         </div>
       </div>
-
       <div
         id="overlay"
         className={classNames(styles.overlay, {

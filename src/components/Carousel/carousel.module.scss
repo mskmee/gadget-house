@@ -1,4 +1,4 @@
-.mobile-carousel,
+/* .smartphone-carousel,
 .laptop-carousel,
 .viewed-carousel {
   box-sizing: border-box;
@@ -6,7 +6,7 @@
   max-width: 1540px;
   padding: 0 50px;
   > div {
-    padding: 50px 10px 24px 10px;
+    padding: 50px 50px 24px 50px;
     background-color: var(--carousel-theme-color);
     border-radius: 20px;
   }
@@ -34,16 +34,163 @@
       background-color: #fff;
     }
   }
+} */
+
+.carousel {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: relative;
+  padding: 50px 40px 24px 40px;
+  max-width: 1440px;
+  margin: 0 auto;
+  background-color: #eae4ee;
+  border-radius: 20px;
+  .trackContainer {
+    padding: 0 10px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .track {
+    display: flex;
+    transition: transform 0.4s ease-in-out;
+    will-change: transform;
+    touch-action: pan-y;
+    gap: 40px;
+  }
 }
 
-@media screen and (320px <= width <= 1040px) {
-  .sliderButtons {
+.brands-carousel {
+  background-color: initial;
+}
+.slider-buttons {
+  display: flex;
+  justify-content: end;
+  padding: 0 10px;
+}
+
+.btn-arrow-prev {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  border: 2px solid #00820d;
+  border-right: none;
+  border-radius: 12px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  outline: none;
+}
+.btn-arrow-next {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 36px;
+  height: 32px;
+  border: 2px solid #00820d;
+  border-left: none;
+  border-radius: 12px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  outline: none;
+}
+
+.btn-arrow-prev:hover,
+.btn-arrow-next:hover {
+  cursor: pointer;
+}
+
+.btn-arrow-prev:active {
+  border: 3px solid #00680a !important;
+  border-right: none !important;
+  outline: none;
+}
+
+.btn-arrow-next:active {
+  border: 3px solid #00680a !important;
+  border-left: none !important;
+  outline: none;
+}
+
+.btn-arrow-prev:active svg path,
+.btn-arrow-next:active svg path {
+  stroke-width: 2.5px;
+  stroke: #00680a !important;
+}
+
+.btn-arrow-prev-disabled,
+.btn-arrow-prev-disabled:active {
+  border: 2px solid #c3c3c5 !important;
+  border-right: none !important;
+  cursor: not-allowed !important;
+  & svg path {
+    stroke: #c3c3c5 !important;
+  }
+}
+
+.btn-arrow-next-disabled,
+.btn-arrow-next-disabled:active {
+  border: 2px solid #c3c3c5 !important;
+  border-left: none !important;
+  cursor: not-allowed !important;
+  & svg path {
+    stroke: #c3c3c5 !important;
+  }
+}
+
+@media (max-width: 1440px) {
+  .carousel {
+    padding: 50px 50px 24px 50px;
+    border-radius: 0;
+    .trackContainer {
+      padding: 0;
+    }
+    .slider-buttons {
+      padding: 0;
+    }
+    .track {
+      gap: 30px;
+    }
+  }
+}
+
+@media screen and (max-width: 1250px) {
+  .carousel {
+    padding: 50px 20px 24px 20px;
+    border-radius: 0;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .carousel {
+    .track {
+      gap: 20px;
+    }
+  }
+  .slider-buttons {
+    button {
+      width: 30px;
+      height: 26px;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .slider-buttons {
     display: none;
   }
 }
 
-@media screen and (7680px <= width <= 1040px) {
-  .carouselContainer {
-    padding: 24px 24px 16px;
+@media screen and (max-width: 450px) {
+  .carousel {
+    padding: 16px 16px 7px 16px;
+    .track {
+      gap: 8px;
+    }
+  }
+  .brands-carousel {
+    padding: 24px 16px 7px 16px;
   }
 }

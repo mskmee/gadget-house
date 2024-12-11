@@ -4,7 +4,7 @@ import RightArrowSliderClick from './icons/right-arrow-slider-click.svg';
 import CatalogIcon from './icons/catalog-icon.svg';
 import BurgerMenuIcon from './icons/burger-menu-icon.svg';
 import RightArrow from './icons/arrow-right.svg';
-import LeftArrow from './icons/left_arrow.svg';
+import LeftArrow from './icons/arrow-left.svg';
 import Smartphone from './icons/smartphone.svg';
 import Tablet from './icons/tablet.svg';
 import Laptop from './icons/laptop.svg';
@@ -56,8 +56,11 @@ import previouslyViewed_3 from '../assets/images/previously-viewed/4.png';
 import headphones from './images/basket-products-img/headphones.png';
 import basketPhoneImg from './images/basket-products-img/phone.png';
 import searchInputClear from './icons/search_input_clear.svg';
+import deleteFromBasket from './icons/delete-from-basket.svg';
+import { BasketIcon } from './icons/BasketIcon';
 
 export {
+  BasketIcon,
   RightArrowSlider,
   Vector,
   RightArrowSliderClick,
@@ -116,4 +119,5 @@ export {
   headphones,
   basketPhoneImg,
   searchInputClear,
+  deleteFromBasket,
 };

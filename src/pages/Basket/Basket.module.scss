@@ -1,4 +1,82 @@
 .container {
-  padding: 100px 60px;
+  padding: 0 60px 100px;
   margin: 0 auto;
+  background: rgba(248, 247, 250, 1);
 }
+
+.buttonBack{
+  margin-top: 40px;
+  background: transparent;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  font-size: 24px;
+  column-gap: 8px;
+  img {
+    width: 48px;
+    transition: .25s ease-in-out;
+  }
+  &:hover{
+    img {
+      transform: translateX(-5px);
+    }
+  }
+}
+
+.content {
+  display: flex;
+  column-gap: 40px;
+  margin-top: 57px;
+}
+
+.productList {
+  flex: 1;
+
+  li:not(:last-child) {
+    margin-bottom: 16px;
+  }
+}
+
+.info {
+  width: 100%;
+  height: fit-content;
+  max-width: 305px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+  padding: 17px 22px 17px 23px;
+
+  p, h3 {
+    display: flex;
+    justify-content: space-between;
+  }
+  p {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+    margin-bottom: 8px;
+  }
+  h3 {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 36px;
+  }
+  button {
+    margin-top: 42px;
+    padding: 16px 24px;
+    color: var(--white-color);
+    background-color: var(--green-color);
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    width: 100%;
+    line-height: 24px;
+    transition: background-color .3s ease-in-out;
+    &:hover {
+      background-color: #4da856;
+    }
+  }
+}
+

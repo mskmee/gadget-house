@@ -156,6 +156,7 @@ export const productAccessoriesData = [
     rate: 5,
     price: '2 799',
     code: '874364',
+    category: 'smartphone'
   },
   {
     id: 2,
@@ -166,6 +167,7 @@ export const productAccessoriesData = [
     rate: 5,
     price: '2 799',
     code: '875496',
+    category: 'smartphone'
   },
   {
     id: 3,
@@ -176,6 +178,7 @@ export const productAccessoriesData = [
     rate: 5,
     price: '2 799',
     code: '456158',
+    category: 'smartphone'
   },
   {
     id: 4,
@@ -186,6 +189,7 @@ export const productAccessoriesData = [
     rate: 5,
     price: '2 799',
     code: '557769',
+    category: 'smartphone'
   },
   {
     id: 5,
@@ -196,6 +200,7 @@ export const productAccessoriesData = [
     rate: 3,
     price: '3 199',
     code: '173497',
+    category: 'smartphone'
   },
   {
     id: 6,
@@ -206,6 +211,7 @@ export const productAccessoriesData = [
     rate: 4,
     price: '2 835',
     code: '157781',
+    category: 'smartphone'
   },
 ];
 
@@ -251,3 +257,5 @@ export const previouslyReviewedData = [
     isLiked: false,
   },
 ];
+
+

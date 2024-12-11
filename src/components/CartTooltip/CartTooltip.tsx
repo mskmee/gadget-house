@@ -4,28 +4,34 @@ import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { ProductItem } from './ProductItem/ProductItem';
 import { useActions } from '@/hooks/useActions';
 import { Link } from 'react-router-dom';
+import { convertPriceToReadable } from '@/utils/helpers/product';
+import { AppRoute } from '@/enums/Route';
 
 export const CardTooltip = () => {
-  const cardItems = useTypedSelector((state) => state.shopping_card);
+  const {
+    products: cardItems,
+    cardTotalAmount,
+    currency,
+    locale,
+  } = useTypedSelector((state) => state.shopping_card);
   const { getTotal } = useActions();
 
   useEffect(() => {
     getTotal();
-  }, [cardItems.products]);
+  }, [cardItems]);
 
-  const formattedPrice = new Intl.NumberFormat('ru-RU').format(
-    cardItems.cardTotalAmount,
-  );
   return (
     <div className={styles.container}>
       <div className={styles.cards}>
-        {cardItems.products.map((product) => (
+        {cardItems.map((product) => (
           <ProductItem key={product.id} product={product} />
         ))}
       </div>
       <div className={styles.total}>
-        <span className={styles.price}>{formattedPrice} ₴</span>
-        <Link to="/basket">Go to basket</Link>
+        <span className={styles.price}>
+          {convertPriceToReadable(cardTotalAmount, currency, locale)}
+        </span>
+        <Link to={AppRoute.BASKET_PAGE}>Go to basket</Link>
       </div>
     </div>
   );

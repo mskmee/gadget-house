@@ -41,33 +41,34 @@
     }
   }
   &__menu {
+    max-width: 1440px;
+    margin: 0 auto;
     margin-top: 48px;
     background-color: #eae4ee;
-    > div {
-      padding: 30px 50px;
-      ul {
+
+    padding: 30px 50px;
+    ul {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      column-gap: 32px;
+      row-gap: 15px;
+      > li {
         display: flex;
         align-items: center;
-        flex-wrap: wrap;
-        column-gap: 32px;
-        row-gap: 15px;
-        > li {
-          display: flex;
-          align-items: center;
-          gap: 32px;
-        }
-        > li:not(:last-child)::after {
-          content: '';
-          display: inline-block;
-          width: 2px;
-          height: 36px;
-          background-image: url('../../assets/single_product/menu_line.svg');
-          background-size: contain;
-          background-repeat: no-repeat;
-        }
-        > li:not(.active):hover > a {
-          transform: scale(1.03);
-        }
+        gap: 32px;
+      }
+      > li:not(:last-child)::after {
+        content: '';
+        display: inline-block;
+        width: 2px;
+        height: 36px;
+        background-image: url('../../assets/single_product/menu_line.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+      }
+      > li:not(.active):hover > a {
+        transform: scale(1.03);
       }
     }
     a {
@@ -623,12 +624,37 @@
 // Accessories section ---start
 
 .accessories {
-  margin-top: 56px;
-  padding: 45px 0 24px 0;
-  background-color: #eae4ee;
+  max-width: 1540px;
+  margin: 52px auto 0 auto;
+  padding: 0 50px;
+
   h2 {
+    padding: 0 50px;
     font-size: rem(42px);
     font-weight: 500;
+    line-height: 150%;
+  }
+  > div {
+    padding: 45px 0 24px 0;
+    border-radius: 20px;
+    background-color: #eae4ee;
+
+    > div {
+      padding: 0;
+      > div:last-child {
+        padding: 0 30px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 1440px) {
+  .accessories {
+    padding: 0;
+    border-radius: 0;
+    background-color: #eae4ee;
+    h2 {
+      padding: 0 50px;
+    }
   }
 }
 
