@@ -2,7 +2,6 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  width: 638px;
   height: 160px;
   padding: 24px;
   background-color: var(--white-color);
@@ -15,42 +14,61 @@
       width: 100%;
     }
   }
-  .name {
-    margin-bottom: 8px;
-    overflow: hidden;
-    color: var(--text-color);
-    font-weight: 500;
-    font-size: 24px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    line-height: 150%;
-  }
 
-  .priceWrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 476px;
-
-    .price {
-      color: var(--text-color);
-      font-size: 24px;
-      line-height: 150%;
+  .cardDetails {
+    flex-grow: 1;
+    .nameWrapper {
+      display: flex;
+      flex-direction: column;
+      max-width: 476px;
+      margin-bottom: 8px;
+      span:last-child {
+        color: #808080;
+      }
+      .name {
+        margin-bottom: 8px;
+        overflow: hidden;
+        color: var(--text-color);
+        font-weight: 500;
+        font-size: 24px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        line-height: 150%;
+      }
     }
 
-    .details {
-      color: #808080;
-      font-size: 16px;
+    .priceWrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .price {
+        color: var(--text-color);
+        font-size: 24px;
+        line-height: 150%;
+      }
+
+      .details {
+        color: #808080;
+        font-size: 16px;
+      }
     }
   }
 }
 
-.nameWrapper {
-  display: flex;
-  flex-direction: column;
-  max-width: 476px;
-  margin-bottom: 8px;
-  span:last-child {
-    color: #808080;
+@media screen and (max-width: 768px) {
+  .card .cardDetails {
+    .nameWrapper .name,
+    .priceWrapper .price {
+      font-size: 1.2rem;
+    }
+  }
+}
+@media screen and (max-width: 500px) {
+  .card .cardDetails {
+    .nameWrapper .name,
+    .priceWrapper .price {
+      font-size: 1rem;
+    }
   }
 }

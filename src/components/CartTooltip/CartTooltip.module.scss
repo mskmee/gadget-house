@@ -63,3 +63,43 @@
     cursor: grab;
   }
 }
+
+@media screen and (max-width: 1250px) {
+  .container {
+    width: 600px;
+  }
+}
+
+@media screen and (max-width: 1250px) {
+  .container {
+    width: 550px;
+    padding: 15px 0 15px 15px;
+    .cards,
+    .total {
+      padding-right: 15px;
+    }
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .container {
+    width: 450px;
+    padding: 10px 0 10px 10px;
+    .cards,
+    .total {
+      padding-right: 10px;
+    }
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .container {
+    width: 400px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .container {
+    width: 350px;
+  }
+}

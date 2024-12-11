@@ -62,11 +62,7 @@ export const SearchResults = () => {
         link="/recommendations"
         isVisibleSeeMoreBtn={false}
       />
-      <Carousels
-        classname="laptop-carousel"
-        sliderClassName="laptop-slider"
-        countSlideToShow={5}
-      >
+      <Carousels classname="laptop-carousel">
         {Array.from({ length: 8 }, (_, i) => (
           <MyCard
             key={`laptop-${i}`}

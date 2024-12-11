@@ -10,7 +10,6 @@ import {
 } from '@/assets/constants';
 
 import Carousels from '../Carousel/Carousel';
-import { photosResponsive } from '@/constants/carouselResponsive';
 
 const productImages = [
   { id: 1, img: productImg1 },
@@ -28,12 +27,7 @@ export const ProductPhotos: FC = () => {
 
       {productImages?.length > 0 ? (
         <>
-          <Carousels
-            classname="photos-carousel"
-            sliderClassName="photos-slider"
-            countSlideToShow={3}
-            responsive={photosResponsive}
-          >
+          <Carousels classname="photos-carousel">
             {productImages?.map((photo) => (
               <img
                 key={photo?.id}

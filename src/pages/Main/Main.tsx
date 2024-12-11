@@ -33,7 +33,7 @@ export default function Main() {
       ) : (
         <>
           <SliderNav text="Smartphone" link="/smartphones" />
-          <Carousels classname="smartphone-carousel" gap={40}>
+          <Carousels classname="smartphone-carousel">
             {Array.from({ length: 8 }, (_, i) => (
               <MyCard
                 key={`smartphone-${i}`}
@@ -43,7 +43,7 @@ export default function Main() {
             ))}
           </Carousels>
 
-          <Carousels classname="brands-carousel" gap={23}>
+          <Carousels classname="brands-carousel">
             {Array.from({ length: 10 }, (_, i) => (
               <BrandCard
                 key={`brand-${i}`}
@@ -53,7 +53,7 @@ export default function Main() {
           </Carousels>
 
           <SliderNav text="Laptop" link="/laptops" />
-          <Carousels classname="laptop-carousel" gap={40}>
+          <Carousels classname="laptop-carousel">
             {Array.from({ length: 8 }, (_, i) => (
               <MyCard
                 key={`laptop-${i}`}
@@ -64,7 +64,7 @@ export default function Main() {
           </Carousels>
 
           <SliderNav text="Previously reviewed offers" link="/viewed" />
-          <Carousels classname="viewed-carousel" gap={40}>
+          <Carousels classname="viewed-carousel">
             {Array.from(Array(8), (_, i) => (
               <MyCard
                 key={`reviewed-${i}`}

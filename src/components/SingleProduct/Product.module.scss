@@ -605,7 +605,14 @@
   padding: 40px 0 40px 33px;
   overflow: hidden;
   @include custom-box-shadow;
-
+  > div {
+    background-color: #fff;
+    > div:last-child {
+      button {
+        background-color: #fff;
+      }
+    }
+  }
   > h2 {
     font-size: rem(42px);
     font-weight: 500;
@@ -638,13 +645,6 @@
     padding: 45px 0 24px 0;
     border-radius: 20px;
     background-color: #eae4ee;
-
-    > div {
-      padding: 0;
-      > div:last-child {
-        padding: 0 30px;
-      }
-    }
   }
 }
 @media screen and (max-width: 1440px) {

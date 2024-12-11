@@ -182,13 +182,9 @@
   position: fixed;
   top: 0;
   left: 0;
-
   z-index: 999;
   width: 100%;
-  background-color: #f8f8fa;
-
   z-index: 4;
-
   box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 8%);
   > div {
     max-width: 1540px;
@@ -233,7 +229,7 @@
 
 .catalogListWrap {
   position: absolute;
-  top: 90px;
+  top: 92px;
   width: 100vw;
   z-index: 3;
   overflow-y: scroll;
@@ -241,6 +237,7 @@
   display: none;
 
   > div {
+    width: 420px;
     position: absolute;
     top: 0;
     left: var(--parent-left);
@@ -261,6 +258,11 @@
     background-color: var(--carousel-theme-color);
     > div {
       padding-right: 0;
+    }
+  }
+  .catalogListWrap {
+    > div {
+      width: initial;
     }
   }
 }
@@ -330,6 +332,9 @@
       gap: 8px;
     }
   }
+  .catalogListWrap > div {
+    width: 420px;
+  }
 }
 
 @media (max-width: 1070px) {
@@ -357,13 +362,15 @@
   header {
     background-color: #fff;
   }
-  .headerBottom {
-    min-height: 64px;
-  }
+
   .headerBottomWrap {
     background-color: #fff;
     padding: 0;
     box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.08);
+    .headerBottom {
+      min-height: 64px;
+      background-color: inherit;
+    }
   }
 
   .headerBottomButtons {
@@ -376,16 +383,22 @@
   }
 }
 
-@media (max-width: 450px) {
+@media screen and (max-width: 450px) {
   .fixedHeader {
     > div {
       padding: 0 16px;
     }
+  }
+  .catalogListWrap > div {
+    width: 380px;
   }
 }
 
 @media (max-width: 380px) {
   .headerBottom {
     gap: 10px;
+  }
+  .catalogListWrap > div {
+    width: 320px;
   }
 }

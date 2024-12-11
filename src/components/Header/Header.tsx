@@ -98,8 +98,8 @@ export const Header = () => {
                 ? `58px`
                 : `66px`
               : isFixedHeader
-                ? `68px`
-                : `85px`;
+                ? `64px`
+                : `81px`;
             catalogListRef.current.style.setProperty('--parent-left', `0`);
           }
         }

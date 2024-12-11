@@ -5,7 +5,6 @@ import classNames from 'classnames';
 interface CustomCarouselProps {
   classname: string;
   children: ReactNode[];
-  gap?: number;
 }
 
 const CustomCarousel: React.FC<CustomCarouselProps> = ({
@@ -176,8 +175,8 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
             </div>
           ))}
         </div>
-      </div>{' '}
-      <div className={styles['slider-buttons']}>
+      </div>
+      <div className={classNames(styles['slider-buttons'])}>
         <button
           className={classNames(styles['btn-arrow-prev'], {
             [styles['btn-arrow-prev-disabled']]: currentIndex === 0,

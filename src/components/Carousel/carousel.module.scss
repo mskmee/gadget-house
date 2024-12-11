@@ -63,6 +63,11 @@
 
 .brands-carousel {
   background-color: initial;
+  > div:last-child {
+    button {
+      background-color: #fff;
+    }
+  }
 }
 .slider-buttons {
   display: flex;

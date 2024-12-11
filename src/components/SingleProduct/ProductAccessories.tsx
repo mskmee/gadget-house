@@ -9,11 +9,7 @@ export const ProductAccessories: FC = () => {
     <section className={style['accessories']} id="product-accessories">
       <div>
         <h2>Previously reviewed offers</h2>
-        <Carousels
-          classname="viewed-carousel"
-          sliderClassName="viewed-slider"
-          countSlideToShow={5}
-        >
+        <Carousels classname="viewed-carousel">
           {Array.from(Array(8), (_, i) => (
             <MyCard
               key={`reviewed-${i}`}
