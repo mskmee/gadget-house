@@ -8,6 +8,11 @@ import { convertPriceToReadable } from '@/utils/helpers/product';
 import { useState } from 'react';
 import { SuccessPopUp } from './libs/components/components';
 import { useActions } from '@/hooks/useActions';
+import { SliderNav } from '@/components/SliderNav/SliderNav.tsx';
+import Carousels from '@/components/Carousel/Carousel.tsx';
+import { MyCard } from '@/components/Card/MyCard.tsx';
+import { smartphoneData } from '@/components/Card/constants.ts';
+import Benefits from '@/components/benefitsList/benefits.tsx';
 
 export const BasketPage = () => {
   const [isPopUpOpened, setIsPopUpOpened] = useState(false);
@@ -25,6 +30,7 @@ export const BasketPage = () => {
   };
 
   return (
+    <>
     <div className={styles.container}>
       <SuccessPopUp isOpened={isPopUpOpened} onClose={onPopUpClose} />
       <CustomBreadcrumbs />
@@ -63,5 +69,21 @@ export const BasketPage = () => {
         </section>
       )}
     </div>
+      <SliderNav text="Recommendations for you" link="/smartphones" isVisibleSeeMoreBtn={false} />
+      <Carousels
+        classname="mobile-carousel"
+        sliderClassName="mobile-slider"
+        countSlideToShow={5}
+      >
+        {Array.from({ length: 8 }, (_, i) => (
+          <MyCard
+            key={`smartphone-${i}`}
+            product={smartphoneData[i % smartphoneData.length]}
+            classname="smartphone"
+          />
+        ))}
+      </Carousels>
+      <Benefits />
+    </>
   );
 };
