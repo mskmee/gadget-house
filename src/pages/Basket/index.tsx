@@ -31,45 +31,50 @@ export const BasketPage = () => {
 
   return (
     <>
-    <div className={styles.container}>
-      <SuccessPopUp isOpened={isPopUpOpened} onClose={onPopUpClose} />
-      <CustomBreadcrumbs />
-      <button className={styles.buttonBack} onClick={() => navigate(-1)}>
-        <img src={LeftArrow} alt="Right Arrow" />
-        Back
-      </button>
+      <div className={styles.container}>
+        <SuccessPopUp isOpened={isPopUpOpened} onClose={onPopUpClose} />
+        <CustomBreadcrumbs />
+        <button className={styles.buttonBack} onClick={() => navigate(-1)}>
+          <img src={LeftArrow} alt="Right Arrow" />
+          Back
+        </button>
 
-      {products.length === 0 ? (
-        <p>Your basket is empty</p>
-      ) : (
-        <section className={styles.content}>
-          <ul className={styles.productList}>
-            {products.map((product) => (
-              <BasketItem product={product} key={product.id} />
-            ))}
-          </ul>
-          <div className={styles.info}>
-            <p>
-              Sum{' '}
-              <span>
-                {convertPriceToReadable(cardTotalAmount, currency, locale)}
-              </span>
-            </p>
-            <p>
-              Discount <span></span>
-            </p>
-            <h3>
-              In total{' '}
-              <span>
-                {convertPriceToReadable(cardTotalAmount, currency, locale)}
-              </span>
-            </h3>
-            <button onClick={handleOrderConfirm}>Place the order</button>
-          </div>
-        </section>
-      )}
-    </div>
-      <SliderNav text="Recommendations for you" link="/smartphones" isVisibleSeeMoreBtn={false} />
+        {products.length === 0 ? (
+          <p>Your basket is empty</p>
+        ) : (
+          <section className={styles.content}>
+            <ul className={styles.productList}>
+              {products.map((product) => (
+                <BasketItem product={product} key={product.id} />
+              ))}
+            </ul>
+            <div className={styles.info}>
+              <p>
+                Sum{' '}
+                <span>
+                  {convertPriceToReadable(cardTotalAmount, currency, locale)}
+                </span>
+              </p>
+              <p>
+                Discount <span></span>
+              </p>
+              <h3>
+                In total{' '}
+                <span>
+                  {convertPriceToReadable(cardTotalAmount, currency, locale)}
+                </span>
+              </h3>
+              <button onClick={handleOrderConfirm}>Place the order</button>
+            </div>
+          </section>
+        )}
+      </div>
+
+      <SliderNav
+        text="Recommendations for you"
+        link="/smartphones"
+        isVisibleSeeMoreBtn={false}
+      />
       <Carousels
         classname="mobile-carousel"
         sliderClassName="mobile-slider"
