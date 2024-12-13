@@ -2,27 +2,28 @@ import { FC, useEffect, useRef, useState } from 'react';
 import type { PaginationProps } from 'antd';
 import { Pagination } from 'antd';
 
-import { IProductCard } from '@/interfaces/interfaces';
-import { MyCard } from '../components';
+import { ProductItem } from '@/utils/packages/products';
+import { Card } from './Card';
 
 import styles from './catalog.module.scss';
 
-interface CatalogProps {
-  products: IProductCard[];
+interface ICatalogProps {
+  data: ProductItem[];
+  totalElements?: number;
+  totalPages: number;
+  page: number;
 }
 
-export const Catalog: FC<CatalogProps> = ({ products }) => {
-  const [displayedProducts, setDisplayedProducts] = useState<IProductCard[]>(
-    [],
-  );
-  const [currentPage, setCurrentPage] = useState(1);
+export const Catalog: FC<ICatalogProps> = ({ data, totalPages, page }) => {
+  const [displayedProducts, setDisplayedProducts] = useState<ProductItem[]>([]);
+  const [currentPage, setCurrentPage] = useState(page);
   const [hasMore, setHasMore] = useState(true);
   const observerRef = useRef<HTMLDivElement | null>(null);
 
   const itemsPerPage = 18;
   const itemsPerPageMobile = 8;
 
-  const paginatedProducts = products.slice(
+  const paginatedProducts = data.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage,
   );
@@ -32,12 +33,12 @@ export const Catalog: FC<CatalogProps> = ({ products }) => {
   };
 
   useEffect(() => {
-    setDisplayedProducts(products.slice(0, itemsPerPageMobile));
-  }, [products]);
+    setDisplayedProducts(data.slice(0, itemsPerPageMobile));
+  }, [data]);
 
   const loadMore = () => {
     const currentLength = displayedProducts.length;
-    const nextProducts = products.slice(
+    const nextProducts = data.slice(
       currentLength,
       currentLength + itemsPerPageMobile,
     );
@@ -81,9 +82,9 @@ export const Catalog: FC<CatalogProps> = ({ products }) => {
     <div className={styles.catalog}>
       <div className={styles.catalog__mobile}>
         <ul className={styles.catalog__mobileList}>
-          {Array.isArray(products) &&
-            displayedProducts.map((product: IProductCard) => (
-              <MyCard
+          {Array.isArray(data) &&
+            displayedProducts.map((product: ProductItem) => (
+              <Card
                 key={product.id}
                 product={product}
                 classname="catalog__item"
@@ -101,9 +102,9 @@ export const Catalog: FC<CatalogProps> = ({ products }) => {
 
       <div className={styles.catalog__desk}>
         <ul className={styles.catalog__deskList}>
-          {Array.isArray(products) &&
-            paginatedProducts.map((product: IProductCard) => (
-              <MyCard
+          {Array.isArray(data) &&
+            paginatedProducts.map((product: ProductItem) => (
+              <Card
                 key={product.id}
                 product={product}
                 classname="catalog__item"
@@ -115,7 +116,7 @@ export const Catalog: FC<CatalogProps> = ({ products }) => {
           showSizeChanger={false}
           showTitle={false}
           current={currentPage}
-          total={products.length}
+          total={totalPages}
           onChange={onChange}
           pageSize={itemsPerPage}
           className={styles.catalog__pagination}

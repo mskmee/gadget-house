@@ -45,7 +45,7 @@ export const filters = {
     'Dynamic Amoled 2x',
     'AMOLED',
     'pOLED',
-  ], 'images': [Smart_1, Smart_2, Smart_3, Smart_4],
+  ], 'images': [{ link: Smart_1, order: 1 }, { link: Smart_2, order: 2 }, { link: Smart_3, order: 3 }, { link: Smart_4, order: 4 }],
 }
 
 import {

@@ -1,28 +1,24 @@
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { selectProductsByCategory } from '@/store/products/selectors';
+import { AppDispatch, RootState } from '@/store';
+import { getAllProducts } from '@/store/products/actions';
 import { PageLayout } from '@/components/PageLayout/PageLayout';
 
 export default function Smartphones() {
-  const location = useLocation();
-  const [isLoading, setIsLoading] = useState(true);
-
-  const category = location.pathname.slice(1);
-  const productsByCategory = useSelector(selectProductsByCategory(category));
+  const dispatch: AppDispatch = useDispatch();
+  const { productsData } = useSelector((state: RootState) => state.products);
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000); // 2 секунды для демонстрации скелетона
-  }, []);
+    dispatch(getAllProducts());
+  }, [dispatch]);
 
   return (
     <PageLayout
-      title="Smartphone"
-      data={productsByCategory}
-      isLoading={isLoading}
+      page={productsData?.page || []}
+      totalElements={productsData?.totalElements || 0}
+      totalPages={productsData?.totalPages || 0}
+      currentPage={productsData?.currentPage || 0}
     />
   );
 }
