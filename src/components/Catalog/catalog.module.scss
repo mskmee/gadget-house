@@ -1,0 +1,121 @@
+.catalog {
+  flex-grow: 1;
+
+  &__mobile {
+    display: block;
+    height: 80vh;
+    overflow-y: auto;
+
+    @media screen and (min-width: 680px) {
+      display: none;
+    }
+  }
+
+  &__mobileList {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 8px;
+    margin-bottom: 40px;
+  }
+
+  &__desk {
+    display: none;
+
+    @media screen and (min-width: 680px) {
+      display: block;
+    }
+  }
+
+  &__deskList {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 32px;
+    margin-bottom: 65px;
+
+    @media screen and (min-width: 1400px) {
+    grid-gap: 40px;
+    grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  &__pagination {
+    display: none;
+    justify-content: center !important;
+
+    @media screen and (min-width: 680px) {
+      display: flex;
+    }
+
+    :global {
+      .ant-pagination {
+        display: flex;
+        margin-top: 20px;
+      }
+
+      .ant-pagination-item {
+        height: auto;
+        width: auto;
+        border: none;
+        background-color: transparent;
+        font-family: "Inter", sans-serif;
+
+        a {
+          display: inline-block;
+          padding: 0;
+          border-bottom: 1px solid transparent;
+          font-weight: 400;
+          font-size: 24px;
+          line-height: 120%;
+          color: var(--text-color);
+        }
+
+        &:hover {
+          background-color: transparent !important;
+          border-color: transparent !important;
+
+          a {
+            color: var(--text-color) !important;
+          }
+        }
+      }
+
+      .ant-pagination-item-active {
+        background-color: transparent;
+
+        a {
+          border-color: var(--text-color);
+          color: var(--text-color);
+        }
+      }
+
+      .ant-pagination-prev,
+      .ant-pagination-next {
+        border: none;
+        background-color: transparent;
+      }
+
+      .ant-pagination-prev .ant-pagination-item-link,
+      .ant-pagination-next .ant-pagination-item-link {
+        color: var(--text-color) !important;
+      }
+
+      .ant-pagination-prev:hover .ant-pagination-item-link,
+      .ant-pagination-next:hover .ant-pagination-item-link {
+        background-color: transparent !important;
+      }
+
+      .ant-pagination-item-link-icon {
+        color: var(--text-color) !important;
+      }
+    }
+  }
+
+  &__loadingIndicator {
+    text-align: center;
+    padding: 16px;
+    font-size: 14px;
+    color: #888;
+  }
+}

@@ -1,0 +1,102 @@
+.pageLayout {
+  min-width: 320px;
+  background-color: var(--bg-color) !important;
+  background: var(--bg-color) !important;
+
+  &_mobile {
+    display: block;
+
+    @media screen and (min-width: 680px) {
+      display: none;
+    }
+  }
+
+  &_tablet {
+    display: none;
+
+    @media screen and (min-width: 680px) {
+      display: block;
+    }
+
+    @media screen and (min-width: 1180px) {
+      display: none;
+    }
+  }
+
+  &_desk {
+    display: none;
+
+    @media screen and (min-width: 1180px) {
+      display: block;
+    }
+  }
+
+  &__header {
+    background: var(--secondary-background-color);
+  }
+
+  &__container {
+    max-width: 1440px;
+    width: 100%;
+    padding: 0px 10px;
+    margin: 0 auto;
+    padding-bottom: 250px;
+
+    @media screen and (min-width: 570px) {
+      padding: 0px 20px;
+      padding-bottom: 50px;
+    }
+
+    @media screen and (min-width: 1070px) {
+      padding: 0px 50px;
+      padding-bottom: 100px;
+    }
+  }
+
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0px;
+    padding: 28px 0px 20px 0px;
+
+    @media screen and (min-width: 680px) {
+      padding: 16px 0;
+      margin-bottom: 32px;
+    }
+
+    @media screen and (min-width: 1070px) {
+      padding: 16px 0;
+      margin-bottom: 32px;
+    }
+  }
+
+  &__title {
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 150%;
+    color: var(--text-color);
+    text-transform: capitalize;
+
+    @media screen and (min-width: 680px) {
+      font-size: 36px;
+    }
+
+    @media screen and (min-width: 980px) {
+      font-size: 40px;
+    }
+
+    @media screen and (min-width: 1070px) {
+      font-size: 42px;
+    }
+  }
+
+  &__content {
+    display: flex;
+    column-gap: 24px;
+
+    @media screen and (max-width: 980px) {
+      flex-direction: column;
+    }
+  }
+}

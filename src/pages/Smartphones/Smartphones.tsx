@@ -1,34 +1,24 @@
-import { FiltersDesk } from '@/components/Filters/FiltersDesk';
-import { Filters } from '@/components/Filters/Filters';
-import { SortingDesk } from '@/components/Sort/SortingDesk';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import styles from './smartphones.module.scss';
+import { AppDispatch, RootState } from '@/store';
+import { getAllProducts } from '@/store/products/actions';
+import { PageLayout } from '@/components/PageLayout/PageLayout';
 
 export default function Smartphones() {
+  const dispatch: AppDispatch = useDispatch();
+  const { productsData } = useSelector((state: RootState) => state.products);
+
+  useEffect(() => {
+    dispatch(getAllProducts());
+  }, [dispatch]);
+
   return (
-    <div className={styles.smartpnones}>
-      <div className={styles.smartpnones_mobile}>
-        <div className={`container ${styles.smartpnones__container}`}>
-          <div className={styles.smartpnones__wrapper}>
-            <h2 className={styles.smartpnones__title}>Smartphone</h2>
-          </div>
-
-          <Filters />
-        </div>
-      </div>
-
-      <div className={styles.smartpnones_desk}>
-        <div className={styles.smartpnones__header}>
-          <div className={`container ${styles.smartpnones__container}`}>
-            <div className={styles.smartpnones__wrapper}>
-              <h2 className={styles.smartpnones__title}>Smartphone</h2>
-              <SortingDesk />
-            </div>
-
-            <FiltersDesk />
-          </div>
-        </div>
-      </div>
-    </div>
+    <PageLayout
+      page={productsData?.page || []}
+      totalElements={productsData?.totalElements || 0}
+      totalPages={productsData?.totalPages || 0}
+      currentPage={productsData?.currentPage || 0}
+    />
   );
 }
