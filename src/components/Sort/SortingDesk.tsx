@@ -47,16 +47,16 @@ export const SortingDesk = () => {
   const sortProducts = (option: SortOrder) => {
     const sorted = [...smartData];
     switch (option) {
-      case 'By popularity':
-        sorted.sort((a, b) => b.popular - a.popular);
+      case SortOrder.Popularity:
+        sorted.sort((a, b) => (b?.popular ?? 0) - (a?.popular ?? 0));
         break;
-      case 'By rating':
+      case SortOrder.Rating:
         sorted.sort((a, b) => b.rate - a.rate);
         break;
-      case 'From low to high cost':
+      case SortOrder.LowToHigh:
         sorted.sort((a, b) => a.price - b.price);
         break;
-      case 'From high to low cost':
+      case SortOrder.HighToLow:
         sorted.sort((a, b) => b.price - a.price);
         break;
     }
