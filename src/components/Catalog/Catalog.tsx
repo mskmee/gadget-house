@@ -82,12 +82,12 @@ export const Catalog: FC<ICatalogProps> = ({ data, totalPages, page }) => {
     <div className={styles.catalog}>
       <div className={styles.catalog__mobile}>
         <ul className={styles.catalog__mobileList}>
-          {Array.isArray(data) &&
+          {data &&
             displayedProducts.map((product: ProductItem) => (
               <Card
                 key={product.id}
                 product={product}
-                classname="catalog__item"
+                classname={styles.catalog__item}
                 index={product.id}
               />
             ))}
@@ -102,7 +102,7 @@ export const Catalog: FC<ICatalogProps> = ({ data, totalPages, page }) => {
 
       <div className={styles.catalog__desk}>
         <ul className={styles.catalog__deskList}>
-          {Array.isArray(data) &&
+          {data &&
             paginatedProducts.map((product: ProductItem) => (
               <Card
                 key={product.id}

@@ -23,9 +23,6 @@ export const FiltersDesk = () => {
   const [maxCameraMP, setMaxMP] = useState<number>(0);
   const [showCategory, setShowCategory] = useState(true);
 
-  // const maxDigitsForPrice = '6';
-  // const maxDigitsForCamera = '3';
-
   const toggleShowCategory = () => {
     setShowCategory(!showCategory);
   };
@@ -129,7 +126,6 @@ export const FiltersDesk = () => {
         <h2 className={styles.filtersDesk__title}>Filters</h2>
 
         <div className={styles.filters__wrapper}>
-          {/* Price Range */}
           <Col span={24} className={styles.filters__option}>
             <h4 className={styles.filters__optionName}>Price</h4>
             <Slider
@@ -195,7 +191,6 @@ export const FiltersDesk = () => {
             </Row>
           </Col>
 
-          {/* Brands */}
           {filters.brands && (
             <Option
               data={filters.brands ?? []}
@@ -206,7 +201,6 @@ export const FiltersDesk = () => {
             />
           )}
 
-          {/* Built-in Memory */}
           {filters.builtInMemory && (
             <Option
               data={filters.builtInMemory ?? []}
@@ -217,7 +211,6 @@ export const FiltersDesk = () => {
             />
           )}
 
-          {/* RAM */}
           {filters.rams && (
             <Option
               data={filters.rams ?? []}
@@ -228,7 +221,6 @@ export const FiltersDesk = () => {
             />
           )}
 
-          {/* Separate Memory Slot */}
           <Option
             data={['Yes', 'No']}
             title="Separate slot for memory"
@@ -237,7 +229,6 @@ export const FiltersDesk = () => {
             optionChange={handleOptionChange}
           />
 
-          {/* Color */}
           {filters.colors && (
             <Option
               data={filters.colors}
@@ -248,7 +239,6 @@ export const FiltersDesk = () => {
             />
           )}
 
-          {/* Main Camera */}
           <div className={styles.filters__option}>
             <div
               className={cn(
@@ -326,7 +316,6 @@ export const FiltersDesk = () => {
             )}
           </div>
 
-          {/* Number of Cores */}
           {filters.cores && (
             <Option
               data={filters.cores}
@@ -337,7 +326,6 @@ export const FiltersDesk = () => {
             />
           )}
 
-          {/* Screen Type */}
           {filters.screens && (
             <Option
               data={filters.screens}

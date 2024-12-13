@@ -42,13 +42,10 @@ export function generateRandomProducts(
 ): PaginatedResponse {
   const totalElements = count;
   const totalPages = Math.ceil(totalElements / pageSize);
-  console.log('totalPages: ', totalPages);
   const currentPage = totalPages;
 
-  // Генерируем все продукты
   const allProducts = generateGadgets(count, category);
 
-  // Находим минимальную и максимальную цену
   const prices = allProducts.map((product) => product.price);
   const minPrice = Math.min(...prices);
   const maxPrice = Math.max(...prices);
@@ -62,21 +59,3 @@ export function generateRandomProducts(
     maxPrice,
   };
 }
-
-
-// const randomColorSet = Array.from(
-    //   new Set(
-    //     Array.from({ length: Math.floor(Math.random() * colorsHex.length) + 1 }, () =>
-    //       colorsHex[Math.floor(Math.random() * colorsHex.length)]
-    //     )
-    //   )
-    // ).slice(0, 4);
-
-// category: randomCategory,
-      // isLiked: Math.random() > 0.5,
-      // brand: randomBrand,
-      // anotherColors: randomColorSet, // Select 3 random colors
-      // ram: Math.pow(2, Math.floor(Math.random() * 5) + 1), // RAM between 2GB and 32GB
-      // builtInMemory: [32, 64, 128, 256, 512][Math.floor(Math.random() * 5)], // Select from predefined options
-      // cameraMP: Math.floor(Math.random() * 192) + 8, // Camera MP between 8 and 200
-      // code: Math.floor(Math.random() * 1000000).toString(), // Generate a random 6-digit code

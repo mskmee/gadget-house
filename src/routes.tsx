@@ -21,11 +21,11 @@ export const routes = createBrowserRouter(
       element: <Layout />,
       children: [
         { path: AppRoute.ROOT, element: <Main /> },
-        { path: AppRoute.ALLPRODUCTS, element: <AllProducts /> },
+        { path: AppRoute.ALL_PRODUCTS, element: <AllProducts /> },
         { path: AppRoute.SMARTPHONES, element: <Smartphones /> },
         { path: AppRoute.LAPTOPS, element: <Laptops /> },
         { path: AppRoute.VIEWED, element: <Viewed /> },
-        { path: AppRoute.PHOTOVIDEO, element: <PhotoVideo /> },
+        { path: AppRoute.PHOTO_VIDEO, element: <PhotoVideo /> },
         { path: AppRoute.AUDIO, element: <Audio /> },
         {
           path: AppRoute.SINGLE_PRODUCT,

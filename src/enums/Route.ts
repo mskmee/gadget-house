@@ -1,10 +1,10 @@
 const AppRoute = {
   ROOT: '/',
-  ALLPRODUCTS: '/all-products',
+  ALL_PRODUCTS: '/all-products',
   SMARTPHONES: '/smartphones',
   LAPTOPS: '/laptops',
   VIEWED: '/viewed',
-  PHOTOVIDEO: '/photo-video',
+  PHOTO_VIDEO: '/photo-video',
   AUDIO: '/audio',
   SINGLE_PRODUCT: '/:smartphone/:id/:title',
   SEARCH_RESULTS: '/search-results',
