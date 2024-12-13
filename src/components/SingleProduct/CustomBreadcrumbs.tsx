@@ -2,8 +2,6 @@ import { useLocation, useParams } from 'react-router-dom';
 import { Breadcrumb } from 'antd';
 import style from './Product.module.scss';
 import { getBreadcrumbItems } from '@/components/helpers.ts';
-// import { AppRoute } from '@/enums/Route';
-// import { laptopData, smartphoneData } from '../Card/constants';
 
 export const CustomBreadcrumbs = () => {
   const { smartphone, id } = useParams();
