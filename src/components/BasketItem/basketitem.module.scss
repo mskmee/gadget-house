@@ -1,0 +1,85 @@
+.basketItem {
+    display: flex;
+    justify-content: space-between;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+    padding: 16px;
+}
+
+.product {
+    &Img {
+        width: 180px;
+        height: 200px;
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    }
+    &Info {
+        margin: 0 auto 0 24px;
+        display: flex;
+        flex-direction: column;
+    }
+    &Title {
+        font-size: 24px;
+        line-height: 36px;
+        font-weight: 500;
+        color: rgba(28, 24, 23, 1);
+    }
+    &Code {
+        margin-top: 16px;
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 400;
+        color: rgba(128, 128, 128, 1);
+    }
+    &Bottom {
+        margin-top: auto;
+        display: flex;
+        align-items: center;
+        column-gap: 24px;
+        button {
+            color: rgba(99, 99, 99, 1);
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            display: flex;
+            align-items: center;
+        }
+    }
+    &Totals {
+        margin-top: auto;
+    }
+    &Quantity {
+        display: flex;
+        align-items: center;
+        column-gap: 8px;
+        width: fit-content;
+        margin-left: auto;
+        margin-bottom: 16px;
+        button {
+            cursor: pointer;
+            background: transparent;
+            border-radius: 50%;
+            border: 1.5px solid rgba(28, 24, 23, 1);
+            color: rgba(28, 24, 23, 1);
+            width: 14px;
+            height: 14px;
+            display: grid;
+            place-content: center;
+            &:last-child {
+                padding-bottom: 2px;
+            }
+
+        }
+    }
+    &Price {
+        font-size: 24px;
+        line-height: 36px;
+        font-weight: 400;
+        color: rgba(28, 24, 23, 1);
+    }
+
+}

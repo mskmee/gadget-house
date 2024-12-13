@@ -1,20 +1,20 @@
-import { useMemo } from 'react';
 import styles from './CartTooltip.module.scss';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { ProductItem } from './ProductItem/ProductItem';
+import { convertPriceToReadable } from '@/utils/helpers/helpers';
+import { useNavigate } from 'react-router-dom';
+import { AppRoute } from '@/enums/Route';
 
 export const CardTooltip = () => {
-  const cardItems = useTypedSelector((state) => state.shopping_card.products);
+  const {
+    products: cardItems,
+    cardTotalAmount,
+    currency,
+    locale,
+  } = useTypedSelector((state) => state.shopping_card);
+  const navigate = useNavigate();
 
-  const totalCardSum = useMemo(
-    () =>
-      cardItems.reduce(
-        (acc, { price }) => acc + Number(price.replace(/\s/g, '')),
-        0,
-      ),
-    [cardItems],
-  );
-  const formattedPrice = new Intl.NumberFormat('ru-RU').format(totalCardSum);
+  const handleButtonClick = () => navigate(AppRoute.BASKET_PAGE);
 
   return (
     <div className={styles.container}>
@@ -24,8 +24,10 @@ export const CardTooltip = () => {
         ))}
       </div>
       <div className={styles.total}>
-        <span className={styles.price}>{formattedPrice} ₴</span>
-        <button>Go to basket</button>
+        <span className={styles.price}>
+          {convertPriceToReadable(cardTotalAmount, currency, locale)}
+        </span>
+        <button onClick={handleButtonClick}>Go to basket</button>
       </div>
     </div>
   );

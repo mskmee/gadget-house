@@ -10,6 +10,8 @@ import classNames from 'classnames';
 import { HeartIcon } from '@/assets/icons/HeartIcon';
 import { useActions } from '@/hooks/useActions';
 import { toast } from 'react-toastify';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { convertPriceToReadable } from '@/utils/helpers/product';
 
 interface ISmartphoneCardProps {
   product: IProductCard;
@@ -24,6 +26,7 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
 }) => {
   const { isLiked, handleClickLike } = useProductCardHandlers();
   const { addToStore } = useActions();
+  const { locale, currency } = useTypedSelector((state) => state.shopping_card);
 
   const productRating = product.rate ?? 0;
 
@@ -109,7 +112,7 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
             </div>
           </div>
           <div className={styles.cardPriceContainer}>
-            <p>{product.price} ₴</p>
+            <p>{convertPriceToReadable(product.price, currency, locale)}</p>
             <button onClick={addToBasket}>
               <BasketIcon />
             </button>
