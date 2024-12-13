@@ -10,4 +10,6 @@ export type {
   ProductItem,
   ProductsResponseDto,
   ProductItemResponseDto,
+  PaginatedProductsResponseDto,
+  CategoryProductsResponseDto
 } from './libs/types/types';

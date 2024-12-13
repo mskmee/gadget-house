@@ -10,6 +10,9 @@ import { SearchResults } from './pages/SearchResults';
 import { UserFavorites } from './pages/Dashboard/Favorites';
 import { SignIn } from './pages/SignIn';
 import { BasketPage } from './pages/Basket';
+import AllProducts from './pages/AllProducts/AllProducts';
+import PhotoVideo from './pages/PhotoVideo/PhotoVideo';
+import Audio from './pages/Audio/Audio';
 
 export const routes = createBrowserRouter(
   [
@@ -18,9 +21,12 @@ export const routes = createBrowserRouter(
       element: <Layout />,
       children: [
         { path: AppRoute.ROOT, element: <Main /> },
+        { path: AppRoute.ALL_PRODUCTS, element: <AllProducts /> },
         { path: AppRoute.SMARTPHONES, element: <Smartphones /> },
         { path: AppRoute.LAPTOPS, element: <Laptops /> },
         { path: AppRoute.VIEWED, element: <Viewed /> },
+        { path: AppRoute.PHOTO_VIDEO, element: <PhotoVideo /> },
+        { path: AppRoute.AUDIO, element: <Audio /> },
         {
           path: AppRoute.SINGLE_PRODUCT,
           element: <SingleProductPage />,
