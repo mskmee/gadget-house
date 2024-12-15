@@ -9,6 +9,7 @@
 
 .product {
     &Img {
+        min-width: 180px;
         width: 180px;
         height: 200px;
         img {
@@ -49,8 +50,14 @@
             align-items: center;
         }
     }
+    &Remove{
+        &Mob {
+            display: none;
+        }
+    }
     &Totals {
         margin-top: auto;
+        min-width: 109px;
     }
     &Quantity {
         display: flex;
@@ -82,6 +89,87 @@
         line-height: 36px;
         font-weight: 400;
         color: rgba(28, 24, 23, 1);
+        text-align: right;
     }
+}
 
+@media (max-width: 992px) {
+    .product {
+        &Title {
+            font-size: 16px;
+            line-height: 22px;
+            font-weight: 300;
+            max-height: 48px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .basketItem {
+        padding: 12.5px 12px;
+    }
+    .product {
+        &Img {
+            min-width: 56px;
+            width: 56px;
+            height: 56px;
+            margin: auto 0;
+        }
+        &Price {
+            font-size: 16px;
+            line-height: 24px;
+        }
+        &Code {
+            font-size: 12px;
+            line-height: 18px;
+        }
+        &Bottom {
+            button {
+                font-size: 14px;
+            }
+        }
+        &Remove{
+            width: 24px;
+        }
+    }
+}
+
+@media (max-width: 576px) {
+    .basketItem {
+        position: relative;
+        border-radius: 8px;
+    }
+    .product {
+        &Info {
+            margin: 0 auto 0 8px;
+        }
+        &Bottom {
+            button {
+                position: absolute;
+                top: 12px;
+                right: 12px;
+                span {
+                    display: none;
+                }
+            }
+        }
+        &Remove{
+            display: none;
+            &Mob {
+                display: initial;
+                width: 44px;
+            }
+        }
+        &Totals {
+            min-width: 80px;
+        }
+        &Quantity {
+            display: none;
+        }
+    }
 }
