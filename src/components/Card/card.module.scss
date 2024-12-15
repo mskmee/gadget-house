@@ -72,6 +72,15 @@
   align-items: center;
   cursor: pointer;
   color: rgba(99, 99, 99, 1);
+  @media (max-width: 768px) {
+    font-size: 14px;
+    svg {
+      width: 20px;
+    }
+  }
+  @media (max-width: 576px) {
+    display: none;
+  }
 }
 
 .accessories-colors {

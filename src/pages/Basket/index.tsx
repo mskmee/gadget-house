@@ -23,6 +23,8 @@ export const BasketPage = () => {
     (state) => state.shopping_card,
   );
 
+  const isMobile = innerWidth < 768;
+
   const onPopUpClose = () => setIsPopUpOpened(false);
   const handleOrderConfirm = () => {
     setIsPopUpOpened(true);
@@ -71,9 +73,9 @@ export const BasketPage = () => {
       </div>
 
       <SliderNav
-        text="Recommendations for you"
+        text={isMobile ? 'Recommendations' : 'Recommendations for you'}
         link="/smartphones"
-        isVisibleSeeMoreBtn={false}
+        isVisibleSeeMoreBtn={isMobile}
       />
       <Carousels
         classname="mobile-carousel"
