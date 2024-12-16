@@ -1,7 +1,7 @@
 @import '@/styles/functions';
 
 .cardConatiner {
-  min-width: 305px;
+  min-width: inherit;
   max-width: 305px;
   display: flex;
   flex-direction: column;
@@ -44,10 +44,16 @@
   flex-grow: 1;
   align-self: flex-start;
 
-  > img {
+  .smartphoneImg,
+  .laptopImg {
     display: block;
     height: 100%;
     margin: 0 auto;
+  }
+
+  .laptopImg {
+    margin-top: 20px;
+    width: 240px;
   }
 }
 .laptopCardImage img {
@@ -106,6 +112,7 @@
 
   h3 {
     display: -webkit-box;
+    -webkit-line-clamp: 2;
     line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -182,11 +189,20 @@
 }
 
 .brandImg {
-  max-width: 256px;
+  max-width: 290px;
 }
-@media screen and (min-width: 1440px) {
-  .cardConatiner {
-    min-width: 305px;
+@media screen and (max-width: 1440px) {
+  .cardImage {
+    .laptopImg {
+      width: 220px;
+    }
+  }
+}
+@media screen and (max-width: 1300px) {
+  .cardImage {
+    .laptopImg {
+      width: 240px;
+    }
   }
 }
 
@@ -210,9 +226,11 @@
   .cardContainerTop {
     height: 190px;
     .cardImage {
-      align-self: auto;
-      img {
-        width: 80%;
+      .smartphoneImg {
+        width: 145px;
+      }
+      .laptopImg {
+        width: 220px;
       }
     }
     .cardConatinerLike {
@@ -245,20 +263,33 @@
       font-size: rem(14px);
     }
   }
-  .cardBrandConatiner {
-    > img {
-      max-width: 180px;
+}
+@media screen and (max-width: 920px) {
+  .cardConatiner {
+    .cardImage {
+      .laptopImg {
+        width: 200px;
+      }
     }
   }
 }
+@media screen and (max-width: 850px) {
+  .cardConatiner {
+    .cardImage {
+      .laptopImg {
+        width: 170px;
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 768px) {
   .cardConatiner {
-    min-width: 200px;
     max-width: 305px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 10px;
+    gap: 30px;
     margin: 5px 0;
     padding: 12px;
     font-family: Inter, sans-serif;
@@ -267,14 +298,20 @@
     box-shadow: 0 0 8px 0 hsla(0deg 0% 0% / 10%);
     transition: all 0.2s;
     text-decoration: none;
+    .cardImage {
+      .laptopImg {
+        margin-top: 0;
+        width: 150px;
+      }
+    }
   }
 
   .cardContainerTop {
     height: 150px;
     .cardImage {
       align-self: auto;
-      img {
-        width: 70%;
+      .smartphoneImg {
+        width: 120px;
       }
     }
     .cardConatinerLike {
@@ -317,9 +354,23 @@
       font-size: rem(13px);
     }
   }
-  .cardBrandConatiner {
-    > img {
-      max-width: 100px;
+}
+
+@media screen and (max-width: 700px) {
+  .cardConatiner {
+    .cardImage {
+      .laptopImg {
+        width: 190px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 530px) {
+  .cardConatiner {
+    .cardImage {
+      .laptopImg {
+        width: 155px;
+      }
     }
   }
 }
@@ -346,8 +397,11 @@
     height: 124px;
     .cardImage {
       align-self: auto;
-      img {
-        width: 65%;
+      .smartphoneImg {
+        width: 90px;
+      }
+      .laptopImg {
+        width: 120px;
       }
     }
     .cardConatinerLike {
@@ -393,6 +447,19 @@
   .cardBrandConatiner {
     > img {
       max-width: 100px;
+    }
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .cardConatiner {
+    .cardImage {
+      .smartphoneImg {
+        width: 80px;
+      }
+      .laptopImg {
+        width: 100px;
+      }
     }
   }
 }

@@ -3,7 +3,6 @@ import styles from './benefits.module.scss';
 import type { BenefitItem } from './libs/types/types';
 import { BENEFIT_ITEMS } from './libs/constants/constants';
 import { Link } from 'react-router-dom';
-import classNames from 'classnames';
 
 const Benefit: FC<BenefitItem> = ({ imageUri, text, imageAlt }) => {
   return (
@@ -18,7 +17,7 @@ const Benefit: FC<BenefitItem> = ({ imageUri, text, imageAlt }) => {
 
 const Benefits = () => {
   return (
-    <section className={classNames(styles.wrapper)}>
+    <section className={styles.wrapper}>
       {BENEFIT_ITEMS.map((item) => (
         <Benefit
           key={item.text}

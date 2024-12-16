@@ -52,7 +52,8 @@ import brand_realme from '../assets/images/brands/realme.png';
 import brand_lenovo from '../assets/images/brands/lenovo.png';
 import previouslyViewed_1 from '../assets/images/previously-viewed/1.png';
 import previouslyViewed_2 from '../assets/images/previously-viewed/2.png';
-import previouslyViewed_3 from '../assets/images/previously-viewed/4.png';
+import previouslyViewed_3 from '../assets/images/previously-viewed/3.png';
+import previouslyViewed_4 from '../assets/images/previously-viewed/4.png';
 import headphones from './images/basket-products-img/headphones.png';
 import basketPhoneImg from './images/basket-products-img/phone.png';
 import searchInputClear from './icons/search_input_clear.svg';
@@ -116,6 +117,7 @@ export {
   previouslyViewed_1,
   previouslyViewed_2,
   previouslyViewed_3,
+  previouslyViewed_4,
   headphones,
   basketPhoneImg,
   searchInputClear,

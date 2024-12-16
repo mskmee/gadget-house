@@ -1,96 +1,53 @@
-import React, { useState, ReactNode, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './carousel.module.scss';
 import classNames from 'classnames';
+import { BrandCard, MyCard } from '../components';
+import {
+  brandData,
+  laptopData,
+  smartphoneData,
+  previouslyReviewedData,
+} from '../Card/constants';
+import { useMediaQuery } from 'react-responsive';
+import { useResponsiveCarouselSettings } from '@/hooks/useResponsiveCarouselSettings';
+import { productImages } from '@/constants/singleProduct';
 
+type CarouselClassname =
+  | 'brands-carousel'
+  | 'laptop-carousel'
+  | 'smartphone-carousel'
+  | 'viewed-carousel'
+  | 'photos-carousel';
 interface CustomCarouselProps {
-  classname: string;
-  children: ReactNode[];
+  classname: CarouselClassname;
 }
 
-const CustomCarousel: React.FC<CustomCarouselProps> = ({
-  classname,
-  children,
-}) => {
-  const responsiveSettings = [
-    {
-      breakpoint: 450,
-      slidesToShow: classname === 'brands-carousel' ? 3 : 2,
-      gap: 8,
-      itemWidth: classname === 'brands-carousel' ? 100 : 175,
-    },
-    {
-      breakpoint: 568,
-      slidesToShow: classname === 'brands-carousel' ? 3 : 2,
-      gap: 10,
-      itemWidth: classname === 'brands-carousel' ? 150 : 200,
-    },
-    {
-      breakpoint: 850,
-      slidesToShow: classname === 'brands-carousel' ? 3 : 2,
-      gap: 10,
-      itemWidth: classname === 'brands-carousel' ? 180 : 250,
-    },
-    {
-      breakpoint: 1024,
-      slidesToShow: classname === 'brands-carousel' ? 4 : 3,
-      gap: 20,
-      itemWidth: classname === 'brands-carousel' ? 180 : 250,
-    },
-    {
-      breakpoint: 1440,
-      slidesToShow: classname === 'brands-carousel' ? 4 : 3,
-      gap: 30,
-      itemWidth: classname === 'brands-carousel' ? 250 : 305,
-    },
-    {
-      breakpoint: Infinity,
-      slidesToShow: classname === 'brands-carousel' ? 5 : 4,
-      gap: 40,
-      itemWidth: classname === 'brands-carousel' ? 250 : 305,
-    }, // Default for large screens
-  ];
-
+const CustomCarousel: React.FC<CustomCarouselProps> = ({ classname }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [startX, setStartX] = useState<number | null>(null);
   const [currentTranslate, setCurrentTranslate] = useState(0);
   const [animation, setAnimation] = useState(true);
-  const [responsiveSlide, setResponsiveSlide] = useState(getSlidesToShow);
 
-  const itemWidth = responsiveSlide.itemWidth;
-  const totalItems = children.length;
-  const maxIndex = totalItems - responsiveSlide.count;
+  const isLargerThan1440px = useMediaQuery({
+    query: '(max-width: 1440px)',
+  });
 
-  function getSlidesToShow() {
-    const screenWidth = window.innerWidth;
-    const matchedSetting = responsiveSettings.find(
-      (setting) => screenWidth < setting.breakpoint,
-    );
-    return matchedSetting
-      ? {
-          count: matchedSetting.slidesToShow,
-          gap: matchedSetting.gap,
-          itemWidth: matchedSetting.itemWidth,
-        }
-      : {
-          count: 4,
-          gap: 40,
-          itemWidth: classname === 'brands-carousel' ? 250 : 305,
-        };
-  }
+  const responsiveCarouselSettings = useResponsiveCarouselSettings(classname);
 
-  useEffect(() => {
-    const handleResize = () => setResponsiveSlide(getSlidesToShow());
-    window.addEventListener('resize', handleResize);
-
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const itemWidth = isLargerThan1440px
+    ? responsiveCarouselSettings.itemWidth
+    : classname === 'brands-carousel'
+      ? 256
+      : 305;
+  const totalItems = classname === 'brands-carousel' ? 10 : 8;
+  const maxIndex = totalItems - responsiveCarouselSettings.count;
 
   const handleNext = () => {
     if (currentIndex < maxIndex) {
       setAnimation(true);
       setCurrentIndex(currentIndex + 1);
       setCurrentTranslate(
-        -(currentIndex + 1) * (itemWidth + responsiveSlide.gap),
+        -(currentIndex + 1) * (itemWidth + responsiveCarouselSettings.gap),
       );
     }
   };
@@ -100,7 +57,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
       setAnimation(true);
       setCurrentIndex(currentIndex - 1);
       setCurrentTranslate(
-        -(currentIndex - 1) * (itemWidth + responsiveSlide.gap),
+        -(currentIndex - 1) * (itemWidth + responsiveCarouselSettings.gap),
       );
     }
   };
@@ -114,7 +71,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
     if (startX !== null) {
       const diff = e.touches[0].clientX - startX;
       setCurrentTranslate(
-        -currentIndex * (itemWidth + responsiveSlide.gap) + diff,
+        -currentIndex * (itemWidth + responsiveCarouselSettings.gap) + diff,
       );
     }
   };
@@ -122,7 +79,8 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
   const handleTouchEnd = () => {
     if (startX !== null) {
       const distanceMoved =
-        -currentTranslate - currentIndex * (itemWidth + responsiveSlide.gap);
+        -currentTranslate -
+        currentIndex * (itemWidth + responsiveCarouselSettings.gap);
 
       if (distanceMoved > 50 && currentIndex < maxIndex) {
         setCurrentIndex(currentIndex + 1);
@@ -131,7 +89,9 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
       }
 
       setAnimation(true);
-      setCurrentTranslate(-currentIndex * (itemWidth + responsiveSlide.gap));
+      setCurrentTranslate(
+        -currentIndex * (itemWidth + responsiveCarouselSettings.gap),
+      );
       setStartX(null);
     }
   };
@@ -165,64 +125,104 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
             transition: animation ? 'transform 0.4s ease-in-out' : 'none',
           }}
         >
-          {children.map((child, index) => (
-            <div
-              key={index}
-              className={styles.item}
-              style={{ width: `${itemWidth}px` }}
-            >
-              {child}
-            </div>
-          ))}
+          {Array.from(
+            { length: classname === 'brands-carousel' ? 10 : 8 },
+            (_, i) => (
+              <>
+                {classname === 'brands-carousel' ? (
+                  <BrandCard
+                    width={itemWidth}
+                    key={`brand-${i}`}
+                    product={brandData[i % brandData.length]}
+                  />
+                ) : classname === 'photos-carousel' ? (
+                  productImages?.map((photo) => (
+                    <img
+                      key={photo?.id}
+                      className="product-photo"
+                      src={photo?.img}
+                      alt="product's photos"
+                    />
+                  ))
+                ) : (
+                  <MyCard
+                    width={itemWidth}
+                    key={
+                      classname === 'laptop-carousel'
+                        ? `laptop-${i}`
+                        : `smartphone-${i}`
+                    }
+                    product={
+                      classname === 'laptop-carousel'
+                        ? laptopData[i % laptopData.length]
+                        : classname === 'smartphone-carousel'
+                          ? smartphoneData[i % smartphoneData.length]
+                          : previouslyReviewedData[
+                              i % previouslyReviewedData.length
+                            ]
+                    }
+                    classname={
+                      classname === 'laptop-carousel'
+                        ? 'laptops'
+                        : classname === 'smartphone-carousel'
+                          ? 'smartphones'
+                          : 'previously-reviewed'
+                    }
+                  />
+                )}
+              </>
+            ),
+          )}
         </div>
-      </div>
-      <div className={classNames(styles['slider-buttons'])}>
-        <button
-          className={classNames(styles['btn-arrow-prev'], {
-            [styles['btn-arrow-prev-disabled']]: currentIndex === 0,
-          })}
-          disabled={currentIndex === 0}
-          onClick={handlePrev}
-        >
-          <svg
-            width="9"
-            height="16"
-            viewBox="0 0 9 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+
+        <div className={classNames(styles['slider-buttons'])}>
+          <button
+            className={classNames(styles['btn-arrow-prev'], {
+              [styles['btn-arrow-prev-disabled']]: currentIndex === 0,
+            })}
+            disabled={currentIndex === 0}
+            onClick={handlePrev}
           >
-            <path
-              d="M8.00016 1.33331L1.3335 7.99998L8.00016 14.6666"
-              stroke="#00820D"
-              strokeWidth={2}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
-        <button
-          className={classNames(styles['btn-arrow-next'], {
-            [styles['btn-arrow-next-disabled']]: currentIndex === maxIndex,
-          })}
-          disabled={currentIndex === maxIndex}
-          onClick={handleNext}
-        >
-          <svg
-            width="9"
-            height="16"
-            viewBox="0 0 9 16"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+            <svg
+              width="9"
+              height="16"
+              viewBox="0 0 9 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8.00016 1.33331L1.3335 7.99998L8.00016 14.6666"
+                stroke="#00820D"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+          <button
+            className={classNames(styles['btn-arrow-next'], {
+              [styles['btn-arrow-next-disabled']]: currentIndex === maxIndex,
+            })}
+            disabled={currentIndex === maxIndex}
+            onClick={handleNext}
           >
-            <path
-              d="M1.3335 1.33331L8.00016 7.99998L1.3335 14.6666"
-              stroke="#00820D"
-              strokeWidth={2}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
+            <svg
+              width="9"
+              height="16"
+              viewBox="0 0 9 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1.3335 1.33331L8.00016 7.99998L1.3335 14.6666"
+                stroke="#00820D"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
   );

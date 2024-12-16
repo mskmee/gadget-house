@@ -17,12 +17,14 @@ interface ISmartphoneCardProps {
   product: IProductCard;
   classname: string;
   index?: number;
+  width: number;
 }
 
 export const MyCard: FC<ISmartphoneCardProps> = ({
   product,
   classname,
   index,
+  width,
 }) => {
   const { isLiked, handleClickLike } = useProductCardHandlers();
   const { addToStore } = useActions();
@@ -48,6 +50,7 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
         key={product.id}
         to={`/${classname}/${product.id}/${product.href}`}
         tabIndex={0}
+        style={{ minWidth: `${width}px` }}
       >
         <div
           className={classNames(styles.cardContainerTop, {
@@ -64,7 +67,15 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
                   : styles.cardImage
             }
           >
-            <img src={product.img} alt="Product image" />
+            <img
+              className={
+                classname === 'smartphones'
+                  ? styles.smartphoneImg
+                  : styles.laptopImg
+              }
+              src={product.img}
+              alt="Product image"
+            />
           </div>
 
           <div

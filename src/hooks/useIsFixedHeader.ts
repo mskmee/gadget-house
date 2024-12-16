@@ -9,8 +9,6 @@ export const useIsFixedHeader = () => {
 
     const handleScroll = () => {
       if (headerTopSectionHeight) {
-        console.log(headerTopSectionHeight);
-
         setIsScrolled(window.scrollY > headerTopSectionHeight);
       }
     };

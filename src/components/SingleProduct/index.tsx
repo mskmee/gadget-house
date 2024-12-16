@@ -118,7 +118,7 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
   };
 
   return (
-    <section className={classNames(style['product'])} id="product">
+    <section className={style['product']} id="product">
       <div className={style['product_custom-carousel-wrap']}>
         <div className={style['product_carousel-current-picture']}>
           <img

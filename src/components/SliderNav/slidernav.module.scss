@@ -71,14 +71,24 @@ span {
     }
   }
 }
-
-@media (width <= 450px) {
+@media screen and (max-width: 768px) {
   .sliderText {
     margin: 24px auto 21px auto;
     padding: 0 16px;
     h2 {
-      max-width: 150px;
       font-size: 24px;
+    }
+  }
+
+  .buttonLink {
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .sliderText {
+    h2 {
+      font-size: 20px;
     }
   }
 
