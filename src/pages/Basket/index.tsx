@@ -8,6 +8,11 @@ import { convertPriceToReadable } from '@/utils/helpers/product';
 import { useState } from 'react';
 import { SuccessPopUp } from './libs/components/components';
 import { useActions } from '@/hooks/useActions';
+import { SliderNav } from '@/components/SliderNav/SliderNav.tsx';
+import Carousels from '@/components/Carousel/Carousel.tsx';
+import { MyCard } from '@/components/Card/MyCard.tsx';
+import { smartphoneData } from '@/components/Card/constants.ts';
+import Benefits from '@/components/benefitsList/benefits.tsx';
 
 export const BasketPage = () => {
   const [isPopUpOpened, setIsPopUpOpened] = useState(false);
@@ -25,43 +30,65 @@ export const BasketPage = () => {
   };
 
   return (
-    <div className={styles.container}>
-      <SuccessPopUp isOpened={isPopUpOpened} onClose={onPopUpClose} />
-      <CustomBreadcrumbs />
-      <button className={styles.buttonBack} onClick={() => navigate(-1)}>
-        <img src={LeftArrow} alt="Right Arrow" />
-        Back
-      </button>
+    <>
+      <div className={styles.container}>
+        <SuccessPopUp isOpened={isPopUpOpened} onClose={onPopUpClose} />
+        <CustomBreadcrumbs />
+        <button className={styles.buttonBack} onClick={() => navigate(-1)}>
+          <img src={LeftArrow} alt="Right Arrow" />
+          Back
+        </button>
 
-      {products.length === 0 ? (
-        <p>Your basket is empty</p>
-      ) : (
-        <section className={styles.content}>
-          <ul className={styles.productList}>
-            {products.map((product) => (
-              <BasketItem product={product} key={product.id} />
-            ))}
-          </ul>
-          <div className={styles.info}>
-            <p>
-              Sum{' '}
-              <span>
-                {convertPriceToReadable(cardTotalAmount, currency, locale)}
-              </span>
-            </p>
-            <p>
-              Discount <span></span>
-            </p>
-            <h3>
-              In total{' '}
-              <span>
-                {convertPriceToReadable(cardTotalAmount, currency, locale)}
-              </span>
-            </h3>
-            <button onClick={handleOrderConfirm}>Place the order</button>
-          </div>
-        </section>
-      )}
-    </div>
+        {products.length === 0 ? (
+          <p>Your basket is empty</p>
+        ) : (
+          <section className={styles.content}>
+            <ul className={styles.productList}>
+              {products.map((product) => (
+                <BasketItem product={product} key={product.id} />
+              ))}
+            </ul>
+            <div className={styles.info}>
+              <p>
+                Sum{' '}
+                <span>
+                  {convertPriceToReadable(cardTotalAmount, currency, locale)}
+                </span>
+              </p>
+              <p>
+                Discount <span></span>
+              </p>
+              <h3>
+                In total{' '}
+                <span>
+                  {convertPriceToReadable(cardTotalAmount, currency, locale)}
+                </span>
+              </h3>
+              <button onClick={handleOrderConfirm}>Place the order</button>
+            </div>
+          </section>
+        )}
+      </div>
+
+      <SliderNav
+        text="Recommendations for you"
+        link="/smartphones"
+        isVisibleSeeMoreBtn={false}
+      />
+      <Carousels
+        classname="mobile-carousel"
+        sliderClassName="mobile-slider"
+        countSlideToShow={5}
+      >
+        {Array.from({ length: 8 }, (_, i) => (
+          <MyCard
+            key={`smartphone-${i}`}
+            product={smartphoneData[i % smartphoneData.length]}
+            classname="smartphone"
+          />
+        ))}
+      </Carousels>
+      <Benefits />
+    </>
   );
 };

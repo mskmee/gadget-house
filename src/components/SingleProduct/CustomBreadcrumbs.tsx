@@ -1,31 +1,16 @@
-import classNames from 'classnames';
-import style from './Product.module.scss';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { Breadcrumb } from 'antd';
-import { AppRoute } from '@/enums/Route';
-import { laptopData, smartphoneData } from '../Card/constants';
+import style from './Product.module.scss';
+import { getBreadcrumbItems } from '@/components/helpers.ts';
 
 export const CustomBreadcrumbs = () => {
   const { smartphone, id } = useParams();
-  const allProducts = [...smartphoneData, ...laptopData];
-  const currentProduct = allProducts.find((el) => id && el.id === +id);
+  const location = useLocation();
 
-  const breadcrumbItems = [
-    {
-      title: 'Homepage',
-      href: `${AppRoute?.ROOT}`,
-    },
-    {
-      title: smartphone?.[0].toUpperCase().concat(smartphone?.slice(1)),
-      href: '#',
-    },
-    {
-      title: currentProduct?.title[0]
-        .toUpperCase()
-        .concat(currentProduct.title.slice(1)),
-      href: '#',
-    },
-  ];
+  const breadcrumbItems = getBreadcrumbItems(location.pathname, {
+    smartphone,
+    id,
+  });
 
   return (
     <Breadcrumb

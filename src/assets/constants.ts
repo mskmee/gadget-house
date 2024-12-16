@@ -5,6 +5,7 @@ import CatalogIcon from './icons/catalog-icon.svg';
 import BurgerMenuIcon from './icons/burger-menu-icon.svg';
 import RightArrow from './icons/arrow-right.svg';
 import LeftArrow from './icons/arrow-left.svg';
+import AllProducts from './icons/all-products.svg';
 import Smartphone from './icons/smartphone.svg';
 import Tablet from './icons/tablet.svg';
 import Laptop from './icons/laptop.svg';
@@ -69,6 +70,7 @@ export {
   BurgerMenuIcon,
   RightArrow,
   LeftArrow,
+  AllProducts,
   Smartphone,
   Laptop,
   Watch,
