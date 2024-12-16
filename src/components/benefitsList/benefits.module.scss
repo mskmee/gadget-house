@@ -7,6 +7,8 @@
   gap: 20px;
   width: 100%;
   padding: 48px 50px;
+  max-width: 1440px;
+  margin: 0 auto;
   background-color: #f8f8fa;
 }
 
@@ -48,25 +50,27 @@
     }
 
     .text {
-      margin-top: 15px;
+      margin-top: 0;
     }
   }
 }
-
-@media screen and (width <= 498px) {
+@media screen and (max-width: 992px) {
   .wrapper {
-    gap: 10px;
-
+    justify-content: center;
     .card {
-      flex-basis: calc(45vw - 10px);
-      min-width: 140px;
-      padding: 15px;
-      border-radius: 20px;
+      min-width: 250px;
+      flex-basis: auto;
+      padding: 12px 25px;
     }
-
     .text {
-      margin-top: 5px;
-      font-size: 14px;
+      margin: 0;
+    }
+  }
+}
+@media screen and (max-width: 768px) {
+  .wrapper {
+    .card {
+      min-width: 305px;
     }
   }
 }

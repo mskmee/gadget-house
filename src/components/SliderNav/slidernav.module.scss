@@ -4,7 +4,9 @@
   justify-content: flex-start;
   align-items: center;
   gap: 24px;
-  padding: 48px 50px 24px 50px;
+  max-width: 1540px;
+  margin: 48px auto 24px auto;
+  padding: 0 50px;
 }
 
 .sliderText h2 {
@@ -60,12 +62,34 @@ span {
     justify-content: space-between;
     padding-right: 24px;
     padding-left: 24px;
+    margin: 36px auto 18px auto;
+    h2 {
+      font-size: 30px;
+    }
+    .buttonLink {
+      font-size: 14px;
+    }
+  }
+}
+@media screen and (max-width: 768px) {
+  .sliderText {
+    margin: 24px auto 21px auto;
+    padding: 0 16px;
+    h2 {
+      font-size: 24px;
+    }
+  }
+
+  .buttonLink {
+    font-size: 12px;
   }
 }
 
-@media (width <= 450px) {
-  .sliderText h2 {
-    font-size: 24px;
+@media screen and (max-width: 450px) {
+  .sliderText {
+    h2 {
+      font-size: 20px;
+    }
   }
 
   .buttonLink {

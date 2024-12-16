@@ -4,6 +4,15 @@ import img3 from '../assets/single_product/product_pictures/3.png';
 import img4 from '../assets/single_product/product_pictures/4.png';
 import img5 from '../assets/single_product/product_pictures/5.png';
 
+import {
+  productImg1,
+  productImg2,
+  productImg3,
+  productImg4,
+  productImg5,
+  productImg6,
+} from '@/assets/constants';
+
 export const currentProduct = [
   {
     id: 1,
@@ -101,4 +110,13 @@ export const currentProduct = [
       },
     ],
   },
+];
+
+export const productImages = [
+  { id: 1, img: productImg1 },
+  { id: 2, img: productImg2 },
+  { id: 3, img: productImg3 },
+  { id: 4, img: productImg4 },
+  { id: 5, img: productImg5 },
+  { id: 6, img: productImg6 },
 ];

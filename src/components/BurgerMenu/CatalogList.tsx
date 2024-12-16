@@ -1,9 +1,12 @@
 import { Dispatch, FC, MouseEvent, SetStateAction } from 'react';
+import styles from './menu.module.scss';
 import items from './constants';
 import { Link } from 'react-router-dom';
-import styles from './menu.module.scss';
 import { RightArrow } from '@/assets/constants';
 import classNames from 'classnames';
+import { useMediaQuery } from 'react-responsive';
+import { buttonData } from '@/constants/ButtonConstants';
+import { NavButton } from '../Button';
 
 interface IProductListProps {
   isBurgerProductList: boolean;
@@ -14,6 +17,10 @@ export const CatalogList: FC<IProductListProps> = ({
   isBurgerProductList = false,
   setIsCatalogListOpen,
 }) => {
+  const isLaptopPage = useMediaQuery({
+    query: '(max-width: 992px)',
+  });
+
   const closeCatalogList = (
     e: MouseEvent<HTMLButtonElement | HTMLDivElement | KeyboardEvent>,
   ) => {
@@ -24,9 +31,15 @@ export const CatalogList: FC<IProductListProps> = ({
       !(e.relatedTarget instanceof Node) ||
       !catalogBtn.contains(e.relatedTarget)
     ) {
-      if (location.pathname !== '/' && setIsCatalogListOpen) {
+      if (/* location.pathname !== '/' &&  */ setIsCatalogListOpen) {
         setIsCatalogListOpen(false);
       }
+    }
+  };
+
+  const handleCloseCatalogList = (e: any) => {
+    if (!isLaptopPage) {
+      closeCatalogList(e);
     }
   };
 
@@ -37,7 +50,7 @@ export const CatalogList: FC<IProductListProps> = ({
         [styles.container]: !isBurgerProductList,
         [styles.burgerContainer]: isBurgerProductList,
       })}
-      onMouseLeave={closeCatalogList}
+      onMouseLeave={handleCloseCatalogList}
     >
       <ul className={styles.burgerMenuTop}>
         {items.map((item) => (
@@ -52,6 +65,11 @@ export const CatalogList: FC<IProductListProps> = ({
           </li>
         ))}
       </ul>
+      <div className={classNames(styles.catalogListButtons)}>
+        {buttonData.slice(0, 3).map((buttonData) => (
+          <NavButton key={buttonData.id} button={buttonData} />
+        ))}
+      </div>
     </div>
   );
 };

@@ -166,11 +166,15 @@ export const SingleProductPage: FC = () => {
 
   return (
     <div className={style['single-product']}>
-      <div className={style['single-product__wrap']}>
+      <div
+        className={classNames(style['single-product__wrap'], 'container-xxl')}
+      >
         <CustomBreadcrumbs />
       </div>
       <MenuItems />
-      <div className={style['single-product__wrap']}>
+      <div
+        className={classNames(style['single-product__wrap'], 'container-xxl')}
+      >
         <Product reviewsLength={allProductReviews?.length} />
         <ProductCharacteristics />
 

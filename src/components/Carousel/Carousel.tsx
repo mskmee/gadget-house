@@ -1,176 +1,231 @@
-import { FC, ReactNode, useEffect, useRef, useState } from 'react';
-import style from './carousel.module.scss';
-import { Carousel } from 'antd';
-import SliderButtons from './SliderButtons';
-import { ResponsiveSettings } from '@/types/responsive';
-import type { CarouselRef } from 'antd/es/carousel';
+import React, { useState, useEffect } from 'react';
+import styles from './carousel.module.scss';
+import classNames from 'classnames';
+import { BrandCard, MyCard } from '../components';
+import {
+  brandData,
+  laptopData,
+  smartphoneData,
+  previouslyReviewedData,
+} from '../Card/constants';
+import { useMediaQuery } from 'react-responsive';
+import { useResponsiveCarouselSettings } from '@/hooks/useResponsiveCarouselSettings';
+import { productImages } from '@/constants/singleProduct';
 
-interface ICarouselsProps {
-  children: ReactNode;
-  classname: string;
-  sliderClassName: string;
-  countSlideToShow: number;
-  responsive?: ResponsiveSettings[];
+type CarouselClassname =
+  | 'brands-carousel'
+  | 'laptop-carousel'
+  | 'smartphone-carousel'
+  | 'viewed-carousel'
+  | 'photos-carousel';
+interface CustomCarouselProps {
+  classname: CarouselClassname;
 }
 
-const Carousels: FC<ICarouselsProps> = ({
-  children,
-  classname,
-  sliderClassName,
-  countSlideToShow,
-  responsive,
-}) => {
-  const ref = useRef<CarouselRef>(null);
-  const [prevClick, setPrevClick] = useState(false);
-  const [nextClick, setNextClick] = useState(false);
-  const [isFirstSlick, setIsFirstSlick] = useState(true);
-  const [isLastSlick, setIsLastSlick] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+const CustomCarousel: React.FC<CustomCarouselProps> = ({ classname }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [startX, setStartX] = useState<number | null>(null);
+  const [currentTranslate, setCurrentTranslate] = useState(0);
+  const [animation, setAnimation] = useState(true);
 
-  const handlePrevClick = () => {
-    setPrevClick(true);
-    ref.current?.prev();
-    setTimeout(() => setPrevClick(false), 0); // Reset click state after 0s
-  };
+  const isLargerThan1440px = useMediaQuery({
+    query: '(max-width: 1440px)',
+  });
 
-  const handleNextClick = () => {
-    setNextClick(true);
-    ref.current?.next();
-    setTimeout(() => setNextClick(false), 0); // Reset click state after 0s
-  };
+  const responsiveCarouselSettings = useResponsiveCarouselSettings(classname);
 
-  useEffect(() => {
-    if (containerRef.current) {
-      const allSlicks = containerRef.current.querySelectorAll('.slick-slide');
-      const filteredElements = Array.from(allSlicks).filter(
-        (element) => !element.classList.contains('slick-cloned'),
+  const itemWidth = isLargerThan1440px
+    ? responsiveCarouselSettings.itemWidth
+    : classname === 'brands-carousel'
+      ? 256
+      : 305;
+  const totalItems = classname === 'brands-carousel' ? 10 : 8;
+  const maxIndex = totalItems - responsiveCarouselSettings.count;
+
+  const handleNext = () => {
+    if (currentIndex < maxIndex) {
+      setAnimation(true);
+      setCurrentIndex(currentIndex + 1);
+      setCurrentTranslate(
+        -(currentIndex + 1) * (itemWidth + responsiveCarouselSettings.gap),
       );
-
-      const activeSlicks =
-        containerRef.current.querySelectorAll('.slick-active');
-      const currentSlickElement =
-        containerRef.current.querySelector('.slick-current');
-      const currentSlickIndex = currentSlickElement?.getAttribute('data-index');
-      const currentSlickIndex2 =
-        activeSlicks[activeSlicks.length - 1]?.getAttribute('data-index');
-
-      if (currentSlickIndex2 !== null && currentSlickIndex2 !== undefined) {
-        setIsLastSlick(+currentSlickIndex2 >= filteredElements.length - 1);
-      } else {
-        setIsLastSlick(false);
-      }
-      if (
-        currentSlickIndex !== null &&
-        currentSlickIndex !== undefined &&
-        +currentSlickIndex === 0
-      ) {
-        setIsFirstSlick(true);
-      } else {
-        setIsFirstSlick(false);
-      }
     }
-  }, [prevClick, nextClick]);
+  };
 
-  /*   useEffect(() => {
-    const allSlideElements = Array.from(
-      containerRef.current?.querySelectorAll('.slick-track .slick-slide') || [],
-    );
-    console.log(allSlideElements);
+  const handlePrev = () => {
+    if (currentIndex > 0) {
+      setAnimation(true);
+      setCurrentIndex(currentIndex - 1);
+      setCurrentTranslate(
+        -(currentIndex - 1) * (itemWidth + responsiveCarouselSettings.gap),
+      );
+    }
+  };
 
-    const dataIndexLessThanZero = allSlideElements.filter((el) => {
-      const dataIndex = el.getAttribute('data-index');
-      return dataIndex !== null && Number(dataIndex) < 0;
-    });
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setAnimation(false);
+    setStartX(e.touches[0].clientX);
+  };
 
-    const dataIndexMoreThanZero = allSlideElements.filter((el) => {
-      const dataIndex = el.getAttribute('data-index');
-      return dataIndex !== null && Number(dataIndex) >= 0;
-    });
-    console.log(dataIndexMoreThanZero);
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (startX !== null) {
+      const diff = e.touches[0].clientX - startX;
+      setCurrentTranslate(
+        -currentIndex * (itemWidth + responsiveCarouselSettings.gap) + diff,
+      );
+    }
+  };
 
-    dataIndexLessThanZero?.map((el) => {
-      el.removeAttribute('tabindex');
-      const childrenWithTabindex2 = el.querySelector('a');
-      childrenWithTabindex2?.remove();
-    });
+  const handleTouchEnd = () => {
+    if (startX !== null) {
+      const distanceMoved =
+        -currentTranslate -
+        currentIndex * (itemWidth + responsiveCarouselSettings.gap);
 
-    dataIndexMoreThanZero?.map((el) => {
-      console.log(el);
-
-      if (el.classList.contains('slick-active')) {
-        el.removeAttribute('tabindex');
-        const childrenWithTabindex = el.querySelectorAll('[tabindex]');
-        childrenWithTabindex.forEach((el) => el.removeAttribute('tabindex'));
-      } else {
-        el.removeAttribute('tabindex');
-        const childrenWithTabindex2 = el.querySelector('a');
-        childrenWithTabindex2?.remove();
+      if (distanceMoved > 50 && currentIndex < maxIndex) {
+        setCurrentIndex(currentIndex + 1);
+      } else if (distanceMoved < -50 && currentIndex > 0) {
+        setCurrentIndex(currentIndex - 1);
       }
-    });
-  }, []); */
+
+      setAnimation(true);
+      setCurrentTranslate(
+        -currentIndex * (itemWidth + responsiveCarouselSettings.gap),
+      );
+      setStartX(null);
+    }
+  };
+  useEffect(() => {
+    const rateComponent = document.querySelectorAll('.reviews_rate-stars');
+    const rateComponentDivs = document.querySelectorAll('.ant-rate-star div');
+    if (rateComponent) {
+      rateComponent.forEach((el) => {
+        el.setAttribute('tabindex', '-1');
+      });
+    }
+    if (rateComponentDivs) {
+      rateComponentDivs.forEach((el) => {
+        el.setAttribute('tabindex', '-1');
+      });
+    }
+  }, []);
 
   return (
-    <div
-      className={`${style.carouselContainer} ${style[classname]}`}
-      style={
-        classname === 'photos-carousel'
-          ? { backgroundColor: 'transparent' }
-          : {}
-      }
-      ref={containerRef}
-    >
-      <Carousel
-        className={sliderClassName}
-        ref={ref}
-        slidesToShow={countSlideToShow}
-        slidesToScroll={1}
-        autoplay={false}
-        dots={false}
-        initialSlide={0}
-        arrows={false}
-        responsive={
-          responsive || [
-            {
-              breakpoint: 2520,
-              settings: {
-                slidesToShow: 5,
-                slidesToScroll: 1,
-              },
-            },
-            {
-              breakpoint: 1700,
-              settings: {
-                slidesToShow: 4,
-                slidesToScroll: 1,
-              },
-            },
-            {
-              breakpoint: 1070,
-              settings: {
-                slidesToShow: 3,
-                slidesToScroll: 1,
-              },
-            },
-            {
-              breakpoint: 700,
-              settings: {
-                slidesToShow: 2,
-                slidesToScroll: 1,
-              },
-            },
-          ]
-        }
+    <div className={classNames(styles.carousel, styles[classname])}>
+      <div
+        className={styles.trackContainer}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
       >
-        {children}
-      </Carousel>
-      <SliderButtons
-        handleNextClick={handleNextClick}
-        handlePrevClick={handlePrevClick}
-        isFirstSlick={isFirstSlick}
-        isLastSlick={isLastSlick}
-      />
+        <div
+          className={styles.track}
+          style={{
+            transform: `translate3d(${currentTranslate}px, 0, 0)`,
+            transition: animation ? 'transform 0.4s ease-in-out' : 'none',
+          }}
+        >
+          {Array.from(
+            { length: classname === 'brands-carousel' ? 10 : 8 },
+            (_, i) => (
+              <>
+                {classname === 'brands-carousel' ? (
+                  <BrandCard
+                    width={itemWidth}
+                    key={`brand-${i}`}
+                    product={brandData[i % brandData.length]}
+                  />
+                ) : classname === 'photos-carousel' ? (
+                  productImages?.map((photo) => (
+                    <img
+                      key={photo?.id}
+                      className="product-photo"
+                      src={photo?.img}
+                      alt="product's photos"
+                    />
+                  ))
+                ) : (
+                  <MyCard
+                    width={itemWidth}
+                    key={
+                      classname === 'laptop-carousel'
+                        ? `laptop-${i}`
+                        : `smartphone-${i}`
+                    }
+                    product={
+                      classname === 'laptop-carousel'
+                        ? laptopData[i % laptopData.length]
+                        : classname === 'smartphone-carousel'
+                          ? smartphoneData[i % smartphoneData.length]
+                          : previouslyReviewedData[
+                              i % previouslyReviewedData.length
+                            ]
+                    }
+                    classname={
+                      classname === 'laptop-carousel'
+                        ? 'laptops'
+                        : classname === 'smartphone-carousel'
+                          ? 'smartphones'
+                          : 'previously-reviewed'
+                    }
+                  />
+                )}
+              </>
+            ),
+          )}
+        </div>
+
+        <div className={classNames(styles['slider-buttons'])}>
+          <button
+            className={classNames(styles['btn-arrow-prev'], {
+              [styles['btn-arrow-prev-disabled']]: currentIndex === 0,
+            })}
+            disabled={currentIndex === 0}
+            onClick={handlePrev}
+          >
+            <svg
+              width="9"
+              height="16"
+              viewBox="0 0 9 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8.00016 1.33331L1.3335 7.99998L8.00016 14.6666"
+                stroke="#00820D"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+          <button
+            className={classNames(styles['btn-arrow-next'], {
+              [styles['btn-arrow-next-disabled']]: currentIndex === maxIndex,
+            })}
+            disabled={currentIndex === maxIndex}
+            onClick={handleNext}
+          >
+            <svg
+              width="9"
+              height="16"
+              viewBox="0 0 9 16"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1.3335 1.33331L8.00016 7.99998L1.3335 14.6666"
+                stroke="#00820D"
+                strokeWidth={2}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default Carousels;
+export default CustomCarousel;

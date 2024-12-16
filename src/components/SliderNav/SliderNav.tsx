@@ -1,7 +1,6 @@
 import { FC, MouseEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './slidernav.module.scss';
-
 import { RightArrowSlider, RightArrowSliderClick } from '@/assets/constants';
 
 interface ISliderNavProps {

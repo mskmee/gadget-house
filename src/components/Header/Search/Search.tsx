@@ -198,7 +198,7 @@ export const Search: FC<ISearchProps> = ({
         </div>
       }
       suffix={
-        <div className="search-right-elements">
+        <div className={styles['search-right-elements']}>
           {searchInput.value && (
             <>
               <img
@@ -206,7 +206,7 @@ export const Search: FC<ISearchProps> = ({
                 alt="clear icon"
                 onClick={clearSearchInputValue}
               />
-              <div></div>
+              <div className={styles['search-right-elements_devider']}></div>
             </>
           )}
           <SearchIcon />

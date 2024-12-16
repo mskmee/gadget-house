@@ -25,7 +25,7 @@ export const MenuItems: FC = () => {
     }
   };
   return (
-    <section className={style['single-product__menu']}>
+    <section className={classNames(style['single-product__menu'])}>
       <ul>
         {menuItems?.map((item) => (
           <li
