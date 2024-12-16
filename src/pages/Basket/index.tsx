@@ -75,19 +75,7 @@ export const BasketPage = () => {
         link="/smartphones"
         isVisibleSeeMoreBtn={false}
       />
-      <Carousels
-        classname="mobile-carousel"
-        sliderClassName="mobile-slider"
-        countSlideToShow={5}
-      >
-        {Array.from({ length: 8 }, (_, i) => (
-          <MyCard
-            key={`smartphone-${i}`}
-            product={smartphoneData[i % smartphoneData.length]}
-            classname="smartphone"
-          />
-        ))}
-      </Carousels>
+      <Carousels classname="smartphone-carousel"/>
       <Benefits />
     </>
   );
