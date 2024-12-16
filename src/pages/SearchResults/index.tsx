@@ -4,10 +4,8 @@ import { useDocumentTitle } from '@/hooks/useDocumentTitle';
 import {
   Benefits,
   Carousels,
-  MyCard,
   SliderNav,
 } from '@/components/components';
-import { laptopData } from '@/components/Card/constants';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 
