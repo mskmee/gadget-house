@@ -62,15 +62,7 @@ export const SearchResults = () => {
         link="/recommendations"
         isVisibleSeeMoreBtn={false}
       />
-      <Carousels classname="laptop-carousel">
-        {Array.from({ length: 8 }, (_, i) => (
-          <MyCard
-            key={`laptop-${i}`}
-            product={laptopData[i % laptopData.length]}
-            classname="laptop"
-          />
-        ))}
-      </Carousels>
+      <Carousels classname="laptop-carousel"/>
       <Benefits />
     </main>
   );
