@@ -10,8 +10,6 @@ import { SuccessPopUp } from './libs/components/components';
 import { useActions } from '@/hooks/useActions';
 import { SliderNav } from '@/components/SliderNav/SliderNav.tsx';
 import Carousels from '@/components/Carousel/Carousel.tsx';
-import { MyCard } from '@/components/Card/MyCard.tsx';
-import { smartphoneData } from '@/components/Card/constants.ts';
 import Benefits from '@/components/benefitsList/benefits.tsx';
 
 export const BasketPage = () => {
