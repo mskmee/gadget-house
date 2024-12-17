@@ -58,11 +58,15 @@ import headphones from './images/basket-products-img/headphones.png';
 import basketPhoneImg from './images/basket-products-img/phone.png';
 import searchInputClear from './icons/search_input_clear.svg';
 import deleteFromBasket from './icons/delete-from-basket.svg';
+import Robot404 from './icons/robot-404.svg';
+import Admin from './icons/admin.svg';
 import {BasketIcon} from './icons/BasketIcon'
 
 export {
+  Admin,
   BasketIcon,
   RightArrowSlider,
+  Robot404,
   Vector,
   RightArrowSliderClick,
   CatalogIcon,
