@@ -13,15 +13,7 @@ import { BasketPage } from './pages/Basket';
 import AllProducts from './pages/AllProducts/AllProducts';
 import PhotoVideo from './pages/PhotoVideo/PhotoVideo';
 import Audio from './pages/Audio/Audio';
-import NotFound from './pages/NotFound/NotFound';
-import GameConsoles from './pages/GameConsoles/GameConsoles';
-import Kids from './pages/Kids/Kids';
-import PCs from './pages/PCs/PCs';
-import TVs from './pages/TVs/TVs';
-import Tablets from './pages/Tablets/Tablets';
-import SmartWatches from './pages/SmartWatches/SmartWatches';
-import Sale from './pages/Sale/Sale';
-import { AdminPage } from './pages/AdminPage/AdminPage';
+import OrderConfirmation from './pages/OrderConfirmation/OrderConfirmation';
 
 export const routes = createBrowserRouter(
   [
@@ -63,14 +55,10 @@ export const routes = createBrowserRouter(
           path: AppRoute.BASKET_PAGE,
           element: <BasketPage />,
         },
-        {
-          path: AppRoute.ADMIN_PAGE,
-          element: <AdminPage />,
-        },
 
         {
-          path: '*',
-          element: <NotFound />,
+          path: AppRoute.ORDER,
+          element: <OrderConfirmation />,
         },
       ],
     },
