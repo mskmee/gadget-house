@@ -1,12 +1,14 @@
 import { Dispatch, FC, MouseEvent, SetStateAction } from 'react';
-import styles from './menu.module.scss';
-import items from './constants';
 import { Link } from 'react-router-dom';
-import { RightArrow } from '@/assets/constants';
 import classNames from 'classnames';
 import { useMediaQuery } from 'react-responsive';
 import { buttonData } from '@/constants/ButtonConstants';
 import { NavButton } from '../Button';
+
+import items from './constants';
+import { RightArrow } from '@/assets/constants';
+
+import styles from './menu.module.scss';
 
 interface IProductListProps {
   isBurgerProductList: boolean;
@@ -58,7 +60,15 @@ export const CatalogList: FC<IProductListProps> = ({
             <Link to={item.link} className={styles.burgerMenuTopItem}>
               <div className={styles.burgerMenuTopItemRight}>
                 <img src={item.img} alt={item.title} />
-                <p>{item.title}</p>
+                <p
+                  className={classNames({
+                    [styles.burgerMenuTopItemAdmin]:
+                      item.title === 'Admin Page',
+                    [styles.burgerMenuTopItemSale]: item.title === 'SALE',
+                  })}
+                >
+                  {item.title}
+                </p>
               </div>
               <img src={RightArrow} alt="Right Arrow" />
             </Link>

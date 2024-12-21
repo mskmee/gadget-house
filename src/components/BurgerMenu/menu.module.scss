@@ -1,7 +1,6 @@
-@import '@/styles/functions';
+@import "@/styles/functions";
 
 .burgerMenuTop {
-  
   &Item {
     display: flex;
     flex-direction: row;
@@ -26,6 +25,14 @@
       align-items: center;
       gap: 8px;
       margin-bottom: 8px;
+    }
+
+    &Admin {
+      color: var(--buttons-and-accent-color);
+    }
+
+    &Sale {
+      color: var(--error-color);
     }
   }
 }
