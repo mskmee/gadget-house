@@ -27,15 +27,14 @@ export const CatalogList: FC<IProductListProps> = ({
     e: MouseEvent<HTMLButtonElement | HTMLDivElement | KeyboardEvent>,
   ) => {
     const catalogBtn = document.getElementById('catalog-btn');
+    const shouldCatalogListClose =
+      (!catalogBtn ||
+        !(e.relatedTarget instanceof Node) ||
+        !catalogBtn.contains(e.relatedTarget)) &&
+      setIsCatalogListOpen;
 
-    if (
-      !catalogBtn ||
-      !(e.relatedTarget instanceof Node) ||
-      !catalogBtn.contains(e.relatedTarget)
-    ) {
-      if (/* location.pathname !== '/' &&  */ setIsCatalogListOpen) {
-        setIsCatalogListOpen(false);
-      }
+    if (shouldCatalogListClose) {
+      setIsCatalogListOpen(false);
     }
   };
 
