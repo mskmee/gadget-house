@@ -26,16 +26,21 @@
     column-gap: 32px;
   }
 
-  button {
-    padding: 16px 24px;
+  a {
+    padding: 16px 33px;
     color: var(--white-color);
     background-color: var(--green-color);
-    border: none;
+    font-weight: 500;
+    line-height: 150%;
     border-radius: 12px;
     cursor: pointer;
+    text-decoration: none;
 
     &:hover {
       background-color: #4da856;
+    }
+    &:active {
+      background-color: #00680a;
     }
   }
 
@@ -56,5 +61,45 @@
   &:hover {
     background-color: #a8a8a8;
     cursor: grab;
+  }
+}
+
+@media screen and (max-width: 1250px) {
+  .container {
+    width: 600px;
+  }
+}
+
+@media screen and (max-width: 1250px) {
+  .container {
+    width: 550px;
+    padding: 15px 0 15px 15px;
+    .cards,
+    .total {
+      padding-right: 15px;
+    }
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .container {
+    width: 450px;
+    padding: 10px 0 10px 10px;
+    .cards,
+    .total {
+      padding-right: 10px;
+    }
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .container {
+    width: 400px;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .container {
+    width: 350px;
   }
 }

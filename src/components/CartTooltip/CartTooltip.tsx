@@ -1,8 +1,10 @@
+import { useEffect } from 'react';
 import styles from './CartTooltip.module.scss';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { ProductItem } from './ProductItem/ProductItem';
-import { convertPriceToReadable } from '@/utils/helpers/helpers';
-import { useNavigate } from 'react-router-dom';
+import { useActions } from '@/hooks/useActions';
+import { Link } from 'react-router-dom';
+import { convertPriceToReadable } from '@/utils/helpers/product';
 import { AppRoute } from '@/enums/Route';
 
 export const CardTooltip = () => {
@@ -12,9 +14,11 @@ export const CardTooltip = () => {
     currency,
     locale,
   } = useTypedSelector((state) => state.shopping_card);
-  const navigate = useNavigate();
+  const { getTotal } = useActions();
 
-  const handleButtonClick = () => navigate(AppRoute.BASKET_PAGE);
+  useEffect(() => {
+    getTotal();
+  }, [cardItems, getTotal]);
 
   return (
     <div className={styles.container}>
@@ -27,7 +31,7 @@ export const CardTooltip = () => {
         <span className={styles.price}>
           {convertPriceToReadable(cardTotalAmount, currency, locale)}
         </span>
-        <button onClick={handleButtonClick}>Go to basket</button>
+        <Link to={AppRoute.BASKET_PAGE}>Go to basket</Link>
       </div>
     </div>
   );

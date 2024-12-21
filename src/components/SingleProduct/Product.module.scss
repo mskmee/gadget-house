@@ -44,10 +44,13 @@
     }
   }
   &__menu {
+    max-width: 1440px;
+    margin: 0 auto;
     margin-top: 48px;
     background-color: #eae4ee;
+
     padding: 30px 50px;
-    > ul {
+    ul {
       display: flex;
       align-items: center;
       flex-wrap: wrap;
@@ -303,130 +306,50 @@
       font-weight: 500;
       color: #1c1817;
     }
-    button {
-      padding: 3px;
-      z-index: 0;
-      background-color: #00820d;
-      border-radius: 12px;
-      cursor: pointer;
-      border: none !important;
-      position: relative;
-      overflow: hidden;
-      color: #656565;
-      display: flex;
-      justify-content: center;
-      align-items: center;
 
-      &:focus-visible {
-        margin: 5px;
-        outline: 1px solid #000;
-      }
+    > svg {
+      width: 26px;
+      height: 26px;
     }
-
-    button > div {
-      padding: 13px 29px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      position: relative;
-      z-index: 1;
-      justify-content: center;
-      border-radius: 8px;
-      color: white;
-      background-color: inherit;
-      > svg {
-        width: 26px;
-        height: 26px;
-      }
-      > span {
-        font-weight: 500;
-        line-height: 150%;
-      }
-    }
-
-    button::after {
-      content: '';
-      position: absolute;
-      z-index: -2;
-      left: -50%;
-      top: -50%;
-      width: 200%;
-      height: 200%;
-      background-color: transparent;
-      background-repeat: no-repeat;
-      background-size:
-        50% 50%,
-        50% 50%;
-      background-position:
-        0 0,
-        100% 0,
-        100% 100%,
-        0 100%;
-      background-image: linear-gradient(
-        90deg,
-        rgba(203, 228, 14) 82%,
-        rgb(198, 200, 210) 50%,
-        rgba(110, 112, 216) 100%
-      );
-      -webkit-animation: rotate 2s linear infinite;
-      animation: rotate 2s linear infinite;
-    }
-
-    /* Disable the animation on hover */
-    button:hover::after {
-      animation: none;
-      background-color: #169d24;
-      background-image: none;
-    }
-    button:hover > div {
-      background-color: #169d24;
+    > span {
+      font-weight: 500;
+      line-height: 150%;
     }
   }
 }
 
-// add to basket btn  _normal variant ---start
 .AddToBasketButton {
-  max-height: 56px;
-  padding: 3px;
+  padding: 16px 34px;
   z-index: 0;
   background-color: #00820d;
   border-radius: 12px;
   cursor: pointer;
   border: none !important;
   position: relative;
-  overflow: hidden;
-  color: #656565;
+  color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  &:hover > div {
-    background-color: #169d24;
+  gap: 4px;
+  > span {
+    line-height: 150%;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+  &:focus-visible {
+    margin: 5px;
+    outline: 1px solid #000;
+  }
+  &:hover {
+    background-color: #4da856;
+  }
+  &:active {
+    background-color: #00680a;
   }
 }
 
-.AddToBasketButton > div {
-  padding: 13px 31px;
-  border: none;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  position: relative;
-  z-index: 1;
-  justify-content: center;
-  border-radius: 8px;
-  color: white;
-  background-color: inherit;
-}
-// add to basket btn  _normal variant ---end
-
 //prodoct photo modal
 .photoModal {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  column-gap: 65px;
-  row-gap: 20px;
   > div {
     max-width: initial;
     padding: 0;
@@ -482,16 +405,6 @@
       font-weight: 500;
       line-height: 150%;
       color: #1c1817;
-    }
-    > button {
-      padding: 3px 4px;
-      &:hover {
-        background-color: #169d24;
-      }
-      span {
-        font-size: rem(16px);
-        font-weight: 500;
-      }
     }
   }
 }
@@ -695,7 +608,14 @@
   padding: 40px 0 40px 33px;
   overflow: hidden;
   @include custom-box-shadow;
-
+  > div {
+    background-color: #fff;
+    > div:last-child {
+      button {
+        background-color: #fff;
+      }
+    }
+  }
   > h2 {
     font-size: rem(42px);
     font-weight: 500;
@@ -714,11 +634,79 @@
 // Accessories section ---start
 
 .accessories {
-  margin-top: 56px;
-  padding: 45px 0 24px 0;
-  background-color: #eae4ee;
+  max-width: 1540px;
+  margin: 52px auto 0 auto;
+  padding: 0 50px;
+
   h2 {
+    padding: 0 50px;
     font-size: rem(42px);
     font-weight: 500;
+    line-height: 150%;
+  }
+  > div {
+    padding: 45px 0 24px 0;
+    border-radius: 20px;
+    background-color: #eae4ee;
+  }
+}
+@media screen and (max-width: 1440px) {
+  .accessories {
+    padding: 0;
+    border-radius: 0;
+    background-color: #eae4ee;
+    h2 {
+      padding: 0 50px;
+    }
+  }
+}
+
+@media screen and (max-height: 870px) {
+  .photoModal {
+    > div {
+      .product_carousel-current-picture {
+        .content-img {
+          max-width: initial;
+          width: 518px;
+          cursor: default;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-height: 770px) {
+  .photoModal {
+    > div {
+      .product_carousel-current-picture {
+        .content-img {
+          max-width: initial;
+          width: 418px;
+          cursor: default;
+        }
+        .arrow-left,
+        .arrow-right {
+          width: 60px;
+          height: 60px;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-height: 670px) {
+  .photoModal {
+    > div {
+      .product_carousel-current-picture {
+        .content-img {
+          max-width: initial;
+          width: 318px;
+          cursor: default;
+        }
+        .arrow-left,
+        .arrow-right {
+          width: 60px;
+          height: 60px;
+        }
+      }
+    }
   }
 }
