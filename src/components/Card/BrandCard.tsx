@@ -4,12 +4,18 @@ import { IBrandCard } from '@/interfaces/interfaces';
 
 interface IBrandCardProps {
   product: IBrandCard;
+  width: number;
 }
 
-export const BrandCard: FC<IBrandCardProps> = ({ product }) => {
+export const BrandCard: FC<IBrandCardProps> = ({ product, width }) => {
   return (
     <div className={styles.cardBrandConatiner} key={product.id}>
-      <img src={product.img} className={styles.brandImg} alt="brand-images" />
+      <img
+        style={{ width: `${width}px` }}
+        src={product.img}
+        className={styles.brandImg}
+        alt="brand-images"
+      />
     </div>
   );
 };

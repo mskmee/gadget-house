@@ -11,6 +11,14 @@ const AppRoute = {
   BASKET_PAGE: '/basket',
   SIGN_IN: '/sign-in',
   USER_FAVORITES: '/dashboard/:user-id/favorites',
+  TABLET: '/tablets',
+  WATCH: '/smartwatches',
+  PC: '/pcs',
+  TV: '/tvs',
+  GAME_CONSOLE: '/consoles',
+  KIDS: '/kids',
+  SALE: '/sale',
+  ADMIN_PAGE: '/admin',
 } as const;
 
 export type RoutePath = (typeof AppRoute)[keyof typeof AppRoute];

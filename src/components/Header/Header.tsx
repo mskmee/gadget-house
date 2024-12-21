@@ -7,7 +7,7 @@ import {
 } from 'react';
 import styles from './header.module.scss';
 import classNames from 'classnames';
-import { CatalogIcon } from '@/assets/constants';
+import { BurgerMenuIcon, CatalogIcon, LeftArrow } from '@/assets/constants';
 import { Search } from './Search/Search';
 import { NavButton } from '../Button';
 import { buttonData } from '@/constants/ButtonConstants';
@@ -20,6 +20,7 @@ import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { CardTooltip } from '../CartTooltip/CartTooltip';
 import { useIsFixedHeader } from '@/hooks/useIsFixedHeader';
 import { InputRef } from 'antd';
+import { useMediaQuery } from 'react-responsive';
 
 export const Header = () => {
   const location = useLocation();
@@ -36,6 +37,19 @@ export const Header = () => {
   const catalogBtnRef = useRef<HTMLButtonElement>(null);
   const headerBottomRef = useRef<HTMLDivElement>(null);
   const searchFieldRef = useRef<InputRef>(null);
+
+  const isLargerThan1250px = useMediaQuery({
+    query: '(max-width: 1250px)',
+  });
+
+  const isLaptopPage = useMediaQuery({
+    query: '(max-width: 992px)',
+  });
+
+  const isLargerThan768px = useMediaQuery({
+    query: '(max-width: 768px)',
+  });
+
   const isBasketPage = location.pathname === AppRoute.BASKET_PAGE;
   const shouldShowCartTooltip = products.length && !isBasketPage;
 
@@ -55,14 +69,40 @@ export const Header = () => {
   }, [location.pathname]);
 
   const openCatalogList = () => {
-    if (location.pathname !== '/' && !isCatalogListOpen) {
-      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    if (isLaptopPage || (location.pathname !== '/' && !isCatalogListOpen)) {
+      const scrollTop = 0;
       const headerHeight = headerRef.current && headerRef.current.clientHeight;
       const a1 = headerHeight ? headerHeight - scrollTop : 0;
       const newHeight = `${Math.floor(window.innerHeight - a1)}px`;
 
+      const newPositionLeft = `${Math.floor(window.innerWidth - 1440) / 2}`;
       if (catalogListRef.current) {
         catalogListRef.current.style.height = newHeight;
+
+        if (+newPositionLeft > 50) {
+          catalogListRef.current.style.left = `-${newPositionLeft}px`;
+          catalogListRef.current.style.setProperty(
+            '--parent-left',
+            `${newPositionLeft}px`,
+          );
+        } else {
+          if (!isLaptopPage) {
+            catalogListRef.current.style.left = isLargerThan1250px
+              ? `-37px`
+              : `-51px`;
+            catalogListRef.current.style.setProperty('--parent-left', `50px`);
+          } else {
+            catalogListRef.current.style.left = `-20px`;
+            catalogListRef.current.style.top = isLargerThan768px
+              ? isFixedHeader
+                ? `58px`
+                : `66px`
+              : isFixedHeader
+                ? `64px`
+                : `81px`;
+            catalogListRef.current.style.setProperty('--parent-left', `0`);
+          }
+        }
       }
 
       setIsCatalogListOpen(true);
@@ -79,11 +119,17 @@ export const Header = () => {
       !(e.relatedTarget instanceof Node) ||
       !catalogList.contains(e.relatedTarget)
     ) {
-      if (location.pathname !== '/') {
-        setIsCatalogListOpen(false);
-      }
+      setIsCatalogListOpen(false);
     }
   };
+
+  useEffect(() => {
+    if (isCatalogListOpen) {
+      document.body.style.overflowY = 'hidden';
+    } else {
+      document.body.style.overflowY = 'initial';
+    }
+  }, [isCatalogListOpen]);
 
   const openCatalogListOnFocus = (e: FocusEvent<HTMLButtonElement>) => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -146,11 +192,19 @@ export const Header = () => {
     } else {
       setIsFirstTime(true);
     }
-  }, [location.pathname, isFirstTime]);
+  }, [location.pathname /*isFirstTime*/]);
+
+  const handleOpenCloseBurgerMenu = (e: any) => {
+    if (!isCatalogListOpen) {
+      openCatalogList();
+    } else {
+      closeCatalogList(e);
+    }
+  };
 
   return (
     <header ref={headerRef}>
-      <div id="header-top-section" className={styles.headerTop}>
+      <div id="header-top-section" className={classNames(styles.headerTop)}>
         <Link
           id="header-logo"
           to={AppRoute?.ROOT}
@@ -161,61 +215,77 @@ export const Header = () => {
         </Link>
       </div>
       <div
-        id="header-bottom-section"
-        ref={headerBottomRef}
-        className={classNames(styles.headerBottom, {
+        className={classNames(styles.headerBottomWrap, {
+          'container-xxl': !isFixedHeader,
           [styles.fixedHeader]: isFixedHeader,
         })}
-        tabIndex={0}
       >
-        <>
-          <button
-            id="catalog-btn"
-            ref={catalogBtnRef}
-            className={classNames(styles.headerBottomCatalog, {
-              [styles.headerBottomCatalog__active]: isCatalogListOpen,
-            })}
-            onMouseEnter={openCatalogList}
-            onFocus={openCatalogListOnFocus}
-            onMouseLeave={closeCatalogList}
-          >
-            <img src={CatalogIcon} alt="Catalog" />
-            <h1>Catalog</h1>
-          </button>
+        <div
+          id="header-bottom-section"
+          ref={headerBottomRef}
+          className={classNames(styles.headerBottom)}
+          tabIndex={0}
+        >
           <div
-            className={classNames(styles.catalogListWrap, {
-              [styles.catalogListWrapVisible]: isCatalogListOpen,
+            className={classNames({
+              [styles['hidden-header-bottom-wrapper']]: !isFixedHeader,
             })}
-            ref={catalogListRef}
           >
-            <CatalogList
-              isBurgerProductList={false}
-              setIsCatalogListOpen={setIsCatalogListOpen}
-            />
-          </div>
-        </>
+            {isLaptopPage ? (
+              <img
+                src={isCatalogListOpen ? LeftArrow : BurgerMenuIcon}
+                onClick={handleOpenCloseBurgerMenu}
+              />
+            ) : (
+              <button
+                id="catalog-btn"
+                ref={catalogBtnRef}
+                className={classNames(styles.headerBottomCatalog, {
+                  [styles.headerBottomCatalog__active]: isCatalogListOpen,
+                })}
+                onMouseEnter={openCatalogList}
+                onFocus={openCatalogListOnFocus}
+                onMouseLeave={closeCatalogList}
+              >
+                <img src={CatalogIcon} alt="Catalog" />
+                <h1>Catalog</h1>
+              </button>
+            )}
 
-        <Search
-          searchFieldRef={searchFieldRef}
-          isOverlayActive={isOverlayActive}
-          setIsOverlayActive={setIsOverlayActive}
-        />
-        <div className={styles.headerBottomButtons}>
-          {buttonData.map((buttonData) => (
-            <NavButton key={buttonData.id} button={buttonData} />
-          ))}
-
-          {shouldShowCartTooltip && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ ease: 'easeInOut', duration: 0.4 }}
-              className={classNames(styles.tooltip, 'oo')}
+            <div
+              className={classNames(styles.catalogListWrap, {
+                [styles.catalogListWrapVisible]: isCatalogListOpen,
+              })}
+              ref={catalogListRef}
             >
-              <CardTooltip />
-            </motion.div>
-          )}
+              <CatalogList
+                isBurgerProductList={false}
+                setIsCatalogListOpen={setIsCatalogListOpen}
+              />
+            </div>
+            <Search
+              searchFieldRef={searchFieldRef}
+              isOverlayActive={isOverlayActive}
+              setIsOverlayActive={setIsOverlayActive}
+            />
+            <div className={styles.headerBottomButtons}>
+              {buttonData.map((buttonData) => (
+                <NavButton key={buttonData.id} button={buttonData} />
+              ))}
+
+              {shouldShowCartTooltip !== 0 && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ ease: 'easeInOut', duration: 0.4 }}
+                  className={classNames(styles.tooltip, 'oo')}
+                >
+                  <CardTooltip />
+                </motion.div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
       <div

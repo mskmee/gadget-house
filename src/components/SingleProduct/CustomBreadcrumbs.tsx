@@ -1,6 +1,7 @@
 import { useLocation, useParams } from 'react-router-dom';
 import { Breadcrumb } from 'antd';
 import style from './Product.module.scss';
+import classNames from 'classnames';
 import { getBreadcrumbItems } from '@/components/helpers.ts';
 
 export const CustomBreadcrumbs = () => {
@@ -14,7 +15,7 @@ export const CustomBreadcrumbs = () => {
 
   return (
     <Breadcrumb
-      className={style['single-product__breadcrumb']}
+      className={classNames(style['single-product__breadcrumb'])}
       separator={
         <svg
           width="6"

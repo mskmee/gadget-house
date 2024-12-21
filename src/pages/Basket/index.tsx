@@ -10,8 +10,6 @@ import { SuccessPopUp } from './libs/components/components';
 import { useActions } from '@/hooks/useActions';
 import { SliderNav } from '@/components/SliderNav/SliderNav.tsx';
 import Carousels from '@/components/Carousel/Carousel.tsx';
-import { MyCard } from '@/components/Card/MyCard.tsx';
-import { smartphoneData } from '@/components/Card/constants.ts';
 import Benefits from '@/components/benefitsList/benefits.tsx';
 
 export const BasketPage = () => {
@@ -22,6 +20,8 @@ export const BasketPage = () => {
   const { products, cardTotalAmount, currency, locale } = useTypedSelector(
     (state) => state.shopping_card,
   );
+
+  const isMobile = innerWidth < 768;
 
   const onPopUpClose = () => setIsPopUpOpened(false);
   const handleOrderConfirm = () => {
@@ -71,23 +71,11 @@ export const BasketPage = () => {
       </div>
 
       <SliderNav
-        text="Recommendations for you"
+        text={isMobile ? 'Recommendations' : 'Recommendations for you'}
         link="/smartphones"
-        isVisibleSeeMoreBtn={false}
+        isVisibleSeeMoreBtn={isMobile}
       />
-      <Carousels
-        classname="mobile-carousel"
-        sliderClassName="mobile-slider"
-        countSlideToShow={5}
-      >
-        {Array.from({ length: 8 }, (_, i) => (
-          <MyCard
-            key={`smartphone-${i}`}
-            product={smartphoneData[i % smartphoneData.length]}
-            classname="smartphone"
-          />
-        ))}
-      </Carousels>
+      <Carousels classname="smartphone-carousel"/>
       <Benefits />
     </>
   );
