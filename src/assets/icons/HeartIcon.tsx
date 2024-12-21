@@ -9,16 +9,17 @@ interface IHeartIcon {
 }
 
 export const HeartIcon: FC<IHeartIcon> = ({ onClick, isLiked, type }) => {
-
   return (
     <span
       className={classNames({
         [styles.likedIcon]: isLiked,
         [styles.basketFavoriteIcon]: type === 'basket',
-      })} onClick={(e) => {
-          e.preventDefault();
-          onClick();
-    }}>
+      })}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick();
+      }}
+    >
       <svg
         width="36"
         height="36"
@@ -37,7 +38,7 @@ export const HeartIcon: FC<IHeartIcon> = ({ onClick, isLiked, type }) => {
           fill="#6F4C9A"
         />
       </svg>
-      {type && <span>{isLiked ? 'Remove from': 'Add to'} favorite</span>}
+      {type && <span>{isLiked ? 'Remove from' : 'Add to'} favorite</span>}
     </span>
   );
 };

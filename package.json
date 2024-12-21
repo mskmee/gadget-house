@@ -11,7 +11,8 @@
     "prettify": "prettier --write \"**/*.{ts,tsx,json,md,css,html,js,jsx}\"",
     "lint:css": "npx stylelint \"src/**/*.css\"",
     "lint:js": "npx eslint \"src/**/*.{ts,tsx,js,jsx}\"",
-    "lint": "npm run lint:css && npm run lint:js",
+    "lint:ts": "tsc --noEmit",
+    "lint": "npm run lint:css && npm run lint:js && npm run lint:ts",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -33,6 +34,7 @@
     "react-router-dom": "^6.28.0",
     "react-toastify": "^10.0.5",
     "redux-logger": "^3.0.6",
+    "reselect": "^5.1.1",
     "stylelint": "^16.8.1",
     "stylelint-config-standard": "^36.0.1",
     "stylelint-order": "^6.0.4"
@@ -54,7 +56,7 @@
     "lint-staged": "^15.2.9",
     "prettier": "^3.3.3",
     "sass": "^1.77.8",
-    "typescript": "^5.2.2",
+    "typescript": "^5.5.3",
     "vite": "^5.3.4"
   },
   "optionalDependencies": {

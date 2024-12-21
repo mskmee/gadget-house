@@ -116,7 +116,6 @@ export const FiltersMobile = ({
     });
   }, [selectedOptions, priceRange, minCameraMP, maxCameraMP]);
 
-  // Применение фильтра
   const applyFilter = () => {
     onFilter(filteredProducts);
     toggleDrawer();
@@ -175,7 +174,6 @@ export const FiltersMobile = ({
       </h2>
 
       <div className={styles.filters__wrapper}>
-        {/* Price Range */}
         <Col span={24} className={styles.filters__option}>
           <h4 className={styles.filters__optionName}>Price</h4>
           <Slider
@@ -242,7 +240,6 @@ export const FiltersMobile = ({
           </Row>
         </Col>
 
-        {/* Brands */}
         {filters.brands && (
           <Option
             data={filters.brands ?? []}
@@ -253,7 +250,6 @@ export const FiltersMobile = ({
           />
         )}
 
-        {/* Built-in Memory */}
         {filters.builtInMemory && (
           <Option
             data={filters.builtInMemory ?? []}
@@ -264,7 +260,6 @@ export const FiltersMobile = ({
           />
         )}
 
-        {/* RAM */}
         {filters.rams && (
           <Option
             data={filters.rams ?? []}
@@ -275,7 +270,6 @@ export const FiltersMobile = ({
           />
         )}
 
-        {/* Separate Memory Slot */}
         <Option
           data={['Yes', 'No']}
           title="Separate slot for memory"
@@ -284,7 +278,6 @@ export const FiltersMobile = ({
           optionChange={handleOptionChange}
         />
 
-        {/* Color */}
         {filters.colors && (
           <Option
             data={filters.colors}
@@ -295,7 +288,6 @@ export const FiltersMobile = ({
           />
         )}
 
-        {/* Main Camera */}
         <div className={styles.filters__option}>
           <div
             className={cn(
@@ -374,7 +366,6 @@ export const FiltersMobile = ({
           )}
         </div>
 
-        {/* Number of Cores */}
         {filters.cores && (
           <Option
             data={filters.cores}
@@ -385,7 +376,6 @@ export const FiltersMobile = ({
           />
         )}
 
-        {/* Screen Type */}
         {filters.screens && (
           <Option
             data={filters.screens}

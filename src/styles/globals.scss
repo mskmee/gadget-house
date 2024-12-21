@@ -34,6 +34,43 @@ body {
   --border-color: rgba(57, 98, 232, 0.1);
 }
 
+
+
+button {
+	padding         : 0;
+	margin          : 0;
+	background-color: transparent;
+	border          : none;
+	cursor          : pointer;
+}
+
+a {
+	text-decoration: none;
+	color          : inherit;
+}
+
+ul,
+ol {
+	margin    : 0;
+	padding   : 0;
+	list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+fieldset {
+	margin : 0;
+	padding: 0;
+}
+
+img {
+	max-width: 100%;
+	height   : auto;
+}
+
 .reviews_rate-stars > li,
 .product_rate-stars > li {
   margin-inline-end: 0 !important;
