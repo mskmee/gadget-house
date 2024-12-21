@@ -10,4 +10,8 @@
   --buttons-and-accent-color: #00820d;
   --secondary-background-color: #eae4ee;
   --button-hover-color: #4da856;
+  --button-disabled-color: #dff2e1;
+  --error-color: #f01a1a;
+
+  --black: #000;
 }

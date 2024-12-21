@@ -63,9 +63,11 @@
     font-weight: 500;
     line-height: 36px;
   }
-  button {
+  a {
+    display: block;
     margin-top: 42px;
     padding: 16px 24px;
+    text-align: center;
     color: var(--white-color);
     background-color: var(--green-color);
     border: none;

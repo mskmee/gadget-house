@@ -13,6 +13,7 @@ import { BasketPage } from './pages/Basket';
 import AllProducts from './pages/AllProducts/AllProducts';
 import PhotoVideo from './pages/PhotoVideo/PhotoVideo';
 import Audio from './pages/Audio/Audio';
+import OrderConfirmation from './pages/OrderConfirmation/OrderConfirmation';
 
 export const routes = createBrowserRouter(
   [
@@ -46,6 +47,11 @@ export const routes = createBrowserRouter(
         {
           path: AppRoute.BASKET_PAGE,
           element: <BasketPage />,
+        },
+
+        {
+          path: AppRoute.ORDER,
+          element: <OrderConfirmation />,
         },
       ],
     },
