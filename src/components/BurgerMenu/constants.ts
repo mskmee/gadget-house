@@ -4,13 +4,14 @@ import {
   Smartphone,
   Audio,
   Photo,
-  // Tablet,
-  // Watch,
-  // PC,
-  // TV,
-  // GameConsole,
-  // Kids,
-  // Sale,
+  Tablet,
+  Watch,
+  PC,
+  TV,
+  GameConsole,
+  Kids,
+  Sale,
+  Admin,
 } from '@/assets/constants';
 
 const items = [
@@ -19,18 +20,24 @@ const items = [
   { key: '2', title: 'Laptop', img: Laptop, link: '/laptops' },
   { key: '7', title: 'Audio', img: Audio, link: '/audio' },
   { key: '9', title: 'Photo and video', img: Photo, link: '/photo-video' },
-  // { key: '3', title: 'Tablet', img: Tablet, link: '/tablets' },
-  // { key: '6', title: 'Smart-watch', img: Watch, link: '/smartwatches' },
-  // { key: '4', title: 'PC', img: PC, link: '/pcs' },
-  // { key: '5', title: 'TVs and Multimedia', img: TV, link: '/tvs' },
-  // { key: '8', title: 'Game console', img: GameConsole, link: '/consoles' },
-  // { key: '10', title: 'KIDS', img: Kids, link: '/kids' },
-  // {
-  //   key: '11',
-  //   title: 'SALE',
-  //   img: Sale,
-  //   link: '/sale',
-  // },
+  { key: '3', title: 'Tablet', img: Tablet, link: '/tablets' },
+  { key: '6', title: 'Smart-watch', img: Watch, link: '/smartwatches' },
+  { key: '4', title: 'PC', img: PC, link: '/pcs' },
+  { key: '5', title: 'TVs and Multimedia', img: TV, link: '/tvs' },
+  { key: '8', title: 'Game console', img: GameConsole, link: '/consoles' },
+  { key: '10', title: 'KIDS', img: Kids, link: '/kids' },
+  {
+    key: '11',
+    title: 'SALE',
+    img: Sale,
+    link: '/sale',
+  },
+  {
+    key: '12',
+    title: 'Admin Page',
+    img: Admin,
+    link: '/admin',
+  },
 ];
 
 export default items;

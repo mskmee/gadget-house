@@ -82,3 +82,44 @@
   }
 }
 
+@media (max-width: 1200px){
+  .info {
+    max-width: unset;
+  }
+  .content {
+    flex-direction: column;
+    row-gap: 16px;
+  }
+}
+
+@media (max-width: 768px){
+  .container {
+    padding:16px;
+  }
+  .buttonBack{
+    display: none;
+  }
+  .content {
+    margin-top: unset;
+  }
+}
+
+@media (max-width: 576px) {
+  .info {
+    border-radius: 8px;
+    h3 {
+      position: relative;
+      &:after {
+        content: '';
+        width: 100%;
+        background: #EAE4EE;
+        height: 1px;
+        position: absolute;
+        bottom: -10px;
+      }
+    }
+    button {
+      margin-top: 24px;
+    }
+  }
+}

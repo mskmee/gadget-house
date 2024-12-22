@@ -1,7 +1,6 @@
-@import '@/styles/functions';
+@import "@/styles/functions";
 
 .burgerMenuTop {
-  
   &Item {
     display: flex;
     flex-direction: row;
@@ -27,6 +26,14 @@
       gap: 8px;
       margin-bottom: 8px;
     }
+
+    &Admin {
+      color: var(--buttons-and-accent-color);
+    }
+
+    &Sale {
+      color: var(--error-color);
+    }
   }
 }
 
@@ -41,7 +48,6 @@
 }
 
 .container {
-  width: 420px;
   padding: 24px 20px 3px 24px;
   background-color: #fff;
   border-bottom-left-radius: 20px;
@@ -61,9 +67,51 @@
   padding: 24px 20px 0 24px;
 }
 
-@media (max-width: 1070px) {
-  header {
-    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.08);
-    background: rgb(255, 255, 255);
+.catalogListButtons {
+  display: none;
+}
+@media (max-width: 1450px) {
+  .burgerMenuTopItem {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 1060px) {
+  .container {
+    padding: 24px 10px 3px 14px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .catalogListButtons {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 44px 0 41px 0;
+    position: relative;
+    > a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 48px;
+      height: 48px;
+      background-color: #ffffff;
+      border: 1px solid #eae4ee;
+      border-radius: 12px;
+      cursor: pointer;
+      text-decoration: none;
+      position: relative;
+
+      &:hover {
+        background-color: #4da856;
+        > svg path {
+          stroke: #fff;
+        }
+      }
+
+      &:active {
+        background-color: #00680a;
+      }
+    }
   }
 }

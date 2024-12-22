@@ -1,13 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './SearchResults.module.scss';
 import { useDocumentTitle } from '@/hooks/useDocumentTitle';
-import {
-  Benefits,
-  Carousels,
-  MyCard,
-  SliderNav,
-} from '@/components/components';
-import { laptopData } from '@/components/Card/constants';
+import { Benefits, Carousels, SliderNav } from '@/components/components';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 
@@ -62,19 +56,7 @@ export const SearchResults = () => {
         link="/recommendations"
         isVisibleSeeMoreBtn={false}
       />
-      <Carousels
-        classname="laptop-carousel"
-        sliderClassName="laptop-slider"
-        countSlideToShow={5}
-      >
-        {Array.from({ length: 8 }, (_, i) => (
-          <MyCard
-            key={`laptop-${i}`}
-            product={laptopData[i % laptopData.length]}
-            classname="laptop"
-          />
-        ))}
-      </Carousels>
+      <Carousels classname="laptop-carousel" />
       <Benefits />
     </main>
   );

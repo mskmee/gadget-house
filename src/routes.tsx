@@ -14,6 +14,15 @@ import AllProducts from './pages/AllProducts/AllProducts';
 import PhotoVideo from './pages/PhotoVideo/PhotoVideo';
 import Audio from './pages/Audio/Audio';
 import OrderConfirmation from './pages/OrderConfirmation/OrderConfirmation';
+import NotFound from './pages/NotFound/NotFound';
+import GameConsoles from './pages/GameConsoles/GameConsoles';
+import Kids from './pages/Kids/Kids';
+import PCs from './pages/PCs/PCs';
+import TVs from './pages/TVs/TVs';
+import Tablets from './pages/Tablets/Tablets';
+import SmartWatches from './pages/SmartWatches/SmartWatches';
+import Sale from './pages/Sale/Sale';
+import { AdminPage } from './pages/AdminPage/AdminPage';
 
 export const routes = createBrowserRouter(
   [
@@ -28,6 +37,13 @@ export const routes = createBrowserRouter(
         { path: AppRoute.VIEWED, element: <Viewed /> },
         { path: AppRoute.PHOTO_VIDEO, element: <PhotoVideo /> },
         { path: AppRoute.AUDIO, element: <Audio /> },
+        { path: AppRoute.GAME_CONSOLE, element: <GameConsoles /> },
+        { path: AppRoute.KIDS, element: <Kids /> },
+        { path: AppRoute.PC, element: <PCs /> },
+        { path: AppRoute.TV, element: <TVs /> },
+        { path: AppRoute.TABLET, element: <Tablets /> },
+        { path: AppRoute.WATCH, element: <SmartWatches /> },
+        { path: AppRoute.SALE, element: <Sale /> },
         {
           path: AppRoute.SINGLE_PRODUCT,
           element: <SingleProductPage />,
@@ -52,6 +68,15 @@ export const routes = createBrowserRouter(
         {
           path: AppRoute.ORDER,
           element: <OrderConfirmation />,
+        },
+        {
+          path: AppRoute.ADMIN_PAGE,
+          element: <AdminPage />,
+        },
+
+        {
+          path: '*',
+          element: <NotFound />,
         },
       ],
     },

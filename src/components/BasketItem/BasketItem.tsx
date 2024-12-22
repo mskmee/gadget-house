@@ -1,6 +1,6 @@
 import styles from './basketitem.module.scss';
 import { IShoppingCard } from '@/interfaces/interfaces.ts';
-import { deleteFromBasket } from '@/assets/constants.ts';
+import { deleteFromBasket, deleteFromBasketMob } from '@/assets/constants.ts';
 import { HeartIcon } from '@/assets/icons/HeartIcon.tsx';
 import { useProductCardHandlers } from '@/hooks/useProductCardHandlers.ts';
 import { useActions } from '@/hooks/useActions.ts';
@@ -27,8 +27,17 @@ export default function BasketItem({ product }: IBasketItemProps) {
         <p className={styles.productCode}>code:{code}</p>
         <span className={styles.productBottom}>
           <button onClick={() => deleteFromStore(id)}>
-            <img src={deleteFromBasket} alt="delete" />
-            Delete
+            <img
+              className={styles.productRemove}
+              src={deleteFromBasket}
+              alt="delete"
+            />
+            <img
+              className={styles.productRemoveMob}
+              src={deleteFromBasketMob}
+              alt="delete"
+            />
+            <span>Delete</span>
           </button>
           <HeartIcon
             onClick={handleClickLike}

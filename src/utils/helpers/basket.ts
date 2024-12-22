@@ -10,7 +10,6 @@ const calculateItemTotalPrice = (quantity: number, price: string): number => {
 };
 
 const calculateCartTotalPrice = (products: IShoppingCard[]): number => {
-  console.log(products);
   return products.reduce(
     (total, item) => total + item.quantity * convertPriceToNumber(item.price),
     0,

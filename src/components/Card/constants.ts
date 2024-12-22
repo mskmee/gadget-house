@@ -19,6 +19,7 @@ import {
   previouslyViewed_1,
   previouslyViewed_2,
   previouslyViewed_3,
+  previouslyViewed_4,
 } from '@/assets/constants';
 
 export const smartphoneData = [
@@ -156,7 +157,7 @@ export const productAccessoriesData = [
     rate: 5,
     price: '2 799',
     code: '874364',
-    category: 'smartphone'
+    category: 'smartphone',
   },
   {
     id: 2,
@@ -167,7 +168,7 @@ export const productAccessoriesData = [
     rate: 5,
     price: '2 799',
     code: '875496',
-    category: 'smartphone'
+    category: 'smartphone',
   },
   {
     id: 3,
@@ -178,7 +179,7 @@ export const productAccessoriesData = [
     rate: 5,
     price: '2 799',
     code: '456158',
-    category: 'smartphone'
+    category: 'smartphone',
   },
   {
     id: 4,
@@ -189,7 +190,7 @@ export const productAccessoriesData = [
     rate: 5,
     price: '2 799',
     code: '557769',
-    category: 'smartphone'
+    category: 'smartphone',
   },
   {
     id: 5,
@@ -200,7 +201,7 @@ export const productAccessoriesData = [
     rate: 3,
     price: '3 199',
     code: '173497',
-    category: 'smartphone'
+    category: 'smartphone',
   },
   {
     id: 6,
@@ -211,7 +212,7 @@ export const productAccessoriesData = [
     rate: 4,
     price: '2 835',
     code: '157781',
-    category: 'smartphone'
+    category: 'smartphone',
   },
 ];
 
@@ -238,18 +239,18 @@ export const previouslyReviewedData = [
   },
   {
     id: 3,
-    title: 'Apple iPhone 15 128Gb Blue',
-    img: smartphoneImg_4,
-    price: '39 999',
-    code: '456158',
+    title: 'Nikon Coolpix P950 Black',
+    img: previouslyViewed_3,
+    price: '41 999',
+    code: '6235478',
     rate: 5,
-    anotherColors: ['#FFFF00', '#00820D', '#1C1817', '#FFCBDB', '#00BFFF'],
+    anotherColors: [],
     isLiked: false,
   },
   {
     id: 4,
     title: 'Fujifilm INSTAX MINI 12 Lilac Purple',
-    img: previouslyViewed_3,
+    img: previouslyViewed_4,
     price: '3 900',
     code: '557769',
     rate: 5,
@@ -257,5 +258,3 @@ export const previouslyReviewedData = [
     isLiked: false,
   },
 ];
-
-
