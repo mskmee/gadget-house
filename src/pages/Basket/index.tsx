@@ -21,6 +21,8 @@ export const BasketPage = () => {
 
   const isMobile = innerWidth < 768;
 
+  const isMobile = innerWidth < 768;
+
   const onPopUpClose = () => setIsPopUpOpened(false);
 
   return (
@@ -69,7 +71,7 @@ export const BasketPage = () => {
         link="/smartphones"
         isVisibleSeeMoreBtn={isMobile}
       />
-      <Carousels classname="smartphone-carousel"/>
+      <Carousels classname="smartphone-carousel" />
       <Benefits />
     </>
   );

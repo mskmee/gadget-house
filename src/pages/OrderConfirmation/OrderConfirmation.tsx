@@ -69,6 +69,8 @@ const OrderConfirmation: React.FC = () => {
 
     setPaymentMethod('');
 
+    setAcceptWithRules(false);
+
     setCurrentTab(1);
   };
 
@@ -194,44 +196,50 @@ const OrderConfirmation: React.FC = () => {
               <div className={styles.order__tabContent}>
                 {currentTab === 1 ? (
                   <>
-                    <input
-                      type="text"
-                      placeholder="Full Name"
-                      name="fullName"
-                      className={styles.order__input}
-                      value={contactData.fullName}
-                      onChange={handleInputChange}
-                      required
-                    />
-                    {errors.fullName && (
-                      <p className={styles.order__error}>{errors.fullName}</p>
-                    )}
+                    <label className={styles.order__label} htmlFor="">
+                      <input
+                        type="text"
+                        placeholder="Full Name"
+                        name="fullName"
+                        className={styles.order__input}
+                        value={contactData.fullName}
+                        onChange={handleInputChange}
+                        required
+                      />
+                      {errors.fullName && (
+                        <p className={styles.order__error}>{errors.fullName}</p>
+                      )}
+                    </label>
 
-                    <input
-                      type="tel"
-                      placeholder="Phone number"
-                      name="phone"
-                      className={styles.order__input}
-                      value={contactData.phone}
-                      onChange={handleInputChange}
-                      required
-                    />
-                    {errors.phone && (
-                      <p className={styles.order__error}>{errors.phone}</p>
-                    )}
+                    <label className={styles.order__label} htmlFor="">
+                      <input
+                        type="tel"
+                        placeholder="Phone number"
+                        name="phone"
+                        className={styles.order__input}
+                        value={contactData.phone}
+                        onChange={handleInputChange}
+                        required
+                      />
+                      {errors.phone && (
+                        <p className={styles.order__error}>{errors.phone}</p>
+                      )}
+                    </label>
 
-                    <input
-                      type="email"
-                      name="email"
-                      placeholder="E-mail"
-                      className={styles.order__input}
-                      value={contactData.email}
-                      onChange={handleInputChange}
-                      required
-                    />
-                    {errors.email && (
-                      <p className={styles.order__error}>{errors.email}</p>
-                    )}
+                    <label className={styles.order__label} htmlFor="">
+                      <input
+                        type="email"
+                        name="email"
+                        placeholder="E-mail"
+                        className={styles.order__input}
+                        value={contactData.email}
+                        onChange={handleInputChange}
+                        required
+                      />
+                      {errors.email && (
+                        <p className={styles.order__error}>{errors.email}</p>
+                      )}
+                    </label>
 
                     <textarea
                       placeholder="Comment"
@@ -332,57 +340,69 @@ const OrderConfirmation: React.FC = () => {
                       <span className={styles.order__radioSpan}>UkrPoshta</span>
                     </label>
 
-                    <input
-                      type="text"
-                      placeholder="City"
-                      name="city"
-                      className={styles.order__input}
-                      value={deliveryData.city}
-                      onChange={handleInputChange}
-                      required
-                    />
-                    {errors.city && (
-                      <p className={styles.order__error}>{errors.city}</p>
-                    )}
-
-                    <input
-                      type="text"
-                      name="street"
-                      placeholder="Street"
-                      className={styles.order__input}
-                      value={deliveryData.street}
-                      onChange={handleInputChange}
-                      required
-                    />
-                    {errors.street && (
-                      <p className={styles.order__error}>{errors.street}</p>
-                    )}
-
-                    <div className={styles.order__address}>
+                    <label className={styles.order__label} htmlFor="">
                       <input
                         type="text"
-                        name="floor"
-                        placeholder="Floor"
+                        placeholder="City"
+                        name="city"
                         className={styles.order__input}
-                        value={deliveryData.floor}
+                        value={deliveryData.city}
                         onChange={handleInputChange}
+                        required
                       />
-                      {errors.floor && (
-                        <p className={styles.order__error}>{errors.floor}</p>
+                      {errors.city && (
+                        <p className={styles.order__error}>{errors.city}</p>
                       )}
+                    </label>
 
+                    <label className={styles.order__label} htmlFor="">
                       <input
                         type="text"
-                        name="flat"
-                        placeholder="Flat number"
+                        name="street"
+                        placeholder="Street"
                         className={styles.order__input}
-                        value={deliveryData.flat}
+                        value={deliveryData.street}
                         onChange={handleInputChange}
+                        required
                       />
-                      {errors.flat && (
-                        <p className={styles.order__error}>{errors.flat}</p>
+                      {errors.street && (
+                        <p className={styles.order__error}>{errors.street}</p>
                       )}
-                    </div>
+                    </label>
+
+                    {deliveryData.method === 'courier' ? (
+                      <div className={styles.order__address}>
+                        <label className={styles.order__label} htmlFor="">
+                          <input
+                            type="text"
+                            name="floor"
+                            placeholder="Floor"
+                            className={styles.order__input}
+                            value={deliveryData.floor}
+                            onChange={handleInputChange}
+                          />
+                          {errors.floor && (
+                            <p className={styles.order__error}>
+                              {errors.floor}
+                            </p>
+                          )}
+                        </label>
+
+                        <label className={styles.order__label} htmlFor="">
+                          <input
+                            type="text"
+                            name="flat"
+                            placeholder="Flat number"
+                            className={styles.order__input}
+                            value={deliveryData.flat}
+                            onChange={handleInputChange}
+                          />
+                          {errors.flat && (
+                            <p className={styles.order__error}>{errors.flat}</p>
+                          )}
+                        </label>
+                      </div>
+                    ) : null}
 
                     <button
                       onClick={handleNext}
@@ -605,7 +625,7 @@ const OrderConfirmation: React.FC = () => {
               <button
                 className={cn(styles.order__button, styles.order__confirm)}
                 disabled={!isOrderReady || !acceptWithRules}
-                onClick={handleOrderConfirm}
+                onSubmit={handleOrderConfirm}
               >
                 Confirm the order
               </button>

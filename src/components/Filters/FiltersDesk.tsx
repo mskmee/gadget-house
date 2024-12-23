@@ -223,7 +223,7 @@ export const FiltersDesk = () => {
 
           <Option
             data={['Yes', 'No']}
-            title="Separate slot for memory"
+            title="Separate slot for&nbsp;memory"
             option="memorySlot"
             btnMore={false}
             optionChange={handleOptionChange}

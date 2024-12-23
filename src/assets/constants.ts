@@ -66,7 +66,10 @@ import DeleteHover from './icons/delete-hover.svg';
 import Radio from './icons/radio.svg';
 import RadioChecked from './icons/radio-checked.svg';
 import CheckMark from './icons/checkmark.svg';
-import { BasketIcon } from './icons/BasketIcon'
+import deleteFromBasketMob from './icons/delete-from-basket-mobile.svg';
+import Robot404 from './icons/robot-404.svg';
+import Admin from './icons/admin.svg';
+import {BasketIcon} from './icons/BasketIcon';
 
 export {
   Admin,
@@ -140,4 +143,5 @@ export {
   Delete,
   DeleteHover,
   CheckMark,
+  deleteFromBasketMob,
 };

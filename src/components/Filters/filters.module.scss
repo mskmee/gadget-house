@@ -245,7 +245,7 @@
           width: 14px;
           height: 14px;
           background-color: var(--buttons-and-accent-color);
-          box-shadow: 0 0 0 2px var(--buttons-and-accent-color);
+          box-shadow: none;
         }
 
         &::before {
@@ -271,7 +271,8 @@
           }
 
           &::after {
-            box-shadow: 0 0 0 2px var(--buttons-and-accent-color);
+            box-shadow: none;
+            outline: none;
           }
         }
       }
@@ -416,7 +417,7 @@
   }
 
   .ant-slider:hover .ant-slider-handle::after {
-    box-shadow: 0 0 0 2px var(--buttons-and-accent-color);
+    box-shadow: none;
     inset-inline-start: 0px;
     inset-block-start: 0px;
     outline: none;

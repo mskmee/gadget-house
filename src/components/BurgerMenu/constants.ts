@@ -11,7 +11,6 @@ import {
   GameConsole,
   Kids,
   Sale,
-  Admin,
 } from '@/assets/constants';
 
 const items = [
@@ -31,12 +30,6 @@ const items = [
     title: 'SALE',
     img: Sale,
     link: '/sale',
-  },
-  {
-    key: '12',
-    title: 'Admin Page',
-    img: Admin,
-    link: '/admin',
   },
 ];
 

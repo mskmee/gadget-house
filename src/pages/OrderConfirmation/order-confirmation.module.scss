@@ -119,6 +119,22 @@
     }
   }
 
+  &__label {
+    position: relative;
+    height: 100%;
+  }
+
+  &__error {
+    position: absolute;
+    bottom: -40px;
+    left: 0;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    color: var(--error-color);
+  }
+
   &__radio {
     display: flex;
     align-items: center;
