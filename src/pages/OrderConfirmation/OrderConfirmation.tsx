@@ -7,11 +7,20 @@ import { useActions } from '@/hooks/useActions';
 import { SuccessPopUp } from './SuccessPopUp';
 
 import styles from './order-confirmation.module.scss';
+import { OrderStage } from './libs/enums/order-stage';
+import { ContactsForm } from './libs/components/components';
+import { ContactsFormDto } from './libs/types/contacts-form-dto.type';
+import { CONTACTS_FORM_INITIAL_VALUE } from './libs/constants/contacts-form-initial-value';
 
 const OrderConfirmation: React.FC = () => {
   const [isOrderReady, setIsOrderReady] = useState(false);
   const [acceptWithRules, setAcceptWithRules] = useState(false);
-  const [currentTab, setCurrentTab] = useState(1);
+  const [contactsFormValue, setContactsFormValue] = useState<ContactsFormDto>(
+    CONTACTS_FORM_INITIAL_VALUE,
+  );
+  const [orderProcessStage, setOrderProcessStage] = useState<OrderStage>(
+    OrderStage.CONTACTS,
+  );
   const [isPopUpOpened, setIsPopUpOpened] = useState(false);
   const { clearCart } = useActions();
   const [contactData, setContactData] = useState({
@@ -69,7 +78,7 @@ const OrderConfirmation: React.FC = () => {
 
     setPaymentMethod('');
 
-    setCurrentTab(1);
+    setOrderProcessStage(OrderStage.DELIVERY);
   };
 
   const validateFields = (name: string, value: string) => {
@@ -95,10 +104,10 @@ const OrderConfirmation: React.FC = () => {
     }
   };
 
-  const handleEdit = (tab: number) => setCurrentTab(tab);
+  const handleEdit = (tab: number) => setOrderProcessStage(tab);
 
   const handleNext = () => {
-    setCurrentTab((prev) => prev + 1);
+    setOrderProcessStage((prev) => prev + 1);
   };
 
   const handleInputChange = (
@@ -111,9 +120,9 @@ const OrderConfirmation: React.FC = () => {
       [name]: validateFields(name, value),
     }));
 
-    if (currentTab === 1) {
+    if (orderProcessStage === 1) {
       setContactData({ ...contactData, [name]: value });
-    } else if (currentTab === 2) {
+    } else if (orderProcessStage === 2) {
       setDeliveryData({ ...deliveryData, [name]: value });
     }
   };
@@ -122,7 +131,7 @@ const OrderConfirmation: React.FC = () => {
 
   const handleDone = () => {
     setIsOrderReady(true);
-    setCurrentTab(4);
+    setOrderProcessStage(OrderStage.DONE);
   };
 
   const onPopUpClose = () => setIsPopUpOpened(false);
@@ -147,14 +156,23 @@ const OrderConfirmation: React.FC = () => {
     setPaymentMethod(e.target.value);
   };
 
+  const handleContactsFormSubmit = (data: ContactsFormDto) => {
+    setContactsFormValue(data);
+    setOrderProcessStage(OrderStage.DELIVERY);
+  };
+
   return (
     <section className={styles.order}>
       <SuccessPopUp isOpened={isPopUpOpened} onClose={onPopUpClose} />
 
       <div className={cn('container', styles.order__container)}>
         <h2 className={styles.order__title}>Order сonfirmation</h2>
-
-        <div className={styles.order__content}>
+        <ContactsForm
+          stage={orderProcessStage}
+          onSubmit={handleContactsFormSubmit}
+          initialValues={contactsFormValue}
+        />
+        {/* <div className={styles.order__content}>
           <div className={styles.order__tabs}>
             <div className={styles.order__tab}>
               <div className={styles.order__tabHeader}>
@@ -549,70 +567,70 @@ const OrderConfirmation: React.FC = () => {
                   </article>
                 </li>
               ))}
-            </ul>
+            </ul> */}
 
-            <div className={styles.order__total}>
-              <div className={styles.order__totalWrapper}>
-                <p>
-                  Sum
-                  <span>
-                    {convertPriceToReadable(cardTotalAmount, currency, locale)}
-                  </span>
-                </p>
-              </div>
-
-              <div className={styles.order__totalWrapper}>
-                <p>
-                  Discount <span>0 ₴</span>
-                </p>
-              </div>
-
-              <div className={styles.order__totalWrapper}>
-                <p>
-                  Delivery
-                  <span>0 ₴</span>
-                </p>
-              </div>
-
-              <div
-                className={cn(
-                  styles.order__totalWrapper,
-                  styles.order__totalWrapperInTotal,
-                )}
-              >
-                <p>
-                  In total
-                  <span>
-                    {convertPriceToReadable(cardTotalAmount, currency, locale)}
-                  </span>
-                </p>
-              </div>
-
-              <label className={styles.order__agreement}>
-                <input
-                  className={styles.order__agreementInput}
-                  type="checkbox"
-                  name="agreement"
-                  id="agreement"
-                  onChange={toggleAcceptWithRules}
-                />
-                <span className={styles.order__agreementIcon}></span>
-                <span className={styles.order__agreementText}>
-                  I agree to the processing of my personal data
-                </span>
-              </label>
-
-              <button
-                className={cn(styles.order__button, styles.order__confirm)}
-                disabled={!isOrderReady || !acceptWithRules}
-                onClick={handleOrderConfirm}
-              >
-                Confirm the order
-              </button>
-            </div>
+        <div className={styles.order__total}>
+          <div className={styles.order__totalWrapper}>
+            <p>
+              Sum
+              <span>
+                {convertPriceToReadable(cardTotalAmount, currency, locale)}
+              </span>
+            </p>
           </div>
+
+          <div className={styles.order__totalWrapper}>
+            <p>
+              Discount <span>0 ₴</span>
+            </p>
+          </div>
+
+          <div className={styles.order__totalWrapper}>
+            <p>
+              Delivery
+              <span>0 ₴</span>
+            </p>
+          </div>
+
+          <div
+            className={cn(
+              styles.order__totalWrapper,
+              styles.order__totalWrapperInTotal,
+            )}
+          >
+            <p>
+              In total
+              <span>
+                {convertPriceToReadable(cardTotalAmount, currency, locale)}
+              </span>
+            </p>
+          </div>
+
+          <label className={styles.order__agreement}>
+            <input
+              className={styles.order__agreementInput}
+              type="checkbox"
+              name="agreement"
+              id="agreement"
+              onChange={toggleAcceptWithRules}
+            />
+            <span className={styles.order__agreementIcon}></span>
+            <span className={styles.order__agreementText}>
+              I agree to the processing of my personal data
+            </span>
+          </label>
+
+          <button
+            className={cn(styles.order__button, styles.order__confirm)}
+            disabled={!isOrderReady || !acceptWithRules}
+            onClick={handleOrderConfirm}
+          >
+            Confirm the order
+          </button>
         </div>
       </div>
+      {/* </div> */}
+      {/* </div> */}
     </section>
   );
 };
