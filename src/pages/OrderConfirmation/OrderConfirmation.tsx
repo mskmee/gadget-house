@@ -13,7 +13,7 @@ import { ContactsFormDto } from './libs/types/contacts-form-dto.type';
 import { CONTACTS_FORM_INITIAL_VALUE } from './libs/constants/contacts-form-initial-value';
 
 const OrderConfirmation: React.FC = () => {
-  const [isOrderReady, setIsOrderReady] = useState(false);
+  const [isOrderReady] = useState(false);
   const [acceptWithRules, setAcceptWithRules] = useState(false);
   const [contactsFormValue, setContactsFormValue] = useState<ContactsFormDto>(
     CONTACTS_FORM_INITIAL_VALUE,
@@ -23,32 +23,32 @@ const OrderConfirmation: React.FC = () => {
   );
   const [isPopUpOpened, setIsPopUpOpened] = useState(false);
   const { clearCart } = useActions();
-  const [contactData, setContactData] = useState({
-    fullName: '',
-    phone: '',
-    email: '',
-    comment: '',
-  });
-  const [deliveryData, setDeliveryData] = useState({
-    method: '',
-    city: '',
-    street: '',
-    floor: '',
-    flat: '',
-  });
-  const [paymentMethod, setPaymentMethod] = useState('');
-  const [errors, setErrors] = useState({
-    fullName: '',
-    phone: '',
-    email: '',
-    city: '',
-    street: '',
-    floor: '',
-    flat: '',
-  });
+  // const [contactData, setContactData] = useState({
+  //   fullName: '',
+  //   phone: '',
+  //   email: '',
+  //   comment: '',
+  // });
+  // const [deliveryData, setDeliveryData] = useState({
+  //   method: '',
+  //   city: '',
+  //   street: '',
+  //   floor: '',
+  //   flat: '',
+  // });
+  // const [paymentMethod, setPaymentMethod] = useState('');
+  // const [errors, setErrors] = useState({
+  //   fullName: '',
+  //   phone: '',
+  //   email: '',
+  //   city: '',
+  //   street: '',
+  //   floor: '',
+  //   flat: '',
+  // });
 
-  const { deleteFromStore, increaseItemQuantity, decreaseItemQuantity } =
-    useActions();
+  // const { deleteFromStore, increaseItemQuantity, decreaseItemQuantity } =
+  //   useActions();
 
   const { products, cardTotalAmount, currency, locale } = useTypedSelector(
     (state) => state.shopping_card,
@@ -61,78 +61,63 @@ const OrderConfirmation: React.FC = () => {
   }, [products]);
 
   const resetOrderData = () => {
-    setContactData({
-      fullName: '',
-      phone: '',
-      email: '',
-      comment: '',
-    });
-
-    setDeliveryData({
-      method: '',
-      city: '',
-      street: '',
-      floor: '',
-      flat: '',
-    });
-
-    setPaymentMethod('');
-
+    // You can use use dispatch to combine few set actions into one action
+    setContactsFormValue(CONTACTS_FORM_INITIAL_VALUE);
     setOrderProcessStage(OrderStage.DELIVERY);
   };
 
-  const validateFields = (name: string, value: string) => {
-    switch (name) {
-      case 'fullName':
-        return value.trim() === '' ? 'Full name is required' : '';
-      case 'phone':
-        return /^\+?[0-9]{10,13}$/.test(value)
-          ? ''
-          : 'Enter a valid phone number';
-      case 'email':
-        return /\S+@\S+\.\S+/.test(value) ? '' : 'Enter a valid email address';
-      case 'city':
-        return value.trim() === '' ? 'City is required' : '';
-      case 'street':
-        return value.trim() === '' ? 'Street is required' : '';
-      case 'floor':
-        return value.trim() === '' ? 'Floor is required' : '';
-      case 'flat':
-        return value.trim() === '' ? 'Flat is required' : '';
-      default:
-        return '';
-    }
-  };
+  // const validateFields = (name: string, value: string) => {
+  //   switch (name) {
+  //     case 'fullName':
+  //       return value.trim() === '' ? 'Full name is required' : '';
+  //     case 'phone':
+  //       return /^\+?[0-9]{10,13}$/.test(value)
+  //         ? ''
+  //         : 'Enter a valid phone number';
+  //     case 'email':
+  //       return /\S+@\S+\.\S+/.test(value) ? '' : 'Enter a valid email address';
+  //     case 'city':
+  //       return value.trim() === '' ? 'City is required' : '';
+  //     case 'street':
+  //       return value.trim() === '' ? 'Street is required' : '';
+  //     case 'floor':
+  //       return value.trim() === '' ? 'Floor is required' : '';
+  //     case 'flat':
+  //       return value.trim() === '' ? 'Flat is required' : '';
+  //     default:
+  //       return '';
+  //   }
+  // };
 
-  const handleEdit = (tab: number) => setOrderProcessStage(tab);
+  // const handleEdit = (tab: number) => setOrderProcessStage(tab);
 
-  const handleNext = () => {
-    setOrderProcessStage((prev) => prev + 1);
-  };
+  // const handleNext = () => {
+  //   setOrderProcessStage((prev) => prev + 1);
+  // };
 
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    const { name, value } = e.target;
+  // const handleInputChange = (
+  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  // ) => {
+  //   const { name, value } = e.target;
 
-    setErrors((prevErrors) => ({
-      ...prevErrors,
-      [name]: validateFields(name, value),
-    }));
+  //   setErrors((prevErrors) => ({
+  //     ...prevErrors,
+  //     [name]: validateFields(name, value),
+  //   }));
 
-    if (orderProcessStage === 1) {
-      setContactData({ ...contactData, [name]: value });
-    } else if (orderProcessStage === 2) {
-      setDeliveryData({ ...deliveryData, [name]: value });
-    }
-  };
+  //   if (orderProcessStage === 1) {
+  //     setContactData({ ...contactData, [name]: value });
+  //   } else if (orderProcessStage === 2) {
+  //     setDeliveryData({ ...deliveryData, [name]: value });
+  //   }
+  // };
 
-  const toggleAcceptWithRules = () => setAcceptWithRules(!acceptWithRules);
+  const toggleAcceptWithRules = () => setAcceptWithRules((prev) => !prev);
 
-  const handleDone = () => {
-    setIsOrderReady(true);
-    setOrderProcessStage(OrderStage.DONE);
-  };
+  // const handleDone = () => {
+  //   setIsOrderReady(true);
+  //   setOrderProcessStage(OrderStage.DONE);
+  // };
 
   const onPopUpClose = () => setIsPopUpOpened(false);
 
@@ -141,20 +126,20 @@ const OrderConfirmation: React.FC = () => {
     clearCart();
   };
 
-  const handleDeliveryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+  // const handleDeliveryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { name, value } = e.target;
 
-    if (name === 'delivery') {
-      setDeliveryData((prev) => ({
-        ...prev,
-        method: value,
-      }));
-    }
-  };
+  //   if (name === 'delivery') {
+  //     setDeliveryData((prev) => ({
+  //       ...prev,
+  //       method: value,
+  //     }));
+  //   }
+  // };
 
-  const handlePaymentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPaymentMethod(e.target.value);
-  };
+  // const handlePaymentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setPaymentMethod(e.target.value);
+  // };
 
   const handleContactsFormSubmit = (data: ContactsFormDto) => {
     setContactsFormValue(data);
