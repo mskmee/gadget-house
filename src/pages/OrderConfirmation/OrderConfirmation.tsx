@@ -1,28 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import cn from 'classnames';
 
 import { convertPriceToReadable } from '@/utils/helpers/product';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
-import { useActions } from '@/hooks/useActions';
 import { SuccessPopUp } from './SuccessPopUp';
 
 import styles from './order-confirmation.module.scss';
-import { OrderStage } from './libs/enums/order-stage';
 import { ContactsForm } from './libs/components/components';
-import { ContactsFormDto } from './libs/types/contacts-form-dto.type';
-import { CONTACTS_FORM_INITIAL_VALUE } from './libs/constants/contacts-form-initial-value';
+import { useOrderConfirmation } from './libs/hooks/hooks';
 
 const OrderConfirmation: React.FC = () => {
-  const [isOrderReady] = useState(false);
-  const [acceptWithRules, setAcceptWithRules] = useState(false);
-  const [contactsFormValue, setContactsFormValue] = useState<ContactsFormDto>(
-    CONTACTS_FORM_INITIAL_VALUE,
-  );
-  const [orderProcessStage, setOrderProcessStage] = useState<OrderStage>(
-    OrderStage.CONTACTS,
-  );
-  const [isPopUpOpened, setIsPopUpOpened] = useState(false);
-  const { clearCart } = useActions();
+  const {
+    orderProcessStage,
+    onContactsFormSubmit,
+    onResetOrderProcess,
+    contactsFormValue,
+    onOrderConfirmed,
+    onSuccessPopUpClose,
+    isSuccessPopUpOpen,
+    isRulesAccepted,
+    isOrderReady,
+    onToggleRules,
+  } = useOrderConfirmation();
+
   // const [contactData, setContactData] = useState({
   //   fullName: '',
   //   phone: '',
@@ -56,15 +56,9 @@ const OrderConfirmation: React.FC = () => {
 
   useEffect(() => {
     if (products.length === 0) {
-      resetOrderData();
+      onResetOrderProcess();
     }
-  }, [products]);
-
-  const resetOrderData = () => {
-    // You can use use dispatch to combine few set actions into one action
-    setContactsFormValue(CONTACTS_FORM_INITIAL_VALUE);
-    setOrderProcessStage(OrderStage.DELIVERY);
-  };
+  }, [onResetOrderProcess, products]);
 
   // const validateFields = (name: string, value: string) => {
   //   switch (name) {
@@ -112,19 +106,10 @@ const OrderConfirmation: React.FC = () => {
   //   }
   // };
 
-  const toggleAcceptWithRules = () => setAcceptWithRules((prev) => !prev);
-
   // const handleDone = () => {
   //   setIsOrderReady(true);
   //   setOrderProcessStage(OrderStage.DONE);
   // };
-
-  const onPopUpClose = () => setIsPopUpOpened(false);
-
-  const handleOrderConfirm = () => {
-    setIsPopUpOpened(true);
-    clearCart();
-  };
 
   // const handleDeliveryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   //   const { name, value } = e.target;
@@ -141,20 +126,18 @@ const OrderConfirmation: React.FC = () => {
   //   setPaymentMethod(e.target.value);
   // };
 
-  const handleContactsFormSubmit = (data: ContactsFormDto) => {
-    setContactsFormValue(data);
-    setOrderProcessStage(OrderStage.DELIVERY);
-  };
-
   return (
     <section className={styles.order}>
-      <SuccessPopUp isOpened={isPopUpOpened} onClose={onPopUpClose} />
+      <SuccessPopUp
+        isOpened={isSuccessPopUpOpen}
+        onClose={onSuccessPopUpClose}
+      />
 
       <div className={cn('container', styles.order__container)}>
         <h2 className={styles.order__title}>Order сonfirmation</h2>
         <ContactsForm
           stage={orderProcessStage}
-          onSubmit={handleContactsFormSubmit}
+          onSubmit={onContactsFormSubmit}
           initialValues={contactsFormValue}
         />
         {/* <div className={styles.order__content}>
@@ -597,7 +580,7 @@ const OrderConfirmation: React.FC = () => {
               type="checkbox"
               name="agreement"
               id="agreement"
-              onChange={toggleAcceptWithRules}
+              onChange={onToggleRules}
             />
             <span className={styles.order__agreementIcon}></span>
             <span className={styles.order__agreementText}>
@@ -607,8 +590,8 @@ const OrderConfirmation: React.FC = () => {
 
           <button
             className={cn(styles.order__button, styles.order__confirm)}
-            disabled={!isOrderReady || !acceptWithRules}
-            onClick={handleOrderConfirm}
+            disabled={!isOrderReady || !isRulesAccepted}
+            onClick={onOrderConfirmed}
           >
             Confirm the order
           </button>
