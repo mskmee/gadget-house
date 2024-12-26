@@ -1,0 +1,122 @@
+.formInput {
+  position: relative;
+  width: 100%;
+
+  &__input {
+    width: 100%;
+
+    span {
+      position: absolute;
+      top: -9px;
+      left: 19px;
+      display: none;
+      padding: 0 3px;
+      font-family: "Inter", sans-serif;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 150%;
+      color: var(--text-color);
+      background-color: var(--bg-color);
+      z-index: 5;
+      transition: display 0.3s ease;
+    }
+
+    input,
+    textarea {
+      display: inline-block;
+      width: 100%;
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid var(--secondary-text-color);
+      outline: none;
+      background-color: transparent;
+      font-family: "Inter", sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 150%;
+      color: var(--text-color);
+
+      &:active,
+      &:focus,
+      &:focus-visible {
+        border: 1px solid var(--secondary-text-color);
+        outline: none;
+        box-shadow: none;
+        background-color: transparent;
+      }
+
+      &::placeholder {
+        color: var(--secondary-text-color);
+        opacity: 1;
+        transition: opacity 0.3s ease;
+      }
+
+      &:focus::placeholder {
+        opacity: 0;
+      }
+    }
+
+    textarea {
+      min-height: 126px;
+      resize: none;
+    }
+
+    :global {
+      .ant-input-outlined:hover {
+        border-color: var(--secondary-text-color);
+        outline: none;
+        background-color: transparent;
+      }
+    }
+  }
+
+  &__radio {
+    input {
+      width: 18px;
+      height: 18px;
+      outline: none;
+      border: none;
+      appearance: none;
+      cursor: pointer;
+
+      &::before {
+        content: "";
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        background-image: url("../../../assets/icons/radio.svg");
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: contain;
+        transition: all 0.3s ease-in-out;
+      }
+
+      &:checked::before {
+        background-image: url("../../../assets/icons/radio-checked.svg");
+      }
+    }
+
+    span {
+      display: inline-block;
+      margin-left: 12px;
+      font-family: "Inter", sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 150%;
+      color: var(--text-color);
+      cursor: pointer;
+    }
+  }
+
+  &__error {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 9px;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    color: var(--error-color);
+  }
+}

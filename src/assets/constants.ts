@@ -69,6 +69,7 @@ import CheckMark from './icons/checkmark.svg';
 import deleteFromBasketMob from './icons/delete-from-basket-mobile.svg';
 import Robot404 from './icons/robot-404.svg';
 import Admin from './icons/admin.svg';
+import ErrorIcon from './icons/error-icon.svg';
 import {BasketIcon} from './icons/BasketIcon';
 
 export {
@@ -136,6 +137,7 @@ export {
   basketPhoneImg,
   searchInputClear,
   deleteFromBasket,
+  ErrorIcon,
   Edit,
   EditHover,
   Radio,

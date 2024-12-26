@@ -144,7 +144,7 @@ const shoppingCard_slice = createSlice({
           let itemTotalPrice = +priceRes * quantity;
           totalAmount.total += itemTotalPrice;
           totalAmount.quantity += quantity;
-          console.log(totalAmount);
+          
           return totalAmount;
         },
         {

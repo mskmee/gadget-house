@@ -6,15 +6,24 @@ import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { SuccessPopUp } from './SuccessPopUp';
 
 import styles from './order-confirmation.module.scss';
-import { ContactsForm } from './libs/components/components';
+import {
+  ContactsForm,
+  DeliveryForm,
+  PaymentForm,
+} from './libs/components/components';
 import { useOrderConfirmation } from './libs/hooks/hooks';
+import { useActions } from '@/hooks/useActions';
 
 const OrderConfirmation: React.FC = () => {
   const {
     orderProcessStage,
     onContactsFormSubmit,
+    onDeliveryFormSubmit,
+    onPaymentFormSubmit,
     onResetOrderProcess,
     contactsFormValue,
+    deliveryFormValue,
+    paymentFormValue,
     onOrderConfirmed,
     onSuccessPopUpClose,
     isSuccessPopUpOpen,
@@ -23,32 +32,8 @@ const OrderConfirmation: React.FC = () => {
     onToggleRules,
   } = useOrderConfirmation();
 
-  // const [contactData, setContactData] = useState({
-  //   fullName: '',
-  //   phone: '',
-  //   email: '',
-  //   comment: '',
-  // });
-  // const [deliveryData, setDeliveryData] = useState({
-  //   method: '',
-  //   city: '',
-  //   street: '',
-  //   floor: '',
-  //   flat: '',
-  // });
-  // const [paymentMethod, setPaymentMethod] = useState('');
-  // const [errors, setErrors] = useState({
-  //   fullName: '',
-  //   phone: '',
-  //   email: '',
-  //   city: '',
-  //   street: '',
-  //   floor: '',
-  //   flat: '',
-  // });
-
-  // const { deleteFromStore, increaseItemQuantity, decreaseItemQuantity } =
-  //   useActions();
+  const { deleteFromStore, increaseItemQuantity, decreaseItemQuantity } =
+    useActions();
 
   const { products, cardTotalAmount, currency, locale } = useTypedSelector(
     (state) => state.shopping_card,
@@ -60,72 +45,6 @@ const OrderConfirmation: React.FC = () => {
     }
   }, [onResetOrderProcess, products]);
 
-  // const validateFields = (name: string, value: string) => {
-  //   switch (name) {
-  //     case 'fullName':
-  //       return value.trim() === '' ? 'Full name is required' : '';
-  //     case 'phone':
-  //       return /^\+?[0-9]{10,13}$/.test(value)
-  //         ? ''
-  //         : 'Enter a valid phone number';
-  //     case 'email':
-  //       return /\S+@\S+\.\S+/.test(value) ? '' : 'Enter a valid email address';
-  //     case 'city':
-  //       return value.trim() === '' ? 'City is required' : '';
-  //     case 'street':
-  //       return value.trim() === '' ? 'Street is required' : '';
-  //     case 'floor':
-  //       return value.trim() === '' ? 'Floor is required' : '';
-  //     case 'flat':
-  //       return value.trim() === '' ? 'Flat is required' : '';
-  //     default:
-  //       return '';
-  //   }
-  // };
-
-  // const handleEdit = (tab: number) => setOrderProcessStage(tab);
-
-  // const handleNext = () => {
-  //   setOrderProcessStage((prev) => prev + 1);
-  // };
-
-  // const handleInputChange = (
-  //   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  // ) => {
-  //   const { name, value } = e.target;
-
-  //   setErrors((prevErrors) => ({
-  //     ...prevErrors,
-  //     [name]: validateFields(name, value),
-  //   }));
-
-  //   if (orderProcessStage === 1) {
-  //     setContactData({ ...contactData, [name]: value });
-  //   } else if (orderProcessStage === 2) {
-  //     setDeliveryData({ ...deliveryData, [name]: value });
-  //   }
-  // };
-
-  // const handleDone = () => {
-  //   setIsOrderReady(true);
-  //   setOrderProcessStage(OrderStage.DONE);
-  // };
-
-  // const handleDeliveryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value } = e.target;
-
-  //   if (name === 'delivery') {
-  //     setDeliveryData((prev) => ({
-  //       ...prev,
-  //       method: value,
-  //     }));
-  //   }
-  // };
-
-  // const handlePaymentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setPaymentMethod(e.target.value);
-  // };
-
   return (
     <section className={styles.order}>
       <SuccessPopUp
@@ -135,48 +54,151 @@ const OrderConfirmation: React.FC = () => {
 
       <div className={cn('container', styles.order__container)}>
         <h2 className={styles.order__title}>Order сonfirmation</h2>
-        <ContactsForm
-          stage={orderProcessStage}
-          onSubmit={onContactsFormSubmit}
-          initialValues={contactsFormValue}
-        />
-        {/* <div className={styles.order__content}>
+
+        <div className={styles.order__content}>
           <div className={styles.order__tabs}>
-            <div className={styles.order__tab}>
-              <div className={styles.order__tabHeader}>
-                <div className={styles.order__tabHeaderText}>
-                  {currentTab > 1 ? (
-                    <div className={styles.order__tabCheckMark}>
-                      <svg
-                        width="22"
-                        height="20"
-                        viewBox="0 0 22 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M5 11L9.33364 15L18 7"
-                          stroke="white"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
+            <ContactsForm
+              stage={orderProcessStage}
+              onSubmit={onContactsFormSubmit}
+              initialValues={contactsFormValue}
+            />
+
+            <DeliveryForm
+              stage={orderProcessStage}
+              onSubmit={onDeliveryFormSubmit}
+              initialValues={deliveryFormValue}
+            />
+
+            <PaymentForm
+              stage={orderProcessStage}
+              onSubmit={onPaymentFormSubmit}
+              initialValues={paymentFormValue}
+            />
+          </div>
+
+          <div className={styles.order__items}>
+            <ul className={styles.order__itemsList}>
+              {products.map((product) => (
+                <li className={styles.order__item} key={product.id}>
+                  <article className={styles.order__itemWrapper}>
+                    <div className={styles.order__itemImage}>
+                      <img
+                        src={product.img}
+                        alt={product.title}
+                        width={100}
+                        height={100}
+                      />
                     </div>
-                  ) : (
-                    <div className={styles.order__tabNumber}>1</div>
-                  )}
-                  <h2 className={styles.order__tabTitle}>Contacts</h2>
-                </div>
-                {currentTab > 1 && (
-                  <button
-                    onClick={() => handleEdit(1)}
-                    className={styles.order__tabBtnEdit}
-                  >
-                    Edit
-                  </button>
-                )}
+
+                    <div className={styles.order__itemInfo}>
+                      <div className={styles.order__itemHeader}>
+                        <h4 className={styles.order__itemTitle}>
+                          {product.title}
+                        </h4>
+
+                        <button
+                          className={styles.order__itemDelete}
+                          type="button"
+                          onClick={() => deleteFromStore(product.id)}
+                        ></button>
+                      </div>
+
+                      <p className={styles.order__itemCode}>
+                        code: {product.code}
+                      </p>
+
+                      <div className={styles.order__itemFooter}>
+                        <div className={styles.order__itemQuantity}>
+                          <button
+                            onClick={() => decreaseItemQuantity(product.id)}
+                          >
+                            -
+                          </button>
+                          <p>{product.quantity}</p>
+                          <button
+                            onClick={() => increaseItemQuantity(product.id)}
+                          >
+                            +
+                          </button>
+                        </div>
+
+                        <p className={styles.order__itemPrice}>
+                          {convertPriceToReadable(
+                            product.totalPrice,
+                            currency,
+                            locale,
+                          )}
+                        </p>
+                      </div>
+                    </div>
+                  </article>
+                </li>
+              ))}
+            </ul>
+
+            <div className={styles.order__total}>
+              <div className={styles.order__totalWrapper}>
+                <p>
+                  Sum
+                  <span>
+                    {convertPriceToReadable(cardTotalAmount, currency, locale)}
+                  </span>
+                </p>
               </div>
+
+              <div className={styles.order__totalWrapper}>
+                <p>
+                  Discount <span>0 ₴</span>
+                </p>
+              </div>
+
+              <div className={styles.order__totalWrapper}>
+                <p>
+                  Delivery
+                  <span>0 ₴</span>
+                </p>
+              </div>
+
+              <div
+                className={cn(
+                  styles.order__totalWrapper,
+                  styles.order__totalWrapperInTotal,
+                )}
+              >
+                <p>
+                  In total
+                  <span>
+                    {convertPriceToReadable(cardTotalAmount, currency, locale)}
+                  </span>
+                </p>
+              </div>
+
+              <label className={styles.order__agreement}>
+                <input
+                  className={styles.order__agreementInput}
+                  type="checkbox"
+                  name="agreement"
+                  id="agreement"
+                  onChange={onToggleRules}
+                />
+                <span className={styles.order__agreementIcon}></span>
+                <span className={styles.order__agreementText}>
+                  I agree to the processing of my personal data
+                </span>
+              </label>
+
+              <button
+                className={cn('button button-secondary')}
+                disabled={!isOrderReady || !isRulesAccepted}
+                onClick={onOrderConfirmed}
+              >
+                Confirm the order
+              </button>
+            </div>
+          </div>
+          {/* <div className={styles.order__content}>
+          <div className={styles.order__tabs}>
+            
               <div className={styles.order__tabContent}>
                 {currentTab === 1 ? (
                   <>
@@ -477,128 +499,9 @@ const OrderConfirmation: React.FC = () => {
             </div>
           </div>
 
-          <div className={styles.order__items}>
-            <ul className={styles.order__itemsList}>
-              {products.map((product) => (
-                <li className={styles.order__item} key={product.id}>
-                  <article className={styles.order__itemWrapper}>
-                    <div className={styles.order__itemImage}>
-                      <img
-                        src={product.img}
-                        alt={product.title}
-                        width={100}
-                        height={100}
-                      />
-                    </div>
-
-                    <div className={styles.order__itemInfo}>
-                      <div className={styles.order__itemHeader}>
-                        <h4 className={styles.order__itemTitle}>
-                          {product.title}
-                        </h4>
-
-                        <button
-                          className={styles.order__itemDelete}
-                          type="button"
-                          onClick={() => deleteFromStore(product.id)}
-                        ></button>
-                      </div>
-
-                      <p className={styles.order__itemCode}>
-                        code: {product.code}
-                      </p>
-
-                      <div className={styles.order__itemFooter}>
-                        <div className={styles.order__itemQuantity}>
-                          <button
-                            onClick={() => decreaseItemQuantity(product.id)}
-                          >
-                            -
-                          </button>
-                          <p>{product.quantity}</p>
-                          <button
-                            onClick={() => increaseItemQuantity(product.id)}
-                          >
-                            +
-                          </button>
-                        </div>
-
-                        <p className={styles.order__itemPrice}>
-                          {convertPriceToReadable(
-                            product.totalPrice,
-                            currency,
-                            locale,
-                          )}
-                        </p>
-                      </div>
-                    </div>
-                  </article>
-                </li>
-              ))}
-            </ul> */}
-
-        <div className={styles.order__total}>
-          <div className={styles.order__totalWrapper}>
-            <p>
-              Sum
-              <span>
-                {convertPriceToReadable(cardTotalAmount, currency, locale)}
-              </span>
-            </p>
-          </div>
-
-          <div className={styles.order__totalWrapper}>
-            <p>
-              Discount <span>0 ₴</span>
-            </p>
-          </div>
-
-          <div className={styles.order__totalWrapper}>
-            <p>
-              Delivery
-              <span>0 ₴</span>
-            </p>
-          </div>
-
-          <div
-            className={cn(
-              styles.order__totalWrapper,
-              styles.order__totalWrapperInTotal,
-            )}
-          >
-            <p>
-              In total
-              <span>
-                {convertPriceToReadable(cardTotalAmount, currency, locale)}
-              </span>
-            </p>
-          </div>
-
-          <label className={styles.order__agreement}>
-            <input
-              className={styles.order__agreementInput}
-              type="checkbox"
-              name="agreement"
-              id="agreement"
-              onChange={onToggleRules}
-            />
-            <span className={styles.order__agreementIcon}></span>
-            <span className={styles.order__agreementText}>
-              I agree to the processing of my personal data
-            </span>
-          </label>
-
-          <button
-            className={cn(styles.order__button, styles.order__confirm)}
-            disabled={!isOrderReady || !isRulesAccepted}
-            onClick={onOrderConfirmed}
-          >
-            Confirm the order
-          </button>
+           */}
         </div>
       </div>
-      {/* </div> */}
-      {/* </div> */}
     </section>
   );
 };

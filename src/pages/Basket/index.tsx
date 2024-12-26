@@ -21,8 +21,6 @@ export const BasketPage = () => {
 
   const isMobile = innerWidth < 768;
 
-  const isMobile = innerWidth < 768;
-
   const onPopUpClose = () => setIsPopUpOpened(false);
 
   return (

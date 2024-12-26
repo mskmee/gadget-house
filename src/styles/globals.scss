@@ -85,6 +85,69 @@ img {
   }
 }
 
+.button {
+  display: inline-block;
+  padding: 16px 32px;
+  border-radius: 12px;
+  border: 2px solid var(--buttons-and-accent-color);
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 150%;
+  transition: all 0.3s ease-in-out;
+
+  &-primary {
+    width: 100px;
+    color: var(--buttons-and-accent-color);
+    background-color: transparent;
+
+    &:hover,
+    &:focus,
+    &:focus-visible {
+      background-color: var(--buttons-and-accent-color);
+      color: var(--white-color);
+    }
+
+    &:active {
+      background-color: var(--green-active-color);
+      color: var(--white-color);
+    }
+
+    &:disabled {
+      background-color: var(--button-disabled-color);
+      color: var(--white-color);
+    }
+  }
+
+  &-secondary {
+    width: 100%;
+    background-color: var(--buttons-and-accent-color);
+    color: var(--white-color);
+
+    &:hover,
+    &:focus,
+    &:focus-visible {
+      border-color: var(--button-hover-color);
+      background-color: var(--button-hover-color);
+    }
+
+    &:active {
+      border-color: var(--green-active-color);
+      background-color: var(--green-active-color);
+    }
+
+    &:disabled {
+      border-color: var(--button-disabled-color);
+      background-color: var(--button-disabled-color);
+    }
+  }
+}
+
+.visually-hidden {
+	position : fixed;
+	transform: scale(0);
+}
+
 .reviews_rate-stars > li,
 .product_rate-stars > li {
   margin-inline-end: 0 !important;
