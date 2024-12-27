@@ -1,10 +1,17 @@
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import cn from 'classnames';
 
 import { Robot404 } from '@/assets/constants';
 
 import styles from './not-found.module.scss';
 
 export default function NotFound() {
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
+  };
+
   return (
     <div className={styles.notFound}>
       <div className={styles.notFound__container}>
@@ -19,9 +26,12 @@ export default function NotFound() {
               Uh oh, We can&#039;t find the page that you&#039;re looking for
             </p>
 
-            <Link to="/" className={styles.notFound__link}>
+            <button
+              onClick={goBack}
+              className={cn('button', styles.notFound__link)}
+            >
               Go Back
-            </Link>
+            </button>
           </div>
 
           <div className={styles.notFound__right}>
