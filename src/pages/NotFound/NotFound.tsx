@@ -4,12 +4,16 @@ import cn from 'classnames';
 import { Robot404 } from '@/assets/constants';
 
 import styles from './not-found.module.scss';
+import { AppRoute } from '@/enums/Route';
 
 export default function NotFound() {
   const navigate = useNavigate();
 
   const goBack = () => {
-    navigate(-1);
+    if (window.history.length > 1) {
+      return navigate(-1);
+    }
+    navigate(AppRoute.ROOT);
   };
 
   return (
