@@ -5,6 +5,7 @@ import CatalogIcon from './icons/catalog-icon.svg';
 import BurgerMenuIcon from './icons/burger-menu-icon.svg';
 import RightArrow from './icons/arrow-right.svg';
 import LeftArrow from './icons/arrow-left.svg';
+import AllProducts from './icons/all-products.svg';
 import Smartphone from './icons/smartphone.svg';
 import Tablet from './icons/tablet.svg';
 import Laptop from './icons/laptop.svg';
@@ -58,17 +59,23 @@ import headphones from './images/basket-products-img/headphones.png';
 import basketPhoneImg from './images/basket-products-img/phone.png';
 import searchInputClear from './icons/search_input_clear.svg';
 import deleteFromBasket from './icons/delete-from-basket.svg';
-import { BasketIcon } from './icons/BasketIcon';
+import deleteFromBasketMob from './icons/delete-from-basket-mobile.svg';
+import Robot404 from './icons/robot-404.svg';
+import Admin from './icons/admin.svg';
+import {BasketIcon} from './icons/BasketIcon'
 
 export {
+  Admin,
   BasketIcon,
   RightArrowSlider,
+  Robot404,
   Vector,
   RightArrowSliderClick,
   CatalogIcon,
   BurgerMenuIcon,
   RightArrow,
   LeftArrow,
+  AllProducts,
   Smartphone,
   Laptop,
   Watch,
@@ -122,4 +129,5 @@ export {
   basketPhoneImg,
   searchInputClear,
   deleteFromBasket,
+  deleteFromBasketMob,
 };

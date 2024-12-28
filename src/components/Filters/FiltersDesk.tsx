@@ -122,237 +122,234 @@ export const FiltersDesk = () => {
 
   return (
     <aside className={styles.filtersDesk}>
-      <h2 className={styles.filtersDesk__title}>Filters</h2>
+      <div className={styles.filtersDesk__wrapper}>
+        <h2 className={styles.filtersDesk__title}>Filters</h2>
 
-      <div className={styles.filters__wrapper}>
-        {/* Price Range */}
-        <Col span={24} className={styles.filters__option}>
-          <h4 className={styles.filters__optionName}>Price</h4>
-          <Slider
-            range
-            min={0}
-            max={100000}
-            value={priceRange}
-            onChange={handleSliderChange}
-            className={styles.filters__sliderRange}
-          />
-
-          <Row gutter={16}>
-            <Col span={13} style={{ paddingLeft: '6px' }}>
-              <span className={styles.filters__priceText}>From</span>
-              <InputNumber
-                min={0}
-                max={99999}
-                value={minPrice}
-                controls={false}
-                onChange={handleMinPriceChange}
-                inputMode="numeric"
-                stringMode={false}
-                onKeyDown={handleKeyDown}
-                style={{
-                  fontFamily: 'Inter, sans-serif',
-                  width: '75px',
-                  border: '1px solid #1c1817',
-                  borderRadius: '10px',
-                  padding: '4px 0px',
-                  backgroundColor: 'white',
-                  fontSize: '16px',
-                  color: '#1c1817',
-                  textAlign: 'center',
-                }}
-              />
-              <span className={styles.filters__priceCurrency}>₴</span>
-            </Col>
-
-            <Col span={11} style={{ paddingLeft: '0px' }}>
-              <span className={styles.filters__priceText}>To</span>
-              <InputNumber
-                min={51}
-                max={100000}
-                value={maxPrice}
-                controls={false}
-                onChange={handleMaxPriceChange}
-                inputMode="numeric"
-                stringMode={false}
-                onKeyDown={handleKeyDown}
-                style={{
-                  width: '75px',
-                  border: '1px solid #1c1817',
-                  borderRadius: '10px',
-                  padding: '4px 0px',
-                  backgroundColor: 'white',
-                  fontFamily: 'Inter, sans-serif',
-                  fontSize: '16px',
-                  color: '#1c1817',
-                }}
-              />
-              <span className={styles.filters__priceCurrency}>₴</span>
-            </Col>
-          </Row>
-        </Col>
-
-        {/* Brands */}
-        {filters.brands && (
-          <Option
-            data={filters.brands ?? []}
-            option="brands"
-            title="Brand"
-            btnMore={true}
-            optionChange={handleOptionChange}
-          />
-        )}
-
-        {/* Built-in Memory */}
-        {filters.builtInMemory && (
-          <Option
-            data={filters.builtInMemory ?? []}
-            title="Built-in memory"
-            option="builtInMemory"
-            btnMore={true}
-            optionChange={handleOptionChange}
-          />
-        )}
-
-        {/* RAM */}
-        {filters.rams && (
-          <Option
-            data={filters.rams ?? []}
-            title="RAM"
-            option="rams"
-            btnMore={true}
-            optionChange={handleOptionChange}
-          />
-        )}
-
-        {/* Separate Memory Slot */}
-        <Option
-          data={['Yes', 'No']}
-          title="Separate slot for memory"
-          option="memorySlot"
-          btnMore={false}
-          optionChange={handleOptionChange}
-        />
-
-        {/* Color */}
-        {filters.colors && (
-          <Option
-            data={filters.colors}
-            title="Color"
-            option="colors"
-            btnMore={true}
-            optionChange={handleOptionChange}
-          />
-        )}
-
-        {/* Main Camera */}
-        <div className={styles.filters__option}>
-          <div
-            className={cn(
-              styles.filters__optionHeader,
-              !showCategory && styles.hide,
-            )}
-            onClick={toggleShowCategory}
-          >
-            <h4 className={styles.filters__optionName}>Main camera, MP</h4>
-
-            <img
-              src={ArrowUpSvg}
-              alt="Arrow Up Icon"
-              className={cn(
-                styles.filters__optionArrow,
-                !showCategory && styles.arrowDown,
-              )}
+        <div className={styles.filters__wrapper}>
+          <Col span={24} className={styles.filters__option}>
+            <h4 className={styles.filters__optionName}>Price</h4>
+            <Slider
+              range
+              min={0}
+              max={100000}
+              value={priceRange}
+              onChange={handleSliderChange}
+              className={styles.filters__sliderRange}
             />
-          </div>
-          {showCategory && (
+
             <Row gutter={16}>
-              <Col span={12} className={styles.filters__camera}>
+              <Col span={13} style={{ paddingLeft: '6px' }}>
                 <span className={styles.filters__priceText}>From</span>
                 <InputNumber
                   min={0}
-                  max={644}
-                  value={minCameraMP}
-                  defaultValue={0}
+                  max={99999}
+                  maxLength={5}
+                  value={minPrice}
                   controls={false}
-                  onChange={handleMinMPChange}
+                  onChange={handleMinPriceChange}
                   inputMode="numeric"
                   stringMode={false}
                   onKeyDown={handleKeyDown}
                   style={{
-                    width: '74px',
-                    height: '40px',
+                    fontFamily: 'Inter, sans-serif',
+                    width: '75px',
                     border: '1px solid #1c1817',
                     borderRadius: '10px',
-                    padding: '1px 1px',
+                    padding: '4px 0px',
                     backgroundColor: 'white',
-                    fontFamily: 'Inter, sans-serif',
                     fontSize: '16px',
                     color: '#1c1817',
                     textAlign: 'center',
                   }}
                 />
+                <span className={styles.filters__priceCurrency}>₴</span>
               </Col>
-              <Col span={12} className={styles.filters__camera}>
+
+              <Col span={11} style={{ paddingLeft: '0px' }}>
                 <span className={styles.filters__priceText}>To</span>
                 <InputNumber
-                  min={0}
-                  max={644}
-                  value={maxCameraMP}
-                  defaultValue={0}
+                  min={51}
+                  max={100000}
+                  maxLength={6}
+                  value={maxPrice}
                   controls={false}
-                  onChange={handleMaxMPChange}
+                  onChange={handleMaxPriceChange}
                   inputMode="numeric"
                   stringMode={false}
                   onKeyDown={handleKeyDown}
                   style={{
-                    width: '74px',
-                    height: '40px',
+                    width: '75px',
                     border: '1px solid #1c1817',
                     borderRadius: '10px',
-                    padding: '1px 1px',
+                    padding: '4px 0px',
                     backgroundColor: 'white',
                     fontFamily: 'Inter, sans-serif',
                     fontSize: '16px',
                     color: '#1c1817',
-                    textAlign: 'center',
                   }}
                 />
+                <span className={styles.filters__priceCurrency}>₴</span>
               </Col>
             </Row>
-          )}
-        </div>
+          </Col>
 
-        {/* Number of Cores */}
-        {filters.cores && (
+          {filters.brands && (
+            <Option
+              data={filters.brands ?? []}
+              option="brands"
+              title="Brand"
+              btnMore={true}
+              optionChange={handleOptionChange}
+            />
+          )}
+
+          {filters.builtInMemory && (
+            <Option
+              data={filters.builtInMemory ?? []}
+              title="Built-in memory"
+              option="builtInMemory"
+              btnMore={true}
+              optionChange={handleOptionChange}
+            />
+          )}
+
+          {filters.rams && (
+            <Option
+              data={filters.rams ?? []}
+              title="RAM"
+              option="rams"
+              btnMore={true}
+              optionChange={handleOptionChange}
+            />
+          )}
+
           <Option
-            data={filters.cores}
-            title="Number of cores"
-            option="cores"
+            data={['Yes', 'No']}
+            title="Separate slot for&nbsp;memory"
+            option="memorySlot"
             btnMore={false}
             optionChange={handleOptionChange}
           />
-        )}
 
-        {/* Screen Type */}
-        {filters.screens && (
-          <Option
-            data={filters.screens}
-            title="Screen type"
-            option="screens"
-            btnMore={true}
-            optionChange={handleOptionChange}
-          />
-        )}
+          {filters.colors && (
+            <Option
+              data={filters.colors}
+              title="Color"
+              option="colors"
+              btnMore={true}
+              optionChange={handleOptionChange}
+            />
+          )}
+
+          <div className={styles.filters__option}>
+            <div
+              className={cn(
+                styles.filters__optionHeader,
+                !showCategory && styles.hide,
+              )}
+              onClick={toggleShowCategory}
+            >
+              <h4 className={styles.filters__optionName}>Main camera, MP</h4>
+
+              <img
+                src={ArrowUpSvg}
+                alt="Arrow Up Icon"
+                className={cn(
+                  styles.filters__optionArrow,
+                  !showCategory && styles.arrowDown,
+                )}
+              />
+            </div>
+            {showCategory && (
+              <Row gutter={16}>
+                <Col span={12} className={styles.filters__camera}>
+                  <span className={styles.filters__priceText}>From</span>
+                  <InputNumber
+                    min={0}
+                    max={644}
+                    maxLength={3}
+                    value={minCameraMP}
+                    defaultValue={0}
+                    controls={false}
+                    onChange={handleMinMPChange}
+                    inputMode="numeric"
+                    stringMode={false}
+                    onKeyDown={handleKeyDown}
+                    style={{
+                      width: '74px',
+                      height: '40px',
+                      border: '1px solid #1c1817',
+                      borderRadius: '10px',
+                      padding: '1px 1px',
+                      backgroundColor: 'white',
+                      fontFamily: 'Inter, sans-serif',
+                      fontSize: '16px',
+                      color: '#1c1817',
+                      textAlign: 'center',
+                    }}
+                  />
+                </Col>
+                <Col span={12} className={styles.filters__camera}>
+                  <span className={styles.filters__priceText}>To</span>
+                  <InputNumber
+                    min={0}
+                    max={644}
+                    maxLength={3}
+                    value={maxCameraMP}
+                    defaultValue={0}
+                    controls={false}
+                    onChange={handleMaxMPChange}
+                    inputMode="numeric"
+                    stringMode={false}
+                    onKeyDown={handleKeyDown}
+                    style={{
+                      width: '74px',
+                      height: '40px',
+                      border: '1px solid #1c1817',
+                      borderRadius: '10px',
+                      padding: '1px 1px',
+                      backgroundColor: 'white',
+                      fontFamily: 'Inter, sans-serif',
+                      fontSize: '16px',
+                      color: '#1c1817',
+                      textAlign: 'center',
+                    }}
+                  />
+                </Col>
+              </Row>
+            )}
+          </div>
+
+          {filters.cores && (
+            <Option
+              data={filters.cores}
+              title="Number of cores"
+              option="cores"
+              btnMore={false}
+              optionChange={handleOptionChange}
+            />
+          )}
+
+          {filters.screens && (
+            <Option
+              data={filters.screens}
+              title="Screen type"
+              option="screens"
+              btnMore={true}
+              optionChange={handleOptionChange}
+            />
+          )}
+        </div>
+
+        <button
+          className={styles.filters__apply}
+          type="submit"
+          onClick={() => handleFilter()}
+          disabled={!selectedOptions}
+        >
+          Apply
+        </button>
       </div>
-
-      <button
-        className={styles.filters__apply}
-        type="submit"
-        onClick={() => handleFilter()}
-        disabled={!selectedOptions}
-      >
-        Apply
-      </button>
     </aside>
   );
 };

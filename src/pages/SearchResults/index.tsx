@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import styles from './SearchResults.module.scss';
 import { useDocumentTitle } from '@/hooks/useDocumentTitle';
+
 import { Benefits, Carousels, SliderNav } from '@/components/components';
+
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 
@@ -58,6 +60,7 @@ export const SearchResults = () => {
         link="/recommendations"
         isVisibleSeeMoreBtn={false}
       />
+
       <Carousels classname="laptop-carousel" />
 
       <Benefits />

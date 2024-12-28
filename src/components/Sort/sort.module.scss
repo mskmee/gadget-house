@@ -101,6 +101,18 @@
     }
   }
 
+  &__arrow {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    margin-left: 4px;
+    margin-right: 0 !important;
+
+    &.arrowDown {
+      transform: rotate(180deg);
+    }
+  }
+
   &__radio {
     position: relative;
     display: flex;

@@ -39,6 +39,9 @@
     > ol > li:nth-last-child(2) svg path {
       stroke: #1c1817;
     }
+    @media (max-width: 567px) {
+      display: none;
+    }
   }
   &__menu {
     max-width: 1440px;

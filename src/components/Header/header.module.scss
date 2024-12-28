@@ -74,6 +74,9 @@
       line-height: 150%;
       color: var(--white-color);
     }
+    > img {
+      max-width: initial;
+    }
   }
   &Catalog__active {
     cursor: pointer;
