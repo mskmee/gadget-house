@@ -128,11 +128,10 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({ classname }) => {
           {Array.from(
             { length: classname === 'brands-carousel' ? 10 : 8 },
             (_, i) => (
-              <>
+              <div key={crypto.randomUUID()}>
                 {classname === 'brands-carousel' ? (
                   <BrandCard
                     width={itemWidth}
-                    key={`brand-${i}`}
                     product={brandData[i % brandData.length]}
                   />
                 ) : classname === 'photos-carousel' ? (
@@ -147,11 +146,6 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({ classname }) => {
                 ) : (
                   <MyCard
                     width={itemWidth}
-                    key={
-                      classname === 'laptop-carousel'
-                        ? `laptop-${i}`
-                        : `smartphone-${i}`
-                    }
                     product={
                       classname === 'laptop-carousel'
                         ? laptopData[i % laptopData.length]
@@ -170,7 +164,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({ classname }) => {
                     }
                   />
                 )}
-              </>
+              </div>
             ),
           )}
         </div>

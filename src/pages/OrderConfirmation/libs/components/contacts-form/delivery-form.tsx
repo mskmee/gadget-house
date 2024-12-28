@@ -6,7 +6,7 @@ import { DeliveryFormDto } from '../../types/types';
 import { OrderStage } from '../../enums/enums';
 import { FormInput } from '@/components/components';
 import { FormRadioInput } from '@/components/common/radio-input/radio-input';
-import { deliveryFormValidationSchema } from '../../validation-schemas/contacts-form-validation-schema';
+// import { deliveryFormValidationSchema } from '../../validation-schemas/contacts-form-validation-schema';
 
 import styles from './form.module.scss';
 
@@ -30,7 +30,7 @@ export const DeliveryForm: FC<Properties> = ({
   onSubmit,
   stage,
 }) => {
-  const isActive = stage === OrderStage.CONTACTS;
+  const isActive = stage === OrderStage.DELIVERY;
   const [value, setValue] = useState(1);
 
   const onChange = (e: RadioChangeEvent) => {
@@ -53,13 +53,15 @@ export const DeliveryForm: FC<Properties> = ({
         initialValues={initialValues}
         validateOnBlur={false}
         validateOnChange={false}
-        validationSchema={deliveryFormValidationSchema}
+        // validationSchema={deliveryFormValidationSchema}
+        //TODO: Check validation schema
         onSubmit={(values) => {
           onSubmit(values);
         }}
       >
         <Form className={styles.form__form}>
           <Radio.Group
+            //TODO: create and use enum Delivery method
             className={styles.form__radioGroup}
             onChange={onChange}
             value={value}
@@ -70,6 +72,7 @@ export const DeliveryForm: FC<Properties> = ({
                 type="radio"
                 label="By courier"
                 value="courier"
+                id="courier"
               />
 
               <FormRadioInput
@@ -77,12 +80,14 @@ export const DeliveryForm: FC<Properties> = ({
                 type="radio"
                 label="Nova Poshta"
                 value="novaposhta"
+                id="novaposhta"
               />
 
               <FormRadioInput
                 name="delivery"
                 label="UkrPoshta"
                 value="ukrposhta"
+                id="ukrposhta"
               />
             </Space>
           </Radio.Group>
