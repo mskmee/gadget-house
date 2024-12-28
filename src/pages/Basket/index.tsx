@@ -75,7 +75,7 @@ export const BasketPage = () => {
         link="/smartphones"
         isVisibleSeeMoreBtn={isMobile}
       />
-      <Carousels classname="smartphone-carousel"/>
+      <Carousels classname="smartphone-carousel" />
       <Benefits />
     </>
   );

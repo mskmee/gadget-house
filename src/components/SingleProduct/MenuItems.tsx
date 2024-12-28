@@ -1,14 +1,7 @@
 import { FC, useRef, useState } from 'react';
 import style from './Product.module.scss';
 import classNames from 'classnames';
-
-const menuItems = [
-  { id: 1, title: 'About the product', href: '#product' },
-  { id: 2, title: 'Characteristics', href: '#product-characteristics' },
-  { id: 3, title: 'Reviews', href: '#product-reviews' },
-  { id: 4, title: 'Photos', href: '#product-photos' },
-  { id: 5, title: 'Accessories', href: '#product-accessories' },
-];
+import { menuItems } from '@/constants/singleProduct';
 
 export const MenuItems: FC = () => {
   const [selectedMenu, setSelectedMenu] = useState('About the product');
@@ -27,7 +20,7 @@ export const MenuItems: FC = () => {
   return (
     <section className={classNames(style['single-product__menu'])}>
       <ul>
-        {menuItems?.map((item) => (
+        {menuItems.map((item) => (
           <li
             className={
               item?.title === selectedMenu ? 'menu-item active' : 'menu-item'

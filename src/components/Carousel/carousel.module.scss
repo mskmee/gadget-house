@@ -1,47 +1,9 @@
-/* .smartphone-carousel,
-.laptop-carousel,
-.viewed-carousel {
-  box-sizing: border-box;
-  margin: 24px auto 0 auto;
-  max-width: 1540px;
-  padding: 0 50px;
-  > div {
-    padding: 50px 50px 24px 50px;
-    background-color: var(--carousel-theme-color);
-    border-radius: 20px;
-  }
-}
-
-.brands-carousel {
-  box-sizing: border-box;
-  margin: 48px auto 0 auto;
-  max-width: 1540px;
-  padding: 0 50px;
-  div {
-    background-color: var(--bg-color);
-    > div:last-child div button {
-      background-color: #fff;
-    }
-  }
-}
-.photos-carousel {
-  margin-top: 24px;
-  padding: 0;
-  > div:last-child {
-    margin-top: 40px;
-    margin-right: 40px;
-    div button {
-      background-color: #fff;
-    }
-  }
-} */
-
 .carousel {
   display: flex;
   flex-direction: column;
   gap: 24px;
   position: relative;
-  padding: 50px 40px 24px 40px;
+  padding: 50px 40px 80px 40px;
   max-width: 1440px;
   margin: 0 auto;
   background-color: #eae4ee;
@@ -49,7 +11,6 @@
   .trackContainer {
     padding: 0 10px;
     overflow: hidden;
-    position: relative;
   }
 
   .track {
@@ -76,8 +37,9 @@
 }
 .slider-buttons {
   display: flex;
-  justify-content: end;
-  margin-top: 24px;
+  position: absolute;
+  right: 50px;
+  bottom: 24px;
   padding: 0 10px;
 }
 
@@ -153,11 +115,7 @@
 
 @media (max-width: 1440px) {
   .carousel {
-    padding: 50px 50px 24px 50px;
     border-radius: 0;
-    .trackContainer {
-      padding: 0;
-    }
     .slider-buttons {
       padding: 0;
     }
@@ -176,7 +134,11 @@
 }
 @media screen and (max-width: 1250px) {
   .carousel {
-    padding: 50px 20px 24px 20px;
+    padding: 50px 10px 80px 10px;
+  }
+  .slider-buttons {
+    right: 20px;
+    bottom: 24px;
   }
 }
 
@@ -203,7 +165,7 @@
 
 @media screen and (max-width: 768px) {
   .carousel {
-    padding: 16px 20px;
+    padding: 16px 10px;
   }
   .slider-buttons {
     display: none;
@@ -240,7 +202,7 @@
 
 @media screen and (max-width: 450px) {
   .carousel {
-    padding: 16px 16px 7px 16px;
+    padding: 16px 6px 7px 6px;
   }
   .brands-carousel {
     padding: 24px 16px 7px 16px;

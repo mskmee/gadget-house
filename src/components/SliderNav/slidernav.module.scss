@@ -22,6 +22,7 @@
   margin-top: -7px;
   text-decoration: none;
   cursor: pointer;
+  border-bottom: 2px solid #00820d;
 }
 
 span {
@@ -56,12 +57,15 @@ span {
   border: 0.5px solid #6f4c9a;
 }
 
+@media screen and (max-width: 1250px) {
+  .sliderText {
+    padding: 0 20px;
+  }
+}
+
 @media (width <= 1024px) {
   /* For screens smaller than 1024px */
   .sliderText {
-    justify-content: space-between;
-    padding-right: 24px;
-    padding-left: 24px;
     margin: 36px auto 18px auto;
     h2 {
       font-size: 30px;
@@ -73,8 +77,9 @@ span {
 }
 @media screen and (max-width: 768px) {
   .sliderText {
+    justify-content: space-between;
     margin: 24px auto 21px auto;
-    padding: 0 16px;
+
     h2 {
       font-size: 24px;
     }
@@ -87,12 +92,31 @@ span {
 
 @media screen and (max-width: 450px) {
   .sliderText {
+    padding: 0 16px;
     h2 {
-      font-size: 20px;
+      font-size: 24px;
     }
   }
 
-  .buttonLink {
+  .sliderText .buttonLink {
     font-size: 12px;
+  }
+}
+@media screen and (max-width: 380px) {
+  .sliderText {
+    h2 {
+      font-size: 18px;
+    }
+    .buttonContent {
+      border-bottom-width: 1.5px;
+    }
+  }
+
+  .sliderText .buttonLink {
+    font-size: 12px;
+    > img {
+      width: 20px;
+      height: 21px;
+    }
   }
 }
