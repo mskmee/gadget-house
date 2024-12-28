@@ -1,6 +1,5 @@
 import { useField, FormikValues } from 'formik';
-import { Input, InputProps } from 'antd';
-const { TextArea } = Input;
+import { Input, InputProps, TextAreaProps } from 'antd';
 import { useId } from 'react';
 import cn from 'classnames';
 
@@ -8,13 +7,18 @@ import { ErrorIcon } from '@/assets/constants';
 
 import styles from './form-input.module.scss';
 
-type Properties<T extends FormikValues> = Omit<InputProps, 'name'> & {
-  name: keyof T;
-  label?: string;
-  span?: string;
-};
+type InputType = 'input' | 'textarea';
+
+type Properties<T extends FormikValues> = Omit<InputProps, 'name'> &
+  Partial<TextAreaProps> & {
+    inputType?: InputType;
+    name: keyof T;
+    label?: string;
+    span?: string;
+  };
 
 export const FormInput = <T extends FormikValues>({
+  inputType = 'input',
   label,
   name,
   span,
@@ -41,18 +45,19 @@ export const FormInput = <T extends FormikValues>({
         label && (
           <label className={cn(styles.formInput__input)} htmlFor={inputId}>
             <span>{label}</span>
-            {label === 'Comment' ? (
-              <TextArea
+            {inputType === 'input' ? (
+              <Input
                 {...field}
-                {...props}
+                {...(props as InputProps)}
                 id={inputId}
                 status={isError ? 'error' : ''}
               />
             ) : (
-              <Input
+              <Input.TextArea
                 {...field}
-                {...props}
+                {...(props as TextAreaProps)}
                 id={inputId}
+                maxLength={1000}
                 status={isError ? 'error' : ''}
               />
             )}

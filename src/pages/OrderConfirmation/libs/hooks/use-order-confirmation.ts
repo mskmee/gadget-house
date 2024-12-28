@@ -119,6 +119,36 @@ const useOrderConfirmation = (): Return => {
   const { clearCart } = useActions();
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 
+  const sendOrderToBackend = async () => {
+    const orderData = {
+      contacts: state.contactsFormValue,
+      delivery: state.deliveryFormValue,
+      payment: state.paymentFormValue,
+    };
+
+    try {
+      const response = await fetch('${process.env.VITE_API_URL}/orders', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send order');
+      }
+
+      const result = await response.json();
+      dispatch({
+        type: OrderConfirmationAction.CONFIRM_ORDER,
+      });
+      clearCart();
+    } catch (error) {
+      console.error('Error sending order:', error);
+    }
+  };
+
   const onContactsFormSubmit = (contactsFormValue: ContactsFormDto, deliveryFormValue: DeliveryFormDto, paymentFormValue: PaymentFormDto) =>
     dispatch({
       type: OrderConfirmationAction.SUBMIT_CONTACT_FORM,
@@ -133,9 +163,7 @@ const useOrderConfirmation = (): Return => {
   };
 
   const onOrderConfirmed = () => {
-    dispatch({
-      type: OrderConfirmationAction.CONFIRM_ORDER,
-    });
+    sendOrderToBackend();
     clearCart();
   };
 

@@ -56,6 +56,12 @@
       }
     }
 
+    input:active {
+      span {
+        display: block;
+      }
+    }
+
     textarea {
       min-height: 126px;
       resize: none;
@@ -67,44 +73,6 @@
         outline: none;
         background-color: transparent;
       }
-    }
-  }
-
-  &__radio {
-    input {
-      width: 18px;
-      height: 18px;
-      outline: none;
-      border: none;
-      appearance: none;
-      cursor: pointer;
-
-      &::before {
-        content: "";
-        display: inline-block;
-        width: 18px;
-        height: 18px;
-        background-image: url("../../../assets/icons/radio.svg");
-        background-repeat: no-repeat;
-        background-position: center center;
-        background-size: contain;
-        transition: all 0.3s ease-in-out;
-      }
-
-      &:checked::before {
-        background-image: url("../../../assets/icons/radio-checked.svg");
-      }
-    }
-
-    span {
-      display: inline-block;
-      margin-left: 12px;
-      font-family: "Inter", sans-serif;
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 150%;
-      color: var(--text-color);
-      cursor: pointer;
     }
   }
 

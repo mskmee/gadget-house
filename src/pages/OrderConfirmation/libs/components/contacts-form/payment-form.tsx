@@ -1,13 +1,14 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Formik, Form } from 'formik';
+import { Radio, RadioChangeEvent, Space } from 'antd';
 import cn from 'classnames';
 
 import { PaymentFormDto } from '../../types/form-dto.type';
 import { OrderStage } from '../../enums/enums';
+import { FormRadioInput } from '@/components/common/radio-input/radio-input';
 import { paymentFormValidationSchema } from '../../validation-schemas/contacts-form-validation-schema';
 
 import styles from './form.module.scss';
-import { FormInput } from '@/components/components';
 
 type Properties = {
   initialValues: PaymentFormDto;
@@ -30,6 +31,13 @@ export const PaymentForm: FC<Properties> = ({
   stage,
 }) => {
   const isActive = stage === OrderStage.CONTACTS;
+  const [value, setValue] = useState(1);
+
+  const onChange = (e: RadioChangeEvent) => {
+    console.log('radio checked', e.target.value);
+    setValue(e.target.value);
+  };
+
   if (!isActive) {
     return (
       <>
@@ -42,41 +50,6 @@ export const PaymentForm: FC<Properties> = ({
 
   return (
     <div className={styles.form}>
-      <div className={styles.form__header}>
-        <div className={styles.form__headerText}>
-          {!OrderStage.PAYMENT ? (
-            <div className={styles.form__checkMark}>
-              <svg
-                width="22"
-                height="20"
-                viewBox="0 0 22 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M5 11L9.33364 15L18 7"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
-          ) : (
-            <div className={styles.form__number}>3</div>
-          )}
-          <h2 className={styles.form__title}>Payment</h2>
-        </div>
-        {!OrderStage.PAYMENT && (
-          <button
-            // onClick={() => handleEdit(1)}
-            className={styles.form__btnEdit}
-          >
-            Edit
-          </button>
-        )}
-      </div>
-
       <Formik<PaymentFormDto>
         initialValues={initialValues}
         validateOnBlur={false}
@@ -86,30 +59,34 @@ export const PaymentForm: FC<Properties> = ({
           onSubmit(values);
         }}
       >
-        <div className={styles.form__content}>
-          <Form className={styles.form__form}>
-            <div className={styles.form__radioGroup}>
-              <FormInput<PaymentFormDto>
+        <Form className={styles.form__form}>
+          <Radio.Group
+            className={styles.form__radioGroup}
+            onChange={onChange}
+            value={value}
+          >
+            <Space direction="vertical">
+              <FormRadioInput
                 name="payment"
-                type="radio"
-                span="Payment after checking"
+                label="Payment after checking"
+                value="afterChecking"
               />
 
-              <FormInput<PaymentFormDto>
+              <FormRadioInput
                 name="payment"
-                type="radio"
-                span="To courier"
+                label="To courier"
+                value="courier"
               />
-            </div>
+            </Space>
+          </Radio.Group>
 
-            <button
-              className={cn('button button-primary', styles.form__buttonDone)}
-              type="submit"
-            >
-              Done
-            </button>
-          </Form>
-        </div>
+          <button
+            className={cn('button button-primary', styles.form__buttonDone)}
+            type="submit"
+          >
+            Done
+          </button>
+        </Form>
       </Formik>
     </div>
   );
