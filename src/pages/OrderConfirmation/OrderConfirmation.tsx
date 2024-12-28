@@ -20,7 +20,6 @@ const OrderConfirmation: React.FC = () => {
     onContactsFormSubmit,
     onDeliveryFormSubmit,
     onPaymentFormSubmit,
-    onResetOrderProcess,
     contactsFormValue,
     deliveryFormValue,
     paymentFormValue,
@@ -39,11 +38,12 @@ const OrderConfirmation: React.FC = () => {
     (state) => state.shopping_card,
   );
 
-  useEffect(() => {
-    if (products.length === 0) {
-      onResetOrderProcess();
-    }
-  }, [onResetOrderProcess, products]);
+  // useEffect(() => {
+  //   if (products.length === 0) {
+  //     onResetOrderProcess();
+  //   }
+  // }, [onResetOrderProcess, products]);
+  // it's will provide an infinity loop
 
   return (
     <section className={styles.order}>
@@ -143,13 +143,11 @@ const OrderConfirmation: React.FC = () => {
               </div>
 
               <div className={styles.order__tabItemContent}>
-                {orderProcessStage === 'delivery' && (
-                  <DeliveryForm
-                    stage={orderProcessStage}
-                    onSubmit={onDeliveryFormSubmit}
-                    initialValues={deliveryFormValue}
-                  />
-                )}
+                <DeliveryForm
+                  stage={orderProcessStage}
+                  onSubmit={onDeliveryFormSubmit}
+                  initialValues={deliveryFormValue}
+                />
               </div>
             </div>
 
