@@ -9,7 +9,7 @@ interface IBrandCardProps {
 
 export const BrandCard: FC<IBrandCardProps> = ({ product, width }) => {
   return (
-    <div className={styles.cardBrandConatiner} key={product.id}>
+    <div className={styles.cardBrandConatiner} key={product.id} tabIndex={0}>
       <img
         style={{ width: `${width}px` }}
         src={product.img}

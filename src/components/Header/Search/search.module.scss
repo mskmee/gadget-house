@@ -122,3 +122,19 @@
     }
   }
 }
+
+@media screen and (max-width: 380px) {
+  .header-search {
+    height: 40px;
+    > span:last-child {
+      > div {
+        width: 40px;
+        height: 40px;
+        > img {
+          width: 21px;
+          height: 21px;
+        }
+      }
+    }
+  }
+}

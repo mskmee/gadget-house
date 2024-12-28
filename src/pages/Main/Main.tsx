@@ -13,8 +13,8 @@ export default function Main() {
   const isProductsLoading = useTypedSelector(
     (state) => state.products.dataStatus === DataStatus.PENDING,
   );
-  const isLargerThan420px = useMediaQuery({
-    query: '(max-width: 420px)',
+  const isLargerThan450px = useMediaQuery({
+    query: '(max-width: 450px)',
   });
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export default function Main() {
 
           <SliderNav
             text={
-              isLargerThan420px
+              isLargerThan450px
                 ? 'Previously reviewed'
                 : 'Previously reviewed offers'
             }
