@@ -13,6 +13,14 @@ import {
   productImg6,
 } from '@/assets/constants';
 
+export const menuItems = [
+  { id: 1, title: 'About the product', href: '#product' },
+  { id: 2, title: 'Characteristics', href: '#product-characteristics' },
+  { id: 3, title: 'Reviews', href: '#product-reviews' },
+  { id: 4, title: 'Photos', href: '#product-photos' },
+  { id: 5, title: 'Accessories', href: '#product-accessories' },
+];
+
 export const currentProduct = [
   {
     id: 1,

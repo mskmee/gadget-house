@@ -1,9 +1,14 @@
 import { FC, useState } from 'react';
 import { currentProduct } from '@/constants/singleProduct';
 import style from './Product.module.scss';
+import { useMediaQuery } from 'react-responsive';
 
 export const ProductCharacteristics: FC = () => {
   const [isShowed, setIsShowed] = useState(false);
+
+  const isLargerThan500px = useMediaQuery({
+    query: '(max-width: 500px)',
+  });
 
   const showedAllCharacteristics = () => {
     setIsShowed(true);
@@ -18,7 +23,7 @@ export const ProductCharacteristics: FC = () => {
             {currentProduct?.[0]?.characteristics?.screen?.map((item) => (
               <li key={item?.id}>
                 <span>{item?.name}</span>
-                <p></p>
+                {!isLargerThan500px && <p></p>}
                 <span>{item?.value}</span>
               </li>
             ))}
@@ -31,7 +36,7 @@ export const ProductCharacteristics: FC = () => {
               (item) => (
                 <li key={item?.id}>
                   <span>{item?.name}</span>
-                  <p></p>
+                  {!isLargerThan500px && <p></p>}
                   <span>{item?.value}</span>
                 </li>
               ),
@@ -44,7 +49,7 @@ export const ProductCharacteristics: FC = () => {
             {currentProduct?.[0]?.characteristics?.os?.map((item) => (
               <li key={item?.id}>
                 <span>{item?.name}</span>
-                <p></p>
+                {!isLargerThan500px && <p></p>}
                 <span>{item?.value}</span>
               </li>
             ))}
@@ -57,7 +62,7 @@ export const ProductCharacteristics: FC = () => {
               {currentProduct?.[0]?.characteristics?.camera?.map((item) => (
                 <li key={item?.id}>
                   <span>{item?.name}</span>
-                  <p></p>
+                  {!isLargerThan500px && <p></p>}
                   <span>{item?.value}</span>
                 </li>
               ))}

@@ -142,6 +142,14 @@
   align-items: center;
   width: 100%;
   margin-top: 4px;
+  > ul {
+    display: flex;
+    gap: 9px;
+    > li div div img {
+      width: 15px;
+      height: 15px;
+    }
+  }
 
   .card-code {
     color: #808080;
@@ -173,6 +181,13 @@
     &:active {
       background-color: #00680a;
     }
+  }
+}
+
+.cardBrandConatiner {
+  &:focus-visible {
+    border: 2px solid #233951;
+    outline: none;
   }
 }
 
@@ -255,10 +270,7 @@
         font-size: rem(18px);
       }
     }
-    .cardRate ul li div img {
-      width: 20px;
-      height: 20px;
-    }
+
     .card-code {
       font-size: rem(14px);
     }
@@ -278,6 +290,15 @@
     .cardImage {
       .laptopImg {
         width: 170px;
+      }
+    }
+  }
+  .cardRate {
+    > ul {
+      gap: 6px;
+      > li div div img {
+        width: 12px;
+        height: 12px;
       }
     }
   }
@@ -346,9 +367,11 @@
         }
       }
     }
-    .cardRate ul li div img {
-      width: 15px;
-      height: 15px;
+    .cardRate {
+      > ul {
+        gap: 5px;
+        font-size: initial;
+      }
     }
     .card-code {
       font-size: rem(13px);
@@ -436,12 +459,20 @@
         }
       }
     }
-    .cardRate ul li div img {
-      width: 13px;
-      height: 13px;
+    .cardRate {
+      > ul {
+        gap: 3px;
+        > li div div {
+          line-height: 9px;
+          img {
+            width: 9px;
+            height: 9px;
+          }
+        }
+      }
     }
     .card-code {
-      font-size: rem(12px);
+      font-size: rem(11px);
     }
   }
   .cardBrandConatiner {
@@ -453,12 +484,58 @@
 
 @media screen and (max-width: 380px) {
   .cardConatiner {
-    .cardImage {
-      .smartphoneImg {
-        width: 80px;
+    .cardContainerTop {
+      height: 110px;
+      .cardImage {
+        .smartphoneImg {
+          width: 70px;
+        }
+        .laptopImg {
+          width: 90px;
+        }
       }
-      .laptopImg {
-        width: 100px;
+      .cardConatinerLike {
+        > span svg {
+          width: 20px;
+          height: 20px;
+        }
+      }
+      .accessories-colors {
+        > div {
+          width: 10px;
+          height: 10px;
+        }
+      }
+    }
+    .cardContainerBottom {
+      > h3 {
+        font-size: rem(14px);
+      }
+      .cardRate {
+        > ul {
+          gap: 4px;
+          > li div div:last-child img {
+            width: 9px;
+            height: 9px;
+          }
+        }
+        .card-code {
+          display: none;
+        }
+      }
+      .cardPriceContainer {
+        margin-top: 15px;
+        > p {
+          font-size: rem(14px);
+        }
+        > button {
+          width: 28px;
+          height: 28px;
+          > svg {
+            width: 16px;
+            height: 16px;
+          }
+        }
       }
     }
   }

@@ -16,6 +16,7 @@ import { AddToBasketButton } from './AddToBasketButton';
 import { PhotoModal } from './PhotoModal';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { convertPriceToReadable } from '@/utils/helpers/product';
+import { useMediaQuery } from 'react-responsive';
 
 interface IProductProps {
   reviewsLength: number;
@@ -36,6 +37,13 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [modalImageSrc, setModalImageSrc] = useState<string | null>(null);
   const productRateRef = useRef<HTMLDivElement>(null);
+
+  const isLargerThan768px = useMediaQuery({
+    query: '(max-width: 768px)',
+  });
+  const isLargerThan500px = useMediaQuery({
+    query: '(max-width: 500px)',
+  });
 
   useEffect(() => {
     if (productRateRef.current) {
@@ -119,6 +127,27 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
 
   return (
     <section className={style['product']} id="product">
+      {isLargerThan768px && (
+        <div className={style['product_title']}>
+          <h1>{currentProduct?.[0]?.title}</h1>
+          <div className={style['product_rate-box']}>
+            <div className={style['product_rate']} ref={productRateRef}>
+              <Rate
+                className="product_rate-stars"
+                value={currentProduct?.[0]?.rating}
+                character={() => {
+                  return <img src={rateImg} alt="product rate star" />;
+                }}
+              />
+              <a href="#users-review">
+                <img src={reviewImg} alt="review pic" />
+                <span>({reviewsLength})</span>
+              </a>
+            </div>
+            <span>code:{currentProduct?.[0]?.code}</span>
+          </div>
+        </div>
+      )}
       <div className={style['product_custom-carousel-wrap']}>
         <div className={style['product_carousel-current-picture']}>
           <img
@@ -143,42 +172,58 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
           />
         </div>
         <div className={style['product_carousel-slicks']}>
-          <ul>
-            {currentProductImages?.map((item) => (
-              <li
-                key={item?.id}
-                className={classNames({
-                  [style['selected-photo']]: currentSlide?.id === item?.id,
-                })}
-                onClick={selectCurrentSlideByClick(item?.id)}
-              >
-                <img src={item?.img} alt="product slick picture" />
-              </li>
-            ))}
-          </ul>
+          {!isLargerThan500px ? (
+            <ul>
+              {currentProductImages?.map((item) => (
+                <li
+                  key={item?.id}
+                  className={classNames({
+                    [style['selected-photo']]: currentSlide?.id === item?.id,
+                  })}
+                  onClick={selectCurrentSlideByClick(item?.id)}
+                >
+                  <img src={item?.img} alt="product slick picture" />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <ul>
+              {currentProductImages?.map((item) => (
+                <li
+                  key={item?.id}
+                  className={classNames({
+                    [style['selected-photo']]: currentSlide?.id === item?.id,
+                  })}
+                  onClick={selectCurrentSlideByClick(item?.id)}
+                ></li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
 
       <div className={style['product_info']}>
-        <div className={style['product_title']}>
-          <h1>{currentProduct?.[0]?.title}</h1>
-          <div className={style['product_rate-box']}>
-            <div className={style['product_rate']} ref={productRateRef}>
-              <Rate
-                className="product_rate-stars"
-                value={currentProduct?.[0]?.rating}
-                character={() => {
-                  return <img src={rateImg} alt="product rate star" />;
-                }}
-              />
-              <a href="#users-review">
-                <img src={reviewImg} alt="review pic" />
-                <span>({reviewsLength})</span>
-              </a>
+        {!isLargerThan768px && (
+          <div className={style['product_title']}>
+            <h1>{currentProduct?.[0]?.title}</h1>
+            <div className={style['product_rate-box']}>
+              <div className={style['product_rate']} ref={productRateRef}>
+                <Rate
+                  className="product_rate-stars"
+                  value={currentProduct?.[0]?.rating}
+                  character={() => {
+                    return <img src={rateImg} alt="product rate star" />;
+                  }}
+                />
+                <a href="#users-review">
+                  <img src={reviewImg} alt="review pic" />
+                  <span>({reviewsLength})</span>
+                </a>
+              </div>
+              <span>code:{currentProduct?.[0]?.code}</span>
             </div>
-            <span>code:{currentProduct?.[0]?.code}</span>
           </div>
-        </div>
+        )}
         <div className={style['product_details']}>
           <div className={style['product_other-colors']}>
             <h3>Other colors</h3>

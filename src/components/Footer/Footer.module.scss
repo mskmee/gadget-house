@@ -8,9 +8,9 @@
     padding: 46px 53px 73px 50px;
     background-color: #1c1817;
     > div:first-child {
-      display: flex;
-      flex-flow: row wrap;
-      gap: 20px;
+      display: grid;
+      grid-template-columns: 1fr 140px 150px 280px;
+      column-gap: 102px;
 
       color: #f8f7fa;
       .contact-info {
@@ -98,17 +98,12 @@
         }
       }
 
-      .client-links,
-      .categories {
-        margin-right: 80px;
-      }
-
       .footer-note {
         margin-top: auto;
         text-align: end;
         color: #f8f7fa;
         text-decoration: none;
-        font-size: rem(12px);
+
         transition: 0.3s linear;
       }
     }
@@ -123,23 +118,27 @@
   }
 }
 
-@media screen and (width <= 1100px) {
+@media screen and (max-width: 1440px) {
   .footer-wrapper {
-    .contact-info,
-    .client-links,
-    .categories,
-    .social-links {
-      h2,
-      h3 {
-        font-size: rem(26px);
+    > div {
+      > div:first-child {
+        column-gap: 70px;
       }
+    }
+  }
+}
 
-      ul {
-        li {
-          a {
-            font-size: rem(13px);
-          }
-        }
+@media screen and (max-width: 1250px) {
+  .footer-wrapper > div {
+    padding: 46px 20px 73px 20px;
+  }
+}
+
+@media screen and (max-width: 1150px) {
+  .footer-wrapper {
+    > div {
+      > div:first-child {
+        column-gap: 50px;
       }
     }
 
@@ -148,63 +147,19 @@
         font-size: rem(28px);
       }
     }
-
-    .client-links,
-    .categories {
-      margin-right: 40px;
-    }
-
-    .footer-note {
-      font-size: rem(12px);
-      &:hover {
-        color: #a7aeeb;
-      }
-    }
-  }
-
-  .contact-info a {
-    font-size: rem(12px);
   }
 }
 
-@media screen and (width <= 878px) {
-  .client-links,
-  .categories,
-  .contact-info,
-  .social-links {
-    margin-right: 0;
-
-    h3 {
-      font-weight: 100;
-      font-size: rem(24px);
-      line-height: 1.5;
-    }
-  }
-
-  .client-links {
-    grid-area: clientlinks;
-
-    .footer-note {
-      margin: auto 0 10px;
-    }
-  }
-
-  .categories {
-    grid-area: categories;
-  }
-
-  .contact-info {
-    grid-area: contactinfo;
-  }
-
-  .social-links {
-    grid-area: sociallinks;
-  }
-
-  .contact-info {
-    h2 {
-      font-size: rem(22px) !important;
-      font-family: Nunito, sans-serif;
+@media screen and (max-width: 1024px) {
+  .footer-wrapper {
+    > div {
+      > div:first-child {
+        grid-template-columns: 1fr 1fr;
+        row-gap: 34px;
+      }
+      .copyrightText {
+        text-align: start;
+      }
     }
   }
 }
@@ -213,17 +168,75 @@
   .copyrightText {
     margin-top: 30px;
   }
+  .footer-wrapper > div {
+    padding: 34px 16px;
+    div:first-child {
+      .contact-info {
+        .footer-logo {
+          font-size: rem(24px);
+        }
+      }
+    }
+  }
 }
 
-@media screen and (width <= 350px) {
-  .footer-wrapper {
-    display: flex;
-    flex-direction: column;
+@media screen and (max-width: 500px) {
+  .footer-wrapper div div:first-child {
+    column-gap: 25px;
+    .contact-info {
+      font-size: rem(12px);
+    }
+  }
+}
 
-    .social-links {
-      .icons {
-        margin-bottom: 20px;
+@media screen and (max-width: 390px) {
+  .footer-wrapper div {
+    > div:first-child {
+      .contact-info {
+        > div > a > {
+          img {
+            width: 24px;
+            height: 24px;
+          }
+        }
+        div:nth-child(2) a svg {
+          width: 20px;
+          height: 20px;
+        }
       }
+
+      .social-links,
+      .categories,
+      .client-links {
+        h3 {
+          font-size: rem(18px);
+        }
+        > ul > li > a {
+          font-size: rem(13px);
+        }
+      }
+      .social-links {
+        > .icons {
+          > a {
+            width: 30px;
+            height: 28px;
+          }
+        }
+      }
+    }
+    .copyrightText {
+      margin-top: 10px;
+    }
+  }
+}
+
+@media screen and (max-width: 370px) {
+  .footer-wrapper div {
+    > div:first-child {
+      grid-template-columns: 1fr;
+    }
+    .copyrightText {
+      margin-top: 30px;
     }
   }
 }

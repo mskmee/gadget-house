@@ -133,26 +133,91 @@ body {
   padding: 0 50px;
 }
 
+@media screen and (max-width: 1440px) {
+  .product-page-photo-modal {
+    max-width: 1000px;
+  }
+}
+
 @media screen and (max-width: 1250px) {
   .container-xxl {
     padding: 0 20px;
   }
+  .product-page-photo-modal {
+    max-width: 900px;
+    .ant-modal-content {
+      padding: 20px !important;
+    }
+  }
 }
+@media screen and (max-width: 992px) {
+  .product-page-photo-modal {
+    max-width: 700px;
+    .ant-modal-content .ant-modal-close {
+      top: 10px !important;
+      right: 25px !important;
+      width: 40px;
+      height: 40px;
+    }
+  }
+}
+@media screen and (max-width: 768px) {
+  #header-search {
+    padding-right: 40px;
+  }
+  .product-page-photo-modal {
+    max-width: 500px;
+    .ant-modal-content {
+      padding: 10px 15px !important;
+      .ant-modal-close {
+        top: 10px !important;
+        right: 15px !important;
+        width: 18px;
+        height: 18px;
+        > span > span {
+          font-size: 18px;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 550px) {
+  .product-page-photo-modal {
+    max-width: 460px !important;
+  }
+}
+@media screen and (max-width: 500px) {
+  .product-page-photo-modal {
+    max-width: 350px !important;
+  }
+}
+
 @media screen and (max-width: 450px) {
   .container-xxl {
     padding: 0 16px;
   }
 }
-
-@media screen and (max-width: 768px) {
-  #header-search {
-    padding-right: 40px;
+@media screen and (max-width: 380px) {
+  .product-page-photo-modal {
+    max-width: 290px !important;
+    .ant-modal-content {
+      padding: 10px !important;
+      .ant-modal-close {
+        top: 10px !important;
+        right: 15px !important;
+        width: 15px;
+        height: 15px;
+        > span > span {
+          font-size: 15px;
+        }
+      }
+    }
   }
 }
 
-@media screen and (max-height: 968px) {
+/* @media screen and (max-height: 968px) {
   .product-page-photo-modal .ant-modal-content {
-    padding: 30px !important;
+    padding: 20px !important;
   }
 }
 @media screen and (max-height: 770px) {
@@ -172,3 +237,4 @@ body {
     right: 40px !important;
   }
 }
+ */

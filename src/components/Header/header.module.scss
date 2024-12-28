@@ -190,7 +190,7 @@
     max-width: 1540px;
     margin: 0 auto;
     padding: 0 50px;
-    background-color: inherit;
+    background-color: #f8f7fa;
     > div {
       display: flex;
       align-items: center;
@@ -258,6 +258,7 @@
     background-color: var(--carousel-theme-color);
     > div {
       padding-right: 0;
+      background-color: inherit;
     }
   }
   .catalogListWrap {
@@ -322,7 +323,13 @@
     gap: 20px;
     > div {
       > img {
+        width: 22px;
         cursor: pointer;
+        user-select: none;
+      }
+      .active-burger-menu {
+        width: 11px;
+        user-select: none;
       }
     }
     &Catalog {
