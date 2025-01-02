@@ -1,11 +1,18 @@
 /* eslint-disable no-unused-vars */
 import { Reducer, useReducer } from 'react';
 
-import { ContactsFormDto, DeliveryFormDto, PaymentFormDto } from '../types/types';
+import {
+  ContactsFormDto,
+  DeliveryFormDto,
+  PaymentFormDto,
+} from '../types/types';
 import { OrderStage, OrderConfirmationAction } from '../enums/enums';
 import { useActions } from '@/hooks/useActions';
 import { CONTACTS_FORM_INITIAL_VALUE } from '../constants/constants';
-import { DELIVERY_FORM_INITIAL_VALUE, PAYMENT_FORM_INITIAL_VALUE } from '../constants/contacts-form-initial-value';
+import {
+  DELIVERY_FORM_INITIAL_VALUE,
+  PAYMENT_FORM_INITIAL_VALUE,
+} from '../constants/contacts-form-initial-value';
 
 type Return = {
   orderProcessStage: OrderStage;
@@ -37,28 +44,32 @@ type State = {
 
 type ReducerAction =
   | {
-    type: OrderConfirmationAction.SUBMIT_CONTACT_FORM;
-    payload: {
-      contactsFormValue: ContactsFormDto;
-      deliveryFormValue: DeliveryFormDto;
-      paymentFormValue: PaymentFormDto;
+      type: OrderConfirmationAction.SUBMIT_CONTACT_FORM;
+      payload: ContactsFormDto;
+    }
+  | {
+      type: OrderConfirmationAction.SUBMIT_DELIVERY_FORM;
+      payload: DeliveryFormDto;
+    }
+  | {
+      type: OrderConfirmationAction.SUBMIT_PAYMENT_FORM;
+      payload: PaymentFormDto;
+    }
+  | {
+      type: OrderConfirmationAction.RESET_ORDER_PROCESS;
+    }
+  | {
+      type: OrderConfirmationAction.TOGGLE_RULES;
+    }
+  | {
+      type: OrderConfirmationAction.ORDER_READY;
+    }
+  | {
+      type: OrderConfirmationAction.CLOSE_SUCCESS_POPUP;
+    }
+  | {
+      type: OrderConfirmationAction.CONFIRM_ORDER;
     };
-  }
-  | {
-    type: OrderConfirmationAction.RESET_ORDER_PROCESS;
-  }
-  | {
-    type: OrderConfirmationAction.TOGGLE_RULES;
-  }
-  | {
-    type: OrderConfirmationAction.ORDER_READY;
-  }
-  | {
-    type: OrderConfirmationAction.CLOSE_SUCCESS_POPUP;
-  }
-  | {
-    type: OrderConfirmationAction.CONFIRM_ORDER;
-  };
 
 const INITIAL_STATE: State = {
   acceptWithRules: false,
@@ -76,10 +87,23 @@ const reducer: Reducer<State, ReducerAction> = (state, action) => {
     case OrderConfirmationAction.SUBMIT_CONTACT_FORM:
       return {
         ...state,
-        contactsFormValue: action.payload.contactsFormValue,
-        deliveryFormValue: action.payload.deliveryFormValue,
-        paymentFormValue: action.payload.paymentFormValue,
+        contactsFormValue: action.payload,
         orderProcessStage: OrderStage.DELIVERY,
+      };
+
+    case OrderConfirmationAction.SUBMIT_DELIVERY_FORM:
+      return {
+        ...state,
+        deliveryFormValue: action.payload,
+        orderProcessStage: OrderStage.PAYMENT,
+      };
+
+    case OrderConfirmationAction.SUBMIT_PAYMENT_FORM:
+      return {
+        ...state,
+        paymentFormValue: action.payload,
+        orderProcessStage: OrderStage.DONE,
+        isOrderReady: true,
       };
 
     case OrderConfirmationAction.RESET_ORDER_PROCESS:
@@ -110,7 +134,7 @@ const reducer: Reducer<State, ReducerAction> = (state, action) => {
       };
 
     default:
-      console.error('Unknown action type:', action.type);
+      console.error('Unknown action type');
       return state;
   }
 };
@@ -120,6 +144,9 @@ const useOrderConfirmation = (): Return => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 
   const sendOrderToBackend = async () => {
+    dispatch({
+      type: OrderConfirmationAction.CONFIRM_ORDER,
+    });
     const orderData = {
       contacts: state.contactsFormValue,
       delivery: state.deliveryFormValue,
@@ -127,6 +154,7 @@ const useOrderConfirmation = (): Return => {
     };
 
     try {
+      //TODO: create service for cart action here. Example is in src/utils/products
       const response = await fetch('${process.env.VITE_API_URL}/orders', {
         method: 'POST',
         headers: {
@@ -140,19 +168,28 @@ const useOrderConfirmation = (): Return => {
       }
 
       const result = await response.json();
-      dispatch({
-        type: OrderConfirmationAction.CONFIRM_ORDER,
-      });
       clearCart();
     } catch (error) {
       console.error('Error sending order:', error);
     }
   };
 
-  const onContactsFormSubmit = (contactsFormValue: ContactsFormDto, deliveryFormValue: DeliveryFormDto, paymentFormValue: PaymentFormDto) =>
+  const onContactsFormSubmit = (contactsFormValue: ContactsFormDto) =>
     dispatch({
       type: OrderConfirmationAction.SUBMIT_CONTACT_FORM,
-      payload: { contactsFormValue, deliveryFormValue, paymentFormValue },
+      payload: contactsFormValue,
+    });
+
+  const onDeliveryFormSubmit = (data: DeliveryFormDto) =>
+    dispatch({
+      type: OrderConfirmationAction.SUBMIT_DELIVERY_FORM,
+      payload: data,
+    });
+
+  const onPaymentFormSubmit = (data: PaymentFormDto) =>
+    dispatch({
+      type: OrderConfirmationAction.SUBMIT_PAYMENT_FORM,
+      payload: data,
     });
 
   const onResetOrderProcess = () => {
@@ -176,6 +213,8 @@ const useOrderConfirmation = (): Return => {
   return {
     onResetOrderProcess,
     onContactsFormSubmit,
+    onDeliveryFormSubmit,
+    onPaymentFormSubmit,
     onSuccessPopUpClose,
     onOrderConfirmed,
     onToggleRules,

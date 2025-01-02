@@ -6,7 +6,7 @@ import cn from 'classnames';
 import { PaymentFormDto } from '../../types/form-dto.type';
 import { OrderStage } from '../../enums/enums';
 import { FormRadioInput } from '@/components/common/radio-input/radio-input';
-import { paymentFormValidationSchema } from '../../validation-schemas/contacts-form-validation-schema';
+// import { paymentFormValidationSchema } from '../../validation-schemas/contacts-form-validation-schema';
 
 import styles from './form.module.scss';
 
@@ -30,7 +30,7 @@ export const PaymentForm: FC<Properties> = ({
   onSubmit,
   stage,
 }) => {
-  const isActive = stage === OrderStage.CONTACTS;
+  const isActive = stage === OrderStage.PAYMENT;
   const [value, setValue] = useState(1);
 
   const onChange = (e: RadioChangeEvent) => {
@@ -54,13 +54,15 @@ export const PaymentForm: FC<Properties> = ({
         initialValues={initialValues}
         validateOnBlur={false}
         validateOnChange={false}
-        validationSchema={paymentFormValidationSchema}
+        // validationSchema={paymentFormValidationSchema}
+        // TODO: check validation schema
         onSubmit={(values) => {
           onSubmit(values);
         }}
       >
         <Form className={styles.form__form}>
           <Radio.Group
+            //TODO: create and use enum PaymentMethod
             className={styles.form__radioGroup}
             onChange={onChange}
             value={value}
@@ -70,12 +72,14 @@ export const PaymentForm: FC<Properties> = ({
                 name="payment"
                 label="Payment after checking"
                 value="afterChecking"
+                id="afterChecking"
               />
 
               <FormRadioInput
                 name="payment"
                 label="To courier"
                 value="courier"
+                id="courier"
               />
             </Space>
           </Radio.Group>
