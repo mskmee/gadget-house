@@ -1,5 +1,6 @@
 import { useField, FormikValues } from 'formik';
-import { Input, InputProps, TextAreaProps } from 'antd';
+import { Input, InputProps } from 'antd';
+import { TextAreaProps } from 'antd/es/input';
 import { useId } from 'react';
 import cn from 'classnames';
 

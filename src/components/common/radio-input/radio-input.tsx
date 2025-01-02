@@ -2,8 +2,6 @@ import React from 'react';
 import { useField, FormikValues } from 'formik';
 import { Radio } from 'antd';
 
-import { ErrorIcon } from '@/assets/constants';
-
 import styles from './radio-input.module.scss';
 
 type Properties<T extends FormikValues> = Omit<
@@ -21,8 +19,7 @@ export const FormRadioInput = <T extends FormikValues>({
   label,
   ...props
 }: Properties<T>) => {
-  const [field, meta] = useField(name as string);
-  const isError = meta.touched && meta.error;
+  const [field] = useField(name as string);
 
   return (
     <>
@@ -35,12 +32,6 @@ export const FormRadioInput = <T extends FormikValues>({
       >
         {label}
       </Radio>
-      {isError && (
-        <div className={styles.radioInput__errorMessage}>
-          <ErrorIcon />
-          <span>{meta.error}</span>
-        </div>
-      )}
     </>
   );
 };

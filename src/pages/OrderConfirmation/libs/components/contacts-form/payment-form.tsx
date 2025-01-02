@@ -1,12 +1,14 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { Formik, Form } from 'formik';
-import { Radio, RadioChangeEvent, Space } from 'antd';
+import { Radio, Space } from 'antd';
 import cn from 'classnames';
 
 import { PaymentFormDto } from '../../types/form-dto.type';
 import { OrderStage } from '../../enums/enums';
+import { PaymentMethod } from '../../enums/payment-method';
 import { FormRadioInput } from '@/components/common/radio-input/radio-input';
-// import { paymentFormValidationSchema } from '../../validation-schemas/contacts-form-validation-schema';
+import { paymentFormValidationSchema } from '../../validation-schemas/contacts-form-validation-schema';
+import { ErrorFields } from './formik-fields';
 
 import styles from './form.module.scss';
 
@@ -18,9 +20,7 @@ type Properties = {
 };
 
 const LineValue = ({ value }: { value: string }) => (
-  <div
-    style={{ display: 'flex', gap: 15, color: '#808080', paddingBottom: 32 }}
-  >
+  <div className={styles.form__info}>
     <span>{value}</span>
   </div>
 );
@@ -31,12 +31,6 @@ export const PaymentForm: FC<Properties> = ({
   stage,
 }) => {
   const isActive = stage === OrderStage.PAYMENT;
-  const [value, setValue] = useState(1);
-
-  const onChange = (e: RadioChangeEvent) => {
-    console.log('radio checked', e.target.value);
-    setValue(e.target.value);
-  };
 
   if (!isActive) {
     return (
@@ -54,34 +48,30 @@ export const PaymentForm: FC<Properties> = ({
         initialValues={initialValues}
         validateOnBlur={false}
         validateOnChange={false}
-        // validationSchema={paymentFormValidationSchema}
-        // TODO: check validation schema
+        validationSchema={paymentFormValidationSchema}
         onSubmit={(values) => {
           onSubmit(values);
         }}
       >
         <Form className={styles.form__form}>
-          <Radio.Group
-            //TODO: create and use enum PaymentMethod
-            className={styles.form__radioGroup}
-            onChange={onChange}
-            value={value}
-          >
+          <Radio.Group className={styles.form__radioGroup} name="paymentType">
             <Space direction="vertical">
               <FormRadioInput
-                name="payment"
+                name="paymentType"
                 label="Payment after checking"
-                value="afterChecking"
-                id="afterChecking"
+                value={PaymentMethod.AFTER_CHECKING}
+                id={PaymentMethod.AFTER_CHECKING}
               />
 
               <FormRadioInput
-                name="payment"
+                name="paymentType"
                 label="To courier"
-                value="courier"
-                id="courier"
+                value={PaymentMethod.COURIER}
+                id={PaymentMethod.COURIER}
               />
             </Space>
+
+            <ErrorFields />
           </Radio.Group>
 
           <button

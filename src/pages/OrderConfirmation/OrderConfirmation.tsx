@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import { FC } from 'react';
+import { useNavigate } from 'react-router-dom';
 import cn from 'classnames';
 
 import {
@@ -14,7 +15,7 @@ import { SuccessPopUp } from './SuccessPopUp';
 
 import styles from './order-confirmation.module.scss';
 
-const OrderConfirmation: React.FC = () => {
+const OrderConfirmation: FC = () => {
   const {
     orderProcessStage,
     onContactsFormSubmit,
@@ -31,6 +32,11 @@ const OrderConfirmation: React.FC = () => {
     isOrderReady,
     onToggleRules,
   } = useOrderConfirmation();
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
+  };
 
   const { deleteFromStore, increaseItemQuantity, decreaseItemQuantity } =
     useActions();
@@ -39,11 +45,22 @@ const OrderConfirmation: React.FC = () => {
     (state) => state.shopping_card,
   );
 
-  useEffect(() => {
-    if (products.length === 0) {
-      onResetOrderProcess();
+  if (products.length === 0) {
+    onResetOrderProcess();
+    goBack();
+  }
+
+  const handleChangeOrderProcessStage = (
+    stage: 'contacts' | 'delivery' | 'payment',
+  ) => {
+    if (stage === 'contacts') {
+      orderProcessStage === 'contacts';
+    } else if (stage === 'delivery') {
+      orderProcessStage === 'delivery';
+    } else if (stage === 'payment') {
+      orderProcessStage === 'payment';
     }
-  }, [onResetOrderProcess, products]);
+  };
 
   return (
     <section className={styles.order}>
@@ -60,7 +77,7 @@ const OrderConfirmation: React.FC = () => {
             <div className={styles.order__tabItem}>
               <div className={styles.order__tabItemHeader}>
                 <div className={styles.order__tabItemHeaderText}>
-                  {orderProcessStage !== 'contacts' && !contactsFormValue ? (
+                  {orderProcessStage !== 'contacts' ? (
                     <div className={styles.order__tabItemCheckMark}>
                       <svg
                         width="22"
@@ -84,14 +101,14 @@ const OrderConfirmation: React.FC = () => {
                   <h2 className={styles.order__tabItemTitle}>Contacts</h2>
                 </div>
 
-                {!contactsFormValue && (
+                {contactsFormValue && orderProcessStage !== 'contacts' ? (
                   <button
-                    onClick={() => orderProcessStage === 'contacts'}
+                    onClick={() => handleChangeOrderProcessStage('contacts')}
                     className={styles.order__tabItemBtnEdit}
                   >
                     Edit
                   </button>
-                )}
+                ) : null}
               </div>
 
               <div className={styles.order__tabItemContent}>
@@ -108,7 +125,7 @@ const OrderConfirmation: React.FC = () => {
             <div className={styles.order__tabItem}>
               <div className={styles.order__tabItemHeader}>
                 <div className={styles.order__tabItemHeaderText}>
-                  {orderProcessStage !== 'delivery' && !deliveryFormValue ? (
+                  {orderProcessStage !== 'delivery' ? (
                     <div className={styles.order__tabItemCheckMark}>
                       <svg
                         width="22"
@@ -132,31 +149,30 @@ const OrderConfirmation: React.FC = () => {
                   <h2 className={styles.order__tabItemTitle}>Delivery</h2>
                 </div>
 
-                {!deliveryFormValue && (
+                {deliveryFormValue.deliveryType !== '' &&
+                orderProcessStage !== 'delivery' ? (
                   <button
-                    onClick={() => orderProcessStage === 'delivery'}
+                    onClick={() => handleChangeOrderProcessStage('delivery')}
                     className={styles.order__tabItemBtnEdit}
                   >
                     Edit
                   </button>
-                )}
+                ) : null}
               </div>
 
               <div className={styles.order__tabItemContent}>
-                {orderProcessStage === 'delivery' && (
-                  <DeliveryForm
-                    stage={orderProcessStage}
-                    onSubmit={onDeliveryFormSubmit}
-                    initialValues={deliveryFormValue}
-                  />
-                )}
+                <DeliveryForm
+                  stage={orderProcessStage}
+                  onSubmit={onDeliveryFormSubmit}
+                  initialValues={deliveryFormValue}
+                />
               </div>
             </div>
 
             <div className={styles.order__tabItem}>
               <div className={styles.order__tabItemHeader}>
                 <div className={styles.order__tabItemHeaderText}>
-                  {orderProcessStage !== 'payment' && !paymentFormValue ? (
+                  {orderProcessStage !== 'payment' ? (
                     <div className={styles.order__tabItemCheckMark}>
                       <svg
                         width="22"
@@ -180,14 +196,15 @@ const OrderConfirmation: React.FC = () => {
                   <h2 className={styles.order__tabItemTitle}>Payment</h2>
                 </div>
 
-                {!paymentFormValue && (
+                {paymentFormValue.paymentType !== '' &&
+                orderProcessStage !== 'payment' ? (
                   <button
-                    onClick={() => orderProcessStage === 'payment'}
+                    onClick={() => handleChangeOrderProcessStage('payment')}
                     className={styles.order__tabItemBtnEdit}
                   >
                     Edit
                   </button>
-                )}
+                ) : null}
               </div>
 
               <div className={styles.order__tabItemContent}>

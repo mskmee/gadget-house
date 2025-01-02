@@ -59,6 +59,10 @@
       align-items: center;
       justify-content: center;
       background-color: var(--buttons-and-accent-color);
+
+      svg{
+        stroke: var(--white-color);
+      }
     }
 
     &Title {

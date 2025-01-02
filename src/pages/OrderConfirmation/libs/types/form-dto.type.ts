@@ -9,8 +9,8 @@ type DeliveryFormDto =  {
   deliveryType: string;
   city: string;
   street: string;
-  houseNumber: string;
-  flat: string;
+  houseNumber?: string;
+  flat?: string;
 };
 
 type PaymentFormDto =  {

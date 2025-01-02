@@ -16,7 +16,7 @@ type Properties = {
 };
 
 const LineValue = ({ value }: { value: string }) => (
-  <div style={{ display: 'flex', gap: 15 }}>
+  <div className={styles.form__info}>
     <span>{value}</span>
   </div>
 );
@@ -27,6 +27,7 @@ export const ContactsForm: FC<Properties> = ({
   stage,
 }) => {
   const isActive = stage === OrderStage.CONTACTS;
+
   if (!isActive) {
     return (
       <>

@@ -1,12 +1,13 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { Formik, Form } from 'formik';
-import { Radio, RadioChangeEvent, Space } from 'antd';
+import { Radio, Space } from 'antd';
 
 import { DeliveryFormDto } from '../../types/types';
-import { OrderStage } from '../../enums/enums';
+import { DeliveryMethod, OrderStage } from '../../enums/enums';
 import { FormInput } from '@/components/components';
 import { FormRadioInput } from '@/components/common/radio-input/radio-input';
-// import { deliveryFormValidationSchema } from '../../validation-schemas/contacts-form-validation-schema';
+import { deliveryFormValidationSchema } from '../../validation-schemas/contacts-form-validation-schema';
+import { CourierFields, ErrorFields } from './formik-fields';
 
 import styles from './form.module.scss';
 
@@ -18,9 +19,7 @@ type Properties = {
 };
 
 const LineValue = ({ value }: { value: string }) => (
-  <div
-    style={{ display: 'flex', gap: 15, color: '#808080', paddingBottom: 32 }}
-  >
+  <div className={styles.form__info}>
     <span>{value}</span>
   </div>
 );
@@ -31,18 +30,14 @@ export const DeliveryForm: FC<Properties> = ({
   stage,
 }) => {
   const isActive = stage === OrderStage.DELIVERY;
-  const [value, setValue] = useState(1);
-
-  const onChange = (e: RadioChangeEvent) => {
-    setValue(e.target.value);
-  };
 
   if (!isActive) {
     return (
       <>
-        {Object.entries(initialValues).map(([key, value]) => (
-          <LineValue key={key} value={value} />
-        ))}
+        {Object.entries(initialValues).map(
+          ([key, value]) =>
+            !initialValues && <LineValue key={key} value={value} />,
+        )}
       </>
     );
   }
@@ -53,43 +48,37 @@ export const DeliveryForm: FC<Properties> = ({
         initialValues={initialValues}
         validateOnBlur={false}
         validateOnChange={false}
-        // validationSchema={deliveryFormValidationSchema}
-        //TODO: Check validation schema
+        validationSchema={deliveryFormValidationSchema}
         onSubmit={(values) => {
           onSubmit(values);
         }}
       >
         <Form className={styles.form__form}>
-          <Radio.Group
-            //TODO: create and use enum Delivery method
-            className={styles.form__radioGroup}
-            onChange={onChange}
-            value={value}
-          >
+          <Radio.Group className={styles.form__radioGroup} name="deliveryType">
             <Space direction="vertical">
               <FormRadioInput
-                name="delivery"
-                type="radio"
+                name="deliveryType"
                 label="By courier"
-                value="courier"
-                id="courier"
+                value={DeliveryMethod.COURIER}
+                id={DeliveryMethod.COURIER}
               />
 
               <FormRadioInput
-                name="delivery"
-                type="radio"
+                name="deliveryType"
                 label="Nova Poshta"
-                value="novaposhta"
-                id="novaposhta"
+                value={DeliveryMethod.NOVA_POSHTA}
+                id={DeliveryMethod.NOVA_POSHTA}
               />
 
               <FormRadioInput
-                name="delivery"
+                name="deliveryType"
                 label="UkrPoshta"
-                value="ukrposhta"
-                id="ukrposhta"
+                value={DeliveryMethod.UKR_POSHTA}
+                id={DeliveryMethod.UKR_POSHTA}
               />
             </Space>
+
+            <ErrorFields />
           </Radio.Group>
 
           <div className={styles.form__inputs}>
@@ -105,21 +94,7 @@ export const DeliveryForm: FC<Properties> = ({
               placeholder="Street*"
             />
 
-            <div style={{ width: '100%', display: 'flex', gap: 24 }}>
-              <FormInput<DeliveryFormDto>
-                name="houseNumber"
-                type="text"
-                label="House number*"
-                placeholder="House number*"
-              />
-
-              <FormInput<DeliveryFormDto>
-                name="flat"
-                type="textarea"
-                label="Flat number*"
-                placeholder="Flat number*"
-              />
-            </div>
+            <CourierFields />
           </div>
 
           <button className="button button-primary" type="submit">

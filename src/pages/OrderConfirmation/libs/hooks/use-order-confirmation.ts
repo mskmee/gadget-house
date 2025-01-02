@@ -13,6 +13,7 @@ import {
   DELIVERY_FORM_INITIAL_VALUE,
   PAYMENT_FORM_INITIAL_VALUE,
 } from '../constants/contacts-form-initial-value';
+import { OrderService } from '@/utils/packages/orders/orders-service';
 
 type Return = {
   orderProcessStage: OrderStage;
@@ -44,32 +45,32 @@ type State = {
 
 type ReducerAction =
   | {
-      type: OrderConfirmationAction.SUBMIT_CONTACT_FORM;
-      payload: ContactsFormDto;
-    }
+    type: OrderConfirmationAction.SUBMIT_CONTACT_FORM;
+    payload: ContactsFormDto;
+  }
   | {
-      type: OrderConfirmationAction.SUBMIT_DELIVERY_FORM;
-      payload: DeliveryFormDto;
-    }
+    type: OrderConfirmationAction.SUBMIT_DELIVERY_FORM;
+    payload: DeliveryFormDto;
+  }
   | {
-      type: OrderConfirmationAction.SUBMIT_PAYMENT_FORM;
-      payload: PaymentFormDto;
-    }
+    type: OrderConfirmationAction.SUBMIT_PAYMENT_FORM;
+    payload: PaymentFormDto;
+  }
   | {
-      type: OrderConfirmationAction.RESET_ORDER_PROCESS;
-    }
+    type: OrderConfirmationAction.RESET_ORDER_PROCESS;
+  }
   | {
-      type: OrderConfirmationAction.TOGGLE_RULES;
-    }
+    type: OrderConfirmationAction.TOGGLE_RULES;
+  }
   | {
-      type: OrderConfirmationAction.ORDER_READY;
-    }
+    type: OrderConfirmationAction.ORDER_READY;
+  }
   | {
-      type: OrderConfirmationAction.CLOSE_SUCCESS_POPUP;
-    }
+    type: OrderConfirmationAction.CLOSE_SUCCESS_POPUP;
+  }
   | {
-      type: OrderConfirmationAction.CONFIRM_ORDER;
-    };
+    type: OrderConfirmationAction.CONFIRM_ORDER;
+  };
 
 const INITIAL_STATE: State = {
   acceptWithRules: false,
@@ -143,37 +144,6 @@ const useOrderConfirmation = (): Return => {
   const { clearCart } = useActions();
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
 
-  const sendOrderToBackend = async () => {
-    dispatch({
-      type: OrderConfirmationAction.CONFIRM_ORDER,
-    });
-    const orderData = {
-      contacts: state.contactsFormValue,
-      delivery: state.deliveryFormValue,
-      payment: state.paymentFormValue,
-    };
-
-    try {
-      //TODO: create service for cart action here. Example is in src/utils/products
-      const response = await fetch('${process.env.VITE_API_URL}/orders', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(orderData),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to send order');
-      }
-
-      const result = await response.json();
-      clearCart();
-    } catch (error) {
-      console.error('Error sending order:', error);
-    }
-  };
-
   const onContactsFormSubmit = (contactsFormValue: ContactsFormDto) =>
     dispatch({
       type: OrderConfirmationAction.SUBMIT_CONTACT_FORM,
@@ -200,7 +170,27 @@ const useOrderConfirmation = (): Return => {
   };
 
   const onOrderConfirmed = () => {
-    sendOrderToBackend();
+    const orderData = {
+      items: [],
+      fullName: state.contactsFormValue.fullName || '',
+      email: state.contactsFormValue.email || '',
+      phone: state.contactsFormValue.phone || '',
+      comment: state.contactsFormValue.comment || '',
+      address: {
+        city: state.deliveryFormValue.city || '',
+        street: state.deliveryFormValue.street || '',
+        houseNumber: state.deliveryFormValue.houseNumber || '',
+        flat: state.deliveryFormValue.flat || '',
+      },
+      deliveryType: state.deliveryFormValue.deliveryType || '',
+      paymentType: state.paymentFormValue.paymentType || '',
+    };
+
+    OrderService.createOrder(orderData).then(() => {
+      dispatch({
+        type: OrderConfirmationAction.CONFIRM_ORDER,
+      });
+    });
     clearCart();
   };
 
