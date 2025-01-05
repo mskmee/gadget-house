@@ -8,9 +8,14 @@ import { MenuContext } from '@/context/menuContext.ts';
 import { ScrollToTop } from '@/utils/scrollToTop';
 import { useIsFixedHeader } from '@/hooks/useIsFixedHeader';
 import classNames from 'classnames';
+import BasketPopup from '@/components/BasketPopup/BasketPopup.tsx';
+import { BasketPopupContext } from '@/context/basketPopupContext.tsx';
+import { PopUp } from '@/components/PopUp/PopUp.tsx';
 
 const Layout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isBasketPopupOpen, setIsBasketPopupOpen] = useState(false);
+  const [selectedProductId, setSelectedProductId] = useState(0);
   const isFixedHeader = useIsFixedHeader();
 
   const handleMenuOpen = () => {
@@ -19,6 +24,14 @@ const Layout = () => {
   const handleMenuClose = () => {
     setIsMenuOpen(false);
   };
+  const openBasketPopup = (id) => {
+    setIsBasketPopupOpen(true);
+    setSelectedProductId(id);
+  };
+  const closeBasketPopup = () => {
+    setIsBasketPopupOpen(false);
+  };
+
   return (
     <>
       <MenuContext.Provider
@@ -31,14 +44,29 @@ const Layout = () => {
         {!isMenuOpen && <Header />}
         <BurgerMenu />
       </MenuContext.Provider>
-
-      <main
-        className={classNames(styles['main-content'], {
-          [styles.isFixedHeader]: isFixedHeader,
-        })}
+      <BasketPopupContext.Provider
+        value={{
+          isBasketPopupOpen,
+          openBasketPopup,
+          closeBasketPopup,
+          selectedProductId,
+        }}
       >
-        <Outlet />
-      </main>
+        <main
+          className={classNames(styles['main-content'], {
+            [styles.isFixedHeader]: isFixedHeader,
+          })}
+        >
+          <Outlet />
+        </main>
+        <PopUp
+          isOpened={isBasketPopupOpen}
+          onClose={closeBasketPopup}
+          classname="basket-modal"
+        >
+          <BasketPopup />
+        </PopUp>
+      </BasketPopupContext.Provider>
       <Footer />
       <ScrollToTop />
     </>

@@ -26,11 +26,20 @@ import { formatDate } from '@/utils/formatDate';
 import DOMPurify from 'dompurify';
 import classNames from 'classnames';
 import { saveReviews } from '@/utils/saveReview';
+import { useMediaQuery } from 'react-responsive';
 
 const maxLength = 500;
 
 export const SingleProductPage: FC = () => {
   useDocumentTitle(currentProduct?.[0]?.title);
+
+  const isLargerThan992px = useMediaQuery({
+    query: '(max-width: 992px)',
+  });
+
+  const isLargerThan768px = useMediaQuery({
+    query: '(max-width: 768px)',
+  });
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -166,12 +175,32 @@ export const SingleProductPage: FC = () => {
 
   return (
     <div className={style['single-product']}>
-      <div
-        className={classNames(style['single-product__wrap'], 'container-xxl')}
-      >
-        <CustomBreadcrumbs />
-      </div>
-      <MenuItems />
+      {isLargerThan992px ? (
+        <>
+          <MenuItems />
+          <div
+            className={classNames(
+              style['single-product__wrap'],
+              'container-xxl',
+            )}
+          >
+            {!isLargerThan768px && <CustomBreadcrumbs />}
+          </div>
+        </>
+      ) : (
+        <>
+          <div
+            className={classNames(
+              style['single-product__wrap'],
+              'container-xxl',
+            )}
+          >
+            <CustomBreadcrumbs />
+          </div>
+          <MenuItems />
+        </>
+      )}
+
       <div
         className={classNames(style['single-product__wrap'], 'container-xxl')}
       >

@@ -13,20 +13,21 @@
 }
 .nothingFound {
   margin: 0 auto;
-  max-width: 743px;
   width: 100%;
   color: #1c1817;
   text-align: center;
 
-  > h2 {
+  > p {
     font-size: rem(42px);
     font-weight: 500;
     line-height: 150%;
     word-wrap: break-word;
   }
-  > p {
+  > span {
+    display: inline-block;
+    max-width: 482px;
+    width: 100%;
     margin: 0 auto;
-    width: 65%;
     line-height: 150%;
   }
 }

@@ -234,6 +234,9 @@ export const Header = () => {
             {isLaptopPage ? (
               <img
                 src={isCatalogListOpen ? LeftArrow : BurgerMenuIcon}
+                className={classNames({
+                  [styles['active-burger-menu']]: isCatalogListOpen,
+                })}
                 onClick={handleOpenCloseBurgerMenu}
               />
             ) : (

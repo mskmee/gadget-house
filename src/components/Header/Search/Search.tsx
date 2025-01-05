@@ -153,7 +153,7 @@ export const Search: FC<ISearchProps> = ({
       })}
       placeholder="Searching..."
       value={searchInput.value}
-      maxLength={80}
+      maxLength={40}
       onChange={handleChangeInputValue}
       prefix={
         <div

@@ -34,10 +34,6 @@ export const SliderNav: FC<ISliderNavProps> = ({
               alt="Right icon"
             />
           </div>
-
-          <hr
-            className={`${styles.buttonHr} ${isClicked ? styles.buttonHrActive : ''}`}
-          />
         </Link>
       )}
     </div>

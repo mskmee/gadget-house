@@ -7,6 +7,7 @@ import { Modal } from 'antd';
 import { AddToBasketButton } from './AddToBasketButton';
 import { convertPriceToReadable } from '@/utils/helpers/product';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { useMediaQuery } from 'react-responsive';
 
 interface ICurrentSlide {
   id: number;
@@ -51,6 +52,10 @@ export const PhotoModal: FC<iPhotoModalProps> = ({
     setIsModalVisible(false);
     setModalImageSrc(null);
   };
+
+  const isLargerThan500px = useMediaQuery({
+    query: '(max-width: 500px)',
+  });
 
   const selectCurrentSlideByClick = (slideId: number) => {
     return () => {
@@ -118,8 +123,7 @@ export const PhotoModal: FC<iPhotoModalProps> = ({
                   {currentSlide.id}/{currentProduct[0].images?.length}
                 </span>
               </div>
-
-              <div className={style['product_carousel-slicks']}>
+              {isLargerThan500px && (
                 <ul>
                   {currentProductImages?.map((item) => (
                     <li
@@ -129,11 +133,28 @@ export const PhotoModal: FC<iPhotoModalProps> = ({
                           currentSlide?.id === item?.id,
                       })}
                       onClick={selectCurrentSlideByClick(item?.id)}
-                    >
-                      <img src={item?.img} alt="product slick picture" />
-                    </li>
+                    ></li>
                   ))}
                 </ul>
+              )}
+              <div className={style['product_carousel-slicks']}>
+                {!isLargerThan500px && (
+                  <ul>
+                    {currentProductImages?.map((item) => (
+                      <li
+                        key={item?.id}
+                        className={classNames({
+                          [style['selected-photo']]:
+                            currentSlide?.id === item?.id,
+                        })}
+                        onClick={selectCurrentSlideByClick(item?.id)}
+                      >
+                        <img src={item?.img} alt="product slick picture" />
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
                 <div className={style.photoModalBottom_right}>
                   <span>
                     {convertPriceToReadable(

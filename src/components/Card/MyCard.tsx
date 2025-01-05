@@ -1,4 +1,4 @@
-import { FC, MouseEvent } from 'react';
+import { FC, MouseEvent, useContext } from 'react';
 import { Rate } from 'antd';
 import styles from './card.module.scss';
 import { rateImg, rateEmptyImg } from '@/assets/constants';
@@ -9,9 +9,9 @@ import { BasketIcon } from '@/assets/icons/BasketIcon';
 import classNames from 'classnames';
 import { HeartIcon } from '@/assets/icons/HeartIcon';
 import { useActions } from '@/hooks/useActions';
-import { toast } from 'react-toastify';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { convertPriceToReadable } from '@/utils/helpers/product';
+import { BasketPopupContext } from '@/context/basketPopupContext.tsx';
 
 interface ISmartphoneCardProps {
   product: IProductCard;
@@ -29,18 +29,14 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
   const { isLiked, handleClickLike } = useProductCardHandlers();
   const { addToStore } = useActions();
   const { locale, currency } = useTypedSelector((state) => state.shopping_card);
+  const { openBasketPopup } = useContext(BasketPopupContext);
 
   const productRating = product.rate ?? 0;
 
   const addToBasket = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     addToStore(product);
-    toast.success('The product has been successfully added to your cart!', {
-      position: 'top-center',
-      type: 'success',
-      autoClose: 4000,
-      theme: 'dark',
-    });
+    openBasketPopup(product.id);
   };
 
   return (
