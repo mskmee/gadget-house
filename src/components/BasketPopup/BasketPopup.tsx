@@ -10,11 +10,9 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '@/enums/Route.ts';
 import { Carousels, SliderNav } from '@/components/components.ts';
-import { useDispatch } from 'react-redux';
 
 export default function BasketPopup() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const { products, currency, locale, selectedProductId } = useTypedSelector(
     (state) => state.shopping_card,
@@ -38,7 +36,7 @@ export default function BasketPopup() {
     <div className={styles.basketPopup}>
       <button
         className={styles.basketPopupClose}
-        onClick={() => dispatch(closeBasketPopup())}
+        onClick={() => closeBasketPopup()}
       >
         <img src={closeBasketPopupIcon} alt="close" />
       </button>

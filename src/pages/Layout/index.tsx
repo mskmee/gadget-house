@@ -11,14 +11,15 @@ import classNames from 'classnames';
 import BasketPopup from '@/components/BasketPopup/BasketPopup.tsx';
 import { PopUp } from '@/components/PopUp/PopUp.tsx';
 import { useTypedSelector } from '@/hooks/useTypedSelector.ts';
+import { useActions } from '@/hooks/useActions.ts';
 
 const Layout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isFixedHeader = useIsFixedHeader();
-  const { isBasketPopupOpen, closeBasketPopup } = useTypedSelector(
+  const { isBasketPopupOpen } = useTypedSelector(
     (state) => state.shopping_card,
   );
-
+  const { closeBasketPopup } = useActions();
   const handleMenuOpen = () => {
     setIsMenuOpen(true);
   };

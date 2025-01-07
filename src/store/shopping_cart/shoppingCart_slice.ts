@@ -17,8 +17,8 @@ export interface IInitialState {
   cardTotalQuantity: number;
   currency: Currency;
   locale: Locale;
-  isBasketPopupOpen: false;
-  selectedProductId: null;
+  isBasketPopupOpen: boolean;
+  selectedProductId: number | null;
 }
 // Locale and Currency should be in the other slice in the future. Something like settings slice.
 
