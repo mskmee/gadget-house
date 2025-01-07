@@ -1,6 +1,4 @@
 import styles from './basketpopup.module.scss';
-import { useContext } from 'react';
-import { BasketPopupContext } from '@/context/basketPopupContext.tsx';
 import { convertPriceToReadable } from '@/utils/helpers/product.ts';
 import { useTypedSelector } from '@/hooks/useTypedSelector.ts';
 import { useActions } from '@/hooks/useActions.ts';
@@ -12,16 +10,22 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '@/enums/Route.ts';
 import { Carousels, SliderNav } from '@/components/components.ts';
+import { useDispatch } from 'react-redux';
 
 export default function BasketPopup() {
   const navigate = useNavigate();
-  const { selectedProductId, closeBasketPopup } =
-    useContext(BasketPopupContext);
-  const { products, currency, locale } = useTypedSelector(
+  const dispatch = useDispatch();
+
+  const { products, currency, locale, selectedProductId } = useTypedSelector(
     (state) => state.shopping_card,
   );
-  const { deleteFromStore, increaseItemQuantity, decreaseItemQuantity } =
-    useActions();
+
+  const {
+    deleteFromStore,
+    closeBasketPopup,
+    increaseItemQuantity,
+    decreaseItemQuantity,
+  } = useActions();
   const selectedProduct = products.find(
     (product) => product.id === selectedProductId,
   );
@@ -32,7 +36,10 @@ export default function BasketPopup() {
 
   return (
     <div className={styles.basketPopup}>
-      <button className={styles.basketPopupClose} onClick={closeBasketPopup}>
+      <button
+        className={styles.basketPopupClose}
+        onClick={() => dispatch(closeBasketPopup())}
+      >
         <img src={closeBasketPopupIcon} alt="close" />
       </button>
       <div className={styles.basketPopupProduct}>

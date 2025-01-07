@@ -17,6 +17,7 @@ type CarouselClassname =
   | 'laptop-carousel'
   | 'smartphone-carousel'
   | 'viewed-carousel'
+  | 'basket-popup-carousel'
   | 'photos-carousel';
 interface CustomCarouselProps {
   classname: CarouselClassname;

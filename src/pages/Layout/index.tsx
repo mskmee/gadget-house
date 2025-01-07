@@ -9,27 +9,21 @@ import { ScrollToTop } from '@/utils/scrollToTop';
 import { useIsFixedHeader } from '@/hooks/useIsFixedHeader';
 import classNames from 'classnames';
 import BasketPopup from '@/components/BasketPopup/BasketPopup.tsx';
-import { BasketPopupContext } from '@/context/basketPopupContext.tsx';
 import { PopUp } from '@/components/PopUp/PopUp.tsx';
+import { useTypedSelector } from '@/hooks/useTypedSelector.ts';
 
 const Layout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isBasketPopupOpen, setIsBasketPopupOpen] = useState(false);
-  const [selectedProductId, setSelectedProductId] = useState(0);
   const isFixedHeader = useIsFixedHeader();
+  const { isBasketPopupOpen, closeBasketPopup } = useTypedSelector(
+    (state) => state.shopping_card,
+  );
 
   const handleMenuOpen = () => {
     setIsMenuOpen(true);
   };
   const handleMenuClose = () => {
     setIsMenuOpen(false);
-  };
-  const openBasketPopup = (id) => {
-    setIsBasketPopupOpen(true);
-    setSelectedProductId(id);
-  };
-  const closeBasketPopup = () => {
-    setIsBasketPopupOpen(false);
   };
 
   return (
@@ -44,29 +38,20 @@ const Layout = () => {
         {!isMenuOpen && <Header />}
         <BurgerMenu />
       </MenuContext.Provider>
-      <BasketPopupContext.Provider
-        value={{
-          isBasketPopupOpen,
-          openBasketPopup,
-          closeBasketPopup,
-          selectedProductId,
-        }}
+      <main
+        className={classNames(styles['main-content'], {
+          [styles.isFixedHeader]: isFixedHeader,
+        })}
       >
-        <main
-          className={classNames(styles['main-content'], {
-            [styles.isFixedHeader]: isFixedHeader,
-          })}
-        >
-          <Outlet />
-        </main>
-        <PopUp
-          isOpened={isBasketPopupOpen}
-          onClose={closeBasketPopup}
-          classname="basket-modal"
-        >
-          <BasketPopup />
-        </PopUp>
-      </BasketPopupContext.Provider>
+        <Outlet />
+      </main>
+      <PopUp
+        isOpened={isBasketPopupOpen}
+        onClose={closeBasketPopup}
+        classname="basket-modal"
+      >
+        <BasketPopup />
+      </PopUp>
       <Footer />
       <ScrollToTop />
     </>
