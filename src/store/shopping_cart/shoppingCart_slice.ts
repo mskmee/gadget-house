@@ -44,6 +44,8 @@ const shoppingCard_slice = createSlice({
   initialState,
   reducers: {
     addToStore: (state, { payload: product }: PayloadAction<IProductCard>) => {
+      state.selectedProductId = product.id || null;
+      state.isBasketPopupOpen = true;
       const updatedProduct = state.products.find(
         (item) => item.id === product?.id,
       );
@@ -70,8 +72,6 @@ const shoppingCard_slice = createSlice({
       );
       state.cardTotalAmount = calculateCartTotalPrice(state.products);
       state.cardTotalQuantity = state.products.length;
-      state.selectedProductId = product?.id || null;
-      state.isBasketPopupOpen = true;
     },
     deleteFromStore: (state, { payload: productId }: PayloadAction<number>) => {
       const productIndex = state.products.findIndex(
