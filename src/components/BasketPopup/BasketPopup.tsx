@@ -76,7 +76,7 @@ export default function BasketPopup() {
             </h3>
             <button
               className={styles.basketPopupContinueShopping}
-              onClick={closeBasketPopup}
+              onClick={() => closeBasketPopup()}
             >
               Continue Shopping
             </button>
