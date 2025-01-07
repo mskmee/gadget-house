@@ -3,7 +3,7 @@
   top: 0;
   bottom: 0;
   left: -5000px;
-  z-index: 15;
+  z-index: 1000;
   display: flex;
   flex: 1;
   justify-content: center;
@@ -47,5 +47,17 @@
   &:focus {
     outline: none;
     box-shadow: 0 0 0 2px #ff5a5a;
+  }
+}
+
+.basket-modal{
+  background: rgba(28, 24, 23, 0.7);
+  .content {
+    padding: 0;
+    width: auto;
+    height: auto;
+  }
+  .close {
+    display: none;
   }
 }
