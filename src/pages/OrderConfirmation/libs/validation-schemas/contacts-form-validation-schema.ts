@@ -9,17 +9,19 @@ const regx = {
 
 const fullName = Yup.string().matches(regx.name, 'Wrong name format').required('Enter your full name');
 const email = Yup.string().matches(regx.email, 'Wrong email format').required('Enter your email');
-const phone = Yup.string().matches(regx.phone, 'Wrong phone number format').required('Enter your phone number');
+const phoneNumber = Yup.string().matches(regx.phone, 'Wrong phone number format').required('Enter your phone number');
 const comment = Yup.string().optional().max(1000, 'Comment is too long');
 const city = Yup.string().required('Enter your city').max(50, 'City is too long');
 const street = Yup.string().required('Enter your street').max(50, 'Street is too long');
 const houseNumber = Yup.string().when('deliveryType', {
-  is: 'courier',
-  then: Yup.string().required('Enter number of house').max(10, 'House number is too long')
+  is: (value: string) => value === 'courier',
+  then: () => Yup.string().required('Enter number of house').max(10, 'House number is too long'),
+  otherwise: () => Yup.string().nullable(),
 });
 const flat = Yup.string().when('deliveryType', {
-  is: 'courier',
-  then: Yup.string().required('Enter number of flat').max(10, 'Flat is too long'),
+  is: (value: string) => value === 'courier',
+  then: () => Yup.string().required('Enter number of flat').max(10, 'Flat is too long'),
+  otherwise: () => Yup.string().nullable(),
 });
 const deliveryType = Yup.string()
   .oneOf(['courier', 'novaposhta', 'ukrposhta'], 'Please select a payment method')
@@ -32,7 +34,7 @@ const contactsFormValidationSchema: Yup.Schema<ContactsFormDto> =
   Yup.object().shape({
     fullName,
     email,
-    phone,
+    phoneNumber,
     comment,
   });
 

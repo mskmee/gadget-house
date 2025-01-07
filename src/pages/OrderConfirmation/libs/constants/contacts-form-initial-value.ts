@@ -3,7 +3,7 @@ import { ContactsFormDto, DeliveryFormDto, PaymentFormDto } from '../types/form-
 const CONTACTS_FORM_INITIAL_VALUE: ContactsFormDto = {
   fullName: '',
   email: '',
-  phone: '',
+  phoneNumber: '',
   comment: '',
 };
 

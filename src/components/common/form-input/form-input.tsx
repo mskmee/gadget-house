@@ -45,7 +45,6 @@ export const FormInput = <T extends FormikValues>({
       ) : (
         label && (
           <label className={cn(styles.formInput__input)} htmlFor={inputId}>
-            <span>{label}</span>
             {inputType === 'input' ? (
               <Input
                 {...field}
@@ -68,6 +67,7 @@ export const FormInput = <T extends FormikValues>({
                 {meta.error}
               </div>
             ) : null}
+            <span className={styles.formInput__label}>{label}</span>
           </label>
         )
       )}

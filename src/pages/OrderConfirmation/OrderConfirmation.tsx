@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import cn from 'classnames';
 
@@ -14,6 +14,7 @@ import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { SuccessPopUp } from './SuccessPopUp';
 
 import styles from './order-confirmation.module.scss';
+import { AppRoute } from '@/enums/Route';
 
 const OrderConfirmation: FC = () => {
   const {
@@ -34,10 +35,6 @@ const OrderConfirmation: FC = () => {
   } = useOrderConfirmation();
   const navigate = useNavigate();
 
-  const goBack = () => {
-    navigate(-1);
-  };
-
   const { deleteFromStore, increaseItemQuantity, decreaseItemQuantity } =
     useActions();
 
@@ -45,22 +42,12 @@ const OrderConfirmation: FC = () => {
     (state) => state.shopping_card,
   );
 
-  if (products.length === 0) {
-    onResetOrderProcess();
-    goBack();
-  }
-
-  const handleChangeOrderProcessStage = (
-    stage: 'contacts' | 'delivery' | 'payment',
-  ) => {
-    if (stage === 'contacts') {
-      orderProcessStage === 'contacts';
-    } else if (stage === 'delivery') {
-      orderProcessStage === 'delivery';
-    } else if (stage === 'payment') {
-      orderProcessStage === 'payment';
+  useEffect(() => {
+    if (products.length === 0) {
+      onResetOrderProcess();
+      navigate(AppRoute.ALL_PRODUCTS);
     }
-  };
+  }, [products, navigate]);
 
   return (
     <section className={styles.order}>
@@ -73,150 +60,24 @@ const OrderConfirmation: FC = () => {
         <h2 className={styles.order__title}>Order сonfirmation</h2>
 
         <div className={styles.order__content}>
-          <div className={styles.order__tabs}>
-            <div className={styles.order__tabItem}>
-              <div className={styles.order__tabItemHeader}>
-                <div className={styles.order__tabItemHeaderText}>
-                  {orderProcessStage !== 'contacts' ? (
-                    <div className={styles.order__tabItemCheckMark}>
-                      <svg
-                        width="22"
-                        height="20"
-                        viewBox="0 0 22 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M5 11L9.33364 15L18 7"
-                          stroke="white"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                  ) : (
-                    <div className={styles.order__tabItemNumber}>1</div>
-                  )}
-                  <h2 className={styles.order__tabItemTitle}>Contacts</h2>
-                </div>
+          <div className={styles.order__forms}>
+            <ContactsForm
+              stage={orderProcessStage}
+              onSubmit={onContactsFormSubmit}
+              initialValues={contactsFormValue}
+            />
 
-                {contactsFormValue && orderProcessStage !== 'contacts' ? (
-                  <button
-                    onClick={() => handleChangeOrderProcessStage('contacts')}
-                    className={styles.order__tabItemBtnEdit}
-                  >
-                    Edit
-                  </button>
-                ) : null}
-              </div>
+            <DeliveryForm
+              stage={orderProcessStage}
+              onSubmit={onDeliveryFormSubmit}
+              initialValues={deliveryFormValue}
+            />
 
-              <div className={styles.order__tabItemContent}>
-                {orderProcessStage === 'contacts' && (
-                  <ContactsForm
-                    stage={orderProcessStage}
-                    onSubmit={onContactsFormSubmit}
-                    initialValues={contactsFormValue}
-                  />
-                )}
-              </div>
-            </div>
-
-            <div className={styles.order__tabItem}>
-              <div className={styles.order__tabItemHeader}>
-                <div className={styles.order__tabItemHeaderText}>
-                  {orderProcessStage !== 'delivery' ? (
-                    <div className={styles.order__tabItemCheckMark}>
-                      <svg
-                        width="22"
-                        height="20"
-                        viewBox="0 0 22 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M5 11L9.33364 15L18 7"
-                          stroke="white"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                  ) : (
-                    <div className={styles.order__tabItemNumber}>2</div>
-                  )}
-                  <h2 className={styles.order__tabItemTitle}>Delivery</h2>
-                </div>
-
-                {deliveryFormValue.deliveryType !== '' &&
-                orderProcessStage !== 'delivery' ? (
-                  <button
-                    onClick={() => handleChangeOrderProcessStage('delivery')}
-                    className={styles.order__tabItemBtnEdit}
-                  >
-                    Edit
-                  </button>
-                ) : null}
-              </div>
-
-              <div className={styles.order__tabItemContent}>
-                <DeliveryForm
-                  stage={orderProcessStage}
-                  onSubmit={onDeliveryFormSubmit}
-                  initialValues={deliveryFormValue}
-                />
-              </div>
-            </div>
-
-            <div className={styles.order__tabItem}>
-              <div className={styles.order__tabItemHeader}>
-                <div className={styles.order__tabItemHeaderText}>
-                  {orderProcessStage !== 'payment' ? (
-                    <div className={styles.order__tabItemCheckMark}>
-                      <svg
-                        width="22"
-                        height="20"
-                        viewBox="0 0 22 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M5 11L9.33364 15L18 7"
-                          stroke="white"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                  ) : (
-                    <div className={styles.order__tabItemNumber}>3</div>
-                  )}
-                  <h2 className={styles.order__tabItemTitle}>Payment</h2>
-                </div>
-
-                {paymentFormValue.paymentType !== '' &&
-                orderProcessStage !== 'payment' ? (
-                  <button
-                    onClick={() => handleChangeOrderProcessStage('payment')}
-                    className={styles.order__tabItemBtnEdit}
-                  >
-                    Edit
-                  </button>
-                ) : null}
-              </div>
-
-              <div className={styles.order__tabItemContent}>
-                {orderProcessStage === 'payment' && (
-                  <PaymentForm
-                    stage={orderProcessStage}
-                    onSubmit={onPaymentFormSubmit}
-                    initialValues={paymentFormValue}
-                  />
-                )}
-              </div>
-            </div>
+            <PaymentForm
+              stage={orderProcessStage}
+              onSubmit={onPaymentFormSubmit}
+              initialValues={paymentFormValue}
+            />
           </div>
 
           <div className={styles.order__items}>

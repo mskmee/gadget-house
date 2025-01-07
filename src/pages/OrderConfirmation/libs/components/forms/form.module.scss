@@ -1,0 +1,158 @@
+.form {
+  padding: 8px 0;
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    gap: 19px;
+
+    &Text {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 19px;
+    }
+  }
+
+  &__number {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: var(--secondary-background-color);
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 150%;
+    color: var(--text-color);
+  }
+
+  &__checkMark {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--buttons-and-accent-color);
+
+    svg {
+      stroke: var(--white-color);
+    }
+  }
+
+  &__title {
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 150%;
+    color: var(--text-color);
+  }
+
+  &__btnEdit {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    color: var(--text-color);
+    border-bottom: 1px dashed var(--black);
+    outline: none;
+    background-color: transparent;
+    transition: all 0.3s ease-in-out;
+
+    &::before {
+      content: "";
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+      background-image: url("../../../../../assets/icons/edit.svg");
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: contain;
+      transition: all 0.3s ease-in-out;
+    }
+
+    &:hover,
+    &:focus,
+    &:focus-visible {
+      color: var(--buttons-and-accent-color);
+      border-color: var(--buttons-and-accent-color);
+
+      &::before {
+        background-image: url("../../../../../assets/icons/edit-hover.svg");
+      }
+    }
+  }
+
+  &__content {
+    margin-left: 31px;
+    padding-left: 45px;
+    padding-bottom: 40px;
+    border-left: 1px solid var(--secondary-text-color);
+
+    &Payment {
+      border-left: none;
+    }
+  }
+
+  &__inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+
+  &__radioGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  &__buttonDone {
+    margin-top: 8px;
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    color: var(--secondary-text-color);
+
+    span:not(:last-child)::after {
+      content: ",";
+      display: inline-block;
+      margin-right: 5px;
+    }
+  }
+
+  &__error {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 9px;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    color: var(--error-color);
+
+    svg {
+      display: inline-block;
+    }
+  }
+}

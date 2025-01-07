@@ -1,3 +1,3 @@
-export { ContactsForm } from './contacts-form/contacts-form';
-export { DeliveryForm } from './contacts-form/delivery-form';
-export { PaymentForm } from './contacts-form/payment-form';
+export { ContactsForm } from './forms/contacts-form';
+export { DeliveryForm } from './forms/delivery-form';
+export { PaymentForm } from './forms/payment-form';

@@ -1,29 +1,30 @@
 .formInput {
-  position: relative;
   width: 100%;
+
+  &__label {
+    position: absolute;
+    top: -9px;
+    left: 19px;
+    display: none;
+    opacity: 0;
+    padding: 0 3px;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    z-index: 5;
+    transition: all 0.3s ease;
+  }
 
   &__input {
     width: 100%;
-
-    span {
-      position: absolute;
-      top: -9px;
-      left: 19px;
-      display: none;
-      padding: 0 3px;
-      font-family: "Inter", sans-serif;
-      font-weight: 400;
-      font-size: 12px;
-      line-height: 150%;
-      color: var(--text-color);
-      background-color: var(--bg-color);
-      z-index: 5;
-      transition: display 0.3s ease;
-    }
+    position: relative;
 
     input,
     textarea {
-      display: inline-block;
+      display: block;
       width: 100%;
       padding: 16px;
       border-radius: 12px;
@@ -56,15 +57,23 @@
       }
     }
 
-    input:active {
-      span {
-        display: block;
-      }
+    input:focus + .formInput__label {
+      display: block;
+      opacity: 1;
+    }
+
+    textarea:focus + .formInput__label {
+      display: block;
+      opacity: 1;
     }
 
     textarea {
       min-height: 126px;
       resize: none;
+    }
+
+    input:focus + .formInput__error {
+      display: none;
     }
 
     :global {
@@ -86,5 +95,6 @@
     font-size: 12px;
     line-height: 150%;
     color: var(--error-color);
+    transition: all 0.3s ease;
   }
 }

@@ -8,12 +8,14 @@ import {
 } from '../types/types';
 import { OrderStage, OrderConfirmationAction } from '../enums/enums';
 import { useActions } from '@/hooks/useActions';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { CONTACTS_FORM_INITIAL_VALUE } from '../constants/constants';
 import {
   DELIVERY_FORM_INITIAL_VALUE,
   PAYMENT_FORM_INITIAL_VALUE,
 } from '../constants/contacts-form-initial-value';
-import { OrderService } from '@/utils/packages/orders/orders-service';
+import { ordersService } from '@/utils/packages/orders/';
+import { OrderItemResponseDto } from '@/utils/packages/orders/libs/types/order-item-response-dto';
 
 type Return = {
   orderProcessStage: OrderStage;
@@ -143,6 +145,9 @@ const reducer: Reducer<State, ReducerAction> = (state, action) => {
 const useOrderConfirmation = (): Return => {
   const { clearCart } = useActions();
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
+  const { products } = useTypedSelector(
+    (state) => state.shopping_card,
+  );
 
   const onContactsFormSubmit = (contactsFormValue: ContactsFormDto) =>
     dispatch({
@@ -150,16 +155,16 @@ const useOrderConfirmation = (): Return => {
       payload: contactsFormValue,
     });
 
-  const onDeliveryFormSubmit = (data: DeliveryFormDto) =>
+  const onDeliveryFormSubmit = (deliveryFormValue: DeliveryFormDto) =>
     dispatch({
       type: OrderConfirmationAction.SUBMIT_DELIVERY_FORM,
-      payload: data,
+      payload: deliveryFormValue,
     });
 
-  const onPaymentFormSubmit = (data: PaymentFormDto) =>
+  const onPaymentFormSubmit = (paymentFormValue: PaymentFormDto) =>
     dispatch({
       type: OrderConfirmationAction.SUBMIT_PAYMENT_FORM,
-      payload: data,
+      payload: paymentFormValue,
     });
 
   const onResetOrderProcess = () => {
@@ -170,28 +175,31 @@ const useOrderConfirmation = (): Return => {
   };
 
   const onOrderConfirmed = () => {
-    const orderData = {
-      items: [],
-      fullName: state.contactsFormValue.fullName || '',
-      email: state.contactsFormValue.email || '',
-      phone: state.contactsFormValue.phone || '',
-      comment: state.contactsFormValue.comment || '',
+    const orderData: OrderItemResponseDto = {
+      fullName: state.contactsFormValue.fullName,
+      email: state.contactsFormValue.email,
+      phoneNumber: state.contactsFormValue.phoneNumber,
+      comment: state.contactsFormValue.comment,
+      cartItems: products.map((product) => ({
+        productId: product.id,
+        quantity: product.quantity,
+      })),
       address: {
-        city: state.deliveryFormValue.city || '',
-        street: state.deliveryFormValue.street || '',
-        houseNumber: state.deliveryFormValue.houseNumber || '',
-        flat: state.deliveryFormValue.flat || '',
+        city: state.deliveryFormValue.city,
+        street: state.deliveryFormValue.street,
+        houseNumber: state.deliveryFormValue.houseNumber,
+        flat: state.deliveryFormValue.flat,
       },
-      deliveryType: state.deliveryFormValue.deliveryType || '',
-      paymentType: state.paymentFormValue.paymentType || '',
+      deliveryMethod: state.deliveryFormValue.deliveryType,
+      paymentMethod: state.paymentFormValue.paymentType,
     };
 
-    OrderService.createOrder(orderData).then(() => {
+    ordersService.createOrder(orderData).then(() => {
       dispatch({
         type: OrderConfirmationAction.CONFIRM_ORDER,
       });
     });
-    clearCart();
+    // clearCart();
   };
 
   const onSuccessPopUpClose = () =>

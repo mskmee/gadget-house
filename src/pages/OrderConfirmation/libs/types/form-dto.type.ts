@@ -1,7 +1,7 @@
 type ContactsFormDto = {
   fullName: string;
   email: string;
-  phone: string;
+  phoneNumber: string;
   comment?: string;
 };
 
