@@ -8,9 +8,9 @@ import { IProductCard } from '@/interfaces/interfaces';
 import { BasketIcon } from '@/assets/icons/BasketIcon';
 import classNames from 'classnames';
 import { HeartIcon } from '@/assets/icons/HeartIcon';
+import { useActions } from '@/hooks/useActions';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { convertPriceToReadable } from '@/utils/helpers/product';
-import { useAddProductToBasket } from '@/hooks/useAddProductToBasket';
 
 interface ISmartphoneCardProps {
   product: IProductCard;
@@ -26,14 +26,14 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
   width,
 }) => {
   const { isLiked, handleClickLike } = useProductCardHandlers();
-
+  const { addToStore } = useActions();
   const { locale, currency } = useTypedSelector((state) => state.shopping_card);
   const productRating = product.rate ?? 0;
-  const { addProductToBasket } = useAddProductToBasket();
 
   const addToBasket = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    addProductToBasket(product);
+
+    addToStore(product);
   };
 
   return (

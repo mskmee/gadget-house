@@ -16,6 +16,7 @@ type CarouselClassname =
   | 'laptop-carousel'
   | 'smartphone-carousel'
   | 'viewed-carousel'
+  | 'basket-popup-carousel'
   | 'photos-carousel';
 
 interface CustomCarouselProps {
@@ -53,7 +54,6 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
         ? productImages?.length
         : 8;
   const maxIndex = (totalItems ?? 0) - responsiveCarouselSettings.count;
-  console.log(currentIndex, maxIndex, classname);
 
   const handleNext = () => {
     if (currentIndex < maxIndex) {
