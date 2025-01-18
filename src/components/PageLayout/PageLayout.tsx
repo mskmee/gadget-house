@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 import { ProductItem } from '@/utils/packages/products';
 import { FiltersDesk } from '@/components/Filters/FiltersDesk';
@@ -25,12 +25,18 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   currentPage,
 }) => {
   const location = useLocation();
+  const { title } = useParams();
 
   const pathname = location.pathname.slice(1).toLowerCase();
   let category = '';
+
   pathname.includes('-')
     ? (category = pathname.split('-').join(' '))
     : (category = pathname);
+
+  pathname.includes('search') && title
+    ? (category = title.split('-').join(' '))
+    : pathname;
 
   return (
     <div className={styles.pageLayout}>

@@ -83,11 +83,18 @@
 
 @media screen and (max-width: 992px) {
   .container {
-    width: 450px;
-    padding: 10px 0 10px 10px;
     .cards,
     .total {
       padding-right: 10px;
+    }
+  }
+}
+@media screen and (max-width: 768px) {
+  .container {
+    width: 490px;
+    .cards {
+      max-height: 430px;
+      row-gap: 10px;
     }
   }
 }
@@ -95,6 +102,9 @@
 @media screen and (max-width: 550px) {
   .container {
     width: 400px;
+    .cards {
+      max-height: 380px;
+    }
   }
 }
 
@@ -114,8 +124,57 @@
 @media screen and (max-width: 380px) {
   .container {
     width: 280px;
+    padding: 10px 0 10px 10px;
   }
   .container .cards {
     row-gap: 7px;
+    max-height: 335px;
+  }
+}
+
+@media (max-height: 820px) and (min-width: 769px) {
+  .container {
+    max-height: 600px;
+    padding: 20px 0 20px 20px;
+    .cards {
+      max-height: 450px;
+    }
+  }
+}
+
+@media (max-height: 820px) and (max-width: 768px) {
+  .container {
+    .cards {
+      max-height: 430px;
+    }
+  }
+}
+@media (max-height: 820px) and (max-width: 550px) {
+  .container {
+    .cards {
+      max-height: 370px;
+    }
+  }
+}
+@media (max-height: 820px) and (max-width: 380px) {
+  .container {
+    .cards {
+      max-height: 335px;
+    }
+  }
+}
+
+@media screen and (max-height: 730px) {
+  .container {
+    max-height: 500px;
+    padding: 15px 0 15px 15px;
+    .cards {
+      row-gap: 10px;
+      max-height: 387px;
+      margin-bottom: 15px;
+      > div {
+        height: 122px;
+      }
+    }
   }
 }

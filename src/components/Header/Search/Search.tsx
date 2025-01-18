@@ -15,7 +15,7 @@ import { Input, InputRef } from 'antd';
 import classNames from 'classnames';
 import debounce from 'lodash.debounce';
 import { searchInputClear } from '@/assets/constants';
-import { laptopData, smartphoneData } from '@/components/Card/constants';
+import { laptopData, smartphoneData } from '@/constants/productCards';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useActions } from '@/hooks/useActions';
 
@@ -116,7 +116,7 @@ export const Search: FC<ISearchProps> = ({
 
   const handleChangeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
-    const isTooLong = inputValue.length >= 80;
+    const isTooLong = inputValue.length >= 40;
 
     setSearchInput({ value: inputValue, hasError: isTooLong });
     debouncedSuggestionHandler(inputValue);
@@ -171,6 +171,8 @@ export const Search: FC<ISearchProps> = ({
                   )
                   .slice(0, 6)
                   .map((trend, index) => {
+                    console.log(trend);
+
                     const searchValue = searchInput.value.trim().toLowerCase();
                     const startIndex = trend.title
                       .toLowerCase()
@@ -181,7 +183,8 @@ export const Search: FC<ISearchProps> = ({
                       <li key={index}>
                         {startIndex !== -1 && (
                           <Link
-                            to={`/seacrh/?text=${trend.title.split(' ').join('+')}`}
+                            to={`/search/${trend.title.replace(/[\s/]/g, '-')}`}
+                            onClick={() => setIsOverlayActive(false)}
                           >
                             <span>{trend.title.slice(0, startIndex)}</span>
                             <strong>

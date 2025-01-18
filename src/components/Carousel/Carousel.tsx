@@ -7,10 +7,9 @@ import {
   laptopData,
   smartphoneData,
   previouslyReviewedData,
-} from '../Card/constants';
+} from '@/constants/productCards';
 import { useMediaQuery } from 'react-responsive';
 import { useResponsiveCarouselSettings } from '@/hooks/useResponsiveCarouselSettings';
-import { productImages } from '@/constants/singleProduct';
 
 type CarouselClassname =
   | 'brands-carousel'
@@ -18,11 +17,16 @@ type CarouselClassname =
   | 'smartphone-carousel'
   | 'viewed-carousel'
   | 'photos-carousel';
+
 interface CustomCarouselProps {
   classname: CarouselClassname;
+  productImages?: string[];
 }
 
-const CustomCarousel: React.FC<CustomCarouselProps> = ({ classname }) => {
+const CustomCarousel: React.FC<CustomCarouselProps> = ({
+  classname,
+  productImages,
+}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [startX, setStartX] = useState<number | null>(null);
   const [currentTranslate, setCurrentTranslate] = useState(0);
@@ -32,15 +36,24 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({ classname }) => {
     query: '(max-width: 1440px)',
   });
 
-  const responsiveCarouselSettings = useResponsiveCarouselSettings(classname);
+  const responsiveCarouselSettings = useResponsiveCarouselSettings(
+    classname,
+    (productImages?.length ?? 0) > 4 ? 4 : (productImages?.length ?? 0),
+  );
 
   const itemWidth = isLargerThan1440px
     ? responsiveCarouselSettings.itemWidth
     : classname === 'brands-carousel'
       ? 256
       : 305;
-  const totalItems = classname === 'brands-carousel' ? 10 : 8;
-  const maxIndex = totalItems - responsiveCarouselSettings.count;
+  const totalItems =
+    classname === 'brands-carousel'
+      ? 10
+      : classname === 'photos-carousel'
+        ? productImages?.length
+        : 8;
+  const maxIndex = (totalItems ?? 0) - responsiveCarouselSettings.count;
+  console.log(currentIndex, maxIndex, classname);
 
   const handleNext = () => {
     if (currentIndex < maxIndex) {
@@ -126,7 +139,14 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({ classname }) => {
           }}
         >
           {Array.from(
-            { length: classname === 'brands-carousel' ? 10 : 8 },
+            {
+              length:
+                classname === 'brands-carousel'
+                  ? 10
+                  : classname === 'photos-carousel'
+                    ? 1
+                    : 8,
+            },
             (_, i) => (
               <>
                 {classname === 'brands-carousel' ? (
@@ -136,11 +156,12 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({ classname }) => {
                     product={brandData[i % brandData.length]}
                   />
                 ) : classname === 'photos-carousel' ? (
-                  productImages?.map((photo) => (
+                  productImages?.map((photo, i) => (
                     <img
-                      key={photo?.id}
+                      style={{ minWidth: `${itemWidth}px` }}
+                      key={i + 1}
                       className="product-photo"
-                      src={photo?.img}
+                      src={photo}
                       alt="product's photos"
                     />
                   ))

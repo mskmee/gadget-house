@@ -1,7 +1,7 @@
 @import '@/styles/functions';
 
 .container {
-  margin: 88px 0;
+  margin: 60px 0 58px 0;
   padding: 0 50px;
   display: flex;
   column-gap: 30px;
@@ -24,10 +24,22 @@
     word-wrap: break-word;
   }
   > span {
-    display: inline-block;
+    display: block;
     max-width: 482px;
     width: 100%;
     margin: 0 auto;
+    margin-top: 12px;
     line-height: 150%;
+  }
+  .backToCatalogBtn {
+    display: inline-block;
+    min-width: 160px;
+    max-width: 300px;
+    margin: 0 auto;
+    margin-top: 12px;
+    padding: 16px 32px;
+    border: 2px solid #00820d;
+    border-radius: 12px;
+    color: #00820d;
   }
 }

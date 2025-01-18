@@ -7,11 +7,8 @@
   border: none;
   outline: none;
 
-  &:hover,
-  &:active {
-    .search-right-elements svg path {
-      stroke: #6f4c9a;
-    }
+  .search-right-elements svg path {
+    stroke: #6f4c9a;
   }
 
   .autocomplete-search-bar {
@@ -61,18 +58,17 @@
   &:hover,
   &:active,
   &:focus-within {
-    border-color: #f01a1a;
+    border: none;
     outline: none;
     cursor: text;
     box-shadow: none;
   }
   &__error {
-    border: 1px solid #f01a1a;
+    border: 1px solid #f01a1a !important;
+    box-shadow: none !important;
 
-    > input + span div {
-      > svg path {
-        stroke: #f01a1a;
-      }
+    .search-right-elements svg path {
+      stroke: #f01a1a !important;
     }
   }
 }
@@ -91,34 +87,36 @@
     border: 1px solid #eae4ee;
 
     &:hover,
-    &:active {
+    &:active,
+    &:focus-within {
+      border: 1px solid #eae4ee;
       .search-right-elements svg path {
         stroke: #fff;
       }
     }
-  }
-  .search-right-elements {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 48px;
-    height: 48px;
-    background-color: #00820d;
-    border-top-right-radius: 12px;
-    border-bottom-right-radius: 12px;
-    position: relative;
+    .search-right-elements {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      background-color: #00820d;
+      border-top-right-radius: 12px;
+      border-bottom-right-radius: 12px;
+      position: relative;
 
-    > img {
-      position: absolute;
-      top: 50%;
-      left: -28px;
-      transform: translateY(-50%);
-    }
-    .search-right-elements_devider {
-      display: none;
-    }
-    > svg path {
-      stroke: #fff;
+      > img {
+        position: absolute;
+        top: 50%;
+        left: -28px;
+        transform: translateY(-50%);
+      }
+      .search-right-elements_devider {
+        display: none;
+      }
+      > svg path {
+        stroke: #fff;
+      }
     }
   }
 }

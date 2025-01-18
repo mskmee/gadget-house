@@ -5,9 +5,10 @@ import styles from './Layout.module.scss';
 import { useState } from 'react';
 import { BurgerMenu } from '@/components/BurgerMenu';
 import { MenuContext } from '@/context/menuContext.ts';
-import { ScrollToTop } from '@/utils/scrollToTop';
+
 import { useIsFixedHeader } from '@/hooks/useIsFixedHeader';
 import classNames from 'classnames';
+import { ScrollToTop } from '@/utils/scrollToTop';
 
 const Layout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

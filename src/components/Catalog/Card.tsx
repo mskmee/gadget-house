@@ -38,12 +38,13 @@ export const Card: FC<ISmartphoneCardProps> = ({
     addToStore({
       ...product,
       title: product.name,
-      img: product.images[0].link,
+      images: [product.images[0].link],
       isLiked: false,
       rate: product.rating,
       anotherColors: [],
       code: 'product_code',
       price: product.price.toString(),
+      category: product.category,
     });
     toast.success('The product has been successfully added to your cart!', {
       position: 'top-center',

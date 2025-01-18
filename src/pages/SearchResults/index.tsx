@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
 import styles from './SearchResults.module.scss';
 import { useDocumentTitle } from '@/hooks/useDocumentTitle';
-
 import { Benefits, Carousels, SliderNav } from '@/components/components';
-
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { AppRoute } from '@/enums/Route';
 
 export const SearchResults = () => {
   useDocumentTitle(`Search results`);
@@ -53,6 +52,9 @@ export const SearchResults = () => {
             You may have entered an incorrect query. Check the spelling. Try to
             use only keywords.
           </span>
+          <Link to={AppRoute.ALL_PRODUCTS} className={styles.backToCatalogBtn}>
+            Back to Catalog
+          </Link>
         </div>
       </div>
       <SliderNav

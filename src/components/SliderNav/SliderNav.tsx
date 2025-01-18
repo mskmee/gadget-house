@@ -1,7 +1,8 @@
-import { FC, MouseEvent, useState } from 'react';
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './slidernav.module.scss';
-import { RightArrowSlider, RightArrowSliderClick } from '@/assets/constants';
+
+import { SliderRightArrow } from '@/assets/icons/SliderRightArrow';
 
 interface ISliderNavProps {
   text: string;
@@ -14,26 +15,13 @@ export const SliderNav: FC<ISliderNavProps> = ({
   link,
   isVisibleSeeMoreBtn = true,
 }) => {
-  const [isClicked, setIsClicked] = useState(false);
-
-  const handleClick = (event: MouseEvent) => {
-    event.stopPropagation;
-    setIsClicked((prevState) => !prevState);
-  };
   return (
     <div className={styles.sliderText}>
       <h2>{text}</h2>
       {isVisibleSeeMoreBtn && (
-        <Link to={link} className={styles.buttonContent} onClick={handleClick}>
-          <div
-            className={`${styles.buttonLink} ${isClicked ? styles.buttonLinkActive : ''}`}
-          >
-            <p>See more</p>
-            <img
-              src={isClicked ? RightArrowSliderClick : RightArrowSlider}
-              alt="Right icon"
-            />
-          </div>
+        <Link to={link} className={styles.buttonLink}>
+          <p>See more</p>
+          <SliderRightArrow />
         </Link>
       )}
     </div>

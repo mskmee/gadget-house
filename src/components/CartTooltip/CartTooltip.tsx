@@ -19,6 +19,7 @@ export const CardTooltip = () => {
   useEffect(() => {
     getTotal();
   }, [cardItems, getTotal]);
+  console.log(cardItems);
 
   return (
     <div className={styles.container}>

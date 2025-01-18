@@ -1,5 +1,5 @@
 import style from '@/components/SingleProduct/Product.module.scss';
-import { currentProduct } from '@/constants/singleProduct';
+import { staticCurrentProduct } from '@/constants/singleProduct';
 import {
   ChangeEventHandler,
   FC,
@@ -27,11 +27,19 @@ import DOMPurify from 'dompurify';
 import classNames from 'classnames';
 import { saveReviews } from '@/utils/saveReview';
 import { useMediaQuery } from 'react-responsive';
+import { laptopData, smartphoneData } from '@/constants/productCards';
+import { useParams } from 'react-router-dom';
 
 const maxLength = 500;
 
 export const SingleProductPage: FC = () => {
-  useDocumentTitle(currentProduct?.[0]?.title);
+  const allProducts = [...smartphoneData, ...laptopData];
+  const { id } = useParams();
+  const dinamicCurrentProduct = allProducts.find(
+    (item) => id && item.id === +id,
+  );
+
+  useDocumentTitle(dinamicCurrentProduct?.title || 'Product');
 
   const isLargerThan992px = useMediaQuery({
     query: '(max-width: 992px)',
@@ -47,14 +55,15 @@ export const SingleProductPage: FC = () => {
     'product_reviews',
     [],
   );
-  const allProductReviews = currentProduct?.[0]?.reviews?.concat(storageValue);
+  const allProductReviews =
+    staticCurrentProduct?.[0]?.reviews?.concat(storageValue);
   const [review, setReview] = useState({
     text: '',
     rateValue: 0,
   });
   const [visibleReviewsCount, setVisibleReviewsCount] = useState(2);
   const [isAllReviewsBtnVisible, setIisAllReviewsBtnVisible] = useState(
-    currentProduct?.[0]?.reviews.length > 2 ? true : false,
+    staticCurrentProduct?.[0]?.reviews.length > 2 ? true : false,
   );
   const leftCharactersCount = maxLength - review?.text?.length;
   const isEmptyReviewText = review?.text?.trim()?.length;
@@ -204,14 +213,20 @@ export const SingleProductPage: FC = () => {
       <div
         className={classNames(style['single-product__wrap'], 'container-xxl')}
       >
-        <Product reviewsLength={allProductReviews?.length} />
+        {dinamicCurrentProduct && (
+          <Product
+            dinamicCurrentProduct={dinamicCurrentProduct}
+            reviewsLength={allProductReviews?.length}
+          />
+        )}
+
         <ProductCharacteristics />
 
         <section className={style['reviews']} id="product-reviews">
           <div className={style['reviews_wrap']}>
             <h2>Reviews</h2>
             <h3>
-              Customer reviews about <span>{currentProduct?.[0]?.title}</span>
+              Customer reviews about <span>{dinamicCurrentProduct?.title}</span>
             </h3>
             <div className={style['reviews_rate']}>
               <span>Rate:</span>
@@ -259,7 +274,7 @@ export const SingleProductPage: FC = () => {
               </button>
             </form>
             <div className={style['review_users-review']} id="users-review">
-              {currentProduct?.[0]?.reviews?.length ? (
+              {staticCurrentProduct?.[0]?.reviews?.length ? (
                 <ul
                   className={style['review_users-review-list']}
                   ref={reviewsRateRef}
@@ -307,8 +322,9 @@ export const SingleProductPage: FC = () => {
             </div>
           </div>
         </section>
-
-        <ProductPhotos />
+        {dinamicCurrentProduct && (
+          <ProductPhotos productImages={dinamicCurrentProduct?.images} />
+        )}
       </div>
       <ProductAccessories />
       <Benefits />

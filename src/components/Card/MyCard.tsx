@@ -8,10 +8,9 @@ import { IProductCard } from '@/interfaces/interfaces';
 import { BasketIcon } from '@/assets/icons/BasketIcon';
 import classNames from 'classnames';
 import { HeartIcon } from '@/assets/icons/HeartIcon';
-import { useActions } from '@/hooks/useActions';
-import { toast } from 'react-toastify';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { convertPriceToReadable } from '@/utils/helpers/product';
+import { useAddProductToBasket } from '@/hooks/useAddProductToBasket';
 
 interface ISmartphoneCardProps {
   product: IProductCard;
@@ -27,20 +26,14 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
   width,
 }) => {
   const { isLiked, handleClickLike } = useProductCardHandlers();
-  const { addToStore } = useActions();
-  const { locale, currency } = useTypedSelector((state) => state.shopping_card);
 
+  const { locale, currency } = useTypedSelector((state) => state.shopping_card);
   const productRating = product.rate ?? 0;
+  const { addProductToBasket } = useAddProductToBasket();
 
   const addToBasket = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    addToStore(product);
-    toast.success('The product has been successfully added to your cart!', {
-      position: 'top-center',
-      type: 'success',
-      autoClose: 4000,
-      theme: 'dark',
-    });
+    addProductToBasket(product);
   };
 
   return (
@@ -48,7 +41,7 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
       <Link
         className={`${styles.cardConatiner} ${classname} `}
         key={product.id}
-        to={`/${classname}/${product.id}/${product.href}`}
+        to={`/${classname === 'previously-reviewed' ? product.category : classname}/${product.id}/${product.href}`}
         tabIndex={0}
         style={{ minWidth: `${width}px` }}
       >
@@ -73,7 +66,7 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
                   ? styles.smartphoneImg
                   : styles.laptopImg
               }
-              src={product.img}
+              src={product?.images[0]}
               alt="Product image"
             />
           </div>

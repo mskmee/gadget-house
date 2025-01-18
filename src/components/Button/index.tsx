@@ -10,13 +10,14 @@ interface INavButtonProps {
 export const NavButton: FC<INavButtonProps> = ({ button }) => {
   const IconComponent = button.img;
   const products = useTypedSelector((state) => state.shopping_card.products);
+  const productsLength = products.reduce((acc, item) => acc + item.quantity, 0);
 
   return (
     <Link to={button.href}>
       <IconComponent />
       {button.href === '/basket' && products?.length > 0 && (
         <div>
-          <span> {products?.length}</span>
+          <span> {productsLength}</span>
         </div>
       )}
     </Link>
