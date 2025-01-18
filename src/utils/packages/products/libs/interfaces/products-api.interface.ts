@@ -5,7 +5,7 @@ interface IProductsApi {
   getAll: () => Promise<ProductsResponseDto>;
   getOne: (id: string) => Promise<ProductItemResponseDto>;
   delete: (id: string) => Promise<void>;
-  getCategoryProducts: (categoryId: number, brandIds: number[], price: { from: number; to: number }, attributeValueIds: number[]) => Promise<CategoryProductsResponseDto>;
+  getCategoryProducts: (name: string, categoryId: number, brandIds: number[], price: { from: number; to: number }, attributeValueIds: number[]) => Promise<CategoryProductsResponseDto>;
   getPaginatedProducts: (page: number, size: number, sort: string[]) => Promise<PaginatedProductsResponseDto>;
 }
 

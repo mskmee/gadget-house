@@ -8,6 +8,7 @@ import { PageLayout } from '@/components/PageLayout/PageLayout';
 export default function AllProducts() {
   const dispatch: AppDispatch = useDispatch();
   const { productsData } = useSelector((state: RootState) => state.products);
+  console.log('productsData: ', productsData);
 
   useEffect(() => {
     dispatch(getAllProducts());
@@ -17,8 +18,8 @@ export default function AllProducts() {
     <PageLayout
       page={productsData?.page || []}
       totalElements={productsData?.totalElements || 0}
-      totalPages={productsData?.totalPages || 0}
-      currentPage={productsData?.currentPage || 0}
+      totalPages={productsData?.totalPages || 1}
+      currentPage={productsData?.currentPage || 1}
     />
   );
 }

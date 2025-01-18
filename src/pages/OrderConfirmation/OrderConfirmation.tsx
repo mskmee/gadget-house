@@ -8,13 +8,13 @@ import {
   PaymentForm,
 } from './libs/components/components';
 import { useOrderConfirmation } from './libs/hooks/hooks';
+import { AppRoute } from '@/enums/Route';
 import { convertPriceToReadable } from '@/utils/helpers/product';
 import { useActions } from '@/hooks/useActions';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { SuccessPopUp } from './SuccessPopUp';
 
 import styles from './order-confirmation.module.scss';
-import { AppRoute } from '@/enums/Route';
 
 const OrderConfirmation: FC = () => {
   const {
@@ -33,6 +33,7 @@ const OrderConfirmation: FC = () => {
     isOrderReady,
     onToggleRules,
   } = useOrderConfirmation();
+
   const navigate = useNavigate();
 
   const { deleteFromStore, increaseItemQuantity, decreaseItemQuantity } =

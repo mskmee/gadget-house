@@ -38,18 +38,23 @@
   &__checkMark {
     width: 60px;
     height: 60px;
-    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 50%;
     background-color: var(--buttons-and-accent-color);
-
-    svg {
-      stroke: var(--white-color);
-    }
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 150%;
+    color: var(--text-color);
   }
 
   &__title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 19px;
     font-family: "Inter", sans-serif;
     font-weight: 400;
     font-size: 24px;

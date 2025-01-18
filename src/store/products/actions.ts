@@ -25,13 +25,15 @@ const getPaginatedProducts = createAsyncThunk(
 const getCategoryProducts = createAsyncThunk(
   'products/fetchCategoryProducts',
   async (params: {
+    name?: string;
     categoryId: number;
     brandIds?: number[];
     price?: PriceDTO;
     attributeValueIds?: number[];
   }) => {
-    const { categoryId, brandIds = [], price = { from: 0, to: 100000 }, attributeValueIds = [] } = params;
+    const { name = '', categoryId, brandIds = [], price = { from: 0, to: 100000 }, attributeValueIds = [] } = params;
     return await productsService.getCategoryProducts(
+      name,
       categoryId,
       brandIds,
       price,

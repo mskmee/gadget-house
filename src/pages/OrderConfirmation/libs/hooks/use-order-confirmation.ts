@@ -15,7 +15,7 @@ import {
   PAYMENT_FORM_INITIAL_VALUE,
 } from '../constants/contacts-form-initial-value';
 import { ordersService } from '@/utils/packages/orders/';
-import { OrderItemResponseDto } from '@/utils/packages/orders/libs/types/order-item-response-dto';
+import { OrderData } from '@/utils/packages/orders/libs/types/order-item';
 
 type Return = {
   orderProcessStage: OrderStage;
@@ -148,7 +148,6 @@ const useOrderConfirmation = (): Return => {
   const { products } = useTypedSelector(
     (state) => state.shopping_card,
   );
-
   const onContactsFormSubmit = (contactsFormValue: ContactsFormDto) =>
     dispatch({
       type: OrderConfirmationAction.SUBMIT_CONTACT_FORM,
@@ -175,7 +174,7 @@ const useOrderConfirmation = (): Return => {
   };
 
   const onOrderConfirmed = () => {
-    const orderData: OrderItemResponseDto = {
+    const orderData: OrderData = {
       fullName: state.contactsFormValue.fullName,
       email: state.contactsFormValue.email,
       phoneNumber: state.contactsFormValue.phoneNumber,
@@ -194,12 +193,12 @@ const useOrderConfirmation = (): Return => {
       paymentMethod: state.paymentFormValue.paymentType,
     };
 
+
     ordersService.createOrder(orderData).then(() => {
       dispatch({
         type: OrderConfirmationAction.CONFIRM_ORDER,
       });
     });
-    // clearCart();
   };
 
   const onSuccessPopUpClose = () =>
@@ -222,7 +221,7 @@ const useOrderConfirmation = (): Return => {
     paymentFormValue: state.paymentFormValue,
     isSuccessPopUpOpen: state.isSuccessPopUpOpen,
     isRulesAccepted: state.isRulesAccepted,
-    isOrderReady: state.isOrderReady,
+    isOrderReady: state.isOrderReady, 
   };
 };
 

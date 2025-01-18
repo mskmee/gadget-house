@@ -1,5 +1,6 @@
 .catalog {
   flex-grow: 1;
+  padding-bottom: 135px;
 
   &__mobile {
     display: block;
@@ -31,12 +32,13 @@
     width: 100%;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
     grid-gap: 32px;
     margin-bottom: 65px;
 
-    @media screen and (min-width: 1400px) {
-    grid-gap: 40px;
-    grid-template-columns: repeat(3, 1fr);
+    @media screen and (min-width: 1200px) {
+      grid-gap: 40px;
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 

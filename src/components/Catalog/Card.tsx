@@ -14,7 +14,7 @@ import { rateImg, rateEmptyImg } from '@/assets/constants';
 import { HeartIcon } from '@/assets/icons/HeartIcon';
 import { BasketIcon } from '@/assets/icons/BasketIcon';
 
-import styles from './card.module.scss';
+import styles from '../Card/card.module.scss';
 
 interface ISmartphoneCardProps {
   product: ProductItem;
@@ -35,7 +35,16 @@ export const Card: FC<ISmartphoneCardProps> = ({
 
   const addToBasket = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    addToStore({...product, title: product.name, img: product.images[0].link, isLiked: false, rate: product.rating, anotherColors: [], code: 'product_code', price: product.price.toString()});
+    addToStore({
+      ...product,
+      title: product.name,
+      img: product.images[0].link,
+      isLiked: false,
+      rate: product.rating,
+      anotherColors: [],
+      code: 'product_code',
+      price: product.price.toString(),
+    });
     toast.success('The product has been successfully added to your cart!', {
       position: 'top-center',
       type: 'success',

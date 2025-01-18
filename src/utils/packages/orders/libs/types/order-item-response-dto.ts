@@ -5,12 +5,11 @@ type ProductItem = {
 }
 
 type OrderItemResponseDto = {
-  id: number;
   email: string,
   fullName: string,
   phoneNumber: string,
   deliveryMethod: string,
-  deliveryStatus: string,
+  paymentMethod: string,
   comment?: string,
   address: {
     street: string,

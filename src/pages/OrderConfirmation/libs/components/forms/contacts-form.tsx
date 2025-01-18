@@ -22,17 +22,8 @@ export const ContactsForm: FC<Properties> = ({
   onSubmit,
   stage,
 }) => {
-  // const isActive = stage === OrderStage.CONTACTS;
-  const [isEditable, setIsEditable] = useState(stage === OrderStage.CONTACTS);
-
-  const handleChangeOrderProcessStage = () => {
-    setIsEditable(true);
-  };
-
-  const handleFormSubmit = (values: ContactsFormDto) => {
-    onSubmit(values);
-    setIsEditable(false);
-  };
+  const [isEditable, setIsEditable] = useState(false);
+  const isActive = stage === OrderStage.CONTACTS;
 
   return (
     <div className={styles.form}>
@@ -41,50 +32,51 @@ export const ContactsForm: FC<Properties> = ({
         validateOnBlur={false}
         validateOnChange={false}
         validationSchema={contactsFormValidationSchema}
-        onSubmit={handleFormSubmit}
+        onSubmit={(values) => {
+          onSubmit(values);
+          setIsEditable(false);
+        }}
       >
         <Form className={styles.form__form}>
           <div className={styles.form__header}>
-            {isEditable && initialValues ? (
-              <div className={styles.form__headerText}>
+            <div className={styles.form__headerText}>
+              {isActive || isEditable ? (
                 <div className={styles.form__number}>1</div>
-                <h2 className={styles.form__title}>Contacts</h2>
-              </div>
-            ) : (
-              <>
-                <div className={styles.form__headerText}>
-                  <div className={styles.form__checkMark}>
-                    <svg
-                      width="22"
-                      height="20"
-                      viewBox="0 0 22 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M5 11L9.33364 15L18 7"
-                        stroke="white"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </div>
-                  <h2 className={styles.form__title}>Contacts</h2>
+              ) : (
+                <div className={styles.form__checkMark}>
+                  <svg
+                    width="22"
+                    height="20"
+                    viewBox="0 0 22 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M5 11L9.33364 15L18 7"
+                      stroke="white"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
                 </div>
-                <button
-                  onClick={() => handleChangeOrderProcessStage()}
-                  className={styles.form__btnEdit}
-                  type="button"
-                >
-                  Edit
-                </button>
-              </>
+              )}
+              <h2 className={styles.form__title}>Contacts</h2>
+            </div>
+
+            {isActive || isEditable ? null : (
+              <button
+                onClick={() => setIsEditable(true)}
+                className={styles.form__btnEdit}
+                type="button"
+              >
+                Edit
+              </button>
             )}
           </div>
 
           <div className={styles.form__content}>
-            {isEditable ? (
+            {isActive || isEditable ? (
               <>
                 <div className={styles.form__inputs}>
                   <FormInput<ContactsFormDto>

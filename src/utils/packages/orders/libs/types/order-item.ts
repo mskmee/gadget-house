@@ -1,4 +1,3 @@
-
 type OrderItem = {
   id: number;
   email: string,
@@ -48,4 +47,25 @@ type OrderItem = {
   }
 };
 
-export { type OrderItem };
+type CartItem = {
+  productId: number,
+  quantity: number,
+}
+
+type OrderData = {
+  fullName: string,
+  email: string,
+  phoneNumber: string,
+  comment?: string,
+  cartItems: CartItem[],
+  address: {
+    city: string,
+    street: string,
+    houseNumber?: string,
+    flat?: string,
+  },
+  deliveryMethod: string,
+  paymentMethod: string,
+};
+
+export { type OrderItem, type OrderData };

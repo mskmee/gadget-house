@@ -25,18 +25,8 @@ export const DeliveryForm: FC<Properties> = ({
   onSubmit,
   stage,
 }) => {
+  const [isEditable, setIsEditable] = useState(false);
   const isActive = stage === OrderStage.DELIVERY;
-  const [isEditable, setIsEditable] = useState(stage === OrderStage.DELIVERY);
-
-  const handleEditable = () => {
-    setIsEditable(true);
-    isActive === true;
-  };
-
-  const handleFormSubmit = (values: DeliveryFormDto) => {
-    onSubmit(values);
-    setIsEditable(false);
-  };
 
   return (
     <div className={styles.form}>
@@ -45,52 +35,51 @@ export const DeliveryForm: FC<Properties> = ({
         validateOnBlur={false}
         validateOnChange={false}
         validationSchema={deliveryFormValidationSchema}
-        onSubmit={handleFormSubmit}
+        onSubmit={(values) => {
+          onSubmit(values);
+          setIsEditable(false);
+        }}
       >
         <Form className={styles.form__form}>
           <div className={styles.form__header}>
-            {isEditable && !initialValues && !isActive ? (
-              <div className={styles.form__headerText}>
+            <div className={styles.form__headerText}>
+              {isActive || isEditable || !initialValues.deliveryType ? (
                 <div className={styles.form__number}>2</div>
-                <h2 className={styles.form__title}>Delivery</h2>
-              </div>
-            ) : (
-              <>
-                <div className={styles.form__headerText}>
-                  <div className={styles.form__checkMark}>
-                    <svg
-                      width="22"
-                      height="20"
-                      viewBox="0 0 22 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M5 11L9.33364 15L18 7"
-                        stroke="white"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </div>
-
-                  <h2 className={styles.form__title}>Delivery</h2>
+              ) : (
+                <div className={styles.form__checkMark}>
+                  <svg
+                    width="22"
+                    height="20"
+                    viewBox="0 0 22 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M5 11L9.33364 15L18 7"
+                      stroke="white"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
                 </div>
+              )}
+              <h2 className={styles.form__title}>Delivery</h2>
+            </div>
 
-                <button
-                  onClick={() => handleEditable()}
-                  className={styles.form__btnEdit}
-                  type="button"
-                >
-                  Edit
-                </button>
-              </>
+            {isActive || isEditable || !initialValues.deliveryType ? null : (
+              <button
+                onClick={() => setIsEditable(true)}
+                className={styles.form__btnEdit}
+                type="button"
+              >
+                Edit
+              </button>
             )}
           </div>
 
           <div className={styles.form__content}>
-            {isEditable || isActive ? (
+            {isActive || isEditable ? (
               <>
                 <Radio.Group
                   className={styles.form__radioGroup}

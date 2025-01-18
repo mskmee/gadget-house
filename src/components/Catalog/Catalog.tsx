@@ -27,6 +27,7 @@ export const Catalog: FC<ICatalogProps> = ({ data, totalPages, page }) => {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage,
   );
+  console.log('paginatedProducts: ', paginatedProducts);
 
   const onChange: PaginationProps['onChange'] = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -83,7 +84,7 @@ export const Catalog: FC<ICatalogProps> = ({ data, totalPages, page }) => {
       <div className={styles.catalog__mobile}>
         <ul className={styles.catalog__mobileList}>
           {data &&
-            displayedProducts.map((product: ProductItem) => (
+            paginatedProducts.map((product: ProductItem) => (
               <Card
                 key={product.id}
                 product={product}
