@@ -17,7 +17,7 @@
   color: #1c1817;
   text-align: center;
 
-  > p {
+  > h2 {
     font-size: rem(42px);
     font-weight: 500;
     line-height: 150%;
@@ -41,5 +41,61 @@
     border: 2px solid #00820d;
     border-radius: 12px;
     color: #00820d;
+    &:hover {
+      background-color: #00820d;
+      color: #fff;
+    }
+    &:active {
+      background-color: #00680a;
+      border: 2px solid #00680a;
+      color: #fff;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 0 20px;
+  }
+  .nothingFound {
+    > h2 {
+      font-size: rem(32px);
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .nothingFound {
+    > h2 {
+      font-size: rem(24px);
+    }
+    > span {
+      font-size: rem(14px);
+    }
+  }
+}
+@media screen and (max-width: 400px) {
+  .container {
+    margin: 40px 0;
+  }
+  .nothingFound {
+    > h2 {
+      font-size: rem(20px);
+    }
+    > span {
+      font-size: rem(13px);
+    }
+    > .backToCatalogBtn {
+      display: block;
+      margin-top: 20px;
+      padding: 12px 32px;
+    }
+  }
+}
+@media screen and (max-width: 350px) {
+  .nothingFound {
+    > h2 {
+      font-size: rem(18px);
+    }
   }
 }

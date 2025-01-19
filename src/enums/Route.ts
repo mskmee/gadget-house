@@ -7,7 +7,7 @@ const AppRoute = {
   PHOTO_VIDEO: '/photo-video',
   AUDIO: '/audio',
   SINGLE_PRODUCT: '/:category/:id/:title',
-  SEARCH_RESULTS_FOUND: '/search/:title',
+  SEARCH_RESULTS_FOUND: '/search',
   SEARCH_RESULTS_NOT_FOUND: '/search-results',
   BASKET_PAGE: '/basket',
   SIGN_IN: '/sign-in',

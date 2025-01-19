@@ -1,12 +1,10 @@
 import React from 'react';
-import { useLocation, useParams } from 'react-router-dom';
-
+import { useLocation } from 'react-router-dom';
 import { ProductItem } from '@/utils/packages/products';
 import { FiltersDesk } from '@/components/Filters/FiltersDesk';
 import { Filters } from '@/components/Filters/Filters';
 import { SortingDesk } from '@/components/Sort/SortingDesk';
 import { Catalog } from '@/components/Catalog/Catalog';
-
 import styles from './page-layout.module.scss';
 
 interface IPageLayoutProps {
@@ -24,19 +22,23 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   totalPages,
   currentPage,
 }) => {
-  const location = useLocation();
-  const { title } = useParams();
+  const { pathname: pathName, state } = useLocation();
+  const { searchInputValue, isSuggestion } = state ? state : {};
 
-  const pathname = location.pathname.slice(1).toLowerCase();
+  const pathname = pathName.slice(1).toLowerCase();
   let category = '';
 
   pathname.includes('-')
     ? (category = pathname.split('-').join(' '))
     : (category = pathname);
 
-  pathname.includes('search') && title
-    ? (category = title.split('-').join(' '))
-    : pathname;
+  if (pathname.includes('search') && searchInputValue) {
+    category = isSuggestion
+      ? searchInputValue.split('-').join(' ')
+      : `Search results for "${searchInputValue}"`;
+  } else {
+    category = pathname;
+  }
 
   return (
     <div className={styles.pageLayout}>

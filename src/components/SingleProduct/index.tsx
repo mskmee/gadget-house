@@ -18,6 +18,7 @@ import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { convertPriceToReadable } from '@/utils/helpers/product';
 import { useMediaQuery } from 'react-responsive';
 import { IProductCard } from '@/interfaces/interfaces';
+import { useLocation } from 'react-router-dom';
 
 interface IProductProps {
   reviewsLength: number;
@@ -28,13 +29,13 @@ export const Product: FC<IProductProps> = ({
   reviewsLength,
   dinamicCurrentProduct,
 }) => {
+  const { pathname } = useLocation();
   const { currency, locale } = useTypedSelector((state) => state.shopping_card);
   const dinamicCurrentProductImages = dinamicCurrentProduct?.images;
   const [currentSlide, setCurrentSlide] = useState({
     id: 1,
     img: dinamicCurrentProductImages?.[0],
   });
-  console.log(currentSlide);
 
   const prevArrowRef = useRef<HTMLImageElement>(null);
   const nextArrowRef = useRef<HTMLImageElement>(null);
@@ -117,6 +118,13 @@ export const Product: FC<IProductProps> = ({
     }
   }, [currentSlide?.id, dinamicCurrentProductImages?.length, modalImageSrc]);
 
+  useEffect(() => {
+    setCurrentSlide({
+      id: 1,
+      img: dinamicCurrentProductImages?.[0],
+    });
+  }, [pathname]);
+
   const changeProductCharacteristics =
     (value: string, inStock = true, type: string) =>
     () => {
@@ -140,6 +148,7 @@ export const Product: FC<IProductProps> = ({
       }
     };
   const openImageModal = (imageSrc: string) => {
+    document.body.style.width = '100%';
     setModalImageSrc(imageSrc);
     setIsModalVisible(true);
   };

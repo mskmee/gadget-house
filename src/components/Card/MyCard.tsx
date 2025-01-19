@@ -54,7 +54,7 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
           <div
             className={
               classname === 'previously-reviewed' && index !== 2 && index !== 6
-                ? styles.laptopCardImage
+                ? styles.cardImage
                 : classname === 'laptop'
                   ? styles.laptopCardImage
                   : styles.cardImage

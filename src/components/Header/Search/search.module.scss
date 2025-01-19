@@ -7,8 +7,29 @@
   border: none;
   outline: none;
 
-  .search-right-elements svg path {
-    stroke: #6f4c9a;
+  .search-right-elements {
+    svg {
+      cursor: not-allowed;
+      path {
+        stroke: #a5a5a5;
+      }
+    }
+    .active {
+      display: flex;
+      cursor: pointer;
+      svg path {
+        stroke: #1c1817;
+      }
+      &:hover,
+      &:active {
+        svg {
+          cursor: pointer;
+          path {
+            stroke: #6f4c9a;
+          }
+        }
+      }
+    }
   }
 
   .autocomplete-search-bar {
@@ -38,6 +59,10 @@
         }
       }
     }
+  }
+  .active-suggestion {
+    background-color: #f8f7fa;
+    cursor: pointer;
   }
   .search-right-elements {
     display: flex;

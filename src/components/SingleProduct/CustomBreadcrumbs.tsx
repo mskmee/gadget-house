@@ -14,8 +14,6 @@ export const CustomBreadcrumbs = () => {
     id,
   });
 
-  console.log(location.pathname);
-
   return (
     <Breadcrumb
       className={classNames(style['single-product__breadcrumb'])}
