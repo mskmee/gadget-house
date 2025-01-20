@@ -1,5 +1,6 @@
 
 
+import { DeliveryMethodType, PaymentMethodType } from "@/pages/OrderConfirmation/libs/enums/enums";
 import { ProductItem } from "../products";
 
 export type OrderDto = {
@@ -14,8 +15,8 @@ export type OrderDto = {
     houseNumber?: string;
     flat?: string;
   };
-  deliveryMethod: 'courier' | 'novaPoshta' | 'ukrPoshta';
-  paymentMethod: 'afterChecking' | 'courier';
+  deliveryMethod: DeliveryMethodType;
+  paymentMethod: PaymentMethodType;
 }
 
 export type UpdateOrderDto = {

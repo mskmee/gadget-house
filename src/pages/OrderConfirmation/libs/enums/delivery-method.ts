@@ -1,7 +1,7 @@
 const DeliveryMethod = {
-  COURIER: 'courier',
-  NOVA_POSHTA: 'novaposhta',
-  UKR_POSHTA: 'ukrposhta'
+  COURIER: 'COURIER',
+  NOVA_POSHTA: 'NOVAPOSHTA',
+  UKR_POSHTA: 'UKRPOSHTA'
 } as const;
 
 type DeliveryMethodType  = (typeof DeliveryMethod)[keyof typeof DeliveryMethod];

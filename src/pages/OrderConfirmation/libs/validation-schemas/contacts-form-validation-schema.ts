@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import { ContactsFormDto, DeliveryFormDto, PaymentFormDto } from '../types/types';
+import { DeliveryMethod, PaymentMethod } from '../enums/enums';
 
 const regx = {
   name: /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/,
@@ -24,10 +25,10 @@ const flat = Yup.string().when('deliveryType', {
   otherwise: () => Yup.string().nullable(),
 });
 const deliveryType = Yup.string()
-  .oneOf(['courier', 'novaposhta', 'ukrposhta'], 'Please select a payment method')
+  .oneOf(Object.values(DeliveryMethod), 'Please select a delivery method')
   .required('Delivery type is required');
 const paymentType = Yup.string()
-  .oneOf(['afterChecking', 'courier'], 'Please select a payment method')
+  .oneOf(Object.values(PaymentMethod), 'Please select a payment method')
   .required('Payment method is required');
 
 const contactsFormValidationSchema: Yup.Schema<ContactsFormDto> =
