@@ -67,7 +67,6 @@ export const routes = createBrowserRouter(
           path: AppRoute.ADMIN_PAGE,
           element: <AdminPage />,
         },
-
         {
           path: '*',
           element: <NotFound />,
