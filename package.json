@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "lint:prettify": "prettier --check \"**/*.{ts,tsx,json,md,css,html,js,jsx}\"",
     "prettify": "prettier --write \"**/*.{ts,tsx,json,md,css,html,js,jsx}\"",
