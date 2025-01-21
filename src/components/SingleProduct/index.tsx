@@ -1,7 +1,7 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import style from './Product.module.scss';
 import { Rate } from 'antd';
-import { currentProduct } from '@/constants/singleProduct';
+import { staticCurrentProduct } from '@/constants/singleProduct';
 import {
   arrowImg,
   deliverImg,
@@ -17,15 +17,26 @@ import { PhotoModal } from './PhotoModal';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { convertPriceToReadable } from '@/utils/helpers/product';
 import { useMediaQuery } from 'react-responsive';
+import { IProductCard } from '@/interfaces/interfaces';
+import { useLocation } from 'react-router-dom';
 
 interface IProductProps {
   reviewsLength: number;
+  dinamicCurrentProduct: IProductCard;
 }
 
-export const Product: FC<IProductProps> = ({ reviewsLength }) => {
+export const Product: FC<IProductProps> = ({
+  reviewsLength,
+  dinamicCurrentProduct,
+}) => {
+  const { pathname } = useLocation();
   const { currency, locale } = useTypedSelector((state) => state.shopping_card);
-  const currentProductImages = currentProduct?.[0]?.images;
-  const [currentSlide, setCurrentSlide] = useState(currentProductImages?.[0]);
+  const dinamicCurrentProductImages = dinamicCurrentProduct?.images;
+  const [currentSlide, setCurrentSlide] = useState({
+    id: 1,
+    img: dinamicCurrentProductImages?.[0],
+  });
+
   const prevArrowRef = useRef<HTMLImageElement>(null);
   const nextArrowRef = useRef<HTMLImageElement>(null);
   const [productCharacteristics, setProductCharacteristics] = useState({
@@ -58,19 +69,28 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
 
   const handlePrevClick = () => {
     if (currentSlide?.id !== 1) {
-      setCurrentSlide(currentProductImages?.[currentSlide?.id - 2]);
+      setCurrentSlide({
+        id: currentSlide.id - 1,
+        img: dinamicCurrentProductImages?.[currentSlide?.id - 2],
+      });
     }
   };
 
   const handleNextClick = () => {
-    if (currentSlide?.id !== currentProductImages?.length) {
-      setCurrentSlide(currentProductImages?.[currentSlide?.id]);
+    if (currentSlide?.id !== dinamicCurrentProductImages?.length) {
+      setCurrentSlide({
+        id: currentSlide.id + 1,
+        img: dinamicCurrentProductImages?.[currentSlide?.id],
+      });
     }
   };
 
   const selectCurrentSlideByClick = (slideId: number) => {
     return () => {
-      setCurrentSlide(currentProductImages?.[slideId - 1]);
+      setCurrentSlide({
+        id: slideId,
+        img: dinamicCurrentProductImages?.[slideId - 1],
+      });
     };
   };
 
@@ -85,7 +105,7 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
       }
     }
     if (
-      currentSlide?.id === currentProductImages?.length &&
+      currentSlide?.id === dinamicCurrentProductImages?.length &&
       nextArrowRef.current
     ) {
       nextArrowRef.current.style.visibility = 'hidden';
@@ -96,7 +116,14 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
         nextArrowRef.current.style.filter = 'none';
       }
     }
-  }, [currentSlide?.id, currentProductImages?.length, modalImageSrc]);
+  }, [currentSlide?.id, dinamicCurrentProductImages?.length, modalImageSrc]);
+
+  useEffect(() => {
+    setCurrentSlide({
+      id: 1,
+      img: dinamicCurrentProductImages?.[0],
+    });
+  }, [pathname]);
 
   const changeProductCharacteristics =
     (value: string, inStock = true, type: string) =>
@@ -121,6 +148,7 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
       }
     };
   const openImageModal = (imageSrc: string) => {
+    document.body.style.width = '100%';
     setModalImageSrc(imageSrc);
     setIsModalVisible(true);
   };
@@ -129,12 +157,12 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
     <section className={style['product']} id="product">
       {isLargerThan768px && (
         <div className={style['product_title']}>
-          <h1>{currentProduct?.[0]?.title}</h1>
+          <h1>{dinamicCurrentProduct?.title}</h1>
           <div className={style['product_rate-box']}>
             <div className={style['product_rate']} ref={productRateRef}>
               <Rate
                 className="product_rate-stars"
-                value={currentProduct?.[0]?.rating}
+                value={dinamicCurrentProduct?.rate}
                 character={() => {
                   return <img src={rateImg} alt="product rate star" />;
                 }}
@@ -144,7 +172,7 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
                 <span>({reviewsLength})</span>
               </a>
             </div>
-            <span>code:{currentProduct?.[0]?.code}</span>
+            <span>code:{dinamicCurrentProduct?.code}</span>
           </div>
         </div>
       )}
@@ -174,27 +202,27 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
         <div className={style['product_carousel-slicks']}>
           {!isLargerThan500px ? (
             <ul>
-              {currentProductImages?.map((item) => (
+              {dinamicCurrentProductImages?.map((item, i) => (
                 <li
-                  key={item?.id}
+                  key={i}
                   className={classNames({
-                    [style['selected-photo']]: currentSlide?.id === item?.id,
+                    [style['selected-photo']]: currentSlide?.id === i + 1,
                   })}
-                  onClick={selectCurrentSlideByClick(item?.id)}
+                  onClick={selectCurrentSlideByClick(i + 1)}
                 >
-                  <img src={item?.img} alt="product slick picture" />
+                  <img src={item} alt="product slick picture" />
                 </li>
               ))}
             </ul>
           ) : (
             <ul>
-              {currentProductImages?.map((item) => (
+              {dinamicCurrentProductImages?.map((_, i) => (
                 <li
-                  key={item?.id}
+                  key={i + 1}
                   className={classNames({
-                    [style['selected-photo']]: currentSlide?.id === item?.id,
+                    [style['selected-photo']]: currentSlide?.id === i + 1,
                   })}
-                  onClick={selectCurrentSlideByClick(item?.id)}
+                  onClick={selectCurrentSlideByClick(i + 1)}
                 ></li>
               ))}
             </ul>
@@ -205,12 +233,12 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
       <div className={style['product_info']}>
         {!isLargerThan768px && (
           <div className={style['product_title']}>
-            <h1>{currentProduct?.[0]?.title}</h1>
+            <h1>{dinamicCurrentProduct?.title}</h1>
             <div className={style['product_rate-box']}>
               <div className={style['product_rate']} ref={productRateRef}>
                 <Rate
                   className="product_rate-stars"
-                  value={currentProduct?.[0]?.rating}
+                  value={dinamicCurrentProduct?.rate}
                   character={() => {
                     return <img src={rateImg} alt="product rate star" />;
                   }}
@@ -220,7 +248,7 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
                   <span>({reviewsLength})</span>
                 </a>
               </div>
-              <span>code:{currentProduct?.[0]?.code}</span>
+              <span>code:{dinamicCurrentProduct?.code}</span>
             </div>
           </div>
         )}
@@ -228,23 +256,24 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
           <div className={style['product_other-colors']}>
             <h3>Other colors</h3>
             <ul>
-              {currentProduct?.[0]?.productColors?.map(({ color, inStock }) => (
+              {dinamicCurrentProduct?.anotherColors?.map((color, i) => (
                 <li
-                  key={color}
+                  key={i}
                   className={classNames({
                     [style['selected-color']]:
                       productCharacteristics?.selectedColor === color &&
-                      inStock,
-                    [style['not-available']]: !inStock,
+                      i + 1 !== dinamicCurrentProduct.anotherColors.length,
+                    [style['not-available']]:
+                      i + 1 === dinamicCurrentProduct.anotherColors.length,
                   })}
                   style={{ backgroundColor: color }}
                   onClick={changeProductCharacteristics(
                     color,
-                    inStock,
+                    i + 1 !== dinamicCurrentProduct.anotherColors.length,
                     'color',
                   )}
                 >
-                  {!inStock && (
+                  {i + 1 === dinamicCurrentProduct.anotherColors.length && (
                     <img
                       src={productIsNotAvailableImg}
                       alt="product isn't available"
@@ -260,7 +289,7 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
           <div className={style['product_other-models']}>
             <h3>Other models</h3>
             <ul>
-              {currentProduct?.[0]?.otherModels?.map(({ model }) => (
+              {staticCurrentProduct?.[0]?.otherModels?.map(({ model }) => (
                 <li
                   key={model}
                   className={classNames({
@@ -277,7 +306,7 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
           <div className={style['product_memory-card']}>
             <h3>Memory card</h3>
             <ul>
-              {currentProduct?.[0]?.memoryCards?.map(({ memory }) => (
+              {staticCurrentProduct?.[0]?.memoryCards?.map(({ memory }) => (
                 <li
                   key={memory}
                   className={classNames({
@@ -308,12 +337,12 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
           <div className={style['product_bottom-section']}>
             <span className={style['product_price']}>
               {convertPriceToReadable(
-                currentProduct?.[0]?.price || 0,
+                dinamicCurrentProduct?.price || 0,
                 currency,
                 locale,
               )}
             </span>
-            <AddToBasketButton />
+            <AddToBasketButton product={dinamicCurrentProduct} />
           </div>
         </div>
       </div>
@@ -324,6 +353,7 @@ export const Product: FC<IProductProps> = ({ reviewsLength }) => {
         setModalImageSrc={setModalImageSrc}
         currentSlide={currentSlide}
         setCurrentSlide={setCurrentSlide}
+        dinamicCurrentProduct={dinamicCurrentProduct}
       />
     </section>
   );

@@ -48,7 +48,11 @@ export const routes = createBrowserRouter(
           element: <SingleProductPage />,
         },
         {
-          path: AppRoute.SEARCH_RESULTS,
+          path: AppRoute.SEARCH_RESULTS_FOUND,
+          element: <AllProducts />,
+        },
+        {
+          path: AppRoute.SEARCH_RESULTS_NOT_FOUND,
           element: <SearchResults />,
         },
         {

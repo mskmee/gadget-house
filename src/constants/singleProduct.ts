@@ -1,9 +1,3 @@
-import img1 from '../assets/single_product/product_pictures/1.png';
-import img2 from '../assets/single_product/product_pictures/2.png';
-import img3 from '../assets/single_product/product_pictures/3.png';
-import img4 from '../assets/single_product/product_pictures/4.png';
-import img5 from '../assets/single_product/product_pictures/5.png';
-
 import {
   productImg1,
   productImg2,
@@ -21,19 +15,8 @@ export const menuItems = [
   { id: 5, title: 'Accessories', href: '#product-accessories' },
 ];
 
-export const currentProduct = [
+export const staticCurrentProduct = [
   {
-    id: 1,
-    title: 'Apple iPhone 15 Pro 256Gb Blue Titanium',
-    price: '48 499',
-    rating: 5,
-    code: 874524,
-    productColors: [
-      { id: 1, color: 'blue', inStock: true },
-      { id: 2, color: 'gray', inStock: true },
-      { id: 3, color: 'black', inStock: true },
-      { id: 4, color: 'white', inStock: false },
-    ],
     otherModels: [
       { id: 1, model: 'Apple iPhone 15 Pro' },
       { id: 2, model: 'Apple iPhone 15 Pro Max' },
@@ -44,13 +27,7 @@ export const currentProduct = [
       { id: 3, memory: '512GB' },
       { id: 4, memory: '1TB' },
     ],
-    images: [
-      { id: 1, img: img1 },
-      { id: 2, img: img2 },
-      { id: 3, img: img3 },
-      { id: 4, img: img4 },
-      { id: 5, img: img5 },
-    ],
+
     characteristics: {
       screen: [
         { id: 1, name: 'Display diagonal', value: `6,1"` },

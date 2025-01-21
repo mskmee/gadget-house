@@ -1,5 +1,5 @@
-import { filters } from "@/components/Filters/consts";
-import { ProductItem } from "@/utils/packages/products";
+import { filters } from '@/components/Filters/consts';
+import { ProductItem } from '@/utils/packages/products';
 
 interface PaginatedResponse {
   page: ProductItem[];
@@ -11,7 +11,7 @@ interface PaginatedResponse {
 }
 
 function generateGadgets(count: number, category: string): ProductItem[] {
-  const { brands, images } = filters
+  const { brands, images } = filters;
 
   const gadgets: ProductItem[] = [];
 
@@ -25,7 +25,7 @@ function generateGadgets(count: number, category: string): ProductItem[] {
       images: [images[Math.floor(Math.random() * images.length)]], // Select from predefined options
       rating: parseFloat((Math.random() * 5).toFixed(1)), // rating between 0 and 5
       available: false, //
-      
+      category: category,
     };
 
     gadgets.push(newGadget);
@@ -34,11 +34,10 @@ function generateGadgets(count: number, category: string): ProductItem[] {
   return gadgets;
 }
 
-
 export function generateRandomProducts(
   count: number,
   category: string,
-  pageSize: number
+  pageSize: number,
 ): PaginatedResponse {
   const totalElements = count;
   const totalPages = Math.ceil(totalElements / pageSize);

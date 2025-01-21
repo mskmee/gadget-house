@@ -9,22 +9,22 @@ export const toClientsMenu = [
 ];
 
 export const categoriesMenu = [
-  { id: 1, menuText: 'Smartphone', href: '/categories/smartphone' },
-  { id: 2, menuText: 'Laptop', href: '/categories/laptop' },
-  { id: 3, menuText: 'Tablet', href: '/categories/tablet' },
-  { id: 4, menuText: 'PC', href: '/categories/pc' },
+  { id: 1, menuText: 'Smartphone', href: '/smartphones' },
+  { id: 2, menuText: 'Laptop', href: '/laptops' },
+  { id: 3, menuText: 'Tablet', href: '/tablets' },
+  { id: 4, menuText: 'PC', href: '/pcs' },
   {
     id: 5,
     menuText: 'TVs and Multimedia',
-    href: '/categories/tvs-and-multimedia',
+    href: '/tvs',
   },
-  { id: 6, menuText: 'Smart-watch', href: '/categories/smart-watch' },
-  { id: 7, menuText: 'Audio', href: '/categories/audio' },
+  { id: 6, menuText: 'Smart-watch', href: '/smartwatches' },
+  { id: 7, menuText: 'Audio', href: '/audio' },
   {
     id: 8,
     menuText: 'Game console',
-    href: '/categories/game-console',
+    href: '/consoles',
   },
-  { id: 9, menuText: 'Photo and video', href: '/categories/photo-and-video' },
-  { id: 10, menuText: 'KIDS', href: '/categories/kids' },
+  { id: 9, menuText: 'Photo and video', href: '/photo-video' },
+  { id: 10, menuText: 'KIDS', href: '/kids' },
 ];

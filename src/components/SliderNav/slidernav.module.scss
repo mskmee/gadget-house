@@ -15,16 +15,6 @@
   line-height: 150%;
 }
 
-.buttonContent {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: -7px;
-  text-decoration: none;
-  cursor: pointer;
-  border-bottom: 2px solid #00820d;
-}
-
 span {
   text-decoration: none;
 }
@@ -41,10 +31,14 @@ span {
   font-size: 16px;
   text-decoration: none;
   word-spacing: 0.2px;
-}
-
-.buttonLinkActive {
-  color: var(--theme-color);
+  border-bottom: 2px solid #00820d;
+  &:active {
+    color: #6f4c9a;
+    border-bottom: 2px solid #6f4c9a;
+    svg path {
+      fill: #6f4c9a;
+    }
+  }
 }
 
 .buttonHr {

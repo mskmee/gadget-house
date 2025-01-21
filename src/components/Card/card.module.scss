@@ -52,7 +52,6 @@
   }
 
   .laptopImg {
-    margin-top: 20px;
     width: 240px;
   }
 }
@@ -224,6 +223,7 @@
 }
 @media screen and (max-width: 1300px) {
   .cardImage {
+    .smartphoneImg,
     .laptopImg {
       width: 240px;
     }
@@ -248,10 +248,10 @@
     text-decoration: none;
   }
   .cardContainerTop {
-    height: 190px;
+    height: initial;
     .cardImage {
       .smartphoneImg {
-        width: 145px;
+        width: 220px;
       }
       .laptopImg {
         width: 220px;
@@ -264,8 +264,8 @@
       }
       .accessories-colors {
         > div {
-          width: 18px;
-          height: 18px;
+          width: 20px;
+          height: 20px;
         }
       }
     }
@@ -293,10 +293,21 @@
       }
     }
   }
+  .cardContainerTop {
+    .cardConatinerLike {
+      .accessories-colors {
+        > div {
+          width: 18px;
+          height: 18px;
+        }
+      }
+    }
+  }
 }
 @media screen and (max-width: 850px) {
   .cardConatiner {
     .cardImage {
+      .smartphoneImg,
       .laptopImg {
         width: 170px;
       }
@@ -329,6 +340,7 @@
     transition: all 0.2s;
     text-decoration: none;
     .cardImage {
+      .smartphoneImg,
       .laptopImg {
         margin-top: 0;
         width: 150px;
@@ -340,9 +352,6 @@
     height: 150px;
     .cardImage {
       align-self: auto;
-      .smartphoneImg {
-        width: 120px;
-      }
     }
     .cardConatinerLike {
       padding-bottom: 10px;
@@ -388,25 +397,6 @@
   }
 }
 
-@media screen and (max-width: 700px) {
-  .cardConatiner {
-    .cardImage {
-      .laptopImg {
-        width: 190px;
-      }
-    }
-  }
-}
-@media screen and (max-width: 530px) {
-  .cardConatiner {
-    .cardImage {
-      .laptopImg {
-        width: 155px;
-      }
-    }
-  }
-}
-
 @media screen and (max-width: 450px) {
   .cardConatiner {
     min-width: 175px;
@@ -429,9 +419,7 @@
     height: 124px;
     .cardImage {
       align-self: auto;
-      .smartphoneImg {
-        width: 90px;
-      }
+      .smartphoneImg,
       .laptopImg {
         width: 120px;
       }
@@ -496,9 +484,7 @@
     .cardContainerTop {
       height: 110px;
       .cardImage {
-        .smartphoneImg {
-          width: 70px;
-        }
+        .smartphoneImg,
         .laptopImg {
           width: 90px;
         }
