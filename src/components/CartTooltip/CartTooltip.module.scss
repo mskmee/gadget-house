@@ -102,4 +102,20 @@
   .container {
     width: 350px;
   }
+  .container .cards {
+    row-gap: 10px;
+  }
+}
+@media screen and (max-width: 430px) {
+  .container {
+    width: 330px;
+  }
+}
+@media screen and (max-width: 380px) {
+  .container {
+    width: 280px;
+  }
+  .container .cards {
+    row-gap: 7px;
+  }
 }

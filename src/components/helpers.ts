@@ -2,13 +2,13 @@ import { AppRoute } from '@/enums/Route.ts';
 import { laptopData, smartphoneData } from '@/components/Card/constants.ts';
 
 type BreadcumbItem = {
-  title: string | undefined,
-  href: string,
+  title: string | undefined;
+  href: string;
 };
 
 export const getBreadcrumbItems = (
   path: string,
-  params: { smartphone?: string; id?: string }
+  params: { smartphone?: string; id?: string },
 ): BreadcumbItem[] => {
   const { smartphone, id } = params;
   const allProducts = [...smartphoneData, ...laptopData];
@@ -45,4 +45,4 @@ export const getBreadcrumbItems = (
   }
 
   return breadcrumbItems;
-}
+};

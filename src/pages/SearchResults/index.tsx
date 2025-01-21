@@ -38,17 +38,19 @@ export const SearchResults = () => {
     <main>
       <div className={styles.container}>
         <div className={styles.nothingFound}>
-          <h2>
+          <p>
             There {isGlobalOverlayActive ? 'were' : 'are'} no results searching
+          </p>
+          <p>
             for &quot;
             {isGlobalOverlayActive ? searchValueBeforeOverlay : searchValue}
             &quot;
-          </h2>
+          </p>
 
-          <p>
+          <span>
             You may have entered an incorrect query. Check the spelling. Try to
             use only keywords.
-          </p>
+          </span>
         </div>
       </div>
       <SliderNav
@@ -56,6 +58,7 @@ export const SearchResults = () => {
         link="/recommendations"
         isVisibleSeeMoreBtn={false}
       />
+
       <Carousels classname="laptop-carousel" />
       <Benefits />
     </main>

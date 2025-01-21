@@ -1,6 +1,7 @@
 import { useLocation, useParams } from 'react-router-dom';
 import { Breadcrumb } from 'antd';
 import style from './Product.module.scss';
+
 import classNames from 'classnames';
 import { getBreadcrumbItems } from '@/components/helpers.ts';
 
