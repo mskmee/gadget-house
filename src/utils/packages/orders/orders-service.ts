@@ -1,6 +1,6 @@
 import { IOrdersApi } from "./libs/interfaces/orders-api.interface";
 import { IOrdersService } from "./libs/interfaces/orders-service.interface";
-import { OrderData } from "./libs/types/order-item";
+import { OrderDto } from "./libs/types/order-item";
 import { OrderItemResponseDto } from "./libs/types/order-item-response-dto";
 import { OrdersResponseDto } from "./libs/types/orders-response-dto";
 
@@ -27,7 +27,7 @@ class OrdersService implements IOrdersService {
     return this.ordersApi.patch(id, status);
   }
 
-  async createOrder(data: OrderData): Promise<OrderData> {
+  async createOrder(data: OrderDto): Promise<OrderDto> {
     return this.ordersApi.create(data);
   }
 }

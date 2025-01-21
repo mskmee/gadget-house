@@ -55,6 +55,7 @@ const OrderConfirmation: FC = () => {
       <SuccessPopUp
         isOpened={isSuccessPopUpOpen}
         onClose={onSuccessPopUpClose}
+        classname="order-success"
       />
 
       <div className={cn('container', styles.order__container)}>

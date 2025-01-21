@@ -9,6 +9,7 @@ import styles from './success-pop-up.module.scss';
 interface ISuccessPopUpProps {
   isOpened: boolean;
   onClose: () => void;
+  classname?: string;
 }
 
 const generateRandomNumber = (): number => Math.floor(Math.random() * 1000);
