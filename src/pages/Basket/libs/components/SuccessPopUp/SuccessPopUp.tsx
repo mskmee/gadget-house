@@ -11,7 +11,7 @@ const generateRandomNumber = (): number => Math.floor(Math.random() * 1000);
 
 const SuccessPopUp: FC<SuccessPopUpProperties> = ({ isOpened, onClose }) => {
   return (
-    <PopUp isOpened={isOpened} onClose={onClose}>
+    <PopUp isOpened={isOpened} onClose={onClose} classname="">
       <div className={styles.container}>
         <h3 className={styles.title}>
           Your order #{generateRandomNumber()} is confirmed.

@@ -6,12 +6,22 @@ import { createPortal } from 'react-dom';
 type PopUpProperties = {
   isOpened: boolean;
   onClose: () => void;
+  classname: string;
 } & PropsWithChildren;
 
-const PopUp: FC<PopUpProperties> = ({ children, isOpened, onClose }) => {
+const PopUp: FC<PopUpProperties> = ({
+  children,
+  isOpened,
+  onClose,
+  classname = '',
+}) => {
   return createPortal(
     <div
-      className={classNames(styles.overlay, { [styles.opened]: isOpened })}
+      className={classNames(
+        styles.overlay,
+        { [styles.opened]: isOpened },
+        styles[classname],
+      )}
       onClick={onClose}
     >
       <div className={styles.content} onClick={(e) => e.stopPropagation()}>

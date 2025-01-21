@@ -143,6 +143,7 @@ export const FiltersDesk = () => {
                 <InputNumber
                   min={0}
                   max={99999}
+                  maxLength={5}
                   value={minPrice}
                   controls={false}
                   onChange={handleMinPriceChange}
@@ -169,6 +170,7 @@ export const FiltersDesk = () => {
                 <InputNumber
                   min={51}
                   max={100000}
+                  maxLength={6}
                   value={maxPrice}
                   controls={false}
                   onChange={handleMaxPriceChange}
@@ -265,6 +267,7 @@ export const FiltersDesk = () => {
                   <InputNumber
                     min={0}
                     max={644}
+                    maxLength={3}
                     value={minCameraMP}
                     defaultValue={0}
                     controls={false}
@@ -291,6 +294,7 @@ export const FiltersDesk = () => {
                   <InputNumber
                     min={0}
                     max={644}
+                    maxLength={3}
                     value={maxCameraMP}
                     defaultValue={0}
                     controls={false}

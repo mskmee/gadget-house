@@ -17,6 +17,8 @@ export interface IInitialState {
   cardTotalQuantity: number;
   currency: Currency;
   locale: Locale;
+  isBasketPopupOpen: boolean;
+  selectedProductId: number | null;
 }
 // Locale and Currency should be in the other slice in the future. Something like settings slice.
 
@@ -33,6 +35,8 @@ const initialState: IInitialState = {
   ),
   currency: Currency.UAH,
   locale: Locale.UA,
+  isBasketPopupOpen: false,
+  selectedProductId: null,
 };
 
 const shoppingCard_slice = createSlice({
@@ -40,6 +44,8 @@ const shoppingCard_slice = createSlice({
   initialState,
   reducers: {
     addToStore: (state, { payload: product }: PayloadAction<IProductCard>) => {
+      state.selectedProductId = product.id || null;
+      state.isBasketPopupOpen = true;
       const updatedProduct = state.products.find(
         (item) => item.id === product?.id,
       );
@@ -154,6 +160,10 @@ const shoppingCard_slice = createSlice({
       );
       state.cardTotalAmount = total;
       state.cardTotalQuantity = quantity;
+    },
+    closeBasketPopup: (state) => {
+      state.isBasketPopupOpen = false;
+      state.selectedProductId = null;
     },
   },
 });
