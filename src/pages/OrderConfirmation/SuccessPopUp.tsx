@@ -9,14 +9,18 @@ import styles from './success-pop-up.module.scss';
 interface ISuccessPopUpProps {
   isOpened: boolean;
   onClose: () => void;
-  classname?: string;
+  classname: string;
 }
 
 const generateRandomNumber = (): number => Math.floor(Math.random() * 1000);
 
-const SuccessPopUp: FC<ISuccessPopUpProps> = ({ isOpened, onClose }) => {
+const SuccessPopUp: FC<ISuccessPopUpProps> = ({
+  isOpened,
+  onClose,
+  classname,
+}) => {
   return (
-    <PopUp isOpened={isOpened} onClose={onClose}>
+    <PopUp isOpened={isOpened} onClose={onClose} classname={classname}>
       <div className={styles.container}>
         <p className={styles.icon}>
           <img src={CheckMark} alt="CheckMark Icon" />
