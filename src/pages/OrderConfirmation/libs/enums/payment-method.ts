@@ -1,4 +1,5 @@
 const PaymentMethod = {
+  DEFAULT: '',
   AFTER_CHECKING: 'afterChecking',
   COURIER: 'courier',
 } as const;

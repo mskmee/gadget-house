@@ -1,3 +1,6 @@
+import { DeliveryMethodType } from "@/pages/OrderConfirmation/libs/enums/delivery-method";
+import { PaymentMethodType } from "@/pages/OrderConfirmation/libs/enums/payment-method";
+
 type OrderItem = {
   id: number;
   email: string,
@@ -52,7 +55,7 @@ type CartItem = {
   quantity: number,
 }
 
-type OrderData = {
+type OrderDto = {
   fullName: string,
   email: string,
   phoneNumber: string,
@@ -64,8 +67,8 @@ type OrderData = {
     houseNumber?: string,
     flat?: string,
   },
-  deliveryMethod: string,
-  paymentMethod: string,
+  deliveryMethod: DeliveryMethodType,
+  paymentMethod: PaymentMethodType,
 };
 
-export { type OrderItem, type OrderData };
+export { type OrderItem, type OrderDto };

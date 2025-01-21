@@ -27,7 +27,6 @@ export const Catalog: FC<ICatalogProps> = ({ data, totalPages, page }) => {
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage,
   );
-  console.log('paginatedProducts: ', paginatedProducts);
 
   const onChange: PaginationProps['onChange'] = (pageNumber) => {
     setCurrentPage(pageNumber);

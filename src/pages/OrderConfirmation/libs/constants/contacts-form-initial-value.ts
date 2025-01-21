@@ -1,3 +1,5 @@
+import { DeliveryMethod } from '../enums/delivery-method';
+import { PaymentMethod } from '../enums/payment-method';
 import { ContactsFormDto, DeliveryFormDto, PaymentFormDto } from '../types/form-dto.type';
 
 const CONTACTS_FORM_INITIAL_VALUE: ContactsFormDto = {
@@ -8,7 +10,7 @@ const CONTACTS_FORM_INITIAL_VALUE: ContactsFormDto = {
 };
 
 const DELIVERY_FORM_INITIAL_VALUE: DeliveryFormDto = {
-  deliveryType: '',
+  deliveryType: DeliveryMethod.DEFAULT,
   city: '',
   street: '',
   houseNumber: '',
@@ -16,7 +18,7 @@ const DELIVERY_FORM_INITIAL_VALUE: DeliveryFormDto = {
 };
 
 const PAYMENT_FORM_INITIAL_VALUE: PaymentFormDto = {
-  paymentType: '',
+  paymentType: PaymentMethod.DEFAULT,
 };
 
 export { CONTACTS_FORM_INITIAL_VALUE, DELIVERY_FORM_INITIAL_VALUE, PAYMENT_FORM_INITIAL_VALUE };

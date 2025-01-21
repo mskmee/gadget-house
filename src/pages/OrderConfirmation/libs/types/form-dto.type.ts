@@ -1,3 +1,6 @@
+import { DeliveryMethodType } from "../enums/delivery-method";
+import { PaymentMethodType } from "../enums/payment-method";
+
 type ContactsFormDto = {
   fullName: string;
   email: string;
@@ -6,7 +9,7 @@ type ContactsFormDto = {
 };
 
 type DeliveryFormDto =  {
-  deliveryType: string;
+  deliveryType: DeliveryMethodType;
   city: string;
   street: string;
   houseNumber?: string;
@@ -14,7 +17,7 @@ type DeliveryFormDto =  {
 };
 
 type PaymentFormDto =  {
-  paymentType: string;
+  paymentType: PaymentMethodType;
 };
 
 export type { ContactsFormDto, DeliveryFormDto, PaymentFormDto };

@@ -15,7 +15,7 @@ import {
   PAYMENT_FORM_INITIAL_VALUE,
 } from '../constants/contacts-form-initial-value';
 import { ordersService } from '@/utils/packages/orders/';
-import { OrderData } from '@/utils/packages/orders/libs/types/order-item';
+import { OrderDto } from '@/utils/packages/orders/libs/types/order-item';
 
 type Return = {
   orderProcessStage: OrderStage;
@@ -170,11 +170,10 @@ const useOrderConfirmation = (): Return => {
     dispatch({
       type: OrderConfirmationAction.RESET_ORDER_PROCESS,
     });
-    clearCart();
   };
 
   const onOrderConfirmed = () => {
-    const orderData: OrderData = {
+    const orderData: OrderDto = {
       fullName: state.contactsFormValue.fullName,
       email: state.contactsFormValue.email,
       phoneNumber: state.contactsFormValue.phoneNumber,
@@ -193,16 +192,20 @@ const useOrderConfirmation = (): Return => {
       paymentMethod: state.paymentFormValue.paymentType,
     };
 
-
     ordersService.createOrder(orderData).then(() => {
       dispatch({
         type: OrderConfirmationAction.CONFIRM_ORDER,
       });
-    });
+    }
+    );
+
+    onResetOrderProcess();
   };
 
-  const onSuccessPopUpClose = () =>
+  const onSuccessPopUpClose = () => {
     dispatch({ type: OrderConfirmationAction.CLOSE_SUCCESS_POPUP });
+    clearCart();
+  }
 
   const onToggleRules = () =>
     dispatch({ type: OrderConfirmationAction.TOGGLE_RULES });
@@ -221,7 +224,7 @@ const useOrderConfirmation = (): Return => {
     paymentFormValue: state.paymentFormValue,
     isSuccessPopUpOpen: state.isSuccessPopUpOpen,
     isRulesAccepted: state.isRulesAccepted,
-    isOrderReady: state.isOrderReady, 
+    isOrderReady: state.isOrderReady,
   };
 };
 
