@@ -7,6 +7,7 @@ type ProductItem = {
   images: ProductImage[];
   available: boolean;
   rating: number;
+  category: string;
 };
 
 export { type ProductItem };

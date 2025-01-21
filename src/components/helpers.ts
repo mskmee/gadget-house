@@ -1,47 +1,53 @@
 import { AppRoute } from '@/enums/Route.ts';
-import { laptopData, smartphoneData } from '@/components/Card/constants.ts';
+import { laptopData, smartphoneData } from '@/constants/productCards';
 
-type BreadcumbItem = {
-  title: string | undefined;
+type TParams = {
+  category?: string;
+  id?: string;
+};
+
+type BreadcrumbItem = {
+  title: string;
   href: string;
 };
 
 export const getBreadcrumbItems = (
   path: string,
-  params: { smartphone?: string; id?: string },
-): BreadcumbItem[] => {
-  const { smartphone, id } = params;
+  { category, id }: TParams,
+): BreadcrumbItem[] => {
   const allProducts = [...smartphoneData, ...laptopData];
-  const currentProduct = allProducts.find((el) => id && el.id === +id);
+  const currentProduct = allProducts.find(
+    (product) => id && product.id === +id,
+  );
 
-  let breadcrumbItems = [
+  const breadcrumbItems: BreadcrumbItem[] = [
     {
       title: 'Homepage',
-      href: `${AppRoute?.ROOT}`,
-    },
-    {
-      title: smartphone?.[0].toUpperCase().concat(smartphone?.slice(1)),
-      href: '#',
-    },
-    {
-      title: currentProduct?.title[0]
-        .toUpperCase()
-        .concat(currentProduct.title.slice(1)),
-      href: '#',
+      href: AppRoute.ROOT,
     },
   ];
 
-  if (path === '/basket') {
-    breadcrumbItems = [
-      {
-        title: 'Homepage',
-        href: `${AppRoute?.ROOT}`,
-      },
-      {
-        title: 'Basket',
+  if (path === AppRoute.BASKET_PAGE) {
+    breadcrumbItems.push({
+      title: 'Basket',
+      href: '#',
+    });
+  } else if (category) {
+    // dynamically resolve the route based on the category
+    const categoryKey = category.toUpperCase() as keyof typeof AppRoute;
+    const categoryRoute = AppRoute[categoryKey] || `/${category}`;
+
+    breadcrumbItems.push({
+      title: category.charAt(0).toUpperCase() + category.slice(1),
+      href: categoryRoute,
+    });
+
+    if (id && currentProduct) {
+      breadcrumbItems.push({
+        title: currentProduct.title,
         href: '#',
-      },
-    ];
+      });
+    }
   }
 
   return breadcrumbItems;

@@ -1,6 +1,9 @@
 import { useState, useCallback, useEffect } from 'react';
 
-export const useResponsiveCarouselSettings = (classname: string) => {
+export const useResponsiveCarouselSettings = (
+  classname: string,
+  productImagesLength: number,
+) => {
   const responsiveSettings = [
     {
       breakpoint: 450,
@@ -46,13 +49,23 @@ export const useResponsiveCarouselSettings = (classname: string) => {
     },
     {
       breakpoint: 1440,
-      slidesToShow: classname === 'brands-carousel' ? 5 : 4,
+      slidesToShow:
+        classname === 'brands-carousel'
+          ? 5
+          : classname === 'photos-carousel'
+            ? productImagesLength
+            : 4,
       gap: classname === 'brands-carousel' ? 15 : 20,
       containerPadding: 100,
     },
     {
       breakpoint: Infinity,
-      slidesToShow: classname === 'brands-carousel' ? 5 : 4,
+      slidesToShow:
+        classname === 'brands-carousel'
+          ? 5
+          : classname === 'photos-carousel'
+            ? productImagesLength
+            : 4,
       gap: classname === 'brands-carousel' ? 15 : 40,
       containerPadding: 100,
     }, // Default for large screens

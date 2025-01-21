@@ -3,11 +3,14 @@
   align-items: center;
   gap: 16px;
   padding: 24px;
+
+  height: 160px;
   background-color: var(--white-color);
   border-radius: 20px;
 
   > div:first-child {
-    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
     padding: 5px;
     img {
       width: 100%;
@@ -55,36 +58,54 @@
 }
 
 @media screen and (max-width: 768px) {
-  .card .cardDetails {
-    .nameWrapper .name,
-    .priceWrapper .price {
-      font-size: 1.2rem;
+  .card {
+    height: 135px;
+    padding: 15px;
+    .cardDetails {
+      .nameWrapper .name,
+      .priceWrapper .price {
+        font-size: 1.2rem;
+      }
     }
   }
 }
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 550px) {
   .card {
     padding: 12px;
     > div:first-child {
-      width: 80px;
+      min-width: 80px;
+      max-width: 80px;
     }
     .cardDetails {
       .nameWrapper .name,
       .priceWrapper .price {
         font-size: 1rem;
       }
+      .nameWrapper {
+        margin-bottom: 4px;
+        .name {
+          line-height: 130%;
+          margin-bottom: 2px;
+        }
+      }
     }
   }
 }
+
 @media screen and (max-width: 380px) {
   .card {
+    gap: 5px;
     padding: 10px;
     > div:first-child {
-      width: 60px;
+      min-width: 65px;
+      max-width: 65px;
     }
     .cardDetails {
-      .nameWrapper .name {
-        margin-bottom: 2px;
+      .nameWrapper {
+        margin-bottom: 0;
+        .name {
+          margin-bottom: 0;
+        }
       }
       .nameWrapper .name,
       .priceWrapper .price {
@@ -94,6 +115,20 @@
       .priceWrapper {
         .details {
           font-size: 0.8rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-height: 820px) and (min-width: 769px) {
+  .card {
+    height: 138px;
+    .cardDetails {
+      .nameWrapper {
+        span:first-child {
+          line-height: 115%;
+          margin-bottom: 5px;
         }
       }
     }
