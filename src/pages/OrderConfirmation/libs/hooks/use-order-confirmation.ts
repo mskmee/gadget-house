@@ -34,7 +34,7 @@ type Return = {
   isSuccessPopUpOpen: boolean;
   isRulesAccepted: boolean;
   isOrderReady: boolean;
-  orderId: string;
+  orderId: number;
 };
 
 type State = {
@@ -46,7 +46,7 @@ type State = {
   isSuccessPopUpOpen: boolean;
   isRulesAccepted: boolean;
   isOrderReady: boolean;
-  orderId: string;
+  orderId: number;
 };
 
 type ReducerAction =
@@ -76,7 +76,7 @@ type ReducerAction =
   }
   | {
     type: OrderConfirmationAction.CONFIRM_ORDER;
-    payload: { orderId: string };
+    payload: { orderId: number };
   };
 
 const INITIAL_STATE: State = {
@@ -88,7 +88,7 @@ const INITIAL_STATE: State = {
   isSuccessPopUpOpen: false,
   isRulesAccepted: false,
   isOrderReady: false,
-  orderId: '',
+  orderId: 0,
 };
 
 const reducer: Reducer<State, ReducerAction> = (state, action) => {
@@ -201,7 +201,7 @@ const useOrderConfirmation = (): Return => {
     };
 
     const result = await dispatchApp(createOrder(orderData)).unwrap();
-    const orderId = String(result);
+    const orderId = Number(result);
 
     dispatch({ type: OrderConfirmationAction.CONFIRM_ORDER, payload: { orderId } });
   };

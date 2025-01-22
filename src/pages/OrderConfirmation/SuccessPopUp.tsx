@@ -10,7 +10,7 @@ interface ISuccessPopUpProps {
   isOpened: boolean;
   onClose: () => void;
   classname: string;
-  orderId?: string;
+  orderId?: number;
 }
 
 const SuccessPopUp: FC<ISuccessPopUpProps> = ({

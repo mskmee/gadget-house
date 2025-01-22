@@ -72,7 +72,7 @@ type OrderDto = {
 };
 
 type OrderResponseDto = {
-  orderId: string,
+  orderId: number,
 }
 
 export { type OrderItem, type OrderDto, type OrderResponseDto };
