@@ -65,7 +65,7 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
                   ? styles.smartphoneImg
                   : styles.laptopImg
               }
-              src={product.img}
+              src={product.images[0].link}
               alt="Product image"
             />
           </div>

@@ -91,7 +91,7 @@ const OrderConfirmation: FC = () => {
                   <article className={styles.order__itemWrapper}>
                     <div className={styles.order__itemImage}>
                       <img
-                        src={product.img}
+                        src={product.images[0].link}
                         alt={product.title}
                         width={100}
                         height={100}

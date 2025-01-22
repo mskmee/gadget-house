@@ -16,7 +16,7 @@ export const ProductItem: FC<IProductItemProps> = ({ product }) => {
   return (
     <div key={product.id} className={styles.card}>
       <div>
-        <img src={product.img} alt={product.title} />
+        <img src={product.images[0].link} alt={product.title} />
       </div>
 
       <div className={styles.cardDetails}>

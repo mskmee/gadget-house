@@ -11,7 +11,7 @@ interface IBasketItemProps {
   product: IShoppingCard;
 }
 export default function BasketItem({ product }: IBasketItemProps) {
-  const { id, title, code, img, quantity, totalPrice } = product;
+  const { id, title, code, images, quantity, totalPrice } = product;
   const { isLiked, handleClickLike } = useProductCardHandlers();
   const { deleteFromStore, increaseItemQuantity, decreaseItemQuantity } =
     useActions();
@@ -20,7 +20,7 @@ export default function BasketItem({ product }: IBasketItemProps) {
   return (
     <li className={styles.basketItem}>
       <div className={styles.productImg}>
-        <img src={img} alt={title} />
+        <img src={images[0].link} alt={title} />
       </div>
       <div className={styles.productInfo}>
         <p className={styles.productTitle}>{title}</p>
