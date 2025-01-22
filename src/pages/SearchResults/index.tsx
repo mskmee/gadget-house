@@ -77,7 +77,6 @@ export const SearchResults = () => {
       />
 
       <Carousels classname="laptop-carousel" />
-
       <Benefits />
     </main>
   );

@@ -34,7 +34,7 @@ export const Product: FC<IProductProps> = ({
   const dinamicCurrentProductImages = dinamicCurrentProduct?.images;
   const [currentSlide, setCurrentSlide] = useState({
     id: 1,
-    img: dinamicCurrentProductImages?.[0],
+    img: dinamicCurrentProductImages[0].link,
   });
 
   const prevArrowRef = useRef<HTMLImageElement>(null);
@@ -71,7 +71,7 @@ export const Product: FC<IProductProps> = ({
     if (currentSlide?.id !== 1) {
       setCurrentSlide({
         id: currentSlide.id - 1,
-        img: dinamicCurrentProductImages?.[currentSlide?.id - 2],
+        img: dinamicCurrentProductImages?.[currentSlide?.id - 2].link,
       });
     }
   };
@@ -80,7 +80,7 @@ export const Product: FC<IProductProps> = ({
     if (currentSlide?.id !== dinamicCurrentProductImages?.length) {
       setCurrentSlide({
         id: currentSlide.id + 1,
-        img: dinamicCurrentProductImages?.[currentSlide?.id],
+        img: dinamicCurrentProductImages?.[currentSlide?.id].link,
       });
     }
   };
@@ -89,7 +89,7 @@ export const Product: FC<IProductProps> = ({
     return () => {
       setCurrentSlide({
         id: slideId,
-        img: dinamicCurrentProductImages?.[slideId - 1],
+        img: dinamicCurrentProductImages?.[slideId - 1].link,
       });
     };
   };
@@ -121,7 +121,7 @@ export const Product: FC<IProductProps> = ({
   useEffect(() => {
     setCurrentSlide({
       id: 1,
-      img: dinamicCurrentProductImages?.[0],
+      img: dinamicCurrentProductImages[0].link,
     });
   }, [pathname]);
 
@@ -210,7 +210,7 @@ export const Product: FC<IProductProps> = ({
                   })}
                   onClick={selectCurrentSlideByClick(i + 1)}
                 >
-                  <img src={item} alt="product slick picture" />
+                  <img src={item.link} alt="product slick picture" />
                 </li>
               ))}
             </ul>

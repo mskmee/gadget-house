@@ -28,8 +28,8 @@ class ProductsService implements IProductsService {
     return this.productsApi.getPaginatedProducts(page, size, sort);
   }
 
-  async getCategoryProducts(categoryId: number, brandIds: number[], price: { from: number; to: number }, attributeValueIds: number[]): Promise<CategoryProductsResponseDto> {
-    return this.productsApi.getCategoryProducts(categoryId, brandIds, price, attributeValueIds);
+  async getCategoryProducts(name: string, categoryId: number, brandIds: number[], price: { from: number; to: number }, attributeValueIds: number[]): Promise<CategoryProductsResponseDto> {
+    return this.productsApi.getCategoryProducts(name, categoryId, brandIds, price, attributeValueIds);
   }
 }
 

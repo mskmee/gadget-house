@@ -14,7 +14,7 @@ import { rateImg, rateEmptyImg } from '@/assets/constants';
 import { HeartIcon } from '@/assets/icons/HeartIcon';
 import { BasketIcon } from '@/assets/icons/BasketIcon';
 
-import styles from './card.module.scss';
+import styles from '../Card/card.module.scss';
 
 interface ISmartphoneCardProps {
   product: ProductItem;
@@ -38,7 +38,6 @@ export const Card: FC<ISmartphoneCardProps> = ({
     addToStore({
       ...product,
       title: product.name,
-      images: [product.images[0].link],
       isLiked: false,
       rate: product.rating,
       anotherColors: [],

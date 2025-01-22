@@ -20,7 +20,7 @@ export default function BasketItem({ product }: IBasketItemProps) {
   return (
     <li className={styles.basketItem}>
       <div className={styles.productImg}>
-        <img src={images[0]} alt={title} />
+        <img src={images?.[0].link} alt={title} />
       </div>
       <div className={styles.productInfo}>
         <p className={styles.productTitle}>{title}</p>

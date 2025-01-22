@@ -1,0 +1,55 @@
+.radioInput {
+  transition: all 0.3s ease;
+
+  :global {
+    .ant-radio {
+      &::before {
+        content: "";
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        background-image: url("../../../assets/icons/radio.svg");
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: contain;
+        transition: all 0.3s ease-in-out;
+      }
+
+      &-checked::before {
+        background-image: url("../../../assets/icons/radio-checked.svg");
+      }
+    }
+
+    .ant-radio-wrapper {
+      font-family: "Inter", sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 150%;
+      color: var(--text-color);
+    }
+
+    span {
+      font-family: "Inter", sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 150%;
+      color: var(--text-color);
+    }
+
+    .ant-radio-inner {
+      display: none;
+    }
+  }
+
+  &__errorMessage {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 9px;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    color: var(--error-color);
+  }
+}

@@ -95,10 +95,18 @@ import headphones from './images/basket-products-img/headphones.png';
 import basketPhoneImg from './images/basket-products-img/phone.png';
 import searchInputClear from './icons/search_input_clear.svg';
 import deleteFromBasket from './icons/delete-from-basket.svg';
+import Edit from './icons/edit.svg';
+import EditHover from './icons/edit-hover.svg';
+import Delete from './icons/delete.svg';
+import DeleteHover from './icons/delete-hover.svg';
+import Radio from './icons/radio.svg';
+import RadioChecked from './icons/radio-checked.svg';
+import CheckMark from './icons/checkmark.svg';
 import deleteFromBasketMob from './icons/delete-from-basket-mobile.svg';
 import Robot404 from './icons/robot-404.svg';
 import Admin from './icons/admin.svg';
-import { BasketIcon } from './icons/BasketIcon';
+import ErrorIcon from './icons/error-icon.svg';
+import {BasketIcon} from './icons/BasketIcon'
 import closeBasketPopupIcon from './icons/close_popup.svg';
 import deleteFromBasketPopupIcon from './icons/delete_product_from_popup.svg';
 import inBasket from './icons/approved.svg';
@@ -200,6 +208,14 @@ export {
   basketPhoneImg,
   searchInputClear,
   deleteFromBasket,
+  ErrorIcon,
+  Edit,
+  EditHover,
+  Radio,
+  RadioChecked,
+  Delete,
+  DeleteHover,
+  CheckMark,
   deleteFromBasketMob,
   closeBasketPopupIcon,
   deleteFromBasketPopupIcon,
