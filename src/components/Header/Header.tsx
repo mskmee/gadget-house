@@ -35,18 +35,37 @@ export const Header = () => {
   const catalogListRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLButtonElement>(null);
   const catalogBtnRef = useRef<HTMLButtonElement>(null);
+  const fixedHeaderRef = useRef<HTMLDivElement>(null);
   const headerBottomRef = useRef<HTMLDivElement>(null);
+  const headerBottomWrapRef = useRef<HTMLDivElement>(null);
   const searchFieldRef = useRef<InputRef>(null);
 
-  const isLargerThan1250px = useMediaQuery({
+  const isLargerThan1557px = useMediaQuery({
+    query: '(min-width: 1557px)',
+  });
+  const isLessThan1557px = useMediaQuery({
+    query: '(max-width: 1557px)',
+  });
+
+  const isLargerThan1540px = useMediaQuery({
+    query: '(min-width: 1540px)',
+  });
+  const isLargerThan1440px = useMediaQuery({
+    query: '(min-width: 1440px)',
+  });
+  const isLessThan1440px = useMediaQuery({
+    query: '(max-width: 1440px)',
+  });
+
+  const isLessThan1250px = useMediaQuery({
     query: '(max-width: 1250px)',
   });
 
-  const isLaptopPage = useMediaQuery({
+  const isLessThan992px = useMediaQuery({
     query: '(max-width: 992px)',
   });
 
-  const isLargerThan768px = useMediaQuery({
+  const isLessThan768px = useMediaQuery({
     query: '(max-width: 768px)',
   });
 
@@ -69,39 +88,43 @@ export const Header = () => {
   }, [location.pathname]);
 
   const openCatalogList = () => {
-    if (isLaptopPage || (location.pathname !== '/' && !isCatalogListOpen)) {
+    if (isLessThan992px || (location.pathname !== '/' && !isCatalogListOpen)) {
       const scrollTop = 0;
-      const headerHeight = headerRef.current && headerRef.current.clientHeight;
+      const headerHeight = isFixedHeader
+        ? headerBottomRef.current && headerBottomRef.current.clientHeight
+        : headerRef.current && headerRef.current.clientHeight;
       const a1 = headerHeight ? headerHeight - scrollTop : 0;
-      const newHeight = `${Math.floor(window.innerHeight - a1)}px`;
+      const newHeight = `${Math.floor(window.innerHeight - a1 + 1)}px`;
 
-      const newPositionLeft = `${Math.floor(window.innerWidth - 1440) / 2}`;
+      const newPositionLeft = `${Math.floor(window.innerWidth - 1440 - 17) / 2}`;
       if (catalogListRef.current) {
         catalogListRef.current.style.height = newHeight;
 
-        if (+newPositionLeft > 50) {
-          catalogListRef.current.style.left = `-${newPositionLeft}px`;
+        if (isLargerThan1557px) {
+          catalogListRef.current.style.left = isFixedHeader
+            ? `-${+newPositionLeft - 50}px`
+            : `-${newPositionLeft}px`;
           catalogListRef.current.style.setProperty(
             '--parent-left',
-            `${newPositionLeft}px`,
+            `-${newPositionLeft}px`,
           );
-        } else {
-          if (!isLaptopPage) {
-            catalogListRef.current.style.left = isLargerThan1250px
-              ? `-37px`
-              : `-51px`;
-            catalogListRef.current.style.setProperty('--parent-left', `50px`);
-          } else {
-            catalogListRef.current.style.left = `-20px`;
-            catalogListRef.current.style.top = isLargerThan768px
-              ? isFixedHeader
-                ? `58px`
-                : `66px`
-              : isFixedHeader
-                ? `64px`
-                : `81px`;
-            catalogListRef.current.style.setProperty('--parent-left', `0`);
-          }
+        } else if (isLessThan1557px && !isLessThan1440px) {
+          catalogListRef.current.style.left = isFixedHeader ? '0' : '-50px';
+          catalogListRef.current.style.setProperty('--parent-left', `-50px`);
+        } else if (isLessThan1440px && !isLessThan1250px) {
+          catalogListRef.current.style.left = isFixedHeader ? '0' : '0';
+          catalogListRef.current.style.setProperty('--parent-left', `-50px`);
+        } else if (isLessThan1250px && !isLessThan992px) {
+          catalogListRef.current.style.left = '0';
+          catalogListRef.current.style.setProperty('--parent-left', `20px`);
+        } else if (isLessThan992px && !isLessThan768px) {
+          catalogListRef.current.style.top = `80px`;
+          catalogListRef.current.style.left = '0';
+          catalogListRef.current.style.setProperty('--parent-left', '0');
+        } else if (isLessThan768px) {
+          catalogListRef.current.style.top = `64px`;
+          catalogListRef.current.style.left = '0';
+          catalogListRef.current.style.setProperty('--parent-left', `0`);
         }
       }
 
@@ -124,12 +147,44 @@ export const Header = () => {
   };
 
   useEffect(() => {
-    if (isCatalogListOpen) {
-      document.body.style.overflowY = 'hidden';
+    if (isFixedHeader) {
+      if (
+        isCatalogListOpen &&
+        fixedHeaderRef.current &&
+        headerBottomWrapRef.current
+      ) {
+        document.body.style.overflowY = 'hidden';
+        document.body.style.paddingRight = '16.8px';
+        if (isLargerThan1540px) {
+          fixedHeaderRef.current.style.width = `${document.documentElement.clientWidth - 16.8}px`;
+        }
+        if (!isLargerThan1540px && isLargerThan1440px) {
+          headerBottomWrapRef.current.style.width = `${document.documentElement.clientWidth - 116.8}px`;
+        }
+        if (isLessThan1440px) {
+          headerBottomWrapRef.current.style.width = `${document.documentElement.clientWidth - 66.8}px`;
+        }
+        if (isLessThan1250px) {
+          headerBottomWrapRef.current.style.width = `${document.documentElement.clientWidth - 56.8}px`;
+        }
+      } else {
+        if (fixedHeaderRef.current && headerBottomWrapRef.current) {
+          document.body.style.overflowY = 'initial';
+          document.body.style.paddingRight = '0px';
+          headerBottomWrapRef.current.style.width = '100%';
+          fixedHeaderRef.current.style.width = '100%';
+        }
+      }
     } else {
-      document.body.style.overflowY = 'initial';
+      if (isCatalogListOpen) {
+        document.body.style.overflowY = 'hidden';
+        document.body.style.paddingRight = '16.8px';
+      } else {
+        document.body.style.overflowY = 'initial';
+        document.body.style.paddingRight = '0px';
+      }
     }
-  }, [isCatalogListOpen]);
+  }, [isCatalogListOpen, isFixedHeader]);
 
   const openCatalogListOnFocus = (e: FocusEvent<HTMLButtonElement>) => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -219,19 +274,24 @@ export const Header = () => {
           'container-xxl': !isFixedHeader,
           [styles.fixedHeader]: isFixedHeader,
         })}
+        ref={fixedHeaderRef}
       >
         <div
           id="header-bottom-section"
           ref={headerBottomRef}
-          className={classNames(styles.headerBottom)}
+          className={classNames(styles.headerBottom, {
+            [styles.headerBottomWithoutBG]: isFixedHeader,
+          })}
           tabIndex={0}
         >
           <div
             className={classNames({
               [styles['hidden-header-bottom-wrapper']]: !isFixedHeader,
+              [styles['openn']]: isCatalogListOpen,
             })}
+            ref={headerBottomWrapRef}
           >
-            {isLaptopPage ? (
+            {isLessThan992px ? (
               <img
                 src={isCatalogListOpen ? LeftArrow : BurgerMenuIcon}
                 className={classNames({

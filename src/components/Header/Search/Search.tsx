@@ -8,6 +8,7 @@ import {
   Dispatch,
   SetStateAction,
   useCallback,
+  KeyboardEvent,
 } from 'react';
 import styles from './search.module.scss';
 import { SearchIcon } from '@/assets/icons/SearchIcon';
@@ -15,9 +16,10 @@ import { Input, InputRef } from 'antd';
 import classNames from 'classnames';
 import debounce from 'lodash.debounce';
 import { searchInputClear } from '@/assets/constants';
-import { laptopData, smartphoneData } from '@/components/Card/constants';
+import { laptopData, smartphoneData } from '@/constants/productCards';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useActions } from '@/hooks/useActions';
+import { AppRoute } from '@/enums/Route';
 
 interface ISearchProps {
   searchFieldRef: LegacyRef<InputRef>;
@@ -41,6 +43,57 @@ export const Search: FC<ISearchProps> = ({
   const [suggestions, setSuggestions] = useState<
     { title: string; category: string }[]
   >([]);
+  const [activeIndex, setActiveIndex] = useState<number>(-1);
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'ArrowDown' && activeIndex !== 5) {
+      console.log(suggestions);
+
+      setActiveIndex((prev) =>
+        Math.min(
+          prev + 1,
+          suggestions
+            .filter((trend) =>
+              trend.title
+                .toLowerCase()
+                .includes(searchInput.value.trim().toLowerCase()),
+            )
+            .slice(0, 6).length - 1,
+        ),
+      );
+    } else if (e.key === 'ArrowUp') {
+      setActiveIndex((prev) => Math.max(prev - 1, 0));
+    } else if (e.key === 'Enter') {
+      if (activeIndex >= 0) {
+        const selectedSuggestion = suggestions[activeIndex];
+        const selectedTitle = selectedSuggestion.title;
+        setIsOverlayActive(false);
+        navigate(
+          `${AppRoute.SEARCH_RESULTS_FOUND}/?text=${selectedTitle.replace(
+            /[\s/]/g,
+            '-',
+          )}`,
+          {
+            state: {
+              searchInputValue: selectedTitle,
+              isSuggestion: true,
+            },
+          },
+        );
+        setSearchInput({ value: selectedTitle, hasError: false });
+      } else if (searchInput.value.trim()) {
+        navigate(
+          `${AppRoute.SEARCH_RESULTS_FOUND}/?text=${searchInput.value.trim()}`,
+          {
+            state: {
+              searchInputValue: searchInput.value.trim(),
+              isSuggestion: false,
+            },
+          },
+        );
+      }
+    }
+  };
 
   const allProducts = [...laptopData, ...smartphoneData];
 
@@ -94,6 +147,7 @@ export const Search: FC<ISearchProps> = ({
       setIsGlobalOverlayActive(false);
       if (currentPath.current !== '/search-results') {
         //because here closure with location pathname, therefor i use currentPath (useRef)
+
         navigate('/search-results', {
           state: inputValue,
         });
@@ -116,7 +170,8 @@ export const Search: FC<ISearchProps> = ({
 
   const handleChangeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
-    const isTooLong = inputValue.length >= 80;
+    const isTooLong = inputValue.length >= 40;
+    setActiveIndex(-1); // Reset the active index when typing
 
     setSearchInput({ value: inputValue, hasError: isTooLong });
     debouncedSuggestionHandler(inputValue);
@@ -152,9 +207,14 @@ export const Search: FC<ISearchProps> = ({
           suggestions.length > 0 && isOverlayActive,
       })}
       placeholder="Searching..."
-      value={searchInput.value}
+      value={
+        activeIndex >= 0 && suggestions[activeIndex]
+          ? suggestions[activeIndex].title
+          : searchInput.value
+      }
       maxLength={40}
       onChange={handleChangeInputValue}
+      onKeyDown={handleKeyDown}
       prefix={
         <div
           id="autocomplete-search-bar-id"
@@ -178,10 +238,20 @@ export const Search: FC<ISearchProps> = ({
                     const endIndex = startIndex + searchValue.length;
 
                     return (
-                      <li key={index}>
+                      <li
+                        key={index}
+                        className={classNames({
+                          [styles['active-suggestion']]: index === activeIndex,
+                        })}
+                      >
                         {startIndex !== -1 && (
                           <Link
-                            to={`/seacrh/?text=${trend.title.split(' ').join('+')}`}
+                            to={`${AppRoute.SEARCH_RESULTS_FOUND}/?text=${trend.title.replace(/[\s/]/g, '-')}`}
+                            state={{
+                              searchInputValue: `${trend.title.replace(/[\s/]/g, '-')}`,
+                              isSuggestion: true,
+                            }}
+                            onClick={() => setIsOverlayActive(false)}
                           >
                             <span>{trend.title.slice(0, startIndex)}</span>
                             <strong>
@@ -199,7 +269,7 @@ export const Search: FC<ISearchProps> = ({
       }
       suffix={
         <div className={styles['search-right-elements']}>
-          {searchInput.value && (
+          {searchInput.value ? (
             <>
               <img
                 src={searchInputClear}
@@ -207,9 +277,21 @@ export const Search: FC<ISearchProps> = ({
                 onClick={clearSearchInputValue}
               />
               <div className={styles['search-right-elements_devider']}></div>
+              <Link
+                to={`${AppRoute.SEARCH_RESULTS_FOUND}/?text=${searchInput.value}`}
+                state={{
+                  searchInputValue: searchInput.value,
+                  isSuggestion: false,
+                }}
+                className={classNames({ [styles.active]: searchInput.value })}
+                onClick={() => setIsOverlayActive(false)}
+              >
+                <SearchIcon />
+              </Link>
             </>
+          ) : (
+            <SearchIcon />
           )}
-          <SearchIcon />
         </div>
       }
     />

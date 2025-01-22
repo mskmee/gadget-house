@@ -49,6 +49,7 @@ export interface IProductCard {
   anotherColors: string[];
   isLiked: boolean;
   isSmartphoneCard?: boolean;
+  category: string;
 }
 
 export interface IShoppingCard extends IProductCard {
@@ -132,7 +133,7 @@ export interface IGadget {
   title: string;
   price: number;
   category: string;
-  isLiked: boolean,
+  isLiked: boolean;
   brand: string;
   rate: number;
   isPopular: number;

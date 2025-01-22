@@ -2,12 +2,13 @@ import { Dispatch, FC, SetStateAction, useEffect, useRef } from 'react';
 import style from './Product.module.scss';
 import classNames from 'classnames';
 import { arrowImg } from '@/assets/constants';
-import { currentProduct } from '@/constants/singleProduct';
+
 import { Modal } from 'antd';
 import { AddToBasketButton } from './AddToBasketButton';
 import { convertPriceToReadable } from '@/utils/helpers/product';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { useMediaQuery } from 'react-responsive';
+import { IProductCard } from '@/interfaces/interfaces';
 
 interface ICurrentSlide {
   id: number;
@@ -21,6 +22,7 @@ interface iPhotoModalProps {
   setModalImageSrc: Dispatch<SetStateAction<string | null>>;
   currentSlide: ICurrentSlide;
   setCurrentSlide: Dispatch<SetStateAction<ICurrentSlide>>;
+  dinamicCurrentProduct: IProductCard;
 }
 
 export const PhotoModal: FC<iPhotoModalProps> = ({
@@ -30,21 +32,29 @@ export const PhotoModal: FC<iPhotoModalProps> = ({
   setModalImageSrc,
   currentSlide,
   setCurrentSlide,
+  dinamicCurrentProduct,
 }) => {
   const prevArrowRef = useRef<HTMLImageElement>(null);
   const nextArrowRef = useRef<HTMLImageElement>(null);
-  const currentProductImages = currentProduct?.[0]?.images;
+  const currentProductImages = dinamicCurrentProduct.images;
+
   const { currency, locale } = useTypedSelector((state) => state.shopping_card);
 
   const handlePrevClick = () => {
     if (currentSlide?.id !== 1) {
-      setCurrentSlide(currentProductImages?.[currentSlide?.id - 2]);
+      setCurrentSlide({
+        id: currentSlide.id - 1,
+        img: currentProductImages?.[currentSlide?.id - 2],
+      });
     }
   };
 
   const handleNextClick = () => {
     if (currentSlide?.id !== currentProductImages?.length) {
-      setCurrentSlide(currentProductImages?.[currentSlide?.id]);
+      setCurrentSlide({
+        id: currentSlide.id + 1,
+        img: currentProductImages?.[currentSlide?.id],
+      });
     }
   };
 
@@ -59,7 +69,10 @@ export const PhotoModal: FC<iPhotoModalProps> = ({
 
   const selectCurrentSlideByClick = (slideId: number) => {
     return () => {
-      setCurrentSlide(currentProductImages?.[slideId - 1]);
+      setCurrentSlide({
+        id: slideId,
+        img: currentProductImages?.[slideId - 1],
+      });
     };
   };
 
@@ -120,19 +133,18 @@ export const PhotoModal: FC<iPhotoModalProps> = ({
                   onClick={handleNextClick}
                 />
                 <span>
-                  {currentSlide.id}/{currentProduct[0].images?.length}
+                  {currentSlide.id}/{dinamicCurrentProduct.images?.length}
                 </span>
               </div>
               {isLargerThan500px && (
                 <ul>
-                  {currentProductImages?.map((item) => (
+                  {currentProductImages?.map((_, i) => (
                     <li
-                      key={item?.id}
+                      key={i + 1}
                       className={classNames({
-                        [style['selected-photo']]:
-                          currentSlide?.id === item?.id,
+                        [style['selected-photo']]: currentSlide?.id === i + 1,
                       })}
-                      onClick={selectCurrentSlideByClick(item?.id)}
+                      onClick={selectCurrentSlideByClick(i + 1)}
                     ></li>
                   ))}
                 </ul>
@@ -140,16 +152,15 @@ export const PhotoModal: FC<iPhotoModalProps> = ({
               <div className={style['product_carousel-slicks']}>
                 {!isLargerThan500px && (
                   <ul>
-                    {currentProductImages?.map((item) => (
+                    {currentProductImages?.map((item, i) => (
                       <li
-                        key={item?.id}
+                        key={i + 1}
                         className={classNames({
-                          [style['selected-photo']]:
-                            currentSlide?.id === item?.id,
+                          [style['selected-photo']]: currentSlide?.id === i + 1,
                         })}
-                        onClick={selectCurrentSlideByClick(item?.id)}
+                        onClick={selectCurrentSlideByClick(i + 1)}
                       >
-                        <img src={item?.img} alt="product slick picture" />
+                        <img src={item} alt="product slick picture" />
                       </li>
                     ))}
                   </ul>
@@ -158,12 +169,12 @@ export const PhotoModal: FC<iPhotoModalProps> = ({
                 <div className={style.photoModalBottom_right}>
                   <span>
                     {convertPriceToReadable(
-                      currentProduct[0].price,
+                      dinamicCurrentProduct.price,
                       currency,
                       locale,
                     )}
                   </span>
-                  <AddToBasketButton />
+                  <AddToBasketButton product={dinamicCurrentProduct} />
                 </div>
               </div>
             </div>

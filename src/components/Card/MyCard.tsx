@@ -32,6 +32,7 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
 
   const addToBasket = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
     addToStore(product);
   };
 
@@ -40,7 +41,7 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
       <Link
         className={`${styles.cardConatiner} ${classname} `}
         key={product.id}
-        to={`/${classname}/${product.id}/${product.href}`}
+        to={`/${classname === 'previously-reviewed' ? product.category : classname}/${product.id}/${product.href}`}
         tabIndex={0}
         style={{ minWidth: `${width}px` }}
       >
@@ -53,7 +54,7 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
           <div
             className={
               classname === 'previously-reviewed' && index !== 2 && index !== 6
-                ? styles.laptopCardImage
+                ? styles.cardImage
                 : classname === 'laptop'
                   ? styles.laptopCardImage
                   : styles.cardImage

@@ -13,6 +13,7 @@ interface IProductItemProps {
 
 export const ProductItem: FC<IProductItemProps> = ({ product }) => {
   const { locale, currency } = useTypedSelector((state) => state.shopping_card);
+
   return (
     <div key={product.id} className={styles.card}>
       <div>

@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { currentProduct } from '@/constants/singleProduct';
+import { staticCurrentProduct } from '@/constants/singleProduct';
 import style from './Product.module.scss';
 import { useMediaQuery } from 'react-responsive';
 
@@ -20,7 +20,7 @@ export const ProductCharacteristics: FC = () => {
         <div className={style['characteristics_screen']}>
           <h3>Screen</h3>
           <ul>
-            {currentProduct?.[0]?.characteristics?.screen?.map((item) => (
+            {staticCurrentProduct?.[0]?.characteristics?.screen?.map((item) => (
               <li key={item?.id}>
                 <span>{item?.name}</span>
                 {!isLargerThan500px && <p></p>}
@@ -32,7 +32,7 @@ export const ProductCharacteristics: FC = () => {
         <div className={style['characteristics_communacation']}>
           <h3>Communication</h3>
           <ul>
-            {currentProduct?.[0]?.characteristics?.communication?.map(
+            {staticCurrentProduct?.[0]?.characteristics?.communication?.map(
               (item) => (
                 <li key={item?.id}>
                   <span>{item?.name}</span>
@@ -46,7 +46,7 @@ export const ProductCharacteristics: FC = () => {
         <div className={style['characteristics_os']}>
           <h3>OS</h3>
           <ul>
-            {currentProduct?.[0]?.characteristics?.os?.map((item) => (
+            {staticCurrentProduct?.[0]?.characteristics?.os?.map((item) => (
               <li key={item?.id}>
                 <span>{item?.name}</span>
                 {!isLargerThan500px && <p></p>}
@@ -59,13 +59,15 @@ export const ProductCharacteristics: FC = () => {
           <div className={style['characteristics_camera']}>
             <h3>Camera</h3>
             <ul>
-              {currentProduct?.[0]?.characteristics?.camera?.map((item) => (
-                <li key={item?.id}>
-                  <span>{item?.name}</span>
-                  {!isLargerThan500px && <p></p>}
-                  <span>{item?.value}</span>
-                </li>
-              ))}
+              {staticCurrentProduct?.[0]?.characteristics?.camera?.map(
+                (item) => (
+                  <li key={item?.id}>
+                    <span>{item?.name}</span>
+                    {!isLargerThan500px && <p></p>}
+                    <span>{item?.value}</span>
+                  </li>
+                ),
+              )}
             </ul>
           </div>
         )}
