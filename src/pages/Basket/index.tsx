@@ -1,5 +1,5 @@
 import styles from './Basket.module.scss';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { LeftArrow } from '@/assets/constants';
 import BasketItem from '@/components/BasketItem/BasketItem.tsx';
 import { useTypedSelector } from '@/hooks/useTypedSelector.ts';
@@ -7,7 +7,6 @@ import { CustomBreadcrumbs } from '@/components/SingleProduct/CustomBreadcrumbs.
 import { convertPriceToReadable } from '@/utils/helpers/product';
 import { useState } from 'react';
 import { SuccessPopUp } from './libs/components/components';
-import { useActions } from '@/hooks/useActions';
 import { SliderNav } from '@/components/SliderNav/SliderNav.tsx';
 import Carousels from '@/components/Carousel/Carousel.tsx';
 import Benefits from '@/components/benefitsList/benefits.tsx';
@@ -15,7 +14,6 @@ import Benefits from '@/components/benefitsList/benefits.tsx';
 export const BasketPage = () => {
   const [isPopUpOpened, setIsPopUpOpened] = useState(false);
   const navigate = useNavigate();
-  const { clearCart } = useActions();
 
   const { products, cardTotalAmount, currency, locale } = useTypedSelector(
     (state) => state.shopping_card,
@@ -24,10 +22,6 @@ export const BasketPage = () => {
   const isMobile = innerWidth < 768;
 
   const onPopUpClose = () => setIsPopUpOpened(false);
-  const handleOrderConfirm = () => {
-    setIsPopUpOpened(true);
-    clearCart();
-  };
 
   return (
     <>
@@ -64,7 +58,7 @@ export const BasketPage = () => {
                   {convertPriceToReadable(cardTotalAmount, currency, locale)}
                 </span>
               </h3>
-              <button onClick={handleOrderConfirm}>Place the order</button>
+              <Link to="/order">Place the order</Link>
             </div>
           </section>
         )}

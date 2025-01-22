@@ -1,0 +1,25 @@
+const Attribute = {
+  ROM_MEMORY: 1,
+  RAM_MEMORY: 2,
+  COLOR: 3,
+  DISPLAY_DIAGONAL: 4,
+  SCREEN_RESOLUTION: 5,
+  SCREEN_TYPE: 6,
+  SCREEN_REFRESH_RATE: 7,
+  GLASS_PROTECTION_TECHNOLOGY: 8,
+  COMMUNICATION_STANDARD: 9,
+  NUMBER_OF_SIM_CARDS: 10,
+  SIM_CARD_SIZE: 11,
+  OPERATING_SYSTEM: 12,
+  PROCESSOR_FREQUENCY: 13,
+  NUMBER_OF_PROCESSOR_CORES: 14,
+  PROCESSOR_MODEL: 15,
+  FLESH_CARD: 16,
+  SENSOR_RESOLUTION: 17,
+  VIDEO_CARD: 18
+} as const;
+
+// eslint-disable-next-line no-redeclare
+type Attribute = (typeof Attribute)[keyof typeof Attribute];
+
+export { Attribute };
