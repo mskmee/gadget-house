@@ -201,7 +201,7 @@ const useOrderConfirmation = (): Return => {
     };
 
     const result = await dispatchApp(createOrder(orderData)).unwrap();
-    const orderId = Number(result);
+    const orderId = result;
 
     dispatch({ type: OrderConfirmationAction.CONFIRM_ORDER, payload: { orderId } });
   };
