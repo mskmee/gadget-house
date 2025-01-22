@@ -44,7 +44,7 @@ export const PhotoModal: FC<iPhotoModalProps> = ({
     if (currentSlide?.id !== 1) {
       setCurrentSlide({
         id: currentSlide.id - 1,
-        img: currentProductImages?.[currentSlide?.id - 2],
+        img: currentProductImages?.[currentSlide?.id - 2].link,
       });
     }
   };
@@ -53,7 +53,7 @@ export const PhotoModal: FC<iPhotoModalProps> = ({
     if (currentSlide?.id !== currentProductImages?.length) {
       setCurrentSlide({
         id: currentSlide.id + 1,
-        img: currentProductImages?.[currentSlide?.id],
+        img: currentProductImages?.[currentSlide?.id].link,
       });
     }
   };
@@ -71,7 +71,7 @@ export const PhotoModal: FC<iPhotoModalProps> = ({
     return () => {
       setCurrentSlide({
         id: slideId,
-        img: currentProductImages?.[slideId - 1],
+        img: currentProductImages?.[slideId - 1].link,
       });
     };
   };
@@ -160,7 +160,7 @@ export const PhotoModal: FC<iPhotoModalProps> = ({
                         })}
                         onClick={selectCurrentSlideByClick(i + 1)}
                       >
-                        <img src={item} alt="product slick picture" />
+                        <img src={item.link} alt="product slick picture" />
                       </li>
                     ))}
                   </ul>

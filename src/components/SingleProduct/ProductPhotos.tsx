@@ -1,21 +1,24 @@
 import { FC } from 'react';
 import style from './Product.module.scss';
 import Carousels from '../Carousel/Carousel';
+import { ProductImageCard } from '@/interfaces/interfaces';
 
 interface IProductPhotosProps {
-  productImages: string[];
+  productImageCards: ProductImageCard[];
 }
 
-export const ProductPhotos: FC<IProductPhotosProps> = ({ productImages }) => {
+export const ProductPhotos: FC<IProductPhotosProps> = ({
+  productImageCards,
+}) => {
   return (
     <section className={style['photos']} id="product-photos">
       <h2>Photos</h2>
 
-      {productImages?.length > 0 ? (
+      {productImageCards?.length > 0 ? (
         <>
           <Carousels
             classname="photos-carousel"
-            productImages={productImages}
+            productImageCards={productImageCards}
           />
         </>
       ) : (

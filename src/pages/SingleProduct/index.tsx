@@ -323,7 +323,7 @@ export const SingleProductPage: FC = () => {
           </div>
         </section>
         {dinamicCurrentProduct && (
-          <ProductPhotos productImages={dinamicCurrentProduct?.images} />
+          <ProductPhotos productImageCards={dinamicCurrentProduct?.images} />
         )}
       </div>
       <ProductAccessories />
