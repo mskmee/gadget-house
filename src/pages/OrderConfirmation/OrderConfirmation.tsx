@@ -32,6 +32,7 @@ const OrderConfirmation: FC = () => {
     isRulesAccepted,
     isOrderReady,
     onToggleRules,
+    orderId,
   } = useOrderConfirmation();
 
   const navigate = useNavigate();
@@ -56,6 +57,7 @@ const OrderConfirmation: FC = () => {
         isOpened={isSuccessPopUpOpen}
         onClose={onSuccessPopUpClose}
         classname="order-success"
+        orderId={orderId}
       />
 
       <div className={cn('container', styles.order__container)}>

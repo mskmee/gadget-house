@@ -6,7 +6,7 @@ import { DeliveryFormDto } from '../../types/types';
 import { DeliveryMethod, OrderStage } from '../../enums/enums';
 import { FormInput } from '@/components/components';
 import { FormRadioInput } from '@/components/common/radio-input/radio-input';
-import { deliveryFormValidationSchema } from '../../validation-schemas/contacts-form-validation-schema';
+import { deliveryFormValidationSchema } from '../../validation-schemas/validation-schemas';
 import { CourierFields, ErrorFields } from './formik-fields';
 
 import styles from './form.module.scss';

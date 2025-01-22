@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Reducer, useReducer } from 'react';
+import { useDispatch } from 'react-redux';
 
 import {
   ContactsFormDto,
@@ -14,8 +15,9 @@ import {
   DELIVERY_FORM_INITIAL_VALUE,
   PAYMENT_FORM_INITIAL_VALUE,
 } from '../constants/contacts-form-initial-value';
-import { ordersService } from '@/utils/packages/orders/';
 import { OrderDto } from '@/utils/packages/orders/libs/types/order-item';
+import { createOrder } from '@/store/actions/orderActions';
+import { AppDispatch } from '@/store';
 
 type Return = {
   orderProcessStage: OrderStage;
@@ -32,6 +34,7 @@ type Return = {
   isSuccessPopUpOpen: boolean;
   isRulesAccepted: boolean;
   isOrderReady: boolean;
+  orderId: string;
 };
 
 type State = {
@@ -43,6 +46,7 @@ type State = {
   isSuccessPopUpOpen: boolean;
   isRulesAccepted: boolean;
   isOrderReady: boolean;
+  orderId: string;
 };
 
 type ReducerAction =
@@ -72,6 +76,7 @@ type ReducerAction =
   }
   | {
     type: OrderConfirmationAction.CONFIRM_ORDER;
+    payload: { orderId: string };
   };
 
 const INITIAL_STATE: State = {
@@ -83,6 +88,7 @@ const INITIAL_STATE: State = {
   isSuccessPopUpOpen: false,
   isRulesAccepted: false,
   isOrderReady: false,
+  orderId: '',
 };
 
 const reducer: Reducer<State, ReducerAction> = (state, action) => {
@@ -115,6 +121,7 @@ const reducer: Reducer<State, ReducerAction> = (state, action) => {
     case OrderConfirmationAction.CONFIRM_ORDER:
       return {
         ...INITIAL_STATE,
+        orderId: action.payload.orderId,
         isSuccessPopUpOpen: true,
       };
 
@@ -143,6 +150,7 @@ const reducer: Reducer<State, ReducerAction> = (state, action) => {
 };
 
 const useOrderConfirmation = (): Return => {
+  const dispatchApp: AppDispatch = useDispatch();
   const { clearCart } = useActions();
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
   const { products } = useTypedSelector(
@@ -172,15 +180,15 @@ const useOrderConfirmation = (): Return => {
     });
   };
 
-  const onOrderConfirmed = () => {
+  const onOrderConfirmed = async () => {
     const orderData: OrderDto = {
       fullName: state.contactsFormValue.fullName,
       email: state.contactsFormValue.email,
       phoneNumber: state.contactsFormValue.phoneNumber,
       comment: state.contactsFormValue.comment,
-      cartItems: products.map((product) => ({
-        productId: product.id,
-        quantity: product.quantity,
+      cartItems: products.map(({ id, quantity }) => ({
+        productId: id,
+        quantity,
       })),
       address: {
         city: state.deliveryFormValue.city,
@@ -192,18 +200,15 @@ const useOrderConfirmation = (): Return => {
       paymentMethod: state.paymentFormValue.paymentType,
     };
 
-    ordersService.createOrder(orderData).then(() => {
-      dispatch({
-        type: OrderConfirmationAction.CONFIRM_ORDER,
-      });
-    }
-    );
+    const result = await dispatchApp(createOrder(orderData)).unwrap();
+    const orderId = String(result);
 
-    onResetOrderProcess();
+    dispatch({ type: OrderConfirmationAction.CONFIRM_ORDER, payload: { orderId } });
   };
 
   const onSuccessPopUpClose = () => {
     dispatch({ type: OrderConfirmationAction.CLOSE_SUCCESS_POPUP });
+    dispatch({ type: OrderConfirmationAction.RESET_ORDER_PROCESS });
     clearCart();
   }
 
@@ -225,6 +230,7 @@ const useOrderConfirmation = (): Return => {
     isSuccessPopUpOpen: state.isSuccessPopUpOpen,
     isRulesAccepted: state.isRulesAccepted,
     isOrderReady: state.isOrderReady,
+    orderId: state.orderId,
   };
 };
 

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store';
 import { getCategoryProducts } from '@/store/products/actions';
 import { PageLayout } from '@/components/PageLayout/PageLayout';
+import { Category } from '@/enums/category';
 
 export default function Smartphones() {
   const dispatch: AppDispatch = useDispatch();
@@ -13,7 +14,7 @@ export default function Smartphones() {
     dispatch(
       getCategoryProducts({
         name: 'smartphones',
-        categoryId: 1,
+        categoryId: Category.PHONES,
         price: { from: 0, to: 100000 },
         brandIds: [1, 2],
         attributeValueIds: [],

@@ -10,14 +10,14 @@ interface ISuccessPopUpProps {
   isOpened: boolean;
   onClose: () => void;
   classname: string;
+  orderId?: string;
 }
-
-const generateRandomNumber = (): number => Math.floor(Math.random() * 1000);
 
 const SuccessPopUp: FC<ISuccessPopUpProps> = ({
   isOpened,
   onClose,
   classname,
+  orderId,
 }) => {
   return (
     <PopUp isOpened={isOpened} onClose={onClose} classname={classname}>
@@ -28,12 +28,14 @@ const SuccessPopUp: FC<ISuccessPopUpProps> = ({
 
         <h2 className={styles.title}>Thank you for your order</h2>
 
-        <p className={styles.text}>
-          Your order is #{generateRandomNumber()}. Delivery between 2 and 5
-          working days. Our manager will contact you before dispatch.
-        </p>
+        {orderId && (
+          <p className={styles.text}>
+            Your order is #{orderId}. Delivery between 2 and 5 working days. Our
+            manager will contact you before dispatch.
+          </p>
+        )}
 
-        <Link className={styles.link} to="/all-products">
+        <Link className={styles.link} to="/all-products" onClick={onClose}>
           Back to Catalog
         </Link>
       </div>

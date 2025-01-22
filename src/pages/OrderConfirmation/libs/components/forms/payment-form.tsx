@@ -7,7 +7,7 @@ import { PaymentFormDto } from '../../types/form-dto.type';
 import { OrderStage } from '../../enums/enums';
 import { PaymentMethod } from '../../enums/payment-method';
 import { FormRadioInput } from '@/components/common/radio-input/radio-input';
-import { paymentFormValidationSchema } from '../../validation-schemas/contacts-form-validation-schema';
+import { paymentFormValidationSchema } from '../../validation-schemas/validation-schemas';
 import { ErrorFields } from './formik-fields';
 
 import styles from './form.module.scss';

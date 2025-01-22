@@ -1,6 +1,6 @@
 import { ApiEndpoint, HttpMethod, request } from "../http";
 import { IOrdersApi } from "./libs/interfaces/orders-api.interface";
-import { OrderDto } from "./libs/types/order-item";
+import { OrderDto, OrderResponseDto } from "./libs/types/order-item";
 import { OrderItemResponseDto } from "./libs/types/order-item-response-dto";
 import { OrdersResponseDto } from "./libs/types/orders-response-dto";
 
@@ -34,7 +34,7 @@ class OrdersApi implements IOrdersApi {
     });
   }
 
-  async create(data: OrderDto): Promise<OrderDto> {
+  async create(data: OrderDto): Promise<OrderResponseDto> {
     return request({
       method: HttpMethod.POST,
       url: ApiEndpoint.ORDERS,

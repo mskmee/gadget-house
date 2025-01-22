@@ -18,9 +18,6 @@ type OrderItemResponseDto = {
     flat?: string
   },
   cartItems: ProductItem[],
-  // isPaid: true,
-  // createdAt: string,
-  // total: number
 };
 
 export { type OrderItemResponseDto };

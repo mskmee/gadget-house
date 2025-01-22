@@ -114,6 +114,7 @@ img {
     }
 
     &:disabled {
+      cursor: not-allowed;
       background-color: var(--button-disabled-color);
       color: var(--white-color);
     }
@@ -137,6 +138,7 @@ img {
     }
 
     &:disabled {
+      cursor: not-allowed;
       border-color: var(--button-disabled-color);
       background-color: var(--button-disabled-color);
     }

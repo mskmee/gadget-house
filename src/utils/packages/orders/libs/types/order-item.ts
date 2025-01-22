@@ -71,4 +71,8 @@ type OrderDto = {
   paymentMethod: PaymentMethodType,
 };
 
-export { type OrderItem, type OrderDto };
+type OrderResponseDto = {
+  orderId: string,
+}
+
+export { type OrderItem, type OrderDto, type OrderResponseDto };
