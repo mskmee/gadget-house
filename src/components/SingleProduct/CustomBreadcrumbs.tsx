@@ -6,11 +6,11 @@ import classNames from 'classnames';
 import { getBreadcrumbItems } from '@/components/helpers.ts';
 
 export const CustomBreadcrumbs = () => {
-  const { smartphone, id } = useParams();
   const location = useLocation();
+  const { category, id } = useParams();
 
   const breadcrumbItems = getBreadcrumbItems(location.pathname, {
-    smartphone,
+    category,
     id,
   });
 

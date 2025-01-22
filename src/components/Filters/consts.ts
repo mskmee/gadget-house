@@ -1,7 +1,22 @@
-import Smart_1 from '../../assets/images/smartphones/1.png';
-import Smart_2 from '../../assets/images/smartphones/2.png';
-import Smart_3 from '../../assets/images/smartphones/3.png';
-import Smart_4 from '../../assets/images/smartphones/4.png';
+import {
+  BasketIcon,
+  accessoriesImg1,
+  accessoriesImg2,
+  accessoriesImg3,
+  accessoriesImg4,
+  laptopImg_1_1,
+  laptopImg_2_1,
+  laptopImg_3_1,
+  laptopImg_4_1,
+  previouslyViewedImg_1_1,
+  previouslyViewedImg_2_1,
+  previouslyViewedImg_3_1,
+  smartphoneImg_1_1,
+  smartphoneImg_2_1,
+  smartphoneImg_3_1,
+  smartphoneImg_4_1,
+} from '@/assets/constants';
+import { IProduct } from '@/interfaces/interfaces';
 
 export const filters = {
   'categories': ['Smartphones', 'Laptops', 'Tablets'],
@@ -28,8 +43,30 @@ export const filters = {
     '512 GB and more',
   ],
   'rams': ['1 GB', '2 GB', '3 GB', '4 GB', '8 GB', '12 GB', '16 GB'],
-  'colors': ['Black', 'White', 'Red', 'Green', 'Blue', 'Purple ', 'Yellow', 'Gold', 'Orange', 'Pink'],
-  'colorsHex': ['#1a1b1d', '#ffffff', '#bbb5ad', '#808080', '#71f2a5', '#3997ef', '#32c0f0 ', '#f0e1b9', '#ffccc8', '#e7cefd',],
+  'colors': [
+    'Black',
+    'White',
+    'Red',
+    'Green',
+    'Blue',
+    'Purple ',
+    'Yellow',
+    'Gold',
+    'Orange',
+    'Pink',
+  ],
+  'colorsHex': [
+    '#1a1b1d',
+    '#ffffff',
+    '#bbb5ad',
+    '#808080',
+    '#71f2a5',
+    '#3997ef',
+    '#32c0f0 ',
+    '#f0e1b9',
+    '#ffccc8',
+    '#e7cefd',
+  ],
   'cores': ['10 Cores', '8 Cores', '6 Cores', '4+4 Cores', '4 Cores'],
   'screens': [
     'LTPS',
@@ -44,24 +81,14 @@ export const filters = {
     'Dynamic Amoled 2x',
     'AMOLED',
     'pOLED',
-  ], 'images': [{ link: Smart_1, order: 1 }, { link: Smart_2, order: 2 }, { link: Smart_3, order: 3 }, { link: Smart_4, order: 4 }],
-}
-
-import {
-  BasketIcon,
-  accessoriesImg1,
-  accessoriesImg2,
-  accessoriesImg3,
-  accessoriesImg4,
-  laptopImg_1,
-  laptopImg_2,
-  laptopImg_3,
-  laptopImg_4,
-  previouslyViewed_1,
-  previouslyViewed_2,
-  previouslyViewed_3,
-} from '@/assets/constants';
-import { IProduct } from '@/interfaces/interfaces';
+  ],
+  'images': [
+    { link: smartphoneImg_1_1, order: 1 },
+    { link: smartphoneImg_2_1, order: 2 },
+    { link: smartphoneImg_3_1, order: 3 },
+    { link: smartphoneImg_4_1, order: 4 },
+  ],
+};
 
 export const smartData: IProduct[] = [
   {
@@ -79,7 +106,7 @@ export const smartData: IProduct[] = [
     builtInMemory: 32,
     code: '874364',
     category: 'smartphone',
-    cameraMP: 15
+    cameraMP: 15,
   },
   {
     id: 2,
@@ -96,7 +123,7 @@ export const smartData: IProduct[] = [
     builtInMemory: 128, // ГБ встроенной памяти
     code: '875496',
     category: 'smartphone',
-    cameraMP: 15
+    cameraMP: 15,
   },
   {
     id: 3,
@@ -113,7 +140,7 @@ export const smartData: IProduct[] = [
     builtInMemory: 32,
     code: '456158',
     category: 'smartphone',
-    cameraMP: 45
+    cameraMP: 45,
   },
   {
     id: 4,
@@ -130,7 +157,7 @@ export const smartData: IProduct[] = [
     builtInMemory: 32,
     code: '557769',
     category: 'smartphone',
-    cameraMP: 45
+    cameraMP: 45,
   },
   {
     id: 5,
@@ -147,7 +174,7 @@ export const smartData: IProduct[] = [
     builtInMemory: 128,
     code: '173497',
     category: 'smartphone',
-    cameraMP: 25
+    cameraMP: 25,
   },
   {
     id: 6,
@@ -164,9 +191,9 @@ export const smartData: IProduct[] = [
     builtInMemory: 128,
     code: '157781',
     category: 'smartphone',
-    cameraMP: 15
+    cameraMP: 15,
   },
-]
+];
 
 export const productsData = [
   {
@@ -183,7 +210,7 @@ export const productsData = [
     builtInMemory: 128, // ГБ встроенной памяти
     code: '874364',
     category: 'smartphone',
-    cameraMP: 15
+    cameraMP: 15,
   },
   {
     id: 2,
@@ -199,7 +226,7 @@ export const productsData = [
     builtInMemory: 128, // ГБ встроенной памяти
     code: '875496',
     category: 'smartphone',
-    cameraMP: 15
+    cameraMP: 15,
   },
   {
     id: 3,
@@ -215,7 +242,7 @@ export const productsData = [
     builtInMemory: 128, // ГБ встроенной памяти
     code: '456158',
     category: 'smartphone',
-    cameraMP: 15
+    cameraMP: 15,
   },
   {
     id: 4,
@@ -228,7 +255,7 @@ export const productsData = [
     price: '2 799 ₴',
     code: '557769',
     category: 'smartphone',
-    cameraMP: 15
+    cameraMP: 15,
   },
   {
     id: 5,
@@ -244,7 +271,7 @@ export const productsData = [
     builtInMemory: 128, // ГБ встроенной памяти
     code: '173497',
     category: 'smartphone',
-    cameraMP: 15
+    cameraMP: 15,
   },
   {
     id: 6,
@@ -261,83 +288,83 @@ export const productsData = [
     builtInMemory: 128, // ГБ встроенной памяти
     code: '157781',
     category: 'smartphone',
-    cameraMP: 15
+    cameraMP: 15,
   },
   {
     id: 7,
     title: 'Apple MacBook Air 13.6 M3 8GB 256GB',
-    img: laptopImg_1,
+    img: laptopImg_1_1,
     price: '59 490 ₴',
     code: '847687',
     rate: 5,
     anotherColors: ['#1C1817', '#F5F5DC', '#808080'],
     isLiked: false,
-    category: 'laptop'
+    category: 'laptop',
   },
   {
     id: 8,
     title: 'Lenovo IdeaPad 1 15ALC7',
-    img: laptopImg_2,
+    img: laptopImg_2_1,
     price: '16 999 ₴',
     code: '256462',
     rate: 5,
     anotherColors: ['#808080'],
     isLiked: false,
-    category: 'laptop'
+    category: 'laptop',
   },
   {
     id: 9,
     title: 'Asus TUF Gaming A15',
-    img: laptopImg_3,
+    img: laptopImg_3_1,
     price: '32 900 ₴',
     code: '458688',
     rate: 5,
     anotherColors: ['#1C1817'],
     isLiked: false,
-    category: 'laptop'
+    category: 'laptop',
   },
   {
     id: 10,
     title: 'Apple MacBook Air 15.3 M3 8GB 256GB',
-    img: laptopImg_4,
+    img: laptopImg_4_1,
     price: '61 999 ₴',
     code: '594898',
     rate: 5,
     anotherColors: ['#1C1817', '#F5F5DC', '#808080', '#1C1817'],
     isLiked: false,
-    category: 'laptop'
+    category: 'laptop',
   },
   {
     id: 11,
     title: 'Canon RF 24-70mm f/2.8 L IS USM',
-    img: previouslyViewed_1,
+    img: previouslyViewedImg_1_1,
     price: '95 999 ₴',
     code: '874364',
     rate: 5,
     anotherColors: [],
     isLiked: false,
-    category: 'photo'
+    category: 'photo',
   },
   {
     id: 12,
     title: 'Canon EOS 4000D 18-55 DC III',
-    img: previouslyViewed_2,
+    img: previouslyViewedImg_2_1,
     price: '16 699 ₴',
     code: '875496',
     rate: 5,
     anotherColors: [],
     isLiked: false,
-    category: 'photo'
+    category: 'photo',
   },
   {
     id: 14,
     title: 'Fujifilm INSTAX MINI 12 Lilac Purple',
-    img: previouslyViewed_3,
+    img: previouslyViewedImg_3_1,
     price: '3 900 ₴',
     code: '557769',
     rate: 5,
     anotherColors: ['#ffffff', '#00BFFF', '#3EB489', '#FFCBDB', '#C8A2C8'],
     isLiked: false,
-    category: 'photo'
+    category: 'photo',
   },
 ];
