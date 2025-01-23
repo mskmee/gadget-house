@@ -18,6 +18,7 @@ import {
 import { OrderDto } from '@/utils/packages/orders/libs/types/order-item';
 import { createOrder } from '@/store/actions/orderActions';
 import { AppDispatch } from '@/store';
+import { useNavigate } from 'react-router-dom';
 
 type Return = {
   orderProcessStage: OrderStage;
@@ -29,9 +30,9 @@ type Return = {
   onPaymentFormSubmit: (paymentFormValue: PaymentFormDto) => void;
   onResetOrderProcess: () => void;
   onOrderConfirmed: () => void;
-  onSuccessPopUpClose: () => void;
+  onSuccessClose: () => void;
   onToggleRules: () => void;
-  isSuccessPopUpOpen: boolean;
+  isSuccessOpen: boolean;
   isRulesAccepted: boolean;
   isOrderReady: boolean;
   orderId: number;
@@ -43,7 +44,7 @@ type State = {
   deliveryFormValue: DeliveryFormDto;
   paymentFormValue: PaymentFormDto;
   orderProcessStage: OrderStage;
-  isSuccessPopUpOpen: boolean;
+  isSuccessOpen: boolean;
   isRulesAccepted: boolean;
   isOrderReady: boolean;
   orderId: number;
@@ -72,7 +73,7 @@ type ReducerAction =
     type: OrderConfirmationAction.ORDER_READY;
   }
   | {
-    type: OrderConfirmationAction.CLOSE_SUCCESS_POPUP;
+    type: OrderConfirmationAction.CLOSE_SUCCESS;
   }
   | {
     type: OrderConfirmationAction.CONFIRM_ORDER;
@@ -85,7 +86,7 @@ const INITIAL_STATE: State = {
   deliveryFormValue: DELIVERY_FORM_INITIAL_VALUE,
   paymentFormValue: PAYMENT_FORM_INITIAL_VALUE,
   orderProcessStage: OrderStage.CONTACTS,
-  isSuccessPopUpOpen: false,
+  isSuccessOpen: false,
   isRulesAccepted: false,
   isOrderReady: false,
   orderId: 0,
@@ -120,15 +121,17 @@ const reducer: Reducer<State, ReducerAction> = (state, action) => {
 
     case OrderConfirmationAction.CONFIRM_ORDER:
       return {
-        ...INITIAL_STATE,
+        ...state,
         orderId: action.payload.orderId,
-        isSuccessPopUpOpen: true,
+        acceptWithRules: true,
+        isSuccessOpen: true,
       };
 
-    case OrderConfirmationAction.CLOSE_SUCCESS_POPUP:
+    case OrderConfirmationAction.CLOSE_SUCCESS:
       return {
         ...state,
-        isSuccessPopUpOpen: false,
+        isSuccessOpen: false,
+        acceptWithRules: false,
       };
 
     case OrderConfirmationAction.TOGGLE_RULES:
@@ -150,6 +153,7 @@ const reducer: Reducer<State, ReducerAction> = (state, action) => {
 };
 
 const useOrderConfirmation = (): Return => {
+  const navigate = useNavigate();
   const dispatchApp: AppDispatch = useDispatch();
   const { clearCart } = useActions();
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
@@ -174,11 +178,8 @@ const useOrderConfirmation = (): Return => {
       payload: paymentFormValue,
     });
 
-  const onResetOrderProcess = () => {
-    dispatch({
-      type: OrderConfirmationAction.RESET_ORDER_PROCESS,
-    });
-  };
+  const onToggleRules = () =>
+    dispatch({ type: OrderConfirmationAction.TOGGLE_RULES });
 
   const onOrderConfirmed = async () => {
     const orderData: OrderDto = {
@@ -204,30 +205,34 @@ const useOrderConfirmation = (): Return => {
     const orderId = result;
 
     dispatch({ type: OrderConfirmationAction.CONFIRM_ORDER, payload: { orderId } });
+    navigate(`/order-success/${orderId}`);
   };
 
-  const onSuccessPopUpClose = () => {
-    dispatch({ type: OrderConfirmationAction.CLOSE_SUCCESS_POPUP });
+  const onSuccessClose = () => {
+    dispatch({ type: OrderConfirmationAction.CLOSE_SUCCESS });
     dispatch({ type: OrderConfirmationAction.RESET_ORDER_PROCESS });
     clearCart();
   }
 
-  const onToggleRules = () =>
-    dispatch({ type: OrderConfirmationAction.TOGGLE_RULES });
+  const onResetOrderProcess = () => {
+    dispatch({
+      type: OrderConfirmationAction.RESET_ORDER_PROCESS,
+    });
+  };
 
   return {
     onResetOrderProcess,
     onContactsFormSubmit,
     onDeliveryFormSubmit,
     onPaymentFormSubmit,
-    onSuccessPopUpClose,
+    onSuccessClose,
     onOrderConfirmed,
     onToggleRules,
     orderProcessStage: state.orderProcessStage,
     contactsFormValue: state.contactsFormValue,
     deliveryFormValue: state.deliveryFormValue,
     paymentFormValue: state.paymentFormValue,
-    isSuccessPopUpOpen: state.isSuccessPopUpOpen,
+    isSuccessOpen: state.isSuccessOpen,
     isRulesAccepted: state.isRulesAccepted,
     isOrderReady: state.isOrderReady,
     orderId: state.orderId,

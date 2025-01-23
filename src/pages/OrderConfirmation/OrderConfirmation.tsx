@@ -12,7 +12,6 @@ import { AppRoute } from '@/enums/Route';
 import { convertPriceToReadable } from '@/utils/helpers/product';
 import { useActions } from '@/hooks/useActions';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
-import { SuccessPopUp } from './SuccessPopUp';
 
 import styles from './order-confirmation.module.scss';
 
@@ -27,12 +26,9 @@ const OrderConfirmation: FC = () => {
     deliveryFormValue,
     paymentFormValue,
     onOrderConfirmed,
-    onSuccessPopUpClose,
-    isSuccessPopUpOpen,
     isRulesAccepted,
     isOrderReady,
     onToggleRules,
-    orderId,
   } = useOrderConfirmation();
 
   const navigate = useNavigate();
@@ -53,13 +49,6 @@ const OrderConfirmation: FC = () => {
 
   return (
     <section className={styles.order}>
-      <SuccessPopUp
-        isOpened={isSuccessPopUpOpen}
-        onClose={onSuccessPopUpClose}
-        classname="order-success"
-        orderId={orderId}
-      />
-
       <div className={cn('container', styles.order__container)}>
         <h2 className={styles.order__title}>Order сonfirmation</h2>
 
