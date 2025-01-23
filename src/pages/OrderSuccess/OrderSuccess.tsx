@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 
@@ -8,14 +8,19 @@ import { CheckMark } from '@/assets/constants';
 import styles from './order-success.module.scss';
 
 const OrderSuccess: FC = () => {
-  const { onSuccessClose, isSuccessOpen, orderId } = useOrderConfirmation();
+  const { onSuccessClose, orderId, onCompleteOrder } = useOrderConfirmation();
   console.log('orderId: ', orderId);
-  console.log('isSuccessOpen: ', isSuccessOpen);
+
+  useEffect(() => {
+    if (!orderId) {
+      onCompleteOrder();
+    }
+  }, [orderId, onCompleteOrder]);
 
   return (
     <div className={styles.orderSuccess}>
       <div className={cn('container', styles.orderSuccess__container)}>
-        {orderId && isSuccessOpen ? (
+        {orderId ? (
           <>
             <p className={styles.orderSuccess__icon}>
               <img src={CheckMark} alt="CheckMark Icon" />

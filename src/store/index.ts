@@ -3,11 +3,13 @@ import { createLogger } from 'redux-logger';
 import { reducer as shoppingCartReducer } from './shopping_cart/shoppingCart_slice';
 import { reducer as searchReducer } from './search/search_slice';
 import { reducer as productsReducer } from './products';
+import { reducer as orderReducer } from './orders';
 
 const reducers = combineReducers({
   shopping_card: shoppingCartReducer,
   search: searchReducer,
   products: productsReducer,
+  order: orderReducer,
 });
 
 const logger: Middleware = createLogger({ collapsed: true });

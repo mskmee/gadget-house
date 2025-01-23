@@ -6,6 +6,7 @@ export enum OrderConfirmationAction {
   SUBMIT_PAYMENT_FORM = 'submitPaymentForm',
   TOGGLE_EDITABLE_FORM = 'toggleEditableForm',
   CONFIRM_ORDER = 'confirmOrder',
+  COMPLETE_ORDER = 'completeOrder',
   CLOSE_SUCCESS = 'closeSuccess',
   TOGGLE_RULES = 'toggleRules',
   ORDER_READY = 'orderReady',
