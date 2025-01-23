@@ -1,21 +1,17 @@
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 
+import { RootState } from '@/store';
 import { useOrderConfirmation } from '../OrderConfirmation/libs/hooks/use-order-confirmation';
 import { CheckMark } from '@/assets/constants';
 
 import styles from './order-success.module.scss';
 
 const OrderSuccess: FC = () => {
-  const { onSuccessClose, orderId, onCompleteOrder } = useOrderConfirmation();
-  console.log('orderId: ', orderId);
-
-  useEffect(() => {
-    if (!orderId) {
-      onCompleteOrder();
-    }
-  }, [orderId, onCompleteOrder]);
+  const { orderId } = useSelector((state: RootState) => state.shopping_card);
+  const { onSuccessClose } = useOrderConfirmation();
 
   return (
     <div className={styles.orderSuccess}>

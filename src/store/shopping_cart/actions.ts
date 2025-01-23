@@ -7,9 +7,7 @@ export const createOrder = createAsyncThunk(
   'order/createOrder',
   async (orderData: OrderDto, thunkAPI) => {
     try {
-      const response = await ordersService.createOrder(orderData);
-
-      return response as OrderResponseDto;
+      return await ordersService.createOrder(orderData) as OrderResponseDto;
     } catch (error: any) {
       const errorMessage = error.response?.message || error.message || 'Something went wrong';
 
