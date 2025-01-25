@@ -8,7 +8,7 @@ import { Catalog } from '@/components/Catalog/Catalog';
 import styles from './page-layout.module.scss';
 
 interface IPageLayoutProps {
-  page: ProductItem[];
+  products: ProductItem[];
   totalElements: number;
   currentPage: number;
   totalPages: number;
@@ -17,7 +17,7 @@ interface IPageLayoutProps {
 }
 
 export const PageLayout: React.FC<IPageLayoutProps> = ({
-  page,
+  products,
   totalElements,
   totalPages,
   currentPage,
@@ -51,7 +51,7 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
           <Filters />
 
           <Catalog
-            data={page}
+            data={products}
             totalElements={totalElements}
             totalPages={totalPages}
             page={currentPage}
@@ -67,7 +67,7 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
           </div>
 
           <Catalog
-            data={page}
+            data={products}
             totalElements={totalElements}
             totalPages={totalPages}
             page={currentPage}
@@ -91,7 +91,7 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
 
             {totalElements > 0 ? (
               <Catalog
-                data={page}
+                data={products}
                 totalElements={totalElements}
                 totalPages={totalPages}
                 page={currentPage}

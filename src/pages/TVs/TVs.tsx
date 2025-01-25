@@ -10,12 +10,12 @@ export default function TVs() {
   const { productsData } = useSelector((state: RootState) => state.products);
 
   useEffect(() => {
-    dispatch(getAllProducts());
+    dispatch(getAllProducts(0));
   }, [dispatch]);
 
   return (
     <PageLayout
-      page={productsData?.page || []}
+      products={productsData?.page || []}
       totalElements={productsData?.totalElements || 0}
       totalPages={productsData?.totalPages || 0}
       currentPage={productsData?.currentPage || 0}

@@ -1,8 +1,11 @@
 /* eslint-disable no-unused-vars */
-import { ProductItemResponseDto, ProductsResponseDto } from '../types/types';
+// import { ProductByCategoryDto } from '../types/product-category-response-dto';
+import { PaginatedProductsResponseDto, ProductItemResponseDto, ProductsResponseDto } from '../types/types';
 
 interface IProductsService {
-  getAllProducts: () => Promise<ProductsResponseDto>;
+  getAllProducts: (page: number) => Promise<ProductsResponseDto>;
+  getPaginatedProducts: (page: number, size: number, sort: string[]) => Promise<PaginatedProductsResponseDto>;
+  getByCategoryProducts: (categoryId: number, brandIds: number[], price: { from: number; to: number }, attributeValueIds: number[]) => Promise<ProductsResponseDto>;
   getOneProductById: (id: string) => Promise<ProductItemResponseDto>;
   deleteProduct: (id: string) => Promise<void>;
 }

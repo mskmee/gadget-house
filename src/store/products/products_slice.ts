@@ -3,22 +3,22 @@ import {
   ProductItemResponseDto,
   ProductsResponseDto,
   PaginatedProductsResponseDto,
-  CategoryProductsResponseDto,
 } from '@/utils/packages/products';
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import {
   getAllProducts,
+  getByCategoryProducts,
   getOneProductById,
   getPaginatedProducts,
-  getCategoryProducts,
 } from './actions';
 
 export interface IInitialState {
   productsData: ProductsResponseDto | null;
   activeProduct: ProductItemResponseDto | null;
   paginatedProducts: PaginatedProductsResponseDto | null;
-  categoryProducts: CategoryProductsResponseDto | null;
+  categoryProducts: ProductsResponseDto | null;
   dataStatus: DataStatus;
+  pageNumber: number | null;
 }
 
 const initialState: IInitialState = {
@@ -27,6 +27,7 @@ const initialState: IInitialState = {
   paginatedProducts: null,
   categoryProducts: null,
   dataStatus: DataStatus.IDLE,
+  pageNumber: null,
 };
 
 const products_slice = createSlice({
@@ -36,6 +37,7 @@ const products_slice = createSlice({
   extraReducers(builder) {
     builder.addCase(getAllProducts.fulfilled, (state, { payload }) => {
       state.productsData = payload;
+      state.pageNumber = payload.currentPage;
     });
     builder.addCase(getOneProductById.fulfilled, (state, { payload }) => {
       state.activeProduct = payload;
@@ -43,15 +45,16 @@ const products_slice = createSlice({
     builder.addCase(getPaginatedProducts.fulfilled, (state, { payload }) => {
       state.paginatedProducts = payload;
     });
-    builder.addCase(getCategoryProducts.fulfilled, (state, { payload }) => {
+    builder.addCase(getByCategoryProducts.fulfilled, (state, { payload }) => {
       state.categoryProducts = payload;
+      state.pageNumber = payload.currentPage;
     });
 
     builder.addMatcher(
       isAnyOf(getAllProducts.fulfilled,
         getOneProductById.fulfilled,
         getPaginatedProducts.fulfilled,
-        getCategoryProducts.fulfilled),
+        getByCategoryProducts.fulfilled),
       (state) => {
         state.dataStatus = DataStatus.FULFILLED;
       },
@@ -60,18 +63,20 @@ const products_slice = createSlice({
       isAnyOf(getAllProducts.rejected,
         getOneProductById.rejected,
         getPaginatedProducts.rejected,
-        getCategoryProducts.rejected),
+        getByCategoryProducts.rejected),
       (state) => {
         state.dataStatus = DataStatus.REJECT;
+        state.pageNumber = null;
       },
     );
     builder.addMatcher(
       isAnyOf(getAllProducts.pending,
         getOneProductById.pending,
         getPaginatedProducts.pending,
-        getCategoryProducts.pending),
+        getByCategoryProducts.pending),
       (state) => {
         state.dataStatus = DataStatus.PENDING;
+        state.pageNumber = null;
       },
     );
   },

@@ -9,24 +9,28 @@ import styles from './catalog.module.scss';
 
 interface ICatalogProps {
   data: ProductItem[];
-  totalElements?: number;
+  totalElements: number;
   totalPages: number;
   page: number;
 }
 
-export const Catalog: FC<ICatalogProps> = ({ data, totalPages, page }) => {
-  const [displayedProducts, setDisplayedProducts] = useState<ProductItem[]>([]);
+export const Catalog: FC<ICatalogProps> = ({
+  data,
+  totalPages,
+  totalElements,
+  page,
+}) => {
+  const [, setDisplayedProducts] = useState<ProductItem[]>([]);
   const [currentPage, setCurrentPage] = useState(page);
   const [hasMore, setHasMore] = useState(true);
   const observerRef = useRef<HTMLDivElement | null>(null);
 
-  const itemsPerPage = 18;
   const itemsPerPageMobile = 8;
 
-  const paginatedProducts = data.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage,
-  );
+  // const paginatedProducts = data.slice(
+  //   (currentPage - 1) * itemsPerPage,
+  //   currentPage * itemsPerPage,
+  // );
 
   const onChange: PaginationProps['onChange'] = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -37,7 +41,7 @@ export const Catalog: FC<ICatalogProps> = ({ data, totalPages, page }) => {
   }, [data]);
 
   const loadMore = () => {
-    const currentLength = displayedProducts.length;
+    const currentLength = data.length;
     const nextProducts = data.slice(
       currentLength,
       currentLength + itemsPerPageMobile,
@@ -76,14 +80,14 @@ export const Catalog: FC<ICatalogProps> = ({ data, totalPages, page }) => {
         observer.unobserve(currentObserverRef);
       }
     };
-  }, [displayedProducts, hasMore]);
+  }, [data, hasMore]);
 
   return (
     <div className={styles.catalog}>
       <div className={styles.catalog__mobile}>
         <ul className={styles.catalog__mobileList}>
           {data &&
-            paginatedProducts.map((product: ProductItem) => (
+            data.map((product: ProductItem) => (
               <Card
                 key={product.id}
                 product={product}
@@ -103,7 +107,7 @@ export const Catalog: FC<ICatalogProps> = ({ data, totalPages, page }) => {
       <div className={styles.catalog__desk}>
         <ul className={styles.catalog__deskList}>
           {data &&
-            paginatedProducts.map((product: ProductItem) => (
+            data.map((product: ProductItem) => (
               <Card
                 key={product.id}
                 product={product}
@@ -115,10 +119,11 @@ export const Catalog: FC<ICatalogProps> = ({ data, totalPages, page }) => {
         <Pagination
           showSizeChanger={false}
           showTitle={false}
+          // defaultCurrent={page}
           current={currentPage}
-          total={totalPages}
+          total={totalPages * totalElements}
           onChange={onChange}
-          pageSize={itemsPerPage}
+          // pageSize={itemsPerPage}
           className={styles.catalog__pagination}
         />
       </div>

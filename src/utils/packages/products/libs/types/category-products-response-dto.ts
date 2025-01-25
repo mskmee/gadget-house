@@ -4,11 +4,11 @@ type PriceDTO = {
 };
 
 type CategoryProductsResponseDto = {
-  name: string;
-  price: PriceDTO;
-  brandIds: number[];
+  name?: string;
+  price?: PriceDTO;
+  brandIds?: number[];
   categoryId: number;
-  attributeValueIds: number[];
+  attributeValueIds?: number[];
 };
 
 export { type CategoryProductsResponseDto, type PriceDTO };

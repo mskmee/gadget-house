@@ -3,8 +3,8 @@ import { productsService } from '@/utils/packages/products';
 import { PriceDTO } from '@/utils/packages/products/libs/types/category-products-response-dto';
 
 // we can use toastify for better user experience, if design is ready
-const getAllProducts = createAsyncThunk('products/fetch', async () => {
-  return await productsService.getAllProducts();
+const getAllProducts = createAsyncThunk('products/fetch', async (page: number) => {
+  return await productsService.getAllProducts(page);
 });
 
 const getOneProductById = createAsyncThunk(
@@ -22,24 +22,18 @@ const getPaginatedProducts = createAsyncThunk(
   }
 );
 
-const getCategoryProducts = createAsyncThunk(
+const getByCategoryProducts = createAsyncThunk(
   'products/fetchCategoryProducts',
   async (params: {
-    name?: string;
     categoryId: number;
     brandIds?: number[];
     price?: PriceDTO;
     attributeValueIds?: number[];
   }) => {
-    const { name = '', categoryId, brandIds = [], price = { from: 0, to: 100000 }, attributeValueIds = [] } = params;
-    return await productsService.getCategoryProducts(
-      name,
-      categoryId,
-      brandIds,
-      price,
-      attributeValueIds
-    );
+    const { categoryId, brandIds = [], price = { from: 0, to: 100000 }, attributeValueIds = [] } = params;
+    
+    return await productsService.getByCategoryProducts(categoryId, brandIds, price, attributeValueIds);
   }
 );
 
-export { getAllProducts, getOneProductById, getPaginatedProducts, getCategoryProducts };
+export { getAllProducts, getOneProductById, getPaginatedProducts, getByCategoryProducts };

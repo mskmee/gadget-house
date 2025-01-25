@@ -15,7 +15,7 @@ export default function PhotoVideo() {
 
   return (
     <PageLayout
-      page={productsData?.page || []}
+      products={productsData?.page || []}
       totalElements={productsData?.totalElements || 0}
       totalPages={productsData?.totalPages || 0}
       currentPage={productsData?.currentPage || 0}

@@ -18,7 +18,7 @@ export default function Main() {
   });
 
   useEffect(() => {
-    getAllProducts();
+    getAllProducts(0);
   }, [getAllProducts]);
 
   return (

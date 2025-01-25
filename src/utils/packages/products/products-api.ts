@@ -1,7 +1,6 @@
 import { IProductsApi } from './libs/interfaces/interfaces';
 import { ApiEndpoint, HttpMethod, request } from '../http';
 import {
-  CategoryProductsResponseDto,
   PaginatedProductsResponseDto,
   PriceDTO,
   ProductItemResponseDto,
@@ -9,10 +8,11 @@ import {
 } from './libs/types/types';
 
 class ProductsApi implements IProductsApi {
-  async getAll(): Promise<ProductsResponseDto> {
+  async getAll(page: number): Promise<ProductsResponseDto> {
     return request({
       method: HttpMethod.GET,
       url: ApiEndpoint.PRODUCTS,
+      query: { page },
     });
   }
 
@@ -40,16 +40,15 @@ class ProductsApi implements IProductsApi {
     });
   }
 
-  async getCategoryProducts(name: string,
+  async getByCategoryProducts(
     categoryId: number,
     brandIds: number[] = [],
     price: PriceDTO = { from: 0, to: Infinity },
-    attributeValueIds: number[] = []): Promise<CategoryProductsResponseDto> {
+    attributeValueIds: number[] = []): Promise<ProductsResponseDto> {
     return request({
       method: HttpMethod.GET,
       url: `${ApiEndpoint.PRODUCTS}`,
       query: {
-        name,
         categoryId,
         brandIds: brandIds.join(','),
         priceFrom: price.from,
