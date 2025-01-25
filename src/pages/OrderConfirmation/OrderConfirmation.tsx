@@ -107,16 +107,14 @@ const OrderConfirmation: FC = () => {
                       <div className={styles.order__itemFooter}>
                         <div className={styles.order__itemQuantity}>
                           <button
+                            className={styles.order__itemQuantityButton_minus}
                             onClick={() => decreaseItemQuantity(product.id)}
-                          >
-                            -
-                          </button>
+                          ></button>
                           <p>{product.quantity}</p>
                           <button
+                            className={styles.order__itemQuantityButton_plus}
                             onClick={() => increaseItemQuantity(product.id)}
-                          >
-                            +
-                          </button>
+                          ></button>
                         </div>
 
                         <p className={styles.order__itemPrice}>

@@ -3,7 +3,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ordersService } from '@/utils/packages/orders/';
 import { OrderDto, OrderResponseDto } from '@/utils/packages/orders/libs/types/order-item';
 
-export const createOrder = createAsyncThunk(
+const createOrder = createAsyncThunk(
   'order/createOrder',
   async (orderData: OrderDto, thunkAPI) => {
     try {
@@ -15,3 +15,5 @@ export const createOrder = createAsyncThunk(
     }
   }
 );
+
+export { createOrder };

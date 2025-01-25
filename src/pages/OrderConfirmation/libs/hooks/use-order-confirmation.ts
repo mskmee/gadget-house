@@ -9,7 +9,6 @@ import {
   PaymentFormDto,
 } from '../types/types';
 import { OrderStage, OrderConfirmationAction } from '../enums/enums';
-import { useActions } from '@/hooks/useActions';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { CONTACTS_FORM_INITIAL_VALUE } from '../constants/constants';
 import {
@@ -30,9 +29,7 @@ type Return = {
   onPaymentFormSubmit: (paymentFormValue: PaymentFormDto) => void;
   onResetOrderProcess: () => void;
   onOrderConfirmed: () => void;
-  onSuccessClose: () => void;
   onToggleRules: () => void;
-  isSuccessOpen: boolean;
   isRulesAccepted: boolean;
   isOrderReady: boolean;
   orderId: number | null;
@@ -44,7 +41,6 @@ type State = {
   deliveryFormValue: DeliveryFormDto;
   paymentFormValue: PaymentFormDto;
   orderProcessStage: OrderStage;
-  isSuccessOpen: boolean;
   isRulesAccepted: boolean;
   isOrderReady: boolean;
   orderId: number | null;
@@ -73,9 +69,6 @@ type ReducerAction =
     type: OrderConfirmationAction.ORDER_READY;
   }
   | {
-    type: OrderConfirmationAction.CLOSE_SUCCESS;
-  }
-  | {
     type: OrderConfirmationAction.CONFIRM_ORDER;
     payload: { orderId: number };
   };
@@ -86,7 +79,6 @@ const INITIAL_STATE: State = {
   deliveryFormValue: DELIVERY_FORM_INITIAL_VALUE,
   paymentFormValue: PAYMENT_FORM_INITIAL_VALUE,
   orderProcessStage: OrderStage.CONTACTS,
-  isSuccessOpen: false,
   isRulesAccepted: false,
   isOrderReady: false,
   orderId: null,
@@ -127,13 +119,6 @@ const reducer: Reducer<State, ReducerAction> = (state, action) => {
         isSuccessOpen: true,
       };
 
-    case OrderConfirmationAction.CLOSE_SUCCESS:
-      return {
-        ...state,
-        isSuccessOpen: false,
-        acceptWithRules: false,
-      };
-
     case OrderConfirmationAction.TOGGLE_RULES:
       return {
         ...state,
@@ -155,7 +140,6 @@ const reducer: Reducer<State, ReducerAction> = (state, action) => {
 const useOrderConfirmation = (): Return => {
   const navigate = useNavigate();
   const dispatchApp: AppDispatch = useDispatch();
-  const { clearCart } = useActions();
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
   const { products } = useTypedSelector(
     (state) => state.shopping_card,
@@ -206,13 +190,8 @@ const useOrderConfirmation = (): Return => {
 
     dispatch({ type: OrderConfirmationAction.CONFIRM_ORDER, payload: { orderId } });
     navigate(`/order-success/${orderId}`);
-  };
-
-  const onSuccessClose = () => {
-    dispatch({ type: OrderConfirmationAction.CLOSE_SUCCESS });
     dispatch({ type: OrderConfirmationAction.RESET_ORDER_PROCESS });
-    clearCart();
-  }
+  };
 
   const onResetOrderProcess = () => {
     dispatch({
@@ -225,14 +204,12 @@ const useOrderConfirmation = (): Return => {
     onContactsFormSubmit,
     onDeliveryFormSubmit,
     onPaymentFormSubmit,
-    onSuccessClose,
     onOrderConfirmed,
     onToggleRules,
     orderProcessStage: state.orderProcessStage,
     contactsFormValue: state.contactsFormValue,
     deliveryFormValue: state.deliveryFormValue,
     paymentFormValue: state.paymentFormValue,
-    isSuccessOpen: state.isSuccessOpen,
     isRulesAccepted: state.isRulesAccepted,
     isOrderReady: state.isOrderReady,
     orderId: state.orderId,

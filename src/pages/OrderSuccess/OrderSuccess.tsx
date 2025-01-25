@@ -1,17 +1,17 @@
 import { FC } from 'react';
-import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 
-import { RootState } from '@/store';
-import { useOrderConfirmation } from '../OrderConfirmation/libs/hooks/use-order-confirmation';
+import { useActions } from '@/hooks/useActions';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { CheckMark } from '@/assets/constants';
 
 import styles from './order-success.module.scss';
+import { AppRoute } from '@/enums/Route';
 
 const OrderSuccess: FC = () => {
-  const { orderId } = useSelector((state: RootState) => state.shopping_card);
-  const { onSuccessClose } = useOrderConfirmation();
+  const { clearCart } = useActions();
+  const { orderId } = useTypedSelector((state) => state.shopping_card);
 
   return (
     <div className={styles.orderSuccess}>
@@ -33,8 +33,8 @@ const OrderSuccess: FC = () => {
 
             <Link
               className={cn('button button-primary', styles.orderSuccess__link)}
-              to="/all-products"
-              onClick={onSuccessClose}
+              to={AppRoute.ALL_PRODUCTS}
+              onClick={() => clearCart()}
             >
               Back to Catalog
             </Link>
@@ -44,7 +44,7 @@ const OrderSuccess: FC = () => {
             <h2 className={styles.orderSuccess__title}>Invalid Order</h2>
             <Link
               className={cn('button button-primary', styles.orderSuccess__link)}
-              to="/"
+              to={AppRoute.ROOT}
             >
               Go to Homepage
             </Link>
