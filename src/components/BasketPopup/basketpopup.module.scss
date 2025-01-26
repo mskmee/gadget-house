@@ -1,7 +1,9 @@
+@import '@/styles/functions';
+
 .basketPopup {
   padding-top: 104px;
   width: 1240px;
-  background: #F8F7FA;
+  background: #f8f7fa;
   border-radius: 20px;
 
   &Close {
@@ -31,9 +33,7 @@
       font-size: 16px;
       line-height: 24px;
     }
-    &Totals {
 
-    }
     &Quantity {
       display: flex;
       align-items: center;
@@ -80,18 +80,18 @@
     width: 24px;
   }
 
-  &Info{
+  &Info {
     display: flex;
     flex-direction: column;
     flex: 1;
   }
-  &RemoveProduct{
+  &RemoveProduct {
     position: absolute;
     top: 16px;
     right: 16px;
   }
 
-  &Bottom{
+  &Bottom {
     margin-top: auto;
     display: flex;
     justify-content: space-between;
@@ -104,7 +104,7 @@
     margin-left: auto;
     margin-right: 16px;
     color: var(--green-color);
-    background-color:var(--white-color);
+    background-color: var(--white-color);
     border: 2px solid var(--green-color);
     font-weight: 500;
     line-height: 24px;
@@ -113,7 +113,7 @@
     text-decoration: none;
     &:hover {
       color: var(--white-color);
-      background-color:var(--green-color);
+      background-color: var(--green-color);
     }
   }
   &GotoBasket {
@@ -131,5 +131,12 @@
     &:active {
       background-color: #00680a;
     }
+  }
+}
+
+@media screen and (max-height: 1150px) {
+  .basketPopup {
+    overflow-y: scroll;
+    max-height: calc(100vh - 100px);
   }
 }

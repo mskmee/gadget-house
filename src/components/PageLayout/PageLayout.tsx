@@ -6,6 +6,7 @@ import { Filters } from '@/components/Filters/Filters';
 import { SortingDesk } from '@/components/Sort/SortingDesk';
 import { Catalog } from '@/components/Catalog/Catalog';
 import styles from './page-layout.module.scss';
+import { CustomBreadcrumbs } from '../SingleProduct/CustomBreadcrumbs';
 
 interface IPageLayoutProps {
   page: ProductItem[];
@@ -78,6 +79,7 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
       <div className={styles.pageLayout_desk}>
         <div className={styles.pageLayout__header}>
           <div className={`container ${styles.pageLayout__container}`}>
+            <CustomBreadcrumbs />
             <div className={styles.pageLayout__wrapper}>
               <h2 className={styles.pageLayout__title}>{category}</h2>
               <SortingDesk />

@@ -11,6 +11,23 @@ type BreadcrumbItem = {
   href: string;
 };
 
+const breadcrumbRoutes = [
+  { name: 'All products', path: '/all-products' },
+  { name: 'Smartphones', path: '/smartphones' },
+  { name: 'Laptops', path: '/laptops' },
+  { name: 'Previously viewed', path: '/viewed' },
+  { name: 'Photo and video', path: '/photo-video' },
+  { name: 'Audio', path: '/audio' },
+  { name: 'Basket', path: '/basket' },
+  { name: 'Tablet', path: '/tablets' },
+  { name: 'Smart watch', path: '/smartwatches' },
+  { name: 'Pc', path: '/pcs' },
+  { name: 'Tv and multimedia', path: '/tvs' },
+  { name: 'Game console', path: '/consoles' },
+  { name: 'Kids', path: '/kids' },
+  { name: 'Sale', path: '/sale' },
+];
+
 export const getBreadcrumbItems = (
   path: string,
   { category, id }: TParams,
@@ -27,9 +44,13 @@ export const getBreadcrumbItems = (
     },
   ];
 
-  if (path === AppRoute.BASKET_PAGE) {
+  const currentBreadcrumbRoute = breadcrumbRoutes.find(
+    (el) => el.path === path,
+  );
+
+  if (currentBreadcrumbRoute) {
     breadcrumbItems.push({
-      title: 'Basket',
+      title: currentBreadcrumbRoute.name,
       href: '#',
     });
   } else if (category) {

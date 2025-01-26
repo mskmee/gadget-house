@@ -344,7 +344,8 @@
         user-select: none;
       }
       .active-burger-menu {
-        width: 11px;
+        width: 9px;
+        margin: 0 6.5px;
         user-select: none;
       }
     }
@@ -418,10 +419,14 @@
 }
 
 @media (max-width: 380px) {
-  .headerBottom {
-    gap: 10px;
+  .headerBottomWrap {
+    .headerBottom {
+      gap: 10px;
+    }
   }
-  .catalogListWrap > div {
-    width: 320px;
+  .catalogListWrap {
+    > div {
+      width: 320px;
+    }
   }
 }

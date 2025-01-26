@@ -50,6 +50,20 @@
       padding: 0px 50px;
       padding-bottom: 100px;
     }
+    > nav {
+      > ol {
+        gap: 4px;
+      }
+      > ol > li > a {
+        color: #808080;
+      }
+      > ol > li:last-child > a {
+        color: #1c1817;
+      }
+      > ol > li:nth-last-child(2) svg path {
+        stroke: #1c1817;
+      }
+    }
   }
 
   &__wrapper {

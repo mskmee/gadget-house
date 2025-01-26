@@ -46,26 +46,19 @@ export const Search: FC<ISearchProps> = ({
   const [activeIndex, setActiveIndex] = useState<number>(-1);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'ArrowDown' && activeIndex !== 5) {
-      console.log(suggestions);
+    const filteredSuggestions = suggestions.filter((s) =>
+      s.title.toLowerCase().includes(searchInput.value.toLowerCase()),
+    );
 
+    if (e.key === 'ArrowDown' && activeIndex !== 5) {
       setActiveIndex((prev) =>
-        Math.min(
-          prev + 1,
-          suggestions
-            .filter((trend) =>
-              trend.title
-                .toLowerCase()
-                .includes(searchInput.value.trim().toLowerCase()),
-            )
-            .slice(0, 6).length - 1,
-        ),
+        Math.min(prev + 1, filteredSuggestions.slice(0, 6).length - 1),
       );
     } else if (e.key === 'ArrowUp') {
       setActiveIndex((prev) => Math.max(prev - 1, 0));
     } else if (e.key === 'Enter') {
       if (activeIndex >= 0) {
-        const selectedSuggestion = suggestions[activeIndex];
+        const selectedSuggestion = filteredSuggestions[activeIndex];
         const selectedTitle = selectedSuggestion.title;
         setIsOverlayActive(false);
         navigate(
