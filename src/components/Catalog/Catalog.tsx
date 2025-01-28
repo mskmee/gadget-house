@@ -1,7 +1,11 @@
 import { FC, useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import type { PaginationProps } from 'antd';
 import { Pagination } from 'antd';
 
+import { RootState } from '@/store';
+import { setPageNumber } from '@/store/products/products_slice';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { ProductItem } from '@/utils/packages/products';
 import { Card } from './Card';
 
@@ -11,17 +15,18 @@ interface ICatalogProps {
   data: ProductItem[];
   totalElements: number;
   totalPages: number;
-  page: number;
+  page?: number;
 }
 
 export const Catalog: FC<ICatalogProps> = ({
   data,
   totalPages,
   totalElements,
-  page,
 }) => {
+  const dispatch = useDispatch();
   const [, setDisplayedProducts] = useState<ProductItem[]>([]);
-  const [currentPage, setCurrentPage] = useState(page);
+  const { pageNumber } = useTypedSelector((state: RootState) => state.products);
+  console.log('pageNumber: ', pageNumber);
   const [hasMore, setHasMore] = useState(true);
   const observerRef = useRef<HTMLDivElement | null>(null);
 
@@ -32,8 +37,8 @@ export const Catalog: FC<ICatalogProps> = ({
   //   currentPage * itemsPerPage,
   // );
 
-  const onChange: PaginationProps['onChange'] = (pageNumber) => {
-    setCurrentPage(pageNumber);
+  const onChange: PaginationProps['onChange'] = (page) => {
+    dispatch(setPageNumber(page - 1));
   };
 
   useEffect(() => {
@@ -119,11 +124,10 @@ export const Catalog: FC<ICatalogProps> = ({
         <Pagination
           showSizeChanger={false}
           showTitle={false}
-          // defaultCurrent={page}
-          current={currentPage}
+          current={pageNumber}
+          // total={18}
           total={totalPages * totalElements}
           onChange={onChange}
-          // pageSize={itemsPerPage}
           className={styles.catalog__pagination}
         />
       </div>

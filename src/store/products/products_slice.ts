@@ -18,7 +18,7 @@ export interface IInitialState {
   paginatedProducts: PaginatedProductsResponseDto | null;
   categoryProducts: ProductsResponseDto | null;
   dataStatus: DataStatus;
-  pageNumber: number | null;
+  pageNumber: number;
 }
 
 const initialState: IInitialState = {
@@ -27,13 +27,17 @@ const initialState: IInitialState = {
   paginatedProducts: null,
   categoryProducts: null,
   dataStatus: DataStatus.IDLE,
-  pageNumber: null,
+  pageNumber: 0,
 };
 
 const products_slice = createSlice({
   name: 'products',
   initialState,
-  reducers: {},
+  reducers: {
+    setPageNumber: (state, { payload }: { payload: number }) => {
+      state.pageNumber = payload;
+    },
+  },
   extraReducers(builder) {
     builder.addCase(getAllProducts.fulfilled, (state, { payload }) => {
       state.productsData = payload;
@@ -66,7 +70,7 @@ const products_slice = createSlice({
         getByCategoryProducts.rejected),
       (state) => {
         state.dataStatus = DataStatus.REJECT;
-        state.pageNumber = null;
+        state.pageNumber = 0;
       },
     );
     builder.addMatcher(
@@ -76,9 +80,10 @@ const products_slice = createSlice({
         getByCategoryProducts.pending),
       (state) => {
         state.dataStatus = DataStatus.PENDING;
-        state.pageNumber = null;
       },
     );
   },
 });
+export const { setPageNumber } = products_slice.actions;
+
 export const { actions, reducer } = products_slice;
