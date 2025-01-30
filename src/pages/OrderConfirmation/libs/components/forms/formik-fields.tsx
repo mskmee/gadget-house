@@ -32,7 +32,7 @@ export const ErrorFields: FC = () => {
 
   return errors.deliveryType && touched.deliveryType ? (
     <div className={styles.form__error}>
-      {ErrorIcon}
+      <img src={ErrorIcon} alt="Error icon" />
       {errors.deliveryType}
     </div>
   ) : null;

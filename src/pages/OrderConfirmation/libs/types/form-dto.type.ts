@@ -11,7 +11,8 @@ type ContactsFormDto = {
 type DeliveryFormDto =  {
   deliveryType: DeliveryMethodType;
   city: string;
-  street: string;
+  street?: string;
+  departmentNumber?: string;
   houseNumber?: string;
   flat?: string;
 };

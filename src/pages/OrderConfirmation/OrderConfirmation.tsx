@@ -12,7 +12,10 @@ import { AppRoute } from '@/enums/Route';
 import { convertPriceToReadable } from '@/utils/helpers/product';
 import { useActions } from '@/hooks/useActions';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { useProductCardHandlers } from '@/hooks/useProductCardHandlers';
 import { SuccessPopUp } from './SuccessPopUp';
+
+import { HeartIcon } from '@/assets/icons/HeartIcon';
 
 import styles from './order-confirmation.module.scss';
 
@@ -43,6 +46,7 @@ const OrderConfirmation: FC = () => {
   const { products, cardTotalAmount, currency, locale } = useTypedSelector(
     (state) => state.shopping_card,
   );
+  const { isLiked, handleClickLike } = useProductCardHandlers();
 
   useEffect(() => {
     if (products.length === 0) {
@@ -85,6 +89,7 @@ const OrderConfirmation: FC = () => {
           </div>
 
           <div className={styles.order__items}>
+            <h3 className={styles.order__itemsTitle}>Your order</h3>
             <ul className={styles.order__itemsList}>
               {products.map((product) => (
                 <li className={styles.order__item} key={product.id}>
@@ -140,6 +145,74 @@ const OrderConfirmation: FC = () => {
                       </div>
                     </div>
                   </article>
+
+                  <article className={styles.order__itemWrapper_mobile}>
+                    <div className={styles.order__itemInfo}>
+                      <div className={styles.order__itemImage}>
+                        <img
+                          src={product.images[0].link}
+                          alt={product.title}
+                          width={100}
+                          height={100}
+                        />
+                      </div>
+
+                      <div className={styles.order__itemContent}>
+                        <div className={styles.order__itemHeader}>
+                          <h4 className={styles.order__itemTitle}>
+                            {product.title}
+                          </h4>
+
+                          <button
+                            className={styles.order__itemDelete}
+                            type="button"
+                            onClick={() => deleteFromStore(product.id)}
+                          ></button>
+                        </div>
+
+                        <div className={styles.order__itemFooter}>
+                          <p className={styles.order__itemCode}>
+                            code: {product.code}
+                          </p>
+
+                          <p className={styles.order__itemPrice}>
+                            {convertPriceToReadable(
+                              product.totalPrice,
+                              currency,
+                              locale,
+                            )}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className={styles.order__itemButtons}>
+                      <div className={styles.order__itemQuantity}>
+                        <div className={styles.order__itemQuantityBtn}>
+                          <button
+                            onClick={() => decreaseItemQuantity(product.id)}
+                          >
+                            -
+                          </button>
+                        </div>
+                        <p>{product.quantity}</p>
+                        <div className={styles.order__itemQuantityBtn}>
+                          <button
+                            onClick={() => increaseItemQuantity(product.id)}
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className={styles.order__itemQuantityBtnFavorite}>
+                        <HeartIcon
+                          onClick={handleClickLike}
+                          isLiked={isLiked}
+                        />
+                      </div>
+                    </div>
+                  </article>
                 </li>
               ))}
             </ul>
@@ -157,13 +230,6 @@ const OrderConfirmation: FC = () => {
               <div className={styles.order__totalWrapper}>
                 <p>
                   Discount <span>0 ₴</span>
-                </p>
-              </div>
-
-              <div className={styles.order__totalWrapper}>
-                <p>
-                  Delivery
-                  <span>0 ₴</span>
                 </p>
               </div>
 
