@@ -31,9 +31,17 @@ const getByCategoryProducts = createAsyncThunk(
     attributeValueIds?: number[];
   }) => {
     const { categoryId, brandIds = [], price = { from: 0, to: 100000 }, attributeValueIds = [] } = params;
-    
+
     return await productsService.getByCategoryProducts(categoryId, brandIds, price, attributeValueIds);
   }
 );
 
-export { getAllProducts, getOneProductById, getPaginatedProducts, getByCategoryProducts };
+const getByCategory = createAsyncThunk(
+  'products/fetchByCategoryProducts',
+  async (categoryId: number) => {
+
+    return await productsService.getByCategory(categoryId);
+  }
+);
+
+export { getAllProducts, getOneProductById, getPaginatedProducts, getByCategoryProducts, getByCategory };

@@ -30,6 +30,10 @@ class ProductsService implements IProductsService {
   async getByCategoryProducts(categoryId: number, brandIds: number[], price: { from: number; to: number }, attributeValueIds: number[]): Promise<ProductsResponseDto> {
     return this.productsApi.getByCategoryProducts(categoryId, brandIds, price, attributeValueIds);
   }
+
+  async getByCategory(categoryId: number): Promise<ProductsResponseDto> {
+    return this.productsApi.getByCategory(categoryId);
+  }
 }
 
 export { ProductsService };

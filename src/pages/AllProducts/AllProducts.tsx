@@ -12,7 +12,6 @@ export default function AllProducts() {
     (state: RootState) => state.products,
   );
 
-  console.log('page: ', pageNumber);
   useEffect(() => {
     dispatch(getAllProducts(pageNumber));
   }, [dispatch]);

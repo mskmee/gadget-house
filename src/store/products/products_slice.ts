@@ -8,6 +8,7 @@ import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import {
   getAllProducts,
   getByCategoryProducts,
+  getByCategory,
   getOneProductById,
   getPaginatedProducts,
 } from './actions';
@@ -17,6 +18,7 @@ export interface IInitialState {
   activeProduct: ProductItemResponseDto | null;
   paginatedProducts: PaginatedProductsResponseDto | null;
   categoryProducts: ProductsResponseDto | null;
+  productsByCategory: ProductsResponseDto | null;
   dataStatus: DataStatus;
   pageNumber: number;
 }
@@ -26,6 +28,7 @@ const initialState: IInitialState = {
   activeProduct: null,
   paginatedProducts: null,
   categoryProducts: null,
+  productsByCategory: null,
   dataStatus: DataStatus.IDLE,
   pageNumber: 0,
 };
@@ -53,11 +56,15 @@ const products_slice = createSlice({
       state.categoryProducts = payload;
       state.pageNumber = payload.currentPage;
     });
+    builder.addCase(getByCategory.fulfilled, (state, { payload }) => {
+      state.productsByCategory = payload;
+    })
 
     builder.addMatcher(
       isAnyOf(getAllProducts.fulfilled,
         getOneProductById.fulfilled,
         getPaginatedProducts.fulfilled,
+        getByCategory.fulfilled,
         getByCategoryProducts.fulfilled),
       (state) => {
         state.dataStatus = DataStatus.FULFILLED;
@@ -67,6 +74,7 @@ const products_slice = createSlice({
       isAnyOf(getAllProducts.rejected,
         getOneProductById.rejected,
         getPaginatedProducts.rejected,
+        getByCategory.rejected,
         getByCategoryProducts.rejected),
       (state) => {
         state.dataStatus = DataStatus.REJECT;
@@ -77,6 +85,7 @@ const products_slice = createSlice({
       isAnyOf(getAllProducts.pending,
         getOneProductById.pending,
         getPaginatedProducts.pending,
+        getByCategory.pending,
         getByCategoryProducts.pending),
       (state) => {
         state.dataStatus = DataStatus.PENDING;

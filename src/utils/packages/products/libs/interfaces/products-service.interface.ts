@@ -6,6 +6,7 @@ interface IProductsService {
   getAllProducts: (page: number) => Promise<ProductsResponseDto>;
   getPaginatedProducts: (page: number, size: number, sort: string[]) => Promise<PaginatedProductsResponseDto>;
   getByCategoryProducts: (categoryId: number, brandIds: number[], price: { from: number; to: number }, attributeValueIds: number[]) => Promise<ProductsResponseDto>;
+  getByCategory: (categoryId: number) => Promise<ProductsResponseDto>;
   getOneProductById: (id: string) => Promise<ProductItemResponseDto>;
   deleteProduct: (id: string) => Promise<void>;
 }

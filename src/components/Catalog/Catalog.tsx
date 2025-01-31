@@ -26,7 +26,6 @@ export const Catalog: FC<ICatalogProps> = ({
   const dispatch = useDispatch();
   const [, setDisplayedProducts] = useState<ProductItem[]>([]);
   const { pageNumber } = useTypedSelector((state: RootState) => state.products);
-  console.log('pageNumber: ', pageNumber);
   const [hasMore, setHasMore] = useState(true);
   const observerRef = useRef<HTMLDivElement | null>(null);
 
