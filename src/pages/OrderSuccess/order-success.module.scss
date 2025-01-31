@@ -1,0 +1,50 @@
+.orderSuccess {
+  padding: 62px 0;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 708px !important;
+    height: auto;
+    padding: 40px 50px !important;
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border: 2px solid var(--buttons-and-accent-color);
+    border-radius: 50%;
+    background-color: transparent;
+    margin-bottom: 20px;
+  }
+
+  &__title {
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    font-size: 42px;
+    line-height: 150%;
+    color: var(--text-color);
+    margin-bottom: 20px;
+  }
+
+  &__text {
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 150%;
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 40px;
+  }
+
+  &__link {
+    width: 200px !important;
+    display: block !important;
+    text-align: center;
+  }
+}

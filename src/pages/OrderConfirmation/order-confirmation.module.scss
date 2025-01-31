@@ -117,34 +117,71 @@
     &Quantity {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
 
       button {
-        cursor: pointer;
-        background: transparent;
-        border-radius: 50%;
-        border: 1.5px solid rgba(28, 24, 23, 1);
-        outline: none;
-        color: rgba(28, 24, 23, 1);
-        width: 16px;
-        height: 16px;
+        width: 24px;
+        height: 24px;
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: all 0.3s ease-in-out;
+      }
 
-        &:hover,
-        &:focus,
-        &:focus-visible {
-          background-color: var(--buttons-and-accent-color);
+      &Button {
+        &_minus {
+          &::before {
+            content: "";
+            display: inline-block;
+            border: none;
+            outline: none;
+            width: 24px;
+            height: 24px;
+            background-image: url("../../assets/icons/button-minus.svg");
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: contain;
+            transition: all 0.3s ease-in-out;
+          }
+
+          &:hover::before,
+          &:focus::before,
+          &:focus-visible::before {
+            background-image: url("../../assets/icons/button-minus-hover.svg");
+          }
+        }
+
+        &_plus {
+          &::before {
+            content: "";
+            display: inline-block;
+            border: none;
+            outline: none;
+            width: 24px;
+            height: 24px;
+            background-image: url("../../assets/icons/button-plus.svg");
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: contain;
+            transition: all 0.3s ease-in-out;
+          }
+
+          &:hover::before,
+          &:focus::before,
+          &:focus-visible::before {
+            background-image: url("../../assets/icons/button-plus-hover.svg");
+          }
         }
       }
+
       p {
+        width: 16px;
+        position: relative;
         font-family: "Inter", sans-serif;
         font-weight: 400;
         font-size: 16px;
         line-height: 150%;
         color: var(--text-color);
+        text-align: center;
       }
     }
 
