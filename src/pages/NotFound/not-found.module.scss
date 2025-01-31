@@ -122,7 +122,7 @@
   }
 
   &__link {
-    width: 128px;
+    min-width: 128px;
     height: 56px;
     border: 2px solid var(--buttons-and-accent-color);
     border-radius: 12px;
