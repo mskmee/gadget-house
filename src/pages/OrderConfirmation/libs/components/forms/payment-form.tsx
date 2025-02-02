@@ -41,7 +41,12 @@ export const PaymentForm: FC<Properties> = ({
           setIsEditable(false);
         }}
       >
-        <Form className={styles.form__form}>
+        <Form
+          className={cn(
+            styles.form__form,
+            isActive || isEditable ? styles.form__formActive : null,
+          )}
+        >
           <div className={styles.form__header}>
             <div className={styles.form__headerText}>
               {isActive || isEditable || !initialValues.paymentType ? (
@@ -65,7 +70,7 @@ export const PaymentForm: FC<Properties> = ({
                   </svg>
                 </div>
               )}
-              <h2 className={styles.form__title}>Payment</h2>
+              <h3 className={styles.form__title}>Payment</h3>
             </div>
 
             {isActive || isEditable || !initialValues.paymentType ? null : (

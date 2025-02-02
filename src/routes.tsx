@@ -14,6 +14,7 @@ import AllProducts from './pages/AllProducts/AllProducts';
 import PhotoVideo from './pages/PhotoVideo/PhotoVideo';
 import Audio from './pages/Audio/Audio';
 import OrderConfirmation from './pages/OrderConfirmation/OrderConfirmation';
+import OrderSuccess from './pages/OrderSuccess/OrderSuccess';
 import NotFound from './pages/NotFound/NotFound';
 import GameConsoles from './pages/GameConsoles/GameConsoles';
 import Kids from './pages/Kids/Kids';
@@ -72,6 +73,11 @@ export const routes = createBrowserRouter(
         {
           path: AppRoute.ORDER,
           element: <OrderConfirmation />,
+        },
+
+        {
+          path: AppRoute.ORDER_SUCCESS,
+          element: <OrderSuccess />,
         },
         {
           path: AppRoute.ADMIN_PAGE,

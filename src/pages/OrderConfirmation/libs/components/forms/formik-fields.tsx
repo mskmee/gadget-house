@@ -3,10 +3,10 @@ import { useFormikContext } from 'formik';
 
 import { DeliveryFormDto } from '../../types/form-dto.type';
 import { DeliveryMethod } from '../../enums/delivery-method';
+import { FormInput } from '@/components/components';
+import { ErrorIcon } from '@/assets/constants';
 
 import styles from './form.module.scss';
-import { ErrorIcon } from '@/assets/constants';
-import { FormInput } from '@/components/components';
 
 export const CourierFields: FC = () => {
   const { values } = useFormikContext<DeliveryFormDto>();
@@ -32,7 +32,7 @@ export const ErrorFields: FC = () => {
 
   return errors.deliveryType && touched.deliveryType ? (
     <div className={styles.form__error}>
-      {ErrorIcon}
+      <img src={ErrorIcon} alt="Error icon" />
       {errors.deliveryType}
     </div>
   ) : null;
