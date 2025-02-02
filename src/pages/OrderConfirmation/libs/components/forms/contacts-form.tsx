@@ -1,5 +1,6 @@
 import { FC, useState } from 'react';
 import { Formik, Form } from 'formik';
+import cn from 'classnames';
 
 import { ContactsFormDto } from '../../types/types';
 import { OrderStage } from '../../enums/enums';
@@ -61,7 +62,7 @@ export const ContactsForm: FC<Properties> = ({
                   </svg>
                 </div>
               )}
-              <h2 className={styles.form__title}>Contacts</h2>
+              <h3 className={styles.form__title}>Contacts</h3>
             </div>
 
             {isActive || isEditable ? null : (
@@ -75,7 +76,12 @@ export const ContactsForm: FC<Properties> = ({
             )}
           </div>
 
-          <div className={styles.form__content}>
+          <div
+            className={cn(
+              styles.form__content,
+              isActive || isEditable ? styles.form__contentActive : null,
+            )}
+          >
             {isActive || isEditable ? (
               <>
                 <div className={styles.form__inputs}>
@@ -107,7 +113,10 @@ export const ContactsForm: FC<Properties> = ({
                   />
                 </div>
 
-                <button className="button button-primary" type="submit">
+                <button
+                  className={cn('button', 'button-primary', styles.form__btn)}
+                  type="submit"
+                >
                   Next
                 </button>
               </>
