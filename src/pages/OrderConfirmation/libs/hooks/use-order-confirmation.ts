@@ -178,6 +178,7 @@ const useOrderConfirmation = (): Return => {
       address: {
         city: state.deliveryFormValue.city,
         street: state.deliveryFormValue.street,
+        departmentNumber: state.deliveryFormValue.departmentNumber,
         houseNumber: state.deliveryFormValue.houseNumber,
         flat: state.deliveryFormValue.flat,
       },

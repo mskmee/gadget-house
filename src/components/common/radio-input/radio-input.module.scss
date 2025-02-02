@@ -1,8 +1,20 @@
 .radioInput {
   transition: all 0.3s ease;
+  align-items: center;
 
   :global {
     .ant-radio {
+      width: 18px;
+      height: 18px;
+
+      @media (max-width: 680px) {
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
       &::before {
         content: "";
         display: inline-block;
