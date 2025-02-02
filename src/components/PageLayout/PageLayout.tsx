@@ -9,18 +9,12 @@ import styles from './page-layout.module.scss';
 
 interface IPageLayoutProps {
   products: ProductItem[];
-  totalElements: number;
-  currentPage: number;
   totalPages: number;
-  minPrice?: number | null;
-  maxPrice?: number | null;
 }
 
 export const PageLayout: React.FC<IPageLayoutProps> = ({
   products,
-  totalElements,
   totalPages,
-  currentPage,
 }) => {
   const { pathname: pathName, state } = useLocation();
   const { searchInputValue, isSuggestion } = state ? state : {};
@@ -50,12 +44,7 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
 
           <Filters />
 
-          <Catalog
-            data={products}
-            totalElements={totalElements}
-            totalPages={totalPages}
-            page={currentPage}
-          />
+          <Catalog data={products} totalPages={totalPages} />
         </div>
       </div>
 
@@ -66,12 +55,7 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
             <Filters />
           </div>
 
-          <Catalog
-            data={products}
-            totalElements={totalElements}
-            totalPages={totalPages}
-            page={currentPage}
-          />
+          <Catalog data={products} totalPages={totalPages} />
         </div>
       </div>
 
@@ -89,13 +73,8 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
           <div className={styles.pageLayout__content}>
             <FiltersDesk />
 
-            {totalElements > 0 ? (
-              <Catalog
-                data={products}
-                totalElements={totalElements}
-                totalPages={totalPages}
-                page={currentPage}
-              />
+            {products.length > 0 ? (
+              <Catalog data={products} totalPages={totalPages} />
             ) : (
               <div>Products not found</div>
             )}

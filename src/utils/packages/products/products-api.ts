@@ -1,18 +1,17 @@
 import { IProductsApi } from './libs/interfaces/interfaces';
 import { ApiEndpoint, HttpMethod, request } from '../http';
 import {
-  PaginatedProductsResponseDto,
   PriceDTO,
   ProductItemResponseDto,
   ProductsResponseDto,
 } from './libs/types/types';
 
 class ProductsApi implements IProductsApi {
-  async getAll(page: number): Promise<ProductsResponseDto> {
+  async getAll(page: number, size: number): Promise<ProductsResponseDto> {
     return request({
       method: HttpMethod.GET,
       url: ApiEndpoint.PRODUCTS,
-      query: { page },
+      query: { page, size },
     });
   }
 
@@ -31,16 +30,15 @@ class ProductsApi implements IProductsApi {
   }
 
   async getPaginatedProducts(page: number,
-    size: number = 10,
-    sort: string[] = []): Promise<PaginatedProductsResponseDto> {
+    size: number): Promise<ProductsResponseDto> {
     return request({
       method: HttpMethod.GET,
-      url: `${ApiEndpoint.PRODUCTS}`,
-      query: { page, size, sort },
+      url: ApiEndpoint.PRODUCTS,
+      query: { page, size },
     });
   }
 
-  async getByCategoryProducts(
+  async getFilteredProducts(
     categoryId: number,
     brandIds: number[] = [],
     price: PriceDTO = { from: 0, to: Infinity },
@@ -58,11 +56,11 @@ class ProductsApi implements IProductsApi {
     });
   }
 
-  async getByCategory(categoryId: number): Promise<ProductsResponseDto> {
+  async getByCategory(categoryId: number, page: number, size: number): Promise<ProductsResponseDto> {
     return request({
       method: HttpMethod.GET,
       url: `${ApiEndpoint.PRODUCTS}`,
-      query: { categoryId },
+      query: { categoryId, page, size },
     });
   }
 }

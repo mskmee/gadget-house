@@ -2,35 +2,37 @@ import { DataStatus } from '@/enums/enums';
 import {
   ProductItemResponseDto,
   ProductsResponseDto,
-  PaginatedProductsResponseDto,
 } from '@/utils/packages/products';
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import {
   getAllProducts,
-  getByCategoryProducts,
   getByCategory,
+  getFilteredProducts,
   getOneProductById,
   getPaginatedProducts,
 } from './actions';
+import { DEFAULT_PAGE, DEFAULT_PAGES, DEFAULT_SIZE } from '@/constants/pagination';
 
 export interface IInitialState {
   productsData: ProductsResponseDto | null;
   activeProduct: ProductItemResponseDto | null;
-  paginatedProducts: PaginatedProductsResponseDto | null;
-  categoryProducts: ProductsResponseDto | null;
+  paginatedProducts: ProductsResponseDto | null;
   productsByCategory: ProductsResponseDto | null;
   dataStatus: DataStatus;
-  pageNumber: number;
+  pagination: {
+    currentPage: number;
+    totalPages: number;
+    totalElements: number;
+  };
 }
 
 const initialState: IInitialState = {
   productsData: null,
   activeProduct: null,
   paginatedProducts: null,
-  categoryProducts: null,
   productsByCategory: null,
   dataStatus: DataStatus.IDLE,
-  pageNumber: 0,
+  pagination: { currentPage: DEFAULT_PAGE, totalPages: DEFAULT_PAGES, totalElements: DEFAULT_SIZE },
 };
 
 const products_slice = createSlice({
@@ -38,23 +40,24 @@ const products_slice = createSlice({
   initialState,
   reducers: {
     setPageNumber: (state, { payload }: { payload: number }) => {
-      state.pageNumber = payload;
+      state.pagination.currentPage = payload;
     },
   },
   extraReducers(builder) {
     builder.addCase(getAllProducts.fulfilled, (state, { payload }) => {
       state.productsData = payload;
-      state.pageNumber = payload.currentPage;
+      state.pagination = { currentPage: payload.currentPage, totalPages: payload.totalPages, totalElements: payload.totalElements };
     });
     builder.addCase(getOneProductById.fulfilled, (state, { payload }) => {
       state.activeProduct = payload;
     });
     builder.addCase(getPaginatedProducts.fulfilled, (state, { payload }) => {
-      state.paginatedProducts = payload;
+      state.productsData = payload;
+      state.pagination = { currentPage: payload.currentPage, totalPages: payload.totalPages, totalElements: payload.totalElements };
     });
-    builder.addCase(getByCategoryProducts.fulfilled, (state, { payload }) => {
-      state.categoryProducts = payload;
-      state.pageNumber = payload.currentPage;
+    builder.addCase(getFilteredProducts.fulfilled, (state, { payload }) => {
+      state.productsData = payload;
+      state.pagination = { currentPage: payload.currentPage, totalPages: payload.totalPages, totalElements: payload.totalElements };
     });
     builder.addCase(getByCategory.fulfilled, (state, { payload }) => {
       state.productsByCategory = payload;
@@ -64,8 +67,8 @@ const products_slice = createSlice({
       isAnyOf(getAllProducts.fulfilled,
         getOneProductById.fulfilled,
         getPaginatedProducts.fulfilled,
-        getByCategory.fulfilled,
-        getByCategoryProducts.fulfilled),
+        getFilteredProducts.fulfilled,
+        getByCategory.fulfilled),
       (state) => {
         state.dataStatus = DataStatus.FULFILLED;
       },
@@ -74,19 +77,18 @@ const products_slice = createSlice({
       isAnyOf(getAllProducts.rejected,
         getOneProductById.rejected,
         getPaginatedProducts.rejected,
-        getByCategory.rejected,
-        getByCategoryProducts.rejected),
+        getFilteredProducts.rejected,
+        getByCategory.rejected,),
       (state) => {
         state.dataStatus = DataStatus.REJECT;
-        state.pageNumber = 0;
       },
     );
     builder.addMatcher(
       isAnyOf(getAllProducts.pending,
         getOneProductById.pending,
         getPaginatedProducts.pending,
-        getByCategory.pending,
-        getByCategoryProducts.pending),
+        getFilteredProducts.pending,
+        getByCategory.pending),
       (state) => {
         state.dataStatus = DataStatus.PENDING;
       },

@@ -1,6 +1,5 @@
 import { IProductsService, IProductsApi } from './libs/interfaces/interfaces';
 import {
-  PaginatedProductsResponseDto,
   ProductItemResponseDto,
   ProductsResponseDto,
 } from './libs/types/types';
@@ -11,8 +10,8 @@ class ProductsService implements IProductsService {
     this.productsApi = productsApi;
   }
 
-  async getAllProducts(page: number): Promise<ProductsResponseDto> {
-    return this.productsApi.getAll(page);
+  async getAllProducts(page: number, size: number): Promise<ProductsResponseDto> {
+    return this.productsApi.getAll(page, size);
   }
 
   async getOneProductById(id: string): Promise<ProductItemResponseDto> {
@@ -23,16 +22,16 @@ class ProductsService implements IProductsService {
     return this.productsApi.delete(id);
   }
 
-  async getPaginatedProducts(page: number, size: number, sort: string[]): Promise<PaginatedProductsResponseDto> {
-    return this.productsApi.getPaginatedProducts(page, size, sort);
+  async getPaginatedProducts(page: number, size: number): Promise<ProductsResponseDto> {
+    return this.productsApi.getPaginatedProducts(page, size);
   }
 
-  async getByCategoryProducts(categoryId: number, brandIds: number[], price: { from: number; to: number }, attributeValueIds: number[]): Promise<ProductsResponseDto> {
-    return this.productsApi.getByCategoryProducts(categoryId, brandIds, price, attributeValueIds);
+  async getFilteredProducts(categoryId: number, brandIds: number[], price: { from: number; to: number }, attributeValueIds: number[]): Promise<ProductsResponseDto> {
+    return this.productsApi.getFilteredProducts(categoryId, brandIds, price, attributeValueIds);
   }
 
-  async getByCategory(categoryId: number): Promise<ProductsResponseDto> {
-    return this.productsApi.getByCategory(categoryId);
+  async getByCategory(categoryId: number, page: number, size: number): Promise<ProductsResponseDto> {
+    return this.productsApi.getByCategory(categoryId, page, size);
   }
 }
 

@@ -3,52 +3,47 @@ import { useDispatch } from 'react-redux';
 import type { PaginationProps } from 'antd';
 import { Pagination } from 'antd';
 
-import { RootState } from '@/store';
+import { DEFAULT_SIZE, DEFAULT_SIZE_MOBILE } from '@/constants/pagination';
+import { AppDispatch, RootState } from '@/store';
 import { setPageNumber } from '@/store/products/products_slice';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { ProductItem } from '@/utils/packages/products';
 import { Card } from './Card';
 
 import styles from './catalog.module.scss';
+import { getPaginatedProducts } from '@/store/products/actions';
 
 interface ICatalogProps {
   data: ProductItem[];
-  totalElements: number;
   totalPages: number;
-  page?: number;
 }
 
-export const Catalog: FC<ICatalogProps> = ({
-  data,
-  totalPages,
-  totalElements,
-}) => {
-  const dispatch = useDispatch();
+export const Catalog: FC<ICatalogProps> = ({ data, totalPages }) => {
+  const dispatch: AppDispatch = useDispatch();
   const [, setDisplayedProducts] = useState<ProductItem[]>([]);
-  const { pageNumber } = useTypedSelector((state: RootState) => state.products);
+  const { pagination } = useTypedSelector((state: RootState) => state.products);
   const [hasMore, setHasMore] = useState(true);
   const observerRef = useRef<HTMLDivElement | null>(null);
 
-  const itemsPerPageMobile = 8;
-
-  // const paginatedProducts = data.slice(
-  //   (currentPage - 1) * itemsPerPage,
-  //   currentPage * itemsPerPage,
-  // );
+  useEffect(() => {
+    dispatch(
+      getPaginatedProducts({
+        page: pagination.currentPage,
+        size: DEFAULT_SIZE,
+      }),
+    );
+    setDisplayedProducts(data.slice(0, DEFAULT_SIZE_MOBILE));
+  }, [pagination.currentPage]);
 
   const onChange: PaginationProps['onChange'] = (page) => {
     dispatch(setPageNumber(page - 1));
   };
 
-  useEffect(() => {
-    setDisplayedProducts(data.slice(0, itemsPerPageMobile));
-  }, [data]);
-
   const loadMore = () => {
     const currentLength = data.length;
     const nextProducts = data.slice(
       currentLength,
-      currentLength + itemsPerPageMobile,
+      currentLength + DEFAULT_SIZE_MOBILE,
     );
 
     if (nextProducts.length === 0) {
@@ -56,7 +51,20 @@ export const Catalog: FC<ICatalogProps> = ({
       return;
     }
 
-    setDisplayedProducts((prev) => [...prev, ...nextProducts]);
+    setDisplayedProducts((prev) => {
+      const currentLength = prev.length;
+      const nextProducts = data.slice(
+        currentLength,
+        currentLength + DEFAULT_SIZE_MOBILE,
+      );
+
+      if (nextProducts.length === 0) {
+        setHasMore(false);
+        return prev;
+      }
+
+      return [...prev, ...nextProducts];
+    });
   };
 
   useEffect(() => {
@@ -84,7 +92,7 @@ export const Catalog: FC<ICatalogProps> = ({
         observer.unobserve(currentObserverRef);
       }
     };
-  }, [data, hasMore]);
+  }, [hasMore]);
 
   return (
     <div className={styles.catalog}>
@@ -123,9 +131,9 @@ export const Catalog: FC<ICatalogProps> = ({
         <Pagination
           showSizeChanger={false}
           showTitle={false}
-          current={pageNumber}
-          // total={18}
-          total={totalPages * totalElements}
+          current={pagination.currentPage + 1}
+          pageSize={DEFAULT_SIZE}
+          total={totalPages * DEFAULT_SIZE}
           onChange={onChange}
           className={styles.catalog__pagination}
         />

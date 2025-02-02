@@ -14,7 +14,7 @@ import { rateImg, rateEmptyImg } from '@/assets/constants';
 import { HeartIcon } from '@/assets/icons/HeartIcon';
 import { BasketIcon } from '@/assets/icons/BasketIcon';
 
-import styles from '../Card/card.module.scss';
+import styles from './card.module.scss';
 
 interface ISmartphoneCardProps {
   product: ProductItem;

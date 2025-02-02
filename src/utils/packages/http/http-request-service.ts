@@ -150,7 +150,6 @@ const sendRequest = async <T>(
     method: options.method,
     cancelToken: source.token,
   };
-  console.log('requestConfig: ', requestConfig);
 
   try {
     if (import.meta.env.DEV) {
