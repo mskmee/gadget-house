@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, ScrollRestoration } from 'react-router-dom';
 import { Header } from '@/components/Header/Header';
 import Footer from '@/components/Footer';
 import styles from './Layout.module.scss';
@@ -7,7 +7,6 @@ import { BurgerMenu } from '@/components/BurgerMenu';
 import { MenuContext } from '@/context/menuContext.ts';
 import { useIsFixedHeader } from '@/hooks/useIsFixedHeader';
 import classNames from 'classnames';
-import { ScrollToTop } from '@/utils/scrollToTop';
 import BasketPopup from '@/components/BasketPopup/BasketPopup.tsx';
 import { PopUp } from '@/components/PopUp/PopUp.tsx';
 import { useTypedSelector } from '@/hooks/useTypedSelector.ts';
@@ -54,7 +53,7 @@ const Layout = () => {
         <BasketPopup />
       </PopUp>
       <Footer />
-      <ScrollToTop />
+      <ScrollRestoration />
     </>
   );
 };

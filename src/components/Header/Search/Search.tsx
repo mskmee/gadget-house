@@ -262,7 +262,7 @@ export const Search: FC<ISearchProps> = ({
       }
       suffix={
         <div className={styles['search-right-elements']}>
-          {searchInput.value ? (
+          {searchInput.value && (
             <>
               <img
                 src={searchInputClear}
@@ -270,18 +270,21 @@ export const Search: FC<ISearchProps> = ({
                 onClick={clearSearchInputValue}
               />
               <div className={styles['search-right-elements_devider']}></div>
-              <Link
-                to={`${AppRoute.SEARCH_RESULTS_FOUND}/?text=${searchInput.value}`}
-                state={{
-                  searchInputValue: searchInput.value,
-                  isSuggestion: false,
-                }}
-                className={classNames({ [styles.active]: searchInput.value })}
-                onClick={() => setIsOverlayActive(false)}
-              >
-                <SearchIcon />
-              </Link>
             </>
+          )}
+
+          {isOverlayActive ? (
+            <Link
+              to={`${AppRoute.SEARCH_RESULTS_FOUND}/?text=${searchInput.value}`}
+              state={{
+                searchInputValue: searchInput.value,
+                isSuggestion: false,
+              }}
+              className={classNames({ [styles.active]: searchInput.value })}
+              onClick={() => setIsOverlayActive(false)}
+            >
+              <SearchIcon />
+            </Link>
           ) : (
             <SearchIcon />
           )}

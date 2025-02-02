@@ -40,7 +40,8 @@ class ProductsApi implements IProductsApi {
     });
   }
 
-  async getCategoryProducts(categoryId: number,
+  async getCategoryProducts(name: string,
+    categoryId: number,
     brandIds: number[] = [],
     price: PriceDTO = { from: 0, to: Infinity },
     attributeValueIds: number[] = []): Promise<CategoryProductsResponseDto> {
@@ -48,6 +49,7 @@ class ProductsApi implements IProductsApi {
       method: HttpMethod.GET,
       url: `${ApiEndpoint.PRODUCTS}`,
       query: {
+        name,
         categoryId,
         brandIds: brandIds.join(','),
         priceFrom: price.from,

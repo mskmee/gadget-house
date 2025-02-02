@@ -2,14 +2,10 @@ import styles from './basketpopup.module.scss';
 import { convertPriceToReadable } from '@/utils/helpers/product.ts';
 import { useTypedSelector } from '@/hooks/useTypedSelector.ts';
 import { useActions } from '@/hooks/useActions.ts';
-import {
-  inBasket,
-  closeBasketPopupIcon,
-  deleteFromBasketPopupIcon,
-} from '@/assets/constants.ts';
+import { inBasket, closeBasketPopupIcon } from '@/assets/constants.ts';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '@/enums/Route.ts';
-import { Carousels, SliderNav } from '@/components/components.ts';
+import { DeleteFromBasket } from '@/assets/icons/DeleteFromBasket';
 
 export default function BasketPopup() {
   const navigate = useNavigate();
@@ -30,7 +26,7 @@ export default function BasketPopup() {
 
   if (!selectedProduct) return null;
 
-  const { id, title, code, quantity, totalPrice } = selectedProduct;
+  const { id, title, code, images, quantity, totalPrice } = selectedProduct;
 
   return (
     <div className={styles.basketPopup}>
@@ -42,7 +38,7 @@ export default function BasketPopup() {
       </button>
       <div className={styles.basketPopupProduct}>
         <div className={styles.basketPopupImg}>
-          <img src={selectedProduct.images[0]} alt={title} />
+          <img src={images?.[0].link} alt={title} />
           <img
             className={styles.basketPopupAdded}
             src={inBasket}
@@ -98,15 +94,9 @@ export default function BasketPopup() {
             deleteFromStore(id);
           }}
         >
-          <img src={deleteFromBasketPopupIcon} alt="close" />
+          <DeleteFromBasket />
         </button>
       </div>
-      <SliderNav
-        text="Previously reviewed offers"
-        link="/smartphones"
-        isVisibleSeeMoreBtn={false}
-      />
-      <Carousels classname="basket-popup-carousel" />
     </div>
   );
 }

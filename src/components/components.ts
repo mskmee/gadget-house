@@ -6,6 +6,7 @@ import Carousels from '@/components/Carousel/Carousel';
 import { SliderNav } from '@/components/SliderNav/SliderNav';
 import { Header } from '@/components/Header/Header';
 import Banner from '@/components/Banner/Banner';
+import { FormInput } from './common/common';
 
 export {
   Banner,
@@ -16,6 +17,7 @@ export {
   BrandCard,
   Benefits,
   Footer,
+  FormInput,
 };
 
 export { PopUp } from './PopUp/PopUp';

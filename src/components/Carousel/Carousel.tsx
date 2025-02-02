@@ -10,6 +10,7 @@ import {
 } from '@/constants/productCards';
 import { useMediaQuery } from 'react-responsive';
 import { useResponsiveCarouselSettings } from '@/hooks/useResponsiveCarouselSettings';
+import { ProductImageCard } from '@/interfaces/interfaces';
 
 type CarouselClassname =
   | 'brands-carousel'
@@ -21,12 +22,12 @@ type CarouselClassname =
 
 interface CustomCarouselProps {
   classname: CarouselClassname;
-  productImages?: string[];
+  productImageCards?: ProductImageCard[];
 }
 
 const CustomCarousel: React.FC<CustomCarouselProps> = ({
   classname,
-  productImages,
+  productImageCards,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [startX, setStartX] = useState<number | null>(null);
@@ -39,7 +40,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
 
   const responsiveCarouselSettings = useResponsiveCarouselSettings(
     classname,
-    (productImages?.length ?? 0) > 4 ? 4 : (productImages?.length ?? 0),
+    (productImageCards?.length ?? 0) > 4 ? 4 : (productImageCards?.length ?? 0),
   );
 
   const itemWidth = isLargerThan1440px
@@ -51,9 +52,13 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
     classname === 'brands-carousel'
       ? 10
       : classname === 'photos-carousel'
-        ? productImages?.length
-        : 8;
+        ? productImageCards?.length
+        : classname === 'basket-popup-carousel'
+          ? 9
+          : 8;
   const maxIndex = (totalItems ?? 0) - responsiveCarouselSettings.count;
+
+  console.log(currentIndex, maxIndex);
 
   const handleNext = () => {
     if (currentIndex < maxIndex) {
@@ -148,31 +153,27 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
                     : 8,
             },
             (_, i) => (
-              <>
+              <div key={crypto.randomUUID()}>
                 {classname === 'brands-carousel' ? (
                   <BrandCard
                     width={itemWidth}
-                    key={`brand-${i}`}
+                    key={crypto.randomUUID()}
                     product={brandData[i % brandData.length]}
                   />
                 ) : classname === 'photos-carousel' ? (
-                  productImages?.map((photo, i) => (
+                  productImageCards?.map((productImageCard) => (
                     <img
                       style={{ minWidth: `${itemWidth}px` }}
-                      key={i + 1}
+                      key={crypto.randomUUID()}
                       className="product-photo"
-                      src={photo}
+                      src={productImageCard.link}
                       alt="product's photos"
                     />
                   ))
                 ) : (
                   <MyCard
                     width={itemWidth}
-                    key={
-                      classname === 'laptop-carousel'
-                        ? `laptop-${i}`
-                        : `smartphone-${i}`
-                    }
+                    key={crypto.randomUUID()}
                     product={
                       classname === 'laptop-carousel'
                         ? laptopData[i % laptopData.length]
@@ -191,7 +192,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
                     }
                   />
                 )}
-              </>
+              </div>
             ),
           )}
         </div>

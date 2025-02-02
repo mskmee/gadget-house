@@ -1,18 +1,17 @@
 @import '@/styles/functions';
 
 .basketPopup {
-  padding-top: 104px;
   width: 1240px;
+  padding: 79px 56px 74px 56px;
   background: #f8f7fa;
   border-radius: 20px;
 
   &Close {
     position: absolute;
-    top: 40px;
+    top: 23px;
     right: 46px;
   }
   &Product {
-    margin: 0 56px;
     position: relative;
     display: flex;
     column-gap: 24px;
@@ -54,6 +53,10 @@
           padding-bottom: 2px;
         }
       }
+      > button:hover,
+      > button:active {
+        background-color: #00820d;
+      }
       p {
         margin-top: 2px;
       }
@@ -89,6 +92,16 @@
     position: absolute;
     top: 16px;
     right: 16px;
+
+    &:hover svg path,
+    &:active svg path {
+      stroke: #00820d;
+    }
+
+    &:hover svg path:last-child,
+    &:active svg path:last-child {
+      fill: #00820d;
+    }
   }
 
   &Bottom {
@@ -115,6 +128,10 @@
       color: var(--white-color);
       background-color: var(--green-color);
     }
+    &:active {
+      color: #fff;
+      background-color: #00680a;
+    }
   }
   &GotoBasket {
     padding: 16px 34px;
@@ -136,7 +153,6 @@
 
 @media screen and (max-height: 1150px) {
   .basketPopup {
-    overflow-y: scroll;
     max-height: calc(100vh - 100px);
   }
 }

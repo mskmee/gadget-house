@@ -14,10 +14,12 @@ interface IProductItemProps {
 export const ProductItem: FC<IProductItemProps> = ({ product }) => {
   const { locale, currency } = useTypedSelector((state) => state.shopping_card);
 
+  console.log(product.images);
+
   return (
     <div key={product.id} className={styles.card}>
       <div>
-        <img src={product.images[0]} alt={product.title} />
+        <img src={product.images?.[0].link} alt={product.title} />
       </div>
 
       <div className={styles.cardDetails}>

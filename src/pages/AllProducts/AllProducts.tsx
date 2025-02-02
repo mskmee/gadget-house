@@ -17,8 +17,8 @@ export default function AllProducts() {
     <PageLayout
       page={productsData?.page || []}
       totalElements={productsData?.totalElements || 0}
-      totalPages={productsData?.totalPages || 0}
-      currentPage={productsData?.currentPage || 0}
+      totalPages={productsData?.totalPages || 1}
+      currentPage={productsData?.currentPage || 1}
     />
   );
 }

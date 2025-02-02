@@ -1,0 +1,248 @@
+.order {
+  padding: 48px 0 150px;
+
+  &__title {
+    margin-bottom: 32px;
+    font-family: "Inter", sans-serif;
+    font-weight: 500;
+    font-size: 42px;
+    line-height: 150%;
+    color: var(--text-color);
+  }
+
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    gap: 155px;
+  }
+
+  &__forms {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__items {
+    flex: 1 0 535px;
+
+    &List {
+      margin-bottom: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+
+  &__item {
+    padding: 24px;
+    border-radius: 20px;
+    background-color: var(--white-color);
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+
+    &Wrapper {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    &Image {
+      width: 100px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &Info {
+      flex: 1 0 0;
+    }
+
+    &Header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    &Title {
+      font-family: "Inter", sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 150%;
+      color: var(--text-color);
+    }
+
+    &Delete {
+      outline: none;
+
+      &::before {
+        content: "";
+        display: inline-block;
+        border: none;
+        outline: none;
+        width: 32px;
+        height: 32px;
+        background-image: url("../../assets/icons/delete.svg");
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: contain;
+        transition: all 0.3s ease-in-out;
+      }
+
+      &:hover,
+      &:focus,
+      &:focus-visible {
+        &::before {
+          background-image: url("../../assets/icons/delete-hover.svg");
+        }
+      }
+    }
+
+    &Code {
+      margin-bottom: 16px;
+      font-family: "Inter", sans-serif;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 150%;
+      color: var(--secondary-text-color);
+    }
+
+    &Footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    &Quantity {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      button {
+        cursor: pointer;
+        background: transparent;
+        border-radius: 50%;
+        border: 1.5px solid rgba(28, 24, 23, 1);
+        outline: none;
+        color: rgba(28, 24, 23, 1);
+        width: 16px;
+        height: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease-in-out;
+
+        &:hover,
+        &:focus,
+        &:focus-visible {
+          background-color: var(--buttons-and-accent-color);
+        }
+      }
+      p {
+        font-family: "Inter", sans-serif;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 150%;
+        color: var(--text-color);
+      }
+    }
+
+    &Price {
+      font-family: "Inter", sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 150%;
+      color: var(--text-color);
+    }
+  }
+
+  &__total {
+    width: 100%;
+    border-radius: 20px;
+    padding: 24px;
+    background-color: var(--white-color);
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+
+    &Wrapper {
+      align-items: center;
+      margin-bottom: 8px;
+      font-family: "Inter", sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 150%;
+      color: var(--text-color);
+
+      p {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      &InTotal {
+        font-weight: 500;
+        font-size: 24px;
+      }
+    }
+  }
+
+  &__agreement {
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    margin-bottom: 42px;
+
+    &Input {
+      position: absolute;
+      opacity: 0;
+    }
+
+    &Icon {
+      margin-right: 11px;
+    }
+
+    &Input + &Icon::before {
+      content: "";
+      display: inline-block;
+      margin-right: 5px;
+      border: 1.5px solid var(--text-color);
+      border-radius: 4px;
+      width: 20px;
+      height: 20px;
+    }
+
+    &Input:checked + &Icon::before {
+      background-image: url("../../assets/icons/checked.svg");
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: contain;
+      border-color: transparent;
+      animation: check 180ms ease-in;
+    }
+
+    &Input:focus + &Icon::before {
+      outline: 1.5px;
+    }
+
+    &Text {
+      font-family: "Inter", sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 150%;
+      color: var(--secondary-text-color);
+    }
+
+    @keyframes check {
+      0% {
+        transform: scale(0);
+      }
+
+      90% {
+        transform: scale(1.4);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+  }
+}

@@ -11,6 +11,7 @@ const AppRoute = {
   SEARCH_RESULTS_NOT_FOUND: '/search-results',
   BASKET_PAGE: '/basket',
   SIGN_IN: '/sign-in',
+  ORDER: '/order',
   USER_FAVORITES: '/dashboard/:user-id/favorites',
   TABLET: '/tablets',
   WATCH: '/smartwatches',
