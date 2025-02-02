@@ -12,6 +12,7 @@ const AppRoute = {
   BASKET_PAGE: '/basket',
   SIGN_IN: '/sign-in',
   ORDER: '/order',
+  ORDER_SUCCESS: '/order-success/:order-id',
   USER_FAVORITES: '/dashboard/:user-id/favorites',
   TABLET: '/tablets',
   WATCH: '/smartwatches',

@@ -63,7 +63,8 @@ type OrderDto = {
   cartItems: CartItem[],
   address: {
     city: string,
-    street: string,
+    street?: string,
+    departmentNumber?: string,
     houseNumber?: string,
     flat?: string,
   },

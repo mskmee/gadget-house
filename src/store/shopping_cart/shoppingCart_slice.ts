@@ -1,5 +1,5 @@
 import { IProductCard, IShoppingCard } from '@/interfaces/interfaces';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, isAnyOf } from '@reduxjs/toolkit';
 import {
   calculateCartTotalPrice,
   calculateItemTotalPrice,
@@ -10,6 +10,7 @@ import {
   LocalStorageKey,
   localStorageService,
 } from '@/utils/packages/local-storage';
+import { createOrder } from './actions';
 
 export interface IInitialState {
   products: IShoppingCard[];
@@ -19,6 +20,7 @@ export interface IInitialState {
   locale: Locale;
   isBasketPopupOpen: boolean;
   selectedProductId: number | null;
+  orderId: number | null;
 }
 // Locale and Currency should be in the other slice in the future. Something like settings slice.
 
@@ -37,6 +39,7 @@ const initialState: IInitialState = {
   locale: Locale.UA,
   isBasketPopupOpen: false,
   selectedProductId: null,
+  orderId: null,
 };
 
 const shoppingCard_slice = createSlice({
@@ -150,7 +153,7 @@ const shoppingCard_slice = createSlice({
           let itemTotalPrice = +priceRes * quantity;
           totalAmount.total += itemTotalPrice;
           totalAmount.quantity += quantity;
-          
+
           return totalAmount;
         },
         {
@@ -165,6 +168,12 @@ const shoppingCard_slice = createSlice({
       state.isBasketPopupOpen = false;
       state.selectedProductId = null;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(createOrder.fulfilled, (state, { payload }) => {
+      state.orderId = payload;
+    });
+    builder.addMatcher(isAnyOf(createOrder.rejected, createOrder.pending), (state) => { state.orderId = null; });
   },
 });
 
