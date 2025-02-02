@@ -1,29 +1,29 @@
 .order {
   padding: 48px 0 150px;
 
-  @media screen and (max-width: 1400px) {
+  @media screen and (width <= 1400px) {
     padding: 38px 0 80px;
   }
 
-  @media screen and (max-width: 680px) {
+  @media screen and (width <= 680px) {
     padding: 18px 0 24px;
   }
 
   &__title {
     margin-bottom: 32px;
-    font-family: "Inter", sans-serif;
+    color: var(--text-color);
     font-weight: 500;
     font-size: 42px;
+    font-family: Inter, sans-serif;
     line-height: 150%;
-    color: var(--text-color);
 
-    @media screen and (max-width: 1400px) {
+    @media screen and (width <= 1400px) {
       font-size: 32px;
     }
 
-    @media screen and (max-width: 680px) {
-      font-size: 24px;
+    @media screen and (width <= 680px) {
       margin-bottom: 24px;
+      font-size: 24px;
     }
   }
 
@@ -32,55 +32,55 @@
     justify-content: space-between;
     gap: 155px;
 
-    @media screen and (max-width: 1280px) {
+    @media screen and (width <= 1280px) {
       flex-direction: column;
       gap: 48px;
     }
 
-    @media screen and (max-width: 680px) {
+    @media screen and (width <= 680px) {
       gap: 24px;
     }
   }
 
   &__forms {
-    width: 100%;
     display: flex;
     flex-direction: column;
-    
-    @media screen and (max-width: 680px) {
+    width: 100%;
+
+    @media screen and (width <= 680px) {
+      padding: 0 0 16px;
       border-bottom: 1px solid var(--secondary-background-color);
-      padding: 0 0 16px 0;
     }
   }
 
   &__items {
     flex: 1 0 535px;
 
-    @media screen and (max-width: 680px) {
+    @media screen and (width <= 680px) {
       flex-basis: auto;
     }
 
     &Title {
       display: none;
       margin-bottom: 16px;
-      font-family: "Inter", sans-serif;
+      color: var(--text-color);
       font-weight: 500;
       font-size: 16px;
+      font-family: Inter, sans-serif;
       line-height: 150%;
-      color: var(--text-color);
 
-      @media screen and (max-width: 680px) {
+      @media screen and (width <= 680px) {
         display: block;
       }
     }
 
     &List {
-      margin-bottom: 24px;
       display: flex;
       flex-direction: column;
       gap: 8px;
+      margin-bottom: 24px;
 
-      @media screen and (max-width: 680px) {
+      @media screen and (width <= 680px) {
         margin-bottom: 16px;
       }
     }
@@ -88,47 +88,47 @@
 
   &__item {
     padding: 24px;
-    border-radius: 20px;
     background-color: var(--white-color);
-    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+    border-radius: 20px;
+    box-shadow: 0 2px 8px 0 rgb(0 0 0 / 8%);
 
-    @media screen and (max-width: 680px) {
+    @media screen and (width <= 680px) {
       padding: 12px;
       border: 1px solid var(--secondary-background-color);
       border-radius: 8px;
     }
 
     &Wrapper {
-      width: 100%;
       display: flex;
       align-items: center;
       gap: 16px;
+      width: 100%;
 
-      @media (max-width: 680px) {
+      @media (width <= 680px) {
         display: none;
       }
 
       &_mobile {
-        width: 100%;
         display: none;
         flex-direction: column;
         align-items: start;
-        gap: 0px;
+        gap: 0;
+        width: 100%;
 
-        @media (max-width: 680px) {
+        @media (width <= 680px) {
           display: flex;
         }
       }
     }
 
     &Image {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       width: 100px;
       height: 100px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
 
-      @media (max-width: 820px) {
+      @media (width <= 820px) {
         width: 80px;
         height: 84px;
 
@@ -138,7 +138,7 @@
         }
       }
 
-      @media (max-width: 680px) {
+      @media (width <= 680px) {
         width: 56px;
         height: 62px;
 
@@ -152,55 +152,55 @@
     &Info {
       flex: 1 0 0;
 
-      @media (max-width: 680px) {
-        flex-basis: auto;
+      @media (width <= 680px) {
         display: flex;
+        flex-basis: auto;
         align-items: start;
         gap: 8px;
         width: 100%;
+        margin-bottom: 12px;
         padding-bottom: 12px;
         border-bottom: 1px solid var(--secondary-background-color);
-        margin-bottom: 12px;
       }
     }
 
     &Header {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       margin-bottom: 12px;
 
-      @media (max-width: 680px) {
+      @media (width <= 680px) {
         align-items: center;
         margin-bottom: 4px;
       }
     }
 
     &Title {
-      font-family: "Inter", sans-serif;
+      color: var(--text-color);
       font-weight: 400;
       font-size: 16px;
+      font-family: Inter, sans-serif;
       line-height: 150%;
-      color: var(--text-color);
     }
 
     &Delete {
       outline: none;
 
       &::before {
-        content: "";
         display: inline-block;
-        border: none;
-        outline: none;
         width: 32px;
         height: 32px;
         background-image: url("../../assets/icons/delete.svg");
         background-repeat: no-repeat;
         background-position: center center;
         background-size: contain;
+        border: none;
+        outline: none;
         transition: all 0.3s ease-in-out;
+        content: "";
 
-        @media screen and (max-width: 680px) {
+        @media screen and (width <= 680px) {
           width: 44px;
           height: 44px;
           background-image: url("../../assets/icons/delete-mobile.svg");
@@ -213,7 +213,7 @@
         &::before {
           background-image: url("../../assets/icons/delete-hover.svg");
 
-          @media screen and (max-width: 680px) {
+          @media screen and (width <= 680px) {
             background-image: url("../../assets/icons/delete-mobile.svg");
           }
         }
@@ -222,13 +222,13 @@
 
     &Code {
       margin-bottom: 16px;
-      font-family: "Inter", sans-serif;
+      color: var(--secondary-text-color);
       font-weight: 400;
       font-size: 14px;
+      font-family: Inter, sans-serif;
       line-height: 150%;
-      color: var(--secondary-text-color);
 
-      @media (max-width: 680px) {
+      @media (width <= 680px) {
         margin-bottom: 0;
         font-weight: 300;
         font-size: 12px;
@@ -237,8 +237,8 @@
 
     &Footer {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
     }
 
     &Quantity {
@@ -246,19 +246,19 @@
       align-items: center;
       gap: 8px;
 
-      @media (max-width: 680px) {
+      @media (width <= 680px) {
         gap: 10px;
       }
 
       button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: 24px;
         height: 24px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
       }
 
-        @media (max-width: 680px) {
+        @media (width <= 680px) {
           width: 30px;
           height: 30px;
         }
@@ -267,21 +267,21 @@
         &:focus,
         &:focus-visible {
           background-color: var(--buttons-and-accent-color);
-          
+
       &Button {
         &_minus {
           &::before {
-            content: "";
             display: inline-block;
-            border: none;
-            outline: none;
             width: 24px;
             height: 24px;
             background-image: url("../../assets/icons/button-minus.svg");
             background-repeat: no-repeat;
             background-position: center center;
             background-size: contain;
+            border: none;
+            outline: none;
             transition: all 0.3s ease-in-out;
+            content: "";
           }
 
           &:hover::before,
@@ -293,17 +293,17 @@
 
         &_plus {
           &::before {
-            content: "";
             display: inline-block;
-            border: none;
-            outline: none;
             width: 24px;
             height: 24px;
             background-image: url("../../assets/icons/button-plus.svg");
             background-repeat: no-repeat;
             background-position: center center;
             background-size: contain;
+            border: none;
+            outline: none;
             transition: all 0.3s ease-in-out;
+            content: "";
           }
 
           &:hover::before,
@@ -315,33 +315,33 @@
       }
 
       p {
-        width: 16px;
         position: relative;
-        font-family: "Inter", sans-serif;
+        width: 16px;
+        color: var(--text-color);
         font-weight: 400;
         font-size: 16px;
+        font-family: Inter, sans-serif;
         line-height: 150%;
-        color: var(--text-color);
         text-align: center;
       }
 
       &Btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: 48px;
         height: 48px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
       }
 
       &BtnFavorite {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: 48px;
         height: 48px;
         padding: 7px;
         border: 1px solid var(--secondary-background-color);
         border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
 
         span {
           width: 36px;
@@ -351,11 +351,11 @@
     }
 
     &Price {
-      font-family: "Inter", sans-serif;
+      color: var(--text-color);
       font-weight: 400;
       font-size: 16px;
+      font-family: Inter, sans-serif;
       line-height: 150%;
-      color: var(--text-color);
     }
 
     &Content {
@@ -363,30 +363,30 @@
     }
 
     &Buttons {
-      width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 16px;
+      width: 100%;
       padding: 12px 0 0;
     }
   }
 
   &__total {
     width: 100%;
-    border-radius: 20px;
     padding: 24px;
     background-color: var(--white-color);
-    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+    border-radius: 20px;
+    box-shadow: 0 2px 8px 0 rgb(0 0 0 / 8%);
 
     &Wrapper {
       align-items: center;
       margin-bottom: 8px;
-      font-family: "Inter", sans-serif;
+      color: var(--text-color);
       font-weight: 400;
       font-size: 16px;
+      font-family: Inter, sans-serif;
       line-height: 150%;
-      color: var(--text-color);
 
       p {
         display: flex;
@@ -397,7 +397,7 @@
         font-weight: 500;
         font-size: 24px;
 
-        @media (max-width: 680px) {
+        @media (width <= 680px) {
           margin-bottom: 12px;
           padding-bottom: 12px;
           border-bottom: 1px solid var(--secondary-background-color);
@@ -408,10 +408,10 @@
 
   &__agreement {
     position: relative;
-    cursor: pointer;
     display: flex;
     align-items: center;
     margin-bottom: 42px;
+    cursor: pointer;
 
     &Input {
       position: absolute;
@@ -421,19 +421,19 @@
     &Icon {
       margin-right: 11px;
 
-      @media (max-width: 680px) {
+      @media (width <= 680px) {
         margin-right: 12px;
       }
     }
 
     &Input + &Icon::before {
-      content: "";
       display: inline-block;
+      width: 20px;
+      height: 20px;
       margin-right: 5px;
       border: 1.5px solid var(--text-color);
       border-radius: 4px;
-      width: 20px;
-      height: 20px;
+      content: "";
     }
 
     &Input:checked + &Icon::before {
@@ -450,13 +450,13 @@
     }
 
     &Text {
-      font-family: "Inter", sans-serif;
+      color: var(--secondary-text-color);
       font-weight: 400;
       font-size: 16px;
+      font-family: Inter, sans-serif;
       line-height: 150%;
-      color: var(--secondary-text-color);
 
-      @media (max-width: 680px) {
+      @media (width <= 680px) {
         font-weight: 300;
         font-size: 12px;
       }
@@ -476,4 +476,5 @@
       }
     }
   }
+}
 }
