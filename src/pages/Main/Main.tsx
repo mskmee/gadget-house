@@ -7,6 +7,7 @@ import { useTypedSelector, useActions } from '@/hooks/hooks';
 import { DataStatus } from '@/enums/enums';
 import { MainPageSkeleton } from '@/components/skeletons/MainPageSkeleton';
 import { useMediaQuery } from 'react-responsive';
+import { DEFAULT_PAGE, DEFAULT_SIZE } from '@/constants/pagination';
 
 export default function Main() {
   const { getAllProducts } = useActions();
@@ -18,7 +19,7 @@ export default function Main() {
   });
 
   useEffect(() => {
-    getAllProducts(0);
+    getAllProducts({ page: DEFAULT_PAGE, size: DEFAULT_SIZE });
   }, [getAllProducts]);
 
   return (
