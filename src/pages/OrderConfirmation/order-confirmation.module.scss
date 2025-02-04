@@ -254,26 +254,14 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 24px;
-        height: 24px;
       }
-
-        @media (width <= 680px) {
-          width: 30px;
-          height: 30px;
-        }
-
-        &:hover,
-        &:focus,
-        &:focus-visible {
-          background-color: var(--buttons-and-accent-color);
 
       &Button {
         &_minus {
           &::before {
             display: inline-block;
-            width: 24px;
-            height: 24px;
+            width: 19px;
+            height: 17px;
             background-image: url("../../assets/icons/button-minus.svg");
             background-repeat: no-repeat;
             background-position: center center;
@@ -282,20 +270,32 @@
             outline: none;
             transition: all 0.3s ease-in-out;
             content: "";
+
+            @media (width <= 980px) {
+              width: 24px;
+              height: 24px;
+            }
+
+            @media (width <= 680px) {
+              width: 30px;
+              height: 30px;
+            }
           }
 
-          &:hover::before,
-          &:focus::before,
-          &:focus-visible::before {
-            background-image: url("../../assets/icons/button-minus-hover.svg");
+          &:hover,
+          &:focus,
+          &:focus-visible {
+            &::before {
+              background-image: url("../../assets/icons/button-minus-hover.svg");
+            }
           }
         }
 
         &_plus {
           &::before {
             display: inline-block;
-            width: 24px;
-            height: 24px;
+            width: 19px;
+            height: 17px;
             background-image: url("../../assets/icons/button-plus.svg");
             background-repeat: no-repeat;
             background-position: center center;
@@ -304,13 +304,25 @@
             outline: none;
             transition: all 0.3s ease-in-out;
             content: "";
+
+            @media (width <= 980px) {
+              width: 24px;
+              height: 24px;
+            }
+
+            @media (width <= 680px) {
+              width: 30px;
+              height: 30px;
+            }
           }
 
-          &:hover::before,
-          &:focus::before,
-          &:focus-visible::before {
-            background-image: url("../../assets/icons/button-plus-hover.svg");
-          }
+          &:hover,
+          &:focus,
+          &:focus-visible {
+            &::before {
+              background-image: url("../../assets/icons/button-plus-hover.svg");
+            }
+          } 
         }
       }
 
@@ -476,5 +488,4 @@
       }
     }
   }
-}
 }
