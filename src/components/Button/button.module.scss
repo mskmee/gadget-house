@@ -39,3 +39,31 @@
   width: 28px;
   height: 28px;
 }
+
+.navBtn {
+  &__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 45px;
+    height: 42px;
+    background-color: #ffffff;
+    border: none;
+    border: 1px solid #eae4ee;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+
+    &:hover {
+      background-color: #4da856;
+      > svg path {
+        stroke: #fff;
+      }
+    }
+
+    &:active {
+      background-color: #00680a;
+    }
+  }
+}

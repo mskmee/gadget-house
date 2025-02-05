@@ -85,6 +85,19 @@
     }
   }
 
+  &__inputWrapper {
+    position: relative;
+  }
+
+  &__passwordToggle {
+    position: absolute;
+    width: 14px;
+    height: 15px;
+    top: 50%;
+    right: 31px;
+    transform: translateY(-50%);
+  }
+
   &__error {
     display: flex;
     align-items: center;
