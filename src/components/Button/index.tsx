@@ -7,7 +7,7 @@ import styles from './button.module.scss';
 
 interface INavButtonProps {
   button: IButton;
-  onAuthClick: () => void;
+  onAuthClick?: () => void;
 }
 
 export const NavButton: FC<INavButtonProps> = ({ button, onAuthClick }) => {
