@@ -106,10 +106,12 @@ import deleteFromBasketMob from './icons/delete-from-basket-mobile.svg';
 import Robot404 from './icons/robot-404.svg';
 import Admin from './icons/admin.svg';
 import ErrorIcon from './icons/error-icon.svg';
-import {BasketIcon} from './icons/BasketIcon'
+import { BasketIcon } from './icons/BasketIcon'
 import closeBasketPopupIcon from './icons/close_popup.svg';
 import deleteFromBasketPopupIcon from './icons/delete_product_from_popup.svg';
 import inBasket from './icons/approved.svg';
+import ShowPassword from './icons/show-password.svg';
+import InvisiblePassword from './icons/invisible-password.svg';
 
 export {
   Admin,
@@ -220,4 +222,6 @@ export {
   closeBasketPopupIcon,
   deleteFromBasketPopupIcon,
   inBasket,
+  ShowPassword,
+  InvisiblePassword
 };
