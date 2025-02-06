@@ -39,6 +39,10 @@
     padding: 0 50px;
     border-radius: 20px;
     background: var(--secondary-background-color);
+
+    @media (width <= 1470px) {
+      border-radius: 0;
+    }
   }
 
   &__wrapper {
