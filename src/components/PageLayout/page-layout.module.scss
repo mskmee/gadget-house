@@ -30,7 +30,14 @@
     }
   }
 
+  &__container {
+    padding: 0 0px !important;
+  }
+
   &__header {
+    margin-top: 48px;
+    padding: 0 50px;
+    border-radius: 20px;
     background: var(--secondary-background-color);
   }
 

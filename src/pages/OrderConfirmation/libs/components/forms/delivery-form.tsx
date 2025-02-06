@@ -37,6 +37,7 @@ export const DeliveryForm: FC<Properties> = ({
         validateOnChange={false}
         validationSchema={deliveryFormValidationSchema}
         onSubmit={(values) => {
+          console.log('values: ', values);
           onSubmit(values);
           setIsEditable(false);
         }}

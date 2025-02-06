@@ -76,11 +76,11 @@ img {
   padding: 0px 50px;
   margin: 0 auto;
 
-  @media screen and (max-width: 1070px) {
+  @media (width <= 1070px) {
     padding: 0px 30px;
   }
 
-  @media screen and (max-width: 570px) {
+  @media (width <= 570px) {
     padding: 0px 20px;
   }
 }
