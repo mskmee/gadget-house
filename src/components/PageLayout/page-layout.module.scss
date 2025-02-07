@@ -38,13 +38,16 @@
   }
 
   &__header {
+    max-width: 1440px;
+    margin: 0 auto;
     margin-top: 48px;
     padding: 0 50px;
     border-radius: 20px;
     background: var(--secondary-background-color);
 
-    @media (width <= 1470px) {
+    @media (width <= 1445px) {
       border-radius: 0;
+      padding: 0;
     }
   }
 

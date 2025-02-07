@@ -71,12 +71,12 @@ img {
 }
 
 .container {
-  max-width: 1540px;
+  max-width: 1440px;
   width: 100%;
   padding: 0px 0px;
   margin: 0 auto;
 
-  @media (width <= 1470px) {
+  @media (width <= 1445px) {
     padding: 0px 50px;
   }
 

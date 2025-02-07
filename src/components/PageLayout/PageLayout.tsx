@@ -83,17 +83,12 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
       </div>
 
       <div className={styles.pageLayout_desk}>
-        <div className="container">
-          <CustomBreadcrumbs />
-        </div>
-
-        <div className={`container ${styles.pageLayout__container}`}>
-          <div className={styles.pageLayout__header}>
         {pathName !== '/search/' && (
           <div className="container">
             <CustomBreadcrumbs />
           </div>
         )}
+
         <div className={styles.pageLayout__header}>
           <div className="container">
             <div className={styles.pageLayout__wrapper}>
