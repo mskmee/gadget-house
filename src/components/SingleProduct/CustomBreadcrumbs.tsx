@@ -16,7 +16,7 @@ export const CustomBreadcrumbs = () => {
 
   return (
     <Breadcrumb
-      className={classNames(style['single-product__breadcrumb'])}
+      className={classNames(style['custom-breadcrumb'])}
       separator={
         <svg
           width="6"
