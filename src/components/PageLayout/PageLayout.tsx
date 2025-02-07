@@ -41,6 +41,8 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
     category = pathname;
   }
 
+  console.log(pathName);
+
   return (
     <div className={styles.pageLayout}>
       <div className={styles.pageLayout_mobile}>
@@ -87,6 +89,13 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
 
         <div className={`container ${styles.pageLayout__container}`}>
           <div className={styles.pageLayout__header}>
+        {pathName !== '/search/' && (
+          <div className="container">
+            <CustomBreadcrumbs />
+          </div>
+        )}
+        <div className={styles.pageLayout__header}>
+          <div className="container">
             <div className={styles.pageLayout__wrapper}>
               <h2 className={styles.pageLayout__title}>{category}</h2>
               <SortingDesk />

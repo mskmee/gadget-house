@@ -1,10 +1,10 @@
 import { useField, FormikValues } from 'formik';
 import { Input, InputProps } from 'antd';
 import { TextAreaProps } from 'antd/es/input';
-import { useId } from 'react';
+import { useId, useState } from 'react';
 import cn from 'classnames';
 
-import { ErrorIcon } from '@/assets/constants';
+import { ErrorIcon, ShowPassword, InvisiblePassword } from '@/assets/constants';
 
 import styles from './form-input.module.scss';
 
@@ -23,12 +23,17 @@ export const FormInput = <T extends FormikValues>({
   label,
   name,
   span,
+  type = 'text',
   ...props
 }: Properties<T>) => {
   const [field, meta] = useField(name as string);
   const id = useId();
   const inputId = props.id ?? id;
   const isError = meta.touched && meta.error;
+
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const togglePasswordVisibility = () =>
+    setIsPasswordVisible(!isPasswordVisible);
 
   return (
     <>
@@ -46,12 +51,37 @@ export const FormInput = <T extends FormikValues>({
         label && (
           <label className={cn(styles.formInput__input)} htmlFor={inputId}>
             {inputType === 'input' ? (
-              <Input
-                {...field}
-                {...(props as InputProps)}
-                id={inputId}
-                status={isError ? 'error' : ''}
-              />
+              <div className={styles.formInput__inputWrapper}>
+                <Input
+                  {...field}
+                  {...(props as InputProps)}
+                  id={inputId}
+                  type={
+                    type === 'password'
+                      ? isPasswordVisible
+                        ? 'text'
+                        : 'password'
+                      : type
+                  }
+                  status={isError ? 'error' : ''}
+                />
+                {type === 'password' && (
+                  <button
+                    type="button"
+                    onClick={togglePasswordVisibility}
+                    className={styles.formInput__passwordToggle}
+                  >
+                    {isPasswordVisible ? (
+                      <img src={ShowPassword} alt="Show password icon" />
+                    ) : (
+                      <img
+                        src={InvisiblePassword}
+                        alt="Invisible password icon"
+                      />
+                    )}
+                  </button>
+                )}
+              </div>
             ) : (
               <Input.TextArea
                 {...field}

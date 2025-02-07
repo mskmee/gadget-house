@@ -28,6 +28,9 @@
     @media screen and (min-width: 1180px) {
       display: block;
     }
+    > div nav {
+      margin-bottom: 48px;
+    }
   }
 
   &__container {
