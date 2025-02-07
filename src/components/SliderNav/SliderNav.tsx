@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styles from './slidernav.module.scss';
 
 import { SliderRightArrow } from '@/assets/icons/SliderRightArrow';
+import classNames from 'classnames';
 
 interface ISliderNavProps {
   text: string;
@@ -16,7 +17,7 @@ export const SliderNav: FC<ISliderNavProps> = ({
   isVisibleSeeMoreBtn = true,
 }) => {
   return (
-    <div className={styles.sliderText}>
+    <div className={classNames(styles.sliderText)}>
       <h2>{text}</h2>
       {isVisibleSeeMoreBtn && (
         <Link to={link} className={styles.buttonLink}>

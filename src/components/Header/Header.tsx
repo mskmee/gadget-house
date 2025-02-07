@@ -21,6 +21,7 @@ import { CardTooltip } from '../CartTooltip/CartTooltip';
 import { useIsFixedHeader } from '@/hooks/useIsFixedHeader';
 import { InputRef } from 'antd';
 import { useMediaQuery } from 'react-responsive';
+import AuthModal from '@/pages/Auth/AuthModal';
 
 export const Header = () => {
   const location = useLocation();
@@ -39,6 +40,11 @@ export const Header = () => {
   const headerBottomRef = useRef<HTMLDivElement>(null);
   const headerBottomWrapRef = useRef<HTMLDivElement>(null);
   const searchFieldRef = useRef<InputRef>(null);
+  const [isAuthModalOpen, setAuthModalOpen] = useState(false);
+
+  const handleAuthClick = () => {
+    setAuthModalOpen(true);
+  };
 
   const isLargerThan1557px = useMediaQuery({
     query: '(min-width: 1557px)',
@@ -333,7 +339,11 @@ export const Header = () => {
             />
             <div className={styles.headerBottomButtons}>
               {buttonData.map((buttonData) => (
-                <NavButton key={buttonData.id} button={buttonData} />
+                <NavButton
+                  key={buttonData.id}
+                  button={buttonData}
+                  onAuthClick={handleAuthClick}
+                />
               ))}
 
               {shouldShowCartTooltip !== 0 && (
@@ -357,6 +367,11 @@ export const Header = () => {
           [styles.active]: isOverlayActive,
         })}
       ></div>
+
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+      />
     </header>
   );
 };

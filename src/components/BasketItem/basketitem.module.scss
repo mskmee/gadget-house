@@ -1,175 +1,179 @@
 .basketItem {
-    display: flex;
-    justify-content: space-between;
-    background: #fff;
-    border-radius: 20px;
-    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
-    padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+  padding: 16px;
 }
 
 .product {
-    &Img {
-        min-width: 180px;
-        width: 180px;
-        height: 200px;
-        img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
+  &Img {
+    min-width: 180px;
+    width: 180px;
+    height: 200px;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
-    &Info {
-        margin: 0 auto 0 24px;
-        display: flex;
-        flex-direction: column;
+  }
+  &Info {
+    margin: 0 auto 0 24px;
+    display: flex;
+    flex-direction: column;
+  }
+  &Title {
+    font-size: 24px;
+    line-height: 36px;
+    font-weight: 500;
+    color: rgba(28, 24, 23, 1);
+  }
+  &Code {
+    margin-top: 16px;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+    color: rgba(128, 128, 128, 1);
+  }
+  &Bottom {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    column-gap: 24px;
+    button {
+      color: rgba(99, 99, 99, 1);
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      display: flex;
+      align-items: center;
+      > svg {
+        width: 32px;
+        height: 32px;
+      }
     }
-    &Title {
-        font-size: 24px;
-        line-height: 36px;
-        font-weight: 500;
-        color: rgba(28, 24, 23, 1);
+  }
+  &Remove {
+    &Mob {
+      display: none;
     }
-    &Code {
-        margin-top: 16px;
-        font-size: 16px;
-        line-height: 24px;
-        font-weight: 400;
-        color: rgba(128, 128, 128, 1);
+  }
+  &Totals {
+    margin-top: auto;
+    min-width: 109px;
+  }
+  &Quantity {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+    width: fit-content;
+    margin-left: auto;
+    margin-bottom: 16px;
+    button {
+      cursor: pointer;
+      background: transparent;
+      border-radius: 50%;
+      border: 1.5px solid rgba(28, 24, 23, 1);
+      color: rgba(28, 24, 23, 1);
+      width: 14px;
+      height: 14px;
+      display: grid;
+      place-content: center;
+      &:last-child {
+        padding-bottom: 2px;
+      }
     }
-    &Bottom {
-        margin-top: auto;
-        display: flex;
-        align-items: center;
-        column-gap: 24px;
-        button {
-            color: rgba(99, 99, 99, 1);
-            cursor: pointer;
-            background: transparent;
-            border: none;
-            display: flex;
-            align-items: center;
-        }
+    p {
+      margin-top: 2px;
     }
-    &Remove{
-        &Mob {
-            display: none;
-        }
-    }
-    &Totals {
-        margin-top: auto;
-        min-width: 109px;
-    }
-    &Quantity {
-        display: flex;
-        align-items: center;
-        column-gap: 8px;
-        width: fit-content;
-        margin-left: auto;
-        margin-bottom: 16px;
-        button {
-            cursor: pointer;
-            background: transparent;
-            border-radius: 50%;
-            border: 1.5px solid rgba(28, 24, 23, 1);
-            color: rgba(28, 24, 23, 1);
-            width: 14px;
-            height: 14px;
-            display: grid;
-            place-content: center;
-            &:last-child {
-                padding-bottom: 2px;
-            }
-        }
-        p {
-            margin-top: 2px;
-        }
-    }
-    &Price {
-        font-size: 24px;
-        line-height: 36px;
-        font-weight: 400;
-        color: rgba(28, 24, 23, 1);
-        text-align: right;
-    }
+  }
+  &Price {
+    font-size: 24px;
+    line-height: 36px;
+    font-weight: 400;
+    color: rgba(28, 24, 23, 1);
+    text-align: right;
+  }
 }
 
 @media (max-width: 992px) {
-    .product {
-        &Title {
-            font-size: 16px;
-            line-height: 22px;
-            font-weight: 300;
-            max-height: 48px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-        }
+  .product {
+    &Title {
+      font-size: 16px;
+      line-height: 22px;
+      font-weight: 300;
+      max-height: 48px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
     }
+  }
 }
 
 @media (max-width: 768px) {
-    .basketItem {
-        padding: 12.5px 12px;
+  .basketItem {
+    padding: 12.5px 12px;
+  }
+  .product {
+    &Img {
+      min-width: 56px;
+      width: 56px;
+      height: 56px;
+      margin: auto 0;
     }
-    .product {
-        &Img {
-            min-width: 56px;
-            width: 56px;
-            height: 56px;
-            margin: auto 0;
-        }
-        &Price {
-            font-size: 16px;
-            line-height: 24px;
-        }
-        &Code {
-            font-size: 12px;
-            line-height: 18px;
-        }
-        &Bottom {
-            button {
-                font-size: 14px;
-            }
-        }
-        &Remove{
-            width: 24px;
-        }
+    &Price {
+      font-size: 16px;
+      line-height: 24px;
     }
+    &Code {
+      font-size: 12px;
+      line-height: 18px;
+    }
+    &Bottom {
+      button {
+        font-size: 14px;
+      }
+    }
+    &Remove {
+      width: 24px;
+    }
+  }
 }
 
 @media (max-width: 576px) {
-    .basketItem {
-        position: relative;
-        border-radius: 8px;
+  .basketItem {
+    position: relative;
+    border-radius: 8px;
+  }
+  .product {
+    &Info {
+      margin: 0 auto 0 8px;
     }
-    .product {
-        &Info {
-            margin: 0 auto 0 8px;
+    &Bottom {
+      button {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        span {
+          display: none;
         }
-        &Bottom {
-            button {
-                position: absolute;
-                top: 12px;
-                right: 12px;
-                span {
-                    display: none;
-                }
-            }
-        }
-        &Remove{
-            display: none;
-            &Mob {
-                display: initial;
-                width: 44px;
-            }
-        }
-        &Totals {
-            min-width: 80px;
-        }
-        &Quantity {
-            display: none;
-        }
+      }
     }
+    &Remove {
+      display: none;
+      &Mob {
+        display: initial;
+        width: 44px;
+      }
+    }
+    &Totals {
+      min-width: 80px;
+    }
+    &Quantity {
+      display: none;
+    }
+  }
 }
