@@ -80,6 +80,7 @@ export const SingleProductPage: FC = () => {
   const currentItems = allProductReviews?.slice(itemOffset, endOffset);
 
   const reviewsRateRef = useRef<HTMLUListElement>(null);
+  const leaveCommentReviewRef = useRef<HTMLUnknownElement>(null);
 
   const debouncedCallback = useMemo(
     () =>
@@ -100,6 +101,16 @@ export const SingleProductPage: FC = () => {
       );
       listItems?.forEach((item) => {
         item.removeAttribute('tabIndex');
+      });
+    }
+    if (leaveCommentReviewRef.current) {
+      console.log(leaveCommentReviewRef.current);
+
+      const listItems = leaveCommentReviewRef.current?.querySelectorAll(
+        '.ant-rate > li > div',
+      );
+      listItems?.forEach((item) => {
+        item.setAttribute('tabIndex', '0');
       });
     }
   }, [allProductReviews]);
@@ -233,6 +244,8 @@ export const SingleProductPage: FC = () => {
               <Rate
                 className="reviews_rate-stars"
                 onChange={changeRateValue}
+                ref={leaveCommentReviewRef}
+                tabIndex={0}
                 character={({ index = 0 }) => {
                   return (
                     <img

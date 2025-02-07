@@ -56,17 +56,6 @@ export const Product: FC<IProductProps> = ({
     query: '(max-width: 500px)',
   });
 
-  useEffect(() => {
-    if (productRateRef.current) {
-      const listItems = productRateRef.current?.querySelectorAll(
-        '.ant-rate > li > div',
-      );
-      listItems?.forEach((item) => {
-        item.removeAttribute('tabIndex');
-      });
-    }
-  }, []);
-
   const handlePrevClick = () => {
     if (currentSlide?.id !== 1) {
       setCurrentSlide({
@@ -259,6 +248,7 @@ export const Product: FC<IProductProps> = ({
               {dinamicCurrentProduct?.anotherColors?.map((color, i) => (
                 <li
                   key={i}
+                  tabIndex={0}
                   className={classNames({
                     [style['selected-color']]:
                       productCharacteristics?.selectedColor === color &&
@@ -292,6 +282,7 @@ export const Product: FC<IProductProps> = ({
               {staticCurrentProduct?.[0]?.otherModels?.map(({ model }) => (
                 <li
                   key={model}
+                  tabIndex={0}
                   className={classNames({
                     [style['selected-model']]:
                       productCharacteristics?.selectedModel === model,
@@ -309,6 +300,7 @@ export const Product: FC<IProductProps> = ({
               {staticCurrentProduct?.[0]?.memoryCards?.map(({ memory }) => (
                 <li
                   key={memory}
+                  tabIndex={0}
                   className={classNames({
                     [style['selected-memory']]:
                       productCharacteristics?.selectedMemory === memory,
