@@ -35,7 +35,8 @@ import returnImg from '../assets/single_product//return.svg';
 import paymentImg from '../assets/single_product/payment.svg';
 import mailImg from '../assets/icons/mail.svg';
 import locationImg from '../assets/icons/location.svg';
-import mainPageIntroImg from '../assets/images/main_intro.webp';
+import mainPageIntroDesktop from '../assets/images/main-intro-desktop.webp';
+import mainPageIntroMobile from '../assets/images/main-intro-mobile.webp';
 
 import smartphoneImg_1_1 from '../assets/images/smartphones/card-1/1.png';
 import smartphoneImg_1_2 from '../assets/images/smartphones/card-1/2.png';
@@ -94,7 +95,7 @@ import brand_lenovo from '../assets/images/brands/lenovo.png';
 import headphones from './images/basket-products-img/headphones.png';
 import basketPhoneImg from './images/basket-products-img/phone.png';
 import searchInputClear from './icons/search_input_clear.svg';
-import deleteFromBasket from './icons/delete-from-basket.svg';
+
 import Edit from './icons/edit.svg';
 import EditHover from './icons/edit-hover.svg';
 import Delete from './icons/delete.svg';
@@ -106,10 +107,12 @@ import deleteFromBasketMob from './icons/delete-from-basket-mobile.svg';
 import Robot404 from './icons/robot-404.svg';
 import Admin from './icons/admin.svg';
 import ErrorIcon from './icons/error-icon.svg';
-import {BasketIcon} from './icons/BasketIcon'
+import { BasketIcon } from './icons/BasketIcon';
 import closeBasketPopupIcon from './icons/close_popup.svg';
 import deleteFromBasketPopupIcon from './icons/delete_product_from_popup.svg';
 import inBasket from './icons/approved.svg';
+import ShowPassword from './icons/show-password.svg';
+import InvisiblePassword from './icons/invisible-password.svg';
 
 export {
   Admin,
@@ -152,7 +155,8 @@ export {
   paymentImg,
   mailImg,
   locationImg,
-  mainPageIntroImg,
+  mainPageIntroDesktop,
+  mainPageIntroMobile,
   smartphoneImg_1_1,
   smartphoneImg_1_2,
   smartphoneImg_1_3,
@@ -207,7 +211,6 @@ export {
   headphones,
   basketPhoneImg,
   searchInputClear,
-  deleteFromBasket,
   ErrorIcon,
   Edit,
   EditHover,
@@ -220,4 +223,6 @@ export {
   closeBasketPopupIcon,
   deleteFromBasketPopupIcon,
   inBasket,
+  ShowPassword,
+  InvisiblePassword
 };
