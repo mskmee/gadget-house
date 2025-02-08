@@ -114,7 +114,7 @@ export const Search: FC<ISearchProps> = ({
     }
 
     allProducts.forEach((product) => {
-      const titleLower = product.title.toLowerCase();
+      const titleLower = product.name.toLowerCase();
 
       if (titleLower.includes(normalizedInput)) {
         const words = titleLower.split(' ');

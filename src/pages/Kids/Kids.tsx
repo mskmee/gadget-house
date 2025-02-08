@@ -9,9 +9,7 @@ import { PageLayout } from '@/components/PageLayout/PageLayout';
 
 export default function Kids() {
   const dispatch: AppDispatch = useDispatch();
-  const { productsByCategory } = useSelector(
-    (state: RootState) => state.products,
-  );
+  const { productsData } = useSelector((state: RootState) => state.products);
 
   useEffect(() => {
     dispatch(
@@ -25,8 +23,9 @@ export default function Kids() {
 
   return (
     <PageLayout
-      products={productsByCategory?.page || []}
-      totalPages={productsByCategory?.totalPages || 0}
+      products={productsData?.page || []}
+      totalPages={productsData?.totalPages || 0}
+      categoryId={Category.KIDS}
     />
   );
 }

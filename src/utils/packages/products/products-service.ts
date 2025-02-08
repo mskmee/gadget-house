@@ -22,12 +22,8 @@ class ProductsService implements IProductsService {
     return this.productsApi.delete(id);
   }
 
-  async getPaginatedProducts(page: number, size: number): Promise<ProductsResponseDto> {
-    return this.productsApi.getPaginatedProducts(page, size);
-  }
-
-  async getFilteredProducts(categoryId: number, brandIds: number[], price: { from: number; to: number }, attributeValueIds: number[]): Promise<ProductsResponseDto> {
-    return this.productsApi.getFilteredProducts(categoryId, brandIds, price, attributeValueIds);
+  async getPaginatedProducts(categoryId: number | null, page: number, size: number): Promise<ProductsResponseDto> {
+    return this.productsApi.getPaginatedProducts(categoryId, page, size);
   }
 
   async getByCategory(categoryId: number, page: number, size: number): Promise<ProductsResponseDto> {

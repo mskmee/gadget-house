@@ -1,20 +1,24 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { ProductItem } from '@/utils/packages/products';
+
+import { IProductCard } from '@/interfaces/interfaces';
 import { FiltersDesk } from '@/components/Filters/FiltersDesk';
 import { Filters } from '@/components/Filters/Filters';
 import { SortingDesk } from '@/components/Sort/SortingDesk';
 import { Catalog } from '@/components/Catalog/Catalog';
+
 import styles from './page-layout.module.scss';
 
 interface IPageLayoutProps {
-  products: ProductItem[];
+  products: IProductCard[];
   totalPages: number;
+  categoryId?: number | null;
 }
 
 export const PageLayout: React.FC<IPageLayoutProps> = ({
   products,
   totalPages,
+  categoryId,
 }) => {
   const { pathname: pathName, state } = useLocation();
   const { searchInputValue, isSuggestion } = state ? state : {};
@@ -44,7 +48,15 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
 
           <Filters />
 
-          <Catalog data={products} totalPages={totalPages} />
+          {products.length > 0 ? (
+            <Catalog
+              data={products}
+              totalPages={totalPages}
+              categoryId={categoryId}
+            />
+          ) : (
+            <div>Products not found</div>
+          )}
         </div>
       </div>
 
@@ -55,7 +67,15 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
             <Filters />
           </div>
 
-          <Catalog data={products} totalPages={totalPages} />
+          {products.length > 0 ? (
+            <Catalog
+              data={products}
+              totalPages={totalPages}
+              categoryId={categoryId}
+            />
+          ) : (
+            <div>Products not found</div>
+          )}
         </div>
       </div>
 
@@ -74,7 +94,11 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
             <FiltersDesk />
 
             {products.length > 0 ? (
-              <Catalog data={products} totalPages={totalPages} />
+              <Catalog
+                data={products}
+                totalPages={totalPages}
+                categoryId={categoryId}
+              />
             ) : (
               <div>Products not found</div>
             )}

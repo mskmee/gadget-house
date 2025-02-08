@@ -44,7 +44,7 @@ export const getBreadcrumbItems = (
 
     if (id && currentProduct) {
       breadcrumbItems.push({
-        title: currentProduct.title,
+        title: currentProduct.name,
         href: '#',
       });
     }

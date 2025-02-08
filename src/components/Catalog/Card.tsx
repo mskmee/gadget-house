@@ -37,7 +37,7 @@ export const Card: FC<ISmartphoneCardProps> = ({
     e.preventDefault();
     addToStore({
       ...product,
-      title: product.name,
+      name: product.name,
       isLiked: false,
       rate: product.rating,
       anotherColors: [],

@@ -7,7 +7,6 @@ import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import {
   getAllProducts,
   getByCategory,
-  getFilteredProducts,
   getOneProductById,
   getPaginatedProducts,
 } from './actions';
@@ -17,7 +16,6 @@ export interface IInitialState {
   productsData: ProductsResponseDto | null;
   activeProduct: ProductItemResponseDto | null;
   paginatedProducts: ProductsResponseDto | null;
-  productsByCategory: ProductsResponseDto | null;
   dataStatus: DataStatus;
   pagination: {
     currentPage: number;
@@ -30,7 +28,6 @@ const initialState: IInitialState = {
   productsData: null,
   activeProduct: null,
   paginatedProducts: null,
-  productsByCategory: null,
   dataStatus: DataStatus.IDLE,
   pagination: { currentPage: DEFAULT_PAGE, totalPages: DEFAULT_PAGES, totalElements: DEFAULT_SIZE },
 };
@@ -55,19 +52,14 @@ const products_slice = createSlice({
       state.productsData = payload;
       state.pagination = { currentPage: payload.currentPage, totalPages: payload.totalPages, totalElements: payload.totalElements };
     });
-    builder.addCase(getFilteredProducts.fulfilled, (state, { payload }) => {
-      state.productsData = payload;
-      state.pagination = { currentPage: payload.currentPage, totalPages: payload.totalPages, totalElements: payload.totalElements };
-    });
     builder.addCase(getByCategory.fulfilled, (state, { payload }) => {
-      state.productsByCategory = payload;
+      state.productsData = payload;
     })
 
     builder.addMatcher(
       isAnyOf(getAllProducts.fulfilled,
         getOneProductById.fulfilled,
         getPaginatedProducts.fulfilled,
-        getFilteredProducts.fulfilled,
         getByCategory.fulfilled),
       (state) => {
         state.dataStatus = DataStatus.FULFILLED;
@@ -77,7 +69,6 @@ const products_slice = createSlice({
       isAnyOf(getAllProducts.rejected,
         getOneProductById.rejected,
         getPaginatedProducts.rejected,
-        getFilteredProducts.rejected,
         getByCategory.rejected,),
       (state) => {
         state.dataStatus = DataStatus.REJECT;
@@ -87,7 +78,6 @@ const products_slice = createSlice({
       isAnyOf(getAllProducts.pending,
         getOneProductById.pending,
         getPaginatedProducts.pending,
-        getFilteredProducts.pending,
         getByCategory.pending),
       (state) => {
         state.dataStatus = DataStatus.PENDING;

@@ -26,7 +26,7 @@ export const ProductCardForOrder: FC<IProductCardProps> = ({ product }) => {
         <div className={styles.order__itemImage}>
           <img
             src={product.images[0].link}
-            alt={product.title}
+            alt={product.name}
             width={100}
             height={100}
           />
@@ -34,7 +34,7 @@ export const ProductCardForOrder: FC<IProductCardProps> = ({ product }) => {
 
         <div className={styles.order__itemInfo}>
           <div className={styles.order__itemHeader}>
-            <h4 className={styles.order__itemTitle}>{product.title}</h4>
+            <h4 className={styles.order__itemTitle}>{product.name}</h4>
 
             <button
               className={styles.order__itemDelete}
@@ -68,7 +68,7 @@ export const ProductCardForOrder: FC<IProductCardProps> = ({ product }) => {
           <div className={styles.order__itemImage}>
             <img
               src={product.images[0].link}
-              alt={product.title}
+              alt={product.name}
               width={100}
               height={100}
             />
@@ -76,7 +76,7 @@ export const ProductCardForOrder: FC<IProductCardProps> = ({ product }) => {
 
           <div className={styles.order__itemContent}>
             <div className={styles.order__itemHeader}>
-              <h4 className={styles.order__itemTitle}>{product.title}</h4>
+              <h4 className={styles.order__itemTitle}>{product.name}</h4>
 
               <button
                 className={styles.order__itemDelete}

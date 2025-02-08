@@ -29,12 +29,12 @@ class ProductsApi implements IProductsApi {
     });
   }
 
-  async getPaginatedProducts(page: number,
+  async getPaginatedProducts(categoryId: number | null, page: number,
     size: number): Promise<ProductsResponseDto> {
     return request({
       method: HttpMethod.GET,
       url: ApiEndpoint.PRODUCTS,
-      query: { page, size },
+      query: { categoryId, page, size },
     });
   }
 
