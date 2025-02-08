@@ -53,8 +53,12 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
       ? 10
       : classname === 'photos-carousel'
         ? productImageCards?.length
-        : 8;
+        : classname === 'basket-popup-carousel'
+          ? 9
+          : 8;
   const maxIndex = (totalItems ?? 0) - responsiveCarouselSettings.count;
+
+  console.log(currentIndex, maxIndex);
 
   const handleNext = () => {
     if (currentIndex < maxIndex) {

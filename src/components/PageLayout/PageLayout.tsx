@@ -8,6 +8,7 @@ import { SortingDesk } from '@/components/Sort/SortingDesk';
 import { Catalog } from '@/components/Catalog/Catalog';
 
 import styles from './page-layout.module.scss';
+import { CustomBreadcrumbs } from '../SingleProduct/CustomBreadcrumbs';
 
 interface IPageLayoutProps {
   products: IProductCard[];
@@ -38,6 +39,8 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
     category = pathname;
   }
 
+  console.log(pathName);
+
   return (
     <div className={styles.pageLayout}>
       <div className={styles.pageLayout_mobile}>
@@ -61,13 +64,15 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
       </div>
 
       <div className={styles.pageLayout_tablet}>
-        <div className={`container ${styles.pageLayout__container}`}>
-          <div className={styles.pageLayout__wrapper}>
-            <h2 className={styles.pageLayout__title}>{category}</h2>
-            <Filters />
-          </div>
+        <div className="container">
+          <div className={styles.pageLayout__container}>
+            <CustomBreadcrumbs />
+            <div className={styles.pageLayout__wrapper}>
+              <h2 className={styles.pageLayout__title}>{category}</h2>
+              <Filters />
+            </div>
 
-          {products.length > 0 ? (
+             {products.length > 0 ? (
             <Catalog
               data={products}
               totalPages={totalPages}
@@ -76,10 +81,17 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
           ) : (
             <div>Products not found</div>
           )}
+          </div>
         </div>
       </div>
 
       <div className={styles.pageLayout_desk}>
+        {pathName !== '/search/' && (
+          <div className="container">
+            <CustomBreadcrumbs />
+          </div>
+        )}
+
         <div className={styles.pageLayout__header}>
           <div className="container">
             <div className={styles.pageLayout__wrapper}>
@@ -89,7 +101,7 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
           </div>
         </div>
 
-        <div className={`container ${styles.pageLayout__container}`}>
+        <div className="container">
           <div className={styles.pageLayout__content}>
             <FiltersDesk />
 

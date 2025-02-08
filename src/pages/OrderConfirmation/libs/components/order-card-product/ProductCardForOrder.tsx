@@ -47,13 +47,15 @@ export const ProductCardForOrder: FC<IProductCardProps> = ({ product }) => {
 
           <div className={styles.order__itemFooter}>
             <div className={styles.order__itemQuantity}>
-              <button onClick={() => decreaseItemQuantity(product.id)}>
-                -
-              </button>
+              <button
+                className={styles.order__itemQuantityButton_minus}
+                onClick={() => decreaseItemQuantity(product.id)}
+              ></button>
               <p>{product.quantity}</p>
-              <button onClick={() => increaseItemQuantity(product.id)}>
-                +
-              </button>
+              <button
+                className={styles.order__itemQuantityButton_plus}
+                onClick={() => increaseItemQuantity(product.id)}
+              ></button>
             </div>
 
             <p className={styles.order__itemPrice}>
@@ -98,15 +100,17 @@ export const ProductCardForOrder: FC<IProductCardProps> = ({ product }) => {
         <div className={styles.order__itemButtons}>
           <div className={styles.order__itemQuantity}>
             <div className={styles.order__itemQuantityBtn}>
-              <button onClick={() => decreaseItemQuantity(product.id)}>
-                -
-              </button>
+              <button
+                className={styles.order__itemQuantityButton_minus}
+                onClick={() => decreaseItemQuantity(product.id)}
+              ></button>
             </div>
             <p>{product.quantity}</p>
             <div className={styles.order__itemQuantityBtn}>
-              <button onClick={() => increaseItemQuantity(product.id)}>
-                +
-              </button>
+              <button
+                className={styles.order__itemQuantityButton_plus}
+                onClick={() => increaseItemQuantity(product.id)}
+              ></button>
             </div>
           </div>
 
