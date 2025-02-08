@@ -18,10 +18,11 @@ export const CourierFields: FC = () => {
         label="House number*"
         placeholder="House number*"
       />
+
       <FormInput<DeliveryFormDto>
         name="flat"
-        label="Flat number*"
-        placeholder="Flat number*"
+        label="Flat number"
+        placeholder="Flat number"
       />
     </div>
   ) : null;

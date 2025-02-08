@@ -63,18 +63,22 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
       </div>
 
       <div className={styles.pageLayout_tablet}>
-        <div className={`container ${styles.pageLayout__container}`}>
-          <div className={styles.pageLayout__wrapper}>
-            <h2 className={styles.pageLayout__title}>{category}</h2>
-            <Filters />
-          </div>
+        <div className="container">
+          <div className={styles.pageLayout__container}>
+            <CustomBreadcrumbs />
 
-          <Catalog
-            data={page}
-            totalElements={totalElements}
-            totalPages={totalPages}
-            page={currentPage}
-          />
+            <div className={styles.pageLayout__wrapper}>
+              <h2 className={styles.pageLayout__title}>{category}</h2>
+              <Filters />
+            </div>
+
+            <Catalog
+              data={page}
+              totalElements={totalElements}
+              totalPages={totalPages}
+              page={currentPage}
+            />
+          </div>
         </div>
       </div>
 
@@ -84,6 +88,7 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
             <CustomBreadcrumbs />
           </div>
         )}
+
         <div className={styles.pageLayout__header}>
           <div className="container">
             <div className={styles.pageLayout__wrapper}>
@@ -93,7 +98,7 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
           </div>
         </div>
 
-        <div className={`container ${styles.pageLayout__container}`}>
+        <div className="container">
           <div className={styles.pageLayout__content}>
             <FiltersDesk />
 
