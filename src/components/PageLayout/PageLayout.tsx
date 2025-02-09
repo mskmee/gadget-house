@@ -1,27 +1,25 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { ProductItem } from '@/utils/packages/products';
+
+import { IProductCard } from '@/interfaces/interfaces';
 import { FiltersDesk } from '@/components/Filters/FiltersDesk';
 import { Filters } from '@/components/Filters/Filters';
 import { SortingDesk } from '@/components/Sort/SortingDesk';
 import { Catalog } from '@/components/Catalog/Catalog';
+
 import styles from './page-layout.module.scss';
 import { CustomBreadcrumbs } from '../SingleProduct/CustomBreadcrumbs';
 
 interface IPageLayoutProps {
-  page: ProductItem[];
-  totalElements: number;
-  currentPage: number;
+  products: IProductCard[];
   totalPages: number;
-  minPrice?: number | null;
-  maxPrice?: number | null;
+  categoryId?: number | null;
 }
 
 export const PageLayout: React.FC<IPageLayoutProps> = ({
-  page,
-  totalElements,
+  products,
   totalPages,
-  currentPage,
+  categoryId,
 }) => {
   const { pathname: pathName, state } = useLocation();
   const { searchInputValue, isSuggestion } = state ? state : {};
@@ -41,8 +39,6 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
     category = pathname;
   }
 
-  console.log(pathName);
-
   return (
     <div className={styles.pageLayout}>
       <div className={styles.pageLayout_mobile}>
@@ -53,12 +49,15 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
 
           <Filters />
 
-          <Catalog
-            data={page}
-            totalElements={totalElements}
-            totalPages={totalPages}
-            page={currentPage}
-          />
+          {products.length > 0 ? (
+            <Catalog
+              data={products}
+              totalPages={totalPages}
+              categoryId={categoryId}
+            />
+          ) : (
+            <div>Products not found</div>
+          )}
         </div>
       </div>
 
@@ -66,18 +65,20 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
         <div className="container">
           <div className={styles.pageLayout__container}>
             <CustomBreadcrumbs />
-
             <div className={styles.pageLayout__wrapper}>
               <h2 className={styles.pageLayout__title}>{category}</h2>
               <Filters />
             </div>
 
-            <Catalog
-              data={page}
-              totalElements={totalElements}
-              totalPages={totalPages}
-              page={currentPage}
-            />
+            {products.length > 0 ? (
+              <Catalog
+                data={products}
+                totalPages={totalPages}
+                categoryId={categoryId}
+              />
+            ) : (
+              <div>Products not found</div>
+            )}
           </div>
         </div>
       </div>
@@ -102,12 +103,11 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
           <div className={styles.pageLayout__content}>
             <FiltersDesk />
 
-            {totalElements > 0 ? (
+            {products.length > 0 ? (
               <Catalog
-                data={page}
-                totalElements={totalElements}
+                data={products}
                 totalPages={totalPages}
-                page={currentPage}
+                categoryId={categoryId}
               />
             ) : (
               <div>Products not found</div>

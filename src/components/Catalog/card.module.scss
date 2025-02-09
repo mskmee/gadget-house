@@ -1,4 +1,6 @@
 .cardConatiner {
+  width: 305px;
+  // height: 256px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -38,10 +40,16 @@
 .cardImage {
   flex-grow: 1;
   align-self: flex-start;
+  position: relative;
 
   > img {
+    width: 305px;
+    height: 256px;
     display: block;
-    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    // height: 100%;
     margin: 0 auto;
   }
 }
