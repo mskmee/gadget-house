@@ -39,8 +39,6 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
     category = pathname;
   }
 
-  console.log(pathName);
-
   return (
     <div className={styles.pageLayout}>
       <div className={styles.pageLayout_mobile}>
@@ -72,15 +70,15 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
               <Filters />
             </div>
 
-             {products.length > 0 ? (
-            <Catalog
-              data={products}
-              totalPages={totalPages}
-              categoryId={categoryId}
-            />
-          ) : (
-            <div>Products not found</div>
-          )}
+            {products.length > 0 ? (
+              <Catalog
+                data={products}
+                totalPages={totalPages}
+                categoryId={categoryId}
+              />
+            ) : (
+              <div>Products not found</div>
+            )}
           </div>
         </div>
       </div>

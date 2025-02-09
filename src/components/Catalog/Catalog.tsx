@@ -48,7 +48,7 @@ export const Catalog: FC<ICatalogProps> = ({
         setHasMore(false);
       }
     });
-  }, [categoryId, dispatch, isMobile680px, pagination.currentPage]);
+  }, [categoryId, pagination.currentPage]);
 
   const loadMore = () => {
     if (hasMore) {
@@ -82,7 +82,7 @@ export const Catalog: FC<ICatalogProps> = ({
         observer.unobserve(observerRef.current);
       }
     };
-  }, [hasMore, isMobile680px]);
+  }, [hasMore]);
 
   return (
     <div className={styles.catalog}>
