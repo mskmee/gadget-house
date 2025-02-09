@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { DEFAULT_PAGE, DEFAULT_SIZE } from '@/constants/pagination';
 import { AppDispatch, RootState } from '@/store';
-import { getCategoryProducts } from '@/store/products/actions';
-import { PageLayout } from '@/components/PageLayout/PageLayout';
+import { getByCategory } from '@/store/products/actions';
 import { Category } from '@/enums/category';
+import { PageLayout } from '@/components/PageLayout/PageLayout';
 
 export default function Smartphones() {
   const dispatch: AppDispatch = useDispatch();
@@ -12,22 +13,19 @@ export default function Smartphones() {
 
   useEffect(() => {
     dispatch(
-      getCategoryProducts({
-        name: 'smartphones',
+      getByCategory({
         categoryId: Category.PHONES,
-        price: { from: 0, to: 100000 },
-        brandIds: [1, 2],
-        attributeValueIds: [],
+        page: DEFAULT_PAGE,
+        size: DEFAULT_SIZE,
       }),
     );
   }, [dispatch]);
 
   return (
     <PageLayout
-      page={productsData?.page || []}
-      totalElements={productsData?.totalElements || 0}
+      products={productsData?.page || []}
       totalPages={productsData?.totalPages || 0}
-      currentPage={productsData?.currentPage || 0}
+      categoryId={Category.PHONES}
     />
   );
 }

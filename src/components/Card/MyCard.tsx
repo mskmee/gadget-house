@@ -95,7 +95,7 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
           <div></div>
         </div>
         <div className={styles.cardContainerBottom}>
-          <h3>{product.title}</h3>
+          <h3>{product.name}</h3>
           <div className={styles.cardRate}>
             <Rate
               className="reviews_rate-stars"
