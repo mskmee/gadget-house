@@ -30,9 +30,11 @@ class ProductsApi implements IProductsApi {
     });
   }
 
-  async getPaginatedProducts(page: number,
+  async getPaginatedProducts(
+    page: number,
     size: number = 10,
-    sort: string[] = []): Promise<PaginatedProductsResponseDto> {
+    sort: string[] = [],
+  ): Promise<PaginatedProductsResponseDto> {
     return request({
       method: HttpMethod.GET,
       url: `${ApiEndpoint.PRODUCTS}`,
@@ -40,11 +42,13 @@ class ProductsApi implements IProductsApi {
     });
   }
 
-  async getCategoryProducts(name: string,
+  async getCategoryProducts(
+    name: string,
     categoryId: number,
     brandIds: number[] = [],
     price: PriceDTO = { from: 0, to: Infinity },
-    attributeValueIds: number[] = []): Promise<CategoryProductsResponseDto> {
+    attributeValueIds: number[] = [],
+  ): Promise<CategoryProductsResponseDto> {
     return request({
       method: HttpMethod.GET,
       url: `${ApiEndpoint.PRODUCTS}`,

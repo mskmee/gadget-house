@@ -9,14 +9,11 @@ import { useEffect, RefObject } from 'react';
 const useClickAway = (ref: RefObject<HTMLElement>, onClickAway: () => void) => {
   useEffect(() => {
     // Function to handle click events
-    const handleClickOutside = (event: MouseEvent ) => {
+    const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
 
       // Check if the click is outside the referenced element
-      if (
-        target.id !== 'header-logo' &&
-        target.id !== 'catalog-list'
-      ) {
+      if (target.id !== 'header-logo' && target.id !== 'catalog-list') {
         onClickAway();
       }
     };

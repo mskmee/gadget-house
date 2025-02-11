@@ -223,20 +223,4 @@
       margin-right: 5px;
     }
   }
-
-  &__error {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    margin-top: 9px;
-    font-family: "Inter", sans-serif;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 150%;
-    color: var(--error-color);
-
-    svg {
-      display: inline-block;
-    }
-  }
 }

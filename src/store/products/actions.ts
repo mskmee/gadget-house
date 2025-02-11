@@ -19,7 +19,7 @@ const getPaginatedProducts = createAsyncThunk(
   async (params: { page: number; size?: number; sort?: string[] }) => {
     const { page, size = 10, sort = [] } = params;
     return await productsService.getPaginatedProducts(page, size, sort);
-  }
+  },
 );
 
 const getCategoryProducts = createAsyncThunk(
@@ -31,15 +31,26 @@ const getCategoryProducts = createAsyncThunk(
     price?: PriceDTO;
     attributeValueIds?: number[];
   }) => {
-    const { name = '', categoryId, brandIds = [], price = { from: 0, to: 100000 }, attributeValueIds = [] } = params;
+    const {
+      name = '',
+      categoryId,
+      brandIds = [],
+      price = { from: 0, to: 100000 },
+      attributeValueIds = [],
+    } = params;
     return await productsService.getCategoryProducts(
       name,
       categoryId,
       brandIds,
       price,
-      attributeValueIds
+      attributeValueIds,
     );
-  }
+  },
 );
 
-export { getAllProducts, getOneProductById, getPaginatedProducts, getCategoryProducts };
+export {
+  getAllProducts,
+  getOneProductById,
+  getPaginatedProducts,
+  getCategoryProducts,
+};

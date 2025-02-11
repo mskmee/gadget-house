@@ -1,6 +1,4 @@
-
 export const checkKeydownEvent = (key: string): boolean => {
-
   return (
     /^\d$/.test(key) ||
     key === 'Backspace' ||

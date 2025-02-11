@@ -1,8 +1,8 @@
 .overlay {
   position: fixed;
-  top: 0;
-  bottom: 0;
-  left: -5000px;
+  left: 0;
+  right: 0;
+  top: -5000px;
   z-index: 1500;
   z-index: 1000;
   display: flex;
@@ -14,8 +14,8 @@
 }
 
 .opened {
-  right: 0;
-  left: 0;
+  top: 0;
+  bottom: 0;
 }
 
 .content {
@@ -67,6 +67,9 @@
 }
 
 .authModal {
+  background: rgba(28, 24, 23, 0.7);
+  backdrop-filter: none;
+
   .content {
     max-width: 452px;
     height: auto;

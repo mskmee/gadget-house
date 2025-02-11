@@ -62,6 +62,11 @@
       opacity: 1;
     }
 
+    input[type="password"]:focus ~ .formInput__label {
+      display: block;
+      opacity: 1;
+    }
+
     textarea:focus + .formInput__label {
       display: block;
       opacity: 1;
@@ -85,17 +90,39 @@
     }
   }
 
-  &__inputWrapper {
-    position: relative;
-  }
-
   &__passwordToggle {
     position: absolute;
     width: 14px;
     height: 15px;
-    top: 50%;
+    top: 30px;
     right: 31px;
     transform: translateY(-50%);
+  }
+
+  &__passwordStrength {
+    margin-top: 6px;
+    font-family: Inter, sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 150%;
+    color: var(--secondary-text-color);
+    transition: all 0.3s ease;
+
+    &_weak {
+      color: red;
+    }
+    
+    &_medium {
+      color: orange;
+    }
+    
+    &_strong {
+      color: yellowgreen;
+    }
+    
+    &_veryStrong {
+      color: green;
+    }
   }
 
   &__error {

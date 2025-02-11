@@ -224,5 +224,5 @@ export {
   deleteFromBasketPopupIcon,
   inBasket,
   ShowPassword,
-  InvisiblePassword
+  InvisiblePassword,
 };

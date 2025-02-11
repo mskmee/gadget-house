@@ -24,12 +24,28 @@ class ProductsService implements IProductsService {
     return this.productsApi.delete(id);
   }
 
-  async getPaginatedProducts(page: number, size: number, sort: string[]): Promise<PaginatedProductsResponseDto> {
+  async getPaginatedProducts(
+    page: number,
+    size: number,
+    sort: string[],
+  ): Promise<PaginatedProductsResponseDto> {
     return this.productsApi.getPaginatedProducts(page, size, sort);
   }
 
-  async getCategoryProducts(name: string, categoryId: number, brandIds: number[], price: { from: number; to: number }, attributeValueIds: number[]): Promise<CategoryProductsResponseDto> {
-    return this.productsApi.getCategoryProducts(name, categoryId, brandIds, price, attributeValueIds);
+  async getCategoryProducts(
+    name: string,
+    categoryId: number,
+    brandIds: number[],
+    price: { from: number; to: number },
+    attributeValueIds: number[],
+  ): Promise<CategoryProductsResponseDto> {
+    return this.productsApi.getCategoryProducts(
+      name,
+      categoryId,
+      brandIds,
+      price,
+      attributeValueIds,
+    );
   }
 }
 

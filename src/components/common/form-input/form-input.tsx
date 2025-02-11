@@ -3,10 +3,12 @@ import { Input, InputProps } from 'antd';
 import { TextAreaProps } from 'antd/es/input';
 import { useId, useState } from 'react';
 import cn from 'classnames';
+import zxcvbn from 'zxcvbn';
 
 import { ErrorIcon, ShowPassword, InvisiblePassword } from '@/assets/constants';
 
 import styles from './form-input.module.scss';
+import { getStrengthPassword } from '@/utils/helpers/password';
 
 type InputType = 'input' | 'textarea';
 
@@ -31,6 +33,8 @@ export const FormInput = <T extends FormikValues>({
   const inputId = props.id ?? id;
   const isError = meta.touched && meta.error;
 
+  const password = field.value || '';
+  const strength = zxcvbn(password).score;
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const togglePasswordVisibility = () =>
     setIsPasswordVisible(!isPasswordVisible);
@@ -51,7 +55,7 @@ export const FormInput = <T extends FormikValues>({
         label && (
           <label className={cn(styles.formInput__input)} htmlFor={inputId}>
             {inputType === 'input' ? (
-              <div className={styles.formInput__inputWrapper}>
+              <>
                 <Input
                   {...field}
                   {...(props as InputProps)}
@@ -81,7 +85,26 @@ export const FormInput = <T extends FormikValues>({
                     )}
                   </button>
                 )}
-              </div>
+
+                {type === 'password' && password && (
+                  <p
+                    className={cn(
+                      styles.formInput__passwordStrength,
+                      strength === 0
+                        ? styles.formInput__passwordStrength_weak
+                        : strength === 1
+                          ? styles.formInput__passwordStrength_weak
+                          : strength === 2
+                            ? styles.formInput__passwordStrength_medium
+                            : strength === 3
+                              ? styles.formInput__passwordStrength_strong
+                              : styles.formInput__passwordStrength_veryStrong,
+                    )}
+                  >
+                    {getStrengthPassword(strength)}
+                  </p>
+                )}
+              </>
             ) : (
               <Input.TextArea
                 {...field}
@@ -97,6 +120,7 @@ export const FormInput = <T extends FormikValues>({
                 {meta.error}
               </div>
             ) : null}
+
             <span className={styles.formInput__label}>{label}</span>
           </label>
         )

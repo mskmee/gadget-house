@@ -37,13 +37,13 @@ const RegisterForm: FC<IRegisterFormProps> = ({
           <div className={styles.form__inputs} style={{ marginBottom: '24px' }}>
             <div className={styles.form__inputsName}>
               <FormInput<RegisterFormDto>
-                name="name"
+                name="firstName"
                 type="text"
                 label="Name"
                 placeholder="Name"
               />
               <FormInput<RegisterFormDto>
-                name="surname"
+                name="lastName"
                 type="text"
                 label="Surname"
                 placeholder="Surname"

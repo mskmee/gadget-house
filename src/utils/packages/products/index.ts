@@ -11,5 +11,5 @@ export type {
   ProductsResponseDto,
   ProductItemResponseDto,
   PaginatedProductsResponseDto,
-  CategoryProductsResponseDto
+  CategoryProductsResponseDto,
 } from './libs/types/types';

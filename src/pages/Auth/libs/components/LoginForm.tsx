@@ -30,8 +30,6 @@ const LoginForm: FC<ILoginFormProps> = ({
         validateOnChange={false}
         validationSchema={loginFormValidationSchema}
         onSubmit={(values) => {
-          console.log(values);
-
           onLogin(values);
         }}
       >

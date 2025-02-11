@@ -48,30 +48,30 @@ type State = {
 
 type ReducerAction =
   | {
-    type: OrderConfirmationAction.SUBMIT_CONTACT_FORM;
-    payload: ContactsFormDto;
-  }
+      type: OrderConfirmationAction.SUBMIT_CONTACT_FORM;
+      payload: ContactsFormDto;
+    }
   | {
-    type: OrderConfirmationAction.SUBMIT_DELIVERY_FORM;
-    payload: DeliveryFormDto;
-  }
+      type: OrderConfirmationAction.SUBMIT_DELIVERY_FORM;
+      payload: DeliveryFormDto;
+    }
   | {
-    type: OrderConfirmationAction.SUBMIT_PAYMENT_FORM;
-    payload: PaymentFormDto;
-  }
+      type: OrderConfirmationAction.SUBMIT_PAYMENT_FORM;
+      payload: PaymentFormDto;
+    }
   | {
-    type: OrderConfirmationAction.RESET_ORDER_PROCESS;
-  }
+      type: OrderConfirmationAction.RESET_ORDER_PROCESS;
+    }
   | {
-    type: OrderConfirmationAction.TOGGLE_RULES;
-  }
+      type: OrderConfirmationAction.TOGGLE_RULES;
+    }
   | {
-    type: OrderConfirmationAction.ORDER_READY;
-  }
+      type: OrderConfirmationAction.ORDER_READY;
+    }
   | {
-    type: OrderConfirmationAction.CONFIRM_ORDER;
-    payload: { orderId: number };
-  };
+      type: OrderConfirmationAction.CONFIRM_ORDER;
+      payload: { orderId: number };
+    };
 
 const INITIAL_STATE: State = {
   acceptWithRules: false,
@@ -141,9 +141,7 @@ const useOrderConfirmation = (): Return => {
   const navigate = useNavigate();
   const dispatchApp: AppDispatch = useDispatch();
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
-  const { products } = useTypedSelector(
-    (state) => state.shopping_card,
-  );
+  const { products } = useTypedSelector((state) => state.shopping_card);
   const onContactsFormSubmit = (contactsFormValue: ContactsFormDto) =>
     dispatch({
       type: OrderConfirmationAction.SUBMIT_CONTACT_FORM,
@@ -189,7 +187,10 @@ const useOrderConfirmation = (): Return => {
     const result = await dispatchApp(createOrder(orderData)).unwrap();
     const orderId = result;
 
-    dispatch({ type: OrderConfirmationAction.CONFIRM_ORDER, payload: { orderId } });
+    dispatch({
+      type: OrderConfirmationAction.CONFIRM_ORDER,
+      payload: { orderId },
+    });
     navigate(`/order-success/${orderId}`);
     dispatch({ type: OrderConfirmationAction.RESET_ORDER_PROCESS });
   };

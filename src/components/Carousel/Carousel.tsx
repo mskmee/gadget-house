@@ -58,8 +58,6 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
           : 8;
   const maxIndex = (totalItems ?? 0) - responsiveCarouselSettings.count;
 
-  console.log(currentIndex, maxIndex);
-
   const handleNext = () => {
     if (currentIndex < maxIndex) {
       setAnimation(true);

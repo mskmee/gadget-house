@@ -48,28 +48,34 @@ const products_slice = createSlice({
     });
 
     builder.addMatcher(
-      isAnyOf(getAllProducts.fulfilled,
+      isAnyOf(
+        getAllProducts.fulfilled,
         getOneProductById.fulfilled,
         getPaginatedProducts.fulfilled,
-        getCategoryProducts.fulfilled),
+        getCategoryProducts.fulfilled,
+      ),
       (state) => {
         state.dataStatus = DataStatus.FULFILLED;
       },
     );
     builder.addMatcher(
-      isAnyOf(getAllProducts.rejected,
+      isAnyOf(
+        getAllProducts.rejected,
         getOneProductById.rejected,
         getPaginatedProducts.rejected,
-        getCategoryProducts.rejected),
+        getCategoryProducts.rejected,
+      ),
       (state) => {
         state.dataStatus = DataStatus.REJECT;
       },
     );
     builder.addMatcher(
-      isAnyOf(getAllProducts.pending,
+      isAnyOf(
+        getAllProducts.pending,
         getOneProductById.pending,
         getPaginatedProducts.pending,
-        getCategoryProducts.pending),
+        getCategoryProducts.pending,
+      ),
       (state) => {
         state.dataStatus = DataStatus.PENDING;
       },

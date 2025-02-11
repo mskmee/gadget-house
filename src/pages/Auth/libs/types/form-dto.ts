@@ -4,12 +4,12 @@ type LoginFormDto = {
 };
 
 type RegisterFormDto = {
-  name: string;
-  surname: string;
+  firstName: string;
+  lastName: string;
   email: string;
   phoneNumber: string;
   password: string;
-  passwordRepeat: string;
+  passwordRepeat?: string;
 };
 
 type ForgotFormDto = {
@@ -18,6 +18,6 @@ type ForgotFormDto = {
   passwordRepeat?: string;
 };
 
-type FormType = "login" | "register" | "forgot";
+type FormType = 'login' | 'register' | 'forgot';
 
 export type { LoginFormDto, RegisterFormDto, ForgotFormDto, FormType };

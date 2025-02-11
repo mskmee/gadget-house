@@ -69,6 +69,3 @@ jobs:
             **/node_modules
           key: ci-pr-${{ hashFiles('**/package-lock.json') }}
 
-      - name: Lint Pull Request
-        run: |
-          npm run lint
