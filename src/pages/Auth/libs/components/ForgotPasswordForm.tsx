@@ -28,6 +28,8 @@ const ForgotPasswordForm: FC<IForgotPasswordFormProps> = ({
         validateOnChange={false}
         validationSchema={forgotFormValidationSchema}
         onSubmit={(values) => {
+          console.log(values);
+
           onReset(values);
         }}
       >
