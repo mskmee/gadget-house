@@ -40,7 +40,7 @@ export type ProductImageCard = {
 
 export interface IProductCard {
   id: number;
-  title: string;
+  name: string;
   href?: string;
   images: ProductImageCard[];
   rate: number;

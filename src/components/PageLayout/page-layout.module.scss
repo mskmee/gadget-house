@@ -34,7 +34,9 @@
   }
 
   &__container {
-    padding: 0 0px !important;
+    @media screen and (min-width: 1440px) {
+      padding: 0 0px !important;
+    }
   }
 
   &__header {

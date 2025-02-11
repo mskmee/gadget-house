@@ -26,7 +26,7 @@ export default function BasketPopup() {
 
   if (!selectedProduct) return null;
 
-  const { id, title, code, images, quantity, totalPrice } = selectedProduct;
+  const { id, name, code, images, quantity, totalPrice } = selectedProduct;
 
   return (
     <div className={styles.basketPopup}>
@@ -38,7 +38,7 @@ export default function BasketPopup() {
       </button>
       <div className={styles.basketPopupProduct}>
         <div className={styles.basketPopupImg}>
-          <img src={images?.[0].link} alt={title} />
+          <img src={images?.[0].link} alt={name} />
           <img
             className={styles.basketPopupAdded}
             src={inBasket}
@@ -46,7 +46,7 @@ export default function BasketPopup() {
           />
         </div>
         <div className={styles.basketPopupInfo}>
-          <p className={styles.basketPopupProductTitle}>{title}</p>
+          <p className={styles.basketPopupProductTitle}>{name}</p>
           <p className={styles.basketPopupProductCode}>code:{code}</p>
           <div className={styles.basketPopupProductTotals}>
             <div className={styles.basketPopupProductQuantity}>

@@ -11,7 +11,7 @@ interface IBasketItemProps {
   product: IShoppingCard;
 }
 export default function BasketItem({ product }: IBasketItemProps) {
-  const { id, title, code, images, quantity, totalPrice } = product;
+  const { id, name, code, images, quantity, totalPrice } = product;
   const { isLiked, handleClickLike } = useProductCardHandlers();
   const { deleteFromStore, increaseItemQuantity, decreaseItemQuantity } =
     useActions();
@@ -20,10 +20,10 @@ export default function BasketItem({ product }: IBasketItemProps) {
   return (
     <li className={styles.basketItem}>
       <div className={styles.productImg}>
-        <img src={images?.[0].link} alt={title} />
+        <img src={images?.[0].link} alt={name} />
       </div>
       <div className={styles.productInfo}>
-        <p className={styles.productTitle}>{title}</p>
+        <p className={styles.productTitle}>{name}</p>
         <p className={styles.productCode}>code:{code}</p>
         <span className={styles.productBottom}>
           <button onClick={() => deleteFromStore(id)}>

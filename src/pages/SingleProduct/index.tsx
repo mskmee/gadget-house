@@ -39,7 +39,7 @@ export const SingleProductPage: FC = () => {
     (item) => id && item.id === +id,
   );
 
-  useDocumentTitle(dinamicCurrentProduct?.title || 'Product');
+  useDocumentTitle(dinamicCurrentProduct?.name || 'Product');
 
   const isLargerThan992px = useMediaQuery({
     query: '(max-width: 992px)',
@@ -226,7 +226,7 @@ export const SingleProductPage: FC = () => {
           <div className={style['reviews_wrap']}>
             <h2>Reviews</h2>
             <h3>
-              Customer reviews about <span>{dinamicCurrentProduct?.title}</span>
+              Customer reviews about <span>{dinamicCurrentProduct?.name}</span>
             </h3>
             <div className={style['reviews_rate']}>
               <span>Rate:</span>

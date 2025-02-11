@@ -1,24 +1,26 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { AppDispatch, RootState } from '@/store';
 import { getAllProducts } from '@/store/products/actions';
 import { PageLayout } from '@/components/PageLayout/PageLayout';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { DEFAULT_PAGE, DEFAULT_SIZE } from '@/constants/pagination';
 
 export default function AllProducts() {
   const dispatch: AppDispatch = useDispatch();
-  const { productsData } = useSelector((state: RootState) => state.products);
+  const { productsData } = useTypedSelector(
+    (state: RootState) => state.products,
+  );
 
   useEffect(() => {
-    dispatch(getAllProducts());
+    dispatch(getAllProducts({ page: DEFAULT_PAGE, size: DEFAULT_SIZE }));
   }, [dispatch]);
 
   return (
     <PageLayout
-      page={productsData?.page || []}
-      totalElements={productsData?.totalElements || 0}
-      totalPages={productsData?.totalPages || 1}
-      currentPage={productsData?.currentPage || 1}
+      products={productsData?.page || []}
+      totalPages={productsData?.totalPages || 0}
     />
   );
 }

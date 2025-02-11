@@ -44,7 +44,7 @@ import {
 export const smartphoneData = [
   {
     id: 1,
-    title: 'Apple iPhone 15 Pro Max 256Gb',
+    name: 'Apple iPhone 15 Pro Max 256Gb',
     href: 'apple-iphone-15-pro-max-256gb',
     category: 'smartphones',
     images: [
@@ -61,7 +61,7 @@ export const smartphoneData = [
   },
   {
     id: 2,
-    title: 'Samsung Galaxy A24 6/128Gb Black',
+    name: 'Samsung Galaxy A24 6/128Gb Black',
     href: 'Samsung-Galaxy-A24-6-128Gb-Black',
     category: 'smartphones',
     images: [
@@ -78,7 +78,7 @@ export const smartphoneData = [
   },
   {
     id: 3,
-    title: 'Samsung Galaxy S24 Ultra 12/512Gb',
+    name: 'Samsung Galaxy S24 Ultra 12/512Gb',
     href: 'samsung-galaxy-s24-ultra-12-512gb',
     category: 'smartphones',
     images: [
@@ -95,7 +95,7 @@ export const smartphoneData = [
   },
   {
     id: 4,
-    title: 'Apple iPhone 15 Pro 128 Gb Blue Titanium',
+    name: 'Apple iPhone 15 Pro 128 Gb Blue Titanium',
     href: 'apple-iphone-15-128gb-blue',
     category: 'smartphones',
     images: [
@@ -115,7 +115,7 @@ export const smartphoneData = [
 export const laptopData = [
   {
     id: 5,
-    title: 'Apple MacBook Air 13.6 M3 8GB 256GB',
+    name: 'Apple MacBook Air 13.6 M3 8GB 256GB',
     href: 'apple-macbook-air-13.6-m3-8gb-256gb',
     category: 'laptops',
     images: [
@@ -132,7 +132,7 @@ export const laptopData = [
   },
   {
     id: 6,
-    title: 'Lenovo IdeaPad 1 15ALC7',
+    name: 'Lenovo IdeaPad 1 15ALC7',
     href: 'lenovo-ideapad-1-15alc7',
     category: 'laptops',
     images: [
@@ -149,7 +149,7 @@ export const laptopData = [
   },
   {
     id: 7,
-    title: 'Asus TUF Gaming A15',
+    name: 'Asus TUF Gaming A15',
     href: 'asus-tuf-gaming-a15',
     category: 'laptops',
     images: [
@@ -166,7 +166,7 @@ export const laptopData = [
   },
   {
     id: 8,
-    title: 'Apple MacBook Air 15.3 M3 8GB 256GB',
+    name: 'Apple MacBook Air 15.3 M3 8GB 256GB',
     href: 'apple-macbook-air-15.3-m3-8gb-256gb',
     category: 'laptops',
     images: [
@@ -208,8 +208,8 @@ export const brandData = [
 export const productAccessoriesData = [
   {
     id: 1,
-    title: 'iPhone 15 Pro Silicone Case with MagSafe',
-    images: [{ link: accessoriesImg1, order: 0 }],
+    name: 'iPhone 15 Pro Silicone Case with MagSafe',
+    images: [{link: accessoriesImg1, order: 0}],
     anotherColors: [],
     isLiked: false,
     rate: 5,
@@ -219,8 +219,8 @@ export const productAccessoriesData = [
   },
   {
     id: 2,
-    title: 'iPhone 15 Pro Silicone Case with MagSafe',
-    images: [{ link: accessoriesImg2, order: 0 }],
+    name: 'iPhone 15 Pro Silicone Case with MagSafe',
+    images: [{link: accessoriesImg2, order: 0}],
     anotherColors: [],
     isLiked: false,
     rate: 5,
@@ -230,8 +230,8 @@ export const productAccessoriesData = [
   },
   {
     id: 3,
-    title: 'iPhone 15 Pro Silicone Case with MagSafe',
-    images: [{ link: accessoriesImg3, order: 0 }],
+    name: 'iPhone 15 Pro Silicone Case with MagSafe',
+    images: [{link: accessoriesImg3, order: 0}],
     anotherColors: ['#FFFF00', '#00820D', '#1C1817', '#FFCBDB', '#00BFFF'],
     isLiked: false,
     rate: 5,
@@ -241,8 +241,8 @@ export const productAccessoriesData = [
   },
   {
     id: 4,
-    title: 'iPhone 15 Pro Silicone Case with MagSafe',
-    images: [{ link: accessoriesImg4, order: 0 }],
+    name: 'iPhone 15 Pro Silicone Case with MagSafe',
+    images: [{link: accessoriesImg4, order: 0}],
     anotherColors: ['#ffffff', '#00BFFF', '#3EB489', '#FFCBDB', '#C8A2C8'],
     isLiked: false,
     rate: 5,
@@ -252,8 +252,8 @@ export const productAccessoriesData = [
   },
   {
     id: 5,
-    title: 'iPhone 15 Pro Silicone Case with MagSafe',
-    images: [{ link: accessoriesImg2, order: 0 }],
+    name: 'iPhone 15 Pro Silicone Case with MagSafe',
+    images: [{link: accessoriesImg2, order: 0}],
     anotherColors: ['#000', '#d84f34', '#236aed', '#FFCBDB', '#C8A2C8'],
     isLiked: false,
     rate: 3,
@@ -262,9 +262,8 @@ export const productAccessoriesData = [
     category: 'smartphones',
   },
   {
-    id: 6,
-    title: 'iPhone 15 Pro Silicone Case with MagSafe',
-    images: [{ link: accessoriesImg4, order: 0 }],
+    name: 'iPhone 15 Pro Silicone Case with MagSafe',
+    images: [{link: accessoriesImg4, order: 0}],
     anotherColors: [],
     isLiked: false,
     rate: 4,
@@ -277,7 +276,7 @@ export const productAccessoriesData = [
 export const previouslyReviewedData = [
   {
     id: 7,
-    title: 'Asus TUF Gaming A15',
+    name: 'Asus TUF Gaming A15',
     href: 'asus-tuf-gaming-a15',
     category: 'laptops',
     images: [
@@ -293,7 +292,7 @@ export const previouslyReviewedData = [
   },
   {
     id: 8,
-    title: 'Apple MacBook Air 15.3 M3 8GB 256GB',
+    name: 'Apple MacBook Air 15.3 M3 8GB 256GB',
     href: 'apple-macbook-air-15.3-m3-8gb-256gb',
     category: 'laptops',
     images: [
@@ -309,7 +308,7 @@ export const previouslyReviewedData = [
   },
   {
     id: 2,
-    title: 'Samsung Galaxy A24 6/128Gb Black',
+    name: 'Samsung Galaxy A24 6/128Gb Black',
     href: 'Samsung-Galaxy-A24-6-128Gb-Black',
     category: 'smartphones',
     images: [
@@ -326,7 +325,7 @@ export const previouslyReviewedData = [
   },
   {
     id: 4,
-    title: 'Apple iPhone 15 Pro 128 Gb Blue Titanium',
+    name: 'Apple iPhone 15 Pro 128 Gb Blue Titanium',
     href: 'apple-iphone-15-128gb-blue',
     category: 'smartphones',
     images: [
