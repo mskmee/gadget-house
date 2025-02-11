@@ -27,10 +27,9 @@ const ForgotPasswordForm: FC<IForgotPasswordFormProps> = ({
         validateOnBlur={false}
         validateOnChange={false}
         validationSchema={forgotFormValidationSchema}
-        onSubmit={(values) => {
-          console.log(values);
-
+        onSubmit={(values, { resetForm }) => {
           onReset(values);
+          resetForm();
         }}
       >
         <Form className={styles.form__form}>

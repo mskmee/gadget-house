@@ -29,8 +29,9 @@ const LoginForm: FC<ILoginFormProps> = ({
         validateOnBlur={false}
         validateOnChange={false}
         validationSchema={loginFormValidationSchema}
-        onSubmit={(values) => {
+        onSubmit={(values, { resetForm }) => {
           onLogin(values);
+          resetForm();
         }}
       >
         <Form className={styles.form__form}>

@@ -21,6 +21,7 @@ import {
   getCredentials,
 } from '@/store/auth/actions';
 import { SuccessType } from '../types/successType';
+import { LocalStorageKey, localStorageService } from '@/utils/packages/local-storage';
 
 type Return = {
   currentForm: FormType;
@@ -126,6 +127,8 @@ const useAuth = (): Return => {
 
     if (result.accessToken) {
       setSuccessType(FormEnum.LOGIN);
+      localStorageService.setItem(LocalStorageKey.ACCESS_TOKEN, result.accessToken);
+      localStorageService.setItem(LocalStorageKey.REFRESH_TOKEN, result.refreshToken);
     }
 
     dispatch({

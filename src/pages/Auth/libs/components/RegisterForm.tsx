@@ -20,6 +20,13 @@ const RegisterForm: FC<IRegisterFormProps> = ({
   onRegister,
   onSwitch,
 }) => {
+  const passwordRules = [
+    'Password length must be between 8 and 24 characters',
+    'Password must contain at least one digit',
+    'One lowercase and uppercase Latin character ',
+    'One special character',
+  ];
+
   return (
     <div className={styles.form}>
       <Formik<RegisterFormDto>
@@ -27,8 +34,9 @@ const RegisterForm: FC<IRegisterFormProps> = ({
         validateOnBlur={false}
         validateOnChange={false}
         validationSchema={registerFormValidationSchema}
-        onSubmit={(values) => {
+        onSubmit={(values, { resetForm }) => {
           onRegister(values);
+          resetForm();
         }}
       >
         <Form className={styles.form__form}>
@@ -70,6 +78,12 @@ const RegisterForm: FC<IRegisterFormProps> = ({
               label="Password"
               placeholder="Password"
             />
+
+            <ul className={styles.form__passwordRules}>
+              {passwordRules.map((rule) => (
+                <li key={rule}>{rule}</li>
+              ))}
+            </ul>
 
             <FormInput<RegisterFormDto>
               name="passwordRepeat"
