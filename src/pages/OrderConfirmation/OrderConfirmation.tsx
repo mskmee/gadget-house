@@ -20,15 +20,17 @@ const OrderConfirmation: FC = () => {
     orderProcessStage,
     onContactsFormSubmit,
     onDeliveryFormSubmit,
-    onPaymentFormSubmit,
     onResetOrderProcess,
+    onPaymentFormSubmit,
     contactsFormValue,
     deliveryFormValue,
     paymentFormValue,
-    onOrderConfirmed,
     isRulesAccepted,
+    onOrderConfirmed,
     isOrderReady,
     onToggleRules,
+    onEditForm,
+    isEditing,
   } = useOrderConfirmation();
 
   const navigate = useNavigate();
@@ -44,6 +46,8 @@ const OrderConfirmation: FC = () => {
     }
   }, [products, navigate]);
 
+  const isOrderButtonDisabled = !isOrderReady || !isRulesAccepted || isEditing;
+
   return (
     <section className={styles.order}>
       <div className={cn('container', styles.order__container)}>
@@ -55,18 +59,21 @@ const OrderConfirmation: FC = () => {
               stage={orderProcessStage}
               onSubmit={onContactsFormSubmit}
               initialValues={contactsFormValue}
+              onEditForm={onEditForm}
             />
 
             <DeliveryForm
               stage={orderProcessStage}
               onSubmit={onDeliveryFormSubmit}
               initialValues={deliveryFormValue}
+              onEditForm={onEditForm}
             />
 
             <PaymentForm
               stage={orderProcessStage}
               onSubmit={onPaymentFormSubmit}
               initialValues={paymentFormValue}
+              onEditForm={onEditForm}
             />
           </div>
 
@@ -124,7 +131,7 @@ const OrderConfirmation: FC = () => {
 
               <button
                 className={cn('button button-secondary')}
-                disabled={!isOrderReady || !isRulesAccepted}
+                disabled={isOrderButtonDisabled}
                 onClick={onOrderConfirmed}
               >
                 Confirm the order

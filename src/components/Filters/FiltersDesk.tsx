@@ -49,27 +49,27 @@ export const FiltersDesk = () => {
   };
 
   const handleMinPriceChange = (value: number | null) => {
-    if (value) {
+    if (value !== null && value <= maxPrice) {
       setMinPrice(value);
       setPriceRange([value, maxPrice]);
     }
   };
 
   const handleMaxPriceChange = (value: number | null) => {
-    if (value) {
+    if (value !== null && value >= minPrice) {
       setMaxPrice(value);
       setPriceRange([minPrice, value]);
     }
   };
 
   const handleMinMPChange = (value: number | null) => {
-    if (value) {
+    if (value !== null && value <= maxCameraMP) {
       setMinMP(value);
     }
   };
 
   const handleMaxMPChange = (value: number | null) => {
-    if (value) {
+    if (value !== null && value >= minCameraMP) {
       setMaxMP(value);
     }
   };
@@ -153,9 +153,9 @@ export const FiltersDesk = () => {
                   style={{
                     fontFamily: 'Inter, sans-serif',
                     width: '75px',
+                    height: '40px',
                     border: '1px solid #1c1817',
                     borderRadius: '10px',
-                    padding: '4px 0px',
                     backgroundColor: 'white',
                     fontSize: '16px',
                     color: '#1c1817',
@@ -168,7 +168,7 @@ export const FiltersDesk = () => {
               <Col span={11} style={{ paddingLeft: '0px' }}>
                 <span className={styles.filters__priceText}>To</span>
                 <InputNumber
-                  min={51}
+                  min={0}
                   max={100000}
                   maxLength={6}
                   value={maxPrice}
@@ -179,9 +179,9 @@ export const FiltersDesk = () => {
                   onKeyDown={handleKeyDown}
                   style={{
                     width: '75px',
+                    height: '40px',
                     border: '1px solid #1c1817',
                     borderRadius: '10px',
-                    padding: '4px 0px',
                     backgroundColor: 'white',
                     fontFamily: 'Inter, sans-serif',
                     fontSize: '16px',
@@ -266,7 +266,7 @@ export const FiltersDesk = () => {
                   <span className={styles.filters__priceText}>From</span>
                   <InputNumber
                     min={0}
-                    max={644}
+                    max={643}
                     maxLength={3}
                     value={minCameraMP}
                     defaultValue={0}
@@ -280,7 +280,6 @@ export const FiltersDesk = () => {
                       height: '40px',
                       border: '1px solid #1c1817',
                       borderRadius: '10px',
-                      padding: '1px 1px',
                       backgroundColor: 'white',
                       fontFamily: 'Inter, sans-serif',
                       fontSize: '16px',
@@ -307,7 +306,6 @@ export const FiltersDesk = () => {
                       height: '40px',
                       border: '1px solid #1c1817',
                       borderRadius: '10px',
-                      padding: '1px 1px',
                       backgroundColor: 'white',
                       fontFamily: 'Inter, sans-serif',
                       fontSize: '16px',

@@ -56,27 +56,27 @@ export const FiltersMobile = ({
   };
 
   const handleMinPriceChange = (value: number | null) => {
-    if (value) {
+    if (value !== null && value <= maxPrice) {
       setMinPrice(value);
       setPriceRange([value, maxPrice]);
     }
   };
 
   const handleMaxPriceChange = (value: number | null) => {
-    if (value) {
+    if (value !== null && value >= minPrice) {
       setMaxPrice(value);
       setPriceRange([minPrice, value]);
     }
   };
 
   const handleMinMPChange = (value: number | null) => {
-    if (value) {
+    if (value !== null && value <= maxCameraMP) {
       setMinMP(value);
     }
   };
 
   const handleMaxMPChange = (value: number | null) => {
-    if (value) {
+    if (value !== null && value >= minCameraMP) {
       setMaxMP(value);
     }
   };
@@ -190,7 +190,7 @@ export const FiltersMobile = ({
               <span className={styles.filters__priceText}>From</span>
               <InputNumber
                 type="number"
-                min={50}
+                min={0}
                 max={99999}
                 value={minPrice}
                 controls={false}
@@ -216,7 +216,7 @@ export const FiltersMobile = ({
               <span className={styles.filters__priceText}>To</span>
               <InputNumber
                 type="number"
-                min={51}
+                min={50}
                 max={100000}
                 value={maxPrice}
                 controls={false}
@@ -313,7 +313,7 @@ export const FiltersMobile = ({
                 <span className={styles.filters__priceText}>From</span>
                 <InputNumber
                   min={0}
-                  max={644}
+                  max={643}
                   value={minCameraMP}
                   defaultValue={0}
                   controls={false}

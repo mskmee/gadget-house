@@ -189,12 +189,15 @@
   }
 
   &__btn {
+    width: 110px !important;
+
     @media screen and (max-width: 680px) {
       width: 100% !important;
     }
   }
 
   &__buttonDone {
+    width: 110px !important;
     margin-top: 8px;
 
     @media screen and (max-width: 680px) {
