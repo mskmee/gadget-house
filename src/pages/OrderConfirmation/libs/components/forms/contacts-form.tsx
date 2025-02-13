@@ -96,7 +96,7 @@ export const ContactsForm: FC<Properties> = ({
                   />
                   <FormInput<ContactsFormDto>
                     name="phoneNumber"
-                    type="text"
+                    type="tel"
                     label="Phone number*"
                     placeholder="Phone number*"
                   />
