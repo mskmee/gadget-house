@@ -6,6 +6,7 @@ import cn from 'classnames';
 import { smartData } from './consts';
 import { checkKeydownEvent } from '@/utils/helpers/checkKeydownEvent';
 import { IFilterProps, IProduct } from '@/interfaces/interfaces';
+import { useRangeFilter } from './hooks/useRangeFilter';
 import { Header } from '../components';
 import { Option } from './Option';
 
@@ -24,10 +25,20 @@ export const FiltersMobile = ({
     Record<string, string[]>
   >({});
   const [priceRange, setPriceRange] = useState<number[]>([11770, 65500]);
-  const [minPrice, setMinPrice] = useState<number>(11770);
-  const [maxPrice, setMaxPrice] = useState<number>(65500);
-  const [minCameraMP, setMinMP] = useState<number>(0);
-  const [maxCameraMP, setMaxMP] = useState<number>(0);
+  const {
+    minValue: minPrice,
+    maxValue: maxPrice,
+    handleMinChange: handleMinPriceChange,
+    handleMaxChange: handleMaxPriceChange,
+  } = useRangeFilter(11000, 65500);
+
+  const {
+    minValue: minCameraMP,
+    maxValue: maxCameraMP,
+    handleMinChange: handleMinMPChange,
+    handleMaxChange: handleMaxMPChange,
+  } = useRangeFilter(0, 0);
+
   const [showCategory, setShowCategory] = useState(true);
 
   const toggleShowCategory = () => {
@@ -51,34 +62,8 @@ export const FiltersMobile = ({
 
   const handleSliderChange = (value: number[]) => {
     setPriceRange(value);
-    setMinPrice(value[0]);
-    setMaxPrice(value[1]);
-  };
-
-  const handleMinPriceChange = (value: number | null) => {
-    if (value !== null && value <= maxPrice) {
-      setMinPrice(value);
-      setPriceRange([value, maxPrice]);
-    }
-  };
-
-  const handleMaxPriceChange = (value: number | null) => {
-    if (value !== null && value >= minPrice) {
-      setMaxPrice(value);
-      setPriceRange([minPrice, value]);
-    }
-  };
-
-  const handleMinMPChange = (value: number | null) => {
-    if (value !== null && value <= maxCameraMP) {
-      setMinMP(value);
-    }
-  };
-
-  const handleMaxMPChange = (value: number | null) => {
-    if (value !== null && value >= minCameraMP) {
-      setMaxMP(value);
-    }
+    handleMinPriceChange(value[0]);
+    handleMaxPriceChange(value[1]);
   };
 
   const filteredProducts = useMemo(() => {
