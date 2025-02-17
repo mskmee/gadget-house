@@ -16,6 +16,8 @@ type Properties = {
   initialValues: PaymentFormDto;
   // eslint-disable-next-line no-unused-vars
   onSubmit: (dto: PaymentFormDto) => void;
+  // eslint-disable-next-line no-unused-vars
+  onEditForm: (stage: OrderStage) => void;
   stage: OrderStage;
 };
 
@@ -24,6 +26,7 @@ const LineValue = ({ value }: { value: string }) => <span>{value}</span>;
 export const PaymentForm: FC<Properties> = ({
   initialValues,
   onSubmit,
+  onEditForm,
   stage,
 }) => {
   const [isEditable, setIsEditable] = useState(false);
@@ -75,7 +78,7 @@ export const PaymentForm: FC<Properties> = ({
 
             {isActive || isEditable || !initialValues.paymentType ? null : (
               <button
-                onClick={() => setIsEditable(true)}
+                onClick={() => onEditForm(OrderStage.PAYMENT)}
                 className={styles.form__btnEdit}
                 type="button"
               >

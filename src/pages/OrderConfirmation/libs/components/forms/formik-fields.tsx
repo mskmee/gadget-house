@@ -12,7 +12,7 @@ export const CourierFields: FC = () => {
   const { values } = useFormikContext<DeliveryFormDto>();
 
   return values.deliveryType === DeliveryMethod.COURIER ? (
-    <div style={{ width: '100%', display: 'flex', gap: 24 }}>
+    <div className={styles.form__inputsDelivery}>
       <FormInput<DeliveryFormDto>
         name="houseNumber"
         label="House number*"

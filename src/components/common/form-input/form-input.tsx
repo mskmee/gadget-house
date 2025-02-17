@@ -81,8 +81,11 @@ export const FormInput = <T extends FormikValues>({
                 {meta.error}
               </div>
             ) : null}
-
-            <span className={styles.formInput__label}>{label}</span>
+            {type === 'tel' ? (
+              ''
+            ) : (
+              <span className={styles.formInput__label}>{label}</span>
+            )}
           </label>
         )
       )}

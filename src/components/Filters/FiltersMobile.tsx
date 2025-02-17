@@ -6,6 +6,7 @@ import cn from 'classnames';
 import { smartData } from './consts';
 import { checkKeydownEvent } from '@/utils/helpers/checkKeydownEvent';
 import { IFilterProps, IProduct } from '@/interfaces/interfaces';
+import { useRangeFilter } from './hooks/useRangeFilter';
 import { Header } from '../components';
 import { Option } from './Option';
 
@@ -24,10 +25,20 @@ export const FiltersMobile = ({
     Record<string, string[]>
   >({});
   const [priceRange, setPriceRange] = useState<number[]>([11770, 65500]);
-  const [minPrice, setMinPrice] = useState<number>(11770);
-  const [maxPrice, setMaxPrice] = useState<number>(65500);
-  const [minCameraMP, setMinMP] = useState<number>(0);
-  const [maxCameraMP, setMaxMP] = useState<number>(0);
+  const {
+    minValue: minPrice,
+    maxValue: maxPrice,
+    handleMinChange: handleMinPriceChange,
+    handleMaxChange: handleMaxPriceChange,
+  } = useRangeFilter(11000, 65500);
+
+  const {
+    minValue: minCameraMP,
+    maxValue: maxCameraMP,
+    handleMinChange: handleMinMPChange,
+    handleMaxChange: handleMaxMPChange,
+  } = useRangeFilter(0, 0);
+
   const [showCategory, setShowCategory] = useState(true);
 
   const toggleShowCategory = () => {
@@ -51,34 +62,8 @@ export const FiltersMobile = ({
 
   const handleSliderChange = (value: number[]) => {
     setPriceRange(value);
-    setMinPrice(value[0]);
-    setMaxPrice(value[1]);
-  };
-
-  const handleMinPriceChange = (value: number | null) => {
-    if (value) {
-      setMinPrice(value);
-      setPriceRange([value, maxPrice]);
-    }
-  };
-
-  const handleMaxPriceChange = (value: number | null) => {
-    if (value) {
-      setMaxPrice(value);
-      setPriceRange([minPrice, value]);
-    }
-  };
-
-  const handleMinMPChange = (value: number | null) => {
-    if (value) {
-      setMinMP(value);
-    }
-  };
-
-  const handleMaxMPChange = (value: number | null) => {
-    if (value) {
-      setMaxMP(value);
-    }
+    handleMinPriceChange(value[0]);
+    handleMaxPriceChange(value[1]);
   };
 
   const filteredProducts = useMemo(() => {
@@ -190,7 +175,7 @@ export const FiltersMobile = ({
               <span className={styles.filters__priceText}>From</span>
               <InputNumber
                 type="number"
-                min={50}
+                min={0}
                 max={99999}
                 value={minPrice}
                 controls={false}
@@ -216,7 +201,7 @@ export const FiltersMobile = ({
               <span className={styles.filters__priceText}>To</span>
               <InputNumber
                 type="number"
-                min={51}
+                min={50}
                 max={100000}
                 value={maxPrice}
                 controls={false}
@@ -313,7 +298,7 @@ export const FiltersMobile = ({
                 <span className={styles.filters__priceText}>From</span>
                 <InputNumber
                   min={0}
-                  max={644}
+                  max={643}
                   value={minCameraMP}
                   defaultValue={0}
                   controls={false}

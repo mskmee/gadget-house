@@ -82,6 +82,10 @@
       display: none;
     }
 
+    input[type="tel"] {
+      padding-left: 95px;
+    }
+
     :global {
       .ant-input-password {
         border-color: var(--secondary-text-color);
