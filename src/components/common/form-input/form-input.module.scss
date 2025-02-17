@@ -23,8 +23,8 @@
     position: relative;
 
     input,
-    textarea {
-      display: block;
+    textarea,
+    &Password {
       width: 100%;
       padding: 16px;
       border-radius: 12px;
@@ -57,12 +57,13 @@
       }
     }
 
-    input:focus + .formInput__label {
+    input:focus ~ .formInput__label {
       display: block;
       opacity: 1;
     }
 
-    input[type="password"]:focus ~ .formInput__label {
+    &Password:focus-visible + .formInput__label,
+    &Password:focus + .formInput__label {
       display: block;
       opacity: 1;
     }
@@ -82,10 +83,22 @@
     }
 
     :global {
-      .ant-input-outlined:hover {
+      .ant-input-password {
         border-color: var(--secondary-text-color);
         outline: none;
-        background-color: transparent;
+        box-shadow: none;
+
+        input {
+          border: none;
+          outline: none;
+        }
+      }
+      .ant-input-outlined {
+        &:hover {
+          border-color: var(--secondary-text-color);
+          outline: none;
+          background-color: transparent;
+        }
       }
     }
   }
@@ -111,15 +124,15 @@
     &_weak {
       color: red;
     }
-    
+
     &_medium {
       color: orange;
     }
-    
+
     &_strong {
       color: yellowgreen;
     }
-    
+
     &_veryStrong {
       color: green;
     }
@@ -137,4 +150,29 @@
     color: var(--error-color);
     transition: all 0.3s ease;
   }
+}
+
+.phoneInput {
+  display: flex;
+  align-items: center;
+  background: #6f4c9a;
+  border-radius: 6px;
+  padding: 4px;
+}
+
+.phonePrefix {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #fff;
+  padding: 0 8px;
+  font-size: 16px;
+}
+
+.flag {
+  font-size: 20px;
+}
+
+.prefix {
+  font-weight: bold;
 }

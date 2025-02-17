@@ -67,7 +67,7 @@ const RegisterForm: FC<IRegisterFormProps> = ({
 
             <FormInput<RegisterFormDto>
               name="phoneNumber"
-              type="text"
+              type="tel"
               label="Phone number"
               placeholder="Phone number"
             />

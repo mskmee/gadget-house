@@ -1,14 +1,14 @@
+import { useId } from 'react';
 import { useField, FormikValues } from 'formik';
 import { Input, InputProps } from 'antd';
 import { TextAreaProps } from 'antd/es/input';
-import { useId, useState } from 'react';
 import cn from 'classnames';
-import zxcvbn from 'zxcvbn';
 
-import { ErrorIcon, ShowPassword, InvisiblePassword } from '@/assets/constants';
+import { PasswordInput } from './password-input';
+import { PhoneInput } from './phone-input';
+import { ErrorIcon } from '@/assets/constants';
 
 import styles from './form-input.module.scss';
-import { getStrengthPassword } from '@/utils/helpers/password';
 
 type InputType = 'input' | 'textarea';
 
@@ -33,12 +33,6 @@ export const FormInput = <T extends FormikValues>({
   const inputId = props.id ?? id;
   const isError = meta.touched && meta.error;
 
-  const password = field.value || '';
-  const strength = zxcvbn(password).score;
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const togglePasswordVisibility = () =>
-    setIsPasswordVisible(!isPasswordVisible);
-
   return (
     <>
       {span ? (
@@ -55,56 +49,23 @@ export const FormInput = <T extends FormikValues>({
         label && (
           <label className={cn(styles.formInput__input)} htmlFor={inputId}>
             {inputType === 'input' ? (
-              <>
+              type === 'password' ? (
+                <PasswordInput
+                  className={styles.formInput__inputPassword}
+                  field={field}
+                  id={inputId}
+                  {...props}
+                />
+              ) : type === 'tel' ? (
+                <PhoneInput field={field} id={inputId} {...props} />
+              ) : (
                 <Input
                   {...field}
                   {...(props as InputProps)}
                   id={inputId}
-                  type={
-                    type === 'password'
-                      ? isPasswordVisible
-                        ? 'text'
-                        : 'password'
-                      : type
-                  }
                   status={isError ? 'error' : ''}
                 />
-                {type === 'password' && (
-                  <button
-                    type="button"
-                    onClick={togglePasswordVisibility}
-                    className={styles.formInput__passwordToggle}
-                  >
-                    {isPasswordVisible ? (
-                      <img src={ShowPassword} alt="Show password icon" />
-                    ) : (
-                      <img
-                        src={InvisiblePassword}
-                        alt="Invisible password icon"
-                      />
-                    )}
-                  </button>
-                )}
-
-                {type === 'password' && password && (
-                  <p
-                    className={cn(
-                      styles.formInput__passwordStrength,
-                      strength === 0
-                        ? styles.formInput__passwordStrength_weak
-                        : strength === 1
-                          ? styles.formInput__passwordStrength_weak
-                          : strength === 2
-                            ? styles.formInput__passwordStrength_medium
-                            : strength === 3
-                              ? styles.formInput__passwordStrength_strong
-                              : styles.formInput__passwordStrength_veryStrong,
-                    )}
-                  >
-                    {getStrengthPassword(strength)}
-                  </p>
-                )}
-              </>
+              )
             ) : (
               <Input.TextArea
                 {...field}
