@@ -30,6 +30,8 @@ type Return = {
   onResetOrderProcess: () => void;
   onOrderConfirmed: () => void;
   onToggleRules: () => void;
+  onEditForm: (stage: OrderStage) => void;
+  isEditing: boolean;
   isRulesAccepted: boolean;
   isOrderReady: boolean;
   orderId: number | null;
@@ -43,6 +45,7 @@ type State = {
   orderProcessStage: OrderStage;
   isRulesAccepted: boolean;
   isOrderReady: boolean;
+  isEditing: boolean;
   orderId: number | null;
 };
 
@@ -71,6 +74,9 @@ type ReducerAction =
   | {
     type: OrderConfirmationAction.CONFIRM_ORDER;
     payload: { orderId: number };
+  } | {
+    type: OrderConfirmationAction.EDIT_FORM;
+    payload: OrderStage;
   };
 
 const INITIAL_STATE: State = {
@@ -81,6 +87,7 @@ const INITIAL_STATE: State = {
   orderProcessStage: OrderStage.CONTACTS,
   isRulesAccepted: false,
   isOrderReady: false,
+  isEditing: false,
   orderId: null,
 };
 
@@ -91,6 +98,7 @@ const reducer: Reducer<State, ReducerAction> = (state, action) => {
         ...state,
         contactsFormValue: action.payload,
         orderProcessStage: OrderStage.DELIVERY,
+        isEditing: state.isEditing ? true : false,
       };
 
     case OrderConfirmationAction.SUBMIT_DELIVERY_FORM:
@@ -98,6 +106,7 @@ const reducer: Reducer<State, ReducerAction> = (state, action) => {
         ...state,
         deliveryFormValue: action.payload,
         orderProcessStage: OrderStage.PAYMENT,
+        isEditing: state.isEditing ? true : false,
       };
 
     case OrderConfirmationAction.SUBMIT_PAYMENT_FORM:
@@ -106,6 +115,7 @@ const reducer: Reducer<State, ReducerAction> = (state, action) => {
         paymentFormValue: action.payload,
         orderProcessStage: OrderStage.DONE,
         isOrderReady: true,
+        isEditing: false,
       };
 
     case OrderConfirmationAction.RESET_ORDER_PROCESS:
@@ -131,6 +141,14 @@ const reducer: Reducer<State, ReducerAction> = (state, action) => {
         isOrderReady: true,
       };
 
+    case OrderConfirmationAction.EDIT_FORM:
+      return {
+        ...state,
+        orderProcessStage: action.payload,
+        isEditing: true,
+      };
+
+
     default:
       console.error('Unknown action type');
       return state;
@@ -144,6 +162,7 @@ const useOrderConfirmation = (): Return => {
   const { products } = useTypedSelector(
     (state) => state.shopping_card,
   );
+
   const onContactsFormSubmit = (contactsFormValue: ContactsFormDto) =>
     dispatch({
       type: OrderConfirmationAction.SUBMIT_CONTACT_FORM,
@@ -194,6 +213,9 @@ const useOrderConfirmation = (): Return => {
     dispatch({ type: OrderConfirmationAction.RESET_ORDER_PROCESS });
   };
 
+  const onEditForm = (stage: OrderStage) =>
+    dispatch({ type: OrderConfirmationAction.EDIT_FORM, payload: stage });
+
   const onResetOrderProcess = () => {
     dispatch({
       type: OrderConfirmationAction.RESET_ORDER_PROCESS,
@@ -207,12 +229,14 @@ const useOrderConfirmation = (): Return => {
     onPaymentFormSubmit,
     onOrderConfirmed,
     onToggleRules,
+    onEditForm,
     orderProcessStage: state.orderProcessStage,
     contactsFormValue: state.contactsFormValue,
     deliveryFormValue: state.deliveryFormValue,
     paymentFormValue: state.paymentFormValue,
     isRulesAccepted: state.isRulesAccepted,
     isOrderReady: state.isOrderReady,
+    isEditing: state.isEditing,
     orderId: state.orderId,
   };
 };

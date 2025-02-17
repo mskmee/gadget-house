@@ -8,4 +8,5 @@ export enum OrderConfirmationAction {
   CONFIRM_ORDER = 'confirmOrder',
   TOGGLE_RULES = 'toggleRules',
   ORDER_READY = 'orderReady',
+  EDIT_FORM = 'editForm',
 }
