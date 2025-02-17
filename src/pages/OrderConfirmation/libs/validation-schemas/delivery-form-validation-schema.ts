@@ -4,7 +4,7 @@ import { DeliveryFormDto } from '../types/types';
 import { DeliveryMethod } from '../enums/delivery-method';
 
 const regx = {
-  useOnlyLetters: /^(?![ .])[a-zA-Zа-яА-ЯёЁ ]+(?<![ .])$/,
+  useOnlyLetters: /^(?![ .])[a-zA-Zа-яА-ЯёЁ-ЯґєіїҐЄІЇ ]+(?<![ .])$/,
   useOnlyNumbers: /^(?![ .])\d+(?<![ .])$/,
 }
 

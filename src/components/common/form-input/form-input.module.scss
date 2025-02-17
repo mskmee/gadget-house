@@ -76,6 +76,10 @@
       display: none;
     }
 
+    input[type="tel"] {
+      padding-left: 95px;
+    }
+
     :global {
       .ant-input-outlined:hover {
         border-color: var(--secondary-text-color);

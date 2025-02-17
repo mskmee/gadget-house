@@ -10,6 +10,7 @@ import { Option } from './Option';
 import ArrowUpSvg from '@/assets/icons/arrow-up.svg';
 
 import styles from './filters.module.scss';
+import { useRangeFilter } from './hooks/useRangeFilter';
 
 export const FiltersDesk = () => {
   const [selectedOptions, setSelectedOptions] = useState<
@@ -17,10 +18,19 @@ export const FiltersDesk = () => {
   >({});
   const [priceRange, setPriceRange] = useState<number[]>([11770, 65500]);
   const [, setFilteredProducts] = useState<IProduct[]>([]);
-  const [minPrice, setMinPrice] = useState<number>(11770);
-  const [maxPrice, setMaxPrice] = useState<number>(65500);
-  const [minCameraMP, setMinMP] = useState<number>(0);
-  const [maxCameraMP, setMaxMP] = useState<number>(0);
+  const {
+    minValue: minPrice,
+    maxValue: maxPrice,
+    handleMinChange: handleMinPriceChange,
+    handleMaxChange: handleMaxPriceChange,
+  } = useRangeFilter(11770, 65500);
+  const {
+    minValue: minCameraMP,
+    maxValue: maxCameraMP,
+    handleMinChange: handleMinMPChange,
+    handleMaxChange: handleMaxMPChange,
+  } = useRangeFilter(0, 0);
+
   const [showCategory, setShowCategory] = useState(true);
 
   const toggleShowCategory = () => {
@@ -44,47 +54,18 @@ export const FiltersDesk = () => {
 
   const handleSliderChange = (value: number[]) => {
     setPriceRange(value);
-    setMinPrice(value[0]);
-    setMaxPrice(value[1]);
-  };
-
-  const handleMinPriceChange = (value: number | null) => {
-    if (value) {
-      setMinPrice(value);
-      setPriceRange([value, maxPrice]);
-    }
-  };
-
-  const handleMaxPriceChange = (value: number | null) => {
-    if (value) {
-      setMaxPrice(value);
-      setPriceRange([minPrice, value]);
-    }
-  };
-
-  const handleMinMPChange = (value: number | null) => {
-    if (value) {
-      setMinMP(value);
-    }
-  };
-
-  const handleMaxMPChange = (value: number | null) => {
-    if (value) {
-      setMaxMP(value);
-    }
+    handleMinPriceChange(value[0]);
+    handleMaxPriceChange(value[1]);
   };
 
   const filteredProducts = useMemo(() => {
     return smartData.filter((product: IProduct) => {
       let isMatch = true;
 
-      // Фильтр по диапазону цен
       if (priceRange.length === 2) {
         const [minPrice, maxPrice] = priceRange;
         isMatch = product.price >= minPrice && product.price <= maxPrice;
       }
-
-      // Фильтр по мегапикселям камеры
       if (minCameraMP && maxCameraMP) {
         isMatch =
           isMatch &&
@@ -92,7 +73,6 @@ export const FiltersDesk = () => {
           product.cameraMP <= maxCameraMP;
       }
 
-      // Фильтр по выбранным опциям
       if (Object.keys(selectedOptions).length > 0 && product.options) {
         Object.keys(selectedOptions).forEach((optionKey) => {
           if (selectedOptions[optionKey].length > 0) {
@@ -153,9 +133,9 @@ export const FiltersDesk = () => {
                   style={{
                     fontFamily: 'Inter, sans-serif',
                     width: '75px',
+                    height: '40px',
                     border: '1px solid #1c1817',
                     borderRadius: '10px',
-                    padding: '4px 0px',
                     backgroundColor: 'white',
                     fontSize: '16px',
                     color: '#1c1817',
@@ -168,7 +148,7 @@ export const FiltersDesk = () => {
               <Col span={11} style={{ paddingLeft: '0px' }}>
                 <span className={styles.filters__priceText}>To</span>
                 <InputNumber
-                  min={51}
+                  min={0}
                   max={100000}
                   maxLength={6}
                   value={maxPrice}
@@ -179,9 +159,9 @@ export const FiltersDesk = () => {
                   onKeyDown={handleKeyDown}
                   style={{
                     width: '75px',
+                    height: '40px',
                     border: '1px solid #1c1817',
                     borderRadius: '10px',
-                    padding: '4px 0px',
                     backgroundColor: 'white',
                     fontFamily: 'Inter, sans-serif',
                     fontSize: '16px',
@@ -266,7 +246,7 @@ export const FiltersDesk = () => {
                   <span className={styles.filters__priceText}>From</span>
                   <InputNumber
                     min={0}
-                    max={644}
+                    max={643}
                     maxLength={3}
                     value={minCameraMP}
                     defaultValue={0}
@@ -280,7 +260,6 @@ export const FiltersDesk = () => {
                       height: '40px',
                       border: '1px solid #1c1817',
                       borderRadius: '10px',
-                      padding: '1px 1px',
                       backgroundColor: 'white',
                       fontFamily: 'Inter, sans-serif',
                       fontSize: '16px',
@@ -307,7 +286,6 @@ export const FiltersDesk = () => {
                       height: '40px',
                       border: '1px solid #1c1817',
                       borderRadius: '10px',
-                      padding: '1px 1px',
                       backgroundColor: 'white',
                       fontFamily: 'Inter, sans-serif',
                       fontSize: '16px',

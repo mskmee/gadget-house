@@ -16,6 +16,8 @@ type Properties = {
   initialValues: DeliveryFormDto;
   // eslint-disable-next-line no-unused-vars
   onSubmit: (dto: DeliveryFormDto) => void;
+  // eslint-disable-next-line no-unused-vars
+  onEditForm: (stage: OrderStage) => void;
   stage: OrderStage;
 };
 
@@ -24,6 +26,7 @@ const LineValue = ({ value }: { value: string }) => <span>{value}</span>;
 export const DeliveryForm: FC<Properties> = ({
   initialValues,
   onSubmit,
+  onEditForm,
   stage,
 }) => {
   const [isEditable, setIsEditable] = useState(false);
@@ -76,7 +79,7 @@ export const DeliveryForm: FC<Properties> = ({
 
               {isActive || isEditable || !initialValues.deliveryType ? null : (
                 <button
-                  onClick={() => setIsEditable(true)}
+                  onClick={() => onEditForm(OrderStage.DELIVERY)}
                   className={styles.form__btnEdit}
                   type="button"
                 >
