@@ -32,9 +32,11 @@
 }
 
 .close {
+  width: 48px;
+  height: 48px;
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 16px;
+  right: 16px;
   color: #333333;
   font-size: 18px;
   background-color: transparent;

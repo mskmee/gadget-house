@@ -33,7 +33,7 @@ const AuthModal: FC<IAuthModalProps> = ({ isOpen, onClose }) => {
   };
 
   return (
-    <PopUp isOpened={isOpen} onClose={onClose} classname="authModal">
+    <PopUp isOpened={isOpen} onClose={handleClose} classname="authModal">
       {successType ? (
         <SuccessPopup type={successType} onClose={handleClose} />
       ) : (

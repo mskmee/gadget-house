@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Input } from 'antd';
 import { FieldInputProps } from 'formik';
 
+import { FlagUA } from '@/assets/constants';
+
 import styles from './form-input.module.scss';
 
 type Props = {
@@ -29,9 +31,11 @@ export const PhoneInput = ({ field, id, ...props }: Props) => {
 
   return (
     <div className={styles.phoneInput}>
-      <div className={styles.phonePrefix}>
-        <span className={styles.flag}>🇺🇦</span>
-        <span className={styles.prefix}>+38</span>
+      <div className={styles.phoneInput__prefix}>
+        <span className={styles.phoneInput__flag}>
+          <FlagUA />
+        </span>
+        <span className={styles.phoneInput__code}>+38</span>
       </div>
       <Input
         {...props}

@@ -77,6 +77,7 @@ const RegisterForm: FC<IRegisterFormProps> = ({
               type="password"
               label="Password"
               placeholder="Password"
+              isRegister={true}
             />
 
             <ul className={styles.form__passwordRules}>

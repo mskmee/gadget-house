@@ -2,7 +2,7 @@ import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 
 import { DataStatus } from '@/enums/data-status';
 import { User } from '@/pages/Auth/libs/types/types';
-import { createUser, getCredentials, forgotPassword } from './actions';
+import { createUser, getCredentials } from './actions';
 import {
   LocalStorageKey,
   localStorageService,
@@ -41,9 +41,6 @@ const authSlice = createSlice({
       state.refreshToken = payload.refreshToken;
     });
     builder.addCase(createUser.fulfilled, (state, { payload }) => {
-      state.user = payload;
-    });
-    builder.addCase(forgotPassword.fulfilled, (state, { payload }) => {
       state.user = payload;
     });
 

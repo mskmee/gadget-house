@@ -18,6 +18,7 @@ type Properties<T extends FormikValues> = Omit<InputProps, 'name'> &
     name: keyof T;
     label?: string;
     span?: string;
+    isRegister?: boolean;
   };
 
 export const FormInput = <T extends FormikValues>({
@@ -26,6 +27,7 @@ export const FormInput = <T extends FormikValues>({
   name,
   span,
   type = 'text',
+  isRegister,
   ...props
 }: Properties<T>) => {
   const [field, meta] = useField(name as string);
@@ -54,6 +56,7 @@ export const FormInput = <T extends FormikValues>({
                   className={styles.formInput__inputPassword}
                   field={field}
                   id={inputId}
+                  isRegister={isRegister}
                   {...props}
                 />
               ) : type === 'tel' ? (

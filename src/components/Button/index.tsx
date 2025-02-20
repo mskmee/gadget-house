@@ -13,12 +13,22 @@ interface INavButtonProps {
 export const NavButton: FC<INavButtonProps> = ({ button, onAuthClick }) => {
   const IconComponent = button.img;
   const products = useTypedSelector((state) => state.shopping_card.products);
+  const user = useTypedSelector((state) => state.auth.user);
+  const refreshToken = localStorage.getItem('refresh_token');
   const productsLength = products.reduce((acc, item) => acc + item.quantity, 0);
 
   return button.href === '/sign-in' ? (
-    <button onClick={onAuthClick} className={styles.navBtn__button}>
-      <IconComponent />
-    </button>
+    refreshToken ? (
+      <button className={styles.navBtn__button}>
+        <span className={styles.navBtn__buttonAvatar}>
+          {user?.firstName?.charAt(0).toUpperCase()}
+        </span>
+      </button>
+    ) : (
+      <button onClick={onAuthClick} className={styles.navBtn__button}>
+        <IconComponent />
+      </button>
+    )
   ) : (
     <Link to={button.href}>
       <IconComponent />

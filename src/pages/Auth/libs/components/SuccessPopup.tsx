@@ -1,9 +1,11 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import cn from 'classnames';
 
+import { AppRoute } from '@/enums/Route';
 import { inBasket } from '@/assets/constants';
 
 import styles from './form.module.scss';
-import cn from 'classnames';
 
 interface SuccessPopupProps {
   type: 'login' | 'register' | 'forgot';
@@ -11,8 +13,18 @@ interface SuccessPopupProps {
 }
 
 const SuccessPopup: FC<SuccessPopupProps> = ({ type, onClose }) => {
+  const navigate = useNavigate();
   let title = '';
   let message = '';
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      onClose();
+      navigate(AppRoute.ROOT);
+    }, 5000);
+
+    return () => clearTimeout(timeoutId);
+  }, [navigate, onClose]);
 
   switch (type) {
     case 'login':
@@ -25,7 +37,7 @@ const SuccessPopup: FC<SuccessPopupProps> = ({ type, onClose }) => {
       break;
     case 'forgot':
       title = 'Send instructions!';
-      message = 'Instructions have been sent to your email';
+      message = 'Password have been sent to your email';
       break;
   }
 
@@ -36,9 +48,6 @@ const SuccessPopup: FC<SuccessPopupProps> = ({ type, onClose }) => {
         <img src={inBasket} alt="Success icon" />
       </div>
       <p className={styles.success__text}>{message}</p>
-      <button className={styles.success__button} onClick={onClose}>
-        Ок
-      </button>
     </div>
   );
 };

@@ -14,8 +14,6 @@ type RegisterFormDto = {
 
 type ForgotFormDto = {
   email: string;
-  password?: string;
-  passwordRepeat?: string;
 };
 
 type FormType = 'login' | 'register' | 'forgot';

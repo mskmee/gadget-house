@@ -22,6 +22,15 @@
     width: 100%;
     position: relative;
 
+    &:focus-within .formInput__label {
+      display: block;
+      opacity: 1;
+    }
+
+    &:focus-within .formInput__error {
+      display: none;
+    }
+
     input,
     textarea,
     &Password {
@@ -57,33 +66,9 @@
       }
     }
 
-    input:focus ~ .formInput__label {
-      display: block;
-      opacity: 1;
-    }
-
-    &Password:focus-visible + .formInput__label,
-    &Password:focus + .formInput__label {
-      display: block;
-      opacity: 1;
-    }
-
-    textarea:focus + .formInput__label {
-      display: block;
-      opacity: 1;
-    }
-
     textarea {
       min-height: 126px;
       resize: none;
-    }
-
-    input:focus + .formInput__error {
-      display: none;
-    }
-
-    input[type="tel"] {
-      padding-left: 95px;
     }
 
     :global {
@@ -105,15 +90,6 @@
         }
       }
     }
-  }
-
-  &__passwordToggle {
-    position: absolute;
-    width: 14px;
-    height: 15px;
-    top: 30px;
-    right: 31px;
-    transform: translateY(-50%);
   }
 
   &__passwordStrength {
@@ -157,26 +133,47 @@
 }
 
 .phoneInput {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--secondary-text-color);
+  outline: none;
+  background-color: transparent;
   display: flex;
   align-items: center;
-  background: #6f4c9a;
-  border-radius: 6px;
-  padding: 4px;
-}
 
-.phonePrefix {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  color: #fff;
-  padding: 0 8px;
-  font-size: 16px;
-}
+  &__prefix {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 8px 16px 16px;
+    background-color: var(--theme-color);
+    border-radius: 10px 0 0 10px;
+  }
 
-.flag {
-  font-size: 20px;
-}
+  &__flag {
+    width: 32px;
+    height: 24px;
+  }
 
-.prefix {
-  font-weight: bold;
+  &__code {
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    color: var(--white-color);
+  }
+
+  input {
+    border: none;
+    padding: 16px 16px 16px 8px;
+
+    &:active,
+    &:focus,
+    &:focus-visible {
+      border: none;
+      outline: none;
+      box-shadow: none;
+      background-color: transparent;
+    }
+  }
 }
