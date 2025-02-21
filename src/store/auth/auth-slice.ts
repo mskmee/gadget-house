@@ -1,12 +1,8 @@
-import { createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit';
 
 import { DataStatus } from '@/enums/data-status';
 import { User } from '@/pages/Auth/libs/types/types';
 import { createUser, getCredentials } from './actions';
-import {
-  LocalStorageKey,
-  localStorageService,
-} from '@/utils/packages/local-storage';
 
 export interface IAuthState {
   isAuthenticated: boolean;
@@ -19,8 +15,8 @@ export interface IAuthState {
 const initialState: IAuthState = {
   isAuthenticated: false,
   user: null,
-  userToken: localStorageService.getItem(LocalStorageKey.ACCESS_TOKEN),
-  refreshToken: localStorageService.getItem(LocalStorageKey.REFRESH_TOKEN),
+  userToken: null,
+  refreshToken: null,
   dataStatus: DataStatus.IDLE,
 };
 
@@ -28,6 +24,10 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    setTokens(state, action: PayloadAction<{ accessToken: string; refreshToken: string }>) {
+      state.userToken = action.payload.accessToken;
+      state.refreshToken = action.payload.refreshToken;
+    },
     logout: (state) => {
       state.isAuthenticated = false;
       state.user = null;
@@ -65,6 +65,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, setTokens } = authSlice.actions;
 
 export const { actions, reducer } = authSlice;
