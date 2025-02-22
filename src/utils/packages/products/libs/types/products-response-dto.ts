@@ -1,7 +1,8 @@
-import { ProductItem } from './product-item';
+import { IProductCard } from '@/interfaces/interfaces';
+// import { ProductItem } from './product-item';
 
 type ProductsResponseDto = {
-  page: ProductItem[];
+  page: IProductCard[];
   totalElements: number;
   currentPage: number;
   totalPages: number;

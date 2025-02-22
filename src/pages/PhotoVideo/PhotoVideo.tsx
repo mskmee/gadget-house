@@ -1,8 +1,10 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { DEFAULT_PAGE, DEFAULT_SIZE } from '@/constants/pagination';
 import { AppDispatch, RootState } from '@/store';
-import { getPaginatedProducts } from '@/store/products/actions';
+import { getByCategory } from '@/store/products/actions';
+import { Category } from '@/enums/category';
 import { PageLayout } from '@/components/PageLayout/PageLayout';
 
 export default function PhotoVideo() {
@@ -10,15 +12,20 @@ export default function PhotoVideo() {
   const { productsData } = useSelector((state: RootState) => state.products);
 
   useEffect(() => {
-    dispatch(getPaginatedProducts({ page: 1, size: 10, sort: ['price'] }));
+    dispatch(
+      getByCategory({
+        categoryId: Category.CAMERAS,
+        page: DEFAULT_PAGE,
+        size: DEFAULT_SIZE,
+      }),
+    );
   }, [dispatch]);
 
   return (
     <PageLayout
-      page={productsData?.page || []}
-      totalElements={productsData?.totalElements || 0}
+      products={productsData?.page || []}
       totalPages={productsData?.totalPages || 0}
-      currentPage={productsData?.currentPage || 0}
+      categoryId={Category.CAMERAS}
     />
   );
 }

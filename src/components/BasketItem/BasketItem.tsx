@@ -22,6 +22,9 @@ interface IBasketItemProps {
 export default function BasketItem({ product }: IBasketItemProps) {
   const { id, title, code, images, quantity, totalPrice, href, category } =
     product;
+
+  console.log(product);
+
   const { isLiked, handleClickLike } = useProductCardHandlers();
   const {
     deleteFromStore,
@@ -96,6 +99,7 @@ export default function BasketItem({ product }: IBasketItemProps) {
       </div>
       <div className={styles.productInfo}>
         <h2 className={styles.productTitle}>{title}</h2>
+
         <p className={styles.productCode}>code:{code}</p>
         <span className={styles.productBottom}>
           <button onClick={handleDeleteFromStore}>

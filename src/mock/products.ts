@@ -20,7 +20,7 @@ function generateGadgets(count: number, category: string): ProductItem[] {
 
     const newGadget: ProductItem = {
       id: i + 1,
-      name: `${category} ${randomBrand} Model ${Math.floor(Math.random() * 1000)}`,
+      title: `${category} ${randomBrand} Model ${Math.floor(Math.random() * 1000)}`,
       price: parseFloat((Math.random() * 99990 + 10).toFixed(2)), // price between 100 and 1100
       images: [images[Math.floor(Math.random() * images.length)]], // Select from predefined options
       rating: parseFloat((Math.random() * 5).toFixed(1)), // rating between 0 and 5

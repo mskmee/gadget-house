@@ -36,7 +36,7 @@ export interface StatusButtonProps {
 export type ProductImageCard = {
   link: string;
   order: number;
-}
+};
 
 export interface IProductCard {
   id: number;

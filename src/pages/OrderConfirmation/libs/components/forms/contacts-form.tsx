@@ -13,6 +13,8 @@ type Properties = {
   initialValues: ContactsFormDto;
   // eslint-disable-next-line no-unused-vars
   onSubmit: (dto: ContactsFormDto) => void;
+  // eslint-disable-next-line no-unused-vars
+  onEditForm: (stage: OrderStage) => void;
   stage: OrderStage;
 };
 
@@ -21,6 +23,7 @@ const LineValue = ({ value }: { value: string }) => <span>{value}</span>;
 export const ContactsForm: FC<Properties> = ({
   initialValues,
   onSubmit,
+  onEditForm,
   stage,
 }) => {
   const [isEditable, setIsEditable] = useState(false);
@@ -67,7 +70,7 @@ export const ContactsForm: FC<Properties> = ({
 
             {isActive || isEditable ? null : (
               <button
-                onClick={() => setIsEditable(true)}
+                onClick={() => onEditForm(OrderStage.CONTACTS)}
                 className={styles.form__btnEdit}
                 type="button"
               >
@@ -93,7 +96,7 @@ export const ContactsForm: FC<Properties> = ({
                   />
                   <FormInput<ContactsFormDto>
                     name="phoneNumber"
-                    type="text"
+                    type="tel"
                     label="Phone number*"
                     placeholder="Phone number*"
                   />

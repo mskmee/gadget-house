@@ -5,7 +5,7 @@
     padding: 0;
 
     &:not(:last-child) {
-      margin-bottom: 16px;
+      margin-bottom: 20px;
     }
   }
 
@@ -170,9 +170,21 @@
     gap: 24px;
     margin-bottom: 32px;
 
-    @media screen and (max-width: 680px) {
-      margin-bottom: 24px;
-      padding-top: 24px;
+    @media (width <= 680px) {
+      margin-bottom: 20px;
+      padding-top: 12px;
+      gap: 12px;
+    }
+
+    &Delivery {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+
+      @media (width <= 680px) {
+        gap: 12px;
+      }
     }
   }
 
@@ -183,18 +195,21 @@
     margin-bottom: 24px;
 
     @media screen and (max-width: 680px) {
-      padding-top: 24px;
+      padding-top: 22px;
       margin-bottom: 0;
     }
   }
 
   &__btn {
+    width: 110px !important;
+
     @media screen and (max-width: 680px) {
       width: 100% !important;
     }
   }
 
   &__buttonDone {
+    width: 110px !important;
     margin-top: 8px;
 
     @media screen and (max-width: 680px) {

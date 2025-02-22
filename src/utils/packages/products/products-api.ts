@@ -1,18 +1,17 @@
 import { IProductsApi } from './libs/interfaces/interfaces';
 import { ApiEndpoint, HttpMethod, request } from '../http';
 import {
-  CategoryProductsResponseDto,
-  PaginatedProductsResponseDto,
   PriceDTO,
   ProductItemResponseDto,
   ProductsResponseDto,
 } from './libs/types/types';
 
 class ProductsApi implements IProductsApi {
-  async getAll(): Promise<ProductsResponseDto> {
+  async getAll(page: number, size: number): Promise<ProductsResponseDto> {
     return request({
       method: HttpMethod.GET,
       url: ApiEndpoint.PRODUCTS,
+      query: { page, size },
     });
   }
 
@@ -30,32 +29,38 @@ class ProductsApi implements IProductsApi {
     });
   }
 
-  async getPaginatedProducts(page: number,
-    size: number = 10,
-    sort: string[] = []): Promise<PaginatedProductsResponseDto> {
+  async getPaginatedProducts(categoryId: number | null, page: number,
+    size: number): Promise<ProductsResponseDto> {
     return request({
       method: HttpMethod.GET,
-      url: `${ApiEndpoint.PRODUCTS}`,
-      query: { page, size, sort },
+      url: ApiEndpoint.PRODUCTS,
+      query: { categoryId, page, size },
     });
   }
 
-  async getCategoryProducts(name: string,
+  async getFilteredProducts(
     categoryId: number,
     brandIds: number[] = [],
     price: PriceDTO = { from: 0, to: Infinity },
-    attributeValueIds: number[] = []): Promise<CategoryProductsResponseDto> {
+    attributeValueIds: number[] = []): Promise<ProductsResponseDto> {
     return request({
       method: HttpMethod.GET,
       url: `${ApiEndpoint.PRODUCTS}`,
       query: {
-        name,
         categoryId,
         brandIds: brandIds.join(','),
         priceFrom: price.from,
         priceTo: price.to,
         attributeValueIds: attributeValueIds.join(','),
       },
+    });
+  }
+
+  async getByCategory(categoryId: number, page: number, size: number): Promise<ProductsResponseDto> {
+    return request({
+      method: HttpMethod.GET,
+      url: `${ApiEndpoint.PRODUCTS}`,
+      query: { categoryId, page, size },
     });
   }
 }

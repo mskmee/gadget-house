@@ -14,7 +14,7 @@ import { rateImg, rateEmptyImg } from '@/assets/constants';
 import { HeartIcon } from '@/assets/icons/HeartIcon';
 import { BasketIcon } from '@/assets/icons/BasketIcon';
 
-import styles from '../Card/card.module.scss';
+import styles from './card.module.scss';
 
 interface ISmartphoneCardProps {
   product: ProductItem;
@@ -37,7 +37,7 @@ export const Card: FC<ISmartphoneCardProps> = ({
     e.preventDefault();
     addToStore({
       ...product,
-      title: product.name,
+      title: product.title,
       isLiked: false,
       rate: product.rating,
       anotherColors: [],
@@ -58,7 +58,7 @@ export const Card: FC<ISmartphoneCardProps> = ({
       <Link
         className={`${styles.cardConatiner} ${classname} `}
         key={product.id}
-        to={`/${classname}/${product.id}/${product.name}`}
+        to={`/${classname}/${product.id}/${product.title}`}
         tabIndex={0}
       >
         <div className={classNames(styles.cardContainerTop)}>
@@ -83,7 +83,7 @@ export const Card: FC<ISmartphoneCardProps> = ({
           <div></div>
         </div>
         <div className={styles.cardContainerBottom}>
-          <h3>{product.name}</h3>
+          <h3>{product.title}</h3>
           <div className={styles.cardRate}>
             <Rate
               className="reviews_rate-stars"
