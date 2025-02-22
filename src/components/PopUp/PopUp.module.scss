@@ -54,7 +54,7 @@
   }
 }
 
-.basket-modal{
+.basket-modal {
   background: rgba(28, 24, 23, 0.7);
   .content {
     padding: 0;
@@ -63,5 +63,30 @@
   }
   .close {
     display: none;
+  }
+}
+
+.authModal {
+  .content {
+    max-width: 452px;
+    height: auto;
+    border-radius: 20px;
+    padding: 48px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .basket-modal {
+    .content {
+      padding: 12px;
+      border-radius: 8px;
+    }
+  }
+}
+@media screen and (max-width: 450px) {
+  .basket-modal {
+    .content {
+      padding: 6px;
+    }
   }
 }

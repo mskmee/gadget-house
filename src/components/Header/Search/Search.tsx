@@ -56,7 +56,7 @@ export const Search: FC<ISearchProps> = ({
       );
     } else if (e.key === 'ArrowUp') {
       setActiveIndex((prev) => Math.max(prev - 1, 0));
-    } else if (e.key === 'Enter') {
+    } else if (e.key === 'Enter' && suggestions.length) {
       if (activeIndex >= 0) {
         const selectedSuggestion = filteredSuggestions[activeIndex];
         const selectedTitle = selectedSuggestion.title;
@@ -75,6 +75,7 @@ export const Search: FC<ISearchProps> = ({
         );
         setSearchInput({ value: selectedTitle, hasError: false });
       } else if (searchInput.value.trim()) {
+        setIsOverlayActive(false);
         navigate(
           `${AppRoute.SEARCH_RESULTS_FOUND}/?text=${searchInput.value.trim()}`,
           {

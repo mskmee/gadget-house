@@ -86,7 +86,8 @@
     align-items: center;
     gap: 16px;
     position: relative;
-    > a {
+    > a,
+    > button {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -239,7 +240,7 @@
   display: none;
 
   > div {
-    width: 420px;
+    width: 420.18px;
     position: absolute;
     top: 0;
 
@@ -282,7 +283,7 @@
 
   .catalogListWrap {
     > div {
-      width: initial;
+      width: 340.18px;
     }
   }
 }
@@ -320,6 +321,11 @@
   .headerBottomWrap {
     .headerBottomCatalog {
       padding: 12px 94px 16px 22px;
+    }
+  }
+  .catalogListWrap {
+    > div {
+      width: 320.18px;
     }
   }
 }
@@ -398,6 +404,9 @@
 
   .headerBottomButtons {
     a:not(:nth-child(4)) {
+      display: none;
+    }
+    button {
       display: none;
     }
   }

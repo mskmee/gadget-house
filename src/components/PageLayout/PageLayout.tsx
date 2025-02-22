@@ -41,8 +41,6 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
     category = pathname;
   }
 
-  console.log(pathName);
-
   return (
     <div className={styles.pageLayout}>
       <div className={styles.pageLayout_mobile}>

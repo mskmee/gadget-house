@@ -80,7 +80,7 @@ export const SingleProductPage: FC = () => {
   const currentItems = allProductReviews?.slice(itemOffset, endOffset);
 
   const reviewsRateRef = useRef<HTMLUListElement>(null);
-  const leaveCommentReviewRef = useRef<HTMLUnknownElement>(null);
+  const leaveCommentReviewRef = useRef<HTMLDivElement>(null);
 
   const debouncedCallback = useMemo(
     () =>
@@ -104,8 +104,6 @@ export const SingleProductPage: FC = () => {
       });
     }
     if (leaveCommentReviewRef.current) {
-      console.log(leaveCommentReviewRef.current);
-
       const listItems = leaveCommentReviewRef.current?.querySelectorAll(
         '.ant-rate > li > div',
       );
@@ -239,12 +237,11 @@ export const SingleProductPage: FC = () => {
             <h3>
               Customer reviews about <span>{dinamicCurrentProduct?.title}</span>
             </h3>
-            <div className={style['reviews_rate']}>
+            <div className={style['reviews_rate']} ref={leaveCommentReviewRef}>
               <span>Rate:</span>
               <Rate
                 className="reviews_rate-stars"
                 onChange={changeRateValue}
-                ref={leaveCommentReviewRef}
                 tabIndex={0}
                 character={({ index = 0 }) => {
                   return (

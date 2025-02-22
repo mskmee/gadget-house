@@ -79,13 +79,16 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
+    console.log('Touch Start:', e.touches[0].clientX); // Debugging
     setAnimation(false);
     setStartX(e.touches[0].clientX);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
+    console.log('Touch Move:', e.touches[0].clientX); // Debugging
     if (startX !== null) {
-      const diff = e.touches[0].clientX - startX;
+      const currentX = e.touches[0].clientX;
+      const diff = currentX - startX;
       setCurrentTranslate(
         -currentIndex * (itemWidth + responsiveCarouselSettings.gap) + diff,
       );
@@ -93,24 +96,38 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
   };
 
   const handleTouchEnd = () => {
+    console.log('Touch End'); // Debugging
     if (startX !== null) {
-      const distanceMoved =
-        -currentTranslate -
+      const swipeDistance =
+        currentTranslate +
         currentIndex * (itemWidth + responsiveCarouselSettings.gap);
 
-      if (distanceMoved > 50 && currentIndex < maxIndex) {
-        setCurrentIndex(currentIndex + 1);
-      } else if (distanceMoved < -50 && currentIndex > 0) {
-        setCurrentIndex(currentIndex - 1);
+      // Define a minimum swipe distance threshold (e.g., 50px)
+      if (swipeDistance > 50 && currentIndex > 0) {
+        setCurrentIndex((prev) => prev - 1);
+        setCurrentTranslate(
+          -(currentIndex - 1) * (itemWidth + responsiveCarouselSettings.gap),
+        );
+      } else if (swipeDistance < -50 && currentIndex < maxIndex) {
+        setCurrentIndex((prev) => prev + 1);
+        console.log(responsiveCarouselSettings.gap);
+
+        setCurrentTranslate(
+          -(currentIndex + 1) * (itemWidth + responsiveCarouselSettings.gap),
+        );
+      } else {
+        // If the swipe distance is not enough, reset to the current index
+        setCurrentTranslate(
+          -currentIndex * (itemWidth + responsiveCarouselSettings.gap),
+        );
       }
 
       setAnimation(true);
-      setCurrentTranslate(
-        -currentIndex * (itemWidth + responsiveCarouselSettings.gap),
-      );
       setStartX(null);
     }
   };
+  console.log(currentTranslate);
+
   useEffect(() => {
     const rateComponent = document.querySelectorAll('.reviews_rate-stars');
     const rateComponentDivs = document.querySelectorAll('.ant-rate-star div');
@@ -133,6 +150,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
+        style={{ touchAction: 'pan-y' }} // Prevent vertical scrolling
       >
         <div
           className={styles.track}
@@ -151,7 +169,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
                     : 8,
             },
             (_, i) => (
-              <div key={crypto.randomUUID()}>
+              <>
                 {classname === 'brands-carousel' ? (
                   <BrandCard
                     width={itemWidth}
@@ -190,7 +208,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
                     }
                   />
                 )}
-              </div>
+              </>
             ),
           )}
         </div>
