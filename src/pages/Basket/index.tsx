@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { LeftArrow } from '@/assets/constants';
 import BasketItem from '@/components/BasketItem/BasketItem.tsx';
 import { useTypedSelector } from '@/hooks/useTypedSelector.ts';
-import { CustomBreadcrumbs } from '@/components/SingleProduct/CustomBreadcrumbs.tsx';
 import { convertPriceToReadable } from '@/utils/helpers/product';
 import { useEffect, useState } from 'react';
 import { SuccessPopUp } from './libs/components/components';
@@ -18,6 +17,7 @@ export const BasketPage = () => {
   const { products, cardTotalAmount, currency, locale } = useTypedSelector(
     (state) => state.shopping_card,
   );
+
   const productsLength = products.reduce((acc, item) => acc + item.quantity, 0);
 
   const isMobile = innerWidth < 768;
@@ -34,10 +34,10 @@ export const BasketPage = () => {
     <>
       <div className={styles.container}>
         <SuccessPopUp isOpened={isPopUpOpened} onClose={onPopUpClose} />
-        <CustomBreadcrumbs />
+
         <button className={styles.buttonBack} onClick={() => navigate(-1)}>
           <img src={LeftArrow} alt="Right Arrow" />
-          Back
+          Basket
         </button>
 
         <section className={styles.content}>

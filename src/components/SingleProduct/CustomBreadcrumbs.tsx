@@ -12,9 +12,6 @@ export const CustomBreadcrumbs = () => {
     category,
     id,
   });
-  console.log(category, id);
-
-  console.log(breadcrumbItems);
 
   return (
     <Breadcrumb

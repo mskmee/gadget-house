@@ -40,7 +40,7 @@ export type ProductImageCard = {
 
 export interface IProductCard {
   id: number;
-  title: string;
+  name: string;
   href?: string;
   images: ProductImageCard[];
   rate: number;
@@ -66,7 +66,7 @@ export interface IProduct {
   id: number;
   price: number;
   category: string;
-  title: string;
+  name: string;
   img: string[];
   basketIcon: () => ReactElement;
   anotherColors: string[];
@@ -97,7 +97,7 @@ export interface IFilterProps {
 
 export interface IOption {
   data: string[];
-  title: string;
+  name: string;
   option: string;
   btnMore: boolean;
   optionChange: (option: string, value: string) => void;
@@ -130,7 +130,7 @@ export interface ISortOptionProps {
 
 export interface IGadget {
   id: number;
-  title: string;
+  name: string;
   price: number;
   category: string;
   isLiked: boolean;

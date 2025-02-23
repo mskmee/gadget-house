@@ -37,7 +37,7 @@ export const Card: FC<ISmartphoneCardProps> = ({
     e.preventDefault();
     addToStore({
       ...product,
-      title: product.title,
+      name: product.name,
       isLiked: false,
       rate: product.rating,
       anotherColors: [],
@@ -58,7 +58,7 @@ export const Card: FC<ISmartphoneCardProps> = ({
       <Link
         className={`${styles.cardConatiner} ${classname} `}
         key={product.id}
-        to={`/${classname}/${product.id}/${product.title}`}
+        to={`/${classname}/${product.id}/${product.name}`}
         tabIndex={0}
       >
         <div className={classNames(styles.cardContainerTop)}>
@@ -83,7 +83,7 @@ export const Card: FC<ISmartphoneCardProps> = ({
           <div></div>
         </div>
         <div className={styles.cardContainerBottom}>
-          <h3>{product.title}</h3>
+          <h3>{product.name}</h3>
           <div className={styles.cardRate}>
             <Rate
               className="reviews_rate-stars"

@@ -20,10 +20,8 @@ interface IBasketItemProps {
   product: IShoppingCard;
 }
 export default function BasketItem({ product }: IBasketItemProps) {
-  const { id, title, code, images, quantity, totalPrice, href, category } =
+  const { id, name, code, images, quantity, totalPrice, href, category } =
     product;
-
-  console.log(product);
 
   const { isLiked, handleClickLike } = useProductCardHandlers();
   const {
@@ -59,9 +57,9 @@ export default function BasketItem({ product }: IBasketItemProps) {
   return isLessThan768px ? (
     <Link to={`/${category}/${id}/${href}`} className={styles.mobilePopup}>
       <div className={styles.top}>
-        <img src={images?.[0].link} alt={title} />
+        <img src={images?.[0].link} alt={name} />
         <div>
-          <h2 className={styles.mobilePopupTitle}>{title}</h2>
+          <h2 className={styles.mobilePopupTitle}>{name}</h2>
           <p className={styles.mobilePopupCode}>code:{code}</p>
         </div>
         <div>
@@ -95,10 +93,10 @@ export default function BasketItem({ product }: IBasketItemProps) {
   ) : (
     <Link to={`/${category}/${id}/${href}`} className={styles.basketItem}>
       <div className={styles.productImg}>
-        <img src={images?.[0].link} alt={title} />
+        <img src={images?.[0].link} alt={name} />
       </div>
       <div className={styles.productInfo}>
-        <h2 className={styles.productTitle}>{title}</h2>
+        <h2 className={styles.productTitle}>{name}</h2>
 
         <p className={styles.productCode}>code:{code}</p>
         <span className={styles.productBottom}>

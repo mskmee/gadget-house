@@ -2,7 +2,7 @@ import { ProductImage } from './product-image';
 
 type ProductItem = {
   id: number;
-  title: string;
+  name: string;
   price: number;
   images: ProductImage[];
   available: boolean;

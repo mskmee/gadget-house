@@ -1,11 +1,13 @@
 .container {
   padding: 0 50px 16px;
+  max-width: 1540px;
+  width: 100%;
   margin: 0 auto;
   background: rgba(248, 247, 250, 1);
 }
 
 .buttonBack {
-  margin-top: 40px;
+  margin-top: 48px;
   background: transparent;
   border: none;
   display: flex;
@@ -13,7 +15,8 @@
   align-items: center;
   cursor: pointer;
   padding-left: 15px;
-  font-size: 24px;
+  font-size: 42px;
+  font-weight: 500;
   column-gap: 23px;
   color: #1c1817;
   img {
@@ -110,6 +113,7 @@
   }
   .buttonBack {
     margin-top: 20px;
+    font-size: 30px;
   }
   .info {
     .orderBtnWrap {

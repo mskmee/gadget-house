@@ -146,7 +146,7 @@ export const Product: FC<IProductProps> = ({
     <section className={style['product']} id="product">
       {isLargerThan768px && (
         <div className={style['product_title']}>
-          <h1>{dinamicCurrentProduct?.title}</h1>
+          <h1>{dinamicCurrentProduct?.name}</h1>
           <div className={style['product_rate-box']}>
             <div className={style['product_rate']} ref={productRateRef}>
               <Rate
@@ -222,7 +222,7 @@ export const Product: FC<IProductProps> = ({
       <div className={style['product_info']}>
         {!isLargerThan768px && (
           <div className={style['product_title']}>
-            <h1>{dinamicCurrentProduct?.title}</h1>
+            <h1>{dinamicCurrentProduct?.name}</h1>
             <div className={style['product_rate-box']}>
               <div className={style['product_rate']} ref={productRateRef}>
                 <Rate
