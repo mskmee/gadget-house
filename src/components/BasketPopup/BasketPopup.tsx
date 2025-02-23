@@ -2,30 +2,17 @@ import styles from './basketpopup.module.scss';
 import { convertPriceToReadable } from '@/utils/helpers/product.ts';
 import { useTypedSelector } from '@/hooks/useTypedSelector.ts';
 import { useActions } from '@/hooks/useActions.ts';
-import {
-  inBasket,
-  closeBasketPopupIcon,
-  quantityDecreaseButton,
-  quantityInreaseButton,
-} from '@/assets/constants.ts';
+import { inBasket, closeBasketPopupIcon } from '@/assets/constants.ts';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '@/enums/Route.ts';
 import { DeleteFromBasket } from '@/assets/icons/DeleteFromBasket';
-import { useMediaQuery } from 'react-responsive';
-import { HeartIcon } from '@/assets/icons/HeartIcon';
-import { useProductCardHandlers } from '@/hooks/useProductCardHandlers';
 
 export default function BasketPopup() {
   const navigate = useNavigate();
 
-  const isLessThan768px = useMediaQuery({
-    query: '(max-width: 768px)',
-  });
-
   const { products, currency, locale, selectedProductId } = useTypedSelector(
     (state) => state.shopping_card,
   );
-  const { isLiked, handleClickLike } = useProductCardHandlers();
 
   const {
     deleteFromStore,
@@ -41,52 +28,7 @@ export default function BasketPopup() {
 
   const { id, name, code, images, quantity, totalPrice } = selectedProduct;
 
-  return isLessThan768px ? (
-    <div className={styles.mobilePopup}>
-      <div className={styles.top}>
-        <img src={images?.[0].link} alt={name} />
-        <div>
-          <h2 className={styles.mobilePopupTitle}>{name}</h2>
-          <p className={styles.mobilePopupCode}>code:{code}</p>
-        </div>
-        <div>
-          <button
-            className={styles.mobilePopupClose}
-            onClick={() => closeBasketPopup()}
-          >
-            <img src={closeBasketPopupIcon} alt="close" />
-          </button>
-          <h3 className={styles.mobilePopupPrice}>
-            {convertPriceToReadable(totalPrice, currency, locale)}
-          </h3>
-        </div>
-      </div>
-      <div className={styles.devider}></div>
-      <div className={styles.bottom}>
-        <div className={styles.mobilePopupQuantity}>
-          <button
-            onClick={() => {
-              if (quantity > 1) {
-                decreaseItemQuantity(id);
-              } else {
-                closeBasketPopup();
-                decreaseItemQuantity(id);
-              }
-            }}
-          >
-            <img src={quantityDecreaseButton} alt="quantity-Decrease-Button" />
-          </button>
-          <p>{quantity}</p>
-          <button onClick={() => increaseItemQuantity(id)}>
-            <img src={quantityInreaseButton} alt="quantity-Inrease-Button" />
-          </button>
-        </div>
-        <button>
-          <HeartIcon onClick={handleClickLike} isLiked={isLiked} />
-        </button>
-      </div>
-    </div>
-  ) : (
+  return (
     <div className={styles.basketPopup}>
       <button
         className={styles.basketPopupClose}

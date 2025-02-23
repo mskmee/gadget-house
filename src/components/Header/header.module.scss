@@ -406,7 +406,7 @@
     a:not(:nth-child(4)) {
       display: none;
     }
-    button {
+    button:not(:nth-child(4)) {
       display: none;
     }
   }

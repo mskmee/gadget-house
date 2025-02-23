@@ -1,7 +1,7 @@
 @import '@/styles/functions';
 
 .basketPopup {
-  width: 1240px;
+  width: 100%;
   min-height: 401px;
   padding: 79px 56px 74px 56px;
   background: #f8f7fa;
@@ -15,6 +15,7 @@
   &Product {
     position: relative;
     display: flex;
+    align-items: center;
     column-gap: 24px;
     background: #fff;
     border-radius: 24px;
@@ -26,6 +27,12 @@
       font-size: 24px;
       font-weight: 500;
       line-height: 36px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      line-clamp: 2;
+      -webkit-box-orient: vertical;
     }
     &Code {
       margin-top: 8px;
@@ -153,7 +160,6 @@
   }
 }
 .emptybasketPopup {
-  max-width: 1240px;
   width: 100%;
   min-height: 287px;
   padding: 84px 56px 84px 56px;
@@ -183,14 +189,8 @@
   }
 }
 
-@media screen and (max-width: 1400px) {
-  .basketPopup {
-    width: 1000px;
-  }
-}
 @media screen and (max-width: 1100px) {
   .basketPopup {
-    width: 800px;
     min-height: 305px;
     padding: 50px 36px 30px 36px;
     &Close {
@@ -221,11 +221,24 @@
       }
     }
   }
+  .emptybasketPopup {
+    padding: 50px 30px;
+    min-height: auto;
+    .emptybasketPopupTitle {
+      font-size: rem(36px);
+    }
+    .emptybasketPopupSubtitle {
+      font-size: rem(18px);
+    }
+    .emptybasketPopupClose {
+      top: 15px;
+      right: 15px;
+    }
+  }
 }
 
 @media screen and (max-width: 900px) {
   .basketPopup {
-    width: 680px;
     min-height: 290px;
     padding: 50px 16px 30px 16px;
 
@@ -259,195 +272,114 @@
 }
 
 @media screen and (max-width: 768px) {
-  .mobilePopup {
-    width: 550px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    .top {
-      display: flex;
-      gap: 8px;
+  .basketPopupBottom {
+    .basketPopupContinueShopping {
+      display: none;
+    }
+  }
+  .emptybasketPopup {
+    padding: 30px 20px;
+
+    .emptybasketPopupTitle {
+      font-size: rem(30px);
+    }
+    .emptybasketPopupSubtitle {
+      font-size: rem(16px);
+    }
+    .emptybasketPopupClose {
+      top: 10px;
+      right: 10px;
       > img {
-        width: 100px;
+        width: 35px;
+        height: 35px;
       }
-      > div:nth-child(2) {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        flex-grow: 1;
-        margin-top: 5px;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .basketPopup {
+    padding: 40px 15px 20px 15px;
+    min-height: 250px;
+    .basketPopupClose {
+      > img {
+        width: 34px;
+        height: 34px;
       }
-      > div:last-child {
-        display: flex;
-        flex-direction: column;
-        align-self: flex-end;
-        min-width: 115px;
-        max-width: 120px;
-      }
-      .mobilePopupTitle {
-        display: -webkit-box;
-        margin-bottom: 4px;
-        font-size: rem(20px);
-        font-weight: 400;
-        color: #1c1817;
-        line-height: 150%;
-        -webkit-line-clamp: 2;
-        line-clamp: 2;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        -webkit-box-orient: vertical;
-      }
-      .mobilePopupCode {
+    }
+    .basketPopupImg {
+      width: 100px;
+      height: 105px;
+    }
+    .basketPopupInfo {
+      .basketPopupProductTitle {
         font-size: rem(16px);
-        font-weight: 400;
-        color: #808080;
-        line-height: 150%;
+        line-height: 22px;
       }
-      .mobilePopupClose {
-        align-self: flex-end;
-        > img {
-          text-align: end;
-          width: 36px;
-          height: 36px;
-        }
+      .basketPopupProductCode {
+        font-size: rem(14px);
       }
-      .mobilePopupPrice {
-        font-size: rem(20px);
-        font-weight: 400;
-        color: #1c1817;
-        line-height: 150%;
-        text-align: end;
-      }
-    }
-    .devider {
-      height: 1px;
-      background-color: #eae4ee;
-    }
-    .bottom {
-      display: flex;
-      justify-content: space-between;
-      > div:first-child {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        > button {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 48px;
-          height: 48px;
-          border: 1.5px solid #1c1817;
-          border-radius: 50%;
+      .basketPopupBottom {
+        .basketPopupProductPrice {
           font-size: rem(16px);
-          line-height: 150%;
-
-          &:active {
-            background-color: #eae4ee;
-          }
-          > img {
-            width: 22px;
-          }
         }
-        > p {
-          width: 15px;
+        .basketPopupGotoBasket {
+          padding: 8px 15px;
+          font-size: rem(13px);
         }
       }
-      > button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 48px;
-        height: 48px;
-        background-color: #f8f7fa;
-        border: none;
-        border: 1px solid #eae4ee;
-        border-radius: 10px;
-        cursor: pointer;
-        text-decoration: none;
-        position: relative;
-        > svg path:last-child {
-          fill: #000;
-        }
-        .likedIcon svg path:first-child,
-        .likedIcon svg path:last-child {
-          fill: rgba(111, 76, 154, 1);
-        }
+    }
+    .basketPopupRemoveProduct {
+      > svg {
+        width: 34px;
+        height: 34px;
       }
     }
   }
 }
-
-@media screen and (max-width: 630px) {
-  .mobilePopup {
-    width: 400px;
-    .top {
-      > img {
-        width: 90px;
+@media screen and (max-width: 500px) {
+  .basketPopup {
+    padding: 40px 0 10px 0;
+    min-height: 210px;
+    .basketPopupProduct {
+      padding: 12px 6px 12px 0;
+      border-radius: 12px;
+      .basketPopupInfo {
+        .basketPopupProductTitle {
+          width: 86%;
+        }
+      }
+      .basketPopupRemoveProduct {
+        top: 5px;
+        right: 5px;
       }
     }
   }
-}
-@media screen and (max-width: 450px) {
-  .mobilePopup {
-    width: 320px;
-    .top {
-      gap: 5px;
-      > img {
-        margin-left: -5px;
-        width: 80px;
-      }
-      .mobilePopupTitle {
-        font-size: rem(14px);
-      }
-      .mobilePopupCode {
-        font-size: rem(12px);
-      }
-      .mobilePopupClose {
-        > img {
-          width: 32px;
-          height: 32px;
-        }
-      }
-      .mobilePopupPrice {
-        font-size: rem(14px);
-      }
-      > div:last-child {
-        min-width: 80px;
-        max-width: 85px;
-      }
+  .emptybasketPopup {
+    .emptybasketPopupTitle {
+      font-size: rem(24px);
     }
-    .bottom {
-      > div:first-child {
-        > button {
-          width: 36px;
-          height: 36px;
-        }
-      }
-      > button {
-        width: 40px;
-        height: 40px;
-        > span {
-          svg {
-            width: 30px;
-            height: 30px;
-          }
-        }
-      }
+    .emptybasketPopupSubtitle {
+      font-size: rem(14px);
     }
   }
 }
-@media screen and (max-width: 360px) {
-  .mobilePopup {
-    width: 290px;
-    gap: 5px;
-
-    .bottom {
-      > div:first-child {
-        > button {
-          width: 32px;
-          height: 32px;
-        }
-      }
+@media screen and (max-width: 400px) {
+  .basketPopup {
+    .basketPopupImg {
+      width: 80px;
+      height: 85px;
+    }
+  }
+  .emptybasketPopup {
+    padding: 30px 15px;
+    .emptybasketPopupClose {
+      top: 4px;
+      right: 4px;
+    }
+    .emptybasketPopupTitle {
+      margin-bottom: 10px;
+      font-size: rem(22px);
     }
   }
 }

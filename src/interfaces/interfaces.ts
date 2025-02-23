@@ -97,7 +97,7 @@ export interface IFilterProps {
 
 export interface IOption {
   data: string[];
-  name: string;
+  title: string;
   option: string;
   btnMore: boolean;
   optionChange: (option: string, value: string) => void;
@@ -130,7 +130,7 @@ export interface ISortOptionProps {
 
 export interface IGadget {
   id: number;
-  name: string;
+  title: string;
   price: number;
   category: string;
   isLiked: boolean;
