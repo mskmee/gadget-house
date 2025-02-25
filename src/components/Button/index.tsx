@@ -18,37 +18,43 @@ export const NavButton: FC<INavButtonProps> = ({ button, onAuthClick }) => {
 
   const [isEmptyBasketPopupOpen, setIsEmptyBasketPopupOpen] = useState(false);
 
-  const openEmptyBasketPopup = () => {
-    setIsEmptyBasketPopupOpen(true);
-  };
+  const openEmptyBasketPopup = () => setIsEmptyBasketPopupOpen(true);
+  const closeEmptyBasketPopup = () => setIsEmptyBasketPopupOpen(false);
 
-  const closeEmptyBasketPopup = () => {
-    setIsEmptyBasketPopupOpen(false);
-  };
-  return (
-    <>
-      {button.href === '/sign-in' ? (
+  const renderButton = () => {
+    if (button.href === '/sign-in') {
+      return (
         <button onClick={onAuthClick} className={styles.navBtn__button}>
           <IconComponent />
         </button>
-      ) : products?.length > 0 ? (
+      );
+    }
+
+    if (button.href === '/basket') {
+      return products.length > 0 ? (
         <Link to={button.href}>
           <IconComponent />
-          {button.href === '/basket' && (
-            <div>
-              <span>{productsLength}</span>
-            </div>
-          )}
+          <div>
+            <span>{productsLength}</span>
+          </div>
         </Link>
-      ) : button.href === '/basket' ? (
+      ) : (
         <button className={styles.headerButton} onClick={openEmptyBasketPopup}>
           <IconComponent />
         </button>
-      ) : (
-        <Link to={button.href}>
-          <IconComponent />
-        </Link>
-      )}
+      );
+    }
+
+    return (
+      <Link to={button.href}>
+        <IconComponent />
+      </Link>
+    );
+  };
+
+  return (
+    <>
+      {renderButton()}
       <PopUp
         isOpened={isEmptyBasketPopupOpen}
         onClose={closeEmptyBasketPopup}

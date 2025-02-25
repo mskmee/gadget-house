@@ -13,7 +13,7 @@ export const EmptyBasketPopup: FC<IEmptyBasketPopupProps> = ({
     <div className={styles.emptybasketPopup}>
       <button
         className={styles.emptybasketPopupClose}
-        onClick={() => closeEmptyBasketPopup()}
+        onClick={closeEmptyBasketPopup}
       >
         <img src={closeBasketPopupIcon} alt="close" />
       </button>

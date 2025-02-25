@@ -79,13 +79,11 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
-    console.log('Touch Start:', e.touches[0].clientX); // Debugging
     setAnimation(false);
     setStartX(e.touches[0].clientX);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    console.log('Touch Move:', e.touches[0].clientX); // Debugging
     if (startX !== null) {
       const currentX = e.touches[0].clientX;
       const diff = currentX - startX;
@@ -96,7 +94,6 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
   };
 
   const handleTouchEnd = () => {
-    console.log('Touch End'); // Debugging
     if (startX !== null) {
       const swipeDistance =
         currentTranslate +
@@ -110,7 +107,6 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
         );
       } else if (swipeDistance < -50 && currentIndex < maxIndex) {
         setCurrentIndex((prev) => prev + 1);
-        console.log(responsiveCarouselSettings.gap);
 
         setCurrentTranslate(
           -(currentIndex + 1) * (itemWidth + responsiveCarouselSettings.gap),
@@ -126,7 +122,6 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
       setStartX(null);
     }
   };
-  console.log(currentTranslate);
 
   useEffect(() => {
     const rateComponent = document.querySelectorAll('.reviews_rate-stars');

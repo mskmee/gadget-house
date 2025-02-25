@@ -28,12 +28,36 @@ export default function BasketPopup() {
 
   const { id, name, code, images, quantity, totalPrice } = selectedProduct;
 
+  const handleDecreaseItemQuantity = () => {
+    if (quantity > 1) {
+      decreaseItemQuantity(id);
+    } else {
+      closeBasketPopup();
+      decreaseItemQuantity(id);
+    }
+  };
+
+  const handleIncreaseItemQuantity = () => {
+    increaseItemQuantity(id);
+  };
+
+  const handleClosePopup = () => {
+    closeBasketPopup();
+  };
+
+  const handleGotoBasket = () => {
+    closeBasketPopup();
+    navigate(AppRoute.BASKET_PAGE);
+  };
+
+  const handleRemoveProduct = () => {
+    closeBasketPopup();
+    deleteFromStore(id);
+  };
+
   return (
     <div className={styles.basketPopup}>
-      <button
-        className={styles.basketPopupClose}
-        onClick={() => closeBasketPopup()}
-      >
+      <button className={styles.basketPopupClose} onClick={handleClosePopup}>
         <img src={closeBasketPopupIcon} alt="close" />
       </button>
       <div className={styles.basketPopupProduct}>
@@ -50,20 +74,9 @@ export default function BasketPopup() {
           <p className={styles.basketPopupProductCode}>code:{code}</p>
           <div className={styles.basketPopupProductTotals}>
             <div className={styles.basketPopupProductQuantity}>
-              <button
-                onClick={() => {
-                  if (quantity > 1) {
-                    decreaseItemQuantity(id);
-                  } else {
-                    closeBasketPopup();
-                    decreaseItemQuantity(id);
-                  }
-                }}
-              >
-                -
-              </button>
+              <button onClick={handleDecreaseItemQuantity}>-</button>
               <p>{quantity}</p>
-              <button onClick={() => increaseItemQuantity(id)}>+</button>
+              <button onClick={handleIncreaseItemQuantity}>+</button>
             </div>
           </div>
           <div className={styles.basketPopupBottom}>
@@ -72,16 +85,13 @@ export default function BasketPopup() {
             </h3>
             <button
               className={styles.basketPopupContinueShopping}
-              onClick={() => closeBasketPopup()}
+              onClick={handleClosePopup}
             >
               Continue Shopping
             </button>
             <button
               className={styles.basketPopupGotoBasket}
-              onClick={() => {
-                closeBasketPopup();
-                navigate(AppRoute.BASKET_PAGE);
-              }}
+              onClick={handleGotoBasket}
             >
               Go to basket
             </button>
@@ -89,10 +99,7 @@ export default function BasketPopup() {
         </div>
         <button
           className={styles.basketPopupRemoveProduct}
-          onClick={() => {
-            closeBasketPopup();
-            deleteFromStore(id);
-          }}
+          onClick={handleRemoveProduct}
         >
           <DeleteFromBasket />
         </button>
