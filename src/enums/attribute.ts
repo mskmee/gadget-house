@@ -16,7 +16,7 @@ const Attribute = {
   PROCESSOR_MODEL: 15,
   FLESH_CARD: 16,
   SENSOR_RESOLUTION: 17,
-  VIDEO_CARD: 18
+  VIDEO_CARD: 18,
 } as const;
 
 // eslint-disable-next-line no-redeclare

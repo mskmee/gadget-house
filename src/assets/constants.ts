@@ -113,6 +113,8 @@ import deleteFromBasketPopupIcon from './icons/delete_product_from_popup.svg';
 import inBasket from './icons/approved.svg';
 import ShowPassword from './icons/show-password.svg';
 import InvisiblePassword from './icons/invisible-password.svg';
+import { FlagUA } from './icons/flag';
+import { CloseModal } from './icons/CloseModal';
 
 export {
   Admin,
@@ -224,5 +226,7 @@ export {
   deleteFromBasketPopupIcon,
   inBasket,
   ShowPassword,
-  InvisiblePassword
+  InvisiblePassword,
+  FlagUA,
+  CloseModal,
 };

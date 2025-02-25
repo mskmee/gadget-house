@@ -1,7 +1,10 @@
 import { FC, PropsWithChildren } from 'react';
-import styles from './PopUp.module.scss';
-import classNames from 'classnames';
 import { createPortal } from 'react-dom';
+import classNames from 'classnames';
+
+import { CloseModal } from '@/assets/constants';
+
+import styles from './PopUp.module.scss';
 
 type PopUpProperties = {
   isOpened: boolean;
@@ -26,7 +29,7 @@ const PopUp: FC<PopUpProperties> = ({
     >
       <div className={styles.content} onClick={(e) => e.stopPropagation()}>
         <button onClick={onClose} className={styles.close}>
-          X
+          <CloseModal />
         </button>
         {children}
       </div>

@@ -10,4 +10,3 @@ interface IProductsApi {
 }
 
 export { type IProductsApi };
-

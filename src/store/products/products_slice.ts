@@ -57,7 +57,8 @@ const products_slice = createSlice({
     })
 
     builder.addMatcher(
-      isAnyOf(getAllProducts.fulfilled,
+      isAnyOf(
+        getAllProducts.fulfilled,
         getOneProductById.fulfilled,
         getPaginatedProducts.fulfilled,
         getByCategory.fulfilled),
@@ -66,7 +67,8 @@ const products_slice = createSlice({
       },
     );
     builder.addMatcher(
-      isAnyOf(getAllProducts.rejected,
+      isAnyOf(
+        getAllProducts.rejected,
         getOneProductById.rejected,
         getPaginatedProducts.rejected,
         getByCategory.rejected,),
@@ -75,7 +77,8 @@ const products_slice = createSlice({
       },
     );
     builder.addMatcher(
-      isAnyOf(getAllProducts.pending,
+      isAnyOf(
+        getAllProducts.pending,
         getOneProductById.pending,
         getPaginatedProducts.pending,
         getByCategory.pending),

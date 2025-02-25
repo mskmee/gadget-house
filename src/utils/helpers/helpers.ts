@@ -5,3 +5,4 @@ export {
   convertPriceToNumber,
 } from './basket';
 export { convertPriceToReadable } from './product';
+export { getStrengthPassword } from './password';

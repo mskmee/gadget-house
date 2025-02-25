@@ -60,7 +60,7 @@ export const useResponsiveCarouselSettings = (
     },
     {
       breakpoint: Infinity,
-      slidesToShow:
+      slidesToShow: 
         classname === 'brands-carousel'
           ? 5
           : classname === 'photos-carousel'

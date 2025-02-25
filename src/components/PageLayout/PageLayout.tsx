@@ -6,9 +6,9 @@ import { FiltersDesk } from '@/components/Filters/FiltersDesk';
 import { Filters } from '@/components/Filters/Filters';
 import { SortingDesk } from '@/components/Sort/SortingDesk';
 import { Catalog } from '@/components/Catalog/Catalog';
+import { CustomBreadcrumbs } from '../SingleProduct/CustomBreadcrumbs';
 
 import styles from './page-layout.module.scss';
-import { CustomBreadcrumbs } from '../SingleProduct/CustomBreadcrumbs';
 
 interface IPageLayoutProps {
   products: IProductCard[];
@@ -24,19 +24,19 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   const { pathname: pathName, state } = useLocation();
   const { searchInputValue, isSuggestion } = state ? state : {};
 
-  const pathname = pathName.slice(1).toLowerCase();
+  const pathname = pathName.slice(1);
   let category = '';
-
-  pathname.includes('-')
-    ? (category = pathname.split('-').join(' '))
-    : (category = pathname);
 
   if (pathname.includes('search') && searchInputValue) {
     category = isSuggestion
       ? searchInputValue.split('-').join(' ')
       : `Search results for "${searchInputValue}"`;
   } else {
-    category = pathname;
+    pathname.includes('-')
+      ? (category =
+          pathname.charAt(0).toUpperCase() +
+          pathname.slice(1).split('-').join(' '))
+      : (category = pathname.charAt(0).toUpperCase() + pathname.slice(1));
   }
 
   return (

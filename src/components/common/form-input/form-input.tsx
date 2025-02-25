@@ -1,10 +1,12 @@
+import { useId } from 'react';
 import { useField, FormikValues } from 'formik';
 import { Input, InputProps } from 'antd';
 import { TextAreaProps } from 'antd/es/input';
-import { useId, useState } from 'react';
 import cn from 'classnames';
 
-import { ErrorIcon, ShowPassword, InvisiblePassword } from '@/assets/constants';
+import { PasswordInput } from './password-input';
+import { PhoneInput } from './phone-input';
+import { ErrorIcon } from '@/assets/constants';
 
 import styles from './form-input.module.scss';
 
@@ -16,6 +18,7 @@ type Properties<T extends FormikValues> = Omit<InputProps, 'name'> &
     name: keyof T;
     label?: string;
     span?: string;
+    isRegister?: boolean;
   };
 
 export const FormInput = <T extends FormikValues>({
@@ -24,16 +27,13 @@ export const FormInput = <T extends FormikValues>({
   name,
   span,
   type = 'text',
+  isRegister,
   ...props
 }: Properties<T>) => {
   const [field, meta] = useField(name as string);
   const id = useId();
   const inputId = props.id ?? id;
   const isError = meta.touched && meta.error;
-
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const togglePasswordVisibility = () =>
-    setIsPasswordVisible(!isPasswordVisible);
 
   return (
     <>
@@ -51,37 +51,24 @@ export const FormInput = <T extends FormikValues>({
         label && (
           <label className={cn(styles.formInput__input)} htmlFor={inputId}>
             {inputType === 'input' ? (
-              <div className={styles.formInput__inputWrapper}>
+              type === 'password' ? (
+                <PasswordInput
+                  className={styles.formInput__inputPassword}
+                  field={field}
+                  id={inputId}
+                  isRegister={isRegister}
+                  {...props}
+                />
+              ) : type === 'tel' ? (
+                <PhoneInput field={field} id={inputId} {...props} />
+              ) : (
                 <Input
                   {...field}
                   {...(props as InputProps)}
                   id={inputId}
-                  type={
-                    type === 'password'
-                      ? isPasswordVisible
-                        ? 'text'
-                        : 'password'
-                      : type
-                  }
                   status={isError ? 'error' : ''}
                 />
-                {type === 'password' && (
-                  <button
-                    type="button"
-                    onClick={togglePasswordVisibility}
-                    className={styles.formInput__passwordToggle}
-                  >
-                    {isPasswordVisible ? (
-                      <img src={ShowPassword} alt="Show password icon" />
-                    ) : (
-                      <img
-                        src={InvisiblePassword}
-                        alt="Invisible password icon"
-                      />
-                    )}
-                  </button>
-                )}
-              </div>
+              )
             ) : (
               <Input.TextArea
                 {...field}

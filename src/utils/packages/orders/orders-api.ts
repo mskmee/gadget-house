@@ -1,8 +1,8 @@
-import { ApiEndpoint, HttpMethod, request } from "../http";
-import { IOrdersApi } from "./libs/interfaces/orders-api.interface";
-import { OrderDto, OrderResponseDto } from "./libs/types/order-item";
-import { OrderItemResponseDto } from "./libs/types/order-item-response-dto";
-import { OrdersResponseDto } from "./libs/types/orders-response-dto";
+import { ApiEndpoint, HttpMethod, request } from '../http';
+import { IOrdersApi } from './libs/interfaces/orders-api.interface';
+import { OrderDto, OrderResponseDto } from './libs/types/order-item';
+import { OrderItemResponseDto } from './libs/types/order-item-response-dto';
+import { OrdersResponseDto } from './libs/types/orders-response-dto';
 
 class OrdersApi implements IOrdersApi {
   async getAll(): Promise<OrdersResponseDto> {
