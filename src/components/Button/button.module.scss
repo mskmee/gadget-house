@@ -25,19 +25,25 @@
 .headerButton svg {
   path {
     stroke: #000;
+    stroke-width: 1px;
+  }
+}
+.headerButton:first-child svg {
+  path {
+    stroke: #000;
     stroke-width: 1.5px;
   }
 }
 .headerButton:nth-child(2) svg {
   path {
     stroke: #000;
-    stroke-width: 1px;
+    stroke-width: 0.5px;
   }
 }
 
 .headerButton:last-child svg {
-  width: 28px;
-  height: 28px;
+  width: 34px;
+  height: 34px;
 }
 
 .navBtn {

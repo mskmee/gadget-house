@@ -173,7 +173,12 @@ const shoppingCard_slice = createSlice({
     builder.addCase(createOrder.fulfilled, (state, { payload }) => {
       state.orderId = payload;
     });
-    builder.addMatcher(isAnyOf(createOrder.rejected, createOrder.pending), (state) => { state.orderId = null; });
+    builder.addMatcher(
+      isAnyOf(createOrder.rejected, createOrder.pending),
+      (state) => {
+        state.orderId = null;
+      },
+    );
   },
 });
 

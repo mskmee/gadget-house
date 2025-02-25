@@ -36,7 +36,7 @@ export interface StatusButtonProps {
 export type ProductImageCard = {
   link: string;
   order: number;
-}
+};
 
 export interface IProductCard {
   id: number;
@@ -66,7 +66,7 @@ export interface IProduct {
   id: number;
   price: number;
   category: string;
-  title: string;
+  name: string;
   img: string[];
   basketIcon: () => ReactElement;
   anotherColors: string[];
