@@ -5,6 +5,7 @@ import {
   AuthSignUpRequestDto,
   AuthSignUpResponseDto,
   AuthForgotPasswordResponseDto,
+  UserResponseDto,
 } from './libs/types/types';
 
 class AuthService implements IAuthService {
@@ -23,6 +24,10 @@ class AuthService implements IAuthService {
 
   async forgotPassword(email: string): Promise<AuthForgotPasswordResponseDto> {
     return this.authApi.forgotPassword(email);
+  }
+
+  async fetchUserProfile(): Promise<UserResponseDto> {
+    return this.authApi.fetchUserProfile();
   }
 }
 

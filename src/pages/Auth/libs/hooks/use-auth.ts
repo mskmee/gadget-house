@@ -19,6 +19,7 @@ import {
   createUser,
   forgotPassword,
   getCredentials,
+  getUserData,
 } from '@/store/auth/actions';
 import { SuccessType } from '../types/successType';
 import { LocalStorageKey, localStorageService } from '@/utils/packages/local-storage';
@@ -129,14 +130,14 @@ const useAuth = (): Return => {
       setSuccessType(FormEnum.LOGIN);
       localStorageService.setItem(LocalStorageKey.ACCESS_TOKEN, result.accessToken);
       localStorageService.setItem(LocalStorageKey.REFRESH_TOKEN, result.refreshToken);
+
+      dispatchApp(getUserData());
     }
 
     dispatch({
       type: AuthAction.LOGIN_FORM,
       payload: loginFormValue,
     });
-
-    dispatch({ type: AuthAction.RESET_FORM });
 
     dispatch({ type: AuthAction.RESET_FORM });
   };

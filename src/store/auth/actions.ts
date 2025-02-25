@@ -27,4 +27,11 @@ const forgotPassword = createAsyncThunk(
   },
 );
 
-export { getCredentials, createUser, forgotPassword };
+const getUserData = createAsyncThunk(
+  'auth/fetchUserProfile ',
+  async () => {
+    return await authService.fetchUserProfile();
+  },
+);
+
+export { getCredentials, createUser, forgotPassword, getUserData };

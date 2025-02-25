@@ -2,7 +2,8 @@ import { createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit';
 
 import { DataStatus } from '@/enums/data-status';
 import { User } from '@/pages/Auth/libs/types/types';
-import { createUser, getCredentials } from './actions';
+import { createUser, getCredentials, getUserData } from './actions';
+import { LocalStorageKey, localStorageService } from '@/utils/packages/local-storage';
 
 export interface IAuthState {
   isAuthenticated: boolean;
@@ -15,8 +16,8 @@ export interface IAuthState {
 const initialState: IAuthState = {
   isAuthenticated: false,
   user: null,
-  userToken: null,
-  refreshToken: null,
+  userToken: localStorageService.getItem(LocalStorageKey.ACCESS_TOKEN) || null,
+  refreshToken: localStorageService.getItem(LocalStorageKey.REFRESH_TOKEN) || null,
   dataStatus: DataStatus.IDLE,
 };
 
@@ -43,21 +44,24 @@ const authSlice = createSlice({
     builder.addCase(createUser.fulfilled, (state, { payload }) => {
       state.user = payload;
     });
+    builder.addCase(getUserData.fulfilled, (state, { payload }) => {
+      state.user = payload;
+    });
 
     builder.addMatcher(
-      isAnyOf(getCredentials.fulfilled, createUser.fulfilled),
+      isAnyOf(getCredentials.fulfilled, createUser.fulfilled, getUserData.fulfilled),
       (state) => {
         state.dataStatus = DataStatus.FULFILLED;
       },
     );
     builder.addMatcher(
-      isAnyOf(getCredentials.rejected, createUser.rejected),
+      isAnyOf(getCredentials.rejected, createUser.rejected, getUserData.rejected),
       (state) => {
         state.dataStatus = DataStatus.REJECT;
       },
     );
     builder.addMatcher(
-      isAnyOf(getCredentials.pending, createUser.pending),
+      isAnyOf(getCredentials.pending, createUser.pending, getUserData.pending),
       (state) => {
         state.dataStatus = DataStatus.PENDING;
       },

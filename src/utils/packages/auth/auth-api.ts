@@ -6,7 +6,9 @@ import {
   AuthSignUpRequestDto,
   AuthSignUpResponseDto,
   AuthForgotPasswordResponseDto,
+  UserResponseDto,
 } from './libs/types/types';
+import { LocalStorageKey, localStorageService } from '../local-storage';
 
 class AuthApi implements IAuthApi {
   async signInAuth(data: AuthSignInRequestDto): Promise<AuthSignInResponseDto> {
@@ -30,6 +32,14 @@ class AuthApi implements IAuthApi {
       method: HttpMethod.POST,
       url: ApiEndpoint.SIGNIN,
       body: { email },
+    });
+  }
+
+  async fetchUserProfile(): Promise<UserResponseDto> {
+    return request({
+      method: HttpMethod.GET,
+      url: ApiEndpoint.USER,
+      headers: { Authorization: `Bearer ${localStorageService.getItem(LocalStorageKey.ACCESS_TOKEN)}` },
     });
   }
 }
