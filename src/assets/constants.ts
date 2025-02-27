@@ -113,6 +113,8 @@ import deleteFromBasketPopupIcon from './icons/delete_product_from_popup.svg';
 import inBasket from './icons/approved.svg';
 import ShowPassword from './icons/show-password.svg';
 import InvisiblePassword from './icons/invisible-password.svg';
+import quantityDecreaseButton from './icons/Quantity-Decrease-Button.svg';
+import quantityInreaseButton from './icons/Quantity-Increase-Button.svg';
 
 export {
   Admin,
@@ -224,5 +226,7 @@ export {
   deleteFromBasketPopupIcon,
   inBasket,
   ShowPassword,
-  InvisiblePassword
+  InvisiblePassword,
+  quantityDecreaseButton,
+  quantityInreaseButton,
 };
