@@ -30,7 +30,7 @@
   > ol > li:nth-last-child(2) svg path {
     stroke: #1c1817;
   }
-  @media (max-width: 567px) {
+  @media (max-width: 768px) {
     display: none;
   }
 }
@@ -347,10 +347,7 @@
     font-size: 1rem;
     font-weight: 500;
   }
-  &:focus-visible {
-    margin: 5px;
-    outline: 1px solid #000;
-  }
+
   &:hover {
     background-color: #4da856;
   }
