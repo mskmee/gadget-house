@@ -1,9 +1,8 @@
 import { RegisterFormDto } from '../types/form-dto';
 
-
 const REGISTER_FORM_INITIAL_VALUE: RegisterFormDto = {
-  name: '',
-  surname: '',
+  firstName: '',
+  lastName: '',
   email: '',
   phoneNumber: '',
   password: '',

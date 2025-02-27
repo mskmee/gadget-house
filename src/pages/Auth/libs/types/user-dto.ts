@@ -1,8 +1,8 @@
 type User = {
-  name?: string;
-  surname?: string;
+  firstName?: string;
+  lastName?: string;
   email?: string;
   phoneNumber?: string;
-}
+};
 
 export type { User };

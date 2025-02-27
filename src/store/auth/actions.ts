@@ -1,18 +1,37 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+
 import { authService } from '@/utils/packages/auth';
+import {
+  AuthSignInRequestDto,
+  AuthSignUpRequestDto,
+} from '@/utils/packages/auth/libs/types/types';
 
 const getCredentials = createAsyncThunk(
   'auth/fetchCredentials',
-  async () => {
-    return await authService.signInAuth();
-  }
+  async (data: AuthSignInRequestDto) => {
+    return await authService.signInAuth(data);
+  },
 );
 
 const createUser = createAsyncThunk(
-  'auth/fetchCredentials',
-  async () => {
-    return await authService.signUpAuth();
-  }
+  'auth/fetchUserCreate',
+  async (data: AuthSignUpRequestDto) => {
+    return await authService.signUpAuth(data);
+  },
 );
 
-export { getCredentials, createUser };
+const forgotPassword = createAsyncThunk(
+  'auth/fetchForgotPassword',
+  async (email: string) => {
+    return await authService.forgotPassword(email);
+  },
+);
+
+const getUserData = createAsyncThunk(
+  'auth/fetchUserProfile ',
+  async () => {
+    return await authService.fetchUserProfile();
+  },
+);
+
+export { getCredentials, createUser, forgotPassword, getUserData };

@@ -20,6 +20,13 @@ const RegisterForm: FC<IRegisterFormProps> = ({
   onRegister,
   onSwitch,
 }) => {
+  const passwordRules = [
+    'Password length must be between 8 and 24 characters',
+    'Password must contain at least one digit',
+    'One lowercase and uppercase Latin character ',
+    'One special character',
+  ];
+
   return (
     <div className={styles.form}>
       <Formik<RegisterFormDto>
@@ -27,8 +34,9 @@ const RegisterForm: FC<IRegisterFormProps> = ({
         validateOnBlur={false}
         validateOnChange={false}
         validationSchema={registerFormValidationSchema}
-        onSubmit={(values) => {
+        onSubmit={(values, { resetForm }) => {
           onRegister(values);
+          resetForm();
         }}
       >
         <Form className={styles.form__form}>
@@ -37,13 +45,13 @@ const RegisterForm: FC<IRegisterFormProps> = ({
           <div className={styles.form__inputs} style={{ marginBottom: '24px' }}>
             <div className={styles.form__inputsName}>
               <FormInput<RegisterFormDto>
-                name="name"
+                name="firstName"
                 type="text"
                 label="Name"
                 placeholder="Name"
               />
               <FormInput<RegisterFormDto>
-                name="surname"
+                name="lastName"
                 type="text"
                 label="Surname"
                 placeholder="Surname"
@@ -59,7 +67,7 @@ const RegisterForm: FC<IRegisterFormProps> = ({
 
             <FormInput<RegisterFormDto>
               name="phoneNumber"
-              type="text"
+              type="tel"
               label="Phone number"
               placeholder="Phone number"
             />
@@ -69,7 +77,14 @@ const RegisterForm: FC<IRegisterFormProps> = ({
               type="password"
               label="Password"
               placeholder="Password"
+              isRegister={true}
             />
+
+            <ul className={styles.form__passwordRules}>
+              {passwordRules.map((rule) => (
+                <li key={rule}>{rule}</li>
+              ))}
+            </ul>
 
             <FormInput<RegisterFormDto>
               name="passwordRepeat"

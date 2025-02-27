@@ -11,4 +11,3 @@ interface IOrdersApi {
 }
 
 export { type IOrdersApi };
-
