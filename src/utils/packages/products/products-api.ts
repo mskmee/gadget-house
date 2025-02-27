@@ -28,7 +28,7 @@ class ProductsApi implements IProductsApi {
       url: `${ApiEndpoint.PRODUCTS}/${id}`,
     });
   }
-
+  
   async getPaginatedProducts(categoryId: number | null, page: number,
     size: number): Promise<ProductsResponseDto> {
     return request({
@@ -37,7 +37,7 @@ class ProductsApi implements IProductsApi {
       query: { categoryId, page, size },
     });
   }
-
+  
   async getFilteredProducts(
     categoryId: number,
     brandIds: number[] = [],

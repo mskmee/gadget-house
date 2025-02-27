@@ -1,5 +1,5 @@
-import { DeliveryMethodType } from "../enums/delivery-method";
-import { PaymentMethodType } from "../enums/payment-method";
+import { DeliveryMethodType } from '../enums/delivery-method';
+import { PaymentMethodType } from '../enums/payment-method';
 
 type ContactsFormDto = {
   fullName: string;
@@ -8,7 +8,7 @@ type ContactsFormDto = {
   comment?: string;
 };
 
-type DeliveryFormDto =  {
+type DeliveryFormDto = {
   deliveryType: DeliveryMethodType;
   city: string;
   street?: string;
@@ -17,7 +17,7 @@ type DeliveryFormDto =  {
   flat?: string;
 };
 
-type PaymentFormDto =  {
+type PaymentFormDto = {
   paymentType: PaymentMethodType;
 };
 
