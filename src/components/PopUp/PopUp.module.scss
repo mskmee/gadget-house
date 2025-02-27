@@ -60,7 +60,6 @@
   background: rgba(28, 24, 23, 0.7);
   .content {
     padding: 0;
-    width: auto;
     height: auto;
   }
   .close {
@@ -77,5 +76,36 @@
     height: auto;
     border-radius: 20px;
     padding: 48px;
+  }
+}
+@media screen and (min-width: 1540px) {
+  .basket-modal {
+    .content {
+      max-width: 1240px;
+      width: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .basket-modal {
+    .content {
+      width: 90%;
+    }
+  }
+}
+@media screen and (max-width: 600px) {
+  .basket-modal {
+    .content {
+      width: 96%;
+    }
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .basket-modal {
+    .content {
+      padding: 6px;
+    }
   }
 }

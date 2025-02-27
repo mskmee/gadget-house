@@ -115,6 +115,8 @@ import ShowPassword from './icons/show-password.svg';
 import InvisiblePassword from './icons/invisible-password.svg';
 import { FlagUA } from './icons/flag';
 import { CloseModal } from './icons/CloseModal';
+import quantityDecreaseButton from './icons/quantity-decrease.svg';
+import quantityInreaseButton from './icons/quantity-increase.svg';
 
 export {
   Admin,
@@ -229,4 +231,6 @@ export {
   InvisiblePassword,
   FlagUA,
   CloseModal,
+  quantityDecreaseButton,
+  quantityInreaseButton,
 };

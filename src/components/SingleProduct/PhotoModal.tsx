@@ -2,7 +2,6 @@ import { Dispatch, FC, SetStateAction, useEffect, useRef } from 'react';
 import style from './Product.module.scss';
 import classNames from 'classnames';
 import { arrowImg } from '@/assets/constants';
-
 import { Modal } from 'antd';
 import { AddToBasketButton } from './AddToBasketButton';
 import { convertPriceToReadable } from '@/utils/helpers/product';

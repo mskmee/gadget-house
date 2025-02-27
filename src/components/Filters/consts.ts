@@ -93,7 +93,7 @@ export const filters = {
 export const smartData: IProduct[] = [
   {
     id: 1,
-    title: 'iPhone 15 Pro Silicone Case with MagSafe',
+    name: 'iPhone 15 Pro Silicone Case with MagSafe',
     img: [accessoriesImg1],
     basketIcon: BasketIcon,
     anotherColors: [],
@@ -110,7 +110,7 @@ export const smartData: IProduct[] = [
   },
   {
     id: 2,
-    title: 'iPhone 15 Pro Silicone Case with MagSafe',
+    name: 'iPhone 15 Pro Silicone Case with MagSafe',
     img: [accessoriesImg2],
     basketIcon: BasketIcon,
     anotherColors: [],
@@ -127,7 +127,7 @@ export const smartData: IProduct[] = [
   },
   {
     id: 3,
-    title: 'iPhone 15 Pro Silicone Case with MagSafe',
+    name: 'iPhone 15 Pro Silicone Case with MagSafe',
     img: [accessoriesImg3],
     basketIcon: BasketIcon,
     anotherColors: ['#FFFF00', '#00820D', '#1C1817', '#FFCBDB', '#00BFFF'],
@@ -144,7 +144,7 @@ export const smartData: IProduct[] = [
   },
   {
     id: 4,
-    title: 'iPhone 15 Pro Silicone Case with MagSafe',
+    name: 'iPhone 15 Pro Silicone Case with MagSafe',
     img: [accessoriesImg4],
     basketIcon: BasketIcon,
     anotherColors: ['#ffffff', '#00BFFF', '#3EB489', '#FFCBDB', '#C8A2C8'],
@@ -161,7 +161,7 @@ export const smartData: IProduct[] = [
   },
   {
     id: 5,
-    title: 'iPhone 15 Pro Silicone Case with MagSafe',
+    name: 'iPhone 15 Pro Silicone Case with MagSafe',
     img: [accessoriesImg2],
     basketIcon: BasketIcon,
     anotherColors: ['#000', '#d84f34', '#236aed', '#FFCBDB', '#C8A2C8'],
@@ -178,7 +178,7 @@ export const smartData: IProduct[] = [
   },
   {
     id: 6,
-    title: 'iPhone 15 Pro Silicone Case with MagSafe',
+    name: 'iPhone 15 Pro Silicone Case with MagSafe',
     img: [accessoriesImg4],
     basketIcon: BasketIcon,
     anotherColors: [],
