@@ -1,6 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { DEFAULT_SIZE } from '@/constants/pagination';
+import { AppDispatch, RootState } from '@/store';
+import { getFilteredProducts } from '@/store/products/actions';
+import { selectBrandIds } from '@/store/filters/selectors';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { IProductCard } from '@/interfaces/interfaces';
 import { FiltersDesk } from '@/components/Filters/FiltersDesk';
 import { Filters } from '@/components/Filters/Filters';
@@ -23,6 +29,42 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
 }) => {
   const { pathname: pathName, state } = useLocation();
   const { searchInputValue, isSuggestion } = state ? state : {};
+  const dispatch: AppDispatch = useDispatch();
+  const { pagination } = useTypedSelector((state: RootState) => state.products);
+  const {
+    selectedSort,
+    selectedCategoryId,
+    selectedPriceRange,
+    selectedCameraRange,
+  } = useTypedSelector((state: RootState) => state.filters);
+  const brandIds = useSelector(selectBrandIds);
+  // const attributesIds = useSelector(selectFilteredAttributes);
+
+  useEffect(() => {
+    dispatch(
+      getFilteredProducts({
+        page: pagination.currentPage,
+        size: DEFAULT_SIZE,
+        categoryId: selectedCategoryId ?? null,
+        brandIds: brandIds,
+        // attributes: attributesIds,
+        minPrice: selectedPriceRange[0],
+        maxPrice: selectedPriceRange[1],
+        minCameraMP: selectedCameraRange[0],
+        maxCameraMP: selectedCameraRange[1],
+        sort: selectedSort as string,
+      }),
+    );
+  }, [
+    dispatch,
+    pagination.currentPage,
+    selectedCategoryId,
+    brandIds,
+    // attributesIds,
+    selectedCameraRange,
+    selectedPriceRange,
+    selectedSort,
+  ]);
 
   const pathname = pathName.slice(1);
   let category = '';

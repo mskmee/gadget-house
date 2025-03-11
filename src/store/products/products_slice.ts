@@ -7,6 +7,7 @@ import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 import {
   getAllProducts,
   getByCategory,
+  getFilteredProducts,
   getOneProductById,
   getPaginatedProducts,
 } from './actions';
@@ -39,6 +40,9 @@ const products_slice = createSlice({
     setPageNumber: (state, { payload }: { payload: number }) => {
       state.pagination.currentPage = payload;
     },
+    clearProductsData: (state) => {
+      state.productsData = null;
+    }
   },
   extraReducers(builder) {
     builder.addCase(getAllProducts.fulfilled, (state, { payload }) => {
@@ -54,6 +58,11 @@ const products_slice = createSlice({
     });
     builder.addCase(getByCategory.fulfilled, (state, { payload }) => {
       state.productsData = payload;
+      state.pagination = { currentPage: payload.currentPage, totalPages: payload.totalPages, totalElements: payload.totalElements };
+    })
+    builder.addCase(getFilteredProducts.fulfilled, (state, { payload }) => {
+      state.productsData = payload;
+      state.pagination = { currentPage: payload.currentPage, totalPages: payload.totalPages, totalElements: payload.totalElements };
     })
 
     builder.addMatcher(
@@ -61,7 +70,8 @@ const products_slice = createSlice({
         getAllProducts.fulfilled,
         getOneProductById.fulfilled,
         getPaginatedProducts.fulfilled,
-        getByCategory.fulfilled),
+        getByCategory.fulfilled,
+        getFilteredProducts.fulfilled),
       (state) => {
         state.dataStatus = DataStatus.FULFILLED;
       },
@@ -71,7 +81,8 @@ const products_slice = createSlice({
         getAllProducts.rejected,
         getOneProductById.rejected,
         getPaginatedProducts.rejected,
-        getByCategory.rejected,),
+        getByCategory.rejected,
+        getFilteredProducts.rejected),
       (state) => {
         state.dataStatus = DataStatus.REJECT;
       },
@@ -81,13 +92,14 @@ const products_slice = createSlice({
         getAllProducts.pending,
         getOneProductById.pending,
         getPaginatedProducts.pending,
-        getByCategory.pending),
+        getByCategory.pending,
+        getFilteredProducts.pending),
       (state) => {
         state.dataStatus = DataStatus.PENDING;
       },
     );
   },
 });
-export const { setPageNumber } = products_slice.actions;
+export const { setPageNumber, clearProductsData } = products_slice.actions;
 
 export const { actions, reducer } = products_slice;
