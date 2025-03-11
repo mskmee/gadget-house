@@ -1,10 +1,10 @@
-import type { StatusSearch } from '@/types/StatusSearch';
 import type {
   ComponentType,
   CSSProperties,
   MouseEvent,
   ReactElement,
 } from 'react';
+import type { StatusSearch } from '@/types/StatusSearch';
 
 export interface SliderButtonProps {
   handlePrevClick: (event: MouseEvent) => void;
@@ -100,7 +100,7 @@ export interface IOption {
   title: string;
   filterKey: string;
   selectedOptions: Record<string, string[]>;
-  setSelectedOptions: (options: Record<string, string[]>) => void;
+  onOptionChange: (filterKey: string, checkedValues: string[]) => void;
 }
 
 export interface ISortProps {

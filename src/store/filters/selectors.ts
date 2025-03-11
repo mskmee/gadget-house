@@ -25,17 +25,15 @@ export const selectBrandIds = createSelector([selectBrands], (selectedOptions) =
 });
 
 export const selectFilteredAttributes = createSelector([selectAttributes], (selectedOptions) => {
-  const ids: number[] = [];
 
-  if (!Array.isArray(selectedOptions)) return ids;
+  if (!Array.isArray(selectedOptions)) return [];
 
-  selectedOptions.forEach((value) => {
+  return selectedOptions.reduce<number[]>((ids, value) => {
     Object.values(Filters).forEach(({ attributes }) => {
       if (attributes[value] !== undefined) {
         ids.push(attributes[value]);
       }
     });
-  });
-
-  return ids;
+    return ids;
+  }, []);
 });

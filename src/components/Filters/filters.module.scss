@@ -82,12 +82,7 @@
   &__option {
     :global {
       .ant-checkbox-wrapper {
-        font-family: "Inter", sans-serif;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 150%;
-        color: var(--text-color);
-        text-transform: capitalize;
+        align-items: center;
 
         &:hover .ant-checkbox-inner {
           border-color: transparent !important;
@@ -95,13 +90,14 @@
       }
 
       .ant-checkbox {
+        width: 18px;
+        height: 18px;
         border-radius: 3px;
         border: 1px solid var(--text-color);
         background-color: white;
+        box-sizing: border-box;
 
         &-inner {
-          width: 18px;
-          height: 18px;
           border: none !important;
           outline: none !important;
           outline-offset: 0px !important;
@@ -111,6 +107,12 @@
           padding-inline-start: 12px;
           display: flex;
           align-items: center;
+          font-family: "Inter", sans-serif;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 150%;
+          color: var(--text-color);
+          text-transform: capitalize;
         }
 
         &-checked .ant-checkbox-inner::after {
@@ -118,6 +120,8 @@
         }
 
         &-checked .ant-checkbox-inner {
+          width: 17px;
+          height: 16px;
           background-image: url("../../assets/icons/checked.svg");
           border-color: transparent !important;
           background-color: transparent !important;
@@ -165,14 +169,19 @@
           .ant-checkbox {
             border-radius: 50%;
 
+            input {
+              width: 18px;
+              height: 18px;
+            }
+
             &-inner {
               border-radius: 50%;
             }
 
             &-checked .ant-checkbox-inner {
               background-image: url("../../assets/icons/checked-circle.svg");
-              border-color: transparent !important;
-              background-color: transparent !important;
+              background-repeat: no-repeat;
+              background-size: cover;
             }
           }
         }
@@ -184,8 +193,9 @@
             + span {
               &::before {
                 content: "";
-                width: 16.3px;
-                height: 16.3px;
+                box-sizing: border-box;
+                width: 18px;
+                height: 18px;
                 display: inline-block;
                 margin-right: 8px;
                 border-radius: 3px;

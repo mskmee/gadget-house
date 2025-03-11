@@ -7,7 +7,6 @@ import { filters } from './consts';
 import { AppDispatch } from '@/store';
 import {
   setSelectedAttributes,
-  // setSelectedAttributes,
   setSelectedBrands,
   setSelectedCameraRange,
   setSelectedPriceRange,
@@ -84,6 +83,13 @@ export const FiltersDesk = () => {
     if (!checkKeydownEvent(event.key)) {
       event.preventDefault();
     }
+  };
+
+  const handleFilterChange = (filterKey: string, checkedValues: string[]) => {
+    setSelectedOptions((prev) => ({
+      ...prev,
+      [filterKey]: checkedValues.length ? checkedValues : [],
+    }));
   };
 
   return (
@@ -165,7 +171,7 @@ export const FiltersDesk = () => {
               filterKey="brands"
               title="Brand"
               selectedOptions={selectedOptions}
-              setSelectedOptions={setSelectedOptions}
+              onOptionChange={handleFilterChange}
             />
           )}
 
@@ -175,7 +181,7 @@ export const FiltersDesk = () => {
               title="Built-in memory"
               filterKey="builtInMemory"
               selectedOptions={selectedOptions}
-              setSelectedOptions={setSelectedOptions}
+              onOptionChange={handleFilterChange}
             />
           )}
 
@@ -185,7 +191,7 @@ export const FiltersDesk = () => {
               title="RAM"
               filterKey="rams"
               selectedOptions={selectedOptions}
-              setSelectedOptions={setSelectedOptions}
+              onOptionChange={handleFilterChange}
             />
           )}
 
@@ -195,7 +201,7 @@ export const FiltersDesk = () => {
               title="Separate slot for&nbsp;memory"
               filterKey="memorySlot"
               selectedOptions={selectedOptions}
-              setSelectedOptions={setSelectedOptions}
+              onOptionChange={handleFilterChange}
             />
           )}
 
@@ -205,7 +211,7 @@ export const FiltersDesk = () => {
               title="Color"
               filterKey="colors"
               selectedOptions={selectedOptions}
-              setSelectedOptions={setSelectedOptions}
+              onOptionChange={handleFilterChange}
             />
           )}
 
@@ -292,7 +298,7 @@ export const FiltersDesk = () => {
               title="Number of cores"
               filterKey="cores"
               selectedOptions={selectedOptions}
-              setSelectedOptions={setSelectedOptions}
+              onOptionChange={handleFilterChange}
             />
           )}
 
@@ -302,7 +308,7 @@ export const FiltersDesk = () => {
               title="Screen type"
               filterKey="screenType"
               selectedOptions={selectedOptions}
-              setSelectedOptions={setSelectedOptions}
+              onOptionChange={handleFilterChange}
             />
           )}
         </div>

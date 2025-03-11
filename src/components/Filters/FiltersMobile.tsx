@@ -56,6 +56,20 @@ export const FiltersMobile = ({
     setShowCategory(!showCategory);
   };
 
+  const onMinInputChange = (value: number | null) => {
+    if (value !== null && value <= maxPrice) {
+      handleMinPriceChange(value);
+      setPriceRange([value, maxPrice]);
+    }
+  };
+
+  const onMaxInputChange = (value: number | null) => {
+    if (value !== null && value >= minPrice) {
+      handleMaxPriceChange(value);
+      setPriceRange([minPrice, value]);
+    }
+  };
+
   const handleSliderChange = (value: number[]) => {
     setPriceRange(value);
     handleMinPriceChange(value[0]);
@@ -74,6 +88,13 @@ export const FiltersMobile = ({
     if (!checkKeydownEvent(event.key)) {
       event.preventDefault();
     }
+  };
+
+  const handleFilterChange = (filterKey: string, checkedValues: string[]) => {
+    setSelectedOptions((prev) => ({
+      ...prev,
+      [filterKey]: checkedValues.length ? checkedValues : [],
+    }));
   };
 
   const drawerStyles: DrawerStyles = {
@@ -143,7 +164,7 @@ export const FiltersMobile = ({
                 max={99999}
                 value={minPrice}
                 controls={false}
-                onChange={handleMinPriceChange}
+                onChange={onMinInputChange}
                 inputMode="numeric"
                 stringMode={false}
                 onKeyDown={handleKeyDown}
@@ -169,7 +190,7 @@ export const FiltersMobile = ({
                 max={100000}
                 value={maxPrice}
                 controls={false}
-                onChange={handleMaxPriceChange}
+                onChange={onMaxInputChange}
                 inputMode="numeric"
                 stringMode={false}
                 onKeyDown={handleKeyDown}
@@ -195,7 +216,7 @@ export const FiltersMobile = ({
             filterKey="brands"
             title="Brand"
             selectedOptions={selectedOptions}
-            setSelectedOptions={setSelectedOptions}
+            onOptionChange={handleFilterChange}
           />
         )}
 
@@ -205,7 +226,7 @@ export const FiltersMobile = ({
             title="Built-in memory"
             filterKey="builtInMemory"
             selectedOptions={selectedOptions}
-            setSelectedOptions={setSelectedOptions}
+            onOptionChange={handleFilterChange}
           />
         )}
 
@@ -215,7 +236,7 @@ export const FiltersMobile = ({
             title="RAM"
             filterKey="rams"
             selectedOptions={selectedOptions}
-            setSelectedOptions={setSelectedOptions}
+            onOptionChange={handleFilterChange}
           />
         )}
 
@@ -224,7 +245,7 @@ export const FiltersMobile = ({
           title="Separate slot for memory"
           filterKey="memorySlot"
           selectedOptions={selectedOptions}
-          setSelectedOptions={setSelectedOptions}
+          onOptionChange={handleFilterChange}
         />
 
         {filters.colors && (
@@ -233,7 +254,7 @@ export const FiltersMobile = ({
             title="Color"
             filterKey="colors"
             selectedOptions={selectedOptions}
-            setSelectedOptions={setSelectedOptions}
+            onOptionChange={handleFilterChange}
           />
         )}
 
@@ -321,7 +342,7 @@ export const FiltersMobile = ({
             title="Number of cores"
             filterKey="cores"
             selectedOptions={selectedOptions}
-            setSelectedOptions={setSelectedOptions}
+            onOptionChange={handleFilterChange}
           />
         )}
 
@@ -331,7 +352,7 @@ export const FiltersMobile = ({
             title="Screen type"
             filterKey="screens"
             selectedOptions={selectedOptions}
-            setSelectedOptions={setSelectedOptions}
+            onOptionChange={handleFilterChange}
           />
         )}
       </div>

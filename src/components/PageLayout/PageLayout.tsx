@@ -1,11 +1,14 @@
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import { DEFAULT_SIZE } from '@/constants/pagination';
 import { AppDispatch, RootState } from '@/store';
 import { getFilteredProducts } from '@/store/products/actions';
-import { selectBrandIds } from '@/store/filters/selectors';
+import {
+  selectBrandIds,
+  selectFilteredAttributes,
+} from '@/store/filters/selectors';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { IProductCard } from '@/interfaces/interfaces';
 import { FiltersDesk } from '@/components/Filters/FiltersDesk';
@@ -38,7 +41,7 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
     selectedCameraRange,
   } = useTypedSelector((state: RootState) => state.filters);
   const brandIds = useSelector(selectBrandIds);
-  // const attributesIds = useSelector(selectFilteredAttributes);
+  const attributesIds = useSelector(selectFilteredAttributes, shallowEqual);
 
   useEffect(() => {
     dispatch(
@@ -47,7 +50,7 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
         size: DEFAULT_SIZE,
         categoryId: selectedCategoryId ?? null,
         brandIds: brandIds,
-        // attributes: attributesIds,
+        attributes: attributesIds,
         minPrice: selectedPriceRange[0],
         maxPrice: selectedPriceRange[1],
         minCameraMP: selectedCameraRange[0],
@@ -60,7 +63,7 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
     pagination.currentPage,
     selectedCategoryId,
     brandIds,
-    // attributesIds,
+    attributesIds,
     selectedCameraRange,
     selectedPriceRange,
     selectedSort,

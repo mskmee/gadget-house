@@ -13,7 +13,7 @@ export const Option = ({
   title,
   filterKey,
   selectedOptions,
-  setSelectedOptions = () => {},
+  onOptionChange,
 }: IOption) => {
   const [showCategory, setShowCategory] = useState(true);
   const [showMoreOptions, setShowMoreOptions] = useState(false);
@@ -27,14 +27,7 @@ export const Option = ({
   };
 
   const handleOptionChange = (checkedValues: string[]) => {
-    setSelectedOptions((prev: Record<string, string[]> | undefined) => {
-      const updatedState = {
-        ...(prev ?? {}),
-        [filterKey as string]: checkedValues.length ? checkedValues : [],
-      };
-
-      return updatedState;
-    });
+    onOptionChange(filterKey, checkedValues);
   };
 
   return (
@@ -61,7 +54,7 @@ export const Option = ({
       {showCategory && (
         <>
           <Checkbox.Group
-            options={options ?? []}
+            // options={options ?? []}
             value={selectedOptions[filterKey] || []}
             onChange={(values) => handleOptionChange(values as string[])}
             className={cn(
@@ -74,7 +67,7 @@ export const Option = ({
               .slice(0, showMoreOptions ? options.length : 5)
               .map((option) => (
                 <Checkbox
-                  key={option}
+                  key={`${option}-checkbox`}
                   value={option}
                   className={styles.filters__optionItem}
                   style={
