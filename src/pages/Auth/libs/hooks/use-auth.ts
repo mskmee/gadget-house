@@ -1,6 +1,9 @@
 /* eslint-disable no-unused-vars */
 import { Reducer, useReducer, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
+import { AppDispatch } from '@/store';
+import { AuthAction, FormEnum } from '../enums/enums';
 import {
   LOGIN_FORM_INITIAL_VALUE,
   REGISTER_FORM_INITIAL_VALUE,
@@ -12,9 +15,6 @@ import {
   LoginFormDto,
   RegisterFormDto,
 } from '../types/form-dto';
-import { AuthAction, FormEnum } from '../enums/enums';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '@/store';
 import {
   createUser,
   forgotPassword,
@@ -46,21 +46,24 @@ type State = {
 
 type ReducerAction =
   | {
-      type: AuthAction.LOGIN_FORM;
-      payload: LoginFormDto;
-    }
+    type: AuthAction.LOGIN_FORM;
+    payload: LoginFormDto;
+  }
   | {
-      type: AuthAction.REGISTER_FORM;
-      payload: RegisterFormDto;
-    }
+    type: AuthAction.REGISTER_FORM;
+    payload: RegisterFormDto;
+  }
   | {
-      type: AuthAction.FORGOT_FORM;
-      payload: ForgotFormDto;
-    }
-  | { type: AuthAction.SET_FORM; payload: FormType }
+    type: AuthAction.FORGOT_FORM;
+    payload: ForgotFormDto;
+  }
   | {
-      type: AuthAction.RESET_FORM;
-    };
+    type: AuthAction.SET_FORM;
+    payload: FormType
+  }
+  | {
+    type: AuthAction.RESET_FORM;
+  };
 
 const INITIAL_STATE: State = {
   currentForm: FormEnum.LOGIN,
@@ -70,6 +73,7 @@ const INITIAL_STATE: State = {
 };
 
 const reducer: Reducer<State, ReducerAction> = (state, action) => {
+
   switch (action.type) {
     case AuthAction.LOGIN_FORM:
       return {
@@ -102,7 +106,7 @@ const reducer: Reducer<State, ReducerAction> = (state, action) => {
         registerFormValue: REGISTER_FORM_INITIAL_VALUE,
         forgotFormValue: FORGOT_FORM_INITIAL_VALUE,
       };
-
+      
     default:
       console.error('Unknown action type');
       return state;
@@ -163,8 +167,6 @@ const useAuth = (): Return => {
     });
 
     dispatch({ type: AuthAction.RESET_FORM });
-
-    dispatch({ type: AuthAction.RESET_FORM });
   };
 
   const onForgotFormSubmit = async (forgotFormValue: ForgotFormDto) => {
@@ -182,8 +184,6 @@ const useAuth = (): Return => {
       type: AuthAction.FORGOT_FORM,
       payload: forgotFormValue,
     });
-
-    dispatch({ type: AuthAction.RESET_FORM });
 
     dispatch({ type: AuthAction.RESET_FORM });
   };

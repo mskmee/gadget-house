@@ -57,6 +57,7 @@ export const FormInput = <T extends FormikValues>({
                   field={field}
                   id={inputId}
                   isRegister={isRegister}
+                  error={isError ? 'error' : ''}
                   {...props}
                 />
               ) : type === 'tel' ? (
