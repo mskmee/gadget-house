@@ -22,6 +22,7 @@ const AppRoute = {
   KIDS: '/kids',
   SALE: '/sale',
   ADMIN_PAGE: '/admin',
+  ADMIN_INVOICE: '/admin/:order-id',
 } as const;
 
 export type RoutePath = (typeof AppRoute)[keyof typeof AppRoute];

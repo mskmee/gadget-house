@@ -1,4 +1,6 @@
-export const checkKeydownEvent = (key: string): boolean => {
+import React from "react";
+
+const checkKeydownEvent = (key: string): boolean => {
   return (
     /^\d$/.test(key) ||
     key === 'Backspace' ||
@@ -9,4 +11,10 @@ export const checkKeydownEvent = (key: string): boolean => {
     key === 'Home' ||
     key === 'End'
   );
+};
+
+export const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  if (!checkKeydownEvent(event.key)) {
+    event.preventDefault();
+  }
 };

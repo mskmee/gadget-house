@@ -4,7 +4,7 @@ import { DrawerStyles } from 'antd/es/drawer/DrawerPanel';
 import cn from 'classnames';
 
 import { smartData } from './consts';
-import { checkKeydownEvent } from '@/utils/helpers/checkKeydownEvent';
+import { handleKeyDown } from '@/utils/helpers/checkKeydownEvent';
 import { IFilterProps, IProduct } from '@/interfaces/interfaces';
 import { useRangeFilter } from './hooks/useRangeFilter';
 import { Header } from '../components';
@@ -104,12 +104,6 @@ export const FiltersMobile = ({
   const applyFilter = () => {
     onFilter(filteredProducts);
     toggleDrawer();
-  };
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (!checkKeydownEvent(event.key)) {
-      event.preventDefault();
-    }
   };
 
   const drawerStyles: DrawerStyles = {

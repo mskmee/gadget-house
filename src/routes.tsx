@@ -23,7 +23,8 @@ import TVs from './pages/TVs/TVs';
 import Tablets from './pages/Tablets/Tablets';
 import SmartWatches from './pages/SmartWatches/SmartWatches';
 import Sale from './pages/Sale/Sale';
-import { AdminPage } from './pages/AdminPage/AdminPage';
+import AdminPage from './pages/AdminPage/AdminPage';
+import AdminInvoice from './pages/AdminInvoice/AdminInvoice';
 
 export const routes = createBrowserRouter(
   [
@@ -82,6 +83,10 @@ export const routes = createBrowserRouter(
         {
           path: AppRoute.ADMIN_PAGE,
           element: <AdminPage />,
+        },
+        {
+          path: AppRoute.ADMIN_INVOICE,
+          element: <AdminInvoice />,
         },
         {
           path: '*',

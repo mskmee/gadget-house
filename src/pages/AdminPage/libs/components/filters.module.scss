@@ -1,0 +1,187 @@
+.admin {
+  position: relative;
+
+  &__filter {
+    width: 130px;
+    padding: 10px;
+    border: 1px solid var(--secondary-background-color);
+    border-radius: 8px;
+    background-color: var(--bg-color);
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+
+    &:hover,
+    &:focus,
+    &:focus-visible {
+      background-color: var(--secondary-background-color);
+    }
+
+    &Btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: "Inter", sans-serif;
+      font-weight: 400;
+      font-size: 24px;
+      line-height: 150%;
+      color: var(--text-color);
+    }
+
+    :global {
+      .ant-drawer-content-wrapper {
+        box-shadow: none !important;
+      }
+
+      .ant-popover .ant-popover-arrow {
+        display: none;
+      }
+
+      .ant-popover .ant-popover-inner {
+        width: 500px;
+        border-radius: 20px;
+        padding: 22px 20px;
+        box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+        background: var(--bg-color);
+        font-family: inherit;
+      }
+    }
+
+    &List {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    &Item {
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+      background: var(--white-color);
+      font-family: "Inter", sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 150%;
+      text-align: right;
+      color: var(--text-color);
+    }
+
+    &Label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 8px;
+
+      h3 {
+        font-family: "Inter", sans-serif;
+        font-weight: 400;
+        font-size: 24px;
+        line-height: 150%;
+        color: var(--text-color);
+      }
+    }
+
+    &Toggle {
+      width: 52px;
+      height: 32px;
+
+      :global {
+        .ant-switch{
+          border-radius: 100px;
+          width: 52px;
+          height: 32px;
+          background-color: var(--secondary-background-color);
+
+          &:hover {
+            background-color: var(--secondary-background-color);
+          }
+        }
+        .ant-switch-inner {
+          border-radius: 100px;
+          width: 52px;
+          height: 32px;
+        }
+        .ant-switch-checked {
+          background-color: var(--theme-color) !important;
+
+          & .ant-switch-handle{
+            inset-inline-start: calc(100% - 30px);
+          }
+        }
+        .ant-switch-handle {
+          width: 27px;
+          height: 28px;
+          border-radius: 100px;
+          box-shadow:
+            0 3px 1px 0 rgba(0, 0, 0, 0.06),
+            0 3px 8px 0 rgba(0, 0, 0, 0.15),
+            0 0 0 1px rgba(0, 0, 0, 0.04);
+          background: var(--white-color);
+          inset-inline-start: 2px;
+
+          &::before {
+            display: none;
+          }
+        }
+      }
+    }
+
+    &Content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    &DatePicker,
+    &Input {
+      width: 144px;
+      height: 50px;
+      border: 1px solid var(--secondary-background-color);
+      border-radius: 10px;
+      background-color: var(--bg-color);
+      font-family: "Inter", sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 150%;
+      text-align: center;
+      color: var(--text-color);
+    }
+
+    &Input {
+      width: 100%;
+
+      :global {
+        .ant-input-number-wrapper,
+        .ant-input-number-input-wrap {
+          width: 100%;
+          height: 100%;
+        }
+
+        .ant-input-number-outlined {
+          background-color: transparent !important;
+          border: none;
+        }
+
+        .ant-input-number-handler-wrap {
+          display: none;
+        }
+
+        .ant-input-number-input-wrap {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .ant-input-number-group-addon {
+          border: none;
+          background-color: transparent !important;
+        }
+      }
+    }
+
+    &Status {
+      width: 146px !important;
+    }
+  }
+}

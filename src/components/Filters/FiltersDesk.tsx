@@ -1,16 +1,16 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Row, Col, InputNumber, Slider } from 'antd';
 import cn from 'classnames';
 
-import { checkKeydownEvent } from '@/utils/helpers/checkKeydownEvent';
-import { IProduct } from '@/interfaces/interfaces';
 import { filters, smartData } from './consts';
+import { IProduct } from '@/interfaces/interfaces';
+import { handleKeyDown } from '@/utils/helpers/checkKeydownEvent';
+import { useRangeFilter } from './hooks/useRangeFilter';
 import { Option } from './Option';
 
 import ArrowUpSvg from '@/assets/icons/arrow-up.svg';
 
 import styles from './filters.module.scss';
-import { useRangeFilter } from './hooks/useRangeFilter';
 
 export const FiltersDesk = () => {
   const [selectedOptions, setSelectedOptions] = useState<
@@ -93,12 +93,6 @@ export const FiltersDesk = () => {
   }, [selectedOptions, priceRange, minCameraMP, maxCameraMP]);
 
   const handleFilter = () => setFilteredProducts(filteredProducts);
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (!checkKeydownEvent(event.key)) {
-      event.preventDefault();
-    }
-  };
 
   return (
     <aside className={styles.filtersDesk}>
