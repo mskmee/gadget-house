@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Reducer, useReducer, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import {
   LOGIN_FORM_INITIAL_VALUE,
@@ -13,7 +14,6 @@ import {
   RegisterFormDto,
 } from '../types/form-dto';
 import { AuthAction, FormEnum } from '../enums/enums';
-import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/store';
 import {
   createUser,
@@ -168,13 +168,14 @@ const useAuth = (): Return => {
   };
 
   const onForgotFormSubmit = async (forgotFormValue: ForgotFormDto) => {
-    const val: ForgotFormDto = {
+
+    const val = {
       email: forgotFormValue.email,
     };
-
+    
     const result = await dispatchApp(forgotPassword(val.email)).unwrap();
 
-    if (result.email) {
+    if (result) {
       setSuccessType(FormEnum.FORGOT);
     }
 
@@ -182,8 +183,6 @@ const useAuth = (): Return => {
       type: AuthAction.FORGOT_FORM,
       payload: forgotFormValue,
     });
-
-    dispatch({ type: AuthAction.RESET_FORM });
 
     dispatch({ type: AuthAction.RESET_FORM });
   };

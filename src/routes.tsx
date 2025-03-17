@@ -24,6 +24,7 @@ import Tablets from './pages/Tablets/Tablets';
 import SmartWatches from './pages/SmartWatches/SmartWatches';
 import Sale from './pages/Sale/Sale';
 import { AdminPage } from './pages/AdminPage/AdminPage';
+import ForgotPassword from './pages/Auth/ChangePassword';
 
 export const routes = createBrowserRouter(
   [
@@ -78,6 +79,11 @@ export const routes = createBrowserRouter(
         {
           path: AppRoute.ORDER_SUCCESS,
           element: <OrderSuccess />,
+        },
+
+        {
+          path: AppRoute.AUTH_FORGOT_PASSWORD,
+          element: <ForgotPassword />,
         },
         {
           path: AppRoute.ADMIN_PAGE,

@@ -48,7 +48,6 @@ const ForgotPasswordForm: FC<IForgotPasswordFormProps> = ({
             <button
               className={cn('button', 'button-secondary', styles.form__btn)}
               type="submit"
-              onClick={onSwitch}
             >
               Reset Password
             </button>

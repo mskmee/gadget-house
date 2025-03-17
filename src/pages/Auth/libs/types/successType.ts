@@ -1,3 +1,3 @@
-type SuccessType = 'login' | 'register' | 'forgot' | null;
+type SuccessType = 'login' | 'register' | 'forgot' | 'changePassword' | null;
 
 export type { SuccessType };

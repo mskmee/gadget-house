@@ -5,6 +5,8 @@ import {
   AuthSignInResponseDto,
   AuthSignUpRequestDto,
   AuthSignUpResponseDto,
+  ChangePasswordRequestDto,
+  ChangePasswordResponseDto,
   UserResponseDto,
 } from '../types/types';
 
@@ -12,6 +14,7 @@ interface IAuthService {
   signInAuth: (data: AuthSignInRequestDto) => Promise<AuthSignInResponseDto>;
   signUpAuth: (data: AuthSignUpRequestDto) => Promise<AuthSignUpResponseDto>;
   forgotPassword: (email: string) => Promise<AuthForgotPasswordResponseDto>;
+  changePassword: (data: ChangePasswordRequestDto) => Promise<ChangePasswordResponseDto>;
   fetchUserProfile: () => Promise<UserResponseDto>;
 }
 
