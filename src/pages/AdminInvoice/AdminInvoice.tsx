@@ -90,7 +90,6 @@ const AdminInvoice = () => {
                   styles.admin__statusInput,
                   `button__status_${status.toLocaleLowerCase().replace(' ', '_')}`,
                 )}
-                // onClick={() => handleFilterChange('status', status)}
               />
             ))}
 

@@ -13,8 +13,7 @@ const AdminPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const searchFieldRef = useRef<InputRef>(null);
   const [isOverlayActive, setIsOverlayActive] = useState(false);
-  const [selectedFilters, setSelectedFilters] = useState({});
-  console.log('selectedFilters: ', selectedFilters);
+  const [, setSelectedFilters] = useState({});
 
   const handleFilterChange = (key: string, values: string) => {
     setSelectedFilters((prev) => ({

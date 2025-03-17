@@ -33,8 +33,6 @@ export const Filters: FC<IFilters> = ({ onSelectedFilters }) => {
     console.log('onChange:', dateStr);
   };
 
-  // const defaultValue = dayjs('01/01/2024');
-
   const dateLocale: typeof en = {
     ...en,
     lang: {
@@ -73,7 +71,6 @@ export const Filters: FC<IFilters> = ({ onSelectedFilters }) => {
 
             <DatePicker
               className={styles.admin__filterDatePicker}
-              // defaultValue={defaultValue}
               locale={dateLocale}
               onChange={onChangeDate}
             />
@@ -84,7 +81,6 @@ export const Filters: FC<IFilters> = ({ onSelectedFilters }) => {
 
             <DatePicker
               className={styles.admin__filterDatePicker}
-              // defaultValue={defaultValue}
               locale={dateLocale}
               onChange={onChangeDate}
             />
