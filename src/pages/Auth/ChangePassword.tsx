@@ -6,10 +6,6 @@ import cn from 'classnames';
 
 import { AppDispatch } from '@/store';
 import { changePassword } from '@/store/auth/actions';
-import {
-  LocalStorageKey,
-  localStorageService,
-} from '@/utils/packages/local-storage';
 import { FormEnum } from './libs/enums/form.enum';
 import { useAuth } from './libs/hooks/use-auth';
 import { ChangePasswordFormDto } from './libs/types/form-dto';
@@ -19,13 +15,14 @@ import { FormInput, PopUp } from '@/components/components';
 
 import styles from './change-password.module.scss';
 import style from './libs/components/form.module.scss';
+import { setTokens } from '@/store/auth/auth-slice';
 
 const ChangePassword = () => {
   const { successType, setSuccessType } = useAuth();
+  const [isOpen, setModalOpen] = useState(false);
   const dispatch: AppDispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const token = searchParams.get('token');
-  const [isOpen, setModalOpen] = useState(false);
 
   const initialValues: ChangePasswordFormDto = {
     password: '',
@@ -47,18 +44,17 @@ const ChangePassword = () => {
     ).unwrap();
 
     if (result) {
-      setSuccessType(FormEnum.CHANGE_PASSWORD);
-      setModalOpen(true);
-
-      localStorageService.setItem(
-        LocalStorageKey.ACCESS_TOKEN,
-        result.accessToken,
-      );
-      localStorageService.setItem(
-        LocalStorageKey.REFRESH_TOKEN,
-        result.refreshToken,
-      );
+      handleSuccessfulPasswordChange(result);
     }
+  };
+
+  const handleSuccessfulPasswordChange = (result: {
+    accessToken: string;
+    refreshToken: string;
+  }) => {
+    setSuccessType(FormEnum.CHANGE_PASSWORD);
+    setModalOpen(true);
+    dispatch(setTokens(result));
   };
 
   return (

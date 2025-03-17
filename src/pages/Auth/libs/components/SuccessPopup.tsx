@@ -19,7 +19,7 @@ const SuccessPopup: FC<SuccessPopupProps> = ({ type, onClose }) => {
   const navigate = useNavigate();
   const { message } = useTypedSelector((state: RootState) => state.auth);
   let title = '';
-  let notice: string | AuthForgotPasswordResponseDto = '';
+  let notice = '';
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -41,7 +41,10 @@ const SuccessPopup: FC<SuccessPopupProps> = ({ type, onClose }) => {
       break;
     case 'forgot':
       title = 'Send instructions!';
-      notice = message;
+      notice =
+        typeof message === 'string'
+          ? message
+          : (message as AuthForgotPasswordResponseDto)?.message;
       break;
     case 'changePassword':
       title = 'Change password!';
@@ -57,7 +60,7 @@ const SuccessPopup: FC<SuccessPopupProps> = ({ type, onClose }) => {
       <div className={styles.success__icon}>
         <img src={inBasket} alt="Success icon" />
       </div>
-      <p className={styles.success__text}>{notice as string}</p>
+      <p className={styles.success__text}>{notice}</p>
     </div>
   );
 };
