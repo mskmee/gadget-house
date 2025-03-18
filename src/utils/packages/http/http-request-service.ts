@@ -233,6 +233,8 @@ const sendRequest = async <T>(
     method: options.method,
     cancelToken: source.token,
   };
+  console.log("Axios Base URL:", axios.defaults.baseURL);
+  console.log("Final Request URL:", requestConfig.url);
 
   try {
     if (import.meta.env.DEV) {
@@ -308,7 +310,7 @@ export const request = <T>(options: ApiRequestOptions): Promise<T> => {
           statusText: response.statusText,
           body: responseHeader ?? responseBody,
         };
-        
+
         catchErrorCodes(options, result);
 
         res(result.body);

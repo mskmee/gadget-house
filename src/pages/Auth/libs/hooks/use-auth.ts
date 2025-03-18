@@ -170,13 +170,14 @@ const useAuth = (): Return => {
   };
 
   const onForgotFormSubmit = async (forgotFormValue: ForgotFormDto) => {
-    const val: ForgotFormDto = {
+
+    const val = {
       email: forgotFormValue.email,
     };
-
+    
     const result = await dispatchApp(forgotPassword(val.email)).unwrap();
 
-    if (result.email) {
+    if (result) {
       setSuccessType(FormEnum.FORGOT);
     }
 
