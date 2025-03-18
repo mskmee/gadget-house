@@ -8,4 +8,13 @@ export default defineConfig({
   resolve: {
     alias: [{ find: '@', replacement: '/src' }],
   },
+    server: {
+      proxy: {
+        "/api": {
+          target: "http://www.logicnsolution.com:8085",
+          changeOrigin: true,
+          secure: false,
+        },
+      },
+    },
 });
