@@ -103,8 +103,8 @@ export const ContactsForm: FC<Properties> = ({
                   <FormInput<ContactsFormDto>
                     name="email"
                     type="text"
-                    label="Email*"
-                    placeholder="Email*"
+                    label="E-mail*"
+                    placeholder="E-mail*"
                   />
 
                   <FormInput<ContactsFormDto>
