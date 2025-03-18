@@ -14,6 +14,7 @@ type PasswordInputProps = {
   className: string;
   id: string;
   isRegister?: boolean;
+  error?: string;
 };
 
 export const PasswordInput = ({
@@ -21,6 +22,7 @@ export const PasswordInput = ({
   className,
   id,
   isRegister,
+  error,
   ...props
 }: PasswordInputProps) => {
   const password = field.value || '';
@@ -41,7 +43,7 @@ export const PasswordInput = ({
         {...field}
         {...props}
         id={id}
-        className={className}
+        className={cn(className, error)}
         iconRender={(visible) =>
           visible ? (
             <img

@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { Checkbox } from 'antd';
 import cn from 'classnames';
 
 import { IOption } from '@/interfaces/interfaces';
@@ -8,21 +9,25 @@ import ArrowUpSvg from '@/assets/icons/arrow-up.svg';
 import styles from './filters.module.scss';
 
 export const Option = ({
-  data,
+  options,
   title,
-  btnMore,
-  option,
-  optionChange,
+  filterKey,
+  selectedOptions,
+  onOptionChange,
 }: IOption) => {
   const [showCategory, setShowCategory] = useState(true);
   const [showMoreOptions, setShowMoreOptions] = useState(false);
 
   const toggleShowMoreOptions = () => {
-    setShowMoreOptions(!showMoreOptions);
+    setShowMoreOptions((prev) => !prev);
   };
 
   const toggleShowCategory = () => {
     setShowCategory(!showCategory);
+  };
+
+  const handleOptionChange = (checkedValues: string[]) => {
+    onOptionChange(filterKey, checkedValues);
   };
 
   return (
@@ -45,52 +50,38 @@ export const Option = ({
           )}
         />
       </div>
+
       {showCategory && (
         <>
-          <ul className={styles.filters__optionList}>
-            {data
-              .slice(0, showMoreOptions ? data.length : 5)
-              .map((item: string) => (
-                <li key={item}>
-                  <label
-                    className={cn(
-                      styles.filters__optionCheckbox,
-                      option === 'memorySlot' ? 'filters__memorySlot' : '',
-                    )}
-                  >
-                    <input
-                      className={styles.filters__optionInput}
-                      type="checkbox"
-                      name={item}
-                      onChange={() => optionChange(option, item)}
-                    />
-                    <span
-                      className={styles.filters__optionText}
-                      data-label={option}
-                    >
-                      {option === 'colors' ? (
-                        <span
-                          style={{
-                            width: '18px',
-                            height: '18px',
-                            display: 'inline-block',
-                            marginRight: '8px',
-                            marginTop: '0px',
-                            borderRadius: ' 3px',
-                            border: '1px solid #1c1817',
-                            backgroundColor: item,
-                            lineHeight: 1,
-                          }}
-                        ></span>
-                      ) : null}
-                      {item}
-                    </span>
-                  </label>
-                </li>
+          <Checkbox.Group
+            // options={options ?? []}
+            value={selectedOptions[filterKey] || []}
+            onChange={(values) => handleOptionChange(values as string[])}
+            className={cn(
+              styles.filters__optionList,
+              filterKey === 'memorySlot' ? 'filters__memorySlot' : '',
+            )}
+            data-label={filterKey}
+          >
+            {options
+              .slice(0, showMoreOptions ? options.length : 5)
+              .map((option) => (
+                <Checkbox
+                  key={`${option}-checkbox`}
+                  value={option}
+                  className={styles.filters__optionItem}
+                  style={
+                    {
+                      '--color-value': option.toLowerCase(),
+                    } as React.CSSProperties
+                  }
+                >
+                  {option}
+                </Checkbox>
               ))}
-          </ul>
+          </Checkbox.Group>
 
-          {btnMore && (
+          {options.length > 5 && (
             <button
               className={cn(
                 styles.filters__btnMore,

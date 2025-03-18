@@ -308,7 +308,7 @@ export const request = <T>(options: ApiRequestOptions): Promise<T> => {
           statusText: response.statusText,
           body: responseHeader ?? responseBody,
         };
-
+        
         catchErrorCodes(options, result);
 
         res(result.body);

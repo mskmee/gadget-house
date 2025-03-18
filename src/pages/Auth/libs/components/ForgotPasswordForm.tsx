@@ -32,36 +32,42 @@ const ForgotPasswordForm: FC<IForgotPasswordFormProps> = ({
           resetForm();
         }}
       >
-        <Form className={styles.form__form}>
-          <h3 className={styles.form__title}>Forgot Password</h3>
+        {({ isValid }) => (
+          <Form className={styles.form__form}>
+            <h3 className={styles.form__title}>Forgot Password</h3>
 
-          <div className={styles.form__inputs} style={{ marginBottom: '24px' }}>
-            <FormInput<ForgotFormDto>
-              name="email"
-              type="email"
-              label="E-mail"
-              placeholder="E-mail"
-            />
-          </div>
-
-          <div className={styles.form__buttons}>
-            <button
-              className={cn('button', 'button-secondary', styles.form__btn)}
-              type="submit"
-              onClick={onSwitch}
+            <div
+              className={styles.form__inputs}
+              style={{ marginBottom: '24px' }}
             >
-              Reset Password
-            </button>
+              <FormInput<ForgotFormDto>
+                name="email"
+                type="email"
+                label="E-mail"
+                placeholder="E-mail"
+              />
+            </div>
 
-            <button
-              className={cn('button', 'button-primary', styles.form__btn)}
-              type="button"
-              onClick={onSwitch}
-            >
-              Log in
-            </button>
-          </div>
-        </Form>
+            <div className={styles.form__buttons}>
+              <button
+                className={cn('button', 'button-secondary', styles.form__btn)}
+                type="submit"
+                onClick={onSwitch}
+                disabled={!isValid}
+              >
+                Reset Password
+              </button>
+
+              <button
+                className={cn('button', 'button-primary', styles.form__btn)}
+                type="button"
+                onClick={onSwitch}
+              >
+                Log in
+              </button>
+            </div>
+          </Form>
+        )}
       </Formik>
     </div>
   );
