@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Drawer, Row, Col, Slider, InputNumber } from 'antd';
 import { DrawerStyles } from 'antd/es/drawer/DrawerPanel';
 import cn from 'classnames';
 
 import { IFilterProps } from '@/interfaces/interfaces';
-import { checkKeydownEvent } from '@/utils/helpers/checkKeydownEvent';
 import { AppDispatch, RootState } from '@/store';
 import {
   setSelectedAttributes,
@@ -15,6 +14,7 @@ import {
 } from '@/store/filters/filters_slice';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { useRangeFilter } from './hooks/useRangeFilter';
+import { handleKeyDown } from '@/utils/helpers/checkKeydownEvent';
 import { Header } from '../components';
 import { Option } from './Option';
 
@@ -82,12 +82,6 @@ export const FiltersMobile = ({
     dispatch(setSelectedPriceRange(priceRange));
     dispatch(setSelectedCameraRange([minCameraMP, maxCameraMP]));
     toggleDrawer();
-  };
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (!checkKeydownEvent(event.key)) {
-      event.preventDefault();
-    }
   };
 
   const handleFilterChange = (filterKey: string, checkedValues: string[]) => {
