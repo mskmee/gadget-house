@@ -1,6 +1,5 @@
 type AuthForgotPasswordResponseDto = {
-  email: string;
-  password: string;
+  message: string;
 };
 
 export type { AuthForgotPasswordResponseDto };

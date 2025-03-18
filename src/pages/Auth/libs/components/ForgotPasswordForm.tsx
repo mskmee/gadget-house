@@ -35,18 +35,15 @@ const ForgotPasswordForm: FC<IForgotPasswordFormProps> = ({
         {({ isValid }) => (
           <Form className={styles.form__form}>
             <h3 className={styles.form__title}>Forgot Password</h3>
-
-            <div
-              className={styles.form__inputs}
-              style={{ marginBottom: '24px' }}
-            >
-              <FormInput<ForgotFormDto>
-                name="email"
-                type="email"
-                label="E-mail"
-                placeholder="E-mail"
-              />
-            </div>
+            
+          <div className={styles.form__inputs} style={{ marginBottom: '24px' }}>
+            <FormInput<ForgotFormDto>
+              name="email"
+              type="email"
+              label="E-mail"
+              placeholder="E-mail"
+            />
+          </div>
 
             <div className={styles.form__buttons}>
               <button
