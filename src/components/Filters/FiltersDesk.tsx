@@ -1,12 +1,18 @@
-
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Row, Col, InputNumber, Slider } from 'antd';
 import cn from 'classnames';
 
-import { filters, smartData } from './consts';
-import { IProduct } from '@/interfaces/interfaces';
-import { handleKeyDown } from '@/utils/helpers/checkKeydownEvent';
+import { filters } from './consts';
+import { AppDispatch } from '@/store';
+import {
+  setSelectedAttributes,
+  setSelectedBrands,
+  setSelectedCameraRange,
+  setSelectedPriceRange,
+} from '@/store/filters/filters_slice';
 import { useRangeFilter } from './hooks/useRangeFilter';
+import { handleKeyDown } from '@/utils/helpers/checkKeydownEvent';
 import { Option } from './Option';
 
 import ArrowUpSvg from '@/assets/icons/arrow-up.svg';
@@ -72,7 +78,14 @@ export const FiltersDesk = () => {
     dispatch(setSelectedPriceRange(priceRange));
     dispatch(setSelectedCameraRange([minCameraMP, maxCameraMP]));
   };
-  
+
+  const handleFilterChange = (filterKey: string, checkedValues: string[]) => {
+    setSelectedOptions((prev) => ({
+      ...prev,
+      [filterKey]: checkedValues.length ? checkedValues : [],
+    }));
+  };
+
   return (
     <aside className={styles.filtersDesk}>
       <div className={styles.filtersDesk__wrapper}>

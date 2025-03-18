@@ -1,13 +1,20 @@
-
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Drawer, Row, Col, Slider, InputNumber } from 'antd';
 import { DrawerStyles } from 'antd/es/drawer/DrawerPanel';
 import cn from 'classnames';
 
-import { smartData } from './consts';
-import { handleKeyDown } from '@/utils/helpers/checkKeydownEvent';
-import { IFilterProps, IProduct } from '@/interfaces/interfaces';
+import { IFilterProps } from '@/interfaces/interfaces';
+import { AppDispatch, RootState } from '@/store';
+import {
+  setSelectedAttributes,
+  setSelectedBrands,
+  setSelectedCameraRange,
+  setSelectedPriceRange,
+} from '@/store/filters/filters_slice';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { useRangeFilter } from './hooks/useRangeFilter';
+import { handleKeyDown } from '@/utils/helpers/checkKeydownEvent';
 import { Header } from '../components';
 import { Option } from './Option';
 
@@ -77,6 +84,12 @@ export const FiltersMobile = ({
     toggleDrawer();
   };
 
+  const handleFilterChange = (filterKey: string, checkedValues: string[]) => {
+    setSelectedOptions((prev) => ({
+      ...prev,
+      [filterKey]: checkedValues.length ? checkedValues : [],
+    }));
+  };
 
   const drawerStyles: DrawerStyles = {
     mask: {
