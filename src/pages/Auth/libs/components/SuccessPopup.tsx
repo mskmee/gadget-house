@@ -3,19 +3,23 @@ import { useNavigate } from 'react-router-dom';
 import cn from 'classnames';
 
 import { AppRoute } from '@/enums/Route';
+import { RootState } from '@/store';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { AuthForgotPasswordResponseDto } from '@/utils/packages/auth/libs/types/auth-forgotPassword-response-dto';
 import { inBasket } from '@/assets/constants';
 
 import styles from './form.module.scss';
 
 interface SuccessPopupProps {
-  type: 'login' | 'register' | 'forgot';
+  type: 'login' | 'register' | 'forgot' | 'changePassword';
   onClose: () => void;
 }
 
 const SuccessPopup: FC<SuccessPopupProps> = ({ type, onClose }) => {
   const navigate = useNavigate();
+  const { message } = useTypedSelector((state: RootState) => state.auth);
   let title = '';
-  let message = '';
+  let notice = '';
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -29,15 +33,24 @@ const SuccessPopup: FC<SuccessPopupProps> = ({ type, onClose }) => {
   switch (type) {
     case 'login':
       title = 'Success log in!';
-      message = 'Log in was successful';
+      notice = 'Log in was successful';
       break;
     case 'register':
       title = 'Register success!';
-      message = 'You have been successfully logged in';
+      notice = 'You have been successfully logged in';
       break;
     case 'forgot':
       title = 'Send instructions!';
-      message = 'Password have been sent to your email';
+      notice =
+        typeof message === 'string'
+          ? message
+          : (message as AuthForgotPasswordResponseDto)?.message;
+      break;
+    case 'changePassword':
+      title = 'Change password!';
+      notice = 'Password has been changed successfully';
+      break;
+    default:
       break;
   }
 
@@ -47,7 +60,7 @@ const SuccessPopup: FC<SuccessPopupProps> = ({ type, onClose }) => {
       <div className={styles.success__icon}>
         <img src={inBasket} alt="Success icon" />
       </div>
-      <p className={styles.success__text}>{message}</p>
+      <p className={styles.success__text}>{notice}</p>
     </div>
   );
 };

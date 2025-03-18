@@ -5,8 +5,10 @@ import {
   AuthSignInResponseDto,
   AuthSignUpRequestDto,
   AuthSignUpResponseDto,
-  AuthForgotPasswordResponseDto,
   UserResponseDto,
+  ChangePasswordRequestDto,
+  AuthForgotPasswordResponseDto,
+  ChangePasswordResponseDto,
 } from './libs/types/types';
 import { LocalStorageKey, localStorageService } from '../local-storage';
 
@@ -30,8 +32,16 @@ class AuthApi implements IAuthApi {
   async forgotPassword(email: string): Promise<AuthForgotPasswordResponseDto> {
     return request({
       method: HttpMethod.POST,
-      url: ApiEndpoint.SIGNIN,
-      body: { email },
+      url: ApiEndpoint.FORGOT_PASSWORD,
+      query: {email},
+    });
+  }
+
+  async changePassword(data: ChangePasswordRequestDto): Promise<ChangePasswordResponseDto> {
+    return request({
+      method: HttpMethod.POST,
+      url: ApiEndpoint.CHANGE_PASSWORD,
+      body: data,
     });
   }
 

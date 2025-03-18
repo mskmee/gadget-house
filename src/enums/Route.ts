@@ -21,6 +21,7 @@ const AppRoute = {
   GAME_CONSOLE: '/game-console',
   KIDS: '/kids',
   SALE: '/sale',
+  AUTH_FORGOT_PASSWORD: '/changePassword',
   ADMIN_PAGE: '/admin',
 } as const;
 

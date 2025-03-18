@@ -4,6 +4,7 @@ import { authService } from '@/utils/packages/auth';
 import {
   AuthSignInRequestDto,
   AuthSignUpRequestDto,
+  ChangePasswordRequestDto,
 } from '@/utils/packages/auth/libs/types/types';
 
 const getCredentials = createAsyncThunk(
@@ -27,6 +28,13 @@ const forgotPassword = createAsyncThunk(
   },
 );
 
+const changePassword = createAsyncThunk(
+  'auth/fetchChangePassword',
+  async (data: ChangePasswordRequestDto) => {
+    return await authService.changePassword(data);
+  },
+);
+
 const getUserData = createAsyncThunk(
   'auth/fetchUserProfile ',
   async () => {
@@ -34,4 +42,4 @@ const getUserData = createAsyncThunk(
   },
 );
 
-export { getCredentials, createUser, forgotPassword, getUserData };
+export { getCredentials, createUser, forgotPassword, changePassword, getUserData };
