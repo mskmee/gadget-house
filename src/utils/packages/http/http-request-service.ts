@@ -16,8 +16,7 @@ import type { ApiRequestOptions, ApiResult } from './libs/types/types';
 import { LocalStorageKey, localStorageService } from '../local-storage';
 import { logout, setTokens } from '@/store/auth/auth-slice';
 
-// axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
-axios.defaults.baseURL = '/api'
+axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 axios.defaults.headers.common['Content-Type'] =
   'application/x-www-form-urlencoded';
 
