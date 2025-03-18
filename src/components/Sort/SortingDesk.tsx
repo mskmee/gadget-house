@@ -1,10 +1,12 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Popover } from 'antd';
 import cn from 'classnames';
 
-import { smartData } from '../Filters/consts';
-import { IProduct, SortOrder } from '@/interfaces/interfaces';
-import { sorting } from './SortingMobile';
+import { Sort } from '@/enums/enums';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { AppDispatch, RootState } from '@/store';
+import { setSelectedSort } from '@/store/filters/filters_slice';
 import { SortOption } from './SortOption';
 
 import SortSvg from '@/assets/icons/sorting.svg';
@@ -14,27 +16,29 @@ import styles from './sort.module.scss';
 
 export const SortingDesk = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedSort, setSelectedSort] = useState<SortOrder>(
-    SortOrder.Popularity,
+  const dispatch: AppDispatch = useDispatch();
+  const { selectedSort } = useTypedSelector(
+    (state: RootState) => state.filters,
   );
-  const [, setSortedProducts] = useState<IProduct[]>([]);
+  const selectedSortName = Object.values(Sort).find(
+    (s) => s.value === selectedSort,
+  )?.name;
 
   const showModal = () => {
     setIsModalOpen(true);
   };
 
-  const handleSortSelection = (sortOrder: SortOrder) => {
-    setSelectedSort(sortOrder);
-    sortProducts(sortOrder);
+  const handleSortSelection = (value: string) => {
+    dispatch(setSelectedSort(value));
     setIsModalOpen(false);
   };
 
   const content = (
     <div className={styles.sort__radioGroup}>
-      {sorting.map((option) => (
+      {Object.values(Sort).map((option) => (
         <SortOption
           key={option.value}
-          label={option.label}
+          name={option.name}
           value={option.value}
           isSelected={selectedSort === option.value}
           onSelect={handleSortSelection}
@@ -43,25 +47,6 @@ export const SortingDesk = () => {
       ))}
     </div>
   );
-
-  const sortProducts = (option: SortOrder) => {
-    const sorted = [...smartData];
-    switch (option) {
-      case SortOrder.Popularity:
-        sorted.sort((a, b) => (b?.popular ?? 0) - (a?.popular ?? 0));
-        break;
-      case SortOrder.Rating:
-        sorted.sort((a, b) => b.rate - a.rate);
-        break;
-      case SortOrder.LowToHigh:
-        sorted.sort((a, b) => a.price - b.price);
-        break;
-      case SortOrder.HighToLow:
-        sorted.sort((a, b) => b.price - a.price);
-        break;
-    }
-    setSortedProducts(sorted);
-  };
 
   return (
     <div className={styles.sortDesk}>
@@ -75,7 +60,7 @@ export const SortingDesk = () => {
       >
         <button onClick={showModal} className={styles.sortDesk__button}>
           <img src={SortSvg} alt="Icon sorting" />
-          Sort: {selectedSort}
+          Sort: {selectedSortName}
           <img
             src={ArrowUpSvg}
             alt="Arrow Up Icon"

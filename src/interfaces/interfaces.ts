@@ -1,10 +1,10 @@
-import type { StatusSearch } from '@/types/StatusSearch';
 import type {
   ComponentType,
   CSSProperties,
   MouseEvent,
   ReactElement,
 } from 'react';
+import type { StatusSearch } from '@/types/StatusSearch';
 
 export interface SliderButtonProps {
   handlePrevClick: (event: MouseEvent) => void;
@@ -96,36 +96,29 @@ export interface IFilterProps {
 }
 
 export interface IOption {
-  data: string[];
+  options: string[];
   title: string;
-  option: string;
-  btnMore: boolean;
-  optionChange: (option: string, value: string) => void;
-}
-
-export enum SortOrder {
-  Popularity = 'By popularity',
-  Rating = 'By rating',
-  LowToHigh = 'From low to high cost',
-  HighToLow = 'From high to low cost',
+  filterKey: string;
+  selectedOptions: Record<string, string[]>;
+  onOptionChange: (filterKey: string, checkedValues: string[]) => void;
 }
 
 export interface ISortProps {
   sortVisible: boolean;
   toggleSort: () => void;
-  onSort: (sortOrder: SortOrder) => void;
+  onSort: (sortOrder: string) => void;
 }
 
 export interface SortDrawerProps {
-  onSort: (sortOrder: SortOrder) => void;
+  onSort: (sortOrder: string) => void;
 }
 
 export interface ISortOptionProps {
-  label: string;
-  value: SortOrder;
+  name: string;
+  value: string;
   isSelected: boolean;
   classNames: string;
-  onSelect: (value: SortOrder) => void;
+  onSelect: (value: string) => void;
 }
 
 export interface IGadget {

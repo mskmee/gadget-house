@@ -1,8 +1,9 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { filters } from './consts';
-import { smartData } from '../Filters/consts';
-import { IProduct, SortOrder } from '@/interfaces/interfaces';
+import { AppDispatch } from '@/store';
+import { setSelectedSort } from '@/store/filters/filters_slice';
 import { FiltersMobile } from './FiltersMobile';
 import { SortingMobile } from '../Sort/SortingMobile';
 
@@ -14,38 +15,17 @@ import styles from './filters.module.scss';
 export const Filters = () => {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [sortVisible, setSortVisible] = useState(false);
-  const [, setFilteredProducts] = useState<IProduct[]>([]);
-  const [, setSortedProducts] = useState<IProduct[]>([]);
+  const dispatch: AppDispatch = useDispatch();
 
   const toggleDrawer = () => setDrawerVisible((prev) => !prev);
   const toggleSort = () => setSortVisible((prev) => !prev);
 
-  const handleFilter = (products: IProduct[]) => {
+  const handleFilter = () => {
     setDrawerVisible(false);
-    setFilteredProducts(products);
   };
 
-  const handleSort = (sortOrder: SortOrder) => {
-    sortProducts(sortOrder);
-  };
-
-  const sortProducts = (option: SortOrder) => {
-    const sorted = [...smartData];
-    switch (option) {
-      case SortOrder.Popularity:
-        sorted.sort((a, b) => (b?.popular || 0) - (a?.popular || 0));
-        break;
-      case SortOrder.Rating:
-        sorted.sort((a, b) => b.rate - a.rate);
-        break;
-      case SortOrder.LowToHigh:
-        sorted.sort((a, b) => a.price - b.price);
-        break;
-      case SortOrder.HighToLow:
-        sorted.sort((a, b) => b.price - a.price);
-        break;
-    }
-    setSortedProducts(sorted);
+  const handleSort = (value: string) => {
+    dispatch(setSelectedSort(value));
   };
 
   return (

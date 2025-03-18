@@ -26,6 +26,23 @@ class ProductsService implements IProductsService {
     return this.productsApi.getPaginatedProducts(categoryId, page, size);
   }
 
+  async getFilteredProducts(
+    params: {
+      page: number,
+      size: number,
+      categoryId?: number,
+      brandIds?: number[],
+      attributes?: number[],
+      minPrice?: number,
+      maxPrice?: number,
+      minCameraMP?: number,
+      maxCameraMP?: number,
+      sort?: string
+    }
+  ): Promise<ProductsResponseDto> {
+    return this.productsApi.getFilteredProducts(params);
+  }
+
   async getByCategory(categoryId: number, page: number, size: number): Promise<ProductsResponseDto> {
     return this.productsApi.getByCategory(categoryId, page, size);
   }
