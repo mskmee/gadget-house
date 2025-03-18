@@ -12,31 +12,31 @@ const regx = {
 };
 
 const firstName = Yup.string()
-  .matches(regx.name, 'Wrong first name format')
+  .matches(regx.name, 'Please enter a correct name')
   .min(2, 'Name is too short!')
   .max(20, 'Name is too long!')
-  .required('Enter your first name');
+  .required('This field is required');
 
 const lastName = Yup.string()
-  .matches(regx.name, 'Wrong last name format')
+  .matches(regx.name, 'Please enter a correct surname')
   .min(2, 'Last name is too short!')
   .max(20, 'Last name is too long!')
-  .required('Enter your last name');
+  .required('This field is required');
 
 const email = Yup.string()
-  .matches(regx.email, 'Wrong email format')
-  .required('Enter your email');
+  .matches(regx.email, 'Please enter a correct e-mail address')
+  .required('This field is required');
 
 const phoneNumber = Yup.string()
-  .matches(regx.phone, 'Wrong phone number format')
-  .required('Enter your phone number');
+  .matches(regx.phone, 'Please enter a correct phone number')
+  .required('This field is required');
 
 const password = Yup.string()
-  .matches(regx.password, 'Wrong password format')
-  .required('Enter your password');
+  .matches(regx.password, 'Please enter a correct password')
+  .required('This field is required');
 
 const passwordRepeat = Yup.string()
-  .oneOf([Yup.ref('password'), ''], 'Passwords must match')
+  .oneOf([Yup.ref('password'), ''], 'Password mismatch')
   .required('Repeat your password');
 
 const registerFormValidationSchema: Yup.Schema<RegisterFormDto> =

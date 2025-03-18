@@ -5,7 +5,7 @@ import { ISortOptionProps } from '@/interfaces/interfaces';
 import styles from './sort.module.scss';
 
 export const SortOption: React.FC<ISortOptionProps> = ({
-  label,
+  name,
   value,
   isSelected,
   onSelect,
@@ -35,6 +35,6 @@ export const SortOption: React.FC<ISortOptionProps> = ({
       </svg>
     )}
 
-    {label}
+    {name}
   </button>
 );

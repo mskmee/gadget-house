@@ -43,6 +43,7 @@ export const filters = {
     '512 GB and more',
   ],
   'rams': ['1 GB', '2 GB', '3 GB', '4 GB', '8 GB', '12 GB', '16 GB'],
+  'fleshCard': ['No', 'Yes'],
   'colors': [
     'Black',
     'White',

@@ -39,78 +39,84 @@ const RegisterForm: FC<IRegisterFormProps> = ({
           resetForm();
         }}
       >
-        <Form className={styles.form__form}>
-          <h3 className={styles.form__title}>Sign up</h3>
+        {({ isValid }) => (
+          <Form className={styles.form__form}>
+            <h3 className={styles.form__title}>Sign up</h3>
 
-          <div className={styles.form__inputs} style={{ marginBottom: '24px' }}>
-            <div className={styles.form__inputsName}>
+            <div
+              className={styles.form__inputs}
+              style={{ marginBottom: '24px' }}
+            >
+              <div className={styles.form__inputsName}>
+                <FormInput<RegisterFormDto>
+                  name="firstName"
+                  type="text"
+                  label="Name"
+                  placeholder="Name"
+                />
+                <FormInput<RegisterFormDto>
+                  name="lastName"
+                  type="text"
+                  label="Surname"
+                  placeholder="Surname"
+                />
+              </div>
+
               <FormInput<RegisterFormDto>
-                name="firstName"
+                name="email"
                 type="text"
-                label="Name"
-                placeholder="Name"
+                label="E-mail"
+                placeholder="E-mail"
               />
+
               <FormInput<RegisterFormDto>
-                name="lastName"
-                type="text"
-                label="Surname"
-                placeholder="Surname"
+                name="phoneNumber"
+                type="tel"
+                label="Phone number"
+                placeholder="Phone number"
+              />
+
+              <FormInput<RegisterFormDto>
+                name="password"
+                type="password"
+                label="Password"
+                placeholder="Password"
+                isRegister={true}
+              />
+
+              <ul className={styles.form__passwordRules}>
+                {passwordRules.map((rule) => (
+                  <li key={rule}>{rule}</li>
+                ))}
+              </ul>
+
+              <FormInput<RegisterFormDto>
+                name="passwordRepeat"
+                type="password"
+                label="Password"
+                placeholder="Password"
               />
             </div>
 
-            <FormInput<RegisterFormDto>
-              name="email"
-              type="text"
-              label="Email"
-              placeholder="Email"
-            />
+            <div className={styles.form__buttons}>
+              <button
+                className={cn('button', 'button-secondary', styles.form__btn)}
+                type="submit"
+                disabled={!isValid}
+              >
+                Sign up
+              </button>
 
-            <FormInput<RegisterFormDto>
-              name="phoneNumber"
-              type="tel"
-              label="Phone number"
-              placeholder="Phone number"
-            />
-
-            <FormInput<RegisterFormDto>
-              name="password"
-              type="password"
-              label="Password"
-              placeholder="Password"
-              isRegister={true}
-            />
-
-            <ul className={styles.form__passwordRules}>
-              {passwordRules.map((rule) => (
-                <li key={rule}>{rule}</li>
-              ))}
-            </ul>
-
-            <FormInput<RegisterFormDto>
-              name="passwordRepeat"
-              type="password"
-              label="Password"
-              placeholder="Password"
-            />
-          </div>
-
-          <div className={styles.form__buttons}>
-            <button
-              className={cn('button', 'button-secondary', styles.form__btn)}
-              type="submit"
-            >
-              Sign up
-            </button>
-
-            <button
-              className={cn('button', 'button-primary', styles.form__btn)}
-              type="button"
-              onClick={onSwitch}
-            >
-              Log in
-            </button>
-          </div>
-        </Form>
+              <button
+                className={cn('button', 'button-primary', styles.form__btn)}
+                type="button"
+                onClick={onSwitch}
+              >
+                Log in
+              </button>
+            </div>
+          </Form>
+        )}
       </Formik>
     </div>
   );

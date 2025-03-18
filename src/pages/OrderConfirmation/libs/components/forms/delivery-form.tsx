@@ -44,7 +44,7 @@ export const DeliveryForm: FC<Properties> = ({
           setIsEditable(false);
         }}
       >
-        {({ values }) => (
+        {({ values, setFieldValue }) => (
           <Form
             className={cn(
               styles.form__form,
@@ -99,6 +99,10 @@ export const DeliveryForm: FC<Properties> = ({
                   <Radio.Group
                     className={styles.form__radioGroup}
                     name="deliveryType"
+                    value={values.deliveryType}
+                    onChange={(e) =>
+                      setFieldValue('deliveryType', e.target.value)
+                    }
                   >
                     <Space direction="vertical">
                       <FormRadioInput

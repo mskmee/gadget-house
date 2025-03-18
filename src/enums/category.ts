@@ -1,4 +1,5 @@
 const Category = {
+  EMPTY: 0,
   PHONES: 1,
   LAPTOPS: 2,
   CAMERAS: 3,

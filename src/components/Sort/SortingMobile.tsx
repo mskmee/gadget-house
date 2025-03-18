@@ -1,34 +1,28 @@
-import { useState } from 'react';
 import { Drawer } from 'antd';
 import { DrawerStyles } from 'antd/es/drawer/DrawerPanel';
 
-import { ISortProps, SortOrder } from '@/interfaces/interfaces';
+import { Sort } from '@/enums/enums';
+import { RootState } from '@/store';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { ISortProps } from '@/interfaces/interfaces';
 import { SortOption } from './SortOption';
 
 import BtnCloseSvg from '@/assets/icons/btn-close-sort.svg';
 
 import styles from './sort.module.scss';
 
-export const sorting = [
-  { label: 'By popularity', value: SortOrder.Popularity },
-  { label: 'By rating', value: SortOrder.Rating },
-  { label: 'From low to high cost', value: SortOrder.LowToHigh },
-  { label: 'From high to low cost', value: SortOrder.HighToLow },
-];
-
 export const SortingMobile = ({
   sortVisible,
   toggleSort,
   onSort,
 }: ISortProps) => {
-  const [selectedSort, setSelectedSort] = useState<SortOrder>(
-    SortOrder.Popularity,
+  const { selectedSort } = useTypedSelector(
+    (state: RootState) => state.filters,
   );
 
-  const handleSortSelection = (sortOrder: SortOrder) => {
-    setSelectedSort(sortOrder);
+  const handleSortSelection = (value: string) => {
     toggleSort();
-    onSort(selectedSort);
+    onSort(value);
   };
 
   const drawerStyles: DrawerStyles = {
@@ -65,10 +59,10 @@ export const SortingMobile = ({
         </button>
 
         <div className={styles.sort__radioGroup}>
-          {sorting.map((option) => (
+          {Object.values(Sort).map((option) => (
             <SortOption
               key={option.value}
-              label={option.label}
+              name={option.name}
               value={option.value}
               isSelected={selectedSort === option.value}
               onSelect={handleSortSelection}

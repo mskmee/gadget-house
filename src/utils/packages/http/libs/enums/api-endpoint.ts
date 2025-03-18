@@ -6,6 +6,9 @@ const ApiEndpoint = {
   FORGOT_PASSWORD: 'resetPassword',
   CHANGE_PASSWORD: 'changePassword',
   USER: 'users/profile',
+  BRANDS: 'brands',
+  CATEGORIES: 'categories',
+  ATTRIBUTES: 'attributes',
 } as const;
 
 // eslint-disable-next-line no-redeclare
