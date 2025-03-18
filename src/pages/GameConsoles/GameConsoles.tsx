@@ -2,9 +2,10 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { DEFAULT_PAGE, DEFAULT_SIZE } from '@/constants/pagination';
+import { Category } from '@/enums/enums';
 import { AppDispatch, RootState } from '@/store';
+import { setSelectedCategory } from '@/store/filters/filters_slice';
 import { getByCategory } from '@/store/products/actions';
-import { Category } from '@/enums/category';
 import { PageLayout } from '@/components/PageLayout/PageLayout';
 
 export default function GameConsoles() {
@@ -19,6 +20,7 @@ export default function GameConsoles() {
         size: DEFAULT_SIZE,
       }),
     );
+    dispatch(setSelectedCategory(Category.GAME_CONSOLES));
   }, [dispatch]);
 
   return (

@@ -4,6 +4,9 @@ const ApiEndpoint = {
   SIGNIN: 'signIn',
   SIGNUP: 'signUp',
   USER: 'users/profile',
+  BRANDS: 'brands',
+  CATEGORIES: 'categories',
+  ATTRIBUTES: 'attributes',
 } as const;
 
 // eslint-disable-next-line no-redeclare

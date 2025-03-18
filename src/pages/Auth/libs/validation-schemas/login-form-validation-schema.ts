@@ -10,12 +10,12 @@ const regx = {
 };
 
 const email = Yup.string()
-  .matches(regx.email, 'Wrong email format')
-  .required('Enter your email');
+  .matches(regx.email, 'Please enter a correct e-mail address')
+  .required('This field is required');
 
 const password = Yup.string()
-  .matches(regx.password, 'Wrong password format')
-  .required('Enter your password');
+  .matches(regx.password, 'Please enter a correct password')
+  .required('This field is required');
 
 const loginFormValidationSchema: Yup.Schema<LoginFormDto> = Yup.object().shape({
   email,

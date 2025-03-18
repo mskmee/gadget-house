@@ -8,8 +8,8 @@ const regx = {
 };
 
 const email = Yup.string()
-  .matches(regx.email, 'Wrong email format')
-  .required('Enter your email');
+  .matches(regx.email, 'Please enter a correct e-mail address')
+  .required('This field is required');
 
 const forgotFormValidationSchema: Yup.Schema<ForgotFormDto> =
   Yup.object().shape({

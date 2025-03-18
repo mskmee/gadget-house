@@ -1,11 +1,19 @@
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Drawer, Row, Col, Slider, InputNumber } from 'antd';
 import { DrawerStyles } from 'antd/es/drawer/DrawerPanel';
 import cn from 'classnames';
 
-import { smartData } from './consts';
+import { IFilterProps } from '@/interfaces/interfaces';
 import { checkKeydownEvent } from '@/utils/helpers/checkKeydownEvent';
-import { IFilterProps, IProduct } from '@/interfaces/interfaces';
+import { AppDispatch, RootState } from '@/store';
+import {
+  setSelectedAttributes,
+  setSelectedBrands,
+  setSelectedCameraRange,
+  setSelectedPriceRange,
+} from '@/store/filters/filters_slice';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { useRangeFilter } from './hooks/useRangeFilter';
 import { Header } from '../components';
 import { Option } from './Option';
@@ -19,25 +27,28 @@ export const FiltersMobile = ({
   filters,
   drawerVisible,
   toggleDrawer,
-  onFilter,
 }: IFilterProps) => {
+  const dispatch: AppDispatch = useDispatch();
+  const { selectedPriceRange, selectedCameraRange } = useTypedSelector(
+    (state: RootState) => state.filters,
+  );
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, string[]>
   >({});
-  const [priceRange, setPriceRange] = useState<number[]>([11770, 65500]);
+  const [priceRange, setPriceRange] = useState<number[]>(selectedPriceRange);
   const {
     minValue: minPrice,
     maxValue: maxPrice,
     handleMinChange: handleMinPriceChange,
     handleMaxChange: handleMaxPriceChange,
-  } = useRangeFilter(11000, 65500);
+  } = useRangeFilter(selectedPriceRange[0], selectedPriceRange[1]);
 
   const {
     minValue: minCameraMP,
     maxValue: maxCameraMP,
     handleMinChange: handleMinMPChange,
     handleMaxChange: handleMaxMPChange,
-  } = useRangeFilter(0, 0);
+  } = useRangeFilter(selectedCameraRange[0], selectedCameraRange[1]);
 
   const [showCategory, setShowCategory] = useState(true);
 
@@ -45,19 +56,18 @@ export const FiltersMobile = ({
     setShowCategory(!showCategory);
   };
 
-  const handleOptionChange = (optionKey: string, value: string) => {
-    setSelectedOptions((prev) => {
-      const newOptions = { ...prev };
-      if (!newOptions[optionKey]) newOptions[optionKey] = [];
-      if (newOptions[optionKey].includes(value)) {
-        newOptions[optionKey] = newOptions[optionKey].filter(
-          (v) => v !== value,
-        );
-      } else {
-        newOptions[optionKey].push(value);
-      }
-      return newOptions;
-    });
+  const onMinInputChange = (value: number | null) => {
+    if (value !== null && value <= maxPrice) {
+      handleMinPriceChange(value);
+      setPriceRange([value, maxPrice]);
+    }
+  };
+
+  const onMaxInputChange = (value: number | null) => {
+    if (value !== null && value >= minPrice) {
+      handleMaxPriceChange(value);
+      setPriceRange([minPrice, value]);
+    }
   };
 
   const handleSliderChange = (value: number[]) => {
@@ -66,43 +76,11 @@ export const FiltersMobile = ({
     handleMaxPriceChange(value[1]);
   };
 
-  const filteredProducts = useMemo(() => {
-    return smartData.filter((product: IProduct) => {
-      let isMatch = true;
-
-      if (priceRange.length === 2) {
-        const [minPrice, maxPrice] = priceRange;
-        isMatch = product.price >= minPrice && product.price <= maxPrice;
-      }
-
-      if (minCameraMP && maxCameraMP) {
-        isMatch =
-          isMatch &&
-          product.cameraMP >= minCameraMP &&
-          product.cameraMP <= maxCameraMP;
-      }
-
-      if (Object.keys(selectedOptions).length > 0 && product.options) {
-        Object.keys(selectedOptions).forEach((optionKey) => {
-          if (selectedOptions[optionKey].length > 0) {
-            const productOption = product.options?.[optionKey];
-            if (productOption) {
-              isMatch =
-                isMatch &&
-                selectedOptions[optionKey].some((value) =>
-                  productOption.includes(value),
-                );
-            }
-          }
-        });
-      }
-
-      return isMatch;
-    });
-  }, [selectedOptions, priceRange, minCameraMP, maxCameraMP]);
-
   const applyFilter = () => {
-    onFilter(filteredProducts);
+    dispatch(setSelectedBrands(selectedOptions.brands));
+    dispatch(setSelectedAttributes(selectedOptions.attributes));
+    dispatch(setSelectedPriceRange(priceRange));
+    dispatch(setSelectedCameraRange([minCameraMP, maxCameraMP]));
     toggleDrawer();
   };
 
@@ -110,6 +88,13 @@ export const FiltersMobile = ({
     if (!checkKeydownEvent(event.key)) {
       event.preventDefault();
     }
+  };
+
+  const handleFilterChange = (filterKey: string, checkedValues: string[]) => {
+    setSelectedOptions((prev) => ({
+      ...prev,
+      [filterKey]: checkedValues.length ? checkedValues : [],
+    }));
   };
 
   const drawerStyles: DrawerStyles = {
@@ -179,7 +164,7 @@ export const FiltersMobile = ({
                 max={99999}
                 value={minPrice}
                 controls={false}
-                onChange={handleMinPriceChange}
+                onChange={onMinInputChange}
                 inputMode="numeric"
                 stringMode={false}
                 onKeyDown={handleKeyDown}
@@ -205,7 +190,7 @@ export const FiltersMobile = ({
                 max={100000}
                 value={maxPrice}
                 controls={false}
-                onChange={handleMaxPriceChange}
+                onChange={onMaxInputChange}
                 inputMode="numeric"
                 stringMode={false}
                 onKeyDown={handleKeyDown}
@@ -227,49 +212,49 @@ export const FiltersMobile = ({
 
         {filters.brands && (
           <Option
-            data={filters.brands ?? []}
-            option="brands"
+            options={filters.brands ?? []}
+            filterKey="brands"
             title="Brand"
-            btnMore={true}
-            optionChange={handleOptionChange}
+            selectedOptions={selectedOptions}
+            onOptionChange={handleFilterChange}
           />
         )}
 
         {filters.builtInMemory && (
           <Option
-            data={filters.builtInMemory ?? []}
+            options={filters.builtInMemory ?? []}
             title="Built-in memory"
-            option="builtInMemory"
-            btnMore={true}
-            optionChange={handleOptionChange}
+            filterKey="builtInMemory"
+            selectedOptions={selectedOptions}
+            onOptionChange={handleFilterChange}
           />
         )}
 
         {filters.rams && (
           <Option
-            data={filters.rams ?? []}
+            options={filters.rams ?? []}
             title="RAM"
-            option="rams"
-            btnMore={true}
-            optionChange={handleOptionChange}
+            filterKey="rams"
+            selectedOptions={selectedOptions}
+            onOptionChange={handleFilterChange}
           />
         )}
 
         <Option
-          data={['Yes', 'No']}
+          options={['Yes', 'No']}
           title="Separate slot for memory"
-          option="memorySlot"
-          btnMore={false}
-          optionChange={handleOptionChange}
+          filterKey="memorySlot"
+          selectedOptions={selectedOptions}
+          onOptionChange={handleFilterChange}
         />
 
         {filters.colors && (
           <Option
-            data={filters.colors}
+            options={filters.colors}
             title="Color"
-            option="colors"
-            btnMore={true}
-            optionChange={handleOptionChange}
+            filterKey="colors"
+            selectedOptions={selectedOptions}
+            onOptionChange={handleFilterChange}
           />
         )}
 
@@ -353,21 +338,21 @@ export const FiltersMobile = ({
 
         {filters.cores && (
           <Option
-            data={filters.cores}
+            options={filters.cores}
             title="Number of cores"
-            option="cores"
-            btnMore={false}
-            optionChange={handleOptionChange}
+            filterKey="cores"
+            selectedOptions={selectedOptions}
+            onOptionChange={handleFilterChange}
           />
         )}
 
         {filters.screens && (
           <Option
-            data={filters.screens}
+            options={filters.screens}
             title="Screen type"
-            option="screens"
-            btnMore={true}
-            optionChange={handleOptionChange}
+            filterKey="screens"
+            selectedOptions={selectedOptions}
+            onOptionChange={handleFilterChange}
           />
         )}
       </div>

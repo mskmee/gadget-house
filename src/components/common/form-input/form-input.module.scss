@@ -37,7 +37,7 @@
       width: 100%;
       padding: 16px;
       border-radius: 12px;
-      border: 1px solid var(--secondary-text-color);
+      border: 1px solid var(--text-color);
       outline: none;
       background-color: transparent;
       font-family: "Inter", sans-serif;
@@ -49,7 +49,7 @@
       &:active,
       &:focus,
       &:focus-visible {
-        border: 1px solid var(--secondary-text-color);
+        border: 1px solid var(--text-color);
         outline: none;
         box-shadow: none;
         background-color: transparent;
@@ -73,7 +73,7 @@
 
     :global {
       .ant-input-password {
-        border-color: var(--secondary-text-color);
+        border-color: var(--text-color);
         outline: none;
         box-shadow: none;
 
@@ -81,12 +81,31 @@
           border: none;
           outline: none;
         }
+
+        &.error {
+          background: var(--white-color);
+          border-width: 1px;
+          border-style: solid;
+          border-color: var(--error-color);
+
+          &:hover {
+            border-color: var(--error-color);
+          }
+        }
+
+        .ant-input-status-error {
+          border-color: var(--error-color);
+        }
       }
       .ant-input-outlined {
         &:hover {
-          border-color: var(--secondary-text-color);
+          border-color: var(--text-color);
           outline: none;
           background-color: transparent;
+        }
+
+        &.ant-input-status-error:hover {
+          border-color: var(--error-color);
         }
       }
     }
@@ -135,7 +154,7 @@
 .phoneInput {
   width: 100%;
   border-radius: 12px;
-  border: 1px solid var(--secondary-text-color);
+  border: 1px solid var(--text-color);
   outline: none;
   background-color: transparent;
   display: flex;

@@ -4,12 +4,14 @@ import { reducer as shoppingCartReducer } from './shopping_cart/shoppingCart_sli
 import { reducer as searchReducer } from './search/search_slice';
 import { reducer as productsReducer } from './products';
 import { reducer as authReducer } from './auth/auth-slice';
+import { reducer as filtersReducer } from './filters/filters_slice';
 
 const reducers = combineReducers({
   shopping_card: shoppingCartReducer,
   search: searchReducer,
   products: productsReducer,
   auth: authReducer,
+  filters: filtersReducer,
 });
 
 const logger: Middleware = createLogger({ collapsed: true });
