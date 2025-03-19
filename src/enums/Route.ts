@@ -23,6 +23,7 @@ const AppRoute = {
   SALE: '/sale',
   AUTH_FORGOT_PASSWORD: '/changePassword',
   ADMIN_PAGE: '/admin',
+  ADMIN_INVOICE: '/admin/:order-id',
 } as const;
 
 export type RoutePath = (typeof AppRoute)[keyof typeof AppRoute];

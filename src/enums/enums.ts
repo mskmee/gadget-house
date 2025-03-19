@@ -5,5 +5,6 @@ export { DataStatus } from './data-status';
 export { Brand, BrandIDs } from './brand';
 export { Category } from './category';
 export { Attribute } from './attribute';
+export { Statuses } from './statuses';
 export { Sort } from './sort';
 export { Filters } from './filters';

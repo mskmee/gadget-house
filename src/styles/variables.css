@@ -1,14 +1,14 @@
 :root {
   --bg-color: #f8f7fa;
+  --secondary-background-color: #eae4ee;
   --text-color: #1c1817;
   --theme-color: #6f4c9a;
   --green-color: #00820d;
   --green-active-color: #00680a;
   --carousel-theme-color: #eae4ee;
   --white-color: #ffffff;
-  --secondary-text-color: #78808c;
+  --secondary-text-color: #78808C;
   --buttons-and-accent-color: #00820d;
-  --secondary-background-color: #eae4ee;
   --button-hover-color: #4da856;
   --button-disabled-color: #dff2e1;
   --error-color: #f01a1a;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Row, Col, InputNumber, Slider } from 'antd';
 import cn from 'classnames';
@@ -12,7 +12,7 @@ import {
   setSelectedPriceRange,
 } from '@/store/filters/filters_slice';
 import { useRangeFilter } from './hooks/useRangeFilter';
-import { checkKeydownEvent } from '@/utils/helpers/checkKeydownEvent';
+import { handleKeyDown } from '@/utils/helpers/checkKeydownEvent';
 import { Option } from './Option';
 
 import ArrowUpSvg from '@/assets/icons/arrow-up.svg';
@@ -77,12 +77,6 @@ export const FiltersDesk = () => {
     );
     dispatch(setSelectedPriceRange(priceRange));
     dispatch(setSelectedCameraRange([minCameraMP, maxCameraMP]));
-  };
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (!checkKeydownEvent(event.key)) {
-      event.preventDefault();
-    }
   };
 
   const handleFilterChange = (filterKey: string, checkedValues: string[]) => {
