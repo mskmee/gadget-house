@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Drawer, Row, Col, Slider, InputNumber } from 'antd';
 import { DrawerStyles } from 'antd/es/drawer/DrawerPanel';
@@ -89,14 +89,10 @@ export const FiltersMobile = ({
     }));
   };
 
-  const handleFocusMinCamera = () => {
-    if (inputMinCameraMPRef.current) {
-      inputMinCameraMPRef.current.select();
+  const handleFocus = (inputRef: React.RefObject<HTMLInputElement>) => {
+    if (inputRef.current) {
+      inputRef.current.select();
     }
-  };
-
-  const handleFocusMaxCamera = () => {
-    if (inputMaxCameraMPRef.current) inputMaxCameraMPRef.current.select();
   };
 
   const drawerStyles: DrawerStyles = {
@@ -294,7 +290,7 @@ export const FiltersMobile = ({
                   inputMode="numeric"
                   stringMode={false}
                   onKeyDown={handleKeyDown}
-                  onFocus={handleFocusMinCamera}
+                  onFocus={() => handleFocus(inputMinCameraMPRef)}
                   style={{
                     width: '74px',
                     height: '40px',
@@ -323,7 +319,7 @@ export const FiltersMobile = ({
                   inputMode="numeric"
                   stringMode={false}
                   onKeyDown={handleKeyDown}
-                  onFocus={handleFocusMaxCamera}
+                  onFocus={() => handleFocus(inputMaxCameraMPRef)}
                   style={{
                     width: '74px',
                     height: '40px',

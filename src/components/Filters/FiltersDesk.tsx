@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Row, Col, InputNumber, Slider } from 'antd';
 import cn from 'classnames';
@@ -46,18 +46,12 @@ export const FiltersDesk = () => {
       handleMinPriceChange(value);
       setPriceRange([value, maxPrice]);
     }
-    if (value !== null || value !== 0) {
-      handleMinMPChange(value);
-    }
   };
 
   const onMaxInputChange = (value: number | null) => {
     if (value !== null && value >= minPrice) {
       handleMaxPriceChange(value);
       setPriceRange([minPrice, value]);
-    }
-    if (value !== null || value !== 0) {
-      handleMaxMPChange(value);
     }
   };
 
@@ -94,14 +88,10 @@ export const FiltersDesk = () => {
     }));
   };
 
-  const handleFocusMinCamera = () => {
-    if (inputMinCameraMPRef.current) {
-      inputMinCameraMPRef.current.select();
+  const handleFocus = (inputRef: React.RefObject<HTMLInputElement>) => {
+    if (inputRef.current) {
+      inputRef.current.select();
     }
-  };
-
-  const handleFocusMaxCamera = () => {
-    if (inputMaxCameraMPRef.current) inputMaxCameraMPRef.current.select();
   };
 
   return (
@@ -262,7 +252,7 @@ export const FiltersDesk = () => {
                     inputMode="numeric"
                     stringMode={false}
                     onKeyDown={handleKeyDown}
-                    onFocus={handleFocusMinCamera}
+                    onFocus={() => handleFocus(inputMinCameraMPRef)}
                     style={{
                       width: '74px',
                       height: '40px',
@@ -290,7 +280,7 @@ export const FiltersDesk = () => {
                     inputMode="numeric"
                     stringMode={false}
                     onKeyDown={handleKeyDown}
-                    onFocus={handleFocusMaxCamera}
+                    onFocus={() => handleFocus(inputMaxCameraMPRef)}
                     style={{
                       width: '74px',
                       height: '40px',
