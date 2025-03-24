@@ -24,6 +24,7 @@ const AppRoute = {
   AUTH_FORGOT_PASSWORD: '/changePassword',
   ADMIN_PAGE: '/admin',
   ADMIN_INVOICE: '/admin/:order-id',
+  LOGIN_ADMIN: '/auth/login-admin',
 } as const;
 
 export type RoutePath = (typeof AppRoute)[keyof typeof AppRoute];
