@@ -21,7 +21,14 @@ type Properties = {
   stage: OrderStage;
 };
 
-const LineValue = ({ value }: { value: string }) => <span>{value}</span>;
+const LineValue = ({ value }: { value: string }) => (
+  <span>
+    {value
+      .match(/[A-Z]?[a-z]+/g)
+      ?.join(' ')
+      .toLowerCase()}
+  </span>
+);
 
 export const PaymentForm: FC<Properties> = ({
   initialValues,

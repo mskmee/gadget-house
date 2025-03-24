@@ -26,6 +26,7 @@ import Sale from './pages/Sale/Sale';
 import AdminPage from './pages/AdminPage/AdminPage';
 import AdminInvoice from './pages/AdminInvoice/AdminInvoice';
 import ForgotPassword from './pages/Auth/ChangePassword';
+import LoginAdmin from './pages/Auth/LoginAdmin';
 
 export const routes = createBrowserRouter(
   [
@@ -93,6 +94,10 @@ export const routes = createBrowserRouter(
         {
           path: AppRoute.ADMIN_INVOICE,
           element: <AdminInvoice />,
+        },
+        {
+          path: AppRoute.LOGIN_ADMIN,
+          element: <LoginAdmin />,
         },
         {
           path: '*',

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Row, Col, InputNumber, Slider } from 'antd';
 import cn from 'classnames';
@@ -20,6 +20,8 @@ import ArrowUpSvg from '@/assets/icons/arrow-up.svg';
 import styles from './filters.module.scss';
 
 export const FiltersDesk = () => {
+  const inputMinCameraMPRef = useRef<HTMLInputElement | null>(null);
+  const inputMaxCameraMPRef = useRef<HTMLInputElement | null>(null);
   const dispatch: AppDispatch = useDispatch();
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, string[]>
@@ -44,12 +46,18 @@ export const FiltersDesk = () => {
       handleMinPriceChange(value);
       setPriceRange([value, maxPrice]);
     }
+    if (value !== null || value !== 0) {
+      handleMinMPChange(value);
+    }
   };
 
   const onMaxInputChange = (value: number | null) => {
     if (value !== null && value >= minPrice) {
       handleMaxPriceChange(value);
       setPriceRange([minPrice, value]);
+    }
+    if (value !== null || value !== 0) {
+      handleMaxMPChange(value);
     }
   };
 
@@ -84,6 +92,16 @@ export const FiltersDesk = () => {
       ...prev,
       [filterKey]: checkedValues.length ? checkedValues : [],
     }));
+  };
+
+  const handleFocusMinCamera = () => {
+    if (inputMinCameraMPRef.current) {
+      inputMinCameraMPRef.current.select();
+    }
+  };
+
+  const handleFocusMaxCamera = () => {
+    if (inputMaxCameraMPRef.current) inputMaxCameraMPRef.current.select();
   };
 
   return (
@@ -233,6 +251,7 @@ export const FiltersDesk = () => {
                 <Col span={12} className={styles.filters__camera}>
                   <span className={styles.filters__priceText}>From</span>
                   <InputNumber
+                    ref={inputMinCameraMPRef}
                     min={0}
                     max={643}
                     maxLength={3}
@@ -243,6 +262,7 @@ export const FiltersDesk = () => {
                     inputMode="numeric"
                     stringMode={false}
                     onKeyDown={handleKeyDown}
+                    onFocus={handleFocusMinCamera}
                     style={{
                       width: '74px',
                       height: '40px',
@@ -259,6 +279,7 @@ export const FiltersDesk = () => {
                 <Col span={12} className={styles.filters__camera}>
                   <span className={styles.filters__priceText}>To</span>
                   <InputNumber
+                    ref={inputMaxCameraMPRef}
                     min={0}
                     max={644}
                     maxLength={3}
@@ -269,6 +290,7 @@ export const FiltersDesk = () => {
                     inputMode="numeric"
                     stringMode={false}
                     onKeyDown={handleKeyDown}
+                    onFocus={handleFocusMaxCamera}
                     style={{
                       width: '74px',
                       height: '40px',
