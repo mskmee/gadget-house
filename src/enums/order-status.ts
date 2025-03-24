@@ -1,4 +1,4 @@
-const Statuses = {
+const OrderStatus = {
   PAID: 'Paid',
   NOT_PAID: 'Not Paid',
   RETURNED: 'Returned',
@@ -8,6 +8,6 @@ const Statuses = {
 } as const;
 
 // eslint-disable-next-line no-redeclare
-type Statuses = (typeof Statuses)[keyof typeof Statuses];
+type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus];
 
-export { Statuses };
+export { OrderStatus };
