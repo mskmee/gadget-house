@@ -29,19 +29,19 @@ export const FiltersMobile = ({
   toggleDrawer,
 }: IFilterProps) => {
   const dispatch: AppDispatch = useDispatch();
-  const { selectedPriceRange, selectedCameraRange } = useTypedSelector(
+  const { selectedCameraRange } = useTypedSelector(
     (state: RootState) => state.filters,
   );
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, string[]>
   >({});
-  const [priceRange, setPriceRange] = useState<number[]>(selectedPriceRange);
+  const [priceRange, setPriceRange] = useState<number[]>([11770, 65500]);
   const {
     minValue: minPrice,
     maxValue: maxPrice,
     handleMinChange: handleMinPriceChange,
     handleMaxChange: handleMaxPriceChange,
-  } = useRangeFilter(selectedPriceRange[0], selectedPriceRange[1]);
+  } = useRangeFilter(11770, 65500);
 
   const {
     minValue: minCameraMP,

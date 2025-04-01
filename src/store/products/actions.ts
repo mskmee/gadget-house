@@ -71,9 +71,9 @@ const getFilteredProducts = createAsyncThunk(
 
 const getByCategory = createAsyncThunk(
   'products/fetchByCategoryProducts',
-  async ({ categoryId, page, size }: { categoryId: number; page: number; size: number }) => {
+  async ({ categoryId, page, size, sort }: { categoryId: number; page: number; size: number, sort: string | null }) => {
 
-    return await productsService.getByCategory(categoryId, page, size);
+    return await productsService.getByCategory(categoryId, page, size, sort);
   }
 );
 

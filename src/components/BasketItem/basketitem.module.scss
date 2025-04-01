@@ -1,4 +1,4 @@
-@import '@/styles/functions';
+@import "@/styles/functions";
 
 .basketItem {
   display: flex;
@@ -76,22 +76,84 @@
     width: fit-content;
     margin-left: auto;
     margin-bottom: 16px;
-    button {
-      cursor: pointer;
-      background: transparent;
-      border-radius: 50%;
-      border: 1.5px solid rgba(28, 24, 23, 1);
-      color: rgba(28, 24, 23, 1);
-      width: 14px;
-      height: 14px;
-      display: grid;
-      place-content: center;
-      &:last-child {
-        padding-bottom: 2px;
-      }
+
+    @media (width <= 680px) {
+      gap: 10px;
     }
-    p {
-      margin-top: 2px;
+
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    &Button {
+      &_minus {
+        &::before {
+          display: inline-block;
+          width: 16px;
+          height: 16px;
+          background-image: url("../../assets/icons/button-minus.svg");
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: contain;
+          border: none;
+          outline: none;
+          transition: all 0.3s ease-in-out;
+          content: "";
+
+          @media (width <= 980px) {
+            width: 24px;
+            height: 24px;
+          }
+
+          @media (width <= 680px) {
+            width: 30px;
+            height: 30px;
+          }
+        }
+
+        &:hover,
+        &:focus,
+        &:focus-visible {
+          &::before {
+            background-image: url("../../assets/icons/button-minus-hover.svg");
+          }
+        }
+      }
+
+      &_plus {
+        &::before {
+          display: inline-block;
+          width: 16px;
+          height: 16px;
+          background-image: url("../../assets/icons/button-plus.svg");
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: contain;
+          border: none;
+          outline: none;
+          transition: all 0.3s ease-in-out;
+          content: "";
+
+          @media (width <= 980px) {
+            width: 24px;
+            height: 24px;
+          }
+
+          @media (width <= 680px) {
+            width: 30px;
+            height: 30px;
+          }
+        }
+
+        &:hover,
+        &:focus,
+        &:focus-visible {
+          &::before {
+            background-image: url("../../assets/icons/button-plus-hover.svg");
+          }
+        }
+      }
     }
   }
   &Price {

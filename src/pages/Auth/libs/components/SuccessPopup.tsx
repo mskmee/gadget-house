@@ -11,7 +11,7 @@ import { inBasket } from '@/assets/constants';
 import styles from './form.module.scss';
 
 interface SuccessPopupProps {
-  type: 'login' | 'register' | 'forgot' | 'changePassword';
+  type: 'login' | 'register' | 'forgot' | 'changePassword' | 'loginAdmin';
   onClose: () => void;
 }
 
@@ -32,6 +32,10 @@ const SuccessPopup: FC<SuccessPopupProps> = ({ type, onClose }) => {
 
   switch (type) {
     case 'login':
+      title = 'Success log in!';
+      notice = 'Log in was successful';
+      break;
+    case 'loginAdmin':
       title = 'Success log in!';
       notice = 'Log in was successful';
       break;

@@ -49,16 +49,10 @@ const RegisterForm: FC<IRegisterFormProps> = ({
             >
               <div className={styles.form__inputsName}>
                 <FormInput<RegisterFormDto>
-                  name="firstName"
+                  name="fullName"
                   type="text"
-                  label="Name"
-                  placeholder="Name"
-                />
-                <FormInput<RegisterFormDto>
-                  name="lastName"
-                  type="text"
-                  label="Surname"
-                  placeholder="Surname"
+                  label="Full name"
+                  placeholder="Full name"
                 />
               </div>
 

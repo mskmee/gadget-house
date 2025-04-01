@@ -6,6 +6,7 @@ import { ContactsFormDto } from '../../types/types';
 import { OrderStage } from '../../enums/enums';
 import { FormInput } from '@/components/components';
 import { contactsFormValidationSchema } from '../../validation-schemas/validation-schemas';
+import formatContactsInfo from '../../utils/formatContactsInfo';
 
 import styles from './form.module.scss';
 
@@ -18,7 +19,7 @@ type Properties = {
   stage: OrderStage;
 };
 
-const LineValue = ({ value }: { value: string }) => <span>{value}</span>;
+const LineValue = ({ text }: { text: string }) => <span>{text}</span>;
 
 export const ContactsForm: FC<Properties> = ({
   initialValues,
@@ -125,8 +126,8 @@ export const ContactsForm: FC<Properties> = ({
               </>
             ) : (
               <div className={styles.form__info}>
-                {Object.entries(initialValues).map(([key, value]) =>
-                  value ? <LineValue key={key} value={value} /> : null,
+                {formatContactsInfo(initialValues) && (
+                  <LineValue text={formatContactsInfo(initialValues)} />
                 )}
               </div>
             )}
