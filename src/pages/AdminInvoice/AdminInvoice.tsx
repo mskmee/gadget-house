@@ -2,7 +2,7 @@ import { useLocation } from 'react-router-dom';
 import { Flex } from 'antd';
 import cn from 'classnames';
 
-import { Statuses } from '@/enums/statuses';
+import { OrderStatus } from '@/enums/enums';
 
 import styles from './admin-invoice.module.scss';
 
@@ -80,7 +80,7 @@ const AdminInvoice = () => {
           <h3>Status</h3>
 
           <Flex gap={12} wrap>
-            {Object.values(Statuses).map((status) => (
+            {Object.values(OrderStatus).map((status) => (
               <input
                 key={status}
                 type="checkbox"

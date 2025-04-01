@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Pagination, InputRef, Checkbox, CheckboxProps } from 'antd';
 import cn from 'classnames';
 
-import { Statuses } from '@/enums/statuses';
+import { OrderStatus } from '@/enums/enums';
 import { Search } from '@/components/Header/Search/Search';
 import { Filters } from './libs/components/Filters';
 
@@ -67,11 +67,11 @@ const AdminPage = () => {
                   <td>(057) 333 33 33</td>
                   <td>
                     <span
-                      className={`button__status button__status_${Object.values(Statuses)[idx % Object.values(Statuses).length].toLowerCase().replace(' ', '_')}`}
+                      className={`button__status button__status_${Object.values(OrderStatus)[idx % Object.values(OrderStatus).length].toLowerCase().replace(' ', '_')}`}
                     >
                       {
-                        Object.values(Statuses)[
-                          idx % Object.values(Statuses).length
+                        Object.values(OrderStatus)[
+                          idx % Object.values(OrderStatus).length
                         ]
                       }
                     </span>

@@ -1,18 +1,17 @@
-import { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Drawer, Row, Col, Slider, InputNumber } from 'antd';
 import { DrawerStyles } from 'antd/es/drawer/DrawerPanel';
 import cn from 'classnames';
 
 import { IFilterProps } from '@/interfaces/interfaces';
-import { AppDispatch, RootState } from '@/store';
+import { AppDispatch } from '@/store';
 import {
   setSelectedAttributes,
   setSelectedBrands,
   setSelectedCameraRange,
   setSelectedPriceRange,
 } from '@/store/filters/filters_slice';
-import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { useRangeFilter } from './hooks/useRangeFilter';
 import { handleKeyDown } from '@/utils/helpers/checkKeydownEvent';
 import { Header } from '../components';
@@ -28,10 +27,9 @@ export const FiltersMobile = ({
   drawerVisible,
   toggleDrawer,
 }: IFilterProps) => {
+  const inputMinCameraMPRef = useRef<HTMLInputElement | null>(null);
+  const inputMaxCameraMPRef = useRef<HTMLInputElement | null>(null);
   const dispatch: AppDispatch = useDispatch();
-  const { selectedCameraRange } = useTypedSelector(
-    (state: RootState) => state.filters,
-  );
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, string[]>
   >({});
@@ -44,11 +42,11 @@ export const FiltersMobile = ({
   } = useRangeFilter(11770, 65500);
 
   const {
-    minValue: minCameraMP,
-    maxValue: maxCameraMP,
-    handleMinChange: handleMinMPChange,
-    handleMaxChange: handleMaxMPChange,
-  } = useRangeFilter(selectedCameraRange[0], selectedCameraRange[1]);
+    minValueCamera: minCameraMP,
+    maxValueCamera: maxCameraMP,
+    handleMinChangeCamera: handleMinMPChange,
+    handleMaxChangeCamera: handleMaxMPChange,
+  } = useRangeFilter(0, 0);
 
   const [showCategory, setShowCategory] = useState(true);
 
@@ -89,6 +87,12 @@ export const FiltersMobile = ({
       ...prev,
       [filterKey]: checkedValues.length ? checkedValues : [],
     }));
+  };
+
+  const handleFocus = (inputRef: React.RefObject<HTMLInputElement>) => {
+    if (inputRef.current) {
+      inputRef.current.select();
+    }
   };
 
   const drawerStyles: DrawerStyles = {
@@ -142,7 +146,7 @@ export const FiltersMobile = ({
           <h4 className={styles.filters__optionName}>Price</h4>
           <Slider
             range
-            min={50}
+            min={0}
             max={100000}
             value={priceRange}
             onChange={handleSliderChange}
@@ -180,7 +184,7 @@ export const FiltersMobile = ({
               <span className={styles.filters__priceText}>To</span>
               <InputNumber
                 type="number"
-                min={50}
+                min={0}
                 max={100000}
                 value={maxPrice}
                 controls={false}
@@ -276,6 +280,7 @@ export const FiltersMobile = ({
               <Col span={12} className={styles.filters__camera}>
                 <span className={styles.filters__priceText}>From</span>
                 <InputNumber
+                  ref={inputMinCameraMPRef}
                   min={0}
                   max={643}
                   value={minCameraMP}
@@ -285,6 +290,7 @@ export const FiltersMobile = ({
                   inputMode="numeric"
                   stringMode={false}
                   onKeyDown={handleKeyDown}
+                  onFocus={() => handleFocus(inputMinCameraMPRef)}
                   style={{
                     width: '74px',
                     height: '40px',
@@ -303,6 +309,7 @@ export const FiltersMobile = ({
               <Col span={12} className={styles.filters__camera}>
                 <span className={styles.filters__priceText}>To</span>
                 <InputNumber
+                  ref={inputMaxCameraMPRef}
                   min={0}
                   max={644}
                   value={maxCameraMP}
@@ -312,6 +319,7 @@ export const FiltersMobile = ({
                   inputMode="numeric"
                   stringMode={false}
                   onKeyDown={handleKeyDown}
+                  onFocus={() => handleFocus(inputMaxCameraMPRef)}
                   style={{
                     width: '74px',
                     height: '40px',

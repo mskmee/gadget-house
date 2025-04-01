@@ -24,11 +24,13 @@ const SuccessPopup: FC<SuccessPopupProps> = ({ type, onClose }) => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       onClose();
-      navigate(AppRoute.ROOT);
+      type === 'loginAdmin'
+        ? navigate(AppRoute.ADMIN_PAGE)
+        : navigate(AppRoute.ROOT);
     }, 5000);
 
     return () => clearTimeout(timeoutId);
-  }, [navigate, onClose]);
+  }, [navigate, onClose, type]);
 
   switch (type) {
     case 'login':
@@ -53,6 +55,10 @@ const SuccessPopup: FC<SuccessPopupProps> = ({ type, onClose }) => {
     case 'changePassword':
       title = 'Change password!';
       notice = 'Password has been changed successfully';
+      break;
+    case 'loginAdmin':
+      title = 'Success log in!';
+      notice = 'Log in was successful';
       break;
     default:
       break;

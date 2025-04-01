@@ -4,11 +4,11 @@ import en from 'antd/es/date-picker/locale/en_US';
 import { DatePickerProps } from 'antd/es/date-picker';
 import cn from 'classnames';
 
-import { Statuses } from '@/enums/statuses';
+import { OrderStatus } from '@/enums/enums';
+import { handleKeyDown } from '@/utils/helpers/checkKeydownEvent';
 import { FilterIcon } from '@/assets/icons/FilterIcon';
 
 import styles from './filters.module.scss';
-import { handleKeyDown } from '@/utils/helpers/checkKeydownEvent';
 
 interface IFilters {
   // eslint-disable-next-line no-unused-vars
@@ -168,7 +168,7 @@ export const Filters: FC<IFilters> = ({ onSelectedFilters }) => {
         {showOptions && (
           <Flex align="center" justify="space-between" gap={12}>
             <Flex gap={10} wrap>
-              {Object.values(Statuses).map((status) => (
+              {Object.values(OrderStatus).map((status) => (
                 <button
                   key={status}
                   className={cn(
