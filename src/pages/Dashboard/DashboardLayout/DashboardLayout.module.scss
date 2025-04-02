@@ -42,6 +42,9 @@
         display: flex;
         align-items: center;
         gap: 4px;
+        > svg path {
+          stroke: #78808c;
+        }
         > span {
           color: #78808c;
         }
@@ -100,6 +103,16 @@
       > span path {
         stroke-width: 1;
         stroke: #1c1817;
+      }
+    }
+  }
+  .dashboardSidebarOrders {
+    > svg {
+      width: 36px;
+      height: 36px;
+      path {
+        stroke: #1c1817;
+        stroke-width: 1;
       }
     }
   }

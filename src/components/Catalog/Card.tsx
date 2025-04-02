@@ -4,7 +4,6 @@ import classNames from 'classnames';
 import { toast } from 'react-toastify';
 import { Rate } from 'antd';
 
-import { useProductCardHandlers } from '@/hooks/hooks';
 import { useActions } from '@/hooks/useActions';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { convertPriceToReadable } from '@/utils/helpers/product';
@@ -25,8 +24,7 @@ export const Card: FC<ISmartphoneCardProps> = ({
   classname,
   index,
 }) => {
-  const { isLiked, handleClickLike } = useProductCardHandlers();
-  const { addToStore } = useActions();
+  const { addToStore, toggleFavorite } = useActions();
   const { locale, currency } = useTypedSelector((state) => state.shopping_card);
 
   const productRating = product.rating ?? 0;
@@ -37,7 +35,7 @@ export const Card: FC<ISmartphoneCardProps> = ({
       ...product,
       name: product.name,
       isLiked: false,
-      rate: product.rating,
+      rating: product.rating,
       anotherColors: [],
       code: 'product_code',
       price: product.price.toString(),
@@ -49,6 +47,12 @@ export const Card: FC<ISmartphoneCardProps> = ({
       autoClose: 4000,
       theme: 'dark',
     });
+  };
+
+  const handleSaveFavoriteProduct = () => {
+    if (product) {
+      toggleFavorite(product);
+    }
   };
 
   return (
@@ -76,7 +80,10 @@ export const Card: FC<ISmartphoneCardProps> = ({
           </div>
 
           <div className={`${styles.cardConatinerLike}`}>
-            <HeartIcon onClick={handleClickLike} isLiked={isLiked} />
+            <HeartIcon
+              onClick={handleSaveFavoriteProduct}
+              isLiked={product?.isLiked}
+            />
           </div>
           <div></div>
         </div>

@@ -7,7 +7,6 @@ import {
   quantityInreaseButton,
 } from '@/assets/constants.ts';
 import { HeartIcon } from '@/assets/icons/HeartIcon.tsx';
-import { useProductCardHandlers } from '@/hooks/useProductCardHandlers.ts';
 import { useActions } from '@/hooks/useActions.ts';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { convertPriceToReadable } from '@/utils/helpers/product';
@@ -22,8 +21,7 @@ interface IBasketItemProps {
 export default function BasketItem({ product }: IBasketItemProps) {
   const { id, name, code, images, quantity, totalPrice, href, category } =
     product;
-
-  const { isLiked, handleClickLike } = useProductCardHandlers();
+  const { toggleFavorite } = useActions();
   const {
     deleteFromStore,
     closeBasketPopup,
@@ -52,6 +50,12 @@ export default function BasketItem({ product }: IBasketItemProps) {
   const handleIncrementItemQuantity = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     increaseItemQuantity(id);
+  };
+
+  const handleSaveFavoriteProduct = () => {
+    if (product) {
+      toggleFavorite(product);
+    }
   };
 
   return isLessThan768px ? (
@@ -86,7 +90,10 @@ export default function BasketItem({ product }: IBasketItemProps) {
           </button>
         </div>
         <button>
-          <HeartIcon onClick={handleClickLike} isLiked={isLiked} />
+          <HeartIcon
+            onClick={handleSaveFavoriteProduct}
+            isLiked={product?.isLiked}
+          />
         </button>
       </div>
     </Link>
@@ -109,9 +116,10 @@ export default function BasketItem({ product }: IBasketItemProps) {
             />
             <span>Delete</span>
           </button>
+
           <HeartIcon
-            onClick={handleClickLike}
-            isLiked={isLiked}
+            onClick={handleSaveFavoriteProduct}
+            isLiked={product?.isLiked}
             type="basket"
           />
         </span>

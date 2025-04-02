@@ -58,7 +58,7 @@ export const DashboardLayout = () => {
             <div className={styles.dashboardUserStatistics}>
               <div className={styles.userStatisticsOrders}>
                 <div>
-                  <BasketIcon stroke="#78808C" />
+                  <BasketIcon />
                   <span>My orders</span>
                 </div>
                 <span>3</span>
@@ -104,12 +104,7 @@ export const DashboardLayout = () => {
                 })}
                 onClick={handleClickOrders}
               >
-                <BasketIcon
-                  stroke="#1C1817"
-                  width="36px"
-                  height="36px"
-                  strokeWidth="1"
-                />
+                <BasketIcon />
                 <span>My orders</span>
               </Link>
               <Link

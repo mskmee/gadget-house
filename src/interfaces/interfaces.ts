@@ -48,7 +48,7 @@ export interface IProductCard {
   code: string;
   anotherColors: string[];
   isLiked: boolean;
-
+  category?: string;
   available: boolean;
 }
 

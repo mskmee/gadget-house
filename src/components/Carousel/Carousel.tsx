@@ -153,8 +153,6 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
     }
   }, []);
 
-  console.log(smartphones);
-
   return (
     <div className={classNames(styles.carousel, styles[classname])}>
       <div
@@ -183,7 +181,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
                       : classname === 'laptop-carousel'
                         ? laptops?.length
                         : 8,
-            },
+            } as { length: number },
             (_, i) => (
               <>
                 {classname === 'brands-carousel' ? (

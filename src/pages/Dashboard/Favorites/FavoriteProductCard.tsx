@@ -16,11 +16,11 @@ interface IFavoriteProductProps {
 export const FavoriteProductCard: FC<IFavoriteProductProps> = ({
   favoriteProduct,
 }) => {
-  const { id, category, href, images, name, code, price, rate, isLiked } =
+  const { id, category, href, images, name, code, price, rating, isLiked } =
     favoriteProduct;
   const { addToStore, toggleFavorite } = useActions();
 
-  const productRating = rate ?? 0;
+  const productRating = rating ?? 0;
 
   const handleSaveFavoriteProduct = () => {
     if (favoriteProduct) {
