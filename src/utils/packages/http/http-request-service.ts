@@ -229,7 +229,10 @@ export const request = <T>(options: ApiRequestOptions): Promise<T> => {
   return new Promise((res, rej) => {
     (async () => {
       try {
+        console.log(options);
+
         const url = getUrl(options);
+
         const formData = getFormData(options);
         const body = options.body;
         const headers = await getHeaders(options, formData);
@@ -241,6 +244,7 @@ export const request = <T>(options: ApiRequestOptions): Promise<T> => {
           formData,
           headers,
         );
+
         const responseBody = getResponseBody(response);
         const responseHeader = getResponseHeader(
           response,

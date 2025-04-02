@@ -43,13 +43,13 @@ export interface IProductCard {
   name: string;
   href?: string;
   images: ProductImageCard[];
-  rate: number;
+  rating: number;
   price: string;
   code: string;
   anotherColors: string[];
   isLiked: boolean;
-  isSmartphoneCard?: boolean;
-  category: string;
+
+  available: boolean;
 }
 
 export interface IShoppingCard extends IProductCard {

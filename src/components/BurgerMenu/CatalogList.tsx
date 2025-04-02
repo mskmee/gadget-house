@@ -4,10 +4,8 @@ import classNames from 'classnames';
 import { useMediaQuery } from 'react-responsive';
 import { buttonData } from '@/constants/ButtonConstants';
 import { NavButton } from '../Button';
-
 import items from './constants';
 import { RightArrow } from '@/assets/constants';
-
 import styles from './menu.module.scss';
 
 interface IProductListProps {

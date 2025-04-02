@@ -2,15 +2,12 @@ import React, { useState, useEffect } from 'react';
 import styles from './carousel.module.scss';
 import classNames from 'classnames';
 import { BrandCard, MyCard } from '../components';
-import {
-  brandData,
-  laptopData,
-  smartphoneData,
-  previouslyReviewedData,
-} from '@/constants/productCards';
+import { brandData } from '@/constants/productCards';
 import { useMediaQuery } from 'react-responsive';
 import { useResponsiveCarouselSettings } from '@/hooks/useResponsiveCarouselSettings';
-import { ProductImageCard } from '@/interfaces/interfaces';
+import { IProductCard, ProductImageCard } from '@/interfaces/interfaces';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import useLocalStorage from '@/hooks/useLocalStorage';
 
 type CarouselClassname =
   | 'brands-carousel'
@@ -33,6 +30,10 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
   const [startX, setStartX] = useState<number | null>(null);
   const [currentTranslate, setCurrentTranslate] = useState(0);
   const [animation, setAnimation] = useState(true);
+  const [previouslyReviewed] = useLocalStorage<IProductCard[]>(
+    'previouslyReviewed',
+    [],
+  );
 
   const isLargerThan1440px = useMediaQuery({
     query: '(max-width: 1440px)',
@@ -43,11 +44,20 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
     (productImageCards?.length ?? 0) > 4 ? 4 : (productImageCards?.length ?? 0),
   );
 
+  const products = useTypedSelector(
+    (state) => state.products.productsData?.page,
+  );
+
+  const smartphones = products?.filter((item) => item.id >= 1 && item.id <= 8);
+  const laptops = products?.filter((item) => item.id >= 9 && item.id <= 11);
+  //const others = products?.filter((item) => item.id >= 12);
+
   const itemWidth = isLargerThan1440px
     ? responsiveCarouselSettings.itemWidth
     : classname === 'brands-carousel'
       ? 256
       : 305;
+
   const totalItems =
     classname === 'brands-carousel'
       ? 10
@@ -55,7 +65,12 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
         ? productImageCards?.length
         : classname === 'basket-popup-carousel'
           ? 9
-          : 8;
+          : classname === 'viewed-carousel'
+            ? previouslyReviewed.length
+            : classname === 'laptop-carousel'
+              ? laptops?.length
+              : 8;
+
   const maxIndex = (totalItems ?? 0) - responsiveCarouselSettings.count;
 
   const handleNext = () => {
@@ -138,6 +153,8 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
     }
   }, []);
 
+  console.log(smartphones);
+
   return (
     <div className={classNames(styles.carousel, styles[classname])}>
       <div
@@ -161,7 +178,11 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
                   ? 10
                   : classname === 'photos-carousel'
                     ? 1
-                    : 8,
+                    : classname === 'viewed-carousel'
+                      ? previouslyReviewed.length
+                      : classname === 'laptop-carousel'
+                        ? laptops?.length
+                        : 8,
             },
             (_, i) => (
               <>
@@ -187,11 +208,11 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
                     key={crypto.randomUUID()}
                     product={
                       classname === 'laptop-carousel'
-                        ? laptopData[i % laptopData.length]
+                        ? laptops?.[i % (laptops.length || 1)] // Ensure laptops is defined before accessing
                         : classname === 'smartphone-carousel'
-                          ? smartphoneData[i % smartphoneData.length]
-                          : previouslyReviewedData[
-                              i % previouslyReviewedData.length
+                          ? smartphones?.[i % (smartphones.length || 1)]
+                          : previouslyReviewed?.[
+                              i % (previouslyReviewed?.length || 1)
                             ]
                     }
                     classname={
@@ -234,9 +255,10 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
           </button>
           <button
             className={classNames(styles['btn-arrow-next'], {
-              [styles['btn-arrow-next-disabled']]: currentIndex === maxIndex,
+              [styles['btn-arrow-next-disabled']]:
+                currentIndex === maxIndex || maxIndex < currentIndex,
             })}
-            disabled={currentIndex === maxIndex}
+            disabled={currentIndex === maxIndex || maxIndex < currentIndex}
             onClick={handleNext}
           >
             <svg

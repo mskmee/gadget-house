@@ -1,0 +1,134 @@
+@import '@/styles/functions';
+
+.dashboardContainer {
+  max-width: 1540px;
+  width: 100%;
+  margin: 48px auto 62px auto;
+  padding: 0 50px;
+
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+}
+.dashboardHeader {
+  display: flex;
+  align-items: center;
+  min-height: 128px;
+  background-color: #eae4ee;
+  .dashboardUserAvatar {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    .dashboardUserName {
+      margin: 0 26px 0 39px;
+      font-size: rem(42px);
+      line-height: 150%;
+      font-weight: 500;
+    }
+  }
+
+  .dashboardUserStatistics {
+    max-width: 177px;
+    width: 100%;
+    margin-right: 55px;
+    .userStatisticsOrders,
+    .userStatisticsFavorites {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      > div {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        > span {
+          color: #78808c;
+        }
+      }
+    }
+    .userStatisticsOrders {
+      margin-bottom: 8px;
+    }
+  }
+  .dashboardLogout {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    > span {
+      color: #1c1817;
+    }
+  }
+}
+.dashboardContent {
+  display: flex;
+  gap: 40px;
+}
+.dashboardSidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  width: 420px;
+  padding: 38px;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 0 8px #0000001a;
+  align-self: self-start;
+
+  .dashboardSidebarAccount,
+  .dashboardSidebarOrders,
+  .dashboardSidebarFavorites {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    > span {
+      color: #1c1817;
+      font-size: rem(24px);
+      line-height: 150%;
+    }
+  }
+  .dashboardSidebarAccount div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 36px;
+    height: 36px;
+  }
+  .dashboardSidebarFavorites {
+    > span:first-child {
+      height: 36px;
+      > span path {
+        stroke-width: 1;
+        stroke: #1c1817;
+      }
+    }
+  }
+  .activeSection {
+    > div > svg path,
+    > svg path {
+      stroke: #6f4c9a;
+    }
+
+    > span {
+      color: #6f4c9a;
+    }
+  }
+  .dashboardSidebarFavorites.aactiveSection {
+    > svg path {
+      fill: #6f4c9a;
+    }
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .dashboardContainer {
+    max-width: none;
+    padding: 0;
+  }
+  .dashboardHeader {
+    padding: 0 50px;
+  }
+  .dashboardContent {
+    padding: 0 50px;
+  }
+}

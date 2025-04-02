@@ -8,11 +8,17 @@ import { DataStatus } from '@/enums/enums';
 import { MainPageSkeleton } from '@/components/skeletons/MainPageSkeleton';
 import { useMediaQuery } from 'react-responsive';
 import { DEFAULT_PAGE, DEFAULT_SIZE } from '@/constants/pagination';
+import { IProductCard } from '@/interfaces/interfaces';
+import useLocalStorage from '@/hooks/useLocalStorage';
 
 export default function Main() {
   const { getAllProducts } = useActions();
   const isProductsLoading = useTypedSelector(
     (state) => state.products.dataStatus === DataStatus.PENDING,
+  );
+  const [previouslyReviewed] = useLocalStorage<IProductCard[]>(
+    'previouslyReviewed',
+    [],
   );
   const isLargerThan450px = useMediaQuery({
     query: '(max-width: 450px)',
@@ -37,15 +43,19 @@ export default function Main() {
           <SliderNav text="Laptop" link="/laptops" />
           <Carousels classname="laptop-carousel" />
 
-          <SliderNav
-            text={
-              isLargerThan450px
-                ? 'Previously reviewed'
-                : 'Previously reviewed offers'
-            }
-            link="/viewed"
-          />
-          <Carousels classname="viewed-carousel" />
+          {previouslyReviewed.length > 0 && (
+            <>
+              <SliderNav
+                text={
+                  isLargerThan450px
+                    ? 'Previously reviewed'
+                    : 'Previously reviewed offers'
+                }
+                link="/viewed"
+              />
+              <Carousels classname="viewed-carousel" />
+            </>
+          )}
         </>
       )}
       <Benefits />

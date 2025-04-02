@@ -10,10 +10,8 @@ import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { convertPriceToReadable } from '@/utils/helpers/product';
 import { ProductItem } from '@/utils/packages/products';
 import { rateImg, rateEmptyImg } from '@/assets/constants';
-
 import { HeartIcon } from '@/assets/icons/HeartIcon';
 import { BasketIcon } from '@/assets/icons/BasketIcon';
-
 import styles from './card.module.scss';
 
 interface ISmartphoneCardProps {

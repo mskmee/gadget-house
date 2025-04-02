@@ -24,6 +24,9 @@ import Tablets from './pages/Tablets/Tablets';
 import SmartWatches from './pages/SmartWatches/SmartWatches';
 import Sale from './pages/Sale/Sale';
 import { AdminPage } from './pages/AdminPage/AdminPage';
+import { UserAccount } from './pages/Dashboard/Account';
+import { UserOrders } from './pages/Dashboard/Orders';
+import { DashboardLayout } from './pages/Dashboard/DashboardLayout/DashboardLayout';
 
 export const routes = createBrowserRouter(
   [
@@ -58,9 +61,24 @@ export const routes = createBrowserRouter(
           element: <SearchResults />,
         },
         {
-          path: AppRoute.USER_FAVORITES,
-          element: <UserFavorites />,
+          path: AppRoute.USER_ACCOUNT,
+          element: <DashboardLayout />,
+          children: [
+            {
+              index: true,
+              element: <UserAccount />,
+            },
+            {
+              path: AppRoute.USER_FAVORITES,
+              element: <UserFavorites />,
+            },
+            {
+              path: AppRoute.USER_ORDERS,
+              element: <UserOrders />,
+            },
+          ],
         },
+
         {
           path: AppRoute.SIGN_IN,
           element: <SignIn />,
