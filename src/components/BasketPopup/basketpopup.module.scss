@@ -191,12 +191,29 @@
   .emptybasketPopupSubtitle {
     font-size: rem(24px);
     font-weight: 400;
+    margin-bottom: 40px;
   }
   .emptybasketPopupTitle,
   .emptybasketPopupSubtitle {
     color: #1c1817;
     line-height: 150%;
     text-align: center;
+  }
+
+  &Image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+      width: 222px;
+      height: 201px;
+
+      @media screen and (max-width: 520px) {
+        width: 158px;
+        height: 141px;
+      }
+    }
   }
 }
 

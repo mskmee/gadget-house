@@ -22,13 +22,22 @@
     width: 100%;
     position: relative;
 
-    input,
-    textarea {
+    &:focus-within .formInput__label {
       display: block;
+      opacity: 1;
+    }
+
+    &:focus-within .formInput__error {
+      display: none;
+    }
+
+    input,
+    textarea,
+    &Password {
       width: 100%;
       padding: 16px;
       border-radius: 12px;
-      border: 1px solid var(--secondary-text-color);
+      border: 1px solid var(--text-color);
       outline: none;
       background-color: transparent;
       font-family: "Inter", sans-serif;
@@ -40,7 +49,7 @@
       &:active,
       &:focus,
       &:focus-visible {
-        border: 1px solid var(--secondary-text-color);
+        border: 1px solid var(--text-color);
         outline: none;
         box-shadow: none;
         background-color: transparent;
@@ -57,49 +66,75 @@
       }
     }
 
-    input:focus + .formInput__label {
-      display: block;
-      opacity: 1;
-    }
-
-    textarea:focus + .formInput__label {
-      display: block;
-      opacity: 1;
-    }
-
     textarea {
       min-height: 126px;
       resize: none;
     }
 
-    input:focus + .formInput__error {
-      display: none;
-    }
-
-    input[type="tel"] {
-      padding-left: 95px;
-    }
-
     :global {
-      .ant-input-outlined:hover {
-        border-color: var(--secondary-text-color);
+      .ant-input-password {
+        border-color: var(--text-color);
         outline: none;
-        background-color: transparent;
+        box-shadow: none;
+
+        input {
+          border: none;
+          outline: none;
+        }
+
+        &.error {
+          background: var(--white-color);
+          border-width: 1px;
+          border-style: solid;
+          border-color: var(--error-color);
+
+          &:hover {
+            border-color: var(--error-color);
+          }
+        }
+
+        .ant-input-status-error {
+          border-color: var(--error-color);
+        }
+      }
+      .ant-input-outlined {
+        &:hover {
+          border-color: var(--text-color);
+          outline: none;
+          background-color: transparent;
+        }
+
+        &.ant-input-status-error:hover {
+          border-color: var(--error-color);
+        }
       }
     }
   }
 
-  &__inputWrapper {
-    position: relative;
-  }
+  &__passwordStrength {
+    margin-top: 6px;
+    font-family: Inter, sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 150%;
+    color: var(--secondary-text-color);
+    transition: all 0.3s ease;
 
-  &__passwordToggle {
-    position: absolute;
-    width: 14px;
-    height: 15px;
-    top: 50%;
-    right: 31px;
-    transform: translateY(-50%);
+    &_weak {
+      color: red;
+    }
+
+    &_medium {
+      color: orange;
+    }
+
+    &_strong {
+      color: yellowgreen;
+    }
+
+    &_veryStrong {
+      color: green;
+    }
   }
 
   &__error {
@@ -113,5 +148,51 @@
     line-height: 150%;
     color: var(--error-color);
     transition: all 0.3s ease;
+  }
+}
+
+.phoneInput {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid var(--text-color);
+  outline: none;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+
+  &__prefix {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 8px 16px 16px;
+    background-color: var(--theme-color);
+    border-radius: 10px 0 0 10px;
+  }
+
+  &__flag {
+    width: 32px;
+    height: 24px;
+  }
+
+  &__code {
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    color: var(--white-color);
+  }
+
+  input {
+    border: none;
+    padding: 16px 16px 16px 8px;
+
+    &:active,
+    &:focus,
+    &:focus-visible {
+      border: none;
+      outline: none;
+      box-shadow: none;
+      background-color: transparent;
+    }
   }
 }

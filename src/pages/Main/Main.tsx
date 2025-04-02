@@ -1,10 +1,20 @@
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { DEFAULT_PAGE, DEFAULT_SIZE } from '@/constants/pagination';
+import {
+  LocalStorageKey,
+  localStorageService,
+} from '@/utils/packages/local-storage';
+import { useTypedSelector, useActions } from '@/hooks/hooks';
+import { useMediaQuery } from 'react-responsive';
+import { getUserData } from '@/store/auth/actions';
+import { AppDispatch } from '@/store';
+import { AppRoute, DataStatus } from '@/enums/enums';
 import Benefits from '@/components/benefitsList/benefits';
 import Carousels from '@/components/Carousel/Carousel';
 import { SliderNav } from '@/components/SliderNav/SliderNav';
 import { MainIntro } from '@/components/MainIntro';
-import { useTypedSelector, useActions } from '@/hooks/hooks';
-import { DataStatus } from '@/enums/enums';
 import { MainPageSkeleton } from '@/components/skeletons/MainPageSkeleton';
 import { useMediaQuery } from 'react-responsive';
 import { DEFAULT_PAGE, DEFAULT_SIZE } from '@/constants/pagination';
@@ -12,6 +22,7 @@ import { IProductCard } from '@/interfaces/interfaces';
 import useLocalStorage from '@/hooks/useLocalStorage';
 
 export default function Main() {
+  const dispatch: AppDispatch = useDispatch();
   const { getAllProducts } = useActions();
   const isProductsLoading = useTypedSelector(
     (state) => state.products.dataStatus === DataStatus.PENDING,
@@ -25,6 +36,13 @@ export default function Main() {
   });
 
   useEffect(() => {
+    const token = localStorageService.getItem(LocalStorageKey.REFRESH_TOKEN);
+    if (token) {
+      dispatch(getUserData());
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
     getAllProducts({ page: DEFAULT_PAGE, size: DEFAULT_SIZE });
   }, [getAllProducts]);
 
@@ -35,14 +53,13 @@ export default function Main() {
         <MainPageSkeleton />
       ) : (
         <>
-          <SliderNav text="Smartphone" link="/smartphones" />
+          <SliderNav text="Smartphone" link={AppRoute.SMARTPHONES} />
           <Carousels classname="smartphone-carousel" />
 
           <Carousels classname="brands-carousel" />
 
-          <SliderNav text="Laptop" link="/laptops" />
+          <SliderNav text="Laptop" link={AppRoute.LAPTOPS} />
           <Carousels classname="laptop-carousel" />
-
           {previouslyReviewed.length > 0 && (
             <>
               <SliderNav

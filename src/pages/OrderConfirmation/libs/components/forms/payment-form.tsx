@@ -21,7 +21,15 @@ type Properties = {
   stage: OrderStage;
 };
 
-const LineValue = ({ value }: { value: string }) => <span>{value}</span>;
+const LineValue = ({ value }: { value: string }) => (
+  <span>
+    Payment
+    {value
+      .match(/[A-Z]?[a-z]+/g)
+      ?.join(' ')
+      .toLowerCase()}
+  </span>
+);
 
 export const PaymentForm: FC<Properties> = ({
   initialValues,
@@ -44,96 +52,102 @@ export const PaymentForm: FC<Properties> = ({
           setIsEditable(false);
         }}
       >
-        <Form
-          className={cn(
-            styles.form__form,
-            isActive || isEditable ? styles.form__formActive : null,
-          )}
-        >
-          <div className={styles.form__header}>
-            <div className={styles.form__headerText}>
-              {isActive || isEditable || !initialValues.paymentType ? (
-                <div className={styles.form__number}>3</div>
-              ) : (
-                <div className={styles.form__checkMark}>
-                  <svg
-                    width="22"
-                    height="20"
-                    viewBox="0 0 22 20"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M5 11L9.33364 15L18 7"
-                      stroke="white"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </div>
+        {({ values, setFieldValue }) => (
+          <Form
+            className={cn(
+              styles.form__form,
+              isActive || isEditable ? styles.form__formActive : null,
+            )}
+          >
+            <div className={styles.form__header}>
+              <div className={styles.form__headerText}>
+                {isActive || isEditable || !initialValues.paymentType ? (
+                  <div className={styles.form__number}>3</div>
+                ) : (
+                  <div className={styles.form__checkMark}>
+                    <svg
+                      width="22"
+                      height="20"
+                      viewBox="0 0 22 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5 11L9.33364 15L18 7"
+                        stroke="white"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                )}
+                <h3 className={styles.form__title}>Payment</h3>
+              </div>
+
+              {isActive || isEditable || !initialValues.paymentType ? null : (
+                <button
+                  onClick={() => onEditForm(OrderStage.PAYMENT)}
+                  className={styles.form__btnEdit}
+                  type="button"
+                >
+                  Edit
+                </button>
               )}
-              <h3 className={styles.form__title}>Payment</h3>
             </div>
 
-            {isActive || isEditable || !initialValues.paymentType ? null : (
-              <button
-                onClick={() => onEditForm(OrderStage.PAYMENT)}
-                className={styles.form__btnEdit}
-                type="button"
-              >
-                Edit
-              </button>
-            )}
-          </div>
+            <div
+              className={cn(styles.form__content, styles.form__contentPayment)}
+            >
+              {isActive || isEditable ? (
+                <>
+                  <Radio.Group
+                    className={styles.form__radioGroup}
+                    name="paymentType"
+                    value={values.paymentType}
+                    onChange={(e) =>
+                      setFieldValue('paymentType', e.target.value)
+                    }
+                  >
+                    <Space direction="vertical">
+                      <FormRadioInput
+                        name="paymentType"
+                        label="Payment after checking"
+                        value={PaymentMethod.AFTER_CHECKING}
+                        id={PaymentMethod.AFTER_CHECKING}
+                      />
 
-          <div
-            className={cn(styles.form__content, styles.form__contentPayment)}
-          >
-            {isActive || isEditable ? (
-              <>
-                <Radio.Group
-                  className={styles.form__radioGroup}
-                  name="paymentType"
-                >
-                  <Space direction="vertical">
-                    <FormRadioInput
-                      name="paymentType"
-                      label="Payment after checking"
-                      value={PaymentMethod.AFTER_CHECKING}
-                      id={PaymentMethod.AFTER_CHECKING}
-                    />
+                      <FormRadioInput
+                        name="paymentType"
+                        label="To courier"
+                        value={PaymentMethod.COURIER}
+                        id={PaymentMethod.COURIER}
+                      />
+                    </Space>
 
-                    <FormRadioInput
-                      name="paymentType"
-                      label="To courier"
-                      value={PaymentMethod.COURIER}
-                      id={PaymentMethod.COURIER}
-                    />
-                  </Space>
+                    <ErrorFields />
+                  </Radio.Group>
 
-                  <ErrorFields />
-                </Radio.Group>
-
-                <button
-                  className={cn(
-                    'button button-primary',
-                    styles.form__buttonDone,
+                  <button
+                    className={cn(
+                      'button button-primary',
+                      styles.form__buttonDone,
+                    )}
+                    type="submit"
+                  >
+                    Done
+                  </button>
+                </>
+              ) : (
+                <div className={styles.form__info}>
+                  {Object.entries(initialValues).map(([key, value]) =>
+                    value ? <LineValue key={key} value={value} /> : null,
                   )}
-                  type="submit"
-                >
-                  Done
-                </button>
-              </>
-            ) : (
-              <div className={styles.form__info}>
-                {Object.entries(initialValues).map(([key, value]) =>
-                  value ? <LineValue key={key} value={value} /> : null,
-                )}
-              </div>
-            )}
-          </div>
-        </Form>
+                </div>
+              )}
+            </div>
+          </Form>
+        )}
       </Formik>
     </div>
   );

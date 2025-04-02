@@ -7,6 +7,7 @@ import { createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit';
 import {
   getAllProducts,
   getByCategory,
+  getFilteredProducts,
   getOneProductById,
   getPaginatedProducts,
 } from './actions';
@@ -117,7 +118,14 @@ const products_slice = createSlice({
     });
     builder.addCase(getByCategory.fulfilled, (state, { payload }) => {
       state.productsData = payload;
-    });
+
+      state.pagination = { currentPage: payload.currentPage, totalPages: payload.totalPages, totalElements: payload.totalElements };
+    })
+    builder.addCase(getFilteredProducts.fulfilled, (state, { payload }) => {
+      state.productsData = payload;
+      state.pagination = { currentPage: payload.currentPage, totalPages: payload.totalPages, totalElements: payload.totalElements };
+    })
+
 
     builder.addMatcher(
       isAnyOf(
@@ -125,7 +133,9 @@ const products_slice = createSlice({
         getOneProductById.fulfilled,
         getPaginatedProducts.fulfilled,
         getByCategory.fulfilled,
-      ),
+
+        getFilteredProducts.fulfilled),
+
       (state) => {
         state.dataStatus = DataStatus.FULFILLED;
       },
@@ -136,7 +146,8 @@ const products_slice = createSlice({
         getOneProductById.rejected,
         getPaginatedProducts.rejected,
         getByCategory.rejected,
-      ),
+        getFilteredProducts.rejected),
+
       (state) => {
         state.dataStatus = DataStatus.REJECT;
       },
@@ -147,13 +158,16 @@ const products_slice = createSlice({
         getOneProductById.pending,
         getPaginatedProducts.pending,
         getByCategory.pending,
-      ),
+        getFilteredProducts.pending),
+
       (state) => {
         state.dataStatus = DataStatus.PENDING;
       },
     );
   },
 });
-export const { setPageNumber, setLoaded } = products_slice.actions;
+
+export const { setPageNumber, clearProductsData } = products_slice.actions;
+
 
 export const { actions, reducer } = products_slice;

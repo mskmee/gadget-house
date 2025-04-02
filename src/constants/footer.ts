@@ -1,3 +1,5 @@
+import { AppRoute } from "@/enums/Route";
+
 export const toClientsMenu = [
   { id: 1, menuText: 'About company', href: '/about-us' },
   { id: 2, menuText: 'Career', href: '/career' },
@@ -9,22 +11,22 @@ export const toClientsMenu = [
 ];
 
 export const categoriesMenu = [
-  { id: 1, menuText: 'Smartphone', href: '/smartphones' },
-  { id: 2, menuText: 'Laptop', href: '/laptops' },
-  { id: 3, menuText: 'Tablet', href: '/tablets' },
-  { id: 4, menuText: 'PC', href: '/pcs' },
+  { id: 1, menuText: 'Smartphone', href: AppRoute.SMARTPHONES },
+  { id: 2, menuText: 'Laptop', href: AppRoute.LAPTOPS },
+  { id: 3, menuText: 'Tablet', href: AppRoute.TABLET },
+  { id: 4, menuText: 'PC', href: AppRoute.PC },
   {
     id: 5,
     menuText: 'TVs and Multimedia',
-    href: '/tvs',
+    href: AppRoute.TV,
   },
-  { id: 6, menuText: 'Smart-watch', href: '/smartwatches' },
-  { id: 7, menuText: 'Audio', href: '/audio' },
+  { id: 6, menuText: 'Smart-watch', href: AppRoute.WATCH },
+  { id: 7, menuText: 'Audio', href: AppRoute.AUDIO },
   {
     id: 8,
     menuText: 'Game console',
-    href: '/consoles',
+    href: AppRoute.GAME_CONSOLE,
   },
-  { id: 9, menuText: 'Photo and video', href: '/photo-video' },
-  { id: 10, menuText: 'KIDS', href: '/kids' },
+  { id: 9, menuText: 'Photo and video', href: AppRoute.PHOTO_VIDEO },
+  { id: 10, menuText: 'KIDS', href: AppRoute.KIDS },
 ];

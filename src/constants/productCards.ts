@@ -326,7 +326,6 @@ export const productAccessoriesData = [
     category: 'smartphones',
   },
   {
-    id: 6,
     name: 'iPhone 15 Pro Silicone Case with MagSafe',
     images: [{ link: accessoriesImg4, order: 0 }],
     anotherColors: [],

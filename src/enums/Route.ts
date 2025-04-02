@@ -1,10 +1,10 @@
 const AppRoute = {
   ROOT: '/',
   ALL_PRODUCTS: '/all-products',
-  SMARTPHONES: '/smartphones',
-  LAPTOPS: '/laptops',
+  SMARTPHONES: '/smartphone',
+  LAPTOPS: '/laptop',
   VIEWED: '/viewed',
-  PHOTO_VIDEO: '/photo-video',
+  PHOTO_VIDEO: '/photo-and-video',
   AUDIO: '/audio',
   SINGLE_PRODUCT: '/:category/:id/:title',
   SEARCH_RESULTS_FOUND: '/search',
@@ -23,7 +23,10 @@ const AppRoute = {
   GAME_CONSOLE: '/consoles',
   KIDS: '/kids',
   SALE: '/sale',
+  AUTH_FORGOT_PASSWORD: '/changePassword',
   ADMIN_PAGE: '/admin',
+  ADMIN_INVOICE: '/admin/:order-id',
+  LOGIN_ADMIN: '/auth/login-admin',
 } as const;
 
 export type RoutePath = (typeof AppRoute)[keyof typeof AppRoute];

@@ -1,7 +1,7 @@
 import { IProductsApi } from './libs/interfaces/interfaces';
 import { ApiEndpoint, HttpMethod, request } from '../http';
 import {
-  PriceDTO,
+  // PriceDTO,
   ProductItemResponseDto,
   ProductsResponseDto,
 } from './libs/types/types';
@@ -39,28 +39,42 @@ class ProductsApi implements IProductsApi {
   }
 
   async getFilteredProducts(
-    categoryId: number,
-    brandIds: number[] = [],
-    price: PriceDTO = { from: 0, to: Infinity },
-    attributeValueIds: number[] = []): Promise<ProductsResponseDto> {
+    params: {
+      page: number,
+      size: number,
+      categoryId?: number,
+      brandIds?: number[],
+      attributes?: number[],
+      minPrice?: number,
+      maxPrice?: number,
+      minCameraMP?: number,
+      maxCameraMP?: number,
+      sort?: string
+    }
+  ): Promise<ProductsResponseDto> {
     return request({
       method: HttpMethod.GET,
       url: `${ApiEndpoint.PRODUCTS}`,
       query: {
-        categoryId,
-        brandIds: brandIds.join(','),
-        priceFrom: price.from,
-        priceTo: price.to,
-        attributeValueIds: attributeValueIds.join(','),
+        page: params.page,
+        size: params.size,
+        categoryId: params.categoryId,
+        brandIds: params.brandIds && params.brandIds.join(','),
+        attributes: params.attributes && params.attributes.join(','),
+        minPrice: params.minPrice,
+        maxPrice: params.maxPrice,
+        minCameraMP: params.minCameraMP,
+        maxCameraMP: params.maxCameraMP,
+        sort: params.sort
       },
     });
   }
 
-  async getByCategory(categoryId: number, page: number, size: number): Promise<ProductsResponseDto> {
+  async getByCategory(categoryId: number, page: number, size: number, sort: string | null): Promise<ProductsResponseDto> {
     return request({
       method: HttpMethod.GET,
       url: `${ApiEndpoint.PRODUCTS}`,
-      query: { categoryId, page, size },
+      query: { categoryId, page, size, sort },
     });
   }
 }

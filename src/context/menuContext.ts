@@ -9,6 +9,7 @@ const defaultMenuContextI = {
   isMenuOpen: false,
   onMenuOpen: () => {},
   onMenuClose: () => {},
-}
+};
 export const MenuContext = createContext<IMenuContext>(defaultMenuContextI);
-export const useMenuContext = (): IMenuContext => useContext<IMenuContext>(MenuContext)
+export const useMenuContext = (): IMenuContext =>
+  useContext<IMenuContext>(MenuContext);

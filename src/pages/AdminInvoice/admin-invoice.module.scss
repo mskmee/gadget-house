@@ -1,0 +1,120 @@
+.adminInvoice {
+  padding: 42px 0 100px;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 42px;
+  }
+
+  &__header,
+  &__wrapper {
+    padding: 28px 50px;
+    border-radius: 28px;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+    background: var(--white-color);
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    h2 {
+      font-family: "Inter", sans-serif;
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 150%;
+      color: var(--buttons-and-accent-color);
+    }
+  }
+
+  &__wrapper {
+    h3 {
+      font-family: "Inter", sans-serif;
+      font-weight: 500;
+      font-size: 42px;
+      line-height: 150%;
+      color: var(--buttons-and-accent-color);
+    }
+  }
+
+  &__orders {
+    &Top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+
+    &Search {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      button {
+        width: 96px;
+      }
+    }
+
+    &List {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    &Item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      border-radius: 28px;
+      border-radius: 20px;
+      padding: 16px 28px;
+      background: var(--bg-color);
+      font-family: "Inter", sans-serif;
+      font-weight: 400;
+      line-height: 150%;
+      color: var(--text-color);
+
+      &Name {
+        font-size: 24px;
+      }
+
+      &Details {
+        display: flex;
+        align-items: center;
+        gap: 26px;
+
+        &Count {
+          font-size: 16px;
+          color: var(--secondary-text-color);
+        }
+
+        &Price {
+          font-size: 24px;
+        }
+
+        button {
+          width: 40px;
+          height: 40px;
+          border: 1px solid var(--secondary-background-color);
+          border-radius: 8px;
+          background-color: var(--secondary-background-color);
+        }
+      }
+    }
+
+    &Total {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: "Inter", sans-serif;
+      font-weight: 500;
+      font-size: 42px;
+      line-height: 150%;
+      color: var(--text-color);
+    }
+  }
+}

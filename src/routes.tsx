@@ -23,10 +23,13 @@ import TVs from './pages/TVs/TVs';
 import Tablets from './pages/Tablets/Tablets';
 import SmartWatches from './pages/SmartWatches/SmartWatches';
 import Sale from './pages/Sale/Sale';
-import { AdminPage } from './pages/AdminPage/AdminPage';
 import { UserAccount } from './pages/Dashboard/Account';
 import { UserOrders } from './pages/Dashboard/Orders';
 import { DashboardLayout } from './pages/Dashboard/DashboardLayout/DashboardLayout';
+import AdminPage from './pages/AdminPage/AdminPage';
+import AdminInvoice from './pages/AdminInvoice/AdminInvoice';
+import ForgotPassword from './pages/Auth/ChangePassword';
+import LoginAdmin from './pages/Auth/LoginAdmin';
 
 export const routes = createBrowserRouter(
   [
@@ -97,9 +100,22 @@ export const routes = createBrowserRouter(
           path: AppRoute.ORDER_SUCCESS,
           element: <OrderSuccess />,
         },
+
+        {
+          path: AppRoute.AUTH_FORGOT_PASSWORD,
+          element: <ForgotPassword />,
+        },
         {
           path: AppRoute.ADMIN_PAGE,
           element: <AdminPage />,
+        },
+        {
+          path: AppRoute.ADMIN_INVOICE,
+          element: <AdminInvoice />,
+        },
+        {
+          path: AppRoute.LOGIN_ADMIN,
+          element: <LoginAdmin />,
         },
         {
           path: '*',

@@ -27,13 +27,15 @@ const ForgotPasswordForm: FC<IForgotPasswordFormProps> = ({
         validateOnBlur={false}
         validateOnChange={false}
         validationSchema={forgotFormValidationSchema}
-        onSubmit={(values) => {
+        onSubmit={(values, { resetForm }) => {
           onReset(values);
+          resetForm();
         }}
       >
-        <Form className={styles.form__form}>
-          <h3 className={styles.form__title}>Forgot Password</h3>
-
+        {({ isValid }) => (
+          <Form className={styles.form__form}>
+            <h3 className={styles.form__title}>Forgot Password</h3>
+            
           <div className={styles.form__inputs} style={{ marginBottom: '24px' }}>
             <FormInput<ForgotFormDto>
               name="email"
@@ -43,24 +45,26 @@ const ForgotPasswordForm: FC<IForgotPasswordFormProps> = ({
             />
           </div>
 
-          <div className={styles.form__buttons}>
-            <button
-              className={cn('button', 'button-secondary', styles.form__btn)}
-              type="submit"
-              onClick={onSwitch}
-            >
-              Reset Password
-            </button>
+            <div className={styles.form__buttons}>
+              <button
+                className={cn('button', 'button-secondary', styles.form__btn)}
+                type="submit"
+                onClick={onSwitch}
+                disabled={!isValid}
+              >
+                Reset Password
+              </button>
 
-            <button
-              className={cn('button', 'button-primary', styles.form__btn)}
-              type="button"
-              onClick={onSwitch}
-            >
-              Log in
-            </button>
-          </div>
-        </Form>
+              <button
+                className={cn('button', 'button-primary', styles.form__btn)}
+                type="button"
+                onClick={onSwitch}
+              >
+                Log in
+              </button>
+            </div>
+          </Form>
+        )}
       </Formik>
     </div>
   );

@@ -27,58 +27,60 @@ const LoginForm: FC<ILoginFormProps> = ({
       <Formik<LoginFormDto>
         initialValues={initialValues}
         validateOnBlur={false}
-        validateOnChange={false}
+        validateOnChange={true}
         validationSchema={loginFormValidationSchema}
-        onSubmit={(values) => {
-          console.log(values);
-
+        onSubmit={(values, { resetForm }) => {
           onLogin(values);
+          resetForm();
         }}
       >
-        <Form className={styles.form__form}>
-          <h3 className={styles.form__title}>Log in</h3>
+        {({ isValid }) => (
+          <Form className={styles.form__form}>
+            <h3 className={styles.form__title}>Log in</h3>
 
-          <div className={styles.form__inputs}>
-            <FormInput<LoginFormDto>
-              name="email"
-              type="text"
-              label="Email"
-              placeholder="Email"
-            />
+            <div className={styles.form__inputs}>
+              <FormInput<LoginFormDto>
+                name="email"
+                type="text"
+                label="E-mail"
+                placeholder="E-mail"
+              />
 
-            <FormInput<LoginFormDto>
-              name="password"
-              type="password"
-              label="Password"
-              placeholder="Password"
-            />
-          </div>
-
-          <button
-            className={styles.form__buttonForgot}
-            type="button"
-            onClick={onForgot}
-          >
-            Forgot Password
-          </button>
-
-          <div className={styles.form__buttons}>
-            <button
-              className={cn('button', 'button-secondary', styles.form__btn)}
-              type="submit"
-            >
-              Log in
-            </button>
+              <FormInput<LoginFormDto>
+                name="password"
+                type="password"
+                label="Password"
+                placeholder="Password"
+              />
+            </div>
 
             <button
-              className={cn('button', 'button-primary', styles.form__btn)}
+              className={styles.form__buttonForgot}
               type="button"
-              onClick={onSwitch}
+              onClick={onForgot}
             >
-              Sign up
+              Forgot Password
             </button>
-          </div>
-        </Form>
+
+            <div className={styles.form__buttons}>
+              <button
+                className={cn('button', 'button-secondary', styles.form__btn)}
+                type="submit"
+                disabled={!isValid}
+              >
+                Log in
+              </button>
+
+              <button
+                className={cn('button', 'button-primary', styles.form__btn)}
+                type="button"
+                onClick={onSwitch}
+              >
+                Sign up
+              </button>
+            </div>
+          </Form>
+        )}
       </Formik>
     </div>
   );

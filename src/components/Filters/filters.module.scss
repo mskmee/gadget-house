@@ -80,6 +80,55 @@
 
 .filters {
   &__option {
+    :global {
+      .ant-checkbox-wrapper {
+        align-items: center;
+
+        &:hover .ant-checkbox-inner {
+          border-color: transparent !important;
+        }
+      }
+
+      .ant-checkbox {
+        width: 18px;
+        height: 18px;
+        border-radius: 3px;
+        border: 1px solid var(--text-color);
+        background-color: white;
+        box-sizing: border-box;
+
+        &-inner {
+          border: none !important;
+          outline: none !important;
+          outline-offset: 0px !important;
+        }
+
+        & + span {
+          padding-inline-start: 12px;
+          display: flex;
+          align-items: center;
+          font-family: "Inter", sans-serif;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 150%;
+          color: var(--text-color);
+          text-transform: capitalize;
+        }
+
+        &-checked .ant-checkbox-inner::after {
+          display: none;
+        }
+
+        &-checked .ant-checkbox-inner {
+          width: 17px;
+          height: 16px;
+          background-image: url("../../assets/icons/checked.svg");
+          border-color: transparent !important;
+          background-color: transparent !important;
+        }
+      }
+    }
+
     &Header {
       display: flex;
       align-items: center;
@@ -114,82 +163,48 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
-    }
 
-    &Checkbox {
-      position: relative;
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-    }
+      &[data-label="memorySlot"] {
+        :global {
+          .ant-checkbox {
+            border-radius: 50%;
 
-    &Input {
-      position: absolute;
-      opacity: 0;
-    }
+            input {
+              width: 18px;
+              height: 18px;
+            }
 
-    &Input + &Text {
-      &::before {
-        content: "";
-        display: inline-flex;
-        margin-right: 12px;
-        border: 1px solid var(--text-color);
-        border-radius: 3px;
-        width: 18px;
-        height: 18px;
-        text-transform: capitalize;
+            &-inner {
+              border-radius: 50%;
+            }
+
+            &-checked .ant-checkbox-inner {
+              background-image: url("../../assets/icons/checked-circle.svg");
+              background-repeat: no-repeat;
+              background-size: cover;
+            }
+          }
+        }
       }
 
-      &[data-label="memorySlot"]::before {
-        border-radius: 50%;
-      }
-    }
-
-    &Input:checked + &Text::before {
-      width: 18px;
-      height: 18px;
-      background-image: url("../../assets/icons/checked.svg");
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-size: cover;
-      border-color: transparent;
-      animation: pop 180ms ease-in;
-      transition: all 0.3s ease-in-out;
-    }
-
-    &Input:checked + &Text[data-label="memorySlot"]::before {
-      background-image: url("../../assets/icons/checked-circle.svg");
-      background-size: contain;
-    }
-
-    &Text {
-      display: flex;
-      align-items: center;
-      user-select: none;
-      font-family: "Inter", sans-serif;
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 150%;
-      color: var(--text-color);
-      text-transform: capitalize;
-      transition: color 0.3s ease-in-out;
-
-      &:hover {
-        color: var(--text-color);
-      }
-    }
-
-    @keyframes pop {
-      0% {
-        transform: scale(0);
-      }
-
-      90% {
-        transform: scale(1.4);
-      }
-
-      100% {
-        transform: scale(1);
+      &[data-label="colors"] {
+        :global {
+          .ant-checkbox {
+            + span {
+              &::before {
+                content: "";
+                box-sizing: border-box;
+                width: 18px;
+                height: 18px;
+                display: inline-block;
+                margin-right: 8px;
+                border-radius: 3px;
+                border: 1px solid var(--text-color);
+                background-color: var(--color-value);
+              }
+            }
+          }
+        }
       }
     }
   }

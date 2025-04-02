@@ -118,9 +118,21 @@ export default function BasketItem({ product }: IBasketItemProps) {
       </div>
       <div className={styles.productTotals}>
         <div className={styles.productQuantity}>
-          <button onClick={handleDecreaseItemQuantity}>-</button>
-          <p>{quantity}</p>
-          <button onClick={handleIncrementItemQuantity}>+</button>
+          <div className={styles.productQuantityButton}>
+            <button
+              className={styles.productQuantityButton_minus}
+              onClick={handleDecreaseItemQuantity}
+            ></button>
+          </div>
+
+          <p>{product.quantity}</p>
+
+          <div className={styles.productQuantityButton}>
+            <button
+              className={styles.productQuantityButton_plus}
+              onClick={handleIncrementItemQuantity}
+            ></button>
+          </div>
         </div>
         <p className={styles.productPrice}>
           {convertPriceToReadable(totalPrice, currency, locale)}

@@ -13,10 +13,35 @@ import {
   shallowStringify,
 } from './libs/helpers/helpers';
 import type { ApiRequestOptions, ApiResult } from './libs/types/types';
+import { LocalStorageKey, localStorageService } from '../local-storage';
+import { logout, setTokens } from '@/store/auth/auth-slice';
 
 axios.defaults.baseURL = import.meta.env.VITE_BASE_URL;
 axios.defaults.headers.common['Content-Type'] =
   'application/x-www-form-urlencoded';
+
+const refreshAccessToken = async () => {
+  try {
+    const refreshToken = localStorageService.getItem(LocalStorageKey.REFRESH_TOKEN);
+
+    if (!refreshToken) throw new Error("No refresh token");
+
+    const response = await axios.post(`${axios.defaults.baseURL}/updateAccessToken?refreshToken=${refreshToken}`);
+
+    const { access_token, refresh_token } = response.data;
+
+    localStorageService.setItem(LocalStorageKey.ACCESS_TOKEN, access_token);
+    localStorageService.setItem(LocalStorageKey.REFRESH_TOKEN, refresh_token);
+
+    (await import("@/store")).store.dispatch(setTokens({ accessToken: access_token, refreshToken: refresh_token }));
+
+    return access_token;
+  } catch (error) {
+    console.error("Error refreshing access token:", error);
+    (await import("@/store")).store.dispatch(logout());
+    return null;
+  }
+};
 
 const getQueryString = (params: Record<string, any>): string => {
   const qs: string[] = [];
@@ -119,6 +144,11 @@ const getHeaders = async (
       {} as Record<string, string>,
     );
 
+  const accessToken = localStorageService.getItem(LocalStorageKey.ACCESS_TOKEN)
+  if (accessToken) {
+    headers.Authorization = `Bearer ${accessToken}`
+  }
+
   if (options.body) {
     if (options.mediaType) {
       headers['Content-Type'] = options.mediaType;
@@ -132,44 +162,6 @@ const getHeaders = async (
   }
 
   return headers;
-};
-
-const sendRequest = async <T>(
-  options: ApiRequestOptions,
-  url: string,
-  body: any,
-  formData: FormData | undefined,
-  headers: Record<string, string>,
-): Promise<AxiosResponse<T>> => {
-  const source = axios.CancelToken.source();
-
-  const requestConfig: AxiosRequestConfig = {
-    url,
-    headers,
-    data: body ?? formData,
-    method: options.method,
-    cancelToken: source.token,
-  };
-
-  try {
-    if (import.meta.env.DEV) {
-      console.debug(
-        `${requestConfig.method}] HTTP Request: `,
-        shallowStringify({
-          baseUrl: axios.defaults.baseURL,
-          endpoint: requestConfig.url,
-          body: requestConfig.data,
-        }),
-      );
-    }
-    return await axios.request(requestConfig);
-  } catch (error) {
-    const axiosError = error as AxiosError<T>;
-    if (axiosError.response) {
-      return axiosError.response;
-    }
-    throw error;
-  }
 };
 
 const getResponseHeader = (
@@ -216,6 +208,70 @@ const catchErrorCodes = (
 
   if (!result.ok) {
     throw new ApiError(options, result, 'Generic Error');
+  }
+};
+
+const sendRequest = async <T>(
+  options: ApiRequestOptions,
+  url: string,
+  body: any,
+  formData: FormData | undefined,
+  headers: Record<string, string>,
+): Promise<AxiosResponse<T>> => {
+  const source = axios.CancelToken.source();
+
+  const accessToken = localStorageService.getItem(LocalStorageKey.ACCESS_TOKEN);
+
+  if (accessToken && !headers.Authorization) {
+    headers.Authorization = `Bearer ${accessToken}`;
+  }
+
+  const requestConfig: AxiosRequestConfig = {
+    url,
+    headers,
+    data: body ?? formData,
+    method: options.method,
+    cancelToken: source.token,
+  };
+  console.log("Axios Base URL:", axios.defaults.baseURL);
+  console.log("Final Request URL:", requestConfig.url);
+
+  try {
+    if (import.meta.env.DEV) {
+      console.debug(
+        `${requestConfig.method}] HTTP Request: `,
+        shallowStringify({
+          baseUrl: axios.defaults.baseURL,
+          endpoint: requestConfig.url,
+          body: requestConfig.data,
+          headers: requestConfig.headers,
+        }),
+      );
+    }
+    return await axios.request(requestConfig);
+  } catch (error) {
+    const axiosError = error as AxiosError<T>;
+
+    if (axiosError.response?.status === 401) {
+      try {
+        const newAccessToken = await refreshAccessToken();
+        if (newAccessToken) {
+          requestConfig.headers = requestConfig.headers || {};
+          requestConfig.headers.Authorization = `Bearer ${newAccessToken}`;
+          localStorageService.setItem(LocalStorageKey.ACCESS_TOKEN, newAccessToken);
+
+          return await axios.request(requestConfig);
+        }
+      } catch (refreshError) {
+        console.error("Failed to refresh token:", refreshError);
+        (await import("@/store")).store.dispatch(logout());
+      }
+    }
+
+    if (axiosError.response) {
+      return axiosError.response;
+    }
+    throw error;
   }
 };
 

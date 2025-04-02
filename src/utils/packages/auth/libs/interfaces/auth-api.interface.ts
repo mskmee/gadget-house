@@ -1,10 +1,21 @@
 /* eslint-disable no-unused-vars */
-import { AuthSignInResponseDto, AuthSignUpResponseDto} from '../types/types';
+import {
+  AuthForgotPasswordResponseDto,
+  AuthSignInRequestDto,
+  AuthSignInResponseDto,
+  AuthSignUpRequestDto,
+  AuthSignUpResponseDto,
+  ChangePasswordRequestDto,
+  ChangePasswordResponseDto,
+  UserResponseDto,
+} from '../types/types';
 
 interface IAuthApi {
-  signInAuth: () => Promise<AuthSignInResponseDto>;
-  signUpAuth: () => Promise<AuthSignUpResponseDto>;
+  signInAuth: (data: AuthSignInRequestDto) => Promise<AuthSignInResponseDto>;
+  signUpAuth: (data: AuthSignUpRequestDto) => Promise<AuthSignUpResponseDto>;
+  forgotPassword: (email: string) => Promise<AuthForgotPasswordResponseDto>;
+  changePassword: (data: ChangePasswordRequestDto) => Promise<ChangePasswordResponseDto>;
+  fetchUserProfile: () => Promise<UserResponseDto>;
 }
 
 export { type IAuthApi };
-
