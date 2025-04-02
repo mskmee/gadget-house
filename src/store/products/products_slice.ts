@@ -63,7 +63,6 @@ const products_slice = createSlice({
       const product = state.productsData?.page.find(
         (item) => item.id === payload.id,
       );
-      console.log(product);
 
       if (!product) return;
 
@@ -81,6 +80,9 @@ const products_slice = createSlice({
         'favorite_products',
         JSON.stringify(state.favoriteProducts),
       );
+    },
+    clearProductsData: (state) => {
+      state.productsData = null;
     },
   },
   extraReducers(builder) {
@@ -119,13 +121,20 @@ const products_slice = createSlice({
     builder.addCase(getByCategory.fulfilled, (state, { payload }) => {
       state.productsData = payload;
 
-      state.pagination = { currentPage: payload.currentPage, totalPages: payload.totalPages, totalElements: payload.totalElements };
-    })
+      state.pagination = {
+        currentPage: payload.currentPage,
+        totalPages: payload.totalPages,
+        totalElements: payload.totalElements,
+      };
+    });
     builder.addCase(getFilteredProducts.fulfilled, (state, { payload }) => {
       state.productsData = payload;
-      state.pagination = { currentPage: payload.currentPage, totalPages: payload.totalPages, totalElements: payload.totalElements };
-    })
-
+      state.pagination = {
+        currentPage: payload.currentPage,
+        totalPages: payload.totalPages,
+        totalElements: payload.totalElements,
+      };
+    });
 
     builder.addMatcher(
       isAnyOf(
@@ -134,7 +143,8 @@ const products_slice = createSlice({
         getPaginatedProducts.fulfilled,
         getByCategory.fulfilled,
 
-        getFilteredProducts.fulfilled),
+        getFilteredProducts.fulfilled,
+      ),
 
       (state) => {
         state.dataStatus = DataStatus.FULFILLED;
@@ -146,7 +156,8 @@ const products_slice = createSlice({
         getOneProductById.rejected,
         getPaginatedProducts.rejected,
         getByCategory.rejected,
-        getFilteredProducts.rejected),
+        getFilteredProducts.rejected,
+      ),
 
       (state) => {
         state.dataStatus = DataStatus.REJECT;
@@ -158,7 +169,8 @@ const products_slice = createSlice({
         getOneProductById.pending,
         getPaginatedProducts.pending,
         getByCategory.pending,
-        getFilteredProducts.pending),
+        getFilteredProducts.pending,
+      ),
 
       (state) => {
         state.dataStatus = DataStatus.PENDING;
@@ -167,7 +179,7 @@ const products_slice = createSlice({
   },
 });
 
-export const { setPageNumber, clearProductsData } = products_slice.actions;
-
+export const { setPageNumber, clearProductsData, toggleFavorite } =
+  products_slice.actions;
 
 export const { actions, reducer } = products_slice;
