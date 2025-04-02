@@ -4,7 +4,7 @@ import { ProductItemResponseDto, ProductsResponseDto } from '../types/types';
 interface IProductsService {
   getAllProducts: (page: number, size: number) => Promise<ProductsResponseDto>;
   getPaginatedProducts: (categoryId: number | null, page: number, size: number) => Promise<ProductsResponseDto>;
-  getByCategory: (categoryId: number, page: number, size: number) => Promise<ProductsResponseDto>;
+  getByCategory: (categoryId: number, page: number, size: number, sort: string | null) => Promise<ProductsResponseDto>;
   getFilteredProducts: (params: {
     page: number,
     size: number,

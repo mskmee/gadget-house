@@ -70,11 +70,11 @@ class ProductsApi implements IProductsApi {
     });
   }
 
-  async getByCategory(categoryId: number, page: number, size: number): Promise<ProductsResponseDto> {
+  async getByCategory(categoryId: number, page: number, size: number, sort: string | null): Promise<ProductsResponseDto> {
     return request({
       method: HttpMethod.GET,
       url: `${ApiEndpoint.PRODUCTS}`,
-      query: { categoryId, page, size },
+      query: { categoryId, page, size, sort },
     });
   }
 }

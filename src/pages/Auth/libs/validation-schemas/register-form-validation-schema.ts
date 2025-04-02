@@ -11,16 +11,10 @@ const regx = {
     /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–/[{}\]:;',?/*~$^+=<>])\S{8,}$/,
 };
 
-const firstName = Yup.string()
+const fullName = Yup.string()
   .matches(regx.name, 'Please enter a correct name')
   .min(2, 'Name is too short!')
   .max(20, 'Name is too long!')
-  .required('This field is required');
-
-const lastName = Yup.string()
-  .matches(regx.name, 'Please enter a correct surname')
-  .min(2, 'Last name is too short!')
-  .max(20, 'Last name is too long!')
   .required('This field is required');
 
 const email = Yup.string()
@@ -41,8 +35,7 @@ const passwordRepeat = Yup.string()
 
 const registerFormValidationSchema: Yup.Schema<RegisterFormDto> =
   Yup.object().shape({
-    firstName,
-    lastName,
+    fullName,
     email,
     phoneNumber,
     password,

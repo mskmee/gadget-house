@@ -15,16 +15,25 @@ export const PhoneInput = ({ field, id, ...props }: Props) => {
   const [phone, setPhone] = useState(field.value || '');
 
   const formatPhoneNumber = (value: string) => {
-    const numbers = value.replace(/\D/g, '').slice(0, 10);
-    const formatted =
-      numbers.length > 2
-        ? `(${numbers.slice(0, 3)}) ${numbers.slice(3, 6)}-${numbers.slice(6, 8)}-${numbers.slice(8, 10)}`
-        : numbers;
-    return formatted;
+    const numbers = value.replace(/\D/g, '');
+
+    if (numbers.length > 0) {
+      let formatted = `(${numbers.slice(0, 3)}`;
+      if (numbers.length >= 4) formatted += `)-${numbers.slice(3, 6)}`;
+      if (numbers.length >= 7) formatted += `-${numbers.slice(6, 8)}`;
+      if (numbers.length >= 9) formatted += `-${numbers.slice(8, 10)}`;
+      return formatted;
+    }
+
+    return numbers;
   };
 
+  const normalizePhoneNumber = (value: string) =>
+    value.replace(/\D/g, '').slice(0, 10);
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const formatted = formatPhoneNumber(event.target.value);
+    const rawValue = normalizePhoneNumber(event.target.value);
+    const formatted = formatPhoneNumber(rawValue);
     setPhone(formatted);
     field.onChange({ target: { name: field.name, value: formatted } });
   };
@@ -42,6 +51,7 @@ export const PhoneInput = ({ field, id, ...props }: Props) => {
         id={id}
         value={phone}
         onChange={handleChange}
+        inputMode="numeric"
         placeholder="(___)-___-__-__"
       />
     </div>

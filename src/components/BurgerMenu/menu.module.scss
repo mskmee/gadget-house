@@ -10,12 +10,15 @@
     margin-bottom: 23px;
     color: #1c1817;
     font-family: Inter, sans-serif;
+    font-weight: 400;
     border-bottom: 1px solid #f0f0f0;
 
     &:hover,
     &:active,
     &:focus-within {
       width: 102%;
+      color: #1c1817;
+      font-weight: 400;
     }
 
     &Right {
@@ -57,6 +60,11 @@
   img {
     width: 36px;
     height: 36px;
+
+    @media (max-width: 570px) {
+      width: 24px;
+      height: 24px;
+    }
   }
   p {
     font-size: rem(24px);
@@ -83,6 +91,9 @@
 }
 
 @media screen and (max-width: 768px) {
+  .burgerMenuTopItem p {
+    font-size: 16px;
+  }
   .catalogListButtons {
     display: flex;
     align-items: center;

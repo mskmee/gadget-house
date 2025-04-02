@@ -37,6 +37,10 @@ const SuccessPopup: FC<SuccessPopupProps> = ({ type, onClose }) => {
       title = 'Success log in!';
       notice = 'Log in was successful';
       break;
+    case 'loginAdmin':
+      title = 'Success log in!';
+      notice = 'Log in was successful';
+      break;
     case 'register':
       title = 'Register success!';
       notice = 'You have been successfully logged in';
@@ -51,10 +55,6 @@ const SuccessPopup: FC<SuccessPopupProps> = ({ type, onClose }) => {
     case 'changePassword':
       title = 'Change password!';
       notice = 'Password has been changed successfully';
-      break;
-    case 'loginAdmin':
-      title = 'Success log in!';
-      notice = 'Log in was successful';
       break;
     default:
       break;

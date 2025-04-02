@@ -10,7 +10,7 @@ import { useTypedSelector, useActions } from '@/hooks/hooks';
 import { useMediaQuery } from 'react-responsive';
 import { getUserData } from '@/store/auth/actions';
 import { AppDispatch } from '@/store';
-import { DataStatus } from '@/enums/enums';
+import { AppRoute, DataStatus } from '@/enums/enums';
 import Benefits from '@/components/benefitsList/benefits';
 import Carousels from '@/components/Carousel/Carousel';
 import { SliderNav } from '@/components/SliderNav/SliderNav';
@@ -45,12 +45,12 @@ export default function Main() {
         <MainPageSkeleton />
       ) : (
         <>
-          <SliderNav text="Smartphone" link="/smartphones" />
+          <SliderNav text="Smartphone" link={AppRoute.SMARTPHONES} />
           <Carousels classname="smartphone-carousel" />
 
           <Carousels classname="brands-carousel" />
 
-          <SliderNav text="Laptop" link="/laptops" />
+          <SliderNav text="Laptop" link={AppRoute.LAPTOPS} />
           <Carousels classname="laptop-carousel" />
 
           <SliderNav
@@ -59,7 +59,7 @@ export default function Main() {
                 ? 'Previously reviewed'
                 : 'Previously reviewed offers'
             }
-            link="/viewed"
+            link={AppRoute.VIEWED}
           />
           <Carousels classname="viewed-carousel" />
         </>
