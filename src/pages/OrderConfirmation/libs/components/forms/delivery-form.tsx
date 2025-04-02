@@ -9,6 +9,7 @@ import { FormInput } from '@/components/components';
 import { FormRadioInput } from '@/components/common/radio-input/radio-input';
 import { deliveryFormValidationSchema } from '../../validation-schemas/validation-schemas';
 import { CourierFields, ErrorFields } from './formik-fields';
+import formatDeliveryInfo from '../../utils/formatDeliveryInfo';
 
 import styles from './form.module.scss';
 
@@ -21,7 +22,7 @@ type Properties = {
   stage: OrderStage;
 };
 
-const LineValue = ({ value }: { value: string }) => <span>{value}</span>;
+const LineValue = ({ text }: { text: string }) => <span>{text}</span>;
 
 export const DeliveryForm: FC<Properties> = ({
   initialValues,
@@ -167,8 +168,8 @@ export const DeliveryForm: FC<Properties> = ({
                 </>
               ) : (
                 <div className={styles.form__info}>
-                  {Object.entries(initialValues).map(([key, value]) =>
-                    value ? <LineValue key={key} value={value} /> : null,
+                  {formatDeliveryInfo(initialValues) && (
+                    <LineValue text={formatDeliveryInfo(initialValues)} />
                   )}
                 </div>
               )}

@@ -150,8 +150,7 @@ const useAuth = (): Return => {
     const val: RegisterFormDto = {
       email: registerFormValue.email,
       password: registerFormValue.password,
-      firstName: registerFormValue.firstName,
-      lastName: registerFormValue.lastName,
+      fullName: registerFormValue.fullName,
       phoneNumber: registerFormValue.phoneNumber,
     };
 

@@ -23,6 +23,7 @@ type Properties = {
 
 const LineValue = ({ value }: { value: string }) => (
   <span>
+    Payment
     {value
       .match(/[A-Z]?[a-z]+/g)
       ?.join(' ')

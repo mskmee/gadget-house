@@ -43,8 +43,8 @@ class ProductsService implements IProductsService {
     return this.productsApi.getFilteredProducts(params);
   }
 
-  async getByCategory(categoryId: number, page: number, size: number): Promise<ProductsResponseDto> {
-    return this.productsApi.getByCategory(categoryId, page, size);
+  async getByCategory(categoryId: number, page: number, size: number, sort: string | null): Promise<ProductsResponseDto> {
+    return this.productsApi.getByCategory(categoryId, page, size, sort);
   }
 }
 

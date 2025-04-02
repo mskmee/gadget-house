@@ -80,6 +80,19 @@
       list-style-type: disc;
     }
   }
+
+  &__error {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 9px;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    color: var(--error-color);
+    transition: all 0.3s ease;
+  }
 }
 
 .success {
