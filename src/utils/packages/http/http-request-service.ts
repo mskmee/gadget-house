@@ -275,17 +275,27 @@ const sendRequest = async <T>(
   }
 };
 
+// Store active requests by URL
+const activeRequests = new Map<string, Promise<any>>();
+
 /**
  * Request method
  * @param options The request options from the service
  * @returns CancelablePromise<T>
  * @throws ApiError
  */
-export const request = <T>(options: ApiRequestOptions): Promise<T> => {
-  return new Promise((res, rej) => {
+export const request = async <T>(options: ApiRequestOptions): Promise<T> => {
+  const url = getUrl(options);
+
+  // If there's an active request for this URL, return its promise
+  if (activeRequests.has(url)) {
+    return activeRequests.get(url) as Promise<T>;
+  }
+
+  // Create a new promise for this request
+  const requestPromise = new Promise((res, rej) => {
     (async () => {
       try {
-        const url = getUrl(options);
         const formData = getFormData(options);
         const body = options.body;
         const headers = await getHeaders(options, formData);
@@ -313,8 +323,13 @@ export const request = <T>(options: ApiRequestOptions): Promise<T> => {
 
         catchErrorCodes(options, result);
 
+        // Remove from active requests when successful
+        activeRequests.delete(url);
         res(result.body);
       } catch (error) {
+        // Remove from active requests on error
+        activeRequests.delete(url);
+
         if (error instanceof ApiError) {
           console.error(`[${options.method}] - ${error.status} error:`, {
             details: error.body,
@@ -335,4 +350,9 @@ export const request = <T>(options: ApiRequestOptions): Promise<T> => {
       }
     })();
   });
+
+  // Store the promise in active requests
+  activeRequests.set(url, requestPromise);
+
+  return requestPromise as Promise<T>;
 };
