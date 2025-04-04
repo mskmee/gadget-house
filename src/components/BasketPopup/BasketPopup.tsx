@@ -74,9 +74,13 @@ export default function BasketPopup() {
           <p className={styles.basketPopupProductCode}>code:{code}</p>
           <div className={styles.basketPopupProductTotals}>
             <div className={styles.basketPopupProductQuantity}>
-              <button onClick={handleDecreaseItemQuantity}>-</button>
+              <button onClick={handleDecreaseItemQuantity}>
+                <span>-</span>
+              </button>
               <p>{quantity}</p>
-              <button onClick={handleIncreaseItemQuantity}>+</button>
+              <button onClick={handleIncreaseItemQuantity}>
+                <span>+</span>
+              </button>
             </div>
           </div>
           <div className={styles.basketPopupBottom}>

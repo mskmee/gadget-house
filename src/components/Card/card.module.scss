@@ -1,5 +1,10 @@
 @import '@/styles/functions';
 
+.isolateHoverEffectFromRerender:hover {
+  cursor: pointer;
+  transform: scale(1.02);
+}
+
 .cardConatiner {
   min-width: inherit;
   max-width: 305px;
@@ -16,6 +21,7 @@
   transition: all 0.2s;
   text-decoration: none;
   pointer-events: auto;
+  transition: transform 0.3s ease-in-out;
 }
 
 .alignCenter {
@@ -28,11 +34,6 @@
 
 .marginTop {
   margin-top: 20px;
-}
-
-.cardConatiner:hover {
-  cursor: pointer;
-  transform: scale(1.02);
 }
 
 .cardContainerTop {
@@ -74,8 +75,10 @@
   height: 100%;
 }
 
-.likedIcon path:first-child {
-  fill: rgba(111, 76, 154, 1);
+.likedIcon {
+  path:first-child {
+    fill: rgba(111, 76, 154, 1);
+  }
 }
 .basketFavoriteIcon {
   display: flex;

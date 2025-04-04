@@ -148,7 +148,7 @@ const shoppingCard_slice = createSlice({
       let { total, quantity } = state.products.reduce(
         (totalAmount, item) => {
           const { price, quantity } = item;
-          const priceRes = price.replace(/\s+/g, '');
+          const priceRes = price.toString().replace(/\s+/g, '');
 
           let itemTotalPrice = +priceRes * quantity;
           totalAmount.total += itemTotalPrice;
@@ -183,3 +183,4 @@ const shoppingCard_slice = createSlice({
 });
 
 export const { actions, reducer } = shoppingCard_slice;
+

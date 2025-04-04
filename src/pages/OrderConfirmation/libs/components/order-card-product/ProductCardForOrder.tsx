@@ -1,8 +1,6 @@
 import { FC } from 'react';
-
 import { IShoppingCard } from '@/interfaces/interfaces';
 import { convertPriceToReadable } from '@/utils/helpers/product';
-import { useProductCardHandlers } from '@/hooks/useProductCardHandlers';
 import { useActions } from '@/hooks/useActions';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { HeartIcon } from '@/assets/icons/HeartIcon';
@@ -14,12 +12,20 @@ interface IProductCardProps {
 }
 
 export const ProductCardForOrder: FC<IProductCardProps> = ({ product }) => {
-  const { isLiked, handleClickLike } = useProductCardHandlers();
-  const { deleteFromStore, increaseItemQuantity, decreaseItemQuantity } =
-    useActions();
+  const {
+    deleteFromStore,
+    increaseItemQuantity,
+    decreaseItemQuantity,
+    toggleFavorite,
+  } = useActions();
 
   const { currency, locale } = useTypedSelector((state) => state.shopping_card);
 
+  const handleSaveFavoriteProduct = () => {
+    if (product) {
+      toggleFavorite(product);
+    }
+  };
   return (
     <li className={styles.order__item}>
       <article className={styles.order__itemWrapper}>
@@ -115,7 +121,10 @@ export const ProductCardForOrder: FC<IProductCardProps> = ({ product }) => {
           </div>
 
           <div className={styles.order__itemQuantityBtnFavorite}>
-            <HeartIcon onClick={handleClickLike} isLiked={isLiked} />
+            <HeartIcon
+              onClick={handleSaveFavoriteProduct}
+              isLiked={product?.isLiked}
+            />
           </div>
         </div>
       </article>

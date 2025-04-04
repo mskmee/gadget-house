@@ -6,8 +6,7 @@
   margin: 0 auto;
 
   &Logo {
-    font-size: 34px;
-
+    font-size: rem(34px);
     line-height: 120%;
     font-family: 'Nunito', sans-serif;
     font-weight: 800;
@@ -110,23 +109,6 @@
 
       &:active {
         background-color: #00680a;
-      }
-      > div {
-        position: absolute;
-        bottom: 3px;
-        right: 3px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 16px;
-        height: 16px;
-        background-color: #6f4c9a;
-        border-radius: 50%;
-        > span {
-          font-size: rem(10px);
-          color: #fff;
-          line-height: 8px;
-        }
       }
     }
 
@@ -407,6 +389,10 @@
   }
 
   .headerBottomButtons {
+    a {
+      width: 48px;
+      height: 48px;
+    }
     a:not(:nth-child(4)) {
       display: none;
     }
@@ -439,6 +425,12 @@
   .catalogListWrap {
     > div {
       width: 320px;
+    }
+  }
+  .headerBottomButtons {
+    a {
+      width: 40px;
+      height: 40px;
     }
   }
 }

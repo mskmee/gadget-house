@@ -3,11 +3,15 @@ import { ProductImage } from './product-image';
 type ProductItem = {
   id: number;
   name: string;
-  price: number;
+  href?: string;
   images: ProductImage[];
-  available: boolean;
   rating: number;
-  category: string;
+  price: string;
+  code: string;
+  anotherColors: string[];
+  isLiked: boolean;
+  category?: string;
+  available: boolean;
 };
 
 export { type ProductItem };

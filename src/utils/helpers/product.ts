@@ -5,7 +5,7 @@ const convertPriceToReadable = (
   currency: Currency,
   locale: Locale,
 ) => {
-  return `${price.toLocaleString(locale)} ${currency}`;
+  return `${price?.toLocaleString(locale)} ${currency}`;
 };
 
 export { convertPriceToReadable };

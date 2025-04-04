@@ -1,0 +1,283 @@
+@import '@/styles/functions';
+
+/* Hide number input arrows in Chrome, Safari, Edge */
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide number input arrows in Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.dashboardAccount {
+  flex-grow: 1;
+  padding: 38px;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 0 8px #0000001a;
+  .dashboardAccountTitle {
+    margin-bottom: 28px;
+    font-size: rem(42px);
+    line-height: 150%;
+    font-weight: 500;
+  }
+  .personalDataWrap,
+  .personalContactWrap {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 402px;
+    margin-bottom: 22px;
+    .personalDataTitle,
+    .personalContactTitle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      > h3 {
+        font-size: rem(24px);
+        font-weight: 400;
+        line-height: 150%;
+      }
+      > span:hover svg {
+        cursor: pointer;
+        > path {
+          stroke: #6f4c9a;
+        }
+      }
+    }
+    .personalDates,
+    .personalContacts {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      > div:not(.buttonsSection, .addPhoneNumberSection) {
+        display: flex;
+
+        gap: 8px;
+        justify-content: space-between;
+        > span:first-child {
+          color: #78808c;
+        }
+      }
+      .addPhoneNumber {
+        color: #6f4c9a;
+        text-decoration: underline;
+        text-align: left;
+      }
+    }
+    .personalDatesChangeSection {
+      display: flex;
+      gap: 32px;
+      > div {
+        .inputError {
+          display: flex;
+          gap: 4px;
+          align-items: center;
+          margin-top: 4px;
+          > span {
+            font-size: rem(12px);
+            line-height: 150%;
+            color: #f01a1a;
+          }
+        }
+        > div {
+          .inputError {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            margin-top: 4px;
+            > span {
+              font-size: rem(12px);
+              line-height: 150%;
+              color: #f01a1a;
+            }
+          }
+        }
+      }
+
+      > div {
+        display: flex;
+        flex-direction: column;
+        > span {
+          color: #78808c;
+        }
+        > div {
+          input {
+            margin-top: 8px;
+            padding: 16px 14px;
+            border-radius: 12px;
+            border: 1px solid #78808c;
+          }
+        }
+      }
+
+      > div:nth-child(1) {
+        > div {
+          input {
+            max-width: 165px;
+          }
+        }
+      }
+      > div:nth-child(2) {
+        > div:not(.inputError) {
+          display: flex;
+          gap: 8px;
+
+          input:nth-child(1),
+          input:nth-child(2) {
+            max-width: 50px;
+          }
+          input:nth-child(3) {
+            max-width: 70px;
+          }
+        }
+      }
+      > div:nth-child(3) {
+        > div {
+          input {
+            max-width: 130px;
+          }
+        }
+      }
+      > div:nth-child(4) {
+        > div:not(.inputError) {
+          display: flex;
+          gap: 16px;
+          height: 52px;
+          margin-top: 8px;
+          > label {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            > input {
+              margin-top: 0;
+              width: 22px;
+              height: 22px;
+              cursor: pointer;
+            }
+            input:checked,
+            input:hover {
+              accent-color: #00820d;
+            }
+          }
+        }
+      }
+    }
+    .personalContacts .personalContactChangeSection {
+      display: flex;
+      gap: 32px !important;
+      > div {
+        display: flex;
+        flex-direction: column;
+        .inputError {
+          display: flex;
+          gap: 4px;
+          align-items: center;
+          margin-top: 4px;
+          > span {
+            font-size: rem(12px);
+            line-height: 150%;
+            color: #f01a1a;
+          }
+        }
+
+        > span {
+          color: #78808c;
+        }
+        > div {
+          input {
+            margin-top: 8px;
+            padding: 16px 14px;
+            border-radius: 12px;
+            border: 1px solid #78808c;
+          }
+        }
+      }
+      > div:nth-child(1) {
+        > div input {
+          width: 228px;
+        }
+      }
+      > div:nth-child(2) {
+        > div input {
+          width: 235px;
+        }
+      }
+    }
+
+    .buttonsSection {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      > button {
+        padding: 16px 32px;
+        border: 2px solid #00820d;
+        border-radius: 12px;
+      }
+      > button:first-child {
+        color: #00820d;
+        &:hover {
+          color: #fff;
+          border-color: #4da856;
+          background-color: #4da856;
+        }
+        &:active {
+          color: #fff;
+          border-color: #00680a;
+          background-color: #00680a;
+        }
+      }
+      > button:last-child {
+        background-color: #00820d;
+        color: #fff;
+        &:hover {
+          border-color: #4da856;
+          background-color: #4da856;
+        }
+        &:active {
+          border-color: #00680a;
+          background-color: #00680a;
+        }
+      }
+    }
+    .personalContacts {
+      .addPhoneNumberSection {
+        margin-top: 16px;
+        > div {
+          > span {
+            color: #78808c;
+          }
+
+          input {
+            margin-top: 8px;
+            padding: 16px 14px;
+            border-radius: 12px;
+            border: 1px solid #78808c;
+          }
+        }
+        .inputError {
+          display: flex;
+          gap: 4px;
+          align-items: center;
+          margin-top: 4px;
+          > span {
+            font-size: rem(12px);
+            line-height: 150%;
+            color: #f01a1a;
+          }
+        }
+      }
+      .buttonsSection {
+        margin-top: 14px;
+      }
+    }
+  }
+  .personalContactWrap {
+    margin-bottom: 0;
+  }
+}
