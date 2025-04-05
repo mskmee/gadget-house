@@ -1,11 +1,14 @@
-import { FC, useState } from 'react';
+import React, { FC, useState } from 'react';
 import { DatePicker, Flex, InputNumber, Popover, Switch } from 'antd';
 import en from 'antd/es/date-picker/locale/en_US';
-import { DatePickerProps } from 'antd/es/date-picker';
 import cn from 'classnames';
 
 import { OrderStatus } from '@/enums/enums';
 import { handleKeyDown } from '@/utils/helpers/checkKeydownEvent';
+import {
+  handleDateChange,
+  handleNumberChange,
+} from '@/utils/helpers/handleFormChange';
 import { FilterIcon } from '@/assets/icons/FilterIcon';
 
 import styles from './filters.module.scss';
@@ -17,21 +20,17 @@ interface IFilters {
 
 export const Filters: FC<IFilters> = ({ onSelectedFilters }) => {
   const [showFilters, setShowFilters] = useState(false);
-  const [showOptions, setShowOptions] = useState(true);
+  const [filterVisibility, setFilterVisibility] = useState({
+    date: true,
+    price: true,
+    status: true,
+  });
 
-  const toggleFilter = () => setShowFilters(!showFilters);
-
-  const handleFilterChange = (key: string, value: string) => {
-    onSelectedFilters(key, value);
-  };
-
-  const onChangeToggle = (checked: boolean) => {
-    setShowOptions(checked);
-  };
-
-  const onChangeDate: DatePickerProps['onChange'] = (_, dateStr) => {
-    console.log('onChange:', dateStr);
-  };
+  const [dateFrom, setDateFrom] = useState<string | null>(null);
+  const [dateTo, setDateTo] = useState<string | null>(null);
+  const [priceFrom, setPriceFrom] = useState<number | null>(null);
+  const [priceTo, setPriceTo] = useState<number | null>(null);
+  const [selectedStatus, setSelectedStatus] = useState<string>('');
 
   const dateLocale: typeof en = {
     ...en,
@@ -43,151 +42,155 @@ export const Filters: FC<IFilters> = ({ onSelectedFilters }) => {
     },
   };
 
-  const content = (
-    <div className={styles.admin__filterList}>
-      <div className={styles.admin__filterItem}>
-        <div
-          className={styles.admin__filterLabel}
-          style={
-            showOptions
-              ? {
-                  marginBottom: '8px',
-                  paddingBottom: '8px',
-                  borderBottom: '1px solid var(--secondary-background-color)',
-                }
-              : {}
-          }
-        >
-          <h3>Order Date</h3>
+  const toggleFilter = () => setShowFilters((prev) => !prev);
 
-          <div className={styles.admin__filterToggle}>
-            <Switch defaultChecked={showOptions} onChange={onChangeToggle} />
-          </div>
-        </div>
+  const handleSwitchChange =
+    (key: keyof typeof filterVisibility) => (checked: boolean) => {
+      setFilterVisibility((prev) => ({
+        ...prev,
+        [key]: checked,
+      }));
+    };
 
-        {showOptions && (
-          <Flex align="center" justify="space-between" gap={12}>
-            <span className={styles.admin__filterText}>From</span>
+  const handleApplyFilters = () => {
+    if (dateFrom) onSelectedFilters('dateFrom', dateFrom);
+    if (dateTo) onSelectedFilters('dateTo', dateTo);
+    if (priceFrom !== null)
+      onSelectedFilters('priceFrom', priceFrom.toString());
+    if (priceTo !== null) onSelectedFilters('priceTo', priceTo.toString());
+    if (selectedStatus) onSelectedFilters('status', selectedStatus);
+    setShowFilters(false);
+  };
 
-            <DatePicker
-              className={styles.admin__filterDatePicker}
-              locale={dateLocale}
-              onChange={onChangeDate}
-            />
+  type FilterKey = keyof typeof filterVisibility;
 
-            <span className={styles.admin__filterDivider}>-</span>
-
-            <span className={styles.admin__filterText}>To</span>
-
-            <DatePicker
-              className={styles.admin__filterDatePicker}
-              locale={dateLocale}
-              onChange={onChangeDate}
-            />
-          </Flex>
-        )}
-      </div>
-
-      <div className={styles.admin__filterItem}>
-        <div
-          className={styles.admin__filterLabel}
-          style={
-            showOptions
-              ? {
-                  marginBottom: '8px',
-                  paddingBottom: '8px',
-                  borderBottom: '1px solid var(--secondary-background-color)',
-                }
-              : {}
-          }
-        >
-          <h3>Price</h3>
-
-          <div className={styles.admin__filterToggle}>
-            <Switch defaultChecked={showOptions} onChange={onChangeToggle} />
-          </div>
-        </div>
-
-        {showOptions && (
-          <Flex align="center" justify="space-between" gap={12}>
-            <span className={styles.admin__filterText}>From</span>
-
-            <InputNumber
-              className={styles.admin__filterInput}
-              addonAfter="₴"
-              defaultValue={50}
-              min={0}
-              max={99999}
-              maxLength={5}
-              controls={false}
-              inputMode="numeric"
-              stringMode={false}
-              onKeyDown={handleKeyDown}
-            />
-
-            <span className={styles.admin__filterDivider}>-</span>
-
-            <span className={styles.admin__filterText}>To</span>
-
-            <InputNumber
-              className={styles.admin__filterInput}
-              addonAfter="₴"
-              defaultValue={100}
-              min={0}
-              max={100000}
-              maxLength={6}
-              controls={false}
-              inputMode="numeric"
-              stringMode={false}
-              onKeyDown={handleKeyDown}
-            />
-          </Flex>
-        )}
-      </div>
-
-      <div className={styles.admin__filterItem}>
-        <div
-          className={styles.admin__filterLabel}
-          style={
-            showOptions
-              ? {
-                  marginBottom: '8px',
-                  paddingBottom: '8px',
-                  borderBottom: '1px solid var(--secondary-background-color)',
-                }
-              : {}
-          }
-        >
-          <h3>Status</h3>
-
-          <div className={styles.admin__filterToggle}>
-            <Switch defaultChecked={showOptions} onChange={onChangeToggle} />
-          </div>
-        </div>
-
-        {showOptions && (
-          <Flex align="center" justify="space-between" gap={12}>
-            <Flex gap={10} wrap>
-              {Object.values(OrderStatus).map((status) => (
-                <button
-                  key={status}
+  const filtersConfig: {
+    key: FilterKey;
+    title: string;
+    content: React.ReactNode;
+  }[] = [
+    {
+      key: 'date',
+      title: 'Order Date',
+      content: (
+        <Flex align="center" justify="space-between" gap={12}>
+          <span className={styles.admin__filterText}>From</span>
+          <DatePicker
+            className={styles.admin__filterDatePicker}
+            locale={dateLocale}
+            onChange={handleDateChange(setDateFrom)}
+          />
+          <span className={styles.admin__filterDivider}>-</span>
+          <span className={styles.admin__filterText}>To</span>
+          <DatePicker
+            className={styles.admin__filterDatePicker}
+            locale={dateLocale}
+            onChange={handleDateChange(setDateTo)}
+          />
+        </Flex>
+      ),
+    },
+    {
+      key: 'price',
+      title: 'Price',
+      content: (
+        <Flex align="center" justify="space-between" gap={12}>
+          <span className={styles.admin__filterText}>From</span>
+          <InputNumber
+            className={styles.admin__filterInput}
+            addonAfter="₴"
+            value={priceFrom ?? undefined}
+            min={0}
+            max={99999}
+            maxLength={5}
+            controls={false}
+            inputMode="numeric"
+            onKeyDown={handleKeyDown}
+            onChange={handleNumberChange(setPriceFrom)}
+          />
+          <span className={styles.admin__filterDivider}>-</span>
+          <span className={styles.admin__filterText}>To</span>
+          <InputNumber
+            className={styles.admin__filterInput}
+            addonAfter="₴"
+            value={priceTo ?? undefined}
+            min={0}
+            max={99999}
+            maxLength={6}
+            controls={false}
+            inputMode="numeric"
+            onKeyDown={handleKeyDown}
+            onChange={handleNumberChange(setPriceTo)}
+          />
+        </Flex>
+      ),
+    },
+    {
+      key: 'status',
+      title: 'Status',
+      content: (
+        <Flex align="center" justify="space-between" gap={12}>
+          <Flex gap={10} wrap>
+            {Object.values(OrderStatus).map((status) => (
+              <label
+                key={status}
+                className={styles.admin__filterRadio}
+                onClick={() => setSelectedStatus(status)}
+              >
+                <input
+                  className={styles.admin__filterRadioInput}
+                  type="radio"
+                  value={status}
+                  name="status"
+                />
+                <span
                   className={cn(
                     'button__status',
-                    styles.admin__filterStatus,
-                    `button__status_${status.toLocaleLowerCase().replace(' ', '_')}`,
+                    styles.admin__filterRadioStatus,
+                    `button__status_${status.toLowerCase().replace(' ', '_')}`,
                   )}
-                  onClick={() => handleFilterChange('status', status)}
                 >
                   {status}
-                </button>
-              ))}
-            </Flex>
+                </span>
+              </label>
+            ))}
           </Flex>
-        )}
-      </div>
+        </Flex>
+      ),
+    },
+  ];
+
+  const content = (
+    <div className={styles.admin__filterList}>
+      {filtersConfig.map(({ key, title, content }) => (
+        <div key={key} className={styles.admin__filterItem}>
+          <div
+            className={styles.admin__filterLabel}
+            style={
+              filterVisibility[key] === true
+                ? {
+                    marginBottom: 8,
+                    paddingBottom: 8,
+                    borderBottom: '1px solid var(--secondary-background-color)',
+                  }
+                : {}
+            }
+          >
+            <h3>{title}</h3>
+            <div className={styles.admin__filterToggle}>
+              <Switch
+                checked={filterVisibility[key]}
+                onChange={handleSwitchChange(key)}
+              />
+            </div>
+          </div>
+          {filterVisibility[key] && content}
+        </div>
+      ))}
 
       <button
         className={cn('button button-secondary', styles.admin__filterApply)}
+        onClick={handleApplyFilters}
       >
         Apply
       </button>

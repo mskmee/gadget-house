@@ -1,15 +1,23 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Pagination, InputRef, Checkbox, CheckboxProps } from 'antd';
 import cn from 'classnames';
 
-import { OrderStatus } from '@/enums/enums';
-import { Search } from '@/components/Header/Search/Search';
+import { AppDispatch, RootState } from '@/store';
+import { setOrder } from '@/store/orders/order_slice';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { Filters } from './libs/components/Filters';
+import { Search } from '@/components/Header/Search/Search';
 
 import styles from './admin-page.module.scss';
+import { orderList } from '@/mock/order-list';
+
+const list = orderList(18);
 
 const AdminPage = () => {
+  const dispatch: AppDispatch = useDispatch();
+  const { orders } = useTypedSelector((state: RootState) => state.order);
   const [currentPage, setCurrentPage] = useState(1);
   const searchFieldRef = useRef<InputRef>(null);
   const [isOverlayActive, setIsOverlayActive] = useState(false);
@@ -21,6 +29,11 @@ const AdminPage = () => {
       [key]: values.length ? values : [],
     }));
   };
+
+  useEffect(() => {
+    dispatch(setOrder(list));
+    dispatch;
+  }, [dispatch]);
 
   const onChecked: CheckboxProps['onChange'] = (e) => {
     console.log(`checked = ${e.target.checked}`);
@@ -56,28 +69,22 @@ const AdminPage = () => {
             </thead>
 
             <tbody>
-              {[...Array(10)].map((_, idx) => (
-                <tr key={idx}>
+              {orders.map((item) => (
+                <tr key={item.id}>
                   <td>
                     <Checkbox onChange={onChecked}></Checkbox>
-                    <Link to={`/admin/4814684-${idx + 1}`}>
-                      4814684-{idx + 1}
-                    </Link>
+                    <Link to={`/admin/${item.id}`}>{item.id}</Link>
                   </td>
-                  <td>(057) 333 33 33</td>
+                  <td>{item.contact}</td>
                   <td>
-                    <span
-                      className={`button__status button__status_${Object.values(OrderStatus)[idx % Object.values(OrderStatus).length].toLowerCase().replace(' ', '_')}`}
+                    <button
+                      className={`button__status button__status_${item.status.toLowerCase().replace(' ', '_')}`}
                     >
-                      {
-                        Object.values(OrderStatus)[
-                          idx % Object.values(OrderStatus).length
-                        ]
-                      }
-                    </span>
+                      {item.status}
+                    </button>
                   </td>
-                  <td>${(Math.random() * 10000).toFixed(2)}</td>
-                  <td>14/09/2025</td>
+                  <td>${item.totalPrice}</td>
+                  <td>{item.date}</td>
                 </tr>
               ))}
             </tbody>
@@ -90,7 +97,7 @@ const AdminPage = () => {
           showSizeChanger={false}
           showTitle={false}
           current={currentPage}
-          total={40}
+          total={list.length}
           pageSize={10}
           onChange={(page) => setCurrentPage(page)}
           className={styles.admin__pagination}

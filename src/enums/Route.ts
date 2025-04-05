@@ -23,7 +23,7 @@ const AppRoute = {
   SALE: '/sale',
   AUTH_FORGOT_PASSWORD: '/changePassword',
   ADMIN_PAGE: '/admin',
-  ADMIN_INVOICE: '/admin/:order-id',
+  ADMIN_INVOICE: '/admin/:orderId',
   LOGIN_ADMIN: '/auth/login-admin',
 } as const;
 
