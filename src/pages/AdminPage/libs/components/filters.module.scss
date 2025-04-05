@@ -185,10 +185,6 @@
         -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
-
-        &:checked + .admin__filtersRadioStatus::before {
-          display: block;
-        }
       }
 
       &Status {
@@ -196,19 +192,6 @@
         display: inline-block;
         position: relative;
         cursor: pointer;
-
-        &::before {
-          content: "";
-          width: 17px;
-          height: 12px;
-          display: none;
-          mask-image: url("../../../../assets/icons/check-icon.svg");
-          mask-size: cover;
-          mask-repeat: no-repeat;
-          mask-position: center;
-
-          background-color: transparent;
-        }
       }
     }
   }

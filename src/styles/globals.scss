@@ -149,11 +149,11 @@ img {
   }
 
   &__status {
+    min-width: 120px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    width: 118px;
     height: 44px;
     padding: 10px 24px;
     border: 1px solid #065d0f;

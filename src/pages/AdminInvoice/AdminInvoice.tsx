@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Flex } from 'antd';
 import cn from 'classnames';
 
-import { OrderStatus } from '@/enums/enums';
+import { AppRoute, OrderStatus } from '@/enums/enums';
 import { AppDispatch, RootState } from '@/store';
 import { getOrderById } from '@/store/orders/order_slice';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
@@ -14,20 +14,55 @@ import { LeftArrow } from '@/assets/constants';
 import styles from './admin-invoice.module.scss';
 
 const AdminInvoice = () => {
+  const navigate = useNavigate();
   const { orderId } = useParams();
   const dispatch: AppDispatch = useDispatch();
   const { order } = useTypedSelector((state: RootState) => state.order);
-  console.log('order: ', order?.address);
+  const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
 
   useEffect(() => {
     dispatch(getOrderById(orderId));
   }, [dispatch, orderId]);
 
+  const handleStatusClick = (status: string) => {
+    setSelectedStatus(status);
+
+    sendStatusToBackend(status);
+  };
+
+  const sendStatusToBackend = async (status: string) => {
+    try {
+      const response = await fetch('/api/update-status', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status }),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to update status');
+      }
+    } catch (error) {
+      console.error('Error updating status:', error);
+    }
+  };
+
   return (
     <div className={styles.adminInvoice}>
       <div className={cn('container', styles.adminInvoice__container)}>
         <header className={styles.adminInvoice__header}>
-          <img src={LeftArrow} alt="Left Arrow Icon" />
+          <button
+            type="button"
+            onClick={() => {
+              if (window.history.length > 1) {
+                return navigate(-1);
+              }
+
+              navigate(AppRoute.ROOT);
+            }}
+          >
+            <img src={LeftArrow} alt="Left Arrow Icon" />
+          </button>
           <h2>Order {order?.id}</h2>
         </header>
 
@@ -94,16 +129,20 @@ const AdminInvoice = () => {
 
           <form action="">
             {order?.address &&
-              Object.values(order?.address).map(
-                (item) =>
-                  item && (
-                    <label key={item} className={styles.admin__filterRadio}>
-                      <input
-                        className={styles.admin__filterRadioInput}
-                        type="text"
-                        value={item}
-                        name="status"
-                      />
+              Object.entries(order?.address).map(
+                ([key, value]) =>
+                  value && (
+                    <label
+                      key={key}
+                      className={styles.adminInvoice__deliveryInput}
+                    >
+                      <span>
+                        {key
+                          .replace(/([A-Z])/g, ' $1')
+                          .trim()
+                          .toLowerCase()}
+                      </span>
+                      <input type="text" value={value} name={key} />
                     </label>
                   ),
               )}
@@ -129,8 +168,9 @@ const AdminInvoice = () => {
                     styles.admin__statusInput,
                     `button__status_${status.toLocaleLowerCase().replace(' ', '_')}`,
                   )}
-                  onClick={() => {}}
+                  onClick={() => handleStatusClick(status)}
                 >
+                  {selectedStatus === status && <span>✓ </span>}
                   {status}
                 </button>
               ))}

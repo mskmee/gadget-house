@@ -150,6 +150,7 @@ export const Filters: FC<IFilters> = ({ onSelectedFilters }) => {
                     `button__status_${status.toLowerCase().replace(' ', '_')}`,
                   )}
                 >
+                  {selectedStatus === status && <span>✓ </span>}
                   {status}
                 </span>
               </label>
