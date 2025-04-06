@@ -1,34 +1,8 @@
 import { filters } from "@/components/Filters/consts";
 import { OrderStatus } from "@/enums/order-status";
 import { DeliveryMethod } from "@/pages/OrderConfirmation/libs/enums/delivery-method";
-
-interface IOrderItemProduct {
-  id: number;
-  images: string[];
-  name: string;
-  totalPrice: number;
-  quantity: number;
-  code: string;
-}
-
-interface IOrderItemAddress {
-  fullName: string;
-  city: string;
-  departmentNumber?: string;
-  street?: string;
-  house?: string;
-  flat?: string;
-}
-
-export interface IOrderItem {
-  id: string;
-  date: string;
-  contact: string;
-  status: string;
-  totalPrice: number;
-  products: IOrderItemProduct[];
-  address: IOrderItemAddress;
-}
+import { IOrderItemProduct } from "@/utils/packages/orders/libs/types/order-item-response-dto";
+import { OrdersResponseDto } from "@/utils/packages/orders/libs/types/orders-response-dto";
 
 const { images } = filters;
 
@@ -46,7 +20,7 @@ const getRandomStatus = (): OrderStatus => {
 };
 
 const generateRandomProduct = (): IOrderItemProduct => ({
-  id: Math.floor(Math.random() * 100),
+  id: Math.floor(Math.random() * 100).toString(),
   images: [images[Math.floor(Math.random() * images.length)].link],
   name: `Product ${Math.floor(Math.random() * 100)}`,
   totalPrice: parseFloat((Math.random() * 500 + 1000).toFixed(2)),
@@ -69,7 +43,6 @@ const generateRandomContacts = (typeDelivery = getRandomDeliveryMethod()) => {
   const randomDigits = () => Math.floor(Math.random() * 10);
 
   const contacts = {
-    fullName: ``,
     city: ``,
     departmentNumber: ``,
     street: ``,
@@ -78,28 +51,35 @@ const generateRandomContacts = (typeDelivery = getRandomDeliveryMethod()) => {
   };
 
   if (typeDelivery === DeliveryMethod.COURIER) {
-    contacts.fullName = `Name ${randomDigits()}${randomDigits()}`;
     contacts.city = `City ${randomDigits()}${randomDigits()}`;
     contacts.street = `Address ${randomDigits()}${randomDigits()} ${randomDigits()} ${randomDigits()}`;
     contacts.house = `${randomDigits()}${randomDigits()}`;
     contacts.flat = `${randomDigits()}${randomDigits()}`;
   } else {
-    contacts.fullName = `Name ${randomDigits()}${randomDigits()}`;
     contacts.city = `City ${randomDigits()}${randomDigits()}`;
     contacts.departmentNumber = `${randomDigits()}${randomDigits()}`;
   }
-  
+
   return contacts;
 };
 
-export const orderList = (count: number): IOrderItem[] => {
-  return Array.from({ length: count }, (_, i) => ({
-    id: `4814684-${i + 1}`,
-    date: getRandomDate(),
-    contact: generateRandomPhone(),
-    status: getRandomStatus(),
-    products: Array.from({ length: Math.floor(Math.random() * 5) + 1 }, generateRandomProduct),
-    address: generateRandomContacts(),
-    totalPrice: parseFloat((Math.random() * 99990 + 10).toFixed(2)),
-  }));
+export const orderList = (count: number): OrdersResponseDto => {
+  return {
+    page: Array.from({ length: count }, (_, i) => ({
+      id: `4814684-${i + 1}`,
+      date: getRandomDate(),
+      deliveryMethod: getRandomDeliveryMethod(),
+      paymentMethod: getRandomDeliveryMethod(),
+      email: `Comment ${i + 1}`,
+      phoneNumber: generateRandomPhone(),
+      status: getRandomStatus(),
+      fullName: `Name ${i + 1}`,
+      products: Array.from({ length: Math.floor(Math.random() * 5) + 1 }, generateRandomProduct),
+      address: generateRandomContacts(),
+      totalPrice: parseFloat((Math.random() * 99990 + 10).toFixed(2)),
+    })),
+    totalElements: count,
+    currentPage: 1,
+    totalPages: 1
+  }
 }

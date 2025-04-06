@@ -55,11 +55,11 @@
     &Search {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 16px;
+    }
 
-      button {
-        width: 96px;
-      }
+    &Add {
+      width: 96px !important;
     }
 
     &List {

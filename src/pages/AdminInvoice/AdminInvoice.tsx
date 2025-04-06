@@ -1,13 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Flex } from 'antd';
 import cn from 'classnames';
 
 import { AppRoute, OrderStatus } from '@/enums/enums';
+import { IProductCard } from '@/interfaces/interfaces';
 import { AppDispatch, RootState } from '@/store';
-import { getOrderById } from '@/store/orders/order_slice';
+import { patchOrder } from '@/store/orders/actions';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
+import AdminSearch from '../AdminPage/libs/components/AdminSearch';
 
 import { LeftArrow } from '@/assets/constants';
 
@@ -15,36 +17,44 @@ import styles from './admin-invoice.module.scss';
 
 const AdminInvoice = () => {
   const navigate = useNavigate();
-  const { orderId } = useParams();
   const dispatch: AppDispatch = useDispatch();
-  const { order } = useTypedSelector((state: RootState) => state.order);
+  const { activeOrder } = useTypedSelector((state: RootState) => state.order);
+  const { productsData } = useTypedSelector(
+    (state: RootState) => state.products,
+  );
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
+  const [filteredProducts, setFilteredProducts] = useState<IProductCard[]>([]);
 
-  useEffect(() => {
-    dispatch(getOrderById(orderId));
-  }, [dispatch, orderId]);
+  const handleProductSearch = useCallback(
+    (query: string) => {
+      const normalized = query.trim().toLowerCase();
+
+      const filtered = productsData?.page.filter(
+        (product) =>
+          product.name?.toLowerCase().includes(normalized) ||
+          product.code?.toLowerCase().includes(normalized),
+      );
+
+      setFilteredProducts(filtered || []);
+    },
+    [productsData],
+  );
 
   const handleStatusClick = (status: string) => {
     setSelectedStatus(status);
 
-    sendStatusToBackend(status);
+    dispatch(patchOrder({ id: activeOrder?.id || '', status }));
   };
 
-  const sendStatusToBackend = async (status: string) => {
-    try {
-      const response = await fetch('/api/update-status', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ status }),
-      });
-      if (!response.ok) {
-        throw new Error('Failed to update status');
-      }
-    } catch (error) {
-      console.error('Error updating status:', error);
+  const handleAddProduct = () => {
+    if (filteredProducts.length === 0) {
+      console.log('No products found');
+      return;
     }
+
+    const productToAdd = filteredProducts[0];
+
+    console.log('Add product:', productToAdd);
   };
 
   return (
@@ -63,7 +73,7 @@ const AdminInvoice = () => {
           >
             <img src={LeftArrow} alt="Left Arrow Icon" />
           </button>
-          <h2>Order {order?.id}</h2>
+          <h2>Order {activeOrder?.id}</h2>
         </header>
 
         <div
@@ -74,14 +84,27 @@ const AdminInvoice = () => {
         >
           <div className={styles.adminInvoice__ordersTop}>
             <h3>Order list</h3>
+
             <div className={styles.adminInvoice__ordersSearch}>
-              <input type="text" placeholder="Search" />
-              <button className="button button-secondary">Add</button>
+              <AdminSearch
+                placeholder="Add the product"
+                onSearch={handleProductSearch}
+              />
+
+              <button
+                className={cn(
+                  styles.adminInvoice__ordersAdd,
+                  'button button-secondary',
+                )}
+                onClick={handleAddProduct}
+              >
+                Add
+              </button>
             </div>
           </div>
 
           <ul className={styles.adminInvoice__ordersList}>
-            {order?.products.map((product) => (
+            {activeOrder?.products.map((product) => (
               <li key={product.id} className={styles.adminInvoice__ordersItem}>
                 <div className={styles.adminInvoice__ordersItemName}>
                   <span></span>
@@ -114,7 +137,7 @@ const AdminInvoice = () => {
           <div className={styles.adminInvoice__ordersTotal}>
             <span className={styles.adminInvoice__ordersTotalText}>Sum</span>
             <span className={styles.adminInvoice__ordersTotalPrice}>
-              {order?.totalPrice} ₴
+              {activeOrder?.totalPrice} ₴
             </span>
           </div>
         </div>
@@ -128,8 +151,18 @@ const AdminInvoice = () => {
           <h3>Delivery details</h3>
 
           <form action="">
-            {order?.address &&
-              Object.entries(order?.address).map(
+            <label className={styles.adminInvoice__deliveryInput}>
+              <span>Full name</span>
+              <input
+                type="text"
+                value={activeOrder?.fullName}
+                name="fullName"
+                onChange={() => {}}
+              />
+            </label>
+
+            {activeOrder?.address &&
+              Object.entries(activeOrder?.address).map(
                 ([key, value]) =>
                   value && (
                     <label
@@ -142,7 +175,12 @@ const AdminInvoice = () => {
                           .trim()
                           .toLowerCase()}
                       </span>
-                      <input type="text" value={value} name={key} />
+                      <input
+                        type="text"
+                        value={value}
+                        name={key}
+                        onChange={() => {}}
+                      />
                     </label>
                   ),
               )}

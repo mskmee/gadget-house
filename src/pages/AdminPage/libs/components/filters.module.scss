@@ -188,10 +188,11 @@
       }
 
       &Status {
-        width: 146px !important;
-        display: inline-block;
-        position: relative;
-        cursor: pointer;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        cursor: pointer !important;
       }
     }
   }

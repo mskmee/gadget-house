@@ -18,7 +18,7 @@ interface IFilters {
   onSelectedFilters: (key: string, value: string) => void;
 }
 
-export const Filters: FC<IFilters> = ({ onSelectedFilters }) => {
+const Filters: FC<IFilters> = ({ onSelectedFilters }) => {
   const [showFilters, setShowFilters] = useState(false);
   const [filterVisibility, setFilterVisibility] = useState({
     date: true,
@@ -221,3 +221,5 @@ export const Filters: FC<IFilters> = ({ onSelectedFilters }) => {
     </div>
   );
 };
+
+export default Filters;

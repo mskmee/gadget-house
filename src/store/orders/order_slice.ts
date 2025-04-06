@@ -1,36 +1,73 @@
-import { IOrderItem } from "@/mock/order-list";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 
+import { DataStatus } from "@/enums/data-status";
+import { getAllOrders, getOneOrderById, patchOrder } from "./actions";
+import { OrderItemResponseDto, OrdersResponseDto } from "@/utils/packages/orders/libs/types/types";
+import { orderList } from "@/mock/order-list";
+
+const list = orderList(18);
 
 export interface IInitialState {
-  orders: IOrderItem[];
-  order: IOrderItem | null;
-  selectedOrderId: string | null;
+  orders: OrdersResponseDto | null;
+  activeOrder: OrderItemResponseDto | null;
+  dataStatus: DataStatus;
 }
 
 const initialState: IInitialState = {
-  orders: [],
-  order: null,
-  selectedOrderId: null,
+  orders: list,
+  activeOrder: null,
+  dataStatus: DataStatus.IDLE
 };
 
 const order_slice = createSlice({
   name: 'order',
   initialState,
   reducers: {
-    setOrder(state, { payload }: { payload: IOrderItem[] }) {
-      state.orders = payload;
-    },
-    getOrderById(state, { payload: orderId }: PayloadAction<string | undefined> ) {
-      state.orders.findIndex(
-        (item) => item.id === orderId ? state.order = item : state.order = null,
-      );
+    setActiveOrder: (state, action) => {
+      state.activeOrder = action.payload;
     },
   },
-  extraReducers: () => {
+  extraReducers: (builder) => {
+    builder.addCase(getAllOrders.fulfilled, (state, { payload }) => {
+      state.orders = payload;
+    })
+    builder.addCase(getOneOrderById.fulfilled, (state, { payload }) => {
+      state.activeOrder = payload;
+    })
+    builder.addCase(patchOrder.fulfilled, (state, { payload }) => {
+      state.activeOrder = payload;
+    })
+
+    builder.addMatcher(
+      isAnyOf(
+        getAllOrders.fulfilled,
+        getOneOrderById.fulfilled,
+        patchOrder.fulfilled),
+      (state) => {
+        state.dataStatus = DataStatus.FULFILLED;
+      },
+    );
+    builder.addMatcher(
+      isAnyOf(
+        getAllOrders.rejected,
+        getOneOrderById.rejected,
+        patchOrder.rejected),
+      (state) => {
+        state.dataStatus = DataStatus.REJECT;
+      },
+    );
+    builder.addMatcher(
+      isAnyOf(
+        getAllOrders.pending,
+        getOneOrderById.pending,
+        patchOrder.pending),
+      (state) => {
+        state.dataStatus = DataStatus.PENDING;
+      },
+    );
   },
 });
 
-export const { setOrder, getOrderById } = order_slice.actions;
 
 export const { actions, reducer } = order_slice;
+export const { setActiveOrder } = actions;
