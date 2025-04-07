@@ -347,7 +347,7 @@ export const Header = () => {
               ))}
 
               {shouldShowCartTooltip !== 0 &&
-                location.pathname !== '/basket' && (
+                location.pathname !== AppRoute.BASKET_PAGE && (
                   <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}

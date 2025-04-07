@@ -206,11 +206,21 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
                     key={crypto.randomUUID()}
                     product={
                       classname === 'laptop-carousel'
-                        ? laptops?.[i % (laptops.length || 1)] // Ensure laptops is defined before accessing
+                        ? laptops?.[
+                            i % (laptops.length > 0 ? laptops.length : 1)
+                          ]
                         : classname === 'smartphone-carousel'
-                          ? smartphones?.[i % (smartphones.length || 1)]
+                          ? smartphones?.[
+                              i %
+                                (smartphones.length > 0
+                                  ? smartphones.length
+                                  : 1)
+                            ]
                           : previouslyReviewed?.[
-                              i % (previouslyReviewed?.length || 1)
+                              i %
+                                (previouslyReviewed.length > 0
+                                  ? previouslyReviewed.length
+                                  : 1)
                             ]
                     }
                     classname={

@@ -55,6 +55,12 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
     }
   };
 
+  const handleSaveReviewedItem = () => {
+    if (product) {
+      saveReviewedItem(product);
+    }
+  };
+
   return (
     <>
       <div className={styles.isolateHoverEffectFromRerender}>
@@ -64,7 +70,7 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
           to={`${classname}/${product?.id}/${product?.href}`}
           tabIndex={0}
           style={{ minWidth: `${width}px` }}
-          onClick={() => saveReviewedItem(product as IProductCard)}
+          onClick={handleSaveReviewedItem}
         >
           <div
             className={classNames(styles.cardContainerTop, {
