@@ -151,7 +151,7 @@ export const Product: FC<IProductProps> = ({
             <div className={style['product_rate']} ref={productRateRef}>
               <Rate
                 className="product_rate-stars"
-                value={dinamicCurrentProduct?.rate}
+                value={dinamicCurrentProduct?.rating}
                 character={() => {
                   return <img src={rateImg} alt="product rate star" />;
                 }}
@@ -227,7 +227,7 @@ export const Product: FC<IProductProps> = ({
               <div className={style['product_rate']} ref={productRateRef}>
                 <Rate
                   className="product_rate-stars"
-                  value={dinamicCurrentProduct?.rate}
+                  value={dinamicCurrentProduct?.rating}
                   character={() => {
                     return <img src={rateImg} alt="product rate star" />;
                   }}

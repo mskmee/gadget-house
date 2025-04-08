@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "mikestead.dotenv",
+    "yoavbls.pretty-ts-errors",
+    "esbenp.prettier-vscode",
+    "viijay-kr.react-ts-css"
+  ]
+}

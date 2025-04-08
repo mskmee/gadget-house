@@ -1,3 +1,5 @@
+@import '@/styles//functions';
+
 .headerButton {
   display: flex;
   justify-content: center;
@@ -19,6 +21,24 @@
 
   &:active {
     background-color: #00680a;
+  }
+
+  > div {
+    position: absolute;
+    bottom: 3px;
+    right: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 16px;
+    height: 16px;
+    background-color: #6f4c9a;
+    border-radius: 50%;
+    > span {
+      font-size: rem(10px);
+      color: #fff;
+      line-height: 8px;
+    }
   }
 }
 

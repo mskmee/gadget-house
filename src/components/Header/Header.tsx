@@ -346,17 +346,18 @@ export const Header = () => {
                 />
               ))}
 
-              {shouldShowCartTooltip !== 0 && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ ease: 'easeInOut', duration: 0.4 }}
-                  className={classNames(styles.tooltip, 'oo')}
-                >
-                  <CardTooltip />
-                </motion.div>
-              )}
+              {shouldShowCartTooltip !== 0 &&
+                location.pathname !== AppRoute.BASKET_PAGE && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ ease: 'easeInOut', duration: 0.4 }}
+                    className={classNames(styles.tooltip, 'oo')}
+                  >
+                    <CardTooltip />
+                  </motion.div>
+                )}
             </div>
           </div>
         </div>
