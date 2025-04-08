@@ -1,0 +1,33 @@
+.adminSearch {
+  position: relative;
+  width: 693px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.adminSearch__input {
+  width: 100%;
+  padding: 16px 90px 16px 22px;
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 150%;
+  color: var(--text-color);
+  border-radius: 12px;
+  border: 1px solid var(--secondary-background-color);
+  outline: none;
+}
+
+.adminSearch__button {
+  width: 24px;
+  height: 25px;
+  position: absolute;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
