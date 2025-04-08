@@ -17,6 +17,12 @@ export const NavButton: FC<INavButtonProps> = ({ button, onAuthClick }) => {
   const user = useTypedSelector((state) => state.auth.user);
   const refreshToken = localStorage.getItem('refresh_token');
   const productsLength = products.reduce((acc, item) => acc + item.quantity, 0);
+
+  const favoriteProducts = useTypedSelector(
+    (state) => state.products.favoriteProducts,
+  );
+
+
   const [isEmptyBasketPopupOpen, setIsEmptyBasketPopupOpen] = useState(false);
 
   const openEmptyBasketPopup = () => setIsEmptyBasketPopupOpen(true);
@@ -38,10 +44,25 @@ export const NavButton: FC<INavButtonProps> = ({ button, onAuthClick }) => {
     )
       );
     }
+    if (
+      button.href.startsWith('/dashboard/') &&
+      button.href.endsWith('/favorites')
+    ) {
+      return (
+        <Link to={button.href} className={styles.headerButton}>
+          <IconComponent />
+          {favoriteProducts.length > 0 && (
+            <div>
+              <span>{favoriteProducts.length}</span>
+            </div>
+          )}
+        </Link>
+      );
+    }
 
     if (button.href === '/basket') {
       return products.length > 0 ? (
-        <Link to={button.href}>
+        <Link to={button.href} className={styles.headerButton}>
           <IconComponent />
           <div>
             <span>{productsLength}</span>
@@ -55,7 +76,7 @@ export const NavButton: FC<INavButtonProps> = ({ button, onAuthClick }) => {
     }
 
     return (
-      <Link to={button.href}>
+      <Link to={button.href} className={styles.headerButton}>
         <IconComponent />
       </Link>
     );

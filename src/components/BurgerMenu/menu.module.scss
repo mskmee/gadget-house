@@ -68,6 +68,7 @@
   }
   p {
     font-size: rem(24px);
+    font-weight: 400;
   }
 }
 .burgerContainer {
@@ -81,6 +82,10 @@
 @media (max-width: 1450px) {
   .burgerMenuTopItem {
     margin-bottom: 20px;
+    &:active,
+    &:hover {
+      color: #1c1817;
+    }
   }
 }
 

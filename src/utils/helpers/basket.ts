@@ -3,7 +3,7 @@ import { IShoppingCard } from '@/interfaces/interfaces';
 const MAX_BASKET_ITEM_QUANTITY = 20;
 
 const convertPriceToNumber = (price: string): number =>
-  parseFloat(price.replace(/\s/g, ''));
+  parseFloat(price.toString().replace(/\s/g, ''));
 
 const calculateItemTotalPrice = (quantity: number, price: string): number => {
   return quantity * convertPriceToNumber(price);
