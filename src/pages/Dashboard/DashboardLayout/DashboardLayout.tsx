@@ -11,6 +11,7 @@ import classNames from 'classnames';
 import { HeartBlackIcon } from '@/assets/icons/HeartBlackIcon';
 import { ChangeUserData } from '@/assets/icons/ChangeUserData';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { userID } from '@/constants/ButtonConstants';
 
 export const DashboardLayout = () => {
   const { pathname } = useLocation();
@@ -42,8 +43,6 @@ export const DashboardLayout = () => {
   const handleClickFavorites = () => {
     setActiveSection('favorites');
   };
-
-  const userID = 'user-33212';
 
   return (
     <>

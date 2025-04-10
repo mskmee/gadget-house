@@ -4,7 +4,7 @@ import { NavHeartIcon } from '@/assets/icons/NavHeartIcon';
 import { NavUserIcon } from '@/assets/icons/NavUserIcon';
 import { IButton } from '@/interfaces/interfaces';
 
-const userID = 'user-33212';
+export const userID = 'user-33212';
 
 export const buttonData: IButton[] = [
   {
