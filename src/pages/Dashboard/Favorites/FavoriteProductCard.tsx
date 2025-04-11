@@ -1,8 +1,8 @@
-import { FC, MouseEvent } from 'react';
+import { FC, MouseEvent, useEffect, useState } from 'react';
 import styles from './UserFavorites.module.scss';
 import { IProductCard } from '@/interfaces/interfaces';
 import { Rate } from 'antd';
-import { BasketIcon, rateEmptyImg, rateImg } from '@/assets/constants';
+import { BasketIcon, CloseModal, rateEmptyImg, rateImg } from '@/assets/constants';
 import { DeleteFromBasket } from '@/assets/icons/DeleteFromBasket';
 import { useActions } from '@/hooks/useActions';
 import { Link } from 'react-router-dom';
@@ -18,6 +18,27 @@ export const FavoriteProductCard: FC<IFavoriteProductProps> = ({
 }) => {
   const { id, category, href, images, name, code, price, rating, isLiked } =
     favoriteProduct;
+
+  const [isMobile575, setIsMobile575] = useState(false);
+
+  useEffect(() => {
+    function responsive() {
+      if(window.innerWidth < 575) {
+        setIsMobile575(true)
+      } else {
+        setIsMobile575(false)
+      }
+    }
+
+    responsive();
+
+    window.addEventListener('resize', responsive)
+
+    return() => {
+      window.removeEventListener('resize', responsive)
+    }
+  }, [])
+
   const { addToStore, toggleFavorite } = useActions();
 
   const productRating = rating ?? 0;
@@ -32,13 +53,31 @@ export const FavoriteProductCard: FC<IFavoriteProductProps> = ({
     addToStore(favoriteProduct);
   };
 
-  return (
-    <Link to={`/${category}/${id}/${href}`} className={styles.cardWrap}>
-      <img className={styles.cardImage} src={images[0].link} alt={name} />
-      <div className={styles.cardInfo}>
-        <div className={styles.cardInfoTop}>
-          <div>
-            <h3>{name}</h3>
+  const CardMobile = () => {
+    return (
+      <Link to={`/${category}/${id}/${href}`} className={styles.cardWrap}>
+        <div className={styles.cardMobile__top}>
+          <div className={styles.cardMobile__topLeft}>
+            <img className={styles.cardImage} src={images[0].link} alt={name} />
+            <div className={styles.cardMobile__info}>
+              <div className={styles.cardMobile__title}>{name}</div>
+              <div className={styles.cardMobile__rating}>
+                <Rate
+                  className="reviews_rate-stars"
+                  character={({ index = 0 }) => (
+                    <img
+                      src={index < productRating ? rateImg : rateEmptyImg}
+                      alt="product rate star"
+                      width={24}
+                      height={24}
+                    />
+                  )}
+                />
+              </div>
+              <div className={styles.cardMobile__code}>code: {code}</div>
+            </div>
+          </div>
+          <div className={styles.cardMobile__topRight}>
             <button
               className={styles.basketPopupRemoveProduct}
               onClick={(e) => {
@@ -46,23 +85,12 @@ export const FavoriteProductCard: FC<IFavoriteProductProps> = ({
                 handleSaveFavoriteProduct;
               }}
             >
-              <DeleteFromBasket />
-            </button>
+              <CloseModal size="35" />
+            </button> 
+            <div className={styles.mobilePrice}>{price} ₴</div>
           </div>
-          <span>code: {code}</span>
-          <Rate
-            className="reviews_rate-stars"
-            character={({ index = 0 }) => (
-              <img
-                src={index < productRating ? rateImg : rateEmptyImg}
-                alt="product rate star"
-                width={24}
-                height={24}
-              />
-            )}
-          />
         </div>
-        <div className={styles.cardInfoBottom}>
+        <div className={styles.cardMobile__bottom}>
           <div className={styles.cardInfoAddFavorite}>
             <HeartIcon
               onClick={handleSaveFavoriteProduct}
@@ -70,14 +98,66 @@ export const FavoriteProductCard: FC<IFavoriteProductProps> = ({
               type="basket"
             />
           </div>
-          <div className={styles.cardInfoPrice}>
-            <span>{price} ₴</span>
-            <button onClick={handleAddToBasket} tabIndex={-1}>
-              <BasketIcon />
-            </button>
-          </div>
+
+          <button onClick={handleAddToBasket} tabIndex={-1} className={styles.addToBasker}>
+            <BasketIcon />
+          </button>
         </div>
-      </div>
-    </Link>
+      </Link>
+    )
+  }
+
+  return (
+    !isMobile575  
+      ?  (
+        <Link to={`/${category}/${id}/${href}`} className={styles.cardWrap}>
+          <img className={styles.cardImage} src={images[0].link} alt={name} />
+          <div className={styles.cardInfo}>
+            <div className={styles.cardInfoTop}>
+              <div>
+                <h3>{name}</h3>
+                <button
+                  className={styles.basketPopupRemoveProduct}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleSaveFavoriteProduct;
+                  }}
+                >
+                  <DeleteFromBasket />
+                </button>
+              </div>
+              <span>code: {code}</span>
+              <Rate
+                className="reviews_rate-stars"
+                character={({ index = 0 }) => (
+                  <img
+                    src={index < productRating ? rateImg : rateEmptyImg}
+                    alt="product rate star"
+                    width={24}
+                    height={24}
+                  />
+                )}
+              />
+            </div>
+            <div className={styles.cardInfoBottom}>
+              <div className={styles.cardInfoAddFavorite}>
+                <HeartIcon
+                  onClick={handleSaveFavoriteProduct}
+                  isLiked={isLiked}
+                  type="basket"
+                />
+              </div>
+              <div className={styles.cardInfoPrice}>
+                <span>{price} ₴</span>
+                <button onClick={handleAddToBasket} tabIndex={-1}>
+                  <BasketIcon />
+                </button>
+              </div>
+            </div>
+          </div>
+        </Link>
+      )
+      : (<CardMobile />)
+    
   );
 };
