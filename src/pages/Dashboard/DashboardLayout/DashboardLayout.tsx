@@ -13,8 +13,15 @@ import { ChangeUserData } from '@/assets/icons/ChangeUserData';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { userID } from '@/constants/ButtonConstants';
 import { useMediaQuery } from 'react-responsive';
+import { logout } from '@/store/auth/auth-slice';
+import { AppDispatch } from '@/store';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 export const DashboardLayout = () => {
+  const dispatch: AppDispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { pathname } = useLocation();
   const isMobile = useMediaQuery({
     query: '(max-width: 768px)',
@@ -46,6 +53,11 @@ export const DashboardLayout = () => {
   };
   const handleClickFavorites = () => {
     setActiveSection('favorites');
+  };
+
+  const handleClickExit = () => {
+    dispatch(logout());
+    navigate('/');
   };
 
   return (
@@ -80,7 +92,7 @@ export const DashboardLayout = () => {
               </span>
             </div>
           </div>
-          <button className={styles.dashboardLogout}>
+          <button className={styles.dashboardLogout} onClick={handleClickExit}>
             <LogoutIcon />
             <span>Exit</span>
           </button>
