@@ -3,16 +3,21 @@ import { Avatar } from 'antd';
 
 interface UserAvatarProps {
   name: string;
+  size?: number;
   imgUrl?: string;
 }
 
-export const UserAvatar: FC<UserAvatarProps> = ({ name, imgUrl }) => {
+export const UserAvatar: FC<UserAvatarProps> = ({
+  name,
+  size = 71,
+  imgUrl,
+}) => {
   return (
     <Avatar
-      size={71}
+      size={size}
       src={imgUrl}
       style={{
-        fontSize: imgUrl ? undefined : '42px',
+        fontSize: imgUrl ? undefined : `${size / 2}px`,
         fontWeight: 500,
         lineHeight: '150%',
         color: '#F8F7FA',
