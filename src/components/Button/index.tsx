@@ -5,6 +5,8 @@ import { useTypedSelector } from '@/hooks/useTypedSelector';
 import styles from './button.module.scss';
 import { PopUp } from '../components';
 import { EmptyBasketPopup } from '../BasketPopup/EmptyBasketPopup';
+import { AppRoute } from '@/enums/Route';
+import { userID } from '@/constants/ButtonConstants';
 
 interface INavButtonProps {
   button: IButton;
@@ -22,7 +24,6 @@ export const NavButton: FC<INavButtonProps> = ({ button, onAuthClick }) => {
     (state) => state.products.favoriteProducts,
   );
 
-
   const [isEmptyBasketPopupOpen, setIsEmptyBasketPopupOpen] = useState(false);
 
   const openEmptyBasketPopup = () => setIsEmptyBasketPopupOpen(true);
@@ -30,18 +31,19 @@ export const NavButton: FC<INavButtonProps> = ({ button, onAuthClick }) => {
 
   const renderButton = () => {
     if (button.href === '/sign-in') {
-      return (
-       refreshToken ? (
-      <button className={styles.navBtn__button}>
-        <span className={styles.navBtn__buttonAvatar}>
-          {user?.firstName?.charAt(0).toUpperCase()}
-        </span>
-      </button>
-    ) : (
-      <button onClick={onAuthClick} className={styles.navBtn__button}>
-        <IconComponent />
-      </button>
-    )
+      return refreshToken ? (
+        <Link
+          to={AppRoute.USER_ACCOUNT.replace(':user-id', userID)}
+          className={styles.navBtn__button}
+        >
+          <span className={styles.navBtn__buttonAvatar}>
+            {user?.firstName?.charAt(0).toUpperCase() || 'U'}
+          </span>
+        </Link>
+      ) : (
+        <button onClick={onAuthClick} className={styles.navBtn__button}>
+          <IconComponent />
+        </button>
       );
     }
     if (

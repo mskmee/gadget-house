@@ -4,3 +4,9 @@
 .isFixedHeader {
   padding-top: 90px;
 }
+
+@media screen and (max-width: 768px) {
+  .main-content {
+    background-color: var(--white-color);
+  }
+}

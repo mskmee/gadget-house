@@ -5,18 +5,13 @@
   width: 100%;
   margin: 48px auto 62px auto;
   padding: 0 50px;
-
-  > div {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-  }
 }
 .dashboardHeader {
   display: flex;
   align-items: center;
   min-height: 128px;
   background-color: #eae4ee;
+  margin-bottom: 40px;
   .dashboardUserAvatar {
     display: flex;
     align-items: center;
@@ -77,6 +72,10 @@
   border-radius: 20px;
   box-shadow: 0 0 8px #0000001a;
   align-self: self-start;
+
+  .dashboardSidebarIcon {
+    margin: 6px;
+  }
 
   .dashboardSidebarAccount,
   .dashboardSidebarOrders,
@@ -143,5 +142,70 @@
   }
   .dashboardContent {
     padding: 0 50px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .dashboardContainer {
+    margin: 0;
+    gap: 0;
+    background-color: var(--white-color);
+  }
+  .dashboardHeader {
+    padding: 0 16px;
+    min-height: 40px;
+    margin: 24px 0;
+    background-color: var(--white-color);
+
+    .dashboardUserAvatar {
+      .dashboardUserName {
+        font-size: 24px;
+        margin: 0 4px;
+      }
+    }
+  }
+
+  .ant-avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .dashboardUserStatistics {
+    display: none;
+  }
+
+  .dashboardContent {
+    padding: 0 16px 40px;
+    flex-direction: column;
+  }
+  .dashboardSidebar {
+    width: 100%;
+    flex-direction: row;
+    gap: 0;
+    border-radius: 0;
+    padding: 0;
+    justify-content: space-around;
+    box-shadow: none;
+
+    > a {
+      width: 33%;
+      justify-content: center;
+      border-bottom: 2px solid var(--secondary-background-color);
+    }
+
+    svg {
+      display: none;
+    }
+
+    .activeSection {
+      border-bottom: 2px solid var(--theme-color);
+      > span {
+        color: #6f4c9a;
+      }
+    }
+  }
+
+  .dashboardRecommendations {
+    display: none;
   }
 }

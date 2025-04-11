@@ -292,7 +292,7 @@
   }
   .headerBottomWrap {
     .headerBottom {
-      padding: 0 20px;
+      padding: 0 16px;
 
       gap: 25px;
 
@@ -374,8 +374,9 @@
 }
 
 @media screen and (max-width: 768px) {
-  header {
+  .header {
     background-color: #fff;
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.08);
   }
 
   .headerBottomWrap {

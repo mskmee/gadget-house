@@ -71,6 +71,7 @@ input[type='number'] {
     }
     .personalDatesChangeSection {
       display: flex;
+      flex-wrap: wrap;
       gap: 32px;
       > div {
         .inputError {
@@ -170,6 +171,7 @@ input[type='number'] {
     }
     .personalContacts .personalContactChangeSection {
       display: flex;
+      flex-wrap: wrap;
       gap: 32px !important;
       > div {
         display: flex;
@@ -279,5 +281,34 @@ input[type='number'] {
   }
   .personalContactWrap {
     margin-bottom: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .dashboardAccount {
+    padding: 0 16px;
+    box-shadow: none;
+
+    .personalDataWrap,
+    .personalContactWrap {
+      width: auto;
+    }
+
+    .personalDatesChangeSection,
+    .personalContactChangeSection {
+      flex-direction: column;
+    }
+
+    .addPhoneNumber {
+      margin: 20px 0;
+    }
+
+    .buttonsSection {
+      flex-wrap: wrap;
+      flex-direction: column-reverse;
+      button {
+        width: 100%;
+      }
+    }
   }
 }

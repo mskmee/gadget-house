@@ -264,7 +264,7 @@ export const Header = () => {
   };
 
   return (
-    <header ref={headerRef}>
+    <header ref={headerRef} className={styles.header}>
       <div id="header-top-section" className={classNames(styles.headerTop)}>
         <Link
           id="header-logo"
