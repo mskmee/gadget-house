@@ -4,9 +4,15 @@ interface IUserIcon {
   stroke?: string;
   width?: string;
   height?: string;
+  className?: string;
 }
 
-export const NavUserIcon: FC<IUserIcon> = ({ stroke, width, height }) => {
+export const NavUserIcon: FC<IUserIcon> = ({
+  stroke,
+  width,
+  height,
+  className,
+}) => {
   return (
     <svg
       width={width ? width : '21'}
@@ -14,6 +20,7 @@ export const NavUserIcon: FC<IUserIcon> = ({ stroke, width, height }) => {
       viewBox="0 0 21 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <path
         fillRule="evenodd"

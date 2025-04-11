@@ -9,15 +9,17 @@ interface ISliderNavProps {
   text: string;
   link: string;
   isVisibleSeeMoreBtn?: boolean;
+  className?: string;
 }
 
 export const SliderNav: FC<ISliderNavProps> = ({
   text,
   link,
   isVisibleSeeMoreBtn = true,
+  className,
 }) => {
   return (
-    <div className={classNames(styles.sliderText)}>
+    <div className={classNames(styles.sliderText, className)}>
       <h2>{text}</h2>
       {isVisibleSeeMoreBtn && (
         <Link to={link} className={styles.buttonLink}>
