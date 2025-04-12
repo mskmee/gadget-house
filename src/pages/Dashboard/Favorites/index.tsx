@@ -1,5 +1,5 @@
 import { useTypedSelector } from '@/hooks/useTypedSelector';
-import styles from './UserFavorites.module.scss';
+import styles from './styles.module.scss';
 import { FavoriteProductCard } from './FavoriteProductCard';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '@/enums/Route';
