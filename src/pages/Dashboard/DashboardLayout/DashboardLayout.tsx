@@ -107,7 +107,7 @@ export const DashboardLayout = () => {
                 <div className={classNames(styles.dashboardSidebarIcon)}>
                   <BasketIcon />
                 </div>
-                <span><span className={styles.dashboardSidebarLink__pref}>My</span>orders</span>
+                <span><span className={styles.dashboardSidebarLink__pref}>My</span> orders</span>
               </Link>
               <Link
                 to={`/dashboard/${userID}/favorites`}
