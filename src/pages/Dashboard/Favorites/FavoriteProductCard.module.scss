@@ -1,0 +1,95 @@
+@import '@/styles/functions';
+
+.cardWrap {
+  display: flex;
+  gap: 24px;
+  padding: 16px;
+  border: 1px solid #eae4ee;
+  border-radius: 20px;
+  .cardImage {
+    width: 180px;
+  }
+  .cardInfo {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .cardInfoTop {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      > div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        > h3 {
+          font-size: rem(24px);
+          line-height: 150%;
+          color: #1c1817;
+          font-weight: 500;
+        }
+        > button {
+          svg {
+            width: 38px;
+            height: 38px;
+          }
+          &:hover svg path,
+          &:active svg path {
+            stroke: #00820d;
+          }
+
+          &:hover svg path:last-child,
+          &:active svg path:last-child {
+            fill: #00820d;
+          }
+        }
+      }
+      > span {
+        color: #78808c;
+      }
+      > ul {
+        display: flex;
+        gap: 10px;
+        li div img {
+          width: 14px;
+          height: 14px;
+        }
+      }
+    }
+  }
+}
+
+.cardInfoBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .cardInfoPrice {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    > span {
+      font-size: rem(24px);
+      line-height: 150%;
+    }
+    button {
+      width: 43px;
+      height: 43px;
+      border: none;
+      background-color: #00820d;
+      border-radius: 10px;
+      cursor: pointer;
+      > svg {
+        width: 30px;
+        height: 30px;
+      }
+
+      &:hover {
+        background-color: #4da856;
+      }
+
+      &:active {
+        background-color: #00680a;
+      }
+    }
+  }
+}

@@ -1,5 +1,5 @@
 import { FC, MouseEvent } from 'react';
-import styles from './UserFavorites.module.scss';
+import styles from './FavoriteProductCard.module.scss';
 import { IProductCard } from '@/interfaces/interfaces';
 import { Rate } from 'antd';
 import { BasketIcon, rateEmptyImg, rateImg } from '@/assets/constants';
