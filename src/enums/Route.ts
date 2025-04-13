@@ -23,7 +23,7 @@ const AppRoute = {
   GAME_CONSOLE: '/consoles',
   KIDS: '/kids',
   SALE: '/sale',
-  AUTH_FORGOT_PASSWORD: '/changePassword',
+  AUTH_FORGOT_PASSWORD: '/change-password',
   ADMIN_PAGE: '/admin',
   ADMIN_INVOICE: '/admin/:order-id',
   LOGIN_ADMIN: '/auth/login-admin',

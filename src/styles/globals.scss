@@ -149,11 +149,7 @@ img {
   }
 
   &__status {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    width: 118px;
+    min-width: 146px;
     height: 44px;
     padding: 10px 24px;
     border: 1px solid #065d0f;
@@ -164,6 +160,7 @@ img {
     font-size: 16px;
     line-height: 150%;
     color: #065d0f;
+    cursor: auto;
 
     &_not_paid {
       border-color: #615f5f;

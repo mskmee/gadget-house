@@ -9,7 +9,7 @@
 
   &__header,
   &__wrapper {
-    padding: 28px 50px;
+    padding: 28px 60px;
     border-radius: 28px;
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
     background: var(--white-color);
@@ -18,7 +18,12 @@
   &__header {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 19px;
+
+    img {
+      width: 15px;
+      height: 26px;
+    }
 
     h2 {
       font-family: "Inter", sans-serif;
@@ -50,11 +55,11 @@
     &Search {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 16px;
+    }
 
-      button {
-        width: 96px;
-      }
+    &Add {
+      width: 96px !important;
     }
 
     &List {
@@ -79,7 +84,32 @@
       color: var(--text-color);
 
       &Name {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
         font-size: 24px;
+
+        span:first-child {
+          width: 40px;
+          height: 40px;
+          border: 2px solid var(--buttons-and-accent-color);
+          border-radius: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          &::after {
+            content: "";
+            width: 22px;
+            height: 20px;
+            mask-image: url("../../assets/icons/checked.svg");
+            mask-size: cover;
+            mask-repeat: no-repeat;
+            mask-position: center;
+            background-color: var(--buttons-and-accent-color);
+          }
+        }
       }
 
       &Details {
@@ -94,6 +124,13 @@
 
         &Price {
           font-size: 24px;
+        }
+
+        img {
+          width: 59px;
+          height: 68px;
+          border: 1px solid var(--secondary-background-color);
+          border-radius: 12px;
         }
 
         button {
@@ -115,6 +152,74 @@
       font-size: 42px;
       line-height: 150%;
       color: var(--text-color);
+    }
+  }
+
+  &__delivery {
+    h3 {
+      margin-bottom: 24px;
+    }
+
+    form {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      column-gap: 90px;
+      row-gap: 24px;
+    }
+
+    &Input {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      &:nth-child(2),
+      &:nth-child(1) {
+        width: 500px;
+      }
+
+      span {
+        font-family: "Inter", sans-serif;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 150%;
+        color: var(--secondary-text-color);
+
+        &::first-letter {
+          text-transform: capitalize;
+        }
+      }
+
+      input {
+        border: 1px solid var(--secondary-text-color);
+        border-radius: 12px;
+        padding: 16px;
+        background-color: var(--bg-color);
+        font-family: "Inter", sans-serif;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 150%;
+        color: var(--text-color);
+      }
+    }
+  }
+
+  &__status {
+    h3 {
+      margin-bottom: 24px;
+    }
+
+    &Buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    &Confirm {
+      button {
+        width: 260px !important;
+      }
     }
   }
 }
