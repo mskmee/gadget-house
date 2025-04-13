@@ -21,7 +21,7 @@ export const HeartIcon: FC<IHeartIcon> = ({
 }) => {
   return (
     <span
-      className={classNames({
+      className={classNames('heartIcon', {
         [styles.likedIcon]: isLiked,
         [styles.basketFavoriteIcon]: type === 'basket',
       })}

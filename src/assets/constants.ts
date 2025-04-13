@@ -117,6 +117,7 @@ import { FlagUA } from './icons/flag';
 import { CloseModal } from './icons/CloseModal';
 import quantityDecreaseButton from './icons/quantity-decrease.svg';
 import quantityInreaseButton from './icons/quantity-increase.svg';
+import quantityInreaseButtonMobile from './icons/increase-mobile-btn.svg';
 
 export {
   Admin,
@@ -233,4 +234,5 @@ export {
   CloseModal,
   quantityDecreaseButton,
   quantityInreaseButton,
+  quantityInreaseButtonMobile,
 };

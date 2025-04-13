@@ -300,9 +300,201 @@
 }
 
 @media screen and (max-width: 768px) {
+  .basketPopup {
+    position: absolute;
+    top: -334px;
+    max-width: 387px;
+    padding: 24px 24px 0 24px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    &Close {
+      background-color: #fff;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      top: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .basketPopupTitle {
+      margin-bottom: 32px;
+      font-size: rem(24px);
+      color: #000;
+      font-weight: 400;
+      line-height: 150%;
+      text-align: center;
+    }
+    .basketPopupTop {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      .basketPopupImg {
+        width: initial;
+        height: initial;
+        > img:first-child {
+          height: 60px;
+        }
+        > img:last-child {
+          width: 16px;
+          height: 16px;
+          right: -3px;
+          bottom: -3px;
+        }
+      }
+      .basketPopupProductTitle {
+        font-size: initial;
+        font-weight: 400;
+      }
+      .basketPopupRemoveProduct {
+        position: static;
+        height: 48px;
+        > svg {
+          width: 48px;
+          height: 48px;
+        }
+      }
+    }
+    .basketPopupMiddle {
+      min-height: 48px;
+      margin: 16px 0 28px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .basketPopupProductQuantity {
+        margin-top: 0;
+        padding: 0 10px;
+        column-gap: 18px;
+        > p {
+          font-size: rem(24px);
+          line-height: 150%;
+        }
+        button {
+          width: 28px;
+          height: 28px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        button:last-child {
+          > img {
+            margin-top: 2px;
+          }
+        }
+      }
+      .basketPopupProductPrice {
+        font-size: initial;
+        line-height: 150%;
+      }
+    }
+    .basketPopupBottom {
+      display: flex;
+      justify-content: center;
+      > button {
+        min-height: 56px;
+        width: 100%;
+        font-size: rem(16px);
+      }
+    }
+  }
+
   .basketPopupBottom {
     .basketPopupContinueShopping {
       display: none;
+    }
+  }
+  .basketPopupCarousel {
+    > h2 {
+      margin: 34px 0 8px 0;
+      font-weight: 400;
+      font-size: rem(24px);
+    }
+    > div {
+      width: calc(100% + 48px);
+      transform: translateX(-24px);
+      padding: 20px 4px 33px 24px;
+      background-color: #eae4ee;
+      > div {
+        padding: 0 !important;
+        > div {
+          gap: 8px !important;
+        }
+      }
+
+      a {
+        min-width: 175px;
+        max-width: 175pc;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 10px;
+        margin: 5px 0;
+        padding: 12px;
+        font-family: Inter, sans-serif;
+        background-color: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 0 8px 0 hsla(0deg 0% 0% / 10%);
+        transition: all 0.2s;
+        text-decoration: none;
+        > div:first-child {
+          height: 124px;
+          > div:first-child {
+            align-self: auto;
+            img {
+              width: 120px;
+            }
+          }
+          > div:nth-child(2) {
+            padding-bottom: 10px;
+            > span svg {
+              width: 24px;
+              height: 24px;
+            }
+            > div {
+              > div {
+                width: 12px;
+                height: 12px;
+              }
+            }
+          }
+        }
+        > div:last-child {
+          h3 {
+            font-size: rem(16px);
+          }
+          > div:nth-child(2) {
+            > ul {
+              gap: 3px;
+              > li div div {
+                line-height: 9px;
+                img {
+                  width: 9px;
+                  height: 9px;
+                }
+              }
+            }
+            .card-code {
+              font-size: rem(11px);
+            }
+          }
+          > div:nth-child(3) {
+            margin-top: 22px;
+            p {
+              font-size: rem(16px);
+            }
+            button {
+              width: 35px;
+              height: 35px;
+              > svg {
+                width: 23px;
+                height: 23px;
+              }
+            }
+          }
+        }
+      }
     }
   }
   .emptybasketPopup {
