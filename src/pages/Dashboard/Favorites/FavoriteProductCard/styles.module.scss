@@ -93,3 +93,27 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .cardWrap {
+    .cardImage {
+      aspect-ratio: 0.9;
+      height: 100%;
+      width: auto;
+      max-height: 62px;
+    }
+
+    .cardInfo {
+      .cardInfoTop {
+        flex-direction: row;
+        padding-bottom: 12px;
+        margin-bottom: 12px;
+        border-bottom: 1px solid var(--secondary-background-color);
+
+        > div > h3 {
+          font-size: rem(16px);
+        }
+      }
+    }
+  }
+}

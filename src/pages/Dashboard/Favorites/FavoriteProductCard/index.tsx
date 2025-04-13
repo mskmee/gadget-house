@@ -7,6 +7,7 @@ import { DeleteFromBasket } from '@/assets/icons/DeleteFromBasket';
 import { useActions } from '@/hooks/useActions';
 import { Link } from 'react-router-dom';
 import { HeartIcon } from '@/assets/icons/HeartIcon';
+import { useMediaQuery } from 'react-responsive';
 
 interface IFavoriteProductProps {
   favoriteProduct: IProductCard;
@@ -19,6 +20,10 @@ export const FavoriteProductCard: FC<IFavoriteProductProps> = ({
   const { id, category, href, images, name, code, price, rating, isLiked } =
     favoriteProduct;
   const { addToStore, toggleFavorite } = useActions();
+
+  const isMobile = useMediaQuery({
+    query: '(max-width: 768px)',
+  });
 
   const productRating = rating ?? 0;
 
@@ -34,11 +39,20 @@ export const FavoriteProductCard: FC<IFavoriteProductProps> = ({
 
   return (
     <Link to={`/${category}/${id}/${href}`} className={styles.cardWrap}>
-      <img className={styles.cardImage} src={images[0].link} alt={name} />
+      {!isMobile && (
+        <img className={styles.cardImage} src={images[0].link} alt={name} />
+      )}
       <div className={styles.cardInfo}>
         <div className={styles.cardInfoTop}>
           <div>
-            <h3>{name}</h3>
+            {isMobile && (
+              <img
+                className={styles.cardImage}
+                src={images[0].link}
+                alt={name}
+              />
+            )}
+            <h3 className={styles.cardInfoName}>{name}</h3>
             <button
               className={styles.basketPopupRemoveProduct}
               onClick={(e) => {
@@ -67,11 +81,11 @@ export const FavoriteProductCard: FC<IFavoriteProductProps> = ({
             <HeartIcon
               onClick={handleSaveFavoriteProduct}
               isLiked={isLiked}
-              type="basket"
+              type={!isMobile ? 'basket' : undefined}
             />
           </div>
           <div className={styles.cardInfoPrice}>
-            <span>{price} ₴</span>
+            {!isMobile && <span>{price} ₴</span>}
             <button onClick={handleAddToBasket} tabIndex={-1}>
               <BasketIcon />
             </button>
