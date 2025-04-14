@@ -6,25 +6,22 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: 1rem;
+    padding: 20px;
     background-color: white;
-    border-bottom: 1px solid #e5e7eb;
+    border-radius: 8px;
     cursor: pointer;
-
-    &:hover {
-      background-color: #f9fafb;
-    }
 
     &-title {
       display: flex;
+      flex-grow: 1;
       align-items: center;
       gap: 0.5rem;
     }
 
     &-icon {
       margin-left: 0.5rem;
-      width: 1.25rem;
-      height: 1.25rem;
+      width: 2rem;
+      height: 2rem;
       color: #6b7280;
       transition: transform 0.2s ease-in-out;
       transform: rotate(180deg);
@@ -56,6 +53,14 @@
   &[aria-expanded='false'] {
     .collapse__content {
       max-height: 0;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .collapse {
+    &__header {
+      padding: 4px;
     }
   }
 }
