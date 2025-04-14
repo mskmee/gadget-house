@@ -62,7 +62,7 @@ export default function BasketPopup() {
       </button>
       <div className={styles.basketPopupProduct}>
         <div className={styles.basketPopupImg}>
-          <img src={images?.[0].link} alt={name} />
+          <img src={images?.[0]?.link} alt={name} />
           <img
             className={styles.basketPopupAdded}
             src={inBasket}

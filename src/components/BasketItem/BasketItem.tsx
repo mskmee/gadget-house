@@ -61,7 +61,7 @@ export default function BasketItem({ product }: IBasketItemProps) {
   return isLessThan768px ? (
     <Link to={`/${category}/${id}/${href}`} className={styles.mobilePopup}>
       <div className={styles.top}>
-        <img src={images?.[0].link} alt={name} />
+        <img src={images?.[0]?.link} alt={name} />
         <div>
           <h2 className={styles.mobilePopupTitle}>{name}</h2>
           <p className={styles.mobilePopupCode}>code:{code}</p>
