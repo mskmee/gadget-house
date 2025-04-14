@@ -88,12 +88,12 @@ export const UserOrders = () => {
               ))}
             </div>
             <div className={styles.orderInfo}>
-              <label htmlFor="deliveryDate">Order delivery date and time</label>
-              <p id="deliveryDate">{order.date}</p>
-              <label htmlFor="deliveryAddress">Delivery address</label>
-              <p id="deliveryAddress">{formatDeliveryInfo(order.address)}</p>
-              <label htmlFor="paymentMethod">Payment Method:</label>
-              <p id="paymentMethod">{order.paymentMethod}</p>
+              <label>Order delivery date and time</label>
+              <p>{order.date}</p>
+              <label>Delivery address</label>
+              <p>{formatDeliveryInfo(order.address)}</p>
+              <label>Payment Method:</label>
+              <p>{order.paymentMethod}</p>
               <button
                 className={classNames(
                   'button',
