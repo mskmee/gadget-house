@@ -10,7 +10,6 @@ import { HeartIcon } from '@/assets/icons/HeartIcon';
 
 interface IFavoriteProductProps {
   favoriteProduct: IProductCard;
-  favoriteProducts: IProductCard[];
 }
 
 export const FavoriteProductCard: FC<IFavoriteProductProps> = ({
@@ -32,6 +31,11 @@ export const FavoriteProductCard: FC<IFavoriteProductProps> = ({
     addToStore(favoriteProduct);
   };
 
+  const handleClickClearBtn = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    handleSaveFavoriteProduct();
+  };
+
   return (
     <Link to={`/${category}/${id}/${href}`} className={styles.cardWrap}>
       <img className={styles.cardImage} src={images[0].link} alt={name} />
@@ -39,13 +43,7 @@ export const FavoriteProductCard: FC<IFavoriteProductProps> = ({
         <div className={styles.cardInfoTop}>
           <div>
             <h3>{name}</h3>
-            <button
-              className={styles.basketPopupRemoveProduct}
-              onClick={(e) => {
-                e.preventDefault();
-                handleSaveFavoriteProduct;
-              }}
-            >
+            <button onClick={handleClickClearBtn}>
               <DeleteFromBasket />
             </button>
           </div>

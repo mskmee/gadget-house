@@ -74,10 +74,7 @@ export const UserFavorites = () => {
                   ref={index === visibleCount - 1 ? lastCardRef : null}
                   key={favoriteProduct.id}
                 >
-                  <FavoriteProductCard
-                    favoriteProduct={favoriteProduct}
-                    favoriteProducts={favoriteProducts}
-                  />
+                  <FavoriteProductCard favoriteProduct={favoriteProduct} />
                 </div>
               ))}
 

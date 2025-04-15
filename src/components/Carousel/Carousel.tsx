@@ -50,7 +50,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
 
   const smartphones = products?.filter((item) => item.id >= 1 && item.id <= 8);
   const laptops = products?.filter((item) => item.id >= 9 && item.id <= 11);
-  //const others = products?.filter((item) => item.id >= 12);
+  const otherProducts = products?.filter((item) => item.id >= 12);
 
   const itemWidth = isLargerThan1440px
     ? responsiveCarouselSettings.itemWidth
@@ -64,7 +64,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
       : classname === 'photos-carousel'
         ? productImageCards?.length
         : classname === 'basket-popup-carousel'
-          ? 9
+          ? 8
           : classname === 'viewed-carousel'
             ? previouslyReviewed.length
             : classname === 'laptop-carousel'
@@ -216,19 +216,28 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
                                   ? smartphones.length
                                   : 1)
                             ]
-                          : previouslyReviewed?.[
-                              i %
-                                (previouslyReviewed.length > 0
-                                  ? previouslyReviewed.length
-                                  : 1)
-                            ]
+                          : classname === 'basket-popup-carousel'
+                            ? otherProducts?.[
+                                i %
+                                  (otherProducts.length > 0
+                                    ? otherProducts.length
+                                    : 1)
+                              ]
+                            : previouslyReviewed?.[
+                                i %
+                                  (previouslyReviewed.length > 0
+                                    ? previouslyReviewed.length
+                                    : 1)
+                              ]
                     }
                     classname={
                       classname === 'laptop-carousel'
                         ? 'laptops'
                         : classname === 'smartphone-carousel'
                           ? 'smartphones'
-                          : 'previously-reviewed'
+                          : classname === 'basket-popup-carousel'
+                            ? 'basket-popup'
+                            : 'previously-reviewed'
                     }
                   />
                 )}
