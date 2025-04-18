@@ -325,6 +325,7 @@ img {
     }
   }
 }
+
 @media screen and (max-width: 768px) {
   #header-search {
     padding-right: 40px;
@@ -342,6 +343,17 @@ img {
           font-size: 18px;
         }
       }
+    }
+  }
+  .favorite__title {
+    display: none !important;
+  }
+  .ant-avatar {
+    width: 40px !important;
+    height: 40px !important;
+    .ant-avatar-string {
+      font-size: 20px;
+      line-height: 1;
     }
   }
 }

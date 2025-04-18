@@ -47,7 +47,7 @@ export const HeartIcon: FC<IHeartIcon> = ({
           fill={fill ? fill : '#6F4C9A'}
         />
       </svg>
-      {type && <span>{isLiked ? 'Remove from' : 'Add to'} favorite</span>}
+      {type && <span className='favorite__title'>{isLiked ? 'Remove from' : 'Add to'} favorite</span>}
     </span>
   );
 };
