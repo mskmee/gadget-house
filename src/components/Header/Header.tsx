@@ -185,12 +185,42 @@ export const Header = () => {
       if (isCatalogListOpen) {
         document.body.style.overflowY = 'hidden';
         document.body.style.paddingRight = '16.8px';
+        document.documentElement.style.overflow = 'hidden'; // for iOS Safari
+        document.body.addEventListener('touchmove', preventTouch, {
+          passive: false,
+        });
       } else {
         document.body.style.overflowY = 'initial';
         document.body.style.paddingRight = '0px';
+        document.documentElement.style.overflow = 'auto';
+        document.body.removeEventListener('touchmove', preventTouch);
       }
     }
+    return () => {
+      document.body.removeEventListener('touchmove', preventTouch);
+      document.documentElement.style.overflow = 'auto';
+    };
   }, [isCatalogListOpen, isFixedHeader]);
+
+  const preventTouch = (e: TouchEvent) => {
+    e.preventDefault();
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (isCatalogListOpen && catalogListRef.current) {
+        openCatalogList();
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleResize);
+    };
+  }, [isCatalogListOpen]);
 
   const openCatalogListOnFocus = (e: FocusEvent<HTMLButtonElement>) => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -330,6 +360,7 @@ export const Header = () => {
               <CatalogList
                 isBurgerProductList={false}
                 setIsCatalogListOpen={setIsCatalogListOpen}
+                onAuthClick={handleAuthClick}
               />
             </div>
             <Search

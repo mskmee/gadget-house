@@ -105,29 +105,5 @@
     gap: 16px;
     margin: 44px 0 41px 0;
     position: relative;
-    > a {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 48px;
-      height: 48px;
-      background-color: #ffffff;
-      border: 1px solid #eae4ee;
-      border-radius: 12px;
-      cursor: pointer;
-      text-decoration: none;
-      position: relative;
-
-      &:hover {
-        background-color: #4da856;
-        > svg path {
-          stroke: #fff;
-        }
-      }
-
-      &:active {
-        background-color: #00680a;
-      }
-    }
   }
 }
