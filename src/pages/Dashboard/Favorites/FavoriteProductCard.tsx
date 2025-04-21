@@ -7,6 +7,8 @@ import { DeleteFromBasket } from '@/assets/icons/DeleteFromBasket';
 import { useActions } from '@/hooks/useActions';
 import { Link } from 'react-router-dom';
 import { HeartIcon } from '@/assets/icons/HeartIcon';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { convertPriceToReadable } from '@/utils/helpers/product';
 
 interface IFavoriteProductProps {
   favoriteProduct: IProductCard;
@@ -18,6 +20,8 @@ export const FavoriteProductCard: FC<IFavoriteProductProps> = ({
 }) => {
   const { id, category, href, images, name, code, price, rating, isLiked } =
     favoriteProduct;
+
+  const { locale, currency } = useTypedSelector((state) => state.shopping_card);  
 
   const [isMobile575, setIsMobile575] = useState(false);
 
@@ -87,7 +91,7 @@ export const FavoriteProductCard: FC<IFavoriteProductProps> = ({
             >
               <CloseModal size="35" />
             </button> 
-            <div className={styles.mobilePrice}>{price} ₴</div>
+            <div className={styles.mobilePrice}>{convertPriceToReadable(price, currency, locale,)}</div>
           </div>
         </div>
         <div className={styles.cardMobile__bottom}>
@@ -148,7 +152,7 @@ export const FavoriteProductCard: FC<IFavoriteProductProps> = ({
                 />
               </div>
               <div className={styles.cardInfoPrice}>
-                <span>{price} ₴</span>
+                <span>{convertPriceToReadable(price, currency, locale,)}</span>
                 <button onClick={handleAddToBasket} tabIndex={-1}>
                   <BasketIcon />
                 </button>
