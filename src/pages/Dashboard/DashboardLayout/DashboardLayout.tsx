@@ -87,38 +87,42 @@ export const DashboardLayout = () => {
             <aside className={styles.dashboardSidebar}>
               <Link
                 to={`/dashboard/${userID}`}
-                className={classNames(styles.dashboardSidebarAccount, {
+                className={classNames(styles.dashboardSidebarAccount, styles.dashboardSidebarLink, {
                   [styles.activeSection]: activeSection === 'account',
                 })}
                 onClick={handleClickAccount}
               >
-                <div>
+                <div className={classNames(styles.dashboardSidebarIcon)}>
                   <NavUserIcon stroke="#1C1817" width="24px" height="24px" />
                 </div>
-                <span>My account</span>
+                <span><span className={styles.dashboardSidebarLink__pref}>My</span> account</span>
               </Link>
               <Link
                 to={`/dashboard/${userID}/orders`}
-                className={classNames(styles.dashboardSidebarOrders, {
+                className={classNames(styles.dashboardSidebarOrders, styles.dashboardSidebarLink, {
                   [styles.activeSection]: activeSection === 'orders',
                 })}
                 onClick={handleClickOrders}
               >
-                <BasketIcon />
-                <span>My orders</span>
+                <div className={classNames(styles.dashboardSidebarIcon)}>
+                  <BasketIcon />
+                </div>
+                <span><span className={styles.dashboardSidebarLink__pref}>My</span> orders</span>
               </Link>
               <Link
                 to={`/dashboard/${userID}/favorites`}
-                className={classNames(styles.dashboardSidebarFavorites, {
+                className={classNames(styles.dashboardSidebarFavorites, styles.dashboardSidebarLink, {
                   [styles.activeSection]: activeSection === 'favorites',
                 })}
                 onClick={handleClickFavorites}
               >
-                <HeartBlackIcon />
+                <div className={classNames(styles.dashboardSidebarIcon)}>
+                  <HeartBlackIcon />
+                </div>
                 <span>
-                  My favorites{' '}
+                  <span className={styles.dashboardSidebarLink__pref}>My</span> favorites{' '}
                   {favoriteProducts.length > 0 && (
-                    <span>({favoriteProducts.length})</span>
+                    <span className={styles.dashboardSidebarCounter}>({favoriteProducts.length})</span>
                   )}
                 </span>
               </Link>

@@ -6,6 +6,17 @@
   background-color: #fff;
   border-radius: 20px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.101960784);
+  @media screen and (max-width: 1100px) {
+    flex: 1;
+    width: 100%;
+    box-shadow: none;
+    border-radius: 0;
+    // margin: 0 -50px;
+    padding: 38px 60px;
+  }
+  @media (max-width: 767px) {
+    padding: 0 15px;
+  }
 
   .favoriteProductsWrap {
     .favoriteProductsTitle {
@@ -65,6 +76,12 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      .cardInfoInner {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
       .cardInfoTop {
         display: flex;
         flex-direction: column;
@@ -78,6 +95,11 @@
             line-height: 150%;
             color: #1c1817;
             font-weight: 500;
+            @media screen and (max-width: 767px) {
+              font-size: 16px;
+              line-height: 24px;
+              font-weight: 400;
+            }
           }
           > button {
             svg {
@@ -118,6 +140,12 @@
           > span {
             font-size: rem(24px);
             line-height: 150%;
+            @media (max-width: 767px) {
+              font-size: 20px;
+            }
+            @media (max-width: 575px) {
+              display: none;
+            }
           }
           button {
             width: 43px;
@@ -163,11 +191,100 @@
   animation: spin 1s linear infinite;
 }
 
+.mobilePrice {
+  font-size: 16px;
+}
+
+.cardMobile__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #EAE4EE;
+  .cardImage {
+    width: 56px !important;
+    height: 62px;
+    margin-right: 8px;
+    border-radius: 6px;
+  }
+  .cardMobile__title {
+    font-size: 16px;
+    font-weight: 400;
+    margin-bottom: 4px;
+  }
+  .cardMobile__rating {
+    margin-bottom: 4px;
+    img {
+      width: 16px;
+      height: 16px;
+    }
+  }
+  .cardMobile__code {
+    font-weight: 300;
+    font-size: 12px;
+    color: #808080;
+  }
+  .cardMobile__topRight {
+    text-align: right; 
+  }
+}
+.cardMobile__topLeft {
+  display: flex;
+  align-items: center;
+}
+.cardMobile__bottom {
+  display: flex;
+  justify-content: space-between;
+}
+.addToBasker {
+  width: 43px;
+  height: 43px;
+  border: none;
+  background-color: #00820d;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
   }
   100% {
     transform: rotate(360deg);
+  }
+}
+
+
+
+@media (max-width: 767px) {
+  .favoriteProductCardsWrap {
+    .cardWrap {
+      border-radius: 8px;
+      box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.08);
+      padding: 12px;
+    }
+  }
+  .cardInfoAddFavorite {
+    border-radius: 8px;
+    border: 1px solid #EAE4EE;
+    background: #F8F7FA;
+    padding: 7px;
+    svg {
+      width: 34px;
+      height: 34px;
+    }
+  }
+}
+
+@media (max-width: 575px) {
+  .favoriteProductCardsWrap {
+    .cardWrap {
+      flex-direction: column;
+      gap: 0;
+    }
+  }
+  .cardMobile__info {
+    max-width: 160px;
   }
 }
