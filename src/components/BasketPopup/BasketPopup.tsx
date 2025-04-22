@@ -7,6 +7,7 @@ import {
   closeBasketPopupIcon,
   quantityDecreaseButton,
   quantityInreaseButtonMobile,
+  noImageAvailable,
 } from '@/assets/constants.ts';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '@/enums/Route.ts';
@@ -14,6 +15,7 @@ import { DeleteFromBasket } from '@/assets/icons/DeleteFromBasket';
 import { useMediaQuery } from 'react-responsive';
 import { Carousels } from '../components';
 import { notification } from 'antd';
+import { MAX_PRODUCT_QUANTITY } from '@/constants/globalConstans';
 
 export default function BasketPopup() {
   const navigate = useNavigate();
@@ -40,6 +42,7 @@ export default function BasketPopup() {
   if (!selectedProduct) return null;
 
   const { id, name, code, images, quantity, totalPrice } = selectedProduct;
+  const imageSrc = images?.[0]?.link ?? noImageAvailable;
 
   const handleDecreaseItemQuantity = () => {
     if (quantity > 1) {
@@ -51,10 +54,10 @@ export default function BasketPopup() {
   };
 
   const handleIncreaseItemQuantity = () => {
-    if (quantity !== 20) {
+    if (quantity !== MAX_PRODUCT_QUANTITY) {
       increaseItemQuantity(id);
     }
-    if (quantity == 20) {
+    if (quantity == MAX_PRODUCT_QUANTITY) {
       notification.open({
         className: 'basket-popup-notification',
         placement: 'top',
@@ -91,7 +94,7 @@ export default function BasketPopup() {
           </h2>
           <div className={styles.basketPopupTop}>
             <div className={styles.basketPopupImg}>
-              <img src={images?.[0].link} alt={name} />
+              <img src={imageSrc} alt={name || 'Product image'} />
               <img
                 className={styles.basketPopupAdded}
                 src={inBasket}
@@ -138,7 +141,7 @@ export default function BasketPopup() {
       ) : (
         <div className={styles.basketPopupProduct}>
           <div className={styles.basketPopupImg}>
-            <img src={images?.[0].link} alt={name} />
+            <img src={imageSrc} alt={name || 'Product image'} />
             <img
               className={styles.basketPopupAdded}
               src={inBasket}

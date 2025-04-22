@@ -28,6 +28,10 @@ const Layout = () => {
     setIsMenuOpen(false);
   };
 
+  const handleClosePopup = () => {
+    closeBasketPopup();
+  };
+
   return (
     <>
       <MenuContext.Provider
@@ -49,7 +53,7 @@ const Layout = () => {
       </main>
       <PopUp
         isOpened={isBasketPopupOpen}
-        onClose={() => closeBasketPopup()}
+        onClose={handleClosePopup}
         classname="basket-modal"
       >
         <BasketPopup />

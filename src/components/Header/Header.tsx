@@ -200,7 +200,16 @@ export const Header = () => {
       document.body.removeEventListener('touchmove', preventTouch);
       document.documentElement.style.overflow = 'auto';
     };
-  }, [isCatalogListOpen, isFixedHeader]);
+  }, [
+    isCatalogListOpen,
+    isFixedHeader,
+    isLargerThan1540px,
+    isLargerThan1440px,
+    isLessThan1440px,
+    isLessThan1250px,
+    fixedHeaderRef,
+    headerBottomWrapRef,
+  ]);
 
   const preventTouch = (e: TouchEvent) => {
     e.preventDefault();

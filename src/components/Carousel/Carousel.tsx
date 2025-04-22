@@ -5,7 +5,7 @@ import { BrandCard, MyCard } from '../components';
 import { brandData } from '@/constants/productCards';
 import { useMediaQuery } from 'react-responsive';
 import { useResponsiveCarouselSettings } from '@/hooks/useResponsiveCarouselSettings';
-import { IProductCard, ProductImageCard } from '@/interfaces/interfaces';
+import { IProductCard, TProductImageCard } from '@/interfaces/interfaces';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import useLocalStorage from '@/hooks/useLocalStorage';
 
@@ -19,8 +19,17 @@ type CarouselClassname =
 
 interface CustomCarouselProps {
   classname: CarouselClassname;
-  productImageCards?: ProductImageCard[];
+  productImageCards?: TProductImageCard[];
 }
+
+const classMap: Record<CarouselClassname, string> = {
+  'laptop-carousel': 'laptops',
+  'smartphone-carousel': 'smartphones',
+  'basket-popup-carousel': 'basket-popup',
+  'viewed-carousel': 'previously-reviewed',
+  'brands-carousel': '',
+  'photos-carousel': '',
+};
 
 const CustomCarousel: React.FC<CustomCarouselProps> = ({
   classname,
@@ -153,6 +162,21 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
     }
   }, []);
 
+  const productMap = {
+    'laptop-carousel': laptops,
+    'smartphone-carousel': smartphones,
+    'basket-popup-carousel': otherProducts,
+    'viewed-carousel': previouslyReviewed,
+    'brands-carousel': brandData,
+    'photos-carousel': productImageCards,
+  };
+
+  const getProduct = (i: number) => {
+    const products = productMap[classname] || [];
+    const safeIndex = i % (products.length > 0 ? products.length : 1);
+    return products[safeIndex];
+  };
+
   return (
     <div className={classNames(styles.carousel, styles[classname])}>
       <div
@@ -204,41 +228,8 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
                   <MyCard
                     width={itemWidth}
                     key={crypto.randomUUID()}
-                    product={
-                      classname === 'laptop-carousel'
-                        ? laptops?.[
-                            i % (laptops.length > 0 ? laptops.length : 1)
-                          ]
-                        : classname === 'smartphone-carousel'
-                          ? smartphones?.[
-                              i %
-                                (smartphones.length > 0
-                                  ? smartphones.length
-                                  : 1)
-                            ]
-                          : classname === 'basket-popup-carousel'
-                            ? otherProducts?.[
-                                i %
-                                  (otherProducts.length > 0
-                                    ? otherProducts.length
-                                    : 1)
-                              ]
-                            : previouslyReviewed?.[
-                                i %
-                                  (previouslyReviewed.length > 0
-                                    ? previouslyReviewed.length
-                                    : 1)
-                              ]
-                    }
-                    classname={
-                      classname === 'laptop-carousel'
-                        ? 'laptops'
-                        : classname === 'smartphone-carousel'
-                          ? 'smartphones'
-                          : classname === 'basket-popup-carousel'
-                            ? 'basket-popup'
-                            : 'previously-reviewed'
-                    }
+                    tempProduct={getProduct(i)}
+                    classname={classMap[classname]}
                   />
                 )}
               </>

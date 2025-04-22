@@ -92,7 +92,7 @@ export const Catalog: FC<ICatalogProps> = ({
             {productsData?.page.map((product: IProductCard) => (
               <MyCard
                 key={product.id}
-                product={product}
+                tempProduct={product}
                 classname={styles.catalog__item}
                 index={product.id}
                 width={0}
@@ -114,7 +114,7 @@ export const Catalog: FC<ICatalogProps> = ({
             data.map((product: IProductCard) => (
               <MyCard
                 key={product.id}
-                product={product}
+                tempProduct={product}
                 classname={styles.catalog__item}
                 index={product.id}
                 width={0}

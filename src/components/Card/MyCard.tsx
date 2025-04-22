@@ -3,7 +3,11 @@ import { notification, Rate } from 'antd';
 import styles from './card.module.scss';
 import { rateImg, rateEmptyImg } from '@/assets/constants';
 import { Link } from 'react-router-dom';
-import { IProductCard } from '@/interfaces/interfaces';
+import {
+  IBrandCard,
+  IProductCard,
+  TProductImageCard,
+} from '@/interfaces/interfaces';
 import { BasketIcon } from '@/assets/icons/BasketIcon';
 import classNames from 'classnames';
 import { HeartIcon } from '@/assets/icons/HeartIcon';
@@ -13,7 +17,7 @@ import { convertPriceToReadable } from '@/utils/helpers/product';
 import useLocalStorage from '@/hooks/useLocalStorage';
 
 interface ISmartphoneCardProps {
-  product: IProductCard | undefined;
+  tempProduct: IProductCard | TProductImageCard | IBrandCard | undefined;
   classname: string;
   index?: number;
   width: number;
@@ -22,12 +26,13 @@ interface ISmartphoneCardProps {
 const MAX_ITEMS = 8;
 
 export const MyCard: FC<ISmartphoneCardProps> = ({
-  product,
+  tempProduct,
   classname,
   index,
   width,
 }) => {
   const { toggleFavorite } = useActions();
+  const product = tempProduct as IProductCard;
 
   const [previouslyReviewed, setPreviouslyReviewed] = useLocalStorage<
     IProductCard[]
@@ -40,7 +45,7 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
     setPreviouslyReviewed(limitedItems);
   };
 
-  const { addToStore, closeBasketPopup } = useActions();
+  const { addToStore } = useActions();
   const { products, locale, currency } = useTypedSelector(
     (state) => state.shopping_card,
   );
@@ -84,21 +89,9 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
     }
   };
 
-  const handleSaveReviewedItem = (e: MouseEvent<HTMLAnchorElement>) => {
-    const className = (e.target as HTMLElement).className;
-    const tagName = (e.target as HTMLElement).tagName;
-
+  const handleSaveReviewedItem = () => {
     if (product) {
       saveReviewedItem(product);
-    }
-    if (
-      classname === 'basket-popup' &&
-      className !== 'heartIcon' &&
-      className !== 'basketPopupBtn' &&
-      tagName !== 'svg' &&
-      tagName !== 'path'
-    ) {
-      closeBasketPopup();
     }
   };
 
@@ -110,11 +103,7 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
           key={product?.id}
           to={`${classname}/${product?.id}/${product?.href}`}
           tabIndex={0}
-          style={
-            classname !== 'basket-popup'
-              ? { minWidth: `${width}px` }
-              : { minWidth: '' }
-          }
+          style={{ minWidth: classname !== 'basket-popup' ? `${width}px` : '' }}
           onClick={handleSaveReviewedItem}
         >
           <div
@@ -200,11 +189,7 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
                   locale,
                 )}
               </p>
-              <button
-                className="basketPopupBtn"
-                onClick={handleaddToBasket}
-                tabIndex={-1}
-              >
+              <button onClick={handleaddToBasket} tabIndex={-1}>
                 <BasketIcon />
               </button>
             </div>

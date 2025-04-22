@@ -14,10 +14,12 @@ import { DeleteFromBasket } from '@/assets/icons/DeleteFromBasket';
 import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
 import { MouseEvent } from 'react';
+import { MAX_PRODUCT_QUANTITY } from '@/constants/globalConstans';
 
 interface IBasketItemProps {
   product: IShoppingCard;
 }
+
 export default function BasketItem({ product }: IBasketItemProps) {
   const { id, name, code, images, quantity, totalPrice, href, category } =
     product;
@@ -52,7 +54,7 @@ export default function BasketItem({ product }: IBasketItemProps) {
   };
   const handleIncrementItemQuantity = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (quantity !== 20) {
+    if (quantity !== MAX_PRODUCT_QUANTITY) {
       increaseItemQuantity(id);
     }
   };

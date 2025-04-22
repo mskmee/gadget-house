@@ -33,7 +33,7 @@ export interface StatusButtonProps {
   style?: CSSProperties;
 }
 
-export type ProductImageCard = {
+export type TProductImageCard = {
   link: string;
   order: number;
 };
@@ -42,7 +42,7 @@ export interface IProductCard {
   id: number;
   name: string;
   href?: string;
-  images: ProductImageCard[];
+  images: TProductImageCard[];
   rating: number;
   price: string;
   code: string;
