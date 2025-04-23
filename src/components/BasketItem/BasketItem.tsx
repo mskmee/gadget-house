@@ -4,7 +4,7 @@ import {
   closeBasketPopupIcon,
   deleteFromBasketMob,
   quantityDecreaseButton,
-  quantityInreaseButton,
+  quantityInreaseButtonMobile,
 } from '@/assets/constants.ts';
 import { HeartIcon } from '@/assets/icons/HeartIcon.tsx';
 import { useActions } from '@/hooks/useActions.ts';
@@ -14,10 +14,12 @@ import { DeleteFromBasket } from '@/assets/icons/DeleteFromBasket';
 import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
 import { MouseEvent } from 'react';
+import { MAX_PRODUCT_QUANTITY } from '@/constants/globalConstans';
 
 interface IBasketItemProps {
   product: IShoppingCard;
 }
+
 export default function BasketItem({ product }: IBasketItemProps) {
   const { id, name, code, images, quantity, totalPrice, href, category } =
     product;
@@ -29,6 +31,9 @@ export default function BasketItem({ product }: IBasketItemProps) {
     decreaseItemQuantity,
   } = useActions();
   const { locale, currency } = useTypedSelector((state) => state.shopping_card);
+  const isLikedProduct = useTypedSelector((state) =>
+    state.products.favoriteProducts.some((fav) => fav.id === product.id),
+  );
 
   const isLessThan768px = useMediaQuery({
     query: '(max-width: 768px)',
@@ -49,7 +54,9 @@ export default function BasketItem({ product }: IBasketItemProps) {
   };
   const handleIncrementItemQuantity = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    increaseItemQuantity(id);
+    if (quantity !== MAX_PRODUCT_QUANTITY) {
+      increaseItemQuantity(id);
+    }
   };
 
   const handleSaveFavoriteProduct = () => {
@@ -86,13 +93,16 @@ export default function BasketItem({ product }: IBasketItemProps) {
           </button>
           <p>{quantity}</p>
           <button onClick={handleIncrementItemQuantity}>
-            <img src={quantityInreaseButton} alt="quantity-Inrease-Button" />
+            <img
+              src={quantityInreaseButtonMobile}
+              alt="quantity-Inrease-Button"
+            />
           </button>
         </div>
         <button>
           <HeartIcon
             onClick={handleSaveFavoriteProduct}
-            isLiked={product?.isLiked}
+            isLiked={isLikedProduct}
           />
         </button>
       </div>
@@ -119,7 +129,7 @@ export default function BasketItem({ product }: IBasketItemProps) {
 
           <HeartIcon
             onClick={handleSaveFavoriteProduct}
-            isLiked={product?.isLiked}
+            isLiked={isLikedProduct}
             type="basket"
           />
         </span>

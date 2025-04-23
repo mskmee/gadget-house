@@ -2,7 +2,7 @@ import { Dispatch, FC, MouseEvent, SetStateAction } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { useMediaQuery } from 'react-responsive';
-import { buttonData } from '@/constants/ButtonConstants';
+import { dropdownBbuttonData } from '@/constants/ButtonConstants';
 import { NavButton } from '../Button';
 import items from './constants';
 import { RightArrow } from '@/assets/constants';
@@ -11,11 +11,13 @@ import styles from './menu.module.scss';
 interface IProductListProps {
   isBurgerProductList: boolean;
   setIsCatalogListOpen?: Dispatch<SetStateAction<boolean>>;
+  onAuthClick?: () => void;
 }
 
 export const CatalogList: FC<IProductListProps> = ({
   isBurgerProductList = false,
   setIsCatalogListOpen,
+  onAuthClick,
 }) => {
   const isLaptopPage = useMediaQuery({
     query: '(max-width: 992px)',
@@ -73,8 +75,12 @@ export const CatalogList: FC<IProductListProps> = ({
         ))}
       </ul>
       <div className={classNames(styles.catalogListButtons)}>
-        {buttonData.slice(0, 3).map((buttonData) => (
-          <NavButton key={buttonData.id} button={buttonData} />
+        {dropdownBbuttonData.slice(0, 3).map((buttonData) => (
+          <NavButton
+            key={buttonData.id}
+            button={buttonData}
+            onAuthClick={onAuthClick}
+          />
         ))}
       </div>
     </div>

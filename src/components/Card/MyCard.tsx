@@ -1,9 +1,13 @@
 import { FC, MouseEvent } from 'react';
-import { Rate } from 'antd';
+import { notification, Rate } from 'antd';
 import styles from './card.module.scss';
 import { rateImg, rateEmptyImg } from '@/assets/constants';
 import { Link } from 'react-router-dom';
-import { IProductCard } from '@/interfaces/interfaces';
+import {
+  IBrandCard,
+  IProductCard,
+  TProductImageCard,
+} from '@/interfaces/interfaces';
 import { BasketIcon } from '@/assets/icons/BasketIcon';
 import classNames from 'classnames';
 import { HeartIcon } from '@/assets/icons/HeartIcon';
@@ -13,7 +17,7 @@ import { convertPriceToReadable } from '@/utils/helpers/product';
 import useLocalStorage from '@/hooks/useLocalStorage';
 
 interface ISmartphoneCardProps {
-  product: IProductCard | undefined;
+  tempProduct: IProductCard | TProductImageCard | IBrandCard | undefined;
   classname: string;
   index?: number;
   width: number;
@@ -22,12 +26,14 @@ interface ISmartphoneCardProps {
 const MAX_ITEMS = 8;
 
 export const MyCard: FC<ISmartphoneCardProps> = ({
-  product,
+  tempProduct,
   classname,
   index,
   width,
 }) => {
   const { toggleFavorite } = useActions();
+  const product = tempProduct as IProductCard;
+
   const [previouslyReviewed, setPreviouslyReviewed] = useLocalStorage<
     IProductCard[]
   >('previouslyReviewed', []);
@@ -36,17 +42,45 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
     const updatedItems = [newItem, ...previouslyReviewed];
 
     const limitedItems = updatedItems.slice(0, MAX_ITEMS);
-
     setPreviouslyReviewed(limitedItems);
   };
 
   const { addToStore } = useActions();
-  const { locale, currency } = useTypedSelector((state) => state.shopping_card);
+  const { products, locale, currency } = useTypedSelector(
+    (state) => state.shopping_card,
+  );
   const productRating = product?.rating ?? 0;
+  const selectedProduct = products.find((item) => item.id === product?.id);
+  const isLikedProduct = useTypedSelector((state) =>
+    state.products.favoriteProducts.some((fav) => fav.id === product?.id),
+  );
 
-  const addToBasket = (e: MouseEvent<HTMLButtonElement>) => {
+  const handleaddToBasket = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    addToStore(product as IProductCard);
+    if (
+      (selectedProduct && selectedProduct?.quantity < 20) ||
+      selectedProduct === undefined
+    ) {
+      addToStore(product as IProductCard);
+      if (classname === 'basket-popup') {
+        notification.open({
+          className: 'basket-popup-notification',
+          placement: 'top',
+          message: 'Product added to the basket',
+          duration: 3,
+          closeIcon: false,
+        });
+      }
+    }
+    if (selectedProduct?.quantity == 20) {
+      notification.open({
+        className: 'basket-popup-notification',
+        placement: 'top',
+        message: 'You can add up to 20 products',
+        duration: 3,
+        closeIcon: false,
+      });
+    }
   };
 
   const handleSaveFavoriteProduct = () => {
@@ -69,7 +103,7 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
           key={product?.id}
           to={`${classname}/${product?.id}/${product?.href}`}
           tabIndex={0}
-          style={{ minWidth: `${width}px` }}
+          style={{ minWidth: classname !== 'basket-popup' ? `${width}px` : '' }}
           onClick={handleSaveReviewedItem}
         >
           <div
@@ -107,7 +141,7 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
             >
               <HeartIcon
                 onClick={handleSaveFavoriteProduct}
-                isLiked={product?.isLiked}
+                isLiked={isLikedProduct}
               />
 
               {(product as IProductCard)?.anotherColors?.length > 0 && (
@@ -155,7 +189,7 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
                   locale,
                 )}
               </p>
-              <button onClick={addToBasket} tabIndex={-1}>
+              <button onClick={handleaddToBasket} tabIndex={-1}>
                 <BasketIcon />
               </button>
             </div>

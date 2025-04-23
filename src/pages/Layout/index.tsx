@@ -11,6 +11,8 @@ import BasketPopup from '@/components/BasketPopup/BasketPopup.tsx';
 import { PopUp } from '@/components/PopUp/PopUp.tsx';
 import { useTypedSelector } from '@/hooks/useTypedSelector.ts';
 import { useActions } from '@/hooks/useActions.ts';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Layout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -24,6 +26,10 @@ const Layout = () => {
   };
   const handleMenuClose = () => {
     setIsMenuOpen(false);
+  };
+
+  const handleClosePopup = () => {
+    closeBasketPopup();
   };
 
   return (
@@ -47,13 +53,14 @@ const Layout = () => {
       </main>
       <PopUp
         isOpened={isBasketPopupOpen}
-        onClose={closeBasketPopup}
+        onClose={handleClosePopup}
         classname="basket-modal"
       >
         <BasketPopup />
       </PopUp>
       <Footer />
       <ScrollRestoration />
+      <ToastContainer />
     </>
   );
 };

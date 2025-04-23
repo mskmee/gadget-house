@@ -94,6 +94,13 @@
     }
   }
 }
+@media screen and (max-width: 768px) {
+  .basket-modal {
+    .content {
+      max-width: 420px;
+    }
+  }
+}
 @media screen and (max-width: 600px) {
   .basket-modal {
     .content {
