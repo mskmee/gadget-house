@@ -11,6 +11,7 @@ import {
   localStorageService,
 } from '@/utils/packages/local-storage';
 import { createOrder } from './actions';
+import { toggleFavorite } from '../products/products_slice';
 
 export interface IInitialState {
   products: IShoppingCard[];
@@ -173,6 +174,13 @@ const shoppingCard_slice = createSlice({
     builder.addCase(createOrder.fulfilled, (state, { payload }) => {
       state.orderId = payload;
     });
+    builder.addCase(toggleFavorite, (state, action) => {
+      const productId = action.payload.id;
+      const item = state.products.find((p) => p.id === productId);
+      if (item) {
+        item.isLiked = !item.isLiked;
+      }
+    });
     builder.addMatcher(
       isAnyOf(createOrder.rejected, createOrder.pending),
       (state) => {
@@ -183,4 +191,3 @@ const shoppingCard_slice = createSlice({
 });
 
 export const { actions, reducer } = shoppingCard_slice;
-

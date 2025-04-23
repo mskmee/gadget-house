@@ -1,4 +1,4 @@
-export const CloseModal = ({size = "48"}: {size?: string}) => (
+export const CloseModal = ({ size = '48' }: { size?: string }) => (
   <svg
     width={size}
     height={size}

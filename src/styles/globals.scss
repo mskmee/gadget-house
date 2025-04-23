@@ -155,37 +155,37 @@ img {
     border: 1px solid #065d0f;
     border-radius: 28px;
     background-color: #d6f1da;
-    font-family: "Inter", sans-serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 400;
     font-size: 16px;
     line-height: 150%;
     color: #065d0f;
     cursor: auto;
-  
+
     &_not_paid {
       border-color: #615f5f;
       background-color: var(--white-color);
       color: #615f5f;
     }
-  
+
     &_returned {
       border-color: #7d3a0a;
       background-color: #f6d3b9;
       color: #7d3a0a;
     }
-  
+
     &_awaiting {
       border-color: #715c3b;
       background-color: #f3ede2;
       color: #715c3b;
     }
-  
+
     &_cancel {
       border-color: #910413;
       background-color: #ffdade;
       color: #910413;
     }
-  
+
     &_order {
       border-color: #5f4185;
       background-color: #e5e1fd;
@@ -233,6 +233,21 @@ img {
 
 .slick-slide-active .product-photo {
   cursor: pointer;
+}
+
+.ant-notification-notice-wrapper {
+  background-color: #2c2c2e !important;
+}
+.basket-popup-notification {
+  padding: 12px !important;
+  width: 268px !important;
+  height: 48px;
+  text-align: center;
+  .ant-notification-notice-message {
+    font-size: 14px !important;
+    font-weight: 500;
+    color: #fff !important;
+  }
 }
 
 .review_users-review-pagination {
@@ -414,4 +429,3 @@ img {
   }
 }
  */
-

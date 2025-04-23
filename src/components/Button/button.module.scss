@@ -4,23 +4,20 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 45px;
-  height: 42px;
+  width: 48px;
+  height: 48px;
   background-color: #ffffff;
   border: none;
   border: 1px solid #eae4ee;
   border-radius: 10px;
   cursor: pointer;
+  position: relative;
 
-  &:hover {
-    background-color: #4da856;
+  &:active {
+    background-color: #00820d;
     > svg path {
       stroke: #fff;
     }
-  }
-
-  &:active {
-    background-color: #00680a;
   }
 
   > div {
@@ -42,37 +39,13 @@
   }
 }
 
-.headerButton svg {
-  path {
-    stroke: #000;
-    stroke-width: 1px;
-  }
-}
-.headerButton:first-child svg {
-  path {
-    stroke: #000;
-    stroke-width: 1.5px;
-  }
-}
-.headerButton:nth-child(2) svg {
-  path {
-    stroke: #000;
-    stroke-width: 0.5px;
-  }
-}
-
-.headerButton:last-child svg {
-  width: 34px;
-  height: 34px;
-}
-
 .navBtn {
   &__button {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 45px;
-    height: 42px;
+    width: 48px;
+    height: 48px;
     background-color: #ffffff;
     border: none;
     border: 1px solid #eae4ee;
@@ -81,19 +54,15 @@
     text-decoration: none;
     position: relative;
 
-    &:hover {
-      background-color: #4da856;
+    &:active {
+      background-color: #00820d;
       > svg path {
         stroke: #fff;
       }
     }
 
-    &:active {
-      background-color: #00680a;
-    }
-
     &Avatar {
-      font-family: "Inter", sans-serif;
+      font-family: 'Inter', sans-serif;
       font-weight: 300;
       font-size: 24px;
       line-height: 150%;

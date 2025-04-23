@@ -232,10 +232,6 @@
 .catalogListWrapVisible {
   display: block;
   background: rgba(28, 24, 23, 0.77);
-
-  @media (max-width: 570px) {
-    max-width: 390px;
-  }
 }
 
 .tooltip-visible {

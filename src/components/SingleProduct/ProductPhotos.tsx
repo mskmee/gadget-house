@@ -1,10 +1,10 @@
 import { FC } from 'react';
 import style from './Product.module.scss';
 import Carousels from '../Carousel/Carousel';
-import { ProductImageCard } from '@/interfaces/interfaces';
+import { TProductImageCard } from '@/interfaces/interfaces';
 
 interface IProductPhotosProps {
-  productImageCards: ProductImageCard[];
+  productImageCards: TProductImageCard[];
 }
 
 export const ProductPhotos: FC<IProductPhotosProps> = ({
