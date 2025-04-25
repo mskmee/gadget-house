@@ -121,6 +121,7 @@ export const FiltersMobile = ({
       open={drawerVisible}
       className={styles.filtersMobile__drawer}
       styles={drawerStyles}
+      width="100%"
     >
       <h2
         style={{
