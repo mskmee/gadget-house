@@ -1,10 +1,13 @@
 import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
+
 import { IButton } from '@/interfaces/interfaces';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
-import styles from './button.module.scss';
+import { getUserInitials } from '@/utils/helpers/getUserInitials';
 import { PopUp } from '../components';
 import { EmptyBasketPopup } from '../BasketPopup/EmptyBasketPopup';
+
+import styles from './button.module.scss';
 
 interface INavButtonProps {
   button: IButton;
@@ -32,7 +35,7 @@ export const NavButton: FC<INavButtonProps> = ({ button, onAuthClick }) => {
       return refreshToken ? (
         <button className={styles.navBtn__button}>
           <span className={styles.navBtn__buttonAvatar}>
-            {user?.fullName?.charAt(0).toUpperCase()}
+            {getUserInitials(user?.fullName || '')}
           </span>
         </button>
       ) : (
