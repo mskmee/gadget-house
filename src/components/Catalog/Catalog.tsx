@@ -25,7 +25,7 @@ export const Catalog: FC<ICatalogProps> = ({
   categoryId,
 }) => {
   const dispatch: AppDispatch = useDispatch();
-  const { pagination, productsData } = useTypedSelector(
+  const { pagination } = useTypedSelector(
     (state: RootState) => state.products,
   );
   const [hasMore, setHasMore] = useState(false);
@@ -118,7 +118,7 @@ export const Catalog: FC<ICatalogProps> = ({
       {isMobile680px ? (
           <div className={styles.catalog__mobile}>
             <div className={styles.catalog__mobileList}>
-              {productsData?.page.map((product: IProductCard) => (
+              {data.map((product: IProductCard) => (
                 <MyCard
                   key={product.id}
                   tempProduct={product}
