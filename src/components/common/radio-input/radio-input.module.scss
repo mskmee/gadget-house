@@ -1,11 +1,14 @@
 .radioInput {
   transition: all 0.3s ease;
   align-items: center;
+  height: 24px;
 
   :global {
     .ant-radio {
-      width: 18px;
-      height: 18px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       @media (max-width: 680px) {
         width: 44px;
@@ -14,16 +17,17 @@
         align-items: center;
         justify-content: center;
       }
-      
+
       &::before {
         content: "";
-        display: inline-block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 18px;
         height: 18px;
         background-image: url("../../../assets/icons/radio.svg");
         background-repeat: no-repeat;
         background-position: center center;
-        background-size: contain;
         transition: all 0.3s ease-in-out;
       }
 

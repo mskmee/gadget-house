@@ -8,3 +8,4 @@ export { Attribute } from './attribute';
 export { OrderStatus } from './order-status';
 export { Sort } from './sort';
 export { Filters } from './filters';
+export {User} from './user'
