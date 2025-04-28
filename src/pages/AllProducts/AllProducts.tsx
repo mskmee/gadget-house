@@ -23,6 +23,7 @@ export default function AllProducts() {
     <PageLayout
       products={productsData?.page || []}
       totalPages={productsData?.totalPages || 0}
+      categoryId={Category.EMPTY}
     />
   );
 }

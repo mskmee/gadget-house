@@ -23,7 +23,7 @@ import { SortingDesk } from '../Sort/SortingDesk';
 import { DataStatus } from '@/enums/data-status';
 
 interface IPageLayoutProps {
-  products: IProductCard[];
+  products?: IProductCard[];
   totalPages: number;
   categoryId?: number | null;
 }
@@ -40,7 +40,6 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   const { pagination } = useTypedSelector((state: RootState) => state.products);
   const {
     selectedSort,
-    selectedCategoryId,
     selectedPriceRange,
     selectedCameraRange,
   } = useTypedSelector((state: RootState) => state.filters);
@@ -58,7 +57,7 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
       getFilteredProducts({
         page: pagination.currentPage,
         size: DEFAULT_SIZE,
-        categoryId: selectedCategoryId ?? null,
+        categoryId: categoryId,
         brandIds: brandIds,
         attributes: attributesIds,
         minPrice: selectedPriceRange[0],
@@ -71,12 +70,12 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   }, [
     dispatch,
     pagination.currentPage,
-    selectedCategoryId,
     brandIds,
     attributesIds,
     selectedCameraRange,
     selectedPriceRange,
     selectedSort,
+    categoryId
   ]);
 
 
