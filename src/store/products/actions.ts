@@ -24,7 +24,7 @@ const getOneProductById = createAsyncThunk(
 
 const getPaginatedProducts = createAsyncThunk(
   'products/fetchPaginatedProducts',
-  async ({ categoryId, page, size }: { categoryId: number; page: number; size: number }) => {
+  async ({ categoryId, page, size, append }: { categoryId: number; page: number; size: number, append?: boolean }) => {
 
     const filteredParams = {
       page,
@@ -32,7 +32,9 @@ const getPaginatedProducts = createAsyncThunk(
       categoryId: categoryId !== 0 ? categoryId : null,
     };
 
-    return await productsService.getPaginatedProducts(filteredParams.categoryId, filteredParams.page, filteredParams.size);
+    const data = await productsService.getPaginatedProducts(filteredParams.categoryId, filteredParams.page, filteredParams.size)
+
+    return {data, append};
   }
 );
 

@@ -111,11 +111,18 @@ const products_slice = createSlice({
       state.activeProduct = payload;
     });
     builder.addCase(getPaginatedProducts.fulfilled, (state, { payload }) => {
-      state.productsData = payload;
+      const {data, append} = payload;
+
+      if(append && state.productsData) {
+        state.productsData.page = [...state.productsData.page, ...data.page]
+      } else {
+        state.productsData = data
+      }
+
       state.pagination = {
-        currentPage: payload.currentPage,
-        totalPages: payload.totalPages,
-        totalElements: payload.totalElements,
+        currentPage: data.currentPage,
+        totalPages: data.totalPages,
+        totalElements: data.totalElements,
       };
     });
     builder.addCase(getByCategory.fulfilled, (state, { payload }) => {

@@ -28,41 +28,69 @@ export const Catalog: FC<ICatalogProps> = ({
   const { pagination, productsData } = useTypedSelector(
     (state: RootState) => state.products,
   );
-  const [hasMore, setHasMore] = useState(true);
+  const [hasMore, setHasMore] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
+  useEffect(() => {
+    if (pagination.totalPages) {
+      setHasMore(pagination.currentPage < pagination.totalPages - 1);
+    }
+  }, [pagination]);
+
   const observerRef = useRef<HTMLDivElement | null>(null);
   const isMobile680px = useMediaQuery({
     query: '(max-width: 680px)',
   });
+  // console.log('isMobile680px', isMobile680px)
 
-  useEffect(() => {
-    const size = isMobile680px ? DEFAULT_SIZE_MOBILE : DEFAULT_SIZE;
+  // useEffect(() => {
 
-    dispatch(
-      getPaginatedProducts({
-        categoryId: categoryId || 0,
-        page: pagination.currentPage,
-        size: size,
-      }),
-    ).then((res) => {
-      if (!res.payload || (res.payload as IProductCard[]).length === 0) {
-        setHasMore(false);
-      }
-    });
-  }, [categoryId, pagination.currentPage]);
+  //     // console.log('1')
 
-  const loadMore = () => {
-    if (hasMore) {
-      dispatch(setPageNumber(pagination.currentPage + 1));
-    }
-  };
+    
+  //     const size = DEFAULT_SIZE;
+
+  //     dispatch(
+  //       getPaginatedProducts({
+  //         categoryId: categoryId || 0,
+  //         page: pagination.currentPage,
+  //         size: size,
+  //         append: false
+  //       }),
+  //     ).then((res) => {
+  //       if (!res.payload || (res.payload as IProductCard[]).length === 0) {
+  //         setHasMore(false);
+  //       }
+  //     });
+  
+    
+  // }, [categoryId, pagination.currentPage, isMobile680px]);
+
+  // const loadMore = () => {
+  //   if (hasMore) {
+  //     dispatch(setPageNumber(pagination.currentPage + 1));
+  //   }
+  // };
 
   useEffect(() => {
     if (!isMobile680px) return;
+    console.log('2')
+    console.log('3', hasMore)
+    const size = DEFAULT_SIZE_MOBILE
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && hasMore) {
-          loadMore();
+          console.log('asd')
+          //  dispatch(
+          //     getPaginatedProducts({
+          //       categoryId: categoryId || 0,
+          //       page: pagination.currentPage + 1,
+          //       size: 1,
+          //       append: true
+          //     }),
+          //   )
+          // setIsFetching(true);
+          // dispatch(setPageNumber(pagination.currentPage + 1));
         }
       },
       {
@@ -82,56 +110,60 @@ export const Catalog: FC<ICatalogProps> = ({
         observer.unobserve(observerRef.current);
       }
     };
-  }, [hasMore]);
+  }, [hasMore, isMobile680px, isFetching, pagination.currentPage]);
+
 
   return (
     <div className={styles.catalog}>
-      {isMobile680px && (
-        <div className={styles.catalog__mobile}>
-          <ul className={styles.catalog__mobileList}>
-            {productsData?.page.map((product: IProductCard) => (
-              <MyCard
-                key={product.id}
-                tempProduct={product}
-                classname={styles.catalog__item}
-                index={product.id}
-                width={0}
-              />
-            ))}
-          </ul>
-
-          {hasMore && (
-            <div ref={observerRef} className={styles.catalog__loadingIndicator}>
-              Loading more products...
+      {isMobile680px ? (
+          <div className={styles.catalog__mobile}>
+            <div className={styles.catalog__mobileList}>
+              {productsData?.page.map((product: IProductCard) => (
+                <MyCard
+                  key={product.id}
+                  tempProduct={product}
+                  classname={styles.catalog__item}
+                  index={product.id}
+                  width={0}
+                />
+              ))}
             </div>
-          )}
-        </div>
-      )}
 
-      <div className={styles.catalog__desk}>
-        <ul className={styles.catalog__deskList}>
-          {data &&
-            data.map((product: IProductCard) => (
-              <MyCard
-                key={product.id}
-                tempProduct={product}
-                classname={styles.catalog__item}
-                index={product.id}
-                width={0}
-              />
-            ))}
-        </ul>
+            {hasMore && (
+              <div ref={observerRef} className={styles.catalog__loadingIndicator}>
+                Loading more products...
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className={styles.catalog__desk}>
+            <div className={styles.catalog__deskList}>
+              {data &&
+                data.map((product: IProductCard) => (
+                  <MyCard
+                    key={product.id}
+                    tempProduct={product}
+                    classname={styles.catalog__item}
+                    index={product.id}
+                    width={0}
+                  />
+                ))}
+            </div>
 
-        <Pagination
-          showSizeChanger={false}
-          showTitle={false}
-          current={pagination.currentPage + 1}
-          pageSize={DEFAULT_SIZE}
-          total={totalPages * DEFAULT_SIZE}
-          onChange={(page) => dispatch(setPageNumber(page - 1))}
-          className={styles.catalog__pagination}
-        />
-      </div>
+            <Pagination
+              showSizeChanger={false}
+              showTitle={false}
+              current={pagination.currentPage + 1}
+              pageSize={DEFAULT_SIZE}
+              total={totalPages * DEFAULT_SIZE}
+              onChange={(page) => dispatch(setPageNumber(page - 1))}
+              className={styles.catalog__pagination}
+            />
+          </div>
+        )
+      }
+
+      
     </div>
   );
 };

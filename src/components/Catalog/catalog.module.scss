@@ -2,15 +2,15 @@
   flex-grow: 1;
   padding-bottom: 135px;
 
-  &__mobile {
-    display: block;
-    height: 85vh;
-    overflow-y: auto;
+  // &__mobile {
+  //   display: block;
+  //   height: 85vh;
+  //   overflow-y: auto;
 
-    @media screen and (min-width: 680px) {
-      display: none;
-    }
-  }
+  //   @media screen and (min-width: 680px) {
+  //     display: none;
+  //   }
+  // }
 
   &__mobileList {
     width: 100%;
@@ -20,13 +20,13 @@
     margin-bottom: 40px;
   }
 
-  &__desk {
-    display: none;
+  //&__desk {
+  //   display: none;
 
-    @media screen and (min-width: 680px) {
-      display: block;
-    }
-  }
+    // @media screen and (min-width: 680px) {
+    //   display: block;
+    // }
+  //}
 
   &__deskList {
     width: 100%;
@@ -43,7 +43,7 @@
   }
 
   &__pagination {
-    display: none;
+    // display: none;
     justify-content: center !important;
 
     @media screen and (min-width: 680px) {

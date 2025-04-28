@@ -12,12 +12,15 @@ import {
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { IProductCard } from '@/interfaces/interfaces';
 import { FiltersDesk } from '@/components/Filters/FiltersDesk';
-import { Filters } from '@/components/Filters/Filters';
-import { SortingDesk } from '@/components/Sort/SortingDesk';
 import { Catalog } from '@/components/Catalog/Catalog';
 import { CustomBreadcrumbs } from '../SingleProduct/CustomBreadcrumbs';
 
 import styles from './page-layout.module.scss';
+import { useMediaQuery } from 'react-responsive';
+
+import { Filters } from '../Filters/Filters';
+import { SortingDesk } from '../Sort/SortingDesk';
+import { DataStatus } from '@/enums/data-status';
 
 interface IPageLayoutProps {
   products: IProductCard[];
@@ -33,6 +36,7 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   const { pathname: pathName, state } = useLocation();
   const { searchInputValue, isSuggestion } = state ? state : {};
   const dispatch: AppDispatch = useDispatch();
+
   const { pagination } = useTypedSelector((state: RootState) => state.products);
   const {
     selectedSort,
@@ -40,8 +44,14 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
     selectedPriceRange,
     selectedCameraRange,
   } = useTypedSelector((state: RootState) => state.filters);
+
+  const isLoading = useTypedSelector(
+    (state: RootState) => state.products.dataStatus === DataStatus.PENDING,
+  );
+
   const brandIds = useSelector(selectBrandIds);
   const attributesIds = useSelector(selectFilteredAttributes, shallowEqual);
+
 
   useEffect(() => {
     dispatch(
@@ -69,6 +79,7 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
     selectedSort,
   ]);
 
+
   const pathname = pathName.slice(1);
   let category = '';
 
@@ -84,71 +95,38 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
       : (category = pathname.charAt(0).toUpperCase() + pathname.slice(1));
   }
 
+  const isMobile991 = useMediaQuery({
+    query: '(max-width: 991px)',
+  });
+  const isMobile767 = useMediaQuery({
+    query: '(max-width: 767px)',
+  });
+
   return (
     <div className={styles.pageLayout}>
-      <div className={styles.pageLayout_mobile}>
-        <div className={`container ${styles.pageLayout__container}`}>
-          <div className={styles.pageLayout__wrapper}>
-            <h2 className={styles.pageLayout__title}>{category}</h2>
-          </div>
-
-          <Filters />
-
-          {products.length > 0 ? (
-            <Catalog
-              data={products}
-              totalPages={totalPages}
-              categoryId={categoryId}
-            />
-          ) : (
-            <div>Products not found</div>
-          )}
-        </div>
-      </div>
-
-      <div className={styles.pageLayout_tablet}>
+      {!isMobile767 && pathName !== '/search/' && (
         <div className="container">
-          <div className={styles.pageLayout__container}>
-            <CustomBreadcrumbs />
-            <div className={styles.pageLayout__wrapper}>
-              <h2 className={styles.pageLayout__title}>{category}</h2>
-              <Filters />
-            </div>
-
-            {products.length > 0 ? (
-              <Catalog
-                data={products}
-                totalPages={totalPages}
-                categoryId={categoryId}
-              />
-            ) : (
-              <div>Products not found</div>
-            )}
-          </div>
+          <CustomBreadcrumbs />
         </div>
-      </div>
+      )}
 
-      <div className={styles.pageLayout_desk}>
-        {pathName !== '/search/' && (
-          <div className="container">
-            <CustomBreadcrumbs />
-          </div>
-        )}
+      <div className='container'>
 
         <div className={styles.pageLayout__header}>
-          <div className="container">
-            <div className={styles.pageLayout__wrapper}>
-              <h2 className={styles.pageLayout__title}>{category}</h2>
-              <SortingDesk />
-            </div>
+          <div className={styles.pageLayout__wrapper}>
+            <h2 className={styles.pageLayout__title}>{category}</h2>
+
+            {isMobile991 ? <Filters/> : <SortingDesk /> }
           </div>
         </div>
 
-        <div className="container">
-          <div className={styles.pageLayout__content}>
-            <FiltersDesk />
-
-            {products.length > 0 ? (
+        <div className={styles.pageLayout__content}>
+          {!isMobile991 && <FiltersDesk /> }
+          
+          {
+            isLoading 
+            ? 'Loading...'
+            : products.length > 0 ? (
               <Catalog
                 data={products}
                 totalPages={totalPages}
@@ -156,10 +134,10 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
               />
             ) : (
               <div>Products not found</div>
-            )}
-          </div>
+            )
+          }
         </div>
       </div>
     </div>
-  );
+  )
 };
