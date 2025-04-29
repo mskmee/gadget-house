@@ -88,7 +88,6 @@ const ChangeStatus: FC<IChangeStatusProps> = ({ checkedItems }) => {
       >
         <button
           onClick={toggleStatusPopup}
-          className={styles.admin__changeStatusBtn}
           disabled={checkedItems.length === 0}
         >
           <CheckedOrderIcon

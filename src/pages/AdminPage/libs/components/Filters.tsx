@@ -35,9 +35,7 @@ const Filters = () => {
     ...en,
     lang: {
       ...en.lang,
-      fieldDateFormat: 'DD/MM/BBBB',
-      yearFormat: '2025',
-      cellYearFormat: '2025',
+      fieldDateFormat: 'DD/MM/YYYY',
     },
   };
 
@@ -77,7 +75,7 @@ const Filters = () => {
       title: 'Order Date',
       content: (
         <Flex align="center" justify="space-between" gap={12}>
-          <span className={styles.admin__filterText}>From</span>
+          <span>From</span>
           <DatePicker
             className={styles.admin__filterDatePicker}
             locale={dateLocale}
@@ -86,8 +84,8 @@ const Filters = () => {
             popupClassName={styles.admin__filterDatePopup}
             allowClear
           />
-          <span className={styles.admin__filterDivider}>-</span>
-          <span className={styles.admin__filterText}>To</span>
+          <span>-</span>
+          <span>To</span>
           <DatePicker
             className={styles.admin__filterDatePicker}
             locale={dateLocale}
@@ -104,7 +102,7 @@ const Filters = () => {
       title: 'Price',
       content: (
         <Flex align="center" justify="space-between" gap={12}>
-          <span className={styles.admin__filterText}>From</span>
+          <span>From</span>
           <InputNumber
             className={styles.admin__filterInput}
             addonAfter="₴"
@@ -117,14 +115,14 @@ const Filters = () => {
             onKeyDown={handleKeyDown}
             onChange={handleNumberChange(setPriceFrom)}
           />
-          <span className={styles.admin__filterDivider}>-</span>
-          <span className={styles.admin__filterText}>To</span>
+          <span>-</span>
+          <span>To</span>
           <InputNumber
             className={styles.admin__filterInput}
             addonAfter="₴"
             value={priceTo ?? undefined}
             min={0}
-            max={99999}
+            max={100000}
             maxLength={6}
             controls={false}
             inputMode="numeric"

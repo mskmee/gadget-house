@@ -21,7 +21,9 @@ import styles from './admin-page.module.scss';
 
 const AdminPage = () => {
   const dispatch: AppDispatch = useDispatch();
-  const { orders } = useTypedSelector((state: RootState) => state.order);
+  const orders = useTypedSelector(
+    (state: RootState) => state.order.filteredOrders,
+  );
   const { productsData } = useTypedSelector(
     (state: RootState) => state.products,
   );
@@ -41,7 +43,7 @@ const AdminPage = () => {
   };
 
   const currentItems =
-    orders?.page.slice(
+    orders?.slice(
       (currentPage - 1) * DEFAULT_SIZE,
       currentPage * DEFAULT_SIZE,
     ) || [];
@@ -120,7 +122,7 @@ const AdminPage = () => {
 
             <tbody>
               {orders &&
-                orders?.page
+                orders
                   .slice(
                     (currentPage - 1) * DEFAULT_SIZE,
                     currentPage * DEFAULT_SIZE,
@@ -165,7 +167,7 @@ const AdminPage = () => {
           showSizeChanger={false}
           showTitle={false}
           current={currentPage}
-          total={orders?.page.length}
+          total={orders?.length}
           pageSize={DEFAULT_SIZE}
           onChange={(page) => setCurrentPage(page)}
           className={styles.admin__pagination}

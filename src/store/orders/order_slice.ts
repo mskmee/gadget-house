@@ -1,13 +1,14 @@
 import { createSlice, isAnyOf, PayloadAction } from "@reduxjs/toolkit";
 
+import { orderList } from "@/mock/order-list";
 import { DataStatus } from "@/enums/data-status";
 import { getAllOrders, getOneOrderById, patchOrder } from "./actions";
+import { filterOrders } from "@/utils/helpers/filter-orders";
 import { OrderItemResponseDto, OrdersResponseDto } from "@/utils/packages/orders/libs/types/types";
-import { orderList } from "@/mock/order-list";
 
 const list = orderList(18);
 
-interface IFiltersState {
+export interface IFiltersState {
   dateFrom?: string | null;
   dateTo?: string | null;
   priceFrom?: number | null;
@@ -20,6 +21,7 @@ export interface IInitialState {
   activeOrder: OrderItemResponseDto | null;
   dataStatus: DataStatus;
   filters: IFiltersState;
+  filteredOrders: OrderItemResponseDto[]; 
 }
 
 const initialState: IInitialState = {
@@ -27,6 +29,7 @@ const initialState: IInitialState = {
   activeOrder: null,
   dataStatus: DataStatus.IDLE,
   filters: {} as IFiltersState,
+  filteredOrders: list?.page || [],
 };
 
 const order_slice = createSlice({
@@ -38,12 +41,16 @@ const order_slice = createSlice({
     },
     setFilters(state, action: PayloadAction<IFiltersState>) {
       state.filters = action.payload;
+
+      if (state.orders) {
+        state.filteredOrders = filterOrders(state.orders.page, action.payload);
+      }
     },
     updateOrdersStatus: (state, action) => {
       const { ids, newStatus } = action.payload;
       if (!state.orders) return;
 
-      state.orders.page = state.orders.page.map((order) =>
+      state.filteredOrders = state.orders.page.map((order) =>
         ids.includes(order.id)
           ? { ...order, status: newStatus }
           : order
@@ -53,6 +60,7 @@ const order_slice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getAllOrders.fulfilled, (state, { payload }) => {
       state.orders = payload;
+      state.filteredOrders = filterOrders(payload.page, state.filters);
     })
     builder.addCase(getOneOrderById.fulfilled, (state, { payload }) => {
       state.activeOrder = payload;

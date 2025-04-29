@@ -171,12 +171,10 @@ const useAuth = (): Return => {
       password: loginPermissionFormValue.password,
     };
 
-    const result = await dispatchApp(getCredentials(val)).unwrap();
+    const result = await dispatchApp(createUser(val)).unwrap();
 
     if (result) {
       setSuccessType('loginAdmin');
-      localStorageService.setItem(LocalStorageKey.ACCESS_TOKEN, result.accessToken);
-      localStorageService.setItem(LocalStorageKey.REFRESH_TOKEN, result.refreshToken);
     }
 
     dispatch({

@@ -149,9 +149,58 @@
       color: var(--text-color);
     }
 
+    &DatePicker {
+      :global {
+        .ant-picker {
+          &-outlined {
+            &:hover,
+            &:focus,
+            &:focus-visible {
+              border-color: none;
+              background-color: none;
+              box-shadow: none;
+            }
+          }
+
+          &-suffix {
+            color: var(--text-color);
+          }
+        }
+      }
+    }
+
     &DatePopup {
-      backdrop-filter: blur(10px);
-      background: rgba(234, 228, 238, 0.8);
+      border-radius: 12px;
+      box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+      background: var(--white-color);
+      font-family: "Inter", sans-serif;
+      font-size: 16px;
+
+      :global {
+        .ant-picker {
+          &-footer {
+            display: none !important;
+          }
+
+          &-header-view {
+            button:hover {
+              color: var(--theme-color);
+            }
+          }
+
+          &-cell {
+            &:hover {
+              background-color: var(--secondary-background-color);
+            }
+
+            &-selected .ant-picker-cell-inner {
+              border-radius: 50%;
+              background: var(--theme-color) !important;
+              color: var(--white-color);
+            }
+          }
+        }
+      }
     }
 
     &Input {
@@ -188,6 +237,7 @@
 
     &Radio {
       &Input {
+        width: 146px;
         position: absolute;
         -webkit-appearance: none;
         -moz-appearance: none;
