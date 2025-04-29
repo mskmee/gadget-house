@@ -22,6 +22,7 @@ import { useIsFixedHeader } from '@/hooks/useIsFixedHeader';
 import { InputRef } from 'antd';
 import { useMediaQuery } from 'react-responsive';
 import AuthModal from '@/pages/Auth/AuthModal';
+import { AdminCredentials } from '@/pages/AdminPage/libs/components/components';
 
 export const Header = () => {
   const location = useLocation();
@@ -33,6 +34,7 @@ export const Header = () => {
   const [isFirstTime, setIsFirstTime] = useState(true);
   const products = useTypedSelector((state) => state.shopping_card.products);
   const searchValue = useTypedSelector((state) => state.search.searchValue);
+  const user = useTypedSelector((state) => state.auth.user);
   const catalogListRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLButtonElement>(null);
   const catalogBtnRef = useRef<HTMLButtonElement>(null);
@@ -372,33 +374,40 @@ export const Header = () => {
                 onAuthClick={handleAuthClick}
               />
             </div>
-            <Search
-              searchFieldRef={searchFieldRef}
-              isOverlayActive={isOverlayActive}
-              setIsOverlayActive={setIsOverlayActive}
-            />
-            <div className={styles.headerBottomButtons}>
-              {buttonData.map((buttonData) => (
-                <NavButton
-                  key={buttonData.id}
-                  button={buttonData}
-                  onAuthClick={handleAuthClick}
-                />
-              ))}
 
-              {shouldShowCartTooltip !== 0 &&
-                location.pathname !== AppRoute.BASKET_PAGE && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ ease: 'easeInOut', duration: 0.4 }}
-                    className={classNames(styles.tooltip, 'oo')}
-                  >
-                    <CardTooltip />
-                  </motion.div>
-                )}
-            </div>
+            {user && user.role !== 'admin' && location.pathname === '/admin' ? (
+              <AdminCredentials user={user} />
+            ) : (
+              <>
+                <Search
+                  searchFieldRef={searchFieldRef}
+                  isOverlayActive={isOverlayActive}
+                  setIsOverlayActive={setIsOverlayActive}
+                />
+                <div className={styles.headerBottomButtons}>
+                  {buttonData.map((buttonData) => (
+                    <NavButton
+                      key={buttonData.id}
+                      button={buttonData}
+                      onAuthClick={handleAuthClick}
+                    />
+                  ))}
+
+                  {shouldShowCartTooltip !== 0 &&
+                    location.pathname !== AppRoute.BASKET_PAGE && (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ ease: 'easeInOut', duration: 0.4 }}
+                        className={classNames(styles.tooltip, 'oo')}
+                      >
+                        <CardTooltip />
+                      </motion.div>
+                    )}
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>

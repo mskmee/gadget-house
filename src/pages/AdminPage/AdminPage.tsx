@@ -1,15 +1,21 @@
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Pagination, Checkbox, CheckboxProps } from 'antd';
+import { Pagination, Checkbox, CheckboxProps, CheckboxChangeEvent } from 'antd';
 import cn from 'classnames';
 
 import { IProductCard } from '@/interfaces/interfaces';
 import { AppDispatch, RootState } from '@/store';
 import { setActiveOrder } from '@/store/orders/order_slice';
+import { DEFAULT_SIZE } from '@/constants/pagination';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
-import Filters from './libs/components/Filters';
-import AdminSearch from './libs/components/AdminSearch';
+import { AddNewUser } from '@/assets/constants';
+import {
+  Filters,
+  AdminSearch,
+  AddNewAdminModal,
+  ChangeStatus,
+} from './libs/components/components';
 
 import styles from './admin-page.module.scss';
 
@@ -20,18 +26,37 @@ const AdminPage = () => {
     (state: RootState) => state.products,
   );
   const [currentPage, setCurrentPage] = useState(1);
-  const [, setSelectedFilters] = useState({});
   const [, setFilteredProducts] = useState<IProductCard[]>([]);
+  const [checkedItems, setCheckedItems] = useState<string[]>([]);
+  const [isAuthModalOpen, setAuthModalOpen] = useState(false);
 
-  const handleFilterChange = (key: string, values: string) => {
-    setSelectedFilters((prev) => ({
-      ...prev,
-      [key]: values.length ? values : [],
-    }));
+  const onChecked = (id: string) => (e: CheckboxChangeEvent) => {
+    setCheckedItems((prev) => {
+      if (e.target.checked) {
+        return [...prev, id];
+      } else {
+        return prev.filter((itemId) => itemId !== id);
+      }
+    });
   };
 
-  const onChecked: CheckboxProps['onChange'] = (e) => {
-    console.log(`checked = ${e.target.checked}`);
+  const currentItems =
+    orders?.page.slice(
+      (currentPage - 1) * DEFAULT_SIZE,
+      currentPage * DEFAULT_SIZE,
+    ) || [];
+
+  const isAllChecked =
+    currentItems.length > 0 &&
+    currentItems.every((item) => checkedItems.includes(item.id));
+
+  const onCheckAll: CheckboxProps['onChange'] = (e) => {
+    if (e.target.checked) {
+      const allIds = currentItems.map((item) => item.id);
+      setCheckedItems(allIds);
+    } else {
+      setCheckedItems([]);
+    }
   };
 
   const handleSearch = useCallback(
@@ -59,14 +84,33 @@ const AdminPage = () => {
             <AdminSearch placeholder="Searching..." onSearch={handleSearch} />
           </div>
 
-          <Filters onSelectedFilters={handleFilterChange} />
+          <div className={styles.admin__buttons}>
+            <button
+              className={styles.admin__buttonsAdd}
+              onClick={() => setAuthModalOpen((prev) => !prev)}
+            >
+              <img src={AddNewUser} alt="Add user icon" />
+            </button>
+
+            <ChangeStatus checkedItems={checkedItems} />
+
+            <Filters />
+          </div>
         </header>
 
         <div className={styles.admin__table}>
           <table className={styles.admin__tableWrapper}>
             <thead>
               <tr>
-                <th>Invoice</th>
+                <th>
+                  <Checkbox
+                    className={styles.admin__tableWrapperCheckbox}
+                    checked={isAllChecked}
+                    indeterminate={checkedItems.length > 0 && !isAllChecked}
+                    onChange={onCheckAll}
+                  />{' '}
+                  Invoice
+                </th>
                 <th>Customers</th>
                 <th>Status</th>
                 <th>Amount</th>
@@ -76,29 +120,41 @@ const AdminPage = () => {
 
             <tbody>
               {orders &&
-                orders?.page.map((item) => (
-                  <tr key={item.id}>
-                    <td>
-                      <Checkbox onChange={onChecked}></Checkbox>
-                      <Link
-                        to={`/admin/${item.id}`}
-                        onClick={() => dispatch(setActiveOrder(item))}
-                      >
-                        {item.id}
-                      </Link>
-                    </td>
-                    <td>{item.phoneNumber}</td>
-                    <td>
-                      <button
-                        className={`button__status button__status_${item.status.toLowerCase().replace(' ', '_')}`}
-                      >
-                        {item.status}
-                      </button>
-                    </td>
-                    <td>${item.totalPrice}</td>
-                    <td>{item.date}</td>
-                  </tr>
-                ))}
+                orders?.page
+                  .slice(
+                    (currentPage - 1) * DEFAULT_SIZE,
+                    currentPage * DEFAULT_SIZE,
+                  )
+                  .map((item) => (
+                    <tr key={item.id}>
+                      <td>
+                        <Checkbox
+                          onChange={onChecked(item.id)}
+                          checked={checkedItems.includes(item.id)}
+                        />
+                        <Link
+                          to={`/admin/${item.id}`}
+                          onClick={() => dispatch(setActiveOrder(item))}
+                        >
+                          {item.id}
+                        </Link>
+                      </td>
+
+                      <td>{item.phoneNumber}</td>
+
+                      <td>
+                        <button
+                          className={`button__status button__status_${item.status.toLowerCase().replace(' ', '_')}`}
+                        >
+                          {item.status}
+                        </button>
+                      </td>
+
+                      <td>{item.totalPrice} ₴</td>
+
+                      <td>{item.date}</td>
+                    </tr>
+                  ))}
             </tbody>
           </table>
         </div>
@@ -110,11 +166,16 @@ const AdminPage = () => {
           showTitle={false}
           current={currentPage}
           total={orders?.page.length}
-          pageSize={10}
+          pageSize={DEFAULT_SIZE}
           onChange={(page) => setCurrentPage(page)}
           className={styles.admin__pagination}
         />
       </div>
+
+      <AddNewAdminModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+      />
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { createSlice, isAnyOf } from "@reduxjs/toolkit";
+import { createSlice, isAnyOf, PayloadAction } from "@reduxjs/toolkit";
 
 import { DataStatus } from "@/enums/data-status";
 import { getAllOrders, getOneOrderById, patchOrder } from "./actions";
@@ -7,16 +7,26 @@ import { orderList } from "@/mock/order-list";
 
 const list = orderList(18);
 
+interface IFiltersState {
+  dateFrom?: string | null;
+  dateTo?: string | null;
+  priceFrom?: number | null;
+  priceTo?: number | null;
+  status?: string | null;
+}
+
 export interface IInitialState {
   orders: OrdersResponseDto | null;
   activeOrder: OrderItemResponseDto | null;
   dataStatus: DataStatus;
+  filters: IFiltersState;
 }
 
 const initialState: IInitialState = {
   orders: list,
   activeOrder: null,
-  dataStatus: DataStatus.IDLE
+  dataStatus: DataStatus.IDLE,
+  filters: {} as IFiltersState,
 };
 
 const order_slice = createSlice({
@@ -25,6 +35,19 @@ const order_slice = createSlice({
   reducers: {
     setActiveOrder: (state, action) => {
       state.activeOrder = action.payload;
+    },
+    setFilters(state, action: PayloadAction<IFiltersState>) {
+      state.filters = action.payload;
+    },
+    updateOrdersStatus: (state, action) => {
+      const { ids, newStatus } = action.payload;
+      if (!state.orders) return;
+
+      state.orders.page = state.orders.page.map((order) =>
+        ids.includes(order.id)
+          ? { ...order, status: newStatus }
+          : order
+      );
     },
   },
   extraReducers: (builder) => {
@@ -68,6 +91,5 @@ const order_slice = createSlice({
   },
 });
 
-
 export const { actions, reducer } = order_slice;
-export const { setActiveOrder } = actions;
+export const { setActiveOrder, updateOrdersStatus, setFilters } = actions;

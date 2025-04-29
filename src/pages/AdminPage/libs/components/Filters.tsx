@@ -1,8 +1,10 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { DatePicker, Flex, InputNumber, Popover, Switch } from 'antd';
 import en from 'antd/es/date-picker/locale/en_US';
 import cn from 'classnames';
 
+import { AppDispatch } from '@/store';
 import { OrderStatus } from '@/enums/enums';
 import { handleKeyDown } from '@/utils/helpers/checkKeydownEvent';
 import {
@@ -12,13 +14,10 @@ import {
 import { FilterIcon } from '@/assets/icons/FilterIcon';
 
 import styles from './filters.module.scss';
+import { setFilters } from '@/store/orders/order_slice';
 
-interface IFilters {
-  // eslint-disable-next-line no-unused-vars
-  onSelectedFilters: (key: string, value: string) => void;
-}
-
-const Filters: FC<IFilters> = ({ onSelectedFilters }) => {
+const Filters = () => {
+  const dispatch: AppDispatch = useDispatch();
   const [showFilters, setShowFilters] = useState(false);
   const [filterVisibility, setFilterVisibility] = useState({
     date: true,
@@ -53,12 +52,16 @@ const Filters: FC<IFilters> = ({ onSelectedFilters }) => {
     };
 
   const handleApplyFilters = () => {
-    if (dateFrom) onSelectedFilters('dateFrom', dateFrom);
-    if (dateTo) onSelectedFilters('dateTo', dateTo);
-    if (priceFrom !== null)
-      onSelectedFilters('priceFrom', priceFrom.toString());
-    if (priceTo !== null) onSelectedFilters('priceTo', priceTo.toString());
-    if (selectedStatus) onSelectedFilters('status', selectedStatus);
+    const filters = {
+      dateFrom,
+      dateTo,
+      priceFrom,
+      priceTo,
+      status: selectedStatus,
+    };
+
+    dispatch(setFilters(filters));
+
     setShowFilters(false);
   };
 
@@ -79,6 +82,9 @@ const Filters: FC<IFilters> = ({ onSelectedFilters }) => {
             className={styles.admin__filterDatePicker}
             locale={dateLocale}
             onChange={handleDateChange(setDateFrom)}
+            format="DD/MM/YYYY"
+            popupClassName={styles.admin__filterDatePopup}
+            allowClear
           />
           <span className={styles.admin__filterDivider}>-</span>
           <span className={styles.admin__filterText}>To</span>
@@ -86,6 +92,9 @@ const Filters: FC<IFilters> = ({ onSelectedFilters }) => {
             className={styles.admin__filterDatePicker}
             locale={dateLocale}
             onChange={handleDateChange(setDateTo)}
+            format="DD/MM/YYYY"
+            popupClassName={styles.admin__filterDatePopup}
+            allowClear
           />
         </Flex>
       ),
@@ -222,4 +231,4 @@ const Filters: FC<IFilters> = ({ onSelectedFilters }) => {
   );
 };
 
-export default Filters;
+export { Filters };
