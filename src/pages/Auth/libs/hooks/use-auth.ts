@@ -25,6 +25,7 @@ import {
 import { SuccessType } from '../types/successType';
 import { LocalStorageKey, localStorageService } from '@/utils/packages/local-storage';
 import { LOGIN_PERMISSION_FORM_INITIAL_VALUE } from '../constants/login-permission-form-initial-value';
+import { setTokens } from '@/store/auth/auth-slice';
 
 type Return = {
   currentForm: FormType;
@@ -150,6 +151,7 @@ const useAuth = (): Return => {
       setSuccessType(FormEnum.LOGIN);
       localStorageService.setItem(LocalStorageKey.ACCESS_TOKEN, result.accessToken);
       localStorageService.setItem(LocalStorageKey.REFRESH_TOKEN, result.refreshToken);
+      dispatchApp(setTokens({ accessToken: result.accessToken, refreshToken: result.refreshToken }));
 
       dispatchApp(getUserData());
     }
