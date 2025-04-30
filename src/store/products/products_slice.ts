@@ -31,6 +31,8 @@ export interface IInitialState {
     totalElements: number;
   };
   loaded: boolean; // Added loaded flag
+  isFetchingMore: boolean,
+  isAppending: boolean
 }
 
 const initialState: IInitialState = {
@@ -47,6 +49,8 @@ const initialState: IInitialState = {
     totalElements: DEFAULT_SIZE,
   },
   loaded: false, // Added loaded flag
+  isFetchingMore: false,
+  isAppending: false
 };
 
 const products_slice = createSlice({
@@ -84,6 +88,10 @@ const products_slice = createSlice({
     clearProductsData: (state) => {
       state.productsData = null;
     },
+    setIsAppending: (state, {payload}: {payload: boolean}) => {
+      console.log('payload', payload)
+      state.isAppending = payload
+    }
   },
   extraReducers(builder) {
     builder.addCase(getAllProducts.fulfilled, (state, { payload }) => {
@@ -111,37 +119,47 @@ const products_slice = createSlice({
       state.activeProduct = payload;
     });
     builder.addCase(getPaginatedProducts.fulfilled, (state, { payload }) => {
-      const {data, append} = payload;
-
-      if(append && state.productsData) {
-        state.productsData.page = [...state.productsData.page, ...data.page]
-      } else {
-        state.productsData = data
-      }
-
+      state.productsData = payload;
       state.pagination = {
-        currentPage: data.currentPage,
-        totalPages: data.totalPages,
-        totalElements: data.totalElements,
+        currentPage: payload.currentPage,
+        totalPages: payload.totalPages,
+        totalElements: payload.totalElements,
       };
     });
     builder.addCase(getByCategory.fulfilled, (state, { payload }) => {
       state.productsData = payload;
+      
+      state.pagination = {
+        currentPage: payload.currentPage,
+        totalPages: payload.totalPages,
+        totalElements: payload.totalElements,
+      };
+    });
+    builder
+      .addCase(getFilteredProducts.pending, (state) => {
+        state.isFetchingMore = true;
+      })
+      .addCase(getFilteredProducts.fulfilled, (state, { payload }) => {
+        // state.productsData = payload;
+        if (!state.isAppending) {
+          state.productsData = payload;
+        } else {
+          state.productsData = {
+            ...payload,
+            page: [...(state.productsData?.page || []), ...payload.page],
+          };
+        }
+        state.pagination = {
+          currentPage: payload.currentPage,
+          totalPages: payload.totalPages,
+          totalElements: payload.totalElements,
+        };
 
-      state.pagination = {
-        currentPage: payload.currentPage,
-        totalPages: payload.totalPages,
-        totalElements: payload.totalElements,
-      };
-    });
-    builder.addCase(getFilteredProducts.fulfilled, (state, { payload }) => {
-      state.productsData = payload;
-      state.pagination = {
-        currentPage: payload.currentPage,
-        totalPages: payload.totalPages,
-        totalElements: payload.totalElements,
-      };
-    });
+        state.isFetchingMore = false;
+      })
+      .addCase(getFilteredProducts.rejected, (state) => {
+        state.isFetchingMore = false;
+      });
 
     builder.addMatcher(
       isAnyOf(
@@ -186,7 +204,7 @@ const products_slice = createSlice({
   },
 });
 
-export const { setPageNumber, clearProductsData, toggleFavorite } =
+export const { setPageNumber, clearProductsData, toggleFavorite, setIsAppending } =
   products_slice.actions;
 
 export const { actions, reducer } = products_slice;

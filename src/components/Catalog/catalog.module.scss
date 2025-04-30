@@ -2,16 +2,6 @@
   flex-grow: 1;
   padding-bottom: 135px;
 
-  // &__mobile {
-  //   display: block;
-  //   height: 85vh;
-  //   overflow-y: auto;
-
-  //   @media screen and (min-width: 680px) {
-  //     display: none;
-  //   }
-  // }
-
   &__mobileList {
     width: 100%;
     display: grid;
@@ -19,14 +9,6 @@
     grid-gap: 8px;
     margin-bottom: 40px;
   }
-
-  //&__desk {
-  //   display: none;
-
-    // @media screen and (min-width: 680px) {
-    //   display: block;
-    // }
-  //}
 
   &__deskList {
     width: 100%;

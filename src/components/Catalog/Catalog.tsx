@@ -2,13 +2,13 @@ import { FC, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Pagination } from 'antd';
 
-import { DEFAULT_SIZE, DEFAULT_SIZE_MOBILE } from '@/constants/pagination';
+import { DEFAULT_SIZE } from '@/constants/pagination';
 import { useMediaQuery } from 'react-responsive';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { IProductCard } from '@/interfaces/interfaces';
 import { AppDispatch, RootState } from '@/store';
-import { getPaginatedProducts } from '@/store/products/actions';
-import { setPageNumber } from '@/store/products/products_slice';
+
+import { setIsAppending, setPageNumber } from '@/store/products/products_slice';
 import { MyCard } from '../components';
 
 import styles from './catalog.module.scss';
@@ -22,14 +22,12 @@ interface ICatalogProps {
 export const Catalog: FC<ICatalogProps> = ({
   data,
   totalPages,
-  categoryId,
 }) => {
   const dispatch: AppDispatch = useDispatch();
   const { pagination } = useTypedSelector(
     (state: RootState) => state.products,
   );
   const [hasMore, setHasMore] = useState(false);
-  const [isFetching, setIsFetching] = useState(false);
   useEffect(() => {
     if (pagination.totalPages) {
       setHasMore(pagination.currentPage < pagination.totalPages - 1);
@@ -37,85 +35,43 @@ export const Catalog: FC<ICatalogProps> = ({
   }, [pagination]);
 
   const observerRef = useRef<HTMLDivElement | null>(null);
-  const isMobile680px = useMediaQuery({
-    query: '(max-width: 680px)',
+  const isMobile767 = useMediaQuery({
+    query: '(max-width: 767px)',
   });
-  // console.log('isMobile680px', isMobile680px)
-
-  // useEffect(() => {
-
-  //     // console.log('1')
-
-    
-  //     const size = DEFAULT_SIZE;
-
-  //     dispatch(
-  //       getPaginatedProducts({
-  //         categoryId: categoryId || 0,
-  //         page: pagination.currentPage,
-  //         size: size,
-  //         append: false
-  //       }),
-  //     ).then((res) => {
-  //       if (!res.payload || (res.payload as IProductCard[]).length === 0) {
-  //         setHasMore(false);
-  //       }
-  //     });
-  
-    
-  // }, [categoryId, pagination.currentPage, isMobile680px]);
-
-  // const loadMore = () => {
-  //   if (hasMore) {
-  //     dispatch(setPageNumber(pagination.currentPage + 1));
-  //   }
-  // };
 
   useEffect(() => {
-    if (!isMobile680px) return;
-    console.log('2')
-    console.log('3', hasMore)
-    const size = DEFAULT_SIZE_MOBILE
+    if (!isMobile767 || !observerRef.current) return;
 
+    dispatch(setIsAppending(true))
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && hasMore) {
-          console.log('asd')
-          //  dispatch(
-          //     getPaginatedProducts({
-          //       categoryId: categoryId || 0,
-          //       page: pagination.currentPage + 1,
-          //       size: 1,
-          //       append: true
-          //     }),
-          //   )
-          // setIsFetching(true);
-          // dispatch(setPageNumber(pagination.currentPage + 1));
+        if (entry.isIntersecting && hasMore && !isFetchingMore) {
+          dispatch(setPageNumber(pagination.currentPage + 1));
+          
         }
       },
       {
-        root: null,
-        rootMargin: '10px',
-        threshold: 1.0,
+        rootMargin: '50px',
+        threshold: 1,
       },
     );
 
-    if (observerRef.current) {
-      observer.observe(observerRef.current);
-    }
+    const target = observerRef.current;
+    observer.observe(target);
 
     return () => {
-      if (observerRef.current) {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        observer.unobserve(observerRef.current);
-      }
+      observer.unobserve(target);
     };
-  }, [hasMore, isMobile680px, isFetching, pagination.currentPage]);
 
+  }, [hasMore, isMobile767, pagination.currentPage]);
+
+
+
+  const isFetchingMore = useTypedSelector((state: RootState) => state.products.isFetchingMore);
 
   return (
     <div className={styles.catalog}>
-      {isMobile680px ? (
+      {isMobile767 ? (
           <div className={styles.catalog__mobile}>
             <div className={styles.catalog__mobileList}>
               {data.map((product: IProductCard) => (
@@ -131,6 +87,12 @@ export const Catalog: FC<ICatalogProps> = ({
 
             {hasMore && (
               <div ref={observerRef} className={styles.catalog__loadingIndicator}>
+                Loading more products...
+              </div>
+            )}
+
+            {isFetchingMore && (
+              <div className={styles.catalog__loadingIndicator}>
                 Loading more products...
               </div>
             )}
@@ -162,8 +124,6 @@ export const Catalog: FC<ICatalogProps> = ({
           </div>
         )
       }
-
-      
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
-import { DEFAULT_SIZE } from '@/constants/pagination';
+import { DEFAULT_SIZE, DEFAULT_SIZE_MOBILE } from '@/constants/pagination';
 import { AppDispatch, RootState } from '@/store';
 import { getFilteredProducts } from '@/store/products/actions';
 import {
@@ -23,7 +23,7 @@ import { SortingDesk } from '../Sort/SortingDesk';
 import { DataStatus } from '@/enums/data-status';
 
 interface IPageLayoutProps {
-  products?: IProductCard[];
+  products: IProductCard[];
   totalPages: number;
   categoryId?: number | null;
 }
@@ -44,19 +44,24 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
     selectedCameraRange,
   } = useTypedSelector((state: RootState) => state.filters);
 
-  const isLoading = useTypedSelector(
-    (state: RootState) => state.products.dataStatus === DataStatus.PENDING,
-  );
+
+  const isMobile991 = useMediaQuery({
+    query: '(max-width: 991px)',
+  });
+  const isMobile767 = useMediaQuery({
+    query: '(max-width: 767px)',
+  });
 
   const brandIds = useSelector(selectBrandIds);
   const attributesIds = useSelector(selectFilteredAttributes, shallowEqual);
 
+  const size = isMobile767 ? DEFAULT_SIZE_MOBILE : DEFAULT_SIZE;
 
   useEffect(() => {
     dispatch(
       getFilteredProducts({
         page: pagination.currentPage,
-        size: DEFAULT_SIZE,
+        size: size,
         categoryId: categoryId,
         brandIds: brandIds,
         attributes: attributesIds,
@@ -94,12 +99,9 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
       : (category = pathname.charAt(0).toUpperCase() + pathname.slice(1));
   }
 
-  const isMobile991 = useMediaQuery({
-    query: '(max-width: 991px)',
-  });
-  const isMobile767 = useMediaQuery({
-    query: '(max-width: 767px)',
-  });
+  const isInitialLoading =
+  useTypedSelector((state: RootState) => state.products.dataStatus) ===
+  DataStatus.PENDING;
 
   return (
     <div className={styles.pageLayout}>
@@ -123,7 +125,7 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
           {!isMobile991 && <FiltersDesk /> }
           
           {
-            isLoading 
+            isInitialLoading && pagination.currentPage === 0 
             ? 'Loading...'
             : products.length > 0 ? (
               <Catalog
