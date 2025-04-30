@@ -37,12 +37,16 @@ const authSlice = createSlice({
       state.user = null;
       state.userToken = null;
       state.refreshToken = null;
+
+      localStorageService.removeItem(LocalStorageKey.ACCESS_TOKEN);
+      localStorageService.removeItem(LocalStorageKey.REFRESH_TOKEN);
     },
   },
   extraReducers(builder) {
     builder.addCase(getCredentials.fulfilled, (state, { payload }) => {
       state.userToken = payload.accessToken;
       state.refreshToken = payload.refreshToken;
+      state.isAuthenticated = true;
     });
     builder.addCase(createUser.fulfilled, (state, { payload }) => {
       state.user = payload;

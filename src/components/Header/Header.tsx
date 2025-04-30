@@ -23,6 +23,7 @@ import { InputRef } from 'antd';
 import { useMediaQuery } from 'react-responsive';
 import AuthModal from '@/pages/Auth/AuthModal';
 import { AdminCredentials } from '@/pages/AdminPage/libs/components/components';
+import { User } from '@/enums/user';
 
 export const Header = () => {
   const location = useLocation();
@@ -375,7 +376,9 @@ export const Header = () => {
               />
             </div>
 
-            {user && user.role !== 'admin' && location.pathname === '/admin' ? (
+            {user &&
+            user.role === User.ROLE_ADMIN &&
+            location.pathname === '/admin' ? (
               <AdminCredentials user={user} />
             ) : (
               <>
