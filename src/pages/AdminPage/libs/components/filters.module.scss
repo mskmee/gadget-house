@@ -163,7 +163,10 @@
           }
 
           &-suffix {
-            color: var(--text-color);
+            border: 1px solid var(--secondary-background-color);
+            border-radius: 8px;
+            padding: 5px;
+            background-color: var(--secondary-background-color);
           }
         }
       }

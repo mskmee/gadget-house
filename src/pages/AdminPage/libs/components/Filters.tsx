@@ -5,6 +5,7 @@ import en from 'antd/es/date-picker/locale/en_US';
 import cn from 'classnames';
 
 import { AppDispatch } from '@/store';
+import { setFilters } from '@/store/orders/order_slice';
 import { OrderStatus } from '@/enums/enums';
 import { handleKeyDown } from '@/utils/helpers/checkKeydownEvent';
 import {
@@ -12,9 +13,9 @@ import {
   handleNumberChange,
 } from '@/utils/helpers/handleFormChange';
 import { FilterIcon } from '@/assets/icons/FilterIcon';
+import { CalendarIcon } from '@/assets/icons/CalendarIcon';
 
 import styles from './filters.module.scss';
-import { setFilters } from '@/store/orders/order_slice';
 
 const Filters = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -83,6 +84,7 @@ const Filters = () => {
             format="DD/MM/YYYY"
             popupClassName={styles.admin__filterDatePopup}
             allowClear
+            suffixIcon={<CalendarIcon />}
           />
           <span>-</span>
           <span>To</span>
@@ -93,6 +95,7 @@ const Filters = () => {
             format="DD/MM/YYYY"
             popupClassName={styles.admin__filterDatePopup}
             allowClear
+            suffixIcon={<CalendarIcon />}
           />
         </Flex>
       ),
