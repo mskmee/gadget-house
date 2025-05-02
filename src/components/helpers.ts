@@ -13,10 +13,10 @@ type BreadcrumbItem = {
 
 const breadcrumbRoutes = [
   { name: 'All products', path: '/all-products' },
-  { name: 'Smartphones', path: '/smartphones' },
-  { name: 'Laptops', path: '/laptops' },
+  { name: 'Smartphones', path: '/smartphone' },
+  { name: 'Laptops', path: '/laptop' },
   { name: 'Previously viewed', path: '/viewed' },
-  { name: 'Photo and video', path: '/photo-video' },
+  { name: 'Photo and video', path: '/photo-and-video' },
   { name: 'Audio', path: '/audio' },
   { name: 'Basket', path: '/basket' },
   { name: 'Tablet', path: '/tablets' },

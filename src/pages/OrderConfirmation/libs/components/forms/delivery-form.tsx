@@ -37,8 +37,8 @@ export const DeliveryForm: FC<Properties> = ({
     <div className={styles.form}>
       <Formik<DeliveryFormDto>
         initialValues={initialValues}
-        validateOnBlur={false}
-        validateOnChange={false}
+        validateOnBlur={true}
+        validateOnChange={true}
         validationSchema={deliveryFormValidationSchema}
         onSubmit={(values) => {
           onSubmit(values);

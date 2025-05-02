@@ -18,12 +18,10 @@
 
   &__title {
     font-family: "Inter", sans-serif;
-    font-weight: 600;
+    font-weight: 400;
     font-size: 24px;
     line-height: 150%;
-    color: var(--buttons-and-accent-color);
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--buttons-and-accent-color);
+    color: var(--theme-color);
   }
 
   &__search {
@@ -35,8 +33,70 @@
     }
   }
 
+  &__buttons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    &Add {
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--secondary-background-color);
+      border-radius: 8px;
+      padding: 10px 16px;
+      background-color: var(--bg-color);
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+
+      &:hover,
+      &:focus,
+      &:focus-visible {
+        background-color: var(--secondary-background-color);
+      }
+    }
+  }
+
   &__table {
     padding: 0 0 50px 0;
+
+    :global {
+      .ant-checkbox {
+        align-items: center;
+
+        &-inner {
+          width: 24px;
+          height: 24px;
+          background-image: url("../../assets/icons/checkbox.svg");
+          background-repeat: no-repeat;
+          background-position: center center;
+          background-size: contain;
+          margin-right: 4px;
+          border: none !important;
+          outline: none !important;
+          outline-offset: 0px !important;
+        }
+
+        & + span {
+          display: none;
+        }
+
+        &::after {
+          display: none;
+        }
+
+        &-checked .ant-checkbox-inner::after {
+          display: none;
+        }
+
+        &-checked .ant-checkbox-inner {
+          background-image: url("../../assets/icons/checkbox-checked.svg") !important;
+          border-color: transparent !important;
+          background-color: transparent !important;
+        }
+      }
+    }
 
     &Wrapper {
       width: 100%;
@@ -50,12 +110,13 @@
       color: var(--black);
 
       thead {
-        background-color: transparent;
-        border-bottom: 1px solid #c0c0c0;
+        background-color: var(--bg-color);
+        border-top: 1px solid var(--secondary-background-color);
+        border-bottom: 1px solid var(--secondary-background-color);
         margin-bottom: 35px;
 
         th {
-          padding: 16px 60px;
+          padding: 16px 100px 16px 80px;
           font-family: "Inter", sans-serif;
           font-weight: 400;
           font-size: 24px;
@@ -64,10 +125,28 @@
 
           &:first-child {
             text-align: left;
+            display: flex;
+            gap: 8px;
           }
 
           &:last-child {
             text-align: right;
+          }
+        }
+      }
+
+      &Checkbox {
+        :global {
+          .ant-checkbox {
+            &.ant-checkbox-indeterminate .ant-checkbox-inner {
+              background-image: url("../../assets/icons/checkbox-checked.svg") !important;
+              border-color: transparent !important;
+              background-color: transparent !important;
+            }
+
+            &-inner::after {
+              display: none;
+            }
           }
         }
       }
@@ -78,12 +157,12 @@
           transition: background-color 0.3s ease-in-out;
 
           &:hover {
-            background-color: #f7f4f8;
+            background-color: var(--bg-color);
           }
         }
 
         td {
-          padding: 24px 50px;
+          padding: 24px 80px;
           font-family: "Inter", sans-serif;
           font-weight: 400;
           font-size: 16px;
@@ -92,44 +171,11 @@
           color: var(--black);
 
           &:first-child {
+            display: flex;
+            align-items: flex-end;
+            gap: 8px;
+            padding-top: 37px;
             text-align: left;
-
-            :global {
-              .ant-checkbox {
-                align-items: center;
-
-                &-inner {
-                  width: 24px;
-                  height: 24px;
-                  background-image: url("../../assets/icons/checkbox.svg");
-                  background-repeat: no-repeat;
-                  background-position: center center;
-                  background-size: contain;
-                  margin-right: 4px;
-                  border: none !important;
-                  outline: none !important;
-                  outline-offset: 0px !important;
-                }
-
-                & + span {
-                  display: none;
-                }
-
-                &::after {
-                  display: none;
-                }
-
-                &-checked .ant-checkbox-inner::after {
-                  display: none;
-                }
-
-                &-checked .ant-checkbox-inner {
-                  background-image: url("../../assets/icons/checkbox-checked.svg") !important;
-                  border-color: transparent !important;
-                  background-color: transparent !important;
-                }
-              }
-            }
 
             a {
               text-decoration: underline;

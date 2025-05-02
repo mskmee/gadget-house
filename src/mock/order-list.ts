@@ -80,6 +80,6 @@ export const orderList = (count: number): OrdersResponseDto => {
     })),
     totalElements: count,
     currentPage: 1,
-    totalPages: 1
+    totalPages: 2
   }
 }

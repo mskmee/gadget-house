@@ -119,6 +119,8 @@ import quantityDecreaseButton from './icons/quantity-decrease.svg';
 import quantityInreaseButton from './icons/quantity-increase.svg';
 import quantityInreaseButtonMobile from './icons/increase-mobile-btn.svg';
 import noImageAvailable from './images/No_Image_Available.webp';
+import ExitIcon from './icons/exit-icon.svg';
+import AddNewUser from './icons/add-new-user.svg';
 
 export {
   Admin,
@@ -237,4 +239,6 @@ export {
   quantityInreaseButton,
   quantityInreaseButtonMobile,
   noImageAvailable,
+  ExitIcon,
+  AddNewUser,
 };

@@ -9,7 +9,7 @@ import { IProductCard } from '@/interfaces/interfaces';
 import { AppDispatch, RootState } from '@/store';
 import { patchOrder } from '@/store/orders/actions';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
-import AdminSearch from '../AdminPage/libs/components/AdminSearch';
+import { AdminSearch } from '../AdminPage/libs/components/components';
 
 import { LeftArrow } from '@/assets/constants';
 

@@ -1,0 +1,66 @@
+.admin__changeStatus {
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--secondary-background-color);
+  border-radius: 8px;
+  padding: 10px 16px;
+  background-color: var(--bg-color);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  &:hover,
+  &:focus,
+  &:focus-visible {
+    background-color: var(--secondary-background-color);
+  }
+}
+
+.statusPopup {
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 12px;
+  background-color: var(--white-color);
+
+  h3 {
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--secondary-background-color);
+    font-family: Inter, sans-serif;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 150%;
+    color: var(--text-color);
+  }
+
+  .statusPopup__options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 10px;
+  }
+
+  .statusPopup__option {
+    min-width: 146px;
+    height: 44px;
+    border-radius: 28px;
+    cursor: pointer;
+  }
+
+  .apply-button {
+    width: 100%;
+    padding: 10px;
+    background: var(--success-color);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+
+    &:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+  }
+}

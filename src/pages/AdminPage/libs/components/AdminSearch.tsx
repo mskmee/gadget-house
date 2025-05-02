@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 
 import { SearchIcon } from '@/assets/icons/SearchIcon';
 
 import styles from './admin-search.module.scss';
 
-interface AdminSearchProps {
+interface IAdminSearchProps {
   // eslint-disable-next-line no-unused-vars
   onSearch: (query: string) => void;
   placeholder?: string;
@@ -12,12 +12,12 @@ interface AdminSearchProps {
   debounceDelay?: number;
 }
 
-const AdminSearch = ({
+const AdminSearch: FC<IAdminSearchProps> = ({
   onSearch,
   placeholder = 'Search...',
   onButtonClick,
   debounceDelay = 300,
-}: AdminSearchProps) => {
+}) => {
   const [query, setQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState(query);
 
@@ -66,4 +66,4 @@ const AdminSearch = ({
   );
 };
 
-export default AdminSearch;
+export { AdminSearch };

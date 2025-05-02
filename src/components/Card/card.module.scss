@@ -198,6 +198,9 @@
     > svg {
       width: 30px;
       height: 30px;
+      path {
+        stroke: #fff;
+      }
     }
 
     &:hover {

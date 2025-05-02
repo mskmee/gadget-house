@@ -13,6 +13,7 @@ import {
   ForgotFormDto,
   FormType,
   LoginFormDto,
+  LoginPermissionFormDto,
   RegisterFormDto,
 } from '../types/form-dto';
 import {
@@ -23,6 +24,7 @@ import {
 } from '@/store/auth/actions';
 import { SuccessType } from '../types/successType';
 import { LocalStorageKey, localStorageService } from '@/utils/packages/local-storage';
+import { LOGIN_PERMISSION_FORM_INITIAL_VALUE } from '../constants/login-permission-form-initial-value';
 import { setTokens } from '@/store/auth/auth-slice';
 
 type Return = {
@@ -31,9 +33,11 @@ type Return = {
   loginFormValue: LoginFormDto;
   registerFormValue: RegisterFormDto;
   forgotFormValue: ForgotFormDto;
+  loginPermissionFormValue: LoginPermissionFormDto;
   onLoginFormSubmit: (loginFormValue: LoginFormDto) => void;
   onRegisterFormSubmit: (registerFormValue: RegisterFormDto) => void;
   onForgotFormSubmit: (forgotFormValue: ForgotFormDto) => void;
+  onLoginPermissionFormSubmit: (loginPermissionFormValue: LoginPermissionFormDto) => void;
   successType: SuccessType;
   setSuccessType: (type: SuccessType) => void;
 };
@@ -41,14 +45,18 @@ type Return = {
 type State = {
   currentForm: FormType;
   loginFormValue: LoginFormDto;
-  registerFormValue: RegisterFormDto;
   forgotFormValue: ForgotFormDto;
+  registerFormValue: RegisterFormDto;
+  loginPermissionFormValue: LoginPermissionFormDto;
 };
 
 type ReducerAction =
   | {
     type: AuthAction.LOGIN_FORM;
     payload: LoginFormDto;
+  } | {
+    type: AuthAction.LOGIN_PERMISSION_FORM;
+    payload: LoginPermissionFormDto;
   }
   | {
     type: AuthAction.REGISTER_FORM;
@@ -69,6 +77,7 @@ type ReducerAction =
 const INITIAL_STATE: State = {
   currentForm: FormEnum.LOGIN,
   loginFormValue: LOGIN_FORM_INITIAL_VALUE,
+  loginPermissionFormValue: LOGIN_PERMISSION_FORM_INITIAL_VALUE,
   registerFormValue: REGISTER_FORM_INITIAL_VALUE,
   forgotFormValue: FORGOT_FORM_INITIAL_VALUE,
 };
@@ -80,6 +89,12 @@ const reducer: Reducer<State, ReducerAction> = (state, action) => {
       return {
         ...state,
         loginFormValue: action.payload,
+      };
+
+    case AuthAction.LOGIN_PERMISSION_FORM:
+      return {
+        ...state,
+        loginPermissionFormValue: action.payload,
       };
 
     case AuthAction.REGISTER_FORM:
@@ -106,8 +121,9 @@ const reducer: Reducer<State, ReducerAction> = (state, action) => {
         loginFormValue: LOGIN_FORM_INITIAL_VALUE,
         registerFormValue: REGISTER_FORM_INITIAL_VALUE,
         forgotFormValue: FORGOT_FORM_INITIAL_VALUE,
+        loginPermissionFormValue: LOGIN_PERMISSION_FORM_INITIAL_VALUE
       };
-      
+
     default:
       console.error('Unknown action type');
       return state;
@@ -148,6 +164,27 @@ const useAuth = (): Return => {
     dispatch({ type: AuthAction.RESET_FORM });
   };
 
+  const onLoginPermissionFormSubmit = async (loginPermissionFormValue: LoginPermissionFormDto) => {
+    const val: LoginPermissionFormDto = {
+      fullName: loginPermissionFormValue.fullName,
+      email: loginPermissionFormValue.email,
+      password: loginPermissionFormValue.password,
+    };
+
+    const result = await dispatchApp(createUser(val)).unwrap();
+
+    if (result) {
+      setSuccessType('loginAdmin');
+    }
+
+    dispatch({
+      type: AuthAction.LOGIN_PERMISSION_FORM,
+      payload: loginPermissionFormValue,
+    });
+
+    dispatch({ type: AuthAction.RESET_FORM });
+  };
+
   const onRegisterFormSubmit = async (registerFormValue: RegisterFormDto) => {
     const val: RegisterFormDto = {
       email: registerFormValue.email,
@@ -175,7 +212,7 @@ const useAuth = (): Return => {
     const val = {
       email: forgotFormValue.email,
     };
-    
+
     const result = await dispatchApp(forgotPassword(val.email)).unwrap();
 
     if (result) {
@@ -194,9 +231,11 @@ const useAuth = (): Return => {
     currentForm: state.currentForm,
     setCurrentForm,
     loginFormValue: state.loginFormValue,
+    loginPermissionFormValue: state.loginPermissionFormValue,
     registerFormValue: state.registerFormValue,
     forgotFormValue: state.forgotFormValue,
     onLoginFormSubmit,
+    onLoginPermissionFormSubmit,
     onRegisterFormSubmit,
     onForgotFormSubmit,
     successType,

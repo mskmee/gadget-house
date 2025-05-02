@@ -1,25 +1,27 @@
-import { FC, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import cn from 'classnames';
 
 import { AppRoute } from '@/enums/Route';
 import { RootState } from '@/store';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { SuccessType } from '../types/successType';
 import { AuthForgotPasswordResponseDto } from '@/utils/packages/auth/libs/types/auth-forgotPassword-response-dto';
-import { inBasket } from '@/assets/constants';
+import { inBasket, searchInputClear } from '@/assets/constants';
 
 import styles from './form.module.scss';
 
 interface SuccessPopupProps {
-  type: 'login' | 'register' | 'forgot' | 'changePassword' | 'loginAdmin';
+  type: SuccessType;
+  emailValue?: string;
   onClose: () => void;
 }
 
-const SuccessPopup: FC<SuccessPopupProps> = ({ type, onClose }) => {
+const SuccessPopup: FC<SuccessPopupProps> = ({ type, onClose, emailValue }) => {
   const navigate = useNavigate();
   const { message } = useTypedSelector((state: RootState) => state.auth);
   let title = '';
-  let notice = '';
+  let notice: React.ReactNode = '';
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -38,8 +40,12 @@ const SuccessPopup: FC<SuccessPopupProps> = ({ type, onClose }) => {
       notice = 'Log in was successful';
       break;
     case 'loginAdmin':
-      title = 'Success log in!';
-      notice = 'Log in was successful';
+      title = 'Access Activated';
+      notice = (
+        <>
+          You have successfully activated <span>{emailValue}</span> account.
+        </>
+      );
       break;
     case 'register':
       title = 'Register success!';
@@ -60,7 +66,20 @@ const SuccessPopup: FC<SuccessPopupProps> = ({ type, onClose }) => {
       break;
   }
 
-  return (
+  return type === 'loginAdmin' ? (
+    <div className={styles.successNotice}>
+      <img src={inBasket} alt="Success icon" />
+
+      <div className={styles.successNotice__content}>
+        <h3 className={styles.successNotice__contentTitle}>{title}</h3>
+        <p className={styles.successNotice__contentNotice}>{notice}</p>
+      </div>
+
+      <button className={styles.successNotice__btn} onClick={onClose}>
+        <img src={searchInputClear} alt="Close icon" />
+      </button>
+    </div>
+  ) : (
     <div className={styles.success}>
       <h3 className={cn(styles.success__title, 'visually-hidden')}>{title}</h3>
       <div className={styles.success__icon}>
