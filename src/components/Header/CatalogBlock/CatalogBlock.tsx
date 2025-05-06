@@ -1,6 +1,6 @@
 import { useMediaQuery } from "react-responsive";
 import { BurgerMenuIcon, CatalogIcon, LeftArrow } from '@/assets/constants';
-import React from "react";
+import React, { MouseEvent } from "react";
 import classNames from "classnames";
 import { CatalogList } from "@/components/BurgerMenu/CatalogList";
 import styles from '../header.module.scss';
@@ -8,10 +8,10 @@ import styles from '../header.module.scss';
 interface CatalogBlockProps {
   isCatalogListOpen: boolean,
   setIsCatalogListOpen: React.Dispatch<React.SetStateAction<boolean>>,
-  openCatalogOnFocus?: () => void;
+  openCatalogOnFocus?: (e: React.FocusEvent<HTMLButtonElement>) => void;
   onAuthClick?: () => void,
   openCatalog?: () => void,
-  closeCatalog?: (() => void) | undefined
+  closeCatalog?: (e: MouseEvent<HTMLButtonElement | HTMLDivElement | KeyboardEvent>) => void
 }
 
 const CatalogBlock = ({ isCatalogListOpen, setIsCatalogListOpen, onAuthClick, openCatalogOnFocus, openCatalog, closeCatalog }: CatalogBlockProps) => {
