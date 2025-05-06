@@ -10,7 +10,7 @@ export const MainIntro = () => {
   });
   return (
     <div className={classNames(styles['product-list'], 'container-xxl')}>
-      <CatalogList isBurgerProductList={false} />
+      <CatalogList />
       <img
         src={isLargerThan1440px ? mainPageIntroDesktop : mainPageIntroMobile}
         alt="main page intro img"

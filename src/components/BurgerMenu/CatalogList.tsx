@@ -10,7 +10,7 @@ import styles from './menu.module.scss';
 
 interface IProductListProps {
   onAuthClick?: () => void;
-  isCatalogListOpen: boolean;
+  isCatalogListOpen?: boolean;
   closeCatalog?: () => void
 }
 
