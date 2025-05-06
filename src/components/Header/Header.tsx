@@ -35,7 +35,6 @@ export const Header = () => {
 
   const products = useTypedSelector((state) => state.shopping_card.products);
   const searchValue = useTypedSelector((state) => state.search.searchValue);
-  console.log('products', products)
 
   const headerRef = useRef<HTMLButtonElement | null>(null);
   const headerBottomRef = useRef<HTMLDivElement | null>(null)
