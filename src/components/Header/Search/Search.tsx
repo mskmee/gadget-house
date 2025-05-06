@@ -1,7 +1,6 @@
 import {
   FC,
   ChangeEvent,
-  LegacyRef,
   useEffect,
   useState,
   useRef,
@@ -12,7 +11,7 @@ import {
 } from 'react';
 import styles from './search.module.scss';
 import { SearchIcon } from '@/assets/icons/SearchIcon';
-import { Input, InputRef } from 'antd';
+import { Input } from 'antd';
 import classNames from 'classnames';
 import debounce from 'lodash.debounce';
 import { searchInputClear } from '@/assets/constants';
@@ -22,13 +21,11 @@ import { useActions } from '@/hooks/useActions';
 import { AppRoute } from '@/enums/Route';
 
 interface ISearchProps {
-  searchFieldRef: LegacyRef<InputRef>;
   isOverlayActive: boolean;
   setIsOverlayActive: Dispatch<SetStateAction<boolean>>;
 }
 
 export const Search: FC<ISearchProps> = ({
-  searchFieldRef,
   isOverlayActive,
   setIsOverlayActive,
 }) => {
@@ -193,7 +190,6 @@ export const Search: FC<ISearchProps> = ({
 
   return (
     <Input
-      ref={searchFieldRef}
       id="header-search"
       className={classNames(styles['header-search'], {
         [styles['header-search__error']]: searchInput.hasError,

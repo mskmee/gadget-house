@@ -1,4 +1,4 @@
-import { Dispatch, FC, MouseEvent, SetStateAction } from 'react';
+import { FC, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { useMediaQuery } from 'react-responsive';
@@ -9,80 +9,86 @@ import { RightArrow } from '@/assets/constants';
 import styles from './menu.module.scss';
 
 interface IProductListProps {
-  isBurgerProductList: boolean;
-  setIsCatalogListOpen?: Dispatch<SetStateAction<boolean>>;
   onAuthClick?: () => void;
+  isCatalogListOpen: boolean;
+  closeCatalog?: () => void
 }
 
 export const CatalogList: FC<IProductListProps> = ({
-  isBurgerProductList = false,
-  setIsCatalogListOpen,
   onAuthClick,
+  isCatalogListOpen,
+  closeCatalog
 }) => {
-  const isLaptopPage = useMediaQuery({
-    query: '(max-width: 992px)',
-  });
 
-  const closeCatalogList = (
-    e: MouseEvent<HTMLButtonElement | HTMLDivElement | KeyboardEvent>,
-  ) => {
-    const catalogBtn = document.getElementById('catalog-btn');
-    const shouldCatalogListClose =
-      (!catalogBtn ||
-        !(e.relatedTarget instanceof Node) ||
-        !catalogBtn.contains(e.relatedTarget)) &&
-      setIsCatalogListOpen;
+const refCatalogWrap = useRef<HTMLDivElement | null>(null);
 
-    if (shouldCatalogListClose) {
-      setIsCatalogListOpen(false);
+const isWidth991 = useMediaQuery({
+  query: '(max-width: 991px)',
+});
+
+useEffect(() => {
+  function handleCatalogHeight() {
+    const headerHeight = document.querySelector('header')?.clientHeight || 0;
+    const windowHeight = window.innerHeight;
+
+    const catalogListHeight = windowHeight - headerHeight;
+
+    if(refCatalogWrap.current) {
+      refCatalogWrap.current.style.height = `${catalogListHeight}px`
     }
-  };
 
-  const handleCloseCatalogList = (e: any) => {
-    if (!isLaptopPage) {
-      closeCatalogList(e);
-    }
-  };
+  }
 
-  return (
-    <div
-      id="catalog-list"
-      className={classNames({
-        [styles.container]: !isBurgerProductList,
-        [styles.burgerContainer]: isBurgerProductList,
-      })}
-      onMouseLeave={handleCloseCatalogList}
-    >
-      <ul className={styles.burgerMenuTop}>
-        {items.map((item) => (
-          <li key={item.key}>
-            <Link to={item.link} className={styles.burgerMenuTopItem}>
-              <div className={styles.burgerMenuTopItemRight}>
-                <img src={item.img} alt={item.title} />
-                <p
-                  className={classNames({
-                    [styles.burgerMenuTopItemAdmin]:
-                      item.title === 'Admin Page',
-                    [styles.burgerMenuTopItemSale]: item.title === 'SALE',
-                  })}
-                >
-                  {item.title}
-                </p>
-              </div>
-              <img src={RightArrow} alt="Right Arrow" />
-            </Link>
-          </li>
-        ))}
-      </ul>
-      <div className={classNames(styles.catalogListButtons)}>
-        {dropdownBbuttonData.slice(0, 3).map((buttonData) => (
-          <NavButton
-            key={buttonData.id}
-            button={buttonData}
-            onAuthClick={onAuthClick}
-          />
-        ))}
-      </div>
-    </div>
-  );
+  if (isCatalogListOpen) {
+    handleCatalogHeight();
+    window.addEventListener('resize', handleCatalogHeight);
+  }
+
+  window.addEventListener('resize', handleCatalogHeight)
+  return () => {
+    window.removeEventListener('resize', handleCatalogHeight);
+  };
+}, [isCatalogListOpen])
+
+return (
+  <div
+    ref={refCatalogWrap}
+    id="catalog-list"
+    className={styles.container}
+  >
+    <ul className={styles.burgerMenuTop}>
+      {items.map((item) => (
+        <li key={item.key}>
+          <Link to={item.link} className={styles.burgerMenuTopItem} onClick={closeCatalog}>
+            <div className={styles.burgerMenuTopItemRight}>
+              <img src={item.img} alt={item.title} />
+              <p
+                className={classNames({
+                  [styles.burgerMenuTopItemAdmin]:
+                    item.title === 'Admin Page',
+                  [styles.burgerMenuTopItemSale]: item.title === 'SALE',
+                })}
+              >
+                {item.title}
+              </p>
+            </div>
+            <img src={RightArrow} alt="Right Arrow" />
+          </Link>
+        </li>
+      ))}
+
+      {isWidth991 && (
+        <li className={classNames(styles.catalogListButtons)}>
+          {dropdownBbuttonData.slice(0, 3).map((buttonData) => (
+            <NavButton
+              key={buttonData.id}
+              button={buttonData}
+              onAuthClick={onAuthClick}
+            />
+          ))}
+        </li>
+      )}
+    </ul>
+  </div>
+);
 };

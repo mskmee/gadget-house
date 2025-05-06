@@ -1,8 +1,6 @@
-import { useEffect } from 'react';
 import styles from './CartTooltip.module.scss';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { ProductItem } from './ProductItem/ProductItem';
-import { useActions } from '@/hooks/useActions';
 import { Link } from 'react-router-dom';
 import { convertPriceToReadable } from '@/utils/helpers/product';
 import { AppRoute } from '@/enums/Route';
@@ -14,11 +12,11 @@ export const CardTooltip = () => {
     currency,
     locale,
   } = useTypedSelector((state) => state.shopping_card);
-  const { getTotal } = useActions();
+  // const { getTotal } = useActions();
 
-  useEffect(() => {
-    getTotal();
-  }, [cardItems, getTotal]);
+  // useEffect(() => {
+  //   getTotal();
+  // }, [cardItems, getTotal]);
 
   return (
     <div className={styles.container}>
