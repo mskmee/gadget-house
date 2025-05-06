@@ -1,6 +1,6 @@
 import { useMediaQuery } from "react-responsive";
 import { BurgerMenuIcon, CatalogIcon, LeftArrow } from '@/assets/constants';
-import React, { MouseEvent } from "react";
+import React from "react";
 import classNames from "classnames";
 import { CatalogList } from "@/components/BurgerMenu/CatalogList";
 import styles from '../header.module.scss';
@@ -8,10 +8,12 @@ import styles from '../header.module.scss';
 interface CatalogBlockProps {
   isCatalogListOpen: boolean,
   setIsCatalogListOpen: React.Dispatch<React.SetStateAction<boolean>>,
+  // eslint-disable-next-line no-unused-vars
   openCatalogOnFocus?: (e: React.FocusEvent<HTMLButtonElement>) => void;
   onAuthClick?: () => void,
   openCatalog?: () => void,
-  closeCatalog?: (e: MouseEvent<HTMLButtonElement | HTMLDivElement | KeyboardEvent>) => void
+  // eslint-disable-next-line no-unused-vars
+  closeCatalog?: (e: React.MouseEvent<HTMLButtonElement | HTMLDivElement | KeyboardEvent | HTMLAnchorElement>) => void;
 }
 
 const CatalogBlock = ({ isCatalogListOpen, setIsCatalogListOpen, onAuthClick, openCatalogOnFocus, openCatalog, closeCatalog }: CatalogBlockProps) => {
@@ -44,7 +46,7 @@ const CatalogBlock = ({ isCatalogListOpen, setIsCatalogListOpen, onAuthClick, op
             [styles.headerBottomCatalog__active]: isCatalogListOpen,
           })}
           onMouseEnter={openCatalog}
-          onFocus={openCatalogOnFocus}
+          onFocus={(e) => openCatalogOnFocus?.(e)}
         >
           <img src={CatalogIcon} alt="Catalog" />
           <h1>Catalog</h1>

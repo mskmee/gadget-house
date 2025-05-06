@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { useMediaQuery } from 'react-responsive';
@@ -11,7 +11,8 @@ import styles from './menu.module.scss';
 interface IProductListProps {
   onAuthClick?: () => void;
   isCatalogListOpen?: boolean;
-  closeCatalog?: () => void
+  // eslint-disable-next-line no-unused-vars
+  closeCatalog?: (e: React.MouseEvent<HTMLButtonElement | HTMLDivElement | KeyboardEvent | HTMLAnchorElement>) => void;
 }
 
 export const CatalogList: FC<IProductListProps> = ({
@@ -59,7 +60,7 @@ return (
     <ul className={styles.burgerMenuTop}>
       {items.map((item) => (
         <li key={item.key}>
-          <Link to={item.link} className={styles.burgerMenuTopItem} onClick={closeCatalog}>
+          <Link to={item.link} className={styles.burgerMenuTopItem} onClick={(e) => closeCatalog?.(e)}>
             <div className={styles.burgerMenuTopItemRight}>
               <img src={item.img} alt={item.title} />
               <p

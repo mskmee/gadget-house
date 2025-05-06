@@ -62,7 +62,7 @@ export const Header = () => {
   };
 
   const closeCatalog = (
-    e: MouseEvent<HTMLButtonElement | HTMLDivElement | KeyboardEvent>,
+    e: MouseEvent<HTMLButtonElement | HTMLDivElement | KeyboardEvent | HTMLAnchorElement>,
   ) => {
     const catalogSection = catalogSectionRef.current;
 
