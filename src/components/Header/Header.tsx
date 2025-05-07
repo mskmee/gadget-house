@@ -50,7 +50,7 @@ export const Header = () => {
   });
 
   // pop-up basket
-  const isBasketPage = location.pathname === AppRoute.BASKET_PAGE;
+  const isBasketPage = location.pathname === AppRoute.BASKET_PAGE || location.pathname === AppRoute.ORDER || location.pathname === AppRoute.ORDER_SUCCESS;
   const shouldShowCartTooltip = products.length && !isBasketPage;
 
   // open catalog
@@ -167,8 +167,7 @@ export const Header = () => {
                 />
               ))}
 
-              {(shouldShowCartTooltip !== 0 && !isLessThan992px) &&
-                location.pathname !== AppRoute.BASKET_PAGE && (
+              {(shouldShowCartTooltip && !isLessThan992px) && (
                   <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
