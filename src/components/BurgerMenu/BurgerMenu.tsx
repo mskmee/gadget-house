@@ -21,7 +21,7 @@ export default function BurgerMenu() {
         <div>
           <Header />
         </div>
-        <CatalogList isBurgerProductList={true} />
+        <CatalogList />
         <div className={styles.burgerMenuBottom}>
           {buttonData.slice(0, 3).map((item) => (
             <NavButton key={item.id} button={item} />

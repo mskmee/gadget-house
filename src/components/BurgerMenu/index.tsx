@@ -20,7 +20,7 @@ export const BurgerMenu = () => {
       <div>
         <Header />
       </div>
-      <CatalogList isBurgerProductList={true} />
+      <CatalogList />
       <div className={styles.burgerMenuBottom}>
         {buttonData.slice(0, 3).map((buttonData) => (
           <NavButton key={buttonData.id} button={buttonData} />
