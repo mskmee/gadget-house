@@ -2,30 +2,12 @@
   flex-grow: 1;
   padding-bottom: 135px;
 
-  &__mobile {
-    display: block;
-    height: 85vh;
-    overflow-y: auto;
-
-    @media screen and (min-width: 680px) {
-      display: none;
-    }
-  }
-
   &__mobileList {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 8px;
     margin-bottom: 40px;
-  }
-
-  &__desk {
-    display: none;
-
-    @media screen and (min-width: 680px) {
-      display: block;
-    }
   }
 
   &__deskList {
@@ -43,7 +25,7 @@
   }
 
   &__pagination {
-    display: none;
+    // display: none;
     justify-content: center !important;
 
     @media screen and (min-width: 680px) {

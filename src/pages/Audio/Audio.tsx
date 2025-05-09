@@ -14,6 +14,7 @@ export default function Laptops() {
     dispatch(setSelectedCategory(Category.AUDIOS));
   }, [dispatch]);
 
+
   return (
     <PageLayout
       products={productsData?.page || []}

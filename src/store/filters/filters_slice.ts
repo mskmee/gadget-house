@@ -27,7 +27,7 @@ const initialState: IInitialState = {
   selectedAttributes: null,
   selectedPriceRange: [0, 0],
   selectedCameraRange: [0, 0],
-  dataStatus: DataStatus.IDLE,
+  dataStatus: DataStatus.IDLE
 };
 
 const filters_slice = createSlice({
@@ -51,7 +51,7 @@ const filters_slice = createSlice({
     },
     setSelectedCameraRange(state, { payload }: { payload: number[] }) {
       state.selectedCameraRange = payload;
-    }
+    },
   },
   extraReducers(builder) {
     builder.addCase(getAllBrands.fulfilled, (state, { payload }) => {
