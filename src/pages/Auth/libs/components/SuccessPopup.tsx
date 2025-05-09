@@ -49,7 +49,7 @@ const SuccessPopup: FC<SuccessPopupProps> = ({ type, onClose, emailValue }) => {
       break;
     case 'register':
       title = 'Register success!';
-      notice = 'You have been successfully logged in';
+      notice = 'You have successfully registered';
       break;
     case 'forgot':
       title = 'Send instructions!';
