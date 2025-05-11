@@ -18,6 +18,7 @@ import { Option } from './Option';
 import ArrowUpSvg from '@/assets/icons/arrow-up.svg';
 
 import styles from './filters.module.scss';
+import { setPageNumber } from '@/store/products/products_slice';
 
 export const FiltersDesk = () => {
   const inputMinCameraMPRef = useRef<HTMLInputElement | null>(null);
@@ -66,6 +67,7 @@ export const FiltersDesk = () => {
   };
 
   const handleFilter = () => {
+    dispatch(setPageNumber(0));
     dispatch(setSelectedBrands(selectedOptions.brands));
     dispatch(
       setSelectedAttributes([
