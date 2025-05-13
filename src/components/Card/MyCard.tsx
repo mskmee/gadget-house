@@ -101,7 +101,7 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
         <Link
           className={`${styles.cardConatiner} ${classname} `}
           key={product?.id}
-          to={`${classname}/${product?.id}/${product?.href}`}
+          to={`/${classname}/${product?.id}/${product?.href}`}
           tabIndex={0}
           style={{ minWidth: classname !== 'basket-popup' ? `${width}px` : '' }}
           onClick={handleSaveReviewedItem}
