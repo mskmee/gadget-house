@@ -53,7 +53,7 @@ export interface IProductCard {
   href?: string;
   images: TProductImageCard[];
   rating: number;
-  price: number;
+  price: string;
   code?: string;
   anotherColors?: string[];
   isLiked?: boolean;
