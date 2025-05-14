@@ -11,7 +11,7 @@ type ProductItemResponseDto = {
   brand: string;
   name: string;
   description: string;
-  price: number;
+  price: string;
   quantity: number;
   rating: number;
   createdAt: string;

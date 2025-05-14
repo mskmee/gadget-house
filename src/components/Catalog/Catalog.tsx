@@ -2,13 +2,13 @@ import { FC, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Pagination } from 'antd';
 
-import { DEFAULT_SIZE, DEFAULT_SIZE_MOBILE } from '@/constants/pagination';
+import { DEFAULT_SIZE } from '@/constants/pagination';
 import { useMediaQuery } from 'react-responsive';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { IProductCard } from '@/interfaces/interfaces';
 import { AppDispatch, RootState } from '@/store';
-import { getPaginatedProducts } from '@/store/products/actions';
-import { setPageNumber } from '@/store/products/products_slice';
+
+import { setIsAppending, setPageNumber } from '@/store/products/products_slice';
 import { MyCard } from '../components';
 
 import styles from './catalog.module.scss';
@@ -22,116 +22,108 @@ interface ICatalogProps {
 export const Catalog: FC<ICatalogProps> = ({
   data,
   totalPages,
-  categoryId,
 }) => {
   const dispatch: AppDispatch = useDispatch();
-  const { pagination, productsData } = useTypedSelector(
+  const { pagination } = useTypedSelector(
     (state: RootState) => state.products,
   );
-  const [hasMore, setHasMore] = useState(true);
+  const [hasMore, setHasMore] = useState(false);
+  useEffect(() => {
+    if (pagination.totalPages) {
+      setHasMore(pagination.currentPage < pagination.totalPages - 1);
+    }
+  }, [pagination]);
+
   const observerRef = useRef<HTMLDivElement | null>(null);
-  const isMobile680px = useMediaQuery({
-    query: '(max-width: 680px)',
+  const isMobile767 = useMediaQuery({
+    query: '(max-width: 767px)',
   });
 
   useEffect(() => {
-    const size = isMobile680px ? DEFAULT_SIZE_MOBILE : DEFAULT_SIZE;
+    if (!isMobile767 || !observerRef.current) return;
 
-    dispatch(
-      getPaginatedProducts({
-        categoryId: categoryId || 0,
-        page: pagination.currentPage,
-        size: size,
-      }),
-    ).then((res) => {
-      if (!res.payload || (res.payload as IProductCard[]).length === 0) {
-        setHasMore(false);
-      }
-    });
-  }, [categoryId, pagination.currentPage]);
-
-  const loadMore = () => {
-    if (hasMore) {
-      dispatch(setPageNumber(pagination.currentPage + 1));
-    }
-  };
-
-  useEffect(() => {
-    if (!isMobile680px) return;
-
+    dispatch(setIsAppending(true))
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && hasMore) {
-          loadMore();
+        if (entry.isIntersecting && hasMore && !isFetchingMore) {
+          dispatch(setPageNumber(pagination.currentPage + 1));
+          
         }
       },
       {
-        root: null,
-        rootMargin: '10px',
-        threshold: 1.0,
+        rootMargin: '50px',
+        threshold: 1,
       },
     );
 
-    if (observerRef.current) {
-      observer.observe(observerRef.current);
-    }
+    const target = observerRef.current;
+    observer.observe(target);
 
     return () => {
-      if (observerRef.current) {
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        observer.unobserve(observerRef.current);
-      }
+      observer.unobserve(target);
     };
-  }, [hasMore]);
+
+  }, [hasMore, isMobile767, pagination.currentPage]);
+
+
+
+  const isFetchingMore = useTypedSelector((state: RootState) => state.products.isFetchingMore);
 
   return (
     <div className={styles.catalog}>
-      {isMobile680px && (
-        <div className={styles.catalog__mobile}>
-          <ul className={styles.catalog__mobileList}>
-            {productsData?.page.map((product: IProductCard) => (
-              <MyCard
-                key={product.id}
-                tempProduct={product}
-                classname={styles.catalog__item}
-                index={product.id}
-                width={0}
-              />
-            ))}
-          </ul>
-
-          {hasMore && (
-            <div ref={observerRef} className={styles.catalog__loadingIndicator}>
-              Loading more products...
+      {isMobile767 ? (
+          <div className={styles.catalog__mobile}>
+            <div className={styles.catalog__mobileList}>
+              {data.map((product: IProductCard) => (
+                <MyCard
+                  key={product.id}
+                  tempProduct={product}
+                  classname={styles.catalog__item}
+                  index={product.id}
+                  width={0}
+                />
+              ))}
             </div>
-          )}
-        </div>
-      )}
 
-      <div className={styles.catalog__desk}>
-        <ul className={styles.catalog__deskList}>
-          {data &&
-            data.map((product: IProductCard) => (
-              <MyCard
-                key={product.id}
-                tempProduct={product}
-                classname={styles.catalog__item}
-                index={product.id}
-                width={0}
-              />
-            ))}
-        </ul>
+            {hasMore && (
+              <div ref={observerRef} className={styles.catalog__loadingIndicator}>
+                Loading more products...
+              </div>
+            )}
 
-        <Pagination
-          showSizeChanger={false}
-          showTitle={false}
-          current={pagination.currentPage + 1}
-          pageSize={DEFAULT_SIZE}
-          total={totalPages * DEFAULT_SIZE}
-          onChange={(page) => dispatch(setPageNumber(page - 1))}
-          className={styles.catalog__pagination}
-        />
-      </div>
+            {isFetchingMore && (
+              <div className={styles.catalog__loadingIndicator}>
+                Loading more products...
+              </div>
+            )}
+          </div>
+        ) : (
+          <div className={styles.catalog__desk}>
+            <div className={styles.catalog__deskList}>
+              {data &&
+                data.map((product: IProductCard) => (
+                  <MyCard
+                    key={product.id}
+                    tempProduct={product}
+                    classname={styles.catalog__item}
+                    index={product.id}
+                    width={0}
+                  />
+                ))}
+            </div>
+
+            <Pagination
+              showSizeChanger={false}
+              showTitle={false}
+              current={pagination.currentPage + 1}
+              pageSize={DEFAULT_SIZE}
+              total={totalPages * DEFAULT_SIZE}
+              onChange={(page) => dispatch(setPageNumber(page - 1))}
+              className={styles.catalog__pagination}
+            />
+          </div>
+        )
+      }
     </div>
   );
 };

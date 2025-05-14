@@ -94,14 +94,14 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
       saveReviewedItem(product);
     }
   };
-
+  const anotherColors = (product as IProductCard)?.anotherColors;
   return (
     <>
       <div className={styles.isolateHoverEffectFromRerender}>
         <Link
           className={`${styles.cardConatiner} ${classname} `}
           key={product?.id}
-          to={`${classname}/${product?.id}/${product?.href}`}
+          to={`/${classname}/${product?.id}/${product?.href}`}
           tabIndex={0}
           style={{ minWidth: classname !== 'basket-popup' ? `${width}px` : '' }}
           onClick={handleSaveReviewedItem}
@@ -144,11 +144,11 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
                 isLiked={isLikedProduct}
               />
 
-              {(product as IProductCard)?.anotherColors?.length > 0 && (
+              {anotherColors && anotherColors?.length > 0 && (
                 <div className={styles['accessories-colors']}>
-                  {product?.anotherColors.map((color: string) => (
+                  {anotherColors?.map((color: string) => (
                     <div
-                      key={crypto.randomUUID()}
+                      key={color}
                       style={{ backgroundColor: color }}
                       className={classNames({
                         [styles['hasBorder']]: color === '#ffffff',

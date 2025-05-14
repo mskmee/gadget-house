@@ -1,7 +1,7 @@
 import { FC, useEffect, useRef, useState } from 'react';
 import style from './Product.module.scss';
 import { Rate } from 'antd';
-import { staticCurrentProduct } from '@/constants/singleProduct';
+
 import {
   arrowImg,
   deliverImg,
@@ -252,18 +252,18 @@ export const Product: FC<IProductProps> = ({
                   className={classNames({
                     [style['selected-color']]:
                       productCharacteristics?.selectedColor === color &&
-                      i + 1 !== dinamicCurrentProduct.anotherColors.length,
+                      i + 1 !== dinamicCurrentProduct?.anotherColors?.length,
                     [style['not-available']]:
-                      i + 1 === dinamicCurrentProduct.anotherColors.length,
+                      i + 1 === dinamicCurrentProduct?.anotherColors?.length,
                   })}
                   style={{ backgroundColor: color }}
                   onClick={changeProductCharacteristics(
                     color,
-                    i + 1 !== dinamicCurrentProduct.anotherColors.length,
+                    i + 1 !== dinamicCurrentProduct?.anotherColors?.length,
                     'color',
                   )}
                 >
-                  {i + 1 === dinamicCurrentProduct.anotherColors.length && (
+                  {i + 1 === dinamicCurrentProduct?.anotherColors?.length && (
                     <img
                       src={productIsNotAvailableImg}
                       alt="product isn't available"
@@ -279,7 +279,7 @@ export const Product: FC<IProductProps> = ({
           <div className={style['product_other-models']}>
             <h3>Other models</h3>
             <ul>
-              {staticCurrentProduct?.[0]?.otherModels?.map(({ model }) => (
+              {dinamicCurrentProduct?.otherModels?.map(({ model }) => (
                 <li
                   key={model}
                   tabIndex={0}
@@ -297,7 +297,7 @@ export const Product: FC<IProductProps> = ({
           <div className={style['product_memory-card']}>
             <h3>Memory card</h3>
             <ul>
-              {staticCurrentProduct?.[0]?.memoryCards?.map(({ memory }) => (
+              {dinamicCurrentProduct?.memoryCards?.map(({ memory }) => (
                 <li
                   key={memory}
                   tabIndex={0}

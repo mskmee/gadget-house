@@ -77,7 +77,11 @@
 }
 
 .catalogListButtons {
-  display: none;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 44px 0 41px 0;
+  position: relative;
 }
 @media (max-width: 1450px) {
   .burgerMenuTopItem {
@@ -99,11 +103,5 @@
   .burgerMenuTopItem p {
     font-size: 16px;
   }
-  .catalogListButtons {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    margin: 44px 0 41px 0;
-    position: relative;
-  }
+  
 }

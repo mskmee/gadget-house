@@ -14,6 +14,9 @@
     text-decoration: none;
   }
 }
+.catalog__hamburger {
+  width: 25px;
+}
 
 @media (max-width: 1070px) {
   .headerTop {
@@ -210,30 +213,40 @@
 
 .overlay.active {
   opacity: 1;
-  pointer-events: auto; // Allow interactions when active
+  pointer-events: auto;
 }
 
 .catalogListWrap {
   position: absolute;
-  top: 92px;
-  width: calc(100vw - 17px);
   z-index: 3;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  display: none;
-
+  @media(max-width: 991px) {
+    top: 80px;
+    left: 0;
+  }
+  @media(max-width: 767px) {
+    top: 64px;
+  }
   > div {
     width: 420.18px;
-    position: absolute;
-    top: 0;
-
-    left: calc(0px - var(--parent-left));
+    @media(max-width: 991px) {
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
+    }
+    ul {
+      height: 100%;
+      overflow-y: auto;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      &::-webkit-scrollbar { 
+        display: none;
+      }
+    }
   }
 }
-.catalogListWrapVisible {
-  display: block;
-  background: rgba(28, 24, 23, 0.77);
-}
+// .catalogListWrapVisible {
+//   display: block;
+//   background: rgba(28, 24, 23, 0.77);
+// }
 
 .tooltip-visible {
   transform: translateY(0);
@@ -271,13 +284,13 @@
   }
 }
 
-@media screen and ((min-width: 992px )and (max-width: 1250px)) {
-  .catalogListWrap {
-    > div {
-      left: calc(var(--parent-left));
-    }
-  }
-}
+// @media screen and ((min-width: 992px )and (max-width: 1250px)) {
+//   .catalogListWrap {
+//     > div {
+//       left: calc(var(--parent-left));
+//     }
+//   }
+// }
 @media (max-width: 1250px) {
   .fixedHeader {
     > div {
@@ -308,7 +321,7 @@
   }
   .catalogListWrap {
     > div {
-      width: 320.18px;
+      width: 320px;
     }
   }
 }

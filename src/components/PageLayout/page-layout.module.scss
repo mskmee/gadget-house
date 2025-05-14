@@ -1,55 +1,22 @@
 .pageLayout {
   min-width: 320px;
   background-color: var(--bg-color) !important;
-
-  &_mobile {
-    display: block;
-
-    @media screen and (min-width: 680px) {
-      display: none;
-    }
-  }
-
-  &_tablet {
-    display: none;
-
-    @media screen and (min-width: 680px) {
-      display: block;
-    }
-
-    @media screen and (min-width: 1180px) {
-      display: none;
-    }
-  }
-
-  &_desk {
-    display: none;
-
-    @media screen and (min-width: 1180px) {
-      display: block;
-    }
-    > div nav {
-      margin-bottom: 48px;
-    }
-  }
-
-  &__container {
-    @media screen and (min-width: 1440px) {
-      padding: 0 0px !important;
-    }
-  }
-
   &__header {
-    max-width: 1440px;
-    margin: 0 auto;
-    margin-top: 48px;
+    margin: 48px auto 0;
     padding: 0 50px;
     border-radius: 20px;
     background: var(--secondary-background-color);
 
     @media (width <= 1445px) {
       border-radius: 0;
+      padding: 0 50px;
+      margin-left: -50px;
+      margin-right: -50px;
+    }
+    @media (max-width: 991px) {
+      background: transparent;
       padding: 0;
+      margin: 0;
     }
   }
 
@@ -58,7 +25,7 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 0px;
-    padding: 28px 0px 20px 0px;
+    padding: 28px 0px 0 0px;
 
     @media screen and (min-width: 680px) {
       padding: 16px 0;
@@ -68,6 +35,10 @@
     @media screen and (min-width: 1070px) {
       padding: 16px 0;
       margin-bottom: 38px;
+    }
+    @media (max-width: 679px) {
+      flex-direction: column;
+      align-items: flex-start;
     }
   }
 
@@ -87,6 +58,9 @@
 
     @media screen and (min-width: 1070px) {
       font-size: 42px;
+    }
+    @media (max-width: 679px) {
+      margin-bottom: 20px;
     }
   }
 

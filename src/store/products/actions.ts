@@ -32,7 +32,7 @@ const getPaginatedProducts = createAsyncThunk(
       categoryId: categoryId !== 0 ? categoryId : null,
     };
 
-    return await productsService.getPaginatedProducts(filteredParams.categoryId, filteredParams.page, filteredParams.size);
+    return await productsService.getPaginatedProducts(filteredParams.categoryId, filteredParams.page, filteredParams.size)
   }
 );
 
