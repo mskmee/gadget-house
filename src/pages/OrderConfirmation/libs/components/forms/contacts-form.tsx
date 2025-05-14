@@ -34,8 +34,8 @@ export const ContactsForm: FC<Properties> = ({
     <div className={styles.form}>
       <Formik<ContactsFormDto>
         initialValues={initialValues}
-        validateOnBlur={false}
-        validateOnChange={false}
+        validateOnBlur={true}
+        validateOnChange={true}
         validationSchema={contactsFormValidationSchema}
         onSubmit={(values) => {
           onSubmit(values);

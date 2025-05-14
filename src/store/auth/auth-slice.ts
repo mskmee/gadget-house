@@ -1,14 +1,14 @@
 import { createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit';
 
 import { DataStatus } from '@/enums/data-status';
-import { User } from '@/pages/Auth/libs/types/types';
+import { IUser } from '@/pages/Auth/libs/types/types';
 import { changePassword, createUser, forgotPassword, getCredentials, getUserData } from './actions';
 import { LocalStorageKey, localStorageService } from '@/utils/packages/local-storage';
 import { AuthForgotPasswordResponseDto } from '@/utils/packages/auth/libs/types/types';
 
 export interface IAuthState {
   isAuthenticated: boolean;
-  user: User | null;
+  user: IUser | null;
   userToken: string | null;
   refreshToken: string | null;
   message: string | AuthForgotPasswordResponseDto;
@@ -37,18 +37,23 @@ const authSlice = createSlice({
       state.user = null;
       state.userToken = null;
       state.refreshToken = null;
+
+      localStorageService.removeItem(LocalStorageKey.ACCESS_TOKEN);
+      localStorageService.removeItem(LocalStorageKey.REFRESH_TOKEN);
     },
   },
   extraReducers(builder) {
     builder.addCase(getCredentials.fulfilled, (state, { payload }) => {
       state.userToken = payload.accessToken;
       state.refreshToken = payload.refreshToken;
+      state.isAuthenticated = true;
     });
     builder.addCase(createUser.fulfilled, (state, { payload }) => {
       state.user = payload;
     });
     builder.addCase(getUserData.fulfilled, (state, { payload }) => {
       state.user = payload;
+      state.isAuthenticated = true;
     });
     builder.addCase(forgotPassword.fulfilled, (state, { payload }) => {
       state.message = payload;

@@ -44,8 +44,8 @@ export const PaymentForm: FC<Properties> = ({
     <div className={styles.form}>
       <Formik<PaymentFormDto>
         initialValues={initialValues}
-        validateOnBlur={false}
-        validateOnChange={false}
+        validateOnBlur={true}
+        validateOnChange={true}
         validationSchema={paymentFormValidationSchema}
         onSubmit={(values) => {
           onSubmit(values);

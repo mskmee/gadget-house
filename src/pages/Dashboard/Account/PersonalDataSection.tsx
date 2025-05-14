@@ -3,16 +3,22 @@ import styles from './MyAccount.module.scss';
 
 import { ChangeUserData } from '@/assets/icons/ChangeUserData';
 import { ErrorIcon } from '@/assets/icons/ErrorIcon';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
 
 export const PersonalDataSection = () => {
   const [isOpenPersonalDatesSection, setIsOpenPersonalDatesSection] =
     useState(false);
+  const { user: currentUser } = useTypedSelector((state) => state.auth);
 
   const [personalData, setPersonalData] = useState({
-    fullName: '',
-    date: { day: '', month: '', year: '' },
-    city: '',
-    gender: '',
+    fullName: currentUser?.fullName || '',
+    date: {
+      day: currentUser?.day || '',
+      month: currentUser?.month || '',
+      year: currentUser?.year || '',
+    },
+    city: currentUser?.city || '',
+    gender: currentUser?.gender || '',
   });
 
   const [errors, setErrors] = useState({
@@ -125,7 +131,6 @@ export const PersonalDataSection = () => {
         city: '',
         gender: '',
       });
-      console.log(personalData);
     }
   };
 
@@ -162,10 +167,10 @@ export const PersonalDataSection = () => {
               <div>
                 <input
                   name="fullName"
-                  placeholder="Kate Carson"
+                  placeholder={currentUser?.fullName || 'Full name*'}
                   minLength={2}
                   maxLength={40}
-                  value={personalData.fullName}
+                  value={currentUser?.fullName}
                   onChange={handleInputChange}
                 />
               </div>
@@ -281,19 +286,24 @@ export const PersonalDataSection = () => {
           <div className={styles.personalDates}>
             <div>
               <span>Full name</span>
-              <span>Kate Carson</span>
+              <span style={{ textTransform: 'capitalize' }}>
+                {personalData.fullName}
+              </span>
             </div>
             <div>
               <span>Birthday</span>
-              <span>17.12.1996</span>
+              <span>
+                {personalData.date.day}.{personalData.date.month}.
+                {personalData.date.year}
+              </span>
             </div>
             <div>
               <span>City</span>
-              <span>Kharkiv</span>
+              <span>{personalData.city}</span>
             </div>
             <div>
               <span>Sex</span>
-              <span>Female</span>
+              <span>{personalData.gender}</span>
             </div>
           </div>
         </div>

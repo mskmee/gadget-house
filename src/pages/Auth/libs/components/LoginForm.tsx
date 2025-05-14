@@ -26,7 +26,7 @@ const LoginForm: FC<ILoginFormProps> = ({
     <div className={styles.form}>
       <Formik<LoginFormDto>
         initialValues={initialValues}
-        validateOnBlur={false}
+        validateOnBlur={true}
         validateOnChange={true}
         validationSchema={loginFormValidationSchema}
         onSubmit={(values, { resetForm }) => {

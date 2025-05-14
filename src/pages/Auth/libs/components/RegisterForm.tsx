@@ -31,8 +31,8 @@ const RegisterForm: FC<IRegisterFormProps> = ({
     <div className={styles.form}>
       <Formik<RegisterFormDto>
         initialValues={initialValues}
-        validateOnBlur={false}
-        validateOnChange={false}
+        validateOnBlur={true}
+        validateOnChange={true}
         validationSchema={registerFormValidationSchema}
         onSubmit={(values, { resetForm }) => {
           onRegister(values);
