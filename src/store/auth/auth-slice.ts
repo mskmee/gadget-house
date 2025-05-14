@@ -1,14 +1,14 @@
 import { createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit';
 
 import { DataStatus } from '@/enums/data-status';
-import { User } from '@/pages/Auth/libs/types/types';
+import { IUser } from '@/pages/Auth/libs/types/types';
 import { changePassword, createUser, forgotPassword, getCredentials, getUserData } from './actions';
 import { LocalStorageKey, localStorageService } from '@/utils/packages/local-storage';
 import { AuthForgotPasswordResponseDto } from '@/utils/packages/auth/libs/types/types';
 
 export interface IAuthState {
   isAuthenticated: boolean;
-  user: User | null;
+  user: IUser | null;
   userToken: string | null;
   refreshToken: string | null;
   message: string | AuthForgotPasswordResponseDto;
@@ -53,6 +53,7 @@ const authSlice = createSlice({
     });
     builder.addCase(getUserData.fulfilled, (state, { payload }) => {
       state.user = payload;
+      state.isAuthenticated = true;
     });
     builder.addCase(forgotPassword.fulfilled, (state, { payload }) => {
       state.message = payload;
