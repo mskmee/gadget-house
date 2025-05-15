@@ -2,6 +2,7 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import styles from './MyAccount.module.scss';
 import { ChangeUserData } from '@/assets/icons/ChangeUserData';
 import { ErrorIcon } from '@/assets/icons/ErrorIcon';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
 
 export type TContacts = {
   email: string;
@@ -36,10 +37,13 @@ export const PersonalContactsSection = () => {
   const [isOpenContactsSection, setIsOpenContactsSection] = useState(false);
   const [isOpenAddPhoneNumberSection, setIsOpenAddPhoneNumberSection] =
     useState(false);
+
+  const { user: currentUser } = useTypedSelector((state) => state.auth);
+
   const [contacts, setContacts] = useState({
-    email: '',
-    defaultNumber: '',
-    additionalNumber: '',
+    email: currentUser?.email || '',
+    defaultNumber: currentUser?.phoneNumber || '',
+    additionalNumber: currentUser?.additionalPhoneNumber || '',
   });
 
   const [errors, setErrors] = useState({
@@ -253,11 +257,11 @@ export const PersonalContactsSection = () => {
           <div className={styles.personalContacts}>
             <div>
               <span>E-mail</span>
-              <span>example@gmail.com</span>
+              <span>{contacts.email}</span>
             </div>
             <div>
               <span>Phone number</span>
-              <span>+38 (063)-777-77-77</span>
+              <span>+38 {contacts.defaultNumber}</span>
             </div>
             {isOpenAddPhoneNumberSection ? (
               <form

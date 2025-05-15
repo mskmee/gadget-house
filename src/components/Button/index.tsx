@@ -32,8 +32,17 @@ export const NavButton: FC<INavButtonProps> = ({ button, onAuthClick }) => {
 
   const renderButton = () => {
     if (button.href === '/sign-in') {
+      if (refreshToken && user?.id) {
+        return (
+          <Link to={`/dashboard/${user.id}`} className={styles.headerButton}>
+            <span className={styles.navBtn__buttonAvatar}>
+              {getUserInitials(user?.fullName || '')}
+            </span>
+          </Link>
+        );
+      }
       return refreshToken ? (
-        <button className={styles.navBtn__button}>
+        <button className={styles.navBtn__button} onClick={onAuthClick}>
           <span className={styles.navBtn__buttonAvatar}>
             {getUserInitials(user?.fullName || '')}
           </span>

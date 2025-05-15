@@ -24,7 +24,6 @@ import { useMediaQuery } from 'react-responsive';
 import AuthModal from '@/pages/Auth/AuthModal';
 import CatalogBlock from './CatalogBlock/CatalogBlock';
 
-
 export const Header = () => {
   const location = useLocation();
   const isFixedHeader = useIsFixedHeader();
@@ -37,7 +36,7 @@ export const Header = () => {
   const searchValue = useTypedSelector((state) => state.search.searchValue);
 
   const headerRef = useRef<HTMLButtonElement | null>(null);
-  const headerBottomRef = useRef<HTMLDivElement | null>(null)
+  const headerBottomRef = useRef<HTMLDivElement | null>(null);
   const OverlayRef = useRef<HTMLDivElement | null>(null);
   const catalogSectionRef = useRef<HTMLDivElement | null>(null);
 
@@ -50,7 +49,10 @@ export const Header = () => {
   });
 
   // pop-up basket
-  const isBasketPage = location.pathname === AppRoute.BASKET_PAGE || location.pathname === AppRoute.ORDER || location.pathname === AppRoute.ORDER_SUCCESS;
+  const isBasketPage =
+    location.pathname === AppRoute.BASKET_PAGE ||
+    location.pathname === AppRoute.ORDER ||
+    location.pathname === AppRoute.ORDER_SUCCESS;
   const shouldShowCartTooltip = products.length && !isBasketPage;
 
   // open catalog
@@ -62,11 +64,17 @@ export const Header = () => {
   };
 
   const closeCatalog = (
-    e: MouseEvent<HTMLButtonElement | HTMLDivElement | KeyboardEvent | HTMLAnchorElement>,
+    e: MouseEvent<
+      HTMLButtonElement | HTMLDivElement | KeyboardEvent | HTMLAnchorElement
+    >,
   ) => {
     const catalogSection = catalogSectionRef.current;
 
-    if (!catalogSection || !(e.relatedTarget instanceof Node) || !catalogSection.contains(e.relatedTarget)) {
+    if (
+      !catalogSection ||
+      !(e.relatedTarget instanceof Node) ||
+      !catalogSection.contains(e.relatedTarget)
+    ) {
       document.body.style.overflow = 'initial';
       setIsCatalogListOpen(false);
     }
@@ -87,7 +95,6 @@ export const Header = () => {
     });
   };
 
-
   // show overpay when user do search
   useEffect(() => {
     if (searchValue) {
@@ -102,16 +109,16 @@ export const Header = () => {
     const header = headerRef.current;
     const overlay = OverlayRef.current;
     const headerBottom = headerBottomRef.current;
-  
+
     if (!overlay) return;
-    
+
     if (isFixedHeader && headerBottom) {
       overlay.style.top = `${headerBottom.clientHeight}px`;
     } else if (header) {
       overlay.style.top = `${header.clientHeight}px`;
     }
   }, [isCatalogListOpen, isOverlayActive, isFixedHeader]);
-  
+
   return (
     <header ref={headerRef}>
       <div id="header-top-section" className={classNames(styles.headerTop)}>
@@ -143,13 +150,17 @@ export const Header = () => {
               [styles['openn']]: isCatalogListOpen,
             })}
           >
-            <div className="catalog-section" ref={catalogSectionRef} onMouseLeave={closeCatalog}>
-              <CatalogBlock 
-                isCatalogListOpen={isCatalogListOpen} 
-                setIsCatalogListOpen={setIsCatalogListOpen} 
+            <div
+              className="catalog-section"
+              ref={catalogSectionRef}
+              onMouseLeave={closeCatalog}
+            >
+              <CatalogBlock
+                isCatalogListOpen={isCatalogListOpen}
+                setIsCatalogListOpen={setIsCatalogListOpen}
                 openCatalogOnFocus={openCatalogOnFocus}
                 openCatalog={openCatalog}
-                onAuthClick={handleAuthClick} 
+                onAuthClick={handleAuthClick}
                 closeCatalog={closeCatalog}
               />
             </div>
@@ -167,23 +178,23 @@ export const Header = () => {
                 />
               ))}
 
-              {(shouldShowCartTooltip && !isLessThan992px) && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ ease: 'easeInOut', duration: 0.4 }}
-                    className={classNames(styles.tooltip, 'oo')}
-                  >
-                    <CardTooltip />
-                  </motion.div>
-                )}
+              {shouldShowCartTooltip && !isLessThan992px && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ ease: 'easeInOut', duration: 0.4 }}
+                  className={classNames(styles.tooltip, 'oo')}
+                >
+                  <CardTooltip />
+                </motion.div>
+              )}
             </div>
           </div>
         </div>
       </div>
 
-      {(isCatalogListOpen || isOverlayActive) &&
+      {(isCatalogListOpen || isOverlayActive) && (
         <div
           id="overlay"
           ref={OverlayRef}
@@ -191,7 +202,7 @@ export const Header = () => {
             [styles.active]: isOverlayActive || isCatalogListOpen,
           })}
         ></div>
-      }
+      )}
 
       <AuthModal
         isOpen={isAuthModalOpen}

@@ -29,6 +29,7 @@
       font-size: rem(42px);
       line-height: 150%;
       font-weight: 500;
+      text-transform: capitalize;
       @media (max-width: 767px) {
         font-size: 24px;
         font-weight: 400;

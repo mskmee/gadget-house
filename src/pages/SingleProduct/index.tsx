@@ -17,7 +17,7 @@ import { ProductCharacteristics } from '@/components/SingleProduct/ProductCharac
 import { ProductPhotos } from '@/components/SingleProduct/ProductPhotos';
 import { ProductAccessories } from '@/components/SingleProduct/ProductAccessories';
 import Benefits from '@/components/benefitsList/benefits';
-import { useDocumentTitle, useSessionStorage } from '@/hooks/hooks';
+import { useDocumentTitle, useSessionStorage, useTypedSelector } from '@/hooks/hooks';
 import { Bounce, toast } from 'react-toastify';
 import debounce from 'lodash.debounce';
 import { Pagination, Rate } from 'antd';
@@ -27,17 +27,27 @@ import DOMPurify from 'dompurify';
 import classNames from 'classnames';
 import { saveReviews } from '@/utils/saveReview';
 import { useMediaQuery } from 'react-responsive';
-import { laptopData, smartphoneData } from '@/constants/productCards';
+
 import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { AppDispatch, RootState } from '@/store';
+import { getOneProductById } from '@/store/products/actions';
+
 
 const maxLength = 500;
 
 export const SingleProductPage: FC = () => {
-  const allProducts = [...smartphoneData, ...laptopData];
+  const dispatch: AppDispatch = useDispatch()
+
   const { id } = useParams();
-  const dinamicCurrentProduct = allProducts.find(
-    (item) => id && item.id === +id,
-  );
+
+  useEffect(() => {
+    dispatch(getOneProductById(String(id)))
+  }, [id, dispatch])
+
+  const dinamicCurrentProduct = useTypedSelector((state: RootState) => state.products.activeProduct);
+console.log('name', dinamicCurrentProduct?.name)
+
 
   useDocumentTitle(dinamicCurrentProduct?.name || 'Product');
 

@@ -1,8 +1,11 @@
-import React, { FC, useState } from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { DatePicker, Flex, InputNumber, Popover, Switch } from 'antd';
 import en from 'antd/es/date-picker/locale/en_US';
 import cn from 'classnames';
 
+import { AppDispatch } from '@/store';
+import { setFilters } from '@/store/orders/order_slice';
 import { OrderStatus } from '@/enums/enums';
 import { handleKeyDown } from '@/utils/helpers/checkKeydownEvent';
 import {
@@ -10,15 +13,12 @@ import {
   handleNumberChange,
 } from '@/utils/helpers/handleFormChange';
 import { FilterIcon } from '@/assets/icons/FilterIcon';
+import { CalendarIcon } from '@/assets/icons/CalendarIcon';
 
 import styles from './filters.module.scss';
 
-interface IFilters {
-  // eslint-disable-next-line no-unused-vars
-  onSelectedFilters: (key: string, value: string) => void;
-}
-
-const Filters: FC<IFilters> = ({ onSelectedFilters }) => {
+const Filters = () => {
+  const dispatch: AppDispatch = useDispatch();
   const [showFilters, setShowFilters] = useState(false);
   const [filterVisibility, setFilterVisibility] = useState({
     date: true,
@@ -36,9 +36,7 @@ const Filters: FC<IFilters> = ({ onSelectedFilters }) => {
     ...en,
     lang: {
       ...en.lang,
-      fieldDateFormat: 'DD/MM/BBBB',
-      yearFormat: '2025',
-      cellYearFormat: '2025',
+      fieldDateFormat: 'DD/MM/YYYY',
     },
   };
 
@@ -53,12 +51,16 @@ const Filters: FC<IFilters> = ({ onSelectedFilters }) => {
     };
 
   const handleApplyFilters = () => {
-    if (dateFrom) onSelectedFilters('dateFrom', dateFrom);
-    if (dateTo) onSelectedFilters('dateTo', dateTo);
-    if (priceFrom !== null)
-      onSelectedFilters('priceFrom', priceFrom.toString());
-    if (priceTo !== null) onSelectedFilters('priceTo', priceTo.toString());
-    if (selectedStatus) onSelectedFilters('status', selectedStatus);
+    const filters = {
+      dateFrom,
+      dateTo,
+      priceFrom,
+      priceTo,
+      status: selectedStatus,
+    };
+
+    dispatch(setFilters(filters));
+
     setShowFilters(false);
   };
 
@@ -74,18 +76,26 @@ const Filters: FC<IFilters> = ({ onSelectedFilters }) => {
       title: 'Order Date',
       content: (
         <Flex align="center" justify="space-between" gap={12}>
-          <span className={styles.admin__filterText}>From</span>
+          <span>From</span>
           <DatePicker
             className={styles.admin__filterDatePicker}
             locale={dateLocale}
             onChange={handleDateChange(setDateFrom)}
+            format="DD/MM/YYYY"
+            popupClassName={styles.admin__filterDatePopup}
+            allowClear
+            suffixIcon={<CalendarIcon />}
           />
-          <span className={styles.admin__filterDivider}>-</span>
-          <span className={styles.admin__filterText}>To</span>
+          <span>-</span>
+          <span>To</span>
           <DatePicker
             className={styles.admin__filterDatePicker}
             locale={dateLocale}
             onChange={handleDateChange(setDateTo)}
+            format="DD/MM/YYYY"
+            popupClassName={styles.admin__filterDatePopup}
+            allowClear
+            suffixIcon={<CalendarIcon />}
           />
         </Flex>
       ),
@@ -95,7 +105,7 @@ const Filters: FC<IFilters> = ({ onSelectedFilters }) => {
       title: 'Price',
       content: (
         <Flex align="center" justify="space-between" gap={12}>
-          <span className={styles.admin__filterText}>From</span>
+          <span>From</span>
           <InputNumber
             className={styles.admin__filterInput}
             addonAfter="₴"
@@ -108,14 +118,14 @@ const Filters: FC<IFilters> = ({ onSelectedFilters }) => {
             onKeyDown={handleKeyDown}
             onChange={handleNumberChange(setPriceFrom)}
           />
-          <span className={styles.admin__filterDivider}>-</span>
-          <span className={styles.admin__filterText}>To</span>
+          <span>-</span>
+          <span>To</span>
           <InputNumber
             className={styles.admin__filterInput}
             addonAfter="₴"
             value={priceTo ?? undefined}
             min={0}
-            max={99999}
+            max={100000}
             maxLength={6}
             controls={false}
             inputMode="numeric"
@@ -222,4 +232,4 @@ const Filters: FC<IFilters> = ({ onSelectedFilters }) => {
   );
 };
 
-export default Filters;
+export { Filters };
