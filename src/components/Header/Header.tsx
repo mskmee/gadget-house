@@ -112,11 +112,17 @@ export const Header = () => {
 
     if (!overlay) return;
 
+    let top = 0;
+
     if (isFixedHeader && headerBottom) {
-      overlay.style.top = `${headerBottom.clientHeight}px`;
+      top = headerBottom.getBoundingClientRect().bottom
+      // console.log('1', top)
     } else if (header) {
-      overlay.style.top = `${header.clientHeight}px`;
+      top = header.getBoundingClientRect().bottom;
+      // console.log('2', top)
     }
+
+    overlay.style.top = `${top}px`;
   }, [isCatalogListOpen, isOverlayActive, isFixedHeader]);
 
   return (

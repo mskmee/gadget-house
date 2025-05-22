@@ -60,7 +60,8 @@ export interface IProductCard {
   category?: string;
   available?: boolean;
   otherModels?: IProductOtherModels[],
-  memoryCards?: iProductMemoryCards[]
+  memoryCards?: iProductMemoryCards[],
+  categoryId?: number
 }
 
 export interface IShoppingCard extends IProductCard {

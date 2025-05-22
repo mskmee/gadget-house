@@ -15,6 +15,7 @@ interface INavButtonProps {
 }
 
 export const NavButton: FC<INavButtonProps> = ({ button, onAuthClick }) => {
+  console.log('button', button)
   const IconComponent = button.img;
   const products = useTypedSelector((state) => state.shopping_card.products);
   const user = useTypedSelector((state) => state.auth.user);

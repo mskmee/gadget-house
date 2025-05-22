@@ -15,6 +15,7 @@ import { useActions } from '@/hooks/useActions';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { convertPriceToReadable } from '@/utils/helpers/product';
 import useLocalStorage from '@/hooks/useLocalStorage';
+import { Category } from '@/enums/category';
 
 interface ISmartphoneCardProps {
   tempProduct: IProductCard | TProductImageCard | IBrandCard | undefined;
@@ -29,7 +30,7 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
   tempProduct,
   classname,
   index,
-  width,
+  width
 }) => {
   const { toggleFavorite } = useActions();
   const product = tempProduct as IProductCard;
@@ -95,13 +96,29 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
     }
   };
   const anotherColors = (product as IProductCard)?.anotherColors;
+
+  const getCategoryByName = (categoryid: number): string | undefined => {
+    return Object.entries(Category).find(([_, value]) => value === categoryid)?.[0];
+  }
+
+  const categoryName = product?.categoryId !== undefined
+  ? getCategoryByName(product.categoryId)
+  : undefined;
+
+  const FormattedName = (categoryName?: string): string | undefined => {
+    return categoryName?.toLocaleLowerCase().replace(/_/g, '-')
+  }
+
+  const formatCategoryName = FormattedName(categoryName)
+
+
   return (
     <>
       <div className={styles.isolateHoverEffectFromRerender}>
         <Link
           className={`${styles.cardConatiner} ${classname} `}
           key={product?.id}
-          to={`/${classname}/${product?.id}/${product?.href}`}
+          to={`/${formatCategoryName}/${product?.id}/${product?.href}`}
           tabIndex={0}
           style={{ minWidth: classname !== 'basket-popup' ? `${width}px` : '' }}
           onClick={handleSaveReviewedItem}

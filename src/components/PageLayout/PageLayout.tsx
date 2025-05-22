@@ -103,6 +103,8 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   useTypedSelector((state: RootState) => state.products.dataStatus) ===
   DataStatus.PENDING;
 
+  console.log('pageLayout', categoryId)
+
   return (
     <div className={styles.pageLayout}>
       {!isMobile767 && pathName !== '/search/' && (

@@ -13,6 +13,7 @@ import { MyCard } from '../components';
 
 import styles from './catalog.module.scss';
 
+
 interface ICatalogProps {
   data: IProductCard[];
   totalPages: number;
@@ -22,6 +23,7 @@ interface ICatalogProps {
 export const Catalog: FC<ICatalogProps> = ({
   data,
   totalPages,
+  categoryId
 }) => {
   const dispatch: AppDispatch = useDispatch();
   const { pagination } = useTypedSelector(
@@ -68,6 +70,9 @@ export const Catalog: FC<ICatalogProps> = ({
 
 
   const isFetchingMore = useTypedSelector((state: RootState) => state.products.isFetchingMore);
+
+
+  console.log('catalog', categoryId)
 
   return (
     <div className={styles.catalog}>

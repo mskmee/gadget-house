@@ -5,13 +5,14 @@ import classNames from 'classnames';
 import { getBreadcrumbItems } from '@/components/helpers.ts';
 
 export const CustomBreadcrumbs = () => {
-  const location = useLocation();
-  const { category, id } = useParams();
+  const {pathname} = useLocation();
+  // const { category, id, pathname } = useParams();
 
-  const breadcrumbItems = getBreadcrumbItems(location.pathname, {
-    category,
-    id,
-  });
+  console.log('pathname', pathname)
+
+  const breadcrumbItems = getBreadcrumbItems(pathname);
+
+  console.log('breadcrumbItems', breadcrumbItems)
 
   return (
     <Breadcrumb
