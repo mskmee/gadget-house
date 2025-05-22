@@ -16,6 +16,7 @@
   }
   @media (max-width: 767px) {
     padding: 0 15px;
+    background: transparent;
   }
 
   .favoriteProductsWrap {
@@ -27,6 +28,9 @@
       color: #1c1817;
       > span {
         color: #78808c;
+        @media(max-width: 767px) {
+          display: none;
+        }
       }
     }
     .favoriteProductsMessageText {
@@ -54,6 +58,9 @@
         color: var(--white-color);
         background-color: #00680a;
       }
+    }
+    & > div {
+      background: #fff;
     }
   }
 }

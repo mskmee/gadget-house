@@ -9,13 +9,13 @@ export const StatusIcon = ({ status }: { status: string }) => {
       {status === 'COMPLETED' ? (
         <img
           src={CheckmarkWhite}
-          className={classNames(styles.orderStatusIcon, styles.completed)}
+          className={classNames(styles.orderStatusIcon__icon, styles.completed)}
           alt="Completed"
         />
       ) : (
         <img
           src={Checkmark}
-          className={classNames(styles.orderStatusIcon, styles.pending)}
+          className={classNames(styles.orderStatusIcon__icon, styles.pending)}
           alt="Pending"
         />
       )}

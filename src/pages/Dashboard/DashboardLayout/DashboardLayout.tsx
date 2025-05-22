@@ -56,7 +56,6 @@ export const DashboardLayout = () => {
           <div>
             <header
               className={styles.dashboardHeader}
-              style={{ padding: '0 50px' }}
             >
               <div className={styles.dashboardUserAvatar}>
                 <UserAvatar name={currentUser?.fullName || ''} />

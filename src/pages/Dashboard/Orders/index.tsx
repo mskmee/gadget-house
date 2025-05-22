@@ -33,81 +33,86 @@ export const UserOrders = () => {
   return (
     <main className={styles.dashboardOrders}>
       <h2 className={styles.dashboardOrdersTitle}>My orders</h2>
-      {orders?.page?.map((order) => (
-        <Collapse
-          key={order.id}
-          title={
-            <div className={styles.orderTitle}>
-              <StatusIcon status={order.status} />
-              <div className={styles.orderInfoHeader}>
-                <div className={styles.orderNumber}>№{order.id}</div>
-                <p className={styles.productQuantity}>
-                  {order.products.reduce(
-                    (acc, product) => acc + product.quantity,
-                    0,
-                  )}{' '}
-                  pieces
-                </p>
-                <div>
-                  {convertPriceToReadable(order.totalPrice, currency, locale)}
-                </div>
-              </div>
-              <div className={styles.orderProductPreview}>
-                <img
-                  src={order.products[0]?.images[0] || ''}
-                  alt={order.products[0]?.name || 'Product'}
-                  className={styles.productImage}
-                />
-              </div>
-            </div>
-          }
-        >
-          <div className={styles.orderDetails}>
-            <div className={styles.orderProducts}>
-              {order.products.map((product, index) => (
-                <div key={index} className={styles.productItem}>
-                  <img
-                    src={product.images[0]}
-                    alt={product.name}
-                    className={styles.productImage}
-                  />
-                  <div className={styles.productDetails}>
-                    <h4 className={styles.productName}>{product.name}</h4>
-                    <p className={styles.productQuantity}>
-                      {product.quantity} pieces
-                    </p>
-                    <p className={styles.productPrice}>
-                      {convertPriceToReadable(
-                        product.totalPrice,
-                        currency,
-                        locale,
-                      )}
-                    </p>
+      <div className='dashboardOrders__items'>
+        {orders?.page?.map((order) => (
+          <Collapse
+            key={order.id}
+            title={
+              <div className={styles.orderTitle}>
+                <StatusIcon status={order.status} />
+                <div className={styles.orderInfoHeader}>
+                  <div className={styles.orderNumber}>№{order.id}</div>
+                  <p className={styles.productQuantity}>
+                    {order.products.reduce(
+                      (acc, product) => acc + product.quantity,
+                      0,
+                    )}{' '}
+                    pieces
+                  </p>
+                  <div>
+                    {convertPriceToReadable(order.totalPrice, currency, locale)}
                   </div>
                 </div>
-              ))}
+                <div className={styles.orderProductPreview}>
+                  <img
+                    src={order.products[0]?.images[0] || ''}
+                    alt={order.products[0]?.name || 'Product'}
+                    className={styles.productImage}
+                  />
+                </div>
+              </div>
+            }
+          >
+            <div className={styles.orderDetails}>
+              <div className={styles.orderProducts}>
+                {order.products.map((product, index) => (
+                  <div key={index} className={styles.productItem}>
+                    <img
+                      src={product.images[0]}
+                      alt={product.name}
+                      className={styles.productImage}
+                    />
+                    <div className={styles.productDetails}>
+                      <h4 className={styles.productName}>{product.name}</h4>
+                      <p className={styles.productQuantity}>
+                        {product.quantity} pieces
+                      </p>
+                      <p className={styles.productPrice}>
+                        {convertPriceToReadable(
+                          product.totalPrice,
+                          currency,
+                          locale,
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className={styles.orderInfo}>
+                <div className={styles.orderInfo__left}>
+                  <label>Order delivery date and time</label>
+                  <p>{order.date}</p>
+                  <label>Delivery address</label>
+                  <p>{formatDeliveryInfo(order.address)}</p>
+                  <label>Payment method:</label>
+                  <p>{order.paymentMethod}</p>
+                </div>
+
+                <button
+                  className={classNames(
+                    'button',
+                    'button-secondary',
+                    styles.orderAgainButton,
+                  )}
+                  onClick={() => handleOrderAgain(order.products)}
+                >
+                  Order Again
+                </button>
+              </div>
             </div>
-            <div className={styles.orderInfo}>
-              <label>Order delivery date and time</label>
-              <p>{order.date}</p>
-              <label>Delivery address</label>
-              <p>{formatDeliveryInfo(order.address)}</p>
-              <label>Payment Method:</label>
-              <p>{order.paymentMethod}</p>
-              <button
-                className={classNames(
-                  'button',
-                  'button-secondary',
-                  styles.orderAgainButton,
-                )}
-                onClick={() => handleOrderAgain(order.products)}
-              >
-                Order Again
-              </button>
-            </div>
-          </div>
-        </Collapse>
-      ))}
+          </Collapse>
+        ))}
+      </div>
     </main>
   );
 };

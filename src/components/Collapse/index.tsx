@@ -23,14 +23,16 @@ export const Collapse: React.FC<CollapseProps> = ({
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={styles['collapse__header']}
+        className={`${styles['collapse__header']} ${isOpen ? styles['isOpen'] : ''}`}
       >
         <div className={styles['collapse__header-title']}>{title}</div>
-        <img
-          src={ArrowUp}
-          alt={isOpen ? 'Arrow Up Icon' : 'Arrow Down Icon'}
-          className={styles['collapse__header-icon']}
-        />
+        <div>
+          <img
+            src={ArrowUp}
+            alt={isOpen ? 'Arrow Up Icon' : 'Arrow Down Icon'}
+            className={styles['collapse__header-icon']}
+          />
+        </div>
       </button>
       <div className={styles['collapse__content']}>
         <div className={styles['collapse__content-wrapper']}>{children}</div>
