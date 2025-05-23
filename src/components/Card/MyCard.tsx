@@ -161,6 +161,7 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
                 onClick={handleSaveFavoriteProduct}
                 isLiked={isLikedProduct}
               />
+              
 
               {anotherColors && anotherColors?.length > 0 && (
                 <div className={styles['accessories-colors']}>
