@@ -280,7 +280,7 @@
       .mobilePopupTitle {
         display: -webkit-box;
         margin-bottom: 4px;
-        font-size: rem(20px);
+        font-size: 16px;
         font-weight: 400;
         color: #1c1817;
         line-height: 150%;
@@ -305,7 +305,7 @@
         }
       }
       .mobilePopupPrice {
-        font-size: rem(20px);
+        font-size: 16px;
         font-weight: 400;
         color: #1c1817;
         line-height: 150%;
@@ -344,14 +344,15 @@
         > p {
           width: 15px;
           text-align: center;
+          font-size: 16px;
         }
       }
       > button {
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 36px;
-        height: 36px;
+        width: 48px;
+        height: 48px;
         background-color: #f8f7fa;
         border: none;
         border: 1px solid #eae4ee;
@@ -359,7 +360,12 @@
         cursor: pointer;
         text-decoration: none;
         position: relative;
-        > svg path:last-child {
+        span {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        > svg {
           fill: #000;
         }
         .likedIcon svg path:first-child,

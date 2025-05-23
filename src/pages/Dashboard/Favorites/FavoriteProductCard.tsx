@@ -161,7 +161,7 @@ export const FavoriteProductCard: FC<IFavoriteProductProps> = ({
           <div className={styles.cardInfoPrice}>
             <span>{convertPriceToReadable(price, currency, locale)}</span>
             <button onClick={handleAddToBasket} tabIndex={-1}>
-              <BasketIcon />
+              <BasketIcon color="#fff" />
             </button>
           </div>
         </div>

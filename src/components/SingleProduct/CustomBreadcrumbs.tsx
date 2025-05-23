@@ -1,17 +1,13 @@
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { Breadcrumb } from 'antd';
 import style from './Product.module.scss';
 import classNames from 'classnames';
 import { getBreadcrumbItems } from '@/components/helpers.ts';
 
 export const CustomBreadcrumbs = () => {
-  const location = useLocation();
-  const { category, id } = useParams();
+  const {pathname} = useLocation();
 
-  const breadcrumbItems = getBreadcrumbItems(location.pathname, {
-    category,
-    id,
-  });
+  const breadcrumbItems = getBreadcrumbItems(pathname);
 
   return (
     <Breadcrumb

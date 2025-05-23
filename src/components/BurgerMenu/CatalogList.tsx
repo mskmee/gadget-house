@@ -31,13 +31,12 @@ useEffect(() => {
   function handleCatalogHeight() {
     const headerHeight = document.querySelector('header')?.clientHeight || 0;
     const windowHeight = window.innerHeight;
-
+    
     const catalogListHeight = windowHeight - headerHeight;
-
-    if(refCatalogWrap.current) {
-      refCatalogWrap.current.style.height = `${catalogListHeight}px`
+    if (refCatalogWrap.current) {
+      refCatalogWrap.current.style.maxHeight = `${catalogListHeight}px`;
+      refCatalogWrap.current.style.overflowY = 'auto';
     }
-
   }
 
   if (isCatalogListOpen) {
@@ -45,7 +44,6 @@ useEffect(() => {
     window.addEventListener('resize', handleCatalogHeight);
   }
 
-  window.addEventListener('resize', handleCatalogHeight)
   return () => {
     window.removeEventListener('resize', handleCatalogHeight);
   };

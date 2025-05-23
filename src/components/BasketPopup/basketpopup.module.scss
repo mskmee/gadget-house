@@ -302,11 +302,14 @@
 @media screen and (max-width: 768px) {
   .basketPopup {
     position: absolute;
-    top: -334px;
-    max-width: 387px;
-    padding: 24px 24px 0 24px;
+    // top: -334px;
+    // max-width: 387px;
+    bottom: 0;
+    top: auto;
+    padding: 24px 16px 0;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
+    min-height: auto;
     &Close {
       background-color: #fff;
       width: 48px;
@@ -335,7 +338,8 @@
         width: initial;
         height: initial;
         > img:first-child {
-          height: 60px;
+          width: 55px;
+          // height: 60px;
         }
         > img:last-child {
           width: 16px;
@@ -347,6 +351,7 @@
       .basketPopupProductTitle {
         font-size: initial;
         font-weight: 400;
+        line-height: 24px;
       }
       .basketPopupRemoveProduct {
         position: static;
@@ -368,8 +373,8 @@
         padding: 0 10px;
         column-gap: 18px;
         > p {
-          font-size: rem(24px);
-          line-height: 150%;
+          font-size: 24px;
+          line-height: 1.5;
         }
         button {
           width: 28px;
@@ -519,8 +524,8 @@
 
 @media screen and (max-width: 600px) {
   .basketPopup {
-    padding: 40px 15px 20px 15px;
-    min-height: 250px;
+    // padding: 40px 15px 20px 15px;
+    // min-height: 250px;
     .basketPopupClose {
       > img {
         width: 34px;
@@ -559,8 +564,8 @@
 }
 @media screen and (max-width: 500px) {
   .basketPopup {
-    padding: 40px 0 10px 0;
-    min-height: 210px;
+    // padding: 40px 0 10px 0;
+    // min-height: 210px;
     .basketPopupProduct {
       padding: 12px 6px 12px 0;
       border-radius: 12px;
@@ -606,8 +611,8 @@
 
 @media screen and (max-height: 450px) and (min-width: 1100px) {
   .basketPopup {
-    min-height: 300px;
-    padding: 50px 56px 40px 56px;
+    // min-height: 300px;
+    // padding: 50px 56px 40px 56px;
     &Close {
       width: 40px;
       position: absolute;

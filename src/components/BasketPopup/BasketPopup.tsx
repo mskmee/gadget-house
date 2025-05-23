@@ -89,49 +89,51 @@ export default function BasketPopup() {
       </button>
       {isLessThan768px ? (
         <>
-          <h2 className={styles.basketPopupTitle}>
-            Has been added to the basket
-          </h2>
-          <div className={styles.basketPopupTop}>
-            <div className={styles.basketPopupImg}>
-              <img src={imageSrc} alt={name || 'Product image'} />
-              <img
-                className={styles.basketPopupAdded}
-                src={inBasket}
-                alt="product in basket"
-              />
-            </div>
-            <h3 className={styles.basketPopupProductTitle}>{name}</h3>
-            <button
-              className={styles.basketPopupRemoveProduct}
-              onClick={handleRemoveProduct}
-            >
-              <DeleteFromBasket />
-            </button>
-          </div>
-
-          <div className={styles.basketPopupMiddle}>
-            <div className={styles.basketPopupProductQuantity}>
-              <button onClick={handleDecreaseItemQuantity}>
-                <img src={quantityDecreaseButton} alt="decrease button" />
-              </button>
-              <p>{quantity}</p>
-              <button onClick={handleIncreaseItemQuantity}>
-                <img src={quantityInreaseButtonMobile} alt="increase button" />
+          <div className={styles.basketPopupContent}>
+            <h2 className={styles.basketPopupTitle}>
+              Has been added to the basket
+            </h2>
+            <div className={styles.basketPopupTop}>
+              <div className={styles.basketPopupImg}>
+                <img src={imageSrc} alt={name || 'Product image'} />
+                <img
+                  className={styles.basketPopupAdded}
+                  src={inBasket}
+                  alt="product in basket"
+                />
+              </div>
+              <h3 className={styles.basketPopupProductTitle}>{name}</h3>
+              <button
+                className={styles.basketPopupRemoveProduct}
+                onClick={handleRemoveProduct}
+              >
+                <DeleteFromBasket />
               </button>
             </div>
-            <span className={styles.basketPopupProductPrice}>
-              {convertPriceToReadable(totalPrice, currency, locale)}
-            </span>
-          </div>
 
-          <div className={styles.basketPopupBottom}>
-            <button
-              className={styles.basketPopupGotoBasket}
-              onClick={handleGotoBasket}
-            >
-              Go to basket
-            </button>
+            <div className={styles.basketPopupMiddle}>
+              <div className={styles.basketPopupProductQuantity}>
+                <button onClick={handleDecreaseItemQuantity}>
+                  <img src={quantityDecreaseButton} alt="decrease button" />
+                </button>
+                <p>{quantity}</p>
+                <button onClick={handleIncreaseItemQuantity}>
+                  <img src={quantityInreaseButtonMobile} alt="increase button" />
+                </button>
+              </div>
+              <span className={styles.basketPopupProductPrice}>
+                {convertPriceToReadable(totalPrice, currency, locale)}
+              </span>
+            </div>
+
+            <div className={styles.basketPopupBottom}>
+              <button
+                className={styles.basketPopupGotoBasket}
+                onClick={handleGotoBasket}
+              >
+                Go to basket
+              </button>
+            </div>
           </div>
           <div className={styles.basketPopupCarousel}>
             <h2>You may also like</h2>

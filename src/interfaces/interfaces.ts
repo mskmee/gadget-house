@@ -5,6 +5,7 @@ import type {
   ReactElement,
 } from 'react';
 import type { StatusSearch } from '@/types/StatusSearch';
+import { IconProps } from '@/assets/icons/type/interfaces';
 
 export interface SliderButtonProps {
   handlePrevClick: (event: MouseEvent) => void;
@@ -60,7 +61,8 @@ export interface IProductCard {
   category?: string;
   available?: boolean;
   otherModels?: IProductOtherModels[],
-  memoryCards?: iProductMemoryCards[]
+  memoryCards?: iProductMemoryCards[],
+  categoryId?: number
 }
 
 export interface IShoppingCard extends IProductCard {
@@ -79,7 +81,7 @@ export interface IProduct {
   category: string;
   name: string;
   img: string[];
-  basketIcon: () => ReactElement;
+  basketIcon: (props: IconProps) => ReactElement;
   anotherColors: string[];
   isLiked: boolean;
   rate: number;
