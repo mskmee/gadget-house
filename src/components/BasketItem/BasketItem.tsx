@@ -103,6 +103,7 @@ export default function BasketItem({ product }: IBasketItemProps) {
           <HeartIcon
             onClick={handleSaveFavoriteProduct}
             isLiked={isLikedProduct}
+            fill={isLikedProduct ? '#6F4C9A' : '#000'}
           />
         </button>
       </div>
