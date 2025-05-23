@@ -7,6 +7,7 @@ import formatDeliveryInfo from '@/pages/OrderConfirmation/libs/utils/formatDeliv
 import { useActions } from '@/hooks/useActions';
 import classNames from 'classnames';
 import { IOrderItemProduct } from '@/utils/packages/orders/libs/types/order-item-response-dto';
+import { Link } from 'react-router-dom';
 
 export const UserOrders = () => {
   const orders = useTypedSelector((state) => state.order.orders);
@@ -73,7 +74,7 @@ export const UserOrders = () => {
                       className={styles.productImage}
                     />
                     <div className={styles.productDetails}>
-                      <h4 className={styles.productName}>{product.name}</h4>
+                      <Link to="#" className={styles.productName}>{product.name}</Link>
                       <p className={styles.productQuantity}>
                         {product.quantity} pieces
                       </p>

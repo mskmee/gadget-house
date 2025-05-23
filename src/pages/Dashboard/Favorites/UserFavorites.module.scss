@@ -8,15 +8,15 @@
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.101960784);
   @media screen and (max-width: 1100px) {
     flex: 1;
-    width: 100%;
-    box-shadow: none;
-    border-radius: 0;
-    // margin: 0 -50px;
+    margin: 0 15px;
     padding: 38px 60px;
   }
   @media (max-width: 767px) {
     padding: 0 15px;
+    margin: 0;
     background: transparent;
+    box-shadow: none;
+    border-radius: 0;
   }
 
   .favoriteProductsWrap {
@@ -59,9 +59,6 @@
         background-color: #00680a;
       }
     }
-    & > div {
-      background: #fff;
-    }
   }
 }
 
@@ -75,6 +72,7 @@
     padding: 16px;
     border: 1px solid #eae4ee;
     border-radius: 20px;
+    background-color: #fff;
     .cardImage {
       width: 180px;
     }
