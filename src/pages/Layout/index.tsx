@@ -11,6 +11,7 @@ import { useTypedSelector } from '@/hooks/useTypedSelector.ts';
 import { useActions } from '@/hooks/useActions.ts';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useBodyScrollLock } from '@/hooks/useBodyScrollLock';
 
 const Layout = () => {
   const isFixedHeader = useIsFixedHeader();
@@ -18,6 +19,9 @@ const Layout = () => {
     (state) => state.shopping_card,
   );
   const { closeBasketPopup } = useActions();
+
+  //if modal open - block scroll body
+  useBodyScrollLock(isBasketPopupOpen);
 
   const handleClosePopup = () => {
     closeBasketPopup();

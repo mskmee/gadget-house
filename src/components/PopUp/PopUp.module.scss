@@ -58,9 +58,11 @@
 
 .basket-modal {
   background: rgba(28, 24, 23, 0.7);
+  
   .content {
     padding: 0;
     height: auto;
+    
   }
   .close {
     display: none;
@@ -96,23 +98,13 @@
 }
 @media screen and (max-width: 768px) {
   .basket-modal {
+    align-items: flex-end;
     .content {
-      max-width: 420px;
-    }
-  }
-}
-@media screen and (max-width: 600px) {
-  .basket-modal {
-    .content {
-      width: 96%;
-    }
-  }
-}
-
-@media screen and (max-width: 450px) {
-  .basket-modal {
-    .content {
-      padding: 6px;
+      max-height: calc(100dvh - 50px);
+      max-width: 100%;
+      width: 100%;
+      height: auto;
+      border-radius: 24px 24px 0 0;
     }
   }
 }
