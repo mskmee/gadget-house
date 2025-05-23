@@ -9,8 +9,6 @@ export const CustomBreadcrumbs = () => {
 
   const breadcrumbItems = getBreadcrumbItems(pathname);
 
-  console.log('breadcrumbItems', breadcrumbItems)
-
   return (
     <Breadcrumb
       className={classNames(style['custom-breadcrumb'])}

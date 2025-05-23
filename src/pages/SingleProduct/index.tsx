@@ -46,8 +46,6 @@ export const SingleProductPage: FC = () => {
   }, [id, dispatch])
 
   const dinamicCurrentProduct = useTypedSelector((state: RootState) => state.products.activeProduct);
-console.log('name', dinamicCurrentProduct?.name)
-
 
   useDocumentTitle(dinamicCurrentProduct?.name || 'Product');
 

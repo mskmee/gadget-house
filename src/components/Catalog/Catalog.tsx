@@ -22,8 +22,7 @@ interface ICatalogProps {
 
 export const Catalog: FC<ICatalogProps> = ({
   data,
-  totalPages,
-  categoryId
+  totalPages
 }) => {
   const dispatch: AppDispatch = useDispatch();
   const { pagination } = useTypedSelector(
@@ -71,8 +70,6 @@ export const Catalog: FC<ICatalogProps> = ({
 
   const isFetchingMore = useTypedSelector((state: RootState) => state.products.isFetchingMore);
 
-
-  console.log('catalog', categoryId)
 
   return (
     <div className={styles.catalog}>

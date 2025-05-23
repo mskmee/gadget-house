@@ -56,7 +56,6 @@ export const DashboardLayout = () => {
     return <Navigate to={AppRoute.ROOT} replace />
   }
 
-  console.log('userID', userID)
   return (
     <>
 

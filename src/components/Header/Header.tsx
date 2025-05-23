@@ -116,10 +116,8 @@ export const Header = () => {
 
     if (isFixedHeader && headerBottom) {
       top = headerBottom.getBoundingClientRect().bottom
-      // console.log('1', top)
     } else if (header) {
       top = header.getBoundingClientRect().bottom;
-      // console.log('2', top)
     }
 
     overlay.style.top = `${top}px`;
