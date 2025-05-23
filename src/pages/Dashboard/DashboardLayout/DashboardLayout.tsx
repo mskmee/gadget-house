@@ -11,18 +11,20 @@ import classNames from 'classnames';
 import { HeartBlackIcon } from '@/assets/icons/HeartBlackIcon';
 import { ChangeUserData } from '@/assets/icons/ChangeUserData';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
-import { logout } from '@/store/auth/auth-slice';
 import { AppRoute } from '@/enums/Route';
+import { useActions } from '@/hooks/useActions';
+
 
 
 export const DashboardLayout = () => {
   const { pathname } = useLocation();
+  const { logout } = useActions();
 
   const [activeSection, setActiveSection] = useState<string>('');
   const { user: currentUser, isAuthenticated } = useTypedSelector(
     (state) => state.auth,
   );
-  const user_token = useTypedSelector(state => state.auth.userToken)
+  const userToken = useTypedSelector(state => state.auth.userToken)
 
   useEffect(() => {
     const parts = pathname.split('/').filter(Boolean);
@@ -52,7 +54,7 @@ export const DashboardLayout = () => {
 
   const userID = currentUser?.id;
 
-  if(!isAuthenticated && !user_token) {
+  if(!isAuthenticated && !userToken) {
     return <Navigate to={AppRoute.ROOT} replace />
   }
 
@@ -82,7 +84,6 @@ export const DashboardLayout = () => {
               <div className={styles.userStatisticsFavorites}>
                 <div>
                   <HeartIcon
-                    onClick={() => {}}
                     fill="#78808C"
                     width="24"
                     height="24"
@@ -90,7 +91,7 @@ export const DashboardLayout = () => {
                   <span>My favorites</span>
                 </div>
                 <span>
-                  {favoriteProducts.length > 0 ? favoriteProducts.length : 0}
+                  {favoriteProducts.length}
                 </span>
               </div>
             </div>

@@ -1,15 +1,13 @@
 import { PageLayout } from '@/components/PageLayout/PageLayout';
-import { AppDispatch, RootState } from '@/store';
-import { setSelectedCategory } from '@/store/filters/filters_slice';
+import { RootState } from '@/store';
 import  { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { Category as CatogoryENUM } from '@/enums/enums';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { useActions } from '@/hooks/useActions';
 
 function Category() {
-
-  const dispatch: AppDispatch = useDispatch();
-  const { productsData } = useSelector((state: RootState) => state.products);
+  const { productsData } = useTypedSelector((state: RootState) => state.products);
 
   const {category} = useParams();
   const categoryKey = category?.replace(/-/g, '_').toUpperCase() as keyof typeof CatogoryENUM;
@@ -17,9 +15,11 @@ function Category() {
 
   const isValidCategory = categoryId !== undefined;
 
+  const { setSelectedCategory } = useActions();
+
   useEffect(() => {
-    dispatch(setSelectedCategory(categoryId));
-  }, [dispatch, categoryId]);
+    setSelectedCategory(categoryId);
+  }, [setSelectedCategory, categoryId]);
 
   if(!isValidCategory) {
     return <div>Invalid category</div>

@@ -23,7 +23,7 @@ export const Collapse: React.FC<CollapseProps> = ({
     >
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`${styles['collapse__header']} ${isOpen ? styles['isOpen'] : ''}`}
+        className={classNames(styles['collapse__header'], {[styles['isOpen']]: isOpen})}
       >
         <div className={styles['collapse__header-title']}>{title}</div>
         <div>

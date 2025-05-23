@@ -106,11 +106,11 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
   ? getCategoryByName(product.categoryId)
   : undefined;
 
-  const FormattedName = (categoryName?: string): string | undefined => {
+  const getFormattedName = (categoryName?: string): string | undefined => {
     return categoryName?.toLocaleLowerCase().replace(/_/g, '-')
   }
 
-  const formatCategoryName = FormattedName(categoryName)
+  const formatCategoryName = getFormattedName(categoryName)
 
 
   return (

@@ -3,7 +3,7 @@ import styles from '@/components/Card/card.module.scss';
 import classNames from 'classnames';
 
 interface IHeartIcon {
-  onClick: () => void;
+  onClick?: () => void;
   isLiked?: boolean;
   type?: string;
   fill?: string;
@@ -28,7 +28,7 @@ export const HeartIcon: FC<IHeartIcon> = ({
       })}
       onClick={(e) => {
         e.preventDefault();
-        onClick();
+        onClick?.();
       }}
     >
       <svg

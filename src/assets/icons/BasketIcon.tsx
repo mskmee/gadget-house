@@ -1,4 +1,6 @@
-export const BasketIcon = ({color="currentColor"}: {color?: string}) => {
+import { IconProps } from "./type/interfaces";
+
+export const BasketIcon = ({color="currentColor"}: IconProps) => {
   return (
     <svg
       width="24"

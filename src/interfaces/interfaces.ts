@@ -5,6 +5,7 @@ import type {
   ReactElement,
 } from 'react';
 import type { StatusSearch } from '@/types/StatusSearch';
+import { IconProps } from '@/assets/icons/type/interfaces';
 
 export interface SliderButtonProps {
   handlePrevClick: (event: MouseEvent) => void;
@@ -80,7 +81,7 @@ export interface IProduct {
   category: string;
   name: string;
   img: string[];
-  basketIcon: (props: { color?: string }) => ReactElement;
+  basketIcon: (props: IconProps) => ReactElement;
   anotherColors: string[];
   isLiked: boolean;
   rate: number;
