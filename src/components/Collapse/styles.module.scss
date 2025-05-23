@@ -1,15 +1,26 @@
 .collapse {
   width: 100%;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  @media(max-width: 767px) {
+    border-radius: 8px;
+  }
+  &:not(:last-child) {
+    margin-bottom: 28px;
+  }
 
   &__header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    padding: 20px;
+    padding: 20px 30px;
     background-color: white;
-    border-radius: 8px;
+    border-radius: 20px;
     cursor: pointer;
+    &.isOpen {
+      border-radius: 20px 20px 0 0;
+    }
 
     &-title {
       display: flex;
@@ -19,15 +30,18 @@
     }
 
     &-icon {
-      margin-left: 0.5rem;
-      width: 2rem;
-      height: 2rem;
+      margin-left: 30px;
+      width: 34px;
+      height: 34px;
       color: #6b7280;
       transition: transform 0.2s ease-in-out;
       transform: rotate(180deg);
 
       .collapse[aria-expanded='true'] & {
         transform: rotate(0deg);
+      }
+      @media(max-width: 767px) {
+        margin-left: 10px;
       }
     }
   }
@@ -37,10 +51,11 @@
     transition: all 0.3s ease-in-out;
 
     &-wrapper {
-      padding: 1rem;
+      // padding: 1rem;
       background-color: white;
-      border: 1px solid #e5e7eb;
-      border-radius: 0 0 0.5rem 0.5rem;
+      // border-top: 1px solid #e5e7eb;
+      // border-bottom: 1px solid #e5e7eb;
+      border-radius: 0 0 20px 20px;
     }
   }
 
@@ -60,7 +75,7 @@
 @media screen and (max-width: 768px) {
   .collapse {
     &__header {
-      padding: 4px;
+      padding: 16px 8px 16px 16px;
     }
   }
 }

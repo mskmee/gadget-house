@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 
 import { PopUp } from '@/components/components';
 import LoginForm from './libs/components/LoginForm';
@@ -31,6 +31,13 @@ const AuthModal: FC<IAuthModalProps> = ({ isOpen, onClose }) => {
     setSuccessType(null);
     onClose();
   };
+
+  useEffect(() => {
+    if (isOpen) {
+      setCurrentForm(FormEnum.LOGIN);
+      setSuccessType(null);
+    }
+  }, [isOpen]);
 
   return (
     <PopUp isOpened={isOpen} onClose={handleClose} classname="authModal">
