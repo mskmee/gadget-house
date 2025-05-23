@@ -1,4 +1,4 @@
-export const BasketIcon = ({color="currentCOlor"}: {color?: string}) => {
+export const BasketIcon = ({color="currentColor"}: {color?: string}) => {
   return (
     <svg
       width="24"

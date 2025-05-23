@@ -80,7 +80,7 @@ export interface IProduct {
   category: string;
   name: string;
   img: string[];
-  basketIcon: () => ReactElement;
+  basketIcon: (props: { color?: string }) => ReactElement;
   anotherColors: string[];
   isLiked: boolean;
   rate: number;
