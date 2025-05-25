@@ -332,32 +332,6 @@
   }
 }
 
-.AddToBasketButton {
-  padding: 16px 34px;
-  z-index: 0;
-  background-color: #00820d;
-  border-radius: 12px;
-  cursor: pointer;
-  border: none !important;
-  position: relative;
-  color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 4px;
-  > span {
-    line-height: 150%;
-    font-size: 1rem;
-    font-weight: 500;
-  }
-
-  &:hover {
-    background-color: #4da856;
-  }
-  &:active {
-    background-color: #00680a;
-  }
-}
 
 //prodoct photo modal
 .photoModal {
@@ -1502,4 +1476,85 @@
       }
     }
   }
+}
+
+
+.photoModal {
+  &__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+  }
+  &__slideCounter {
+    font-size: 1.5rem;
+    color: #1c1817;
+    line-height: 150%;
+    @media(max-width: 991px) {
+      font-size: 20px;
+    }
+  }
+
+  .photoModalBottom_right {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 16px;
+    @media (max-width: 767px) {
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+    }
+    > span {
+      font-size: 42px;
+      font-weight: 500;
+      line-height: 150%;
+      color: #1c1817;
+      @media (max-width: 767px) {
+        font-size: 26px;
+      }
+    }
+  }
+}
+
+.AddToBasketButton {
+  padding: 16px 34px;
+  z-index: 0;
+  background-color: #00820d;
+  border-radius: 12px;
+  cursor: pointer;
+  border: none !important;
+  position: relative;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  @media(max-width: 991px) {
+    padding: 12px 20px;
+  }
+  @media(max-width: 767px) {
+    padding: 10px 15px;
+    & svg {
+      width: 21px;
+    }
+  }
+  > span {
+    line-height: 150%;
+    font-size: 1rem;
+    font-weight: 500;
+    @media(max-width: 767px) {
+      font-size: 14px;
+    }
+  }
+
+  &:hover {
+    background-color: #4da856;
+  }
+  &:active {
+    background-color: #00680a;
+  }
+}
+
+* {
+    -webkit-tap-highlight-color: transparent;
 }

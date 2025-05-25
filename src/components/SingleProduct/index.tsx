@@ -1,9 +1,8 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import style from './Product.module.scss';
 import { Rate } from 'antd';
 
 import {
-  arrowImg,
   deliverImg,
   paymentImg,
   productIsNotAvailableImg,
@@ -13,106 +12,40 @@ import {
 } from '@/assets/constants';
 import classNames from 'classnames';
 import { AddToBasketButton } from './AddToBasketButton';
-import { PhotoModal } from './PhotoModal';
+
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { convertPriceToReadable } from '@/utils/helpers/product';
 import { useMediaQuery } from 'react-responsive';
 import { IProductCard } from '@/interfaces/interfaces';
-import { useLocation } from 'react-router-dom';
+
+import ArrowIcon from '@/assets/single_product/ArrowIcon';
+
+
+import SliderWithTumbsAndModal from '@/UI/Slider/SliderWithTumbsAndModal/SliderWithTumbsAndModal';
+import { ArrowNext, ArrowPrev } from '@/UI/Slider/SliderArrows/SliderArrow';
 
 interface IProductProps {
   reviewsLength: number;
   dinamicCurrentProduct: IProductCard;
 }
 
-export const Product: FC<IProductProps> = ({
-  reviewsLength,
-  dinamicCurrentProduct,
-}) => {
-  const { pathname } = useLocation();
+export const Product: FC<IProductProps> = ({reviewsLength, dinamicCurrentProduct}) => {
+  
   const { currency, locale } = useTypedSelector((state) => state.shopping_card);
   const dinamicCurrentProductImages = dinamicCurrentProduct?.images;
-  const [currentSlide, setCurrentSlide] = useState({
-    id: 1,
-    img: dinamicCurrentProductImages[0].link,
-  });
 
-  const prevArrowRef = useRef<HTMLImageElement>(null);
-  const nextArrowRef = useRef<HTMLImageElement>(null);
   const [productCharacteristics, setProductCharacteristics] = useState({
     selectedColor: 'blue',
     selectedModel: 'Apple iPhone 15 Pro',
     selectedMemory: '256GB',
   });
 
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [modalImageSrc, setModalImageSrc] = useState<string | null>(null);
+
   const productRateRef = useRef<HTMLDivElement>(null);
 
   const isLargerThan768px = useMediaQuery({
     query: '(max-width: 768px)',
   });
-  const isLargerThan500px = useMediaQuery({
-    query: '(max-width: 500px)',
-  });
-
-  const handlePrevClick = () => {
-    if (currentSlide?.id !== 1) {
-      setCurrentSlide({
-        id: currentSlide.id - 1,
-        img: dinamicCurrentProductImages?.[currentSlide?.id - 2].link,
-      });
-    }
-  };
-
-  const handleNextClick = () => {
-    if (currentSlide?.id !== dinamicCurrentProductImages?.length) {
-      setCurrentSlide({
-        id: currentSlide.id + 1,
-        img: dinamicCurrentProductImages?.[currentSlide?.id].link,
-      });
-    }
-  };
-
-  const selectCurrentSlideByClick = (slideId: number) => {
-    return () => {
-      setCurrentSlide({
-        id: slideId,
-        img: dinamicCurrentProductImages?.[slideId - 1].link,
-      });
-    };
-  };
-
-  useEffect(() => {
-    if (currentSlide?.id === 1 && prevArrowRef.current) {
-      prevArrowRef.current.style.visibility = 'hidden';
-    } else {
-      if (prevArrowRef.current) {
-        prevArrowRef.current.style.visibility = 'visible';
-        prevArrowRef.current.style.cursor = 'pointer';
-        prevArrowRef.current.style.filter = 'none';
-      }
-    }
-    if (
-      currentSlide?.id === dinamicCurrentProductImages?.length &&
-      nextArrowRef.current
-    ) {
-      nextArrowRef.current.style.visibility = 'hidden';
-    } else {
-      if (nextArrowRef.current) {
-        nextArrowRef.current.style.visibility = 'visible';
-        nextArrowRef.current.style.cursor = 'pointer';
-        nextArrowRef.current.style.filter = 'none';
-      }
-    }
-  }, [currentSlide?.id, dinamicCurrentProductImages?.length, modalImageSrc]);
-
-  useEffect(() => {
-    setCurrentSlide({
-      id: 1,
-      img: dinamicCurrentProductImages[0].link,
-    });
-  }, [pathname]);
 
   const changeProductCharacteristics =
     (value: string, inStock = true, type: string) =>
@@ -136,11 +69,8 @@ export const Product: FC<IProductProps> = ({
         });
       }
     };
-  const openImageModal = (imageSrc: string) => {
-    document.body.style.width = '100%';
-    setModalImageSrc(imageSrc);
-    setIsModalVisible(true);
-  };
+
+  const isWidth575 = useMediaQuery({ query: '(max-width: 575px)',})
 
   return (
     <section className={style['product']} id="product">
@@ -166,56 +96,16 @@ export const Product: FC<IProductProps> = ({
         </div>
       )}
       <div className={style['product_custom-carousel-wrap']}>
-        <div className={style['product_carousel-current-picture']}>
-          <img
-            className={style['arrow-left']}
-            src={arrowImg}
-            alt="prev image arrow"
-            ref={prevArrowRef}
-            onClick={handlePrevClick}
+        <div className=''>
+          <SliderWithTumbsAndModal 
+            data={dinamicCurrentProductImages} 
+            prevArrow={<ArrowPrev classNameArrow='arrowLeft'><ArrowIcon color="#1C1817" /></ArrowPrev>}
+            nextArrow={<ArrowNext classNameArrow='arrowRight'><ArrowIcon color="#1C1817" /></ArrowNext>}
+            dinamicCurrentProduct={dinamicCurrentProduct}
+            slidesPerView={{ xs: 2, sm: 3, md: 4, lg: 6 }}
+            isMobile={isWidth575}
+            className="productSlider"
           />
-          <img
-            className={style['content-img']}
-            src={currentSlide?.img}
-            alt="current product picture"
-            onClick={() => openImageModal(currentSlide?.img)}
-          />
-          <img
-            className={style['arrow-right']}
-            src={arrowImg}
-            alt="next image arrow"
-            ref={nextArrowRef}
-            onClick={handleNextClick}
-          />
-        </div>
-        <div className={style['product_carousel-slicks']}>
-          {!isLargerThan500px ? (
-            <ul>
-              {dinamicCurrentProductImages?.map((item, i) => (
-                <li
-                  key={i}
-                  className={classNames({
-                    [style['selected-photo']]: currentSlide?.id === i + 1,
-                  })}
-                  onClick={selectCurrentSlideByClick(i + 1)}
-                >
-                  <img src={item.link} alt="product slick picture" />
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <ul>
-              {dinamicCurrentProductImages?.map((_, i) => (
-                <li
-                  key={i + 1}
-                  className={classNames({
-                    [style['selected-photo']]: currentSlide?.id === i + 1,
-                  })}
-                  onClick={selectCurrentSlideByClick(i + 1)}
-                ></li>
-              ))}
-            </ul>
-          )}
         </div>
       </div>
 
@@ -338,15 +228,6 @@ export const Product: FC<IProductProps> = ({
           </div>
         </div>
       </div>
-      <PhotoModal
-        isModalVisible={isModalVisible}
-        setIsModalVisible={setIsModalVisible}
-        modalImageSrc={modalImageSrc}
-        setModalImageSrc={setModalImageSrc}
-        currentSlide={currentSlide}
-        setCurrentSlide={setCurrentSlide}
-        dinamicCurrentProduct={dinamicCurrentProduct}
-      />
     </section>
   );
 };
