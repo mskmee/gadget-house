@@ -21,7 +21,7 @@ interface ISmartphoneCardProps {
   tempProduct: IProductCard | TProductImageCard | IBrandCard | undefined;
   classname: string;
   index?: number;
-  width: number;
+  width?: number;
 }
 
 const MAX_ITEMS = 8;
@@ -32,6 +32,7 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
   index,
   width
 }) => {
+
   const { toggleFavorite } = useActions();
   const product = tempProduct as IProductCard;
 
