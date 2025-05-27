@@ -1478,6 +1478,9 @@
   }
 }
 
+.product-photos__title {
+  margin-bottom: 24px;
+}
 
 .photoModal {
   &__inner {
@@ -1556,5 +1559,5 @@
 }
 
 * {
-    -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent;
 }

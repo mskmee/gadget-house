@@ -96,13 +96,27 @@ export const Product: FC<IProductProps> = ({reviewsLength, dinamicCurrentProduct
         </div>
       )}
       <div className={style['product_custom-carousel-wrap']}>
-        <div className=''>
+        <div className='relative'>
           <SliderWithTumbsAndModal 
             data={dinamicCurrentProductImages} 
             prevArrow={<ArrowPrev classNameArrow='arrowLeft'><ArrowIcon color="#1C1817" /></ArrowPrev>}
             nextArrow={<ArrowNext classNameArrow='arrowRight'><ArrowIcon color="#1C1817" /></ArrowNext>}
             dinamicCurrentProduct={dinamicCurrentProduct}
-            slidesPerView={{ xs: 2, sm: 3, md: 4, lg: 6 }}
+            slidesPerView={6}
+            breakpointsThumbs={{
+              575: {
+                slidesPerView: 2.5,
+              },
+              640: {
+                slidesPerView: 3.5,
+              },
+              768: {
+                slidesPerView: 4,
+              },
+              1024: {
+                slidesPerView: 6,
+              },
+            }}
             isMobile={isWidth575}
             className="productSlider"
           />

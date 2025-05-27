@@ -4,7 +4,7 @@ import styles from "./SliderArrow.module.scss"
 
 export function ArrowPrev({ classNameArrow, children }: ArrowProps) {
   return (
-    <div className={classNames(styles['swiper-button'], styles[classNameArrow])}>
+    <div className={classNames(styles['swiper-button'], ...(Array.isArray(classNameArrow) ? classNameArrow.map(c => styles[c]) : [styles[classNameArrow]]))}>
       {children}
     </div>
   );
@@ -12,7 +12,7 @@ export function ArrowPrev({ classNameArrow, children }: ArrowProps) {
 
 export function ArrowNext({ classNameArrow, children }: ArrowProps) {
   return (
-    <div className={classNames(styles['swiper-button'], styles[classNameArrow])}>
+    <div className={classNames(styles['swiper-button'], ...(Array.isArray(classNameArrow) ? classNameArrow.map(c => styles[c]) : [styles[classNameArrow]]))}>
       {children}
     </div>
   );

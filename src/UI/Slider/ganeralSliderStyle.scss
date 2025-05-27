@@ -6,6 +6,56 @@
   opacity: 0;
   visibility: hidden;
 }
+.relative {
+  position: relative;
+}
+
+.base-slider {
+  padding-bottom: 70px;
+  position: relative;
+  @media(max-width: 991px) {
+    padding-bottom: 0;
+  }
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 0;
+    top: auto;
+    width: 32px;
+    height: 32px;
+    margin-top: 0;
+    background-color: #fff;
+    border: 2px solid #00820d;
+    &.swiper-button-disabled {
+      border: 2px solid #c3c3c5;
+      opacity: 1;
+      visibility: visible;
+      svg {
+        color: #c3c3c5
+      }
+    }
+  }
+  .swiper-button-next {
+    right: 40px;
+    border-radius: 0 12px 12px 0;
+    border-left: 0;
+    &.swiper-button-disabled {
+      border-left: 0;
+      
+    }
+  }
+  .swiper-button-prev {
+    border-right: none;
+    right: 72px;
+    left: auto;
+    border-radius: 12px 0 0 12px;
+    &.swiper-button-disabled {
+      border-right: 0;
+    }
+  }
+}
 
 .mainSlider {
   &.photoModal__main {

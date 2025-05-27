@@ -1,6 +1,6 @@
 import { IProductCard, TProductImageCard } from "@/interfaces/interfaces";
 import React, { ReactElement, ReactNode } from "react";
-import { Swiper, SwiperModule } from "swiper/types";
+import { Swiper, SwiperModule, SwiperOptions } from "swiper/types";
 
 export interface SliderBaseProps {
   children: ReactNode; 
@@ -19,10 +19,11 @@ export interface SliderBaseProps {
   freeMode?: boolean;
   watchSlidesProgress?: boolean;
   onSlideChange?: (swiper: Swiper) => void;
+  breakpoints?: SwiperOptions['breakpoints'];
 }
 
 export interface ArrowProps {
-  classNameArrow: string;
+  classNameArrow: string | string[]
   children: React.ReactNode;
 }
 
@@ -47,14 +48,16 @@ export interface SliderThumbsProps {
   spaceBetween?: number;
   classNameMain?: string;
   isMobile?: boolean;
-  slidesPerView?: number | { [key: string]: number };
+  slidesPerView?: number;
   onSlideChange?: (realIndex: number) => void;
+  breakpointsThumbs?: Record<string, { slidesPerView: number }>;
 }
 
 export interface SliderThumbsAndModalProps extends SliderThumbsProps {
   dinamicCurrentProduct: IProductCard,
   isMobile?: boolean,
   className?: string
+  
 }
 
 export interface SlideInfo {
