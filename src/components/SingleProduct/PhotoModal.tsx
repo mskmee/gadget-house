@@ -69,7 +69,21 @@ export const PhotoModal: FC<iPhotoModalProps> = ({
                 prevArrow={<ArrowPrev classNameArrow='arrowLeft'><ArrowIcon color="#1C1817"/></ArrowPrev>} 
                 nextArrow={<ArrowNext classNameArrow='arrowRight'><ArrowIcon color="#1C1817"/></ArrowNext>}
                 currentSlide={currentSlide}
-                slidesPerView={{ xs: 2, sm: 3, md: 4, lg: 6 }}
+                breakpointsThumbs={{
+                  575: {
+                    slidesPerView: 2.5,
+                  },
+                  640: {
+                    slidesPerView: 3.5,
+                  },
+                  768: {
+                    slidesPerView: 4,
+                  },
+                  1024: {
+                    slidesPerView: 6,
+                  },
+                }}
+                slidesPerView={2.5}
                 spaceBetween={24}
                 isMobile={isWidth575}
                 classNameMain="photoModal__main"

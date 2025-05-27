@@ -1,4 +1,4 @@
-import  { useEffect, useState } from 'react';
+import  { useState } from 'react';
 
 import { FreeMode, Navigation, Thumbs,Pagination } from 'swiper/modules';
 import { SliderThumbsProps } from '../type/interfaces';
@@ -8,17 +8,8 @@ import classNames from 'classnames';
 
 function SliderThumbs({data, prevArrow, nextArrow, currentSlide, classNameThumb, slidesPerView, spaceBetween, classNameMain, isMobile, onSlideChange, breakpointsThumbs}: SliderThumbsProps) {
   const [thumbsSwiper, setThumbsSwiper] = useState<Swiper | null>(null);
+  // eslint-disable-next-line no-unused-vars
   const [mainSwiper, setMainSwiper] = useState<Swiper | null>(null);
-
-  useEffect(() => {
-    if (thumbsSwiper && currentSlide?.id) {
-      thumbsSwiper.slideTo(currentSlide.id - 1);
-    }
-    if (mainSwiper && currentSlide?.id) {
-      mainSwiper.slideTo(currentSlide.id - 1);
-    }
-  }, [currentSlide, thumbsSwiper, mainSwiper]);
-
 
   return (
     <>
@@ -32,6 +23,7 @@ function SliderThumbs({data, prevArrow, nextArrow, currentSlide, classNameThumb,
         pagination={isMobile ?? true}
         prevArrow={prevArrow}
         nextArrow={nextArrow}
+        initialSlide={(currentSlide?.id ?? 1) - 1}
         onSlideChange={({ realIndex }: { realIndex: number }) => {
           if (onSlideChange) {
             onSlideChange(realIndex);
@@ -53,6 +45,7 @@ function SliderThumbs({data, prevArrow, nextArrow, currentSlide, classNameThumb,
         watchSlidesProgress={true}
         breakpoints={breakpointsThumbs}
         slidesPerView={slidesPerView}
+        initialSlide={(currentSlide?.id ?? 1) - 1}
         modules={[FreeMode, Navigation, Thumbs, Pagination]}
         className={classNames('thumb-wrapper', classNameThumb)}
       >

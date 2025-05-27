@@ -1,8 +1,9 @@
 import { IProductCard, TProductImageCard } from "@/interfaces/interfaces";
 import React, { ReactElement, ReactNode } from "react";
+import { SwiperProps } from "swiper/react";
 import { Swiper, SwiperModule, SwiperOptions } from "swiper/types";
 
-export interface SliderBaseProps {
+export interface SliderBaseProps extends SwiperProps {
   children: ReactNode; 
   className?: string,
   spaceBetween?: number;
