@@ -1,0 +1,1 @@
+export { AdminPagination } from './AdminPagination';

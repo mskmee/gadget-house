@@ -10,7 +10,7 @@ export interface IOrderItemProduct extends OrderItemProduct {
   code: string;
 }
 
-interface IOrderItemAddress {
+export interface IOrderItemAddress {
   city: string;
   departmentNumber?: string;
   street?: string;
