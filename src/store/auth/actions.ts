@@ -5,41 +5,64 @@ import {
   AuthSignInRequestDto,
   AuthSignUpRequestDto,
   ChangePasswordRequestDto,
+  UserResponseDto,
 } from '@/utils/packages/auth/libs/types/types';
+import {
+  LocalStorageKey,
+  localStorageService,
+} from '@/utils/packages/local-storage';
+import { withAuthErrorHandler } from '../helpers/helpers';
 
 const getCredentials = createAsyncThunk(
   'auth/fetchCredentials',
-  async (data: AuthSignInRequestDto) => {
-    return await authService.signInAuth(data);
-  },
+  withAuthErrorHandler(async (data: AuthSignInRequestDto) => {
+    const response = await authService.signInAuth(data);
+    localStorageService.setItem(
+      LocalStorageKey.ACCESS_TOKEN,
+      response.accessToken,
+    );
+    localStorageService.setItem(
+      LocalStorageKey.REFRESH_TOKEN,
+      response.refreshToken,
+    );
+    return response;
+  }),
 );
 
 const createUser = createAsyncThunk(
   'auth/fetchUserCreate',
-  async (data: AuthSignUpRequestDto) => {
-    return await authService.signUpAuth(data);
-  },
+  withAuthErrorHandler(async (data: AuthSignUpRequestDto, { dispatch }) => {
+    const response = await authService.signUpAuth(data);
+    await dispatch(getCredentials(data));
+    return response;
+  }),
 );
 
 const forgotPassword = createAsyncThunk(
   'auth/fetchForgotPassword',
-  async (email: string) => {
+  withAuthErrorHandler(async (email: string) => {
     return await authService.forgotPassword(email);
-  },
+  }),
 );
 
 const changePassword = createAsyncThunk(
   'auth/fetchChangePassword',
-  async (data: ChangePasswordRequestDto) => {
+  withAuthErrorHandler(async (data: ChangePasswordRequestDto) => {
     return await authService.changePassword(data);
-  },
+  }),
 );
 
-const getUserData = createAsyncThunk(
-  'auth/fetchUserProfile ',
-  async () => {
+const getUserData = createAsyncThunk<UserResponseDto, void>(
+  'auth/fetchUserProfile',
+  withAuthErrorHandler(async () => {
     return await authService.fetchUserProfile();
-  },
+  }),
 );
 
-export { getCredentials, createUser, forgotPassword, changePassword, getUserData };
+export {
+  getCredentials,
+  createUser,
+  forgotPassword,
+  changePassword,
+  getUserData,
+};

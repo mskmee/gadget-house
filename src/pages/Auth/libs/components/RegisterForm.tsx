@@ -7,18 +7,21 @@ import { FormInput } from '@/components/components';
 import { registerFormValidationSchema } from '../validation-schemas/register-form-validation-schema';
 
 import styles from './form.module.scss';
+import { AuthLoader } from './AuthLoader/AuthLoader';
 
 interface IRegisterFormProps {
   initialValues: RegisterFormDto;
   // eslint-disable-next-line no-unused-vars
   onRegister: (dto: RegisterFormDto) => void;
   onSwitch: () => void;
+  isLoading: boolean;
 }
 
 const RegisterForm: FC<IRegisterFormProps> = ({
   initialValues,
   onRegister,
   onSwitch,
+  isLoading,
 }) => {
   const passwordRules = [
     'Password length must be between 8 and 24 characters',
@@ -32,7 +35,6 @@ const RegisterForm: FC<IRegisterFormProps> = ({
       <Formik<RegisterFormDto>
         initialValues={initialValues}
         validateOnBlur={true}
-        validateOnChange={true}
         validationSchema={registerFormValidationSchema}
         onSubmit={(values, { resetForm }) => {
           onRegister(values);
@@ -48,7 +50,7 @@ const RegisterForm: FC<IRegisterFormProps> = ({
               style={{ marginBottom: '24px' }}
             >
               <div className={styles.form__inputsName}>
-                <FormInput<RegisterFormDto>
+                <FormInput
                   name="fullName"
                   type="text"
                   label="Full name"
@@ -56,21 +58,21 @@ const RegisterForm: FC<IRegisterFormProps> = ({
                 />
               </div>
 
-              <FormInput<RegisterFormDto>
+              <FormInput
                 name="email"
                 type="text"
                 label="E-mail"
                 placeholder="E-mail"
               />
 
-              <FormInput<RegisterFormDto>
+              <FormInput
                 name="phoneNumber"
                 type="tel"
                 label="Phone number"
                 placeholder="Phone number"
               />
 
-              <FormInput<RegisterFormDto>
+              <FormInput
                 name="password"
                 type="password"
                 label="Password"
@@ -84,7 +86,7 @@ const RegisterForm: FC<IRegisterFormProps> = ({
                 ))}
               </ul>
 
-              <FormInput<RegisterFormDto>
+              <FormInput
                 name="passwordRepeat"
                 type="password"
                 label="Password"
@@ -93,21 +95,31 @@ const RegisterForm: FC<IRegisterFormProps> = ({
             </div>
 
             <div className={styles.form__buttons}>
-              <button
-                className={cn('button', 'button-secondary', styles.form__btn)}
-                type="submit"
-                disabled={!isValid}
-              >
-                Sign up
-              </button>
+              {isLoading ? (
+                <AuthLoader />
+              ) : (
+                <>
+                  <button
+                    className={cn(
+                      'button',
+                      'button-secondary',
+                      styles.form__btn,
+                    )}
+                    type="submit"
+                    disabled={!isValid}
+                  >
+                    Sign up
+                  </button>
 
-              <button
-                className={cn('button', 'button-primary', styles.form__btn)}
-                type="button"
-                onClick={onSwitch}
-              >
-                Log in
-              </button>
+                  <button
+                    className={cn('button', 'button-primary', styles.form__btn)}
+                    type="button"
+                    onClick={onSwitch}
+                  >
+                    Log in
+                  </button>
+                </>
+              )}
             </div>
           </Form>
         )}

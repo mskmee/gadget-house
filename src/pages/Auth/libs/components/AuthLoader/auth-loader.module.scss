@@ -1,0 +1,28 @@
+.loader {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  &__circle {
+    transform-origin: center;
+    animation: rotate 1s linear infinite;
+    stroke-dasharray: 60;
+    stroke-dashoffset: 60;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+    stroke-dashoffset: 60;
+  }
+
+  50% {
+    stroke-dashoffset: 0;
+  }
+
+  100% {
+    transform: rotate(360deg);
+    stroke-dashoffset: 60;
+  }
+}
