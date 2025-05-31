@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import { RegisterFormDto } from '../types/form-dto';
 
 const regx = {
-  name: /^[a-zA-Zа-яА-ЯґєіїҐЄІЇ]+([ '-][a-zA-Zа-яА-ЯґєіїҐЄІЇ]+)*$/,
+  name: /^[a-zA-Zа-яА-ЯґєіїҐЄІЇ]+(?:[ '-][a-zA-Zа-яА-ЯґєіїҐЄІЇ]+)*$/,
   email:
     /^(?![ .])[\w!#$%&'*+/=?^_`{|}~.-]{4,63}(?<![ .])@[a-zA-Z\d.-]{2,9}(?<![ ])\.[a-zA-Z]{2,9}$/,
   phone: /^\(0\d{2}\)-\d{3}-\d{2}-\d{2}$/,
@@ -14,7 +14,12 @@ const regx = {
 const fullName = Yup.string()
   .matches(regx.name, 'Please enter a correct name')
   .min(2, 'Name is too short!')
-  .max(20, 'Name is too long!')
+  .max(50, 'Name is too long!')
+  .test('two-words', 'Please enter both first and last name', (value) => {
+    if (!value) return false;
+    const words = value.trim().split(/\s+/);
+    return words.length >= 2;
+  })
   .required('This field is required');
 
 const email = Yup.string()

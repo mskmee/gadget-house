@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Reducer, useReducer, useState } from 'react';
+import { Reducer, useEffect, useReducer, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { AppDispatch } from '@/store';
@@ -23,9 +23,10 @@ import {
   getUserData,
 } from '@/store/auth/actions';
 import { SuccessType } from '../types/successType';
-import { LocalStorageKey, localStorageService } from '@/utils/packages/local-storage';
+
 import { LOGIN_PERMISSION_FORM_INITIAL_VALUE } from '../constants/login-permission-form-initial-value';
-import { setTokens } from '@/store/auth/auth-slice';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { DataStatus } from '@/enums/data-status';
 
 type Return = {
   currentForm: FormType;
@@ -37,9 +38,12 @@ type Return = {
   onLoginFormSubmit: (loginFormValue: LoginFormDto) => void;
   onRegisterFormSubmit: (registerFormValue: RegisterFormDto) => void;
   onForgotFormSubmit: (forgotFormValue: ForgotFormDto) => void;
-  onLoginPermissionFormSubmit: (loginPermissionFormValue: LoginPermissionFormDto) => void;
+  onLoginPermissionFormSubmit: (
+    loginPermissionFormValue: LoginPermissionFormDto,
+  ) => void;
   successType: SuccessType;
   setSuccessType: (type: SuccessType) => void;
+  isLoading: boolean;
 };
 
 type State = {
@@ -52,27 +56,28 @@ type State = {
 
 type ReducerAction =
   | {
-    type: AuthAction.LOGIN_FORM;
-    payload: LoginFormDto;
-  } | {
-    type: AuthAction.LOGIN_PERMISSION_FORM;
-    payload: LoginPermissionFormDto;
-  }
+      type: AuthAction.LOGIN_FORM;
+      payload: LoginFormDto;
+    }
   | {
-    type: AuthAction.REGISTER_FORM;
-    payload: RegisterFormDto;
-  }
+      type: AuthAction.LOGIN_PERMISSION_FORM;
+      payload: LoginPermissionFormDto;
+    }
   | {
-    type: AuthAction.FORGOT_FORM;
-    payload: ForgotFormDto;
-  }
+      type: AuthAction.REGISTER_FORM;
+      payload: RegisterFormDto;
+    }
   | {
-    type: AuthAction.SET_FORM;
-    payload: FormType
-  }
+      type: AuthAction.FORGOT_FORM;
+      payload: ForgotFormDto;
+    }
   | {
-    type: AuthAction.RESET_FORM;
-  };
+      type: AuthAction.SET_FORM;
+      payload: FormType;
+    }
+  | {
+      type: AuthAction.RESET_FORM;
+    };
 
 const INITIAL_STATE: State = {
   currentForm: FormEnum.LOGIN,
@@ -83,7 +88,6 @@ const INITIAL_STATE: State = {
 };
 
 const reducer: Reducer<State, ReducerAction> = (state, action) => {
-
   switch (action.type) {
     case AuthAction.LOGIN_FORM:
       return {
@@ -121,7 +125,7 @@ const reducer: Reducer<State, ReducerAction> = (state, action) => {
         loginFormValue: LOGIN_FORM_INITIAL_VALUE,
         registerFormValue: REGISTER_FORM_INITIAL_VALUE,
         forgotFormValue: FORGOT_FORM_INITIAL_VALUE,
-        loginPermissionFormValue: LOGIN_PERMISSION_FORM_INITIAL_VALUE
+        loginPermissionFormValue: LOGIN_PERMISSION_FORM_INITIAL_VALUE,
       };
 
     default:
@@ -133,7 +137,17 @@ const reducer: Reducer<State, ReducerAction> = (state, action) => {
 const useAuth = (): Return => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
   const dispatchApp: AppDispatch = useDispatch();
+  const { userToken, refreshToken } = useTypedSelector((state) => state.auth);
   const [successType, setSuccessType] = useState<SuccessType>(null);
+  const isLoading = useTypedSelector(
+    (state) => state.auth.dataStatus === DataStatus.PENDING,
+  );
+
+  useEffect(() => {
+    if (userToken && refreshToken) {
+      dispatchApp(getUserData());
+    }
+  }, [dispatchApp, refreshToken, userToken]);
 
   const setCurrentForm = (form: FormType) => {
     dispatch({ type: AuthAction.SET_FORM, payload: form });
@@ -146,25 +160,18 @@ const useAuth = (): Return => {
     };
 
     const result = await dispatchApp(getCredentials(val)).unwrap();
-
-    if (result.accessToken) {
-      setSuccessType(FormEnum.LOGIN);
-      localStorageService.setItem(LocalStorageKey.ACCESS_TOKEN, result.accessToken);
-      localStorageService.setItem(LocalStorageKey.REFRESH_TOKEN, result.refreshToken);
-      dispatchApp(setTokens({ accessToken: result.accessToken, refreshToken: result.refreshToken }));
-
-      dispatchApp(getUserData());
+    if (!result) {
+      return;
     }
-
+    setSuccessType(FormEnum.LOGIN);
     dispatch({
-      type: AuthAction.LOGIN_FORM,
-      payload: loginFormValue,
+      type: AuthAction.RESET_FORM,
     });
-
-    dispatch({ type: AuthAction.RESET_FORM });
   };
 
-  const onLoginPermissionFormSubmit = async (loginPermissionFormValue: LoginPermissionFormDto) => {
+  const onLoginPermissionFormSubmit = async (
+    loginPermissionFormValue: LoginPermissionFormDto,
+  ) => {
     const val: LoginPermissionFormDto = {
       fullName: loginPermissionFormValue.fullName,
       email: loginPermissionFormValue.email,
@@ -194,21 +201,15 @@ const useAuth = (): Return => {
     };
 
     const result = await dispatchApp(createUser(val)).unwrap();
-
-    if (result.email) {
-      setSuccessType(FormEnum.REGISTER);
+    if (!result) {
+      return;
     }
 
-    dispatch({
-      type: AuthAction.REGISTER_FORM,
-      payload: registerFormValue,
-    });
-
+    setSuccessType(FormEnum.REGISTER);
     dispatch({ type: AuthAction.RESET_FORM });
   };
 
   const onForgotFormSubmit = async (forgotFormValue: ForgotFormDto) => {
-
     const val = {
       email: forgotFormValue.email,
     };
@@ -240,6 +241,7 @@ const useAuth = (): Return => {
     onForgotFormSubmit,
     successType,
     setSuccessType,
+    isLoading,
   };
 };
 
