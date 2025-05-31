@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '@/enums/enums';
 import { LeftArrow } from '@/assets/constants';
 
-import styles from '../admin-invoice.module.scss';
+import styles from './admin-invoice-header.module.scss';
 
 interface AdminInvoiceHeaderProps {
   orderId?: string;

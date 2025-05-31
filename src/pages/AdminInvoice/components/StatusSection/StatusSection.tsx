@@ -3,7 +3,7 @@ import cn from 'classnames';
 
 import { OrderStatus } from '@/enums/enums';
 
-import styles from '../admin-invoice.module.scss';
+import styles from '../../admin-invoice.module.scss';
 
 interface StatusSectionProps {
   selectedStatus: string | null;

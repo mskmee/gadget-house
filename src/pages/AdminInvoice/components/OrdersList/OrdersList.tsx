@@ -2,10 +2,11 @@ import { useCallback, useState } from 'react';
 import cn from 'classnames';
 
 import { IProductCard } from '@/interfaces/interfaces';
-import { OrderItem } from './OrderItem';
+import { OrderItem } from '../OrderItem/OrderItem';
 
-import styles from '../admin-invoice.module.scss';
+import styles from '../../admin-invoice.module.scss';
 import { AdminSearch } from '@/pages/AdminPage/components/Search/AdminSearch';
+import { convertPriceToReadable } from '@/utils/helpers/helpers';
 
 interface OrdersListProps {
   products: Array<{
@@ -95,7 +96,7 @@ export const OrdersList = ({
       <div className={styles.adminInvoice__ordersTotal}>
         <span className={styles.adminInvoice__ordersTotalText}>Sum</span>
         <span className={styles.adminInvoice__ordersTotalPrice}>
-          {totalPrice} ₴
+          {convertPriceToReadable(totalPrice ?? 0, '₴', 'uk-UA')}
         </span>
       </div>
     </div>

@@ -7,12 +7,13 @@ import { AppDispatch, RootState } from '@/store';
 import { patchOrder } from '@/store/orders/actions';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 
-
 import styles from './admin-invoice.module.scss';
-import { AdminInvoiceHeader } from './components/AdminInvoiceHeader';
-import { OrdersList } from './components/OrdersList';
-import { DeliveryDetails } from './components/DeliveryDetails';
-import { StatusSection } from './components/StatusSection';
+import {
+  AdminInvoiceHeader,
+  DeliveryDetails,
+  OrdersList,
+  StatusSection,
+} from './components';
 
 const AdminInvoice = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -36,12 +37,10 @@ const AdminInvoice = () => {
   }, []);
 
   const handleFieldChange = useCallback((field: string, value: string) => {
-    // Логика обновления полей формы
     console.log('Field change:', field, value);
   }, []);
 
   const handleStatusConfirm = useCallback(() => {
-    // Логика подтверждения статуса
     console.log('Confirm status');
   }, []);
 

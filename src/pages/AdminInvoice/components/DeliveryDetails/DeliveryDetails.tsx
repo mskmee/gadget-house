@@ -1,8 +1,8 @@
-// components/AdminInvoice/DeliveryDetails.tsx
 import cn from 'classnames';
 
-import styles from '../admin-invoice.module.scss';
+import styles from '../../admin-invoice.module.scss';
 import { IOrderItemAddress } from '@/utils/packages/orders/libs/types/order-item-response-dto';
+import { formatKeyToLabel } from '@/utils/helpers/formatKeyToLabel';
 
 interface DeliveryDetailsProps {
   fullName?: string;
@@ -41,12 +41,7 @@ export const DeliveryDetails = ({
             ([key, value]) =>
               value && (
                 <label key={key} className={styles.adminInvoice__deliveryInput}>
-                  <span>
-                    {key
-                      .replace(/([A-Z])/g, ' $1')
-                      .trim()
-                      .toLowerCase()}
-                  </span>
+                  <span>{formatKeyToLabel(key)}</span>
                   <input
                     type="text"
                     value={value}

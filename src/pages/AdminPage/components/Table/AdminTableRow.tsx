@@ -1,14 +1,10 @@
 import styles from '../../styles/admin-page.module.scss';
 import { Link } from 'react-router-dom';
 import { Checkbox, CheckboxChangeEvent } from 'antd';
+import { convertPriceToReadable } from '@/utils/helpers/helpers';
+import { OrderItem } from '@/types/OrderItem';
 
-interface OrderItem {
-  id: string;
-  phoneNumber: string;
-  status: string;
-  totalPrice: number;
-  date: string;
-}
+
 
 interface AdminTableRowProps {
   item: OrderItem;
@@ -51,7 +47,7 @@ export const AdminTableRow = ({
           {item.status}
         </button>
       </td>
-      <td>{item.totalPrice} ₴</td>
+      <td>{convertPriceToReadable(item.totalPrice ?? 0, '₴', 'uk-UA')}</td>
       <td>{item.date}</td>
     </tr>
   );

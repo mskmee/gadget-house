@@ -1,0 +1,23 @@
+.adminInvoice__header {
+  padding: 28px 60px;
+  border-radius: 28px;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+  background: var(--white-color);
+
+  display: flex;
+  align-items: center;
+  gap: 19px;
+
+  img {
+    width: 15px;
+    height: 26px;
+  }
+
+  h2 {
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 150%;
+    color: var(--buttons-and-accent-color);
+  }
+}

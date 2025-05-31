@@ -1,5 +1,5 @@
 
-import styles from '../admin-invoice.module.scss';
+import styles from '../../admin-invoice.module.scss';
 
 interface OrderItemProps {
   product: {
@@ -14,6 +14,9 @@ interface OrderItemProps {
 }
 
 export const OrderItem = ({ product, onDelete }: OrderItemProps) => {
+  const handleDelete = () => {
+    onDelete(product.id);
+  };
   return (
     <li className={styles.adminInvoice__ordersItem}>
       <div className={styles.adminInvoice__ordersItemName}>
@@ -30,9 +33,11 @@ export const OrderItem = ({ product, onDelete }: OrderItemProps) => {
           {product.totalPrice} ₴
         </span>
 
-        <img src={product.images[0]} alt={product.name} />
+        {product.images?.[0] && (
+          <img src={product.images[0]} alt={product.name} />
+        )}
 
-        <button onClick={() => onDelete(product.id)}>x</button>
+        <button onClick={handleDelete}>x</button>
       </div>
     </li>
   );
