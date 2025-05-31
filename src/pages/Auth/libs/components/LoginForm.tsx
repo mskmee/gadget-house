@@ -7,6 +7,7 @@ import { loginFormValidationSchema } from '../validation-schemas/login-form-vali
 import { FormInput } from '@/components/components';
 
 import styles from './form.module.scss';
+import { AuthLoader } from './AuthLoader/AuthLoader';
 
 interface ILoginFormProps {
   initialValues: LoginFormDto;
@@ -14,6 +15,7 @@ interface ILoginFormProps {
   onLogin: (dto: LoginFormDto) => void;
   onSwitch: () => void;
   onForgot: () => void;
+  isLoading: boolean;
 }
 
 const LoginForm: FC<ILoginFormProps> = ({
@@ -21,6 +23,7 @@ const LoginForm: FC<ILoginFormProps> = ({
   onLogin,
   onSwitch,
   onForgot,
+  isLoading,
 }) => {
   return (
     <div className={styles.form}>
@@ -61,23 +64,32 @@ const LoginForm: FC<ILoginFormProps> = ({
             >
               Forgot Password
             </button>
-
             <div className={styles.form__buttons}>
-              <button
-                className={cn('button', 'button-secondary', styles.form__btn)}
-                type="submit"
-                disabled={!isValid}
-              >
-                Log in
-              </button>
+              {isLoading ? (
+                <AuthLoader />
+              ) : (
+                <>
+                  <button
+                    className={cn(
+                      'button',
+                      'button-secondary',
+                      styles.form__btn,
+                    )}
+                    type="submit"
+                    disabled={!isValid}
+                  >
+                    Log in
+                  </button>
 
-              <button
-                className={cn('button', 'button-primary', styles.form__btn)}
-                type="button"
-                onClick={onSwitch}
-              >
-                Sign up
-              </button>
+                  <button
+                    className={cn('button', 'button-primary', styles.form__btn)}
+                    type="button"
+                    onClick={onSwitch}
+                  >
+                    Sign up
+                  </button>
+                </>
+              )}
             </div>
           </Form>
         )}

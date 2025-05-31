@@ -25,6 +25,7 @@ const AuthModal: FC<IAuthModalProps> = ({ isOpen, onClose }) => {
     onRegisterFormSubmit,
     successType,
     setSuccessType,
+    isLoading,
   } = useAuth();
 
   const handleClose = () => {
@@ -51,6 +52,7 @@ const AuthModal: FC<IAuthModalProps> = ({ isOpen, onClose }) => {
               onLogin={onLoginFormSubmit}
               onSwitch={() => setCurrentForm(FormEnum.REGISTER)}
               onForgot={() => setCurrentForm(FormEnum.FORGOT)}
+              isLoading={isLoading}
             />
           )}
           {currentForm === FormEnum.REGISTER && (
@@ -58,6 +60,7 @@ const AuthModal: FC<IAuthModalProps> = ({ isOpen, onClose }) => {
               initialValues={registerFormValue}
               onRegister={onRegisterFormSubmit}
               onSwitch={() => setCurrentForm(FormEnum.LOGIN)}
+              isLoading={isLoading}
             />
           )}
           {currentForm === FormEnum.FORGOT && (
@@ -65,6 +68,7 @@ const AuthModal: FC<IAuthModalProps> = ({ isOpen, onClose }) => {
               initialValues={forgotFormValue}
               onReset={onForgotFormSubmit}
               onSwitch={() => setCurrentForm(FormEnum.LOGIN)}
+              isLoading={isLoading}
             />
           )}
         </>
