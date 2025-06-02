@@ -7,9 +7,13 @@ import styles from './admin-invoice-header.module.scss';
 
 interface AdminInvoiceHeaderProps {
   orderId?: string;
+  createdAt?: string;
 }
 
-export const AdminInvoiceHeader = ({ orderId }: AdminInvoiceHeaderProps) => {
+export const AdminInvoiceHeader = ({
+  orderId,
+  createdAt,
+}: AdminInvoiceHeaderProps) => {
   const navigate = useNavigate();
 
   const handleBackClick = () => {
@@ -21,10 +25,13 @@ export const AdminInvoiceHeader = ({ orderId }: AdminInvoiceHeaderProps) => {
 
   return (
     <header className={styles.adminInvoice__header}>
-      <button type="button" onClick={handleBackClick}>
-        <img src={LeftArrow} alt="Left Arrow Icon" />
-      </button>
-      <h2>Order {orderId}</h2>
+      <div className={styles.adminInvoice__header_title}>
+        <button type="button" onClick={handleBackClick}>
+          <img src={LeftArrow} alt="Left Arrow Icon" />
+        </button>
+        <h2>Order {orderId}</h2>
+      </div>
+      <span>Date: {createdAt}</span>
     </header>
   );
 };
