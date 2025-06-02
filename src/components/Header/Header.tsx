@@ -53,7 +53,7 @@ export const Header = () => {
     location.pathname === AppRoute.BASKET_PAGE ||
     location.pathname === AppRoute.ORDER ||
     location.pathname === AppRoute.ORDER_SUCCESS;
-  const shouldShowCartTooltip = products.length && !isBasketPage;
+  const shouldShowCartTooltip = products.length > 0 && !isBasketPage;
 
   // open catalog
   const openCatalog = () => {
@@ -115,7 +115,7 @@ export const Header = () => {
     let top = 0;
 
     if (isFixedHeader && headerBottom) {
-      top = headerBottom.getBoundingClientRect().bottom
+      top = headerBottom.getBoundingClientRect().bottom;
     } else if (header) {
       top = header.getBoundingClientRect().bottom;
     }
