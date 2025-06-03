@@ -1,10 +1,10 @@
 import {
   useState,
   useRef,
-  useEffect,
   FocusEvent,
   MouseEvent,
   useLayoutEffect,
+  useEffect,
 } from 'react';
 import styles from './header.module.scss';
 import classNames from 'classnames';
@@ -34,6 +34,9 @@ export const Header = () => {
 
   const products = useTypedSelector((state) => state.shopping_card.products);
   const searchValue = useTypedSelector((state) => state.search.searchValue);
+  const isGlobalOverlayActive = useTypedSelector(
+    (state) => state.search.isGlobalOverlayActive,
+  );
 
   const headerRef = useRef<HTMLButtonElement | null>(null);
   const headerBottomRef = useRef<HTMLDivElement | null>(null);
@@ -95,14 +98,14 @@ export const Header = () => {
     });
   };
 
-  // show overpay when user do search
+  // test
   useEffect(() => {
-    if (searchValue) {
+    if (searchValue && isGlobalOverlayActive) {
       setIsOverlayActive(true);
     } else {
       setIsOverlayActive(false);
     }
-  }, [searchValue]);
+  }, [searchValue, isGlobalOverlayActive]);
 
   // add position top for overlay
   useLayoutEffect(() => {
