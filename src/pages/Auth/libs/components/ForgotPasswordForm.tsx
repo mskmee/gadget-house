@@ -7,18 +7,21 @@ import { FormInput } from '@/components/components';
 import { forgotFormValidationSchema } from '../validation-schemas/forgot-form-validation-schema';
 
 import styles from './form.module.scss';
+import { AuthLoader } from './AuthLoader/AuthLoader';
 
 interface IForgotPasswordFormProps {
   initialValues: ForgotFormDto;
   // eslint-disable-next-line no-unused-vars
   onReset: (dto: ForgotFormDto) => void;
   onSwitch: () => void;
+  isLoading: boolean;
 }
 
 const ForgotPasswordForm: FC<IForgotPasswordFormProps> = ({
   initialValues,
   onReset,
   onSwitch,
+  isLoading,
 }) => {
   return (
     <div className={styles.form}>
@@ -49,22 +52,32 @@ const ForgotPasswordForm: FC<IForgotPasswordFormProps> = ({
             </div>
 
             <div className={styles.form__buttons}>
-              <button
-                className={cn('button', 'button-secondary', styles.form__btn)}
-                type="submit"
-                onClick={onSwitch}
-                disabled={!isValid}
-              >
-                Reset Password
-              </button>
+              {isLoading ? (
+                <AuthLoader />
+              ) : (
+                <>
+                  <button
+                    className={cn(
+                      'button',
+                      'button-secondary',
+                      styles.form__btn,
+                    )}
+                    type="submit"
+                    onClick={onSwitch}
+                    disabled={!isValid}
+                  >
+                    Reset Password
+                  </button>
 
-              <button
-                className={cn('button', 'button-primary', styles.form__btn)}
-                type="button"
-                onClick={onSwitch}
-              >
-                Log in
-              </button>
+                  <button
+                    className={cn('button', 'button-primary', styles.form__btn)}
+                    type="button"
+                    onClick={onSwitch}
+                  >
+                    Log in
+                  </button>
+                </>
+              )}
             </div>
           </Form>
         )}

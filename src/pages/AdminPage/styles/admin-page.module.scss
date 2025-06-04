@@ -68,7 +68,7 @@
         &-inner {
           width: 24px;
           height: 24px;
-          background-image: url("../../assets/icons/checkbox.svg");
+          background-image: url("../../../assets/icons/checkbox.svg");
           background-repeat: no-repeat;
           background-position: center center;
           background-size: contain;
@@ -91,7 +91,7 @@
         }
 
         &-checked .ant-checkbox-inner {
-          background-image: url("../../assets/icons/checkbox-checked.svg") !important;
+          background-image: url("../../../assets/icons/checkbox-checked.svg") !important;
           border-color: transparent !important;
           background-color: transparent !important;
         }
@@ -139,7 +139,7 @@
         :global {
           .ant-checkbox {
             &.ant-checkbox-indeterminate .ant-checkbox-inner {
-              background-image: url("../../assets/icons/checkbox-checked.svg") !important;
+              background-image: url("../../../assets/icons/checkbox-checked.svg") !important;
               border-color: transparent !important;
               background-color: transparent !important;
             }
