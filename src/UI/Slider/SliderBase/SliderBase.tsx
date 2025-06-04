@@ -42,12 +42,14 @@ function SliderBase({spaceBetween, slidesPerView, pagination=true, children, nav
       </Swiper>
 
       {navigation && (
-        <SliderCustomArrows
-          prevButtonRef={prevButtonRef} 
-          nextButtonRef={nextButtonRef} 
-          prevArrow={prevArrow} 
-          nextArrow={nextArrow} 
-        />
+        <div className='slider-nav__arrows'>
+          <SliderCustomArrows
+            prevButtonRef={prevButtonRef} 
+            nextButtonRef={nextButtonRef} 
+            prevArrow={prevArrow} 
+            nextArrow={nextArrow} 
+          />
+        </div>
       )}
     </div>
   );
