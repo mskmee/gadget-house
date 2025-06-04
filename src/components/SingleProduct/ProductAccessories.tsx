@@ -1,5 +1,3 @@
-import React, { FC } from 'react';
-
 import style from './Product.module.scss';
 import SliderBase from '@/UI/Slider/SliderBase/SliderBase';
 import useLocalStorage from '@/hooks/useLocalStorage';
@@ -12,11 +10,8 @@ import { Navigation } from 'swiper/modules';
 import { MyCard } from '../components';
 import classNames from 'classnames';
 
-type ProductAccessoriesProps = {
-  refs: React.MutableRefObject<Record<string, HTMLDivElement | null>>;
-};
 
-export const ProductAccessories: FC<ProductAccessoriesProps> = () => {
+export const ProductAccessories = () => {
   const isMobile = useMediaQuery({query: '(max-width: 991px)',})
   const shouldShowNavigation = isMobile ? false : true;
 

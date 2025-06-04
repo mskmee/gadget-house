@@ -18,7 +18,10 @@ function ProductMemory({memories, selectedMemory, onSelectedMemory}: ProductMemo
                 [style['selected-memory']]: selectedMemory === memory.value && isAvailable,
                 [style['not-available']]: !isAvailable,
               })}
-              onClick={() => onSelectedMemory(memory.value, true)}
+              onClick={() => {
+                if(!isAvailable) return;
+                onSelectedMemory(memory.value, true)
+              }}
             >
               {memory.value}
             </li>

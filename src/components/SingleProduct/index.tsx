@@ -34,10 +34,10 @@ export const Product: FC<IProductProps> = ({dinamicCurrentProduct}) => {
   const reviews = useTypedSelector(state => state.singleProduct.reviews);
   const reviewsLength = reviews?.totalElements;
 
-  const {changeCharacteristic, productCharacteristics} = useProductDetails({
-    selectedColor: dinamicCurrentProduct?.alternativeProducts?.color?.[0]?.value ?? null,
-    selectedModel: dinamicCurrentProduct?.alternativeProducts?.model?.[0]?.value ?? null,
-    selectedMemory: dinamicCurrentProduct?.alternativeProducts?.romMemory?.[0]?.value ?? null,
+  const { changeCharacteristic, productCharacteristics } = useProductDetails({
+    selectedColor: dinamicCurrentProduct?.alternativeProducts?.color?.find(c => c.available)?.value ?? null,
+    selectedModel: dinamicCurrentProduct?.alternativeProducts?.model?.find(m => m.available)?.value ?? null,
+    selectedMemory: dinamicCurrentProduct?.alternativeProducts?.romMemory?.find(r => r.available)?.value ?? null,
   });
   
   const { currency, locale } = useTypedSelector((state) => state.shopping_card);
@@ -115,7 +115,7 @@ export const Product: FC<IProductProps> = ({dinamicCurrentProduct}) => {
                     return <img src={rateImg} alt="product rate star" />;
                   }}
                 />
-                <a href="#users-review">
+                <a>
                   <img src={reviewImg} alt="review pic" />
                   <span>({reviewsLength})</span>
                 </a>

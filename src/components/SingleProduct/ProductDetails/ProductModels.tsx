@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import { ProductModelsProps } from './type/interfaces';
 
 function ProductModels({models, selectedModel, onSelectedModels}: ProductModelsProps) {
-  console.log('models', models)
+
   return (
     <div className={style['product_other-models']}>
       <h3>Other models</h3>
@@ -18,7 +18,10 @@ function ProductModels({models, selectedModel, onSelectedModels}: ProductModelsP
                 [style['selected-model']]: selectedModel === model.value && isAvailable,
                 [style['not-available']]: !isAvailable,
               })}
-              onClick={() => onSelectedModels(model.value, true)}
+              onClick={() => {
+                if(!isAvailable) return;
+                onSelectedModels(model.value, true)
+              }}
             >
               {model.value}
             </li>

@@ -77,21 +77,33 @@ export const SingleProductPage: FC = () => {
       <div
         className={classNames(style['single-product__wrap'], 'container-xxl')}
       >
-        {dinamicCurrentProduct && (
-          <Product
-            dinamicCurrentProduct={dinamicCurrentProduct}
-          />
-        )}
+        <div ref={(el) => sectionRefs.current['#product'] = el}>
+          {dinamicCurrentProduct && (
+            <Product
+              dinamicCurrentProduct={dinamicCurrentProduct}
+            />
+          )}
+        </div>
 
-        <ProductCharacteristics />
+        <div ref={(el) => sectionRefs.current['#product-characteristics'] = el}>
+          <ProductCharacteristics />
+        </div>
 
-        <ProductReviews productTitle={dinamicCurrentProduct?.name ?? ''} productId={Number(dinamicCurrentProduct?.id)} />
+        <div ref={(el) => sectionRefs.current['#product-reviews'] = el}>
+          <ProductReviews productTitle={dinamicCurrentProduct?.name ?? ''} productId={Number(dinamicCurrentProduct?.id)} />
+        </div>
 
-        {dinamicCurrentProduct && (
-          <ProductPhotos productImageCards={dinamicCurrentProduct?.images} />
-        )}
+        <div ref={(el) => sectionRefs.current['#product-photos'] = el}>
+          {dinamicCurrentProduct && (
+            <ProductPhotos productImageCards={dinamicCurrentProduct?.images} />
+          )}
+        </div>
       </div>
-      <ProductAccessories refs={sectionRefs} />
+
+      <div ref={(el) => sectionRefs.current['#product-accessories'] = el}>
+        <ProductAccessories />
+      </div>
+
       <Benefits />
     </div>
   );

@@ -20,7 +20,10 @@ function ProductColors({colors, selectedColor, onSelectedColor}: ProductColorsPr
                 [style['not-available']]: !isAvailable,
               })}
               style={{ backgroundColor: `#${color.value}` }}
-              onClick={() => onSelectedColor(color.value, isAvailable)}
+              onClick={() => {
+                if(!isAvailable) return;
+                onSelectedColor(color.value, isAvailable)
+              }}
             >
               {!isAvailable && (
                 <img

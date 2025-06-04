@@ -10,15 +10,12 @@ type MenuItemsProps = {
 export const MenuItems: FC<MenuItemsProps> = ({refs}) => {
   const [selectedMenu, setSelectedMenu] = useState('About the product');
 
-console.log('refs', refs)
-  const handleMenuClick = (menuTitle: string, refKey: string) => () => {
+  const handleMenuClick = (menuTitle: string, refKey: string) => {
     setSelectedMenu(menuTitle);
-    console.log('aas')
     const targetRef = refs.current[refKey];
-    console.log('targetRef', targetRef)
     if (targetRef) {
       window.scrollTo({
-        top: targetRef.offsetTop,
+        top: targetRef.offsetTop - 80,
         behavior: 'smooth',
       });
     }
