@@ -35,9 +35,9 @@ export const Product: FC<IProductProps> = ({dinamicCurrentProduct}) => {
   const reviewsLength = reviews?.totalElements;
 
   const {changeCharacteristic, productCharacteristics} = useProductDetails({
-    selectedColor: dinamicCurrentProduct?.anotherColors?.[0] ?? null,
-    selectedModel: dinamicCurrentProduct?.otherModels?.[0]?.model ?? [],
-    selectedMemory: dinamicCurrentProduct?.memoryCards?.[0]?.memory ?? [],
+    selectedColor: dinamicCurrentProduct?.alternativeProducts?.color?.[0]?.value ?? null,
+    selectedModel: dinamicCurrentProduct?.alternativeProducts?.model?.[0]?.value ?? null,
+    selectedMemory: dinamicCurrentProduct?.alternativeProducts?.romMemory?.[0]?.value ?? null,
   });
   
   const { currency, locale } = useTypedSelector((state) => state.shopping_card);
@@ -46,6 +46,8 @@ export const Product: FC<IProductProps> = ({dinamicCurrentProduct}) => {
 
   const isLargerThan768px = useMediaQuery({query: '(max-width: 768px)'});
   const isWidth575 = useMediaQuery({ query: '(max-width: 575px)',})
+
+  console.log('dinamicCurrentProduct', dinamicCurrentProduct?.alternativeProducts)
 
   return (
     <section className={style['product']} id="product">
@@ -123,23 +125,32 @@ export const Product: FC<IProductProps> = ({dinamicCurrentProduct}) => {
           </div>
         )}
         <div className={style['product_details']}>
-          <ProductColors 
-            colors={dinamicCurrentProduct?.anotherColors ?? null} 
-            selectedColor={productCharacteristics?.selectedColor ?? ''} 
-            onSelectedColor={(val,inStock) => changeCharacteristic(val, inStock, 'selectedColor')}
-          />
+          {dinamicCurrentProduct?.alternativeProducts?.color && (  
+              <ProductColors 
+                colors={dinamicCurrentProduct?.alternativeProducts?.color ?? []} 
+                selectedColor={productCharacteristics?.selectedColor ?? ''} 
+                onSelectedColor={(val,inStock) => changeCharacteristic(val, inStock, 'selectedColor')}
+              />
+            )
+          }
 
-          <ProductModels 
-            models={dinamicCurrentProduct?.otherModels ?? []} 
-            selectedModel={productCharacteristics?.selectedModel ?? ''}
-            onSelectedModels={(val, inStock) => changeCharacteristic(val, inStock, 'selectedModel')}
-          />
+          {dinamicCurrentProduct?.alternativeProducts?.model && (  
+              <ProductModels 
+                models={dinamicCurrentProduct?.alternativeProducts?.model ?? []} 
+                selectedModel={productCharacteristics?.selectedModel ?? ''}
+                onSelectedModels={(val, inStock) => changeCharacteristic(val, inStock, 'selectedModel')}
+              />
+            )
+          }
           
-          <ProductMemory 
-            memories={dinamicCurrentProduct?.memoryCards ?? []}
-            selectedMemory={productCharacteristics?.selectedMemory ?? ''}
-            onSelectedMemory={(val, inStock) => changeCharacteristic(val, inStock, 'selectedMemory')}
-          />
+          {dinamicCurrentProduct?.alternativeProducts?.romMemory && (
+              <ProductMemory 
+                memories={dinamicCurrentProduct?.alternativeProducts?.romMemory ?? []}
+                selectedMemory={productCharacteristics?.selectedMemory ?? ''}
+                onSelectedMemory={(val, inStock) => changeCharacteristic(val, inStock, 'selectedMemory')}
+              />
+            )
+          }
 
           <div className={style['product_deliver-section']}>
             <div>

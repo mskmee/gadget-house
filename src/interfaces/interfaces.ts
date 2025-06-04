@@ -39,14 +39,21 @@ export type TProductImageCard = {
   order: number;
 };
 
+export interface IProductOtherColors {
+  id: number;
+  value: string;
+  available: boolean;
+}
 export interface IProductOtherModels {
   id: number,
-  model: string;
+  value: string;
+  available: boolean;
 }
 
 export interface iProductMemoryCards {
   id: number;
-  memory: string;
+  value: string;
+  available: boolean;
 }
 export interface IProductCard {
   id: number;
@@ -56,13 +63,15 @@ export interface IProductCard {
   rating: number;
   price: string;
   code?: string;
-  anotherColors?: string[];
   isLiked?: boolean;
   category?: string;
   available?: boolean;
-  otherModels?: IProductOtherModels[],
-  memoryCards?: iProductMemoryCards[],
-  categoryId?: number
+  categoryId?: number;
+  alternativeProducts?: {
+    color?: IProductOtherColors[];
+    model?: IProductOtherModels[],
+    romMemory?: iProductMemoryCards[],
+  }
 }
 
 export interface IShoppingCard extends IProductCard {

@@ -9,18 +9,18 @@ function ProductColors({colors, selectedColor, onSelectedColor}: ProductColorsPr
     <div className={style['product_other-colors']}>
       <h3>Other colors</h3>
       <ul>
-        {colors?.map((color, i) => {
-          const isAvailable = i + 1 !== colors.length;
+        {colors?.map((color) => {
+          const isAvailable = color?.available;
           return (
             <li
-              key={i}
+              key={color.id}
               tabIndex={0}
               className={classNames({
-                [style['selected-color']]: selectedColor === color && isAvailable,
+                [style['selected-color']]: selectedColor === color.value && isAvailable,
                 [style['not-available']]: !isAvailable,
               })}
-              style={{ backgroundColor: color }}
-             onClick={() => onSelectedColor(color, isAvailable)}
+              style={{ backgroundColor: `#${color.value}` }}
+              onClick={() => onSelectedColor(color.value, isAvailable)}
             >
               {!isAvailable && (
                 <img

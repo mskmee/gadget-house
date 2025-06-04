@@ -2,8 +2,8 @@ import { useState } from "react";
 
 type ProductDetails = {
   selectedColor?: string | null;
-  selectedModel?: string | [];
-  selectedMemory?: string | [];
+  selectedModel?: string | null;
+  selectedMemory?: string | null;
 }
 
 export function useProductDetails(initial: ProductDetails) {

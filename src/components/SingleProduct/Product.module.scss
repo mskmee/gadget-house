@@ -200,6 +200,7 @@
             justify-content: center;
             align-items: center;
             cursor: not-allowed;
+            pointer-events: none;
           }
         }
       }
@@ -225,6 +226,14 @@
             border: 1px solid #00680a;
             color: #00680a;
           }
+          > li.not-available {
+            border: 1px solid #808080;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: not-allowed;
+            pointer-events: none;
+          }
         }
       }
       .product_memory-card {
@@ -248,6 +257,14 @@
           > li.selected-memory {
             border: 1px solid #00680a;
             color: #00680a;
+          }
+          > li.not-available {
+            border: 1px solid #808080;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: not-allowed;
+            pointer-events: none;
           }
         }
       }

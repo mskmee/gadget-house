@@ -1,7 +1,11 @@
 import { iProductMemoryCards, IProductOtherModels } from "@/interfaces/interfaces";
 
 export interface ProductColorsProps {
-  colors: string[] | null;
+  colors: {
+    id: number;
+    available: boolean;
+    value: string;
+  }[];
   selectedColor: string;
   onSelectedColor: (val: string, inStock: boolean) => void;
 }
