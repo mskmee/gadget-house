@@ -52,10 +52,10 @@ function SliderWithTumbsAndModal({data, prevArrow, nextArrow, dinamicCurrentProd
         freeMode={true}
         watchSlidesProgress={true}
         modules={[FreeMode, Navigation, Thumbs]}
-        className="thumb-wrapper"
+        className='thumb-wrapper'
       >
         {data.map((image, index) => (
-          <div style={{ cursor: 'pointer' }} key={index}>
+          <div style={{ cursor: 'pointer' }} key={index} className='thumb__item'>
             <img src={image.link} alt={`main-slide-${index}`} />
           </div>
         ))}

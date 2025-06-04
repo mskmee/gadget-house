@@ -9,6 +9,12 @@
 .relative {
   position: relative;
 }
+.w-100 {
+  width: 100%;
+}
+.swiper-wrapper {
+  align-items: center;
+}
 
 .base-slider {
   padding-bottom: 70px;
@@ -63,6 +69,9 @@
       padding-bottom: 30px;
     }
     .swiper-slide > div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       max-width: 720px;
       margin: 0 auto;
       @media(max-width: 991px){
@@ -72,9 +81,14 @@
   }
   &.productSlider {
     padding-bottom: 25px;
+    .swiper-wrapper {
+      align-items: center;
+    }
     .swiper-slide > div {
       max-width: 514px;
       margin: 0 auto;
+      display: flex;
+      justify-content: center;
       @media (max-width: 575px) {
         max-width: 300px;
       }
@@ -86,7 +100,6 @@
       }
     }
   }
-
 }
 
 
@@ -104,9 +117,15 @@
 }
 
 .thumb-wrapper {
+  .thumb__item {
+    width: 100%;
+    height: 100%;
+  }
   .swiper-slide {
+    display: flex;
+    align-items: center;
     max-width: 110px;
-    max-height: 120px;
+    height: 120px;
     padding: 5px;
     flex: 0 0 auto;
     border: 1px solid transparent;
@@ -116,6 +135,9 @@
   }
   img {
     border-radius: 11px;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
   .swiper-slide-thumb-active {
     border: 1px solid #00820d;
@@ -128,12 +150,6 @@
       .swiper-button-next,
       .swiper-button-prev {
         display: none;
-      }
-    }
-    .swiper-wrapper {
-      justify-content: flex-end;
-      @media(max-width: 991px) {
-        justify-content: flex-start;
       }
     }
     .swiper-slide {

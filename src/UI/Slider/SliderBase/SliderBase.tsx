@@ -16,7 +16,7 @@ function SliderBase({spaceBetween, slidesPerView, pagination=true, children, nav
   const prevButtonRef = useRef<HTMLDivElement | null>(null);
   const nextButtonRef = useRef<HTMLDivElement | null>(null);
   return (
-    <>
+    <div className='relative'>
       <Swiper
         spaceBetween={spaceBetween}
         slidesPerView={slidesPerView}
@@ -49,7 +49,7 @@ function SliderBase({spaceBetween, slidesPerView, pagination=true, children, nav
           nextArrow={nextArrow} 
         />
       )}
-    </>
+    </div>
   );
 }
 
