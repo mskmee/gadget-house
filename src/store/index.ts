@@ -6,6 +6,7 @@ import { reducer as productsReducer } from './products';
 import { reducer as authReducer } from './auth/auth-slice';
 import { reducer as filtersReducer } from './filters/filters_slice';
 import { reducer as orderReducer } from './orders/order_slice';
+import { reducer as singleProductSlice} from './singleProduct/singleProduct_slice';
 
 const reducers = combineReducers({
   shopping_card: shoppingCartReducer,
@@ -14,6 +15,7 @@ const reducers = combineReducers({
   auth: authReducer,
   filters: filtersReducer,
   order: orderReducer,
+  singleProduct: singleProductSlice
 });
 
 const logger: Middleware = createLogger({ collapsed: true });

@@ -6,13 +6,15 @@ import { actions as searchActions } from '../store/search/search_slice';
 import { productsActions } from '../store/products';
 import { actions as authActions } from '../store/auth/auth-slice';
 import {actions as filters_slice} from "../store/filters/filters_slice"
+import {actions as singleProductSlise} from "../store/singleProduct/singleProduct_slice"
 
 const rootActions = {
   ...productCardsActions,
   ...searchActions,
   ...productsActions,
   ...authActions,
-  ...filters_slice
+  ...filters_slice,
+  ...singleProductSlise
 };
 
 export const useActions = () => {
