@@ -5,10 +5,12 @@ import { AddReviewRequestDTO, AddReviewResponseDTO, GetReviewResponseDTO } from 
 
 class SingleProductAPI implements ISingleProductApi {
   async addReview(data: AddReviewRequestDTO): Promise<AddReviewResponseDTO> {
+    // eslint-disable-next-line no-unused-vars
+    const {productId, userId, rate, text} = data;
     return request({
       method: HttpMethod.POST,
       url: `${ApiEndpoint.PRODUCT_REVIEW}/${productId}`,
-      body: {data}
+      body: {rate, text}
     })
   }
 
