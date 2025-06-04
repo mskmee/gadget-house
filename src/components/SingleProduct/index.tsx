@@ -1,16 +1,14 @@
-import { FC, useRef, useState } from 'react';
+import { FC, useRef } from 'react';
 import style from './Product.module.scss';
 import { Rate } from 'antd';
 
 import {
   deliverImg,
   paymentImg,
-  productIsNotAvailableImg,
   rateImg,
   returnImg,
   reviewImg,
 } from '@/assets/constants';
-import classNames from 'classnames';
 import { AddToBasketButton } from './AddToBasketButton';
 
 import { useTypedSelector } from '@/hooks/useTypedSelector';
@@ -23,53 +21,30 @@ import ArrowIcon from '@/assets/single_product/ArrowIcon';
 
 import SliderWithTumbsAndModal from '@/UI/Slider/SliderWithTumbsAndModal/SliderWithTumbsAndModal';
 import { ArrowNext, ArrowPrev } from '@/UI/Slider/SliderArrows/SliderArrow';
+import ProductColors from './ProductDetails/ProductColors';
+import ProductModels from './ProductDetails/ProductModels';
+import ProductMemory from './ProductDetails/ProductMemory';
+import { useProductDetails } from './ProductDetails/hook/useProductDetails';
 
 interface IProductProps {
-  reviewsLength: number;
   dinamicCurrentProduct: IProductCard;
 }
 
-export const Product: FC<IProductProps> = ({reviewsLength, dinamicCurrentProduct}) => {
+export const Product: FC<IProductProps> = ({dinamicCurrentProduct}) => {
+  const reviews = useTypedSelector(state => state.singleProduct.reviews);
+  const reviewsLength = reviews?.totalElements;
+
+  const {changeCharacteristic, productCharacteristics} = useProductDetails({
+    selectedColor: dinamicCurrentProduct?.anotherColors?.[0] ?? null,
+    selectedModel: dinamicCurrentProduct?.otherModels?.[0]?.model ?? [],
+    selectedMemory: dinamicCurrentProduct?.memoryCards?.[0]?.memory ?? [],
+  });
   
   const { currency, locale } = useTypedSelector((state) => state.shopping_card);
   const dinamicCurrentProductImages = dinamicCurrentProduct?.images;
-
-  const [productCharacteristics, setProductCharacteristics] = useState({
-    selectedColor: 'blue',
-    selectedModel: 'Apple iPhone 15 Pro',
-    selectedMemory: '256GB',
-  });
-
-
   const productRateRef = useRef<HTMLDivElement>(null);
 
-  const isLargerThan768px = useMediaQuery({
-    query: '(max-width: 768px)',
-  });
-
-  const changeProductCharacteristics =
-    (value: string, inStock = true, type: string) =>
-    () => {
-      if (type === 'color' && inStock) {
-        setProductCharacteristics({
-          ...productCharacteristics,
-          selectedColor: value,
-        });
-      }
-      if (type === 'model') {
-        setProductCharacteristics({
-          ...productCharacteristics,
-          selectedModel: value,
-        });
-      }
-      if (type === 'memory') {
-        setProductCharacteristics({
-          ...productCharacteristics,
-          selectedMemory: value,
-        });
-      }
-    };
-
+  const isLargerThan768px = useMediaQuery({query: '(max-width: 768px)'});
   const isWidth575 = useMediaQuery({ query: '(max-width: 575px)',})
 
   return (
@@ -95,6 +70,8 @@ export const Product: FC<IProductProps> = ({reviewsLength, dinamicCurrentProduct
           </div>
         </div>
       )}
+      
+      {/* Slider */}
       <div className={style['product_custom-carousel-wrap']}>
         <div className='relative'>
           <SliderWithTumbsAndModal 
@@ -146,76 +123,24 @@ export const Product: FC<IProductProps> = ({reviewsLength, dinamicCurrentProduct
           </div>
         )}
         <div className={style['product_details']}>
-          <div className={style['product_other-colors']}>
-            <h3>Other colors</h3>
-            <ul>
-              {dinamicCurrentProduct?.anotherColors?.map((color, i) => (
-                <li
-                  key={i}
-                  tabIndex={0}
-                  className={classNames({
-                    [style['selected-color']]:
-                      productCharacteristics?.selectedColor === color &&
-                      i + 1 !== dinamicCurrentProduct?.anotherColors?.length,
-                    [style['not-available']]:
-                      i + 1 === dinamicCurrentProduct?.anotherColors?.length,
-                  })}
-                  style={{ backgroundColor: color }}
-                  onClick={changeProductCharacteristics(
-                    color,
-                    i + 1 !== dinamicCurrentProduct?.anotherColors?.length,
-                    'color',
-                  )}
-                >
-                  {i + 1 === dinamicCurrentProduct?.anotherColors?.length && (
-                    <img
-                      src={productIsNotAvailableImg}
-                      alt="product isn't available"
-                      width={16}
-                      height={16}
-                    />
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <ProductColors 
+            colors={dinamicCurrentProduct?.anotherColors ?? null} 
+            selectedColor={productCharacteristics?.selectedColor ?? ''} 
+            onSelectedColor={(val,inStock) => changeCharacteristic(val, inStock, 'selectedColor')}
+          />
 
-          <div className={style['product_other-models']}>
-            <h3>Other models</h3>
-            <ul>
-              {dinamicCurrentProduct?.otherModels?.map(({ model }) => (
-                <li
-                  key={model}
-                  tabIndex={0}
-                  className={classNames({
-                    [style['selected-model']]:
-                      productCharacteristics?.selectedModel === model,
-                  })}
-                  onClick={changeProductCharacteristics(model, true, 'model')}
-                >
-                  {model}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className={style['product_memory-card']}>
-            <h3>Memory card</h3>
-            <ul>
-              {dinamicCurrentProduct?.memoryCards?.map(({ memory }) => (
-                <li
-                  key={memory}
-                  tabIndex={0}
-                  className={classNames({
-                    [style['selected-memory']]:
-                      productCharacteristics?.selectedMemory === memory,
-                  })}
-                  onClick={changeProductCharacteristics(memory, true, 'memory')}
-                >
-                  {memory}
-                </li>
-              ))}
-            </ul>
-          </div>
+          <ProductModels 
+            models={dinamicCurrentProduct?.otherModels ?? []} 
+            selectedModel={productCharacteristics?.selectedModel ?? ''}
+            onSelectedModels={(val, inStock) => changeCharacteristic(val, inStock, 'selectedModel')}
+          />
+          
+          <ProductMemory 
+            memories={dinamicCurrentProduct?.memoryCards ?? []}
+            selectedMemory={productCharacteristics?.selectedMemory ?? ''}
+            onSelectedMemory={(val, inStock) => changeCharacteristic(val, inStock, 'selectedMemory')}
+          />
+
           <div className={style['product_deliver-section']}>
             <div>
               <img src={deliverImg} alt="deliver product" />

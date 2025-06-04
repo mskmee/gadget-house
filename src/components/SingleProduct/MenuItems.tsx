@@ -1,15 +1,21 @@
-import { FC, useRef, useState } from 'react';
+import React, { FC, useState } from 'react';
 import style from './Product.module.scss';
 import classNames from 'classnames';
 import { menuItems } from '@/constants/singleProduct';
 
-export const MenuItems: FC = () => {
-  const [selectedMenu, setSelectedMenu] = useState('About the product');
-  const refs = useRef<Record<string, HTMLDivElement | null>>({});
+type MenuItemsProps = {
+  refs: React.MutableRefObject<Record<string, HTMLDivElement | null>>;
+};
 
+export const MenuItems: FC<MenuItemsProps> = ({refs}) => {
+  const [selectedMenu, setSelectedMenu] = useState('About the product');
+
+console.log('refs', refs)
   const handleMenuClick = (menuTitle: string, refKey: string) => () => {
     setSelectedMenu(menuTitle);
+    console.log('aas')
     const targetRef = refs.current[refKey];
+    console.log('targetRef', targetRef)
     if (targetRef) {
       window.scrollTo({
         top: targetRef.offsetTop,
@@ -17,6 +23,7 @@ export const MenuItems: FC = () => {
       });
     }
   };
+
   return (
     <section className={classNames(style['single-product__menu'])}>
       <ul>
@@ -26,10 +33,14 @@ export const MenuItems: FC = () => {
               item?.title === selectedMenu ? 'menu-item active' : 'menu-item'
             }
             key={item?.id}
-            onClick={handleMenuClick(item?.title, item?.href)}
+            
           >
             <a
               href={item?.href}
+              onClick={(e) => {
+                e.preventDefault();
+                handleMenuClick(item?.title, item?.href)
+              }}
               className={classNames({
                 [style['selected-menu']]: item?.title === selectedMenu,
               })}

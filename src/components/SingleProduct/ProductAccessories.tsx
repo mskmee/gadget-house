@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 
 import style from './Product.module.scss';
 import SliderBase from '@/UI/Slider/SliderBase/SliderBase';
@@ -12,7 +12,11 @@ import { Navigation } from 'swiper/modules';
 import { MyCard } from '../components';
 import classNames from 'classnames';
 
-export const ProductAccessories: FC = () => {
+type ProductAccessoriesProps = {
+  refs: React.MutableRefObject<Record<string, HTMLDivElement | null>>;
+};
+
+export const ProductAccessories: FC<ProductAccessoriesProps> = () => {
   const isMobile = useMediaQuery({query: '(max-width: 991px)',})
   const shouldShowNavigation = isMobile ? false : true;
 
