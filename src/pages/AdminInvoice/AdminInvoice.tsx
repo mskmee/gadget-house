@@ -49,12 +49,12 @@ const AdminInvoice = () => {
       <div className={cn('container', styles.adminInvoice__container)}>
         <AdminInvoiceHeader
           orderId={activeOrder?.id}
-          createdAt={activeOrder?.date}
+          createdAt={activeOrder?.createdAt}
         />
 
         <OrdersList
           products={activeOrder?.products || []}
-          totalPrice={activeOrder?.totalPrice}
+          totalPrice={activeOrder?.total}
           productsData={productsData?.page}
           onProductAdd={handleProductAdd}
           onProductDelete={handleProductDelete}
