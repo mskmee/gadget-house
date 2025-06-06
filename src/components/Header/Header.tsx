@@ -98,7 +98,6 @@ export const Header = () => {
     });
   };
 
-  // test
   useEffect(() => {
     if (searchValue && isGlobalOverlayActive) {
       setIsOverlayActive(true);
