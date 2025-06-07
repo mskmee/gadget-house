@@ -21,7 +21,7 @@ interface ISmartphoneCardProps {
   tempProduct: IProductCard | TProductImageCard | IBrandCard | undefined;
   classname: string;
   index?: number;
-  width: number;
+  width?: number;
 }
 
 const MAX_ITEMS = 8;
@@ -32,6 +32,7 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
   index,
   width
 }) => {
+
   const { toggleFavorite } = useActions();
   const product = tempProduct as IProductCard;
 
@@ -97,9 +98,9 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
   };
   const anotherColors = (product as IProductCard)?.anotherColors;
 
-  const getCategoryByName = (categoryid: number): string | undefined => {
+  const getCategoryByName = (categoryId: number): string | undefined => {
     // eslint-disable-next-line no-unused-vars
-    return Object.entries(Category).find(([_, value]) => value === categoryid)?.[0];
+    return Object.entries(Category).find(([_, value]) => value === categoryId)?.[0];
   }
 
   const categoryName = product?.categoryId !== undefined
