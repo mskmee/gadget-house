@@ -97,6 +97,18 @@
       stroke: #f01a1a !important;
     }
   }
+
+  @media screen and (max-width: 1400px) {
+    margin-left: 18px; 
+  }
+
+  @media screen and (max-width: 1200px) {
+    margin-left: 18px;
+  }
+
+  @media screen and (max-width: 1070px) {
+    margin-left: 0px; 
+  }
 }
 .autocomplete-search-bar__active {
   border-bottom-left-radius: 0;

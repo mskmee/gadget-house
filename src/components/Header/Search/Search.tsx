@@ -173,6 +173,7 @@ export const Search: FC<ISearchProps> = ({
     if (location.pathname !== '/search-results') {
       setSearchInput({ value: '', hasError: false });
       setSuggestions([]);
+      setIsOverlayActive(false);
     }
 
     return () => {
