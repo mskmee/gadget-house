@@ -40,7 +40,7 @@ export const UserOrders = () => {
             key={order.id}
             title={
               <div className={styles.orderTitle}>
-                <StatusIcon status={order.status} />
+                <StatusIcon status={order.deliveryStatus} />
                 <div className={styles.orderInfoHeader}>
                   <div className={styles.orderNumber}>№{order.id}</div>
                   <p className={styles.productQuantity}>
@@ -51,7 +51,7 @@ export const UserOrders = () => {
                     pieces
                   </p>
                   <div>
-                    {convertPriceToReadable(order.totalPrice, currency, locale)}
+                    {convertPriceToReadable(order.total, currency, locale)}
                   </div>
                 </div>
                 <div className={styles.orderProductPreview}>
@@ -92,7 +92,7 @@ export const UserOrders = () => {
               <div className={styles.orderInfo}>
                 <div className={styles.orderInfo__left}>
                   <label>Order delivery date and time</label>
-                  <p>{order.date}</p>
+                  <p>{order.createdAt}</p>
                   <label>Delivery address</label>
                   <p>{formatDeliveryInfo(order.address)}</p>
                   <label>Payment method:</label>

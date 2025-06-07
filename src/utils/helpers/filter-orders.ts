@@ -8,7 +8,7 @@ export const filterOrders = (
   filters: IFiltersState
 ): OrderItemResponseDto[] => {
   return orders.filter((order) => {
-    const orderDate = dayjs(order.date);
+    const orderDate = dayjs(order.createdAt);
     const from = filters.dateFrom ? dayjs(filters.dateFrom, 'DD/MM/YYYY') : null;
     const to = filters.dateTo ? dayjs(filters.dateTo, 'DD/MM/YYYY') : null;
 
@@ -17,11 +17,11 @@ export const filterOrders = (
       (!to || orderDate.isSameOrBefore(to, 'day'));
 
     const matchesPrice =
-      (!filters.priceFrom || order.totalPrice >= filters.priceFrom) &&
-      (!filters.priceTo || order.totalPrice <= filters.priceTo);
+      (!filters.priceFrom || order.total >= filters.priceFrom) &&
+      (!filters.priceTo || order.total <= filters.priceTo);
 
     const matchesStatus =
-      !filters.status || order.status === filters.status;
+      !filters.status || order.deliveryStatus === filters.status;
 
     return matchesDate && matchesPrice && matchesStatus;
   });
