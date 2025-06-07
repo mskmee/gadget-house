@@ -4,6 +4,7 @@ import { AppRoute } from '@/enums/enums';
 import { LeftArrow } from '@/assets/constants';
 
 import styles from './admin-invoice-header.module.scss';
+import { formatDateToDDMMYYYY } from '@/utils/helpers/format-date';
 
 interface AdminInvoiceHeaderProps {
   orderId?: string;
@@ -31,7 +32,7 @@ export const AdminInvoiceHeader = ({
         </button>
         <h2>Order {orderId}</h2>
       </div>
-      <span>Date: {createdAt}</span>
+      <span>Date: {formatDateToDDMMYYYY(createdAt || '')}</span>
     </header>
   );
 };

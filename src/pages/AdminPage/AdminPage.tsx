@@ -5,7 +5,6 @@ import cn from 'classnames';
 
 import { IProductCard } from '@/interfaces/interfaces';
 import { AppDispatch, RootState } from '@/store';
-import { setActiveOrder } from '@/store/orders/order_slice';
 import { DEFAULT_SIZE } from '@/constants/pagination';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 
@@ -13,7 +12,7 @@ import styles from './styles/admin-page.module.scss';
 import { AdminPageHeader } from './components/Header/AdminPageHeader';
 import { AdminTable } from './components/Table/AdminTable';
 import { AdminPagination } from './components/Pagination/AdminPagination';
-import { getAllOrders } from '@/store/orders/actions';
+import { getAllOrders, getOneOrderById } from '@/store/orders/actions';
 
 import { OrderItem } from '@/types/OrderItem';
 
@@ -69,7 +68,7 @@ const AdminPage = () => {
   }, []);
 
   const handleOrderClick = (item: OrderItem) => {
-    dispatch(setActiveOrder(item));
+    dispatch(getOneOrderById(item.id));
   };
 
   const handlePageChange = (page: number) => {
