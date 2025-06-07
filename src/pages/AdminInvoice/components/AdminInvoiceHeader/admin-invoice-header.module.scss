@@ -6,11 +6,12 @@
 
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 19px;
 
   img {
-    width: 15px;
-    height: 26px;
+    width: 48px;
+    height: 48px;
   }
 
   h2 {
@@ -19,5 +20,18 @@
     font-size: 24px;
     line-height: 150%;
     color: var(--buttons-and-accent-color);
+    padding: 10px;
+  }
+
+  &_title{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  span {
+    color: var(--secondary-text-color);
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
   }
 }

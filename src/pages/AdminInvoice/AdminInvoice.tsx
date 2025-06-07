@@ -47,11 +47,14 @@ const AdminInvoice = () => {
   return (
     <div className={styles.adminInvoice}>
       <div className={cn('container', styles.adminInvoice__container)}>
-        <AdminInvoiceHeader orderId={activeOrder?.id} />
+        <AdminInvoiceHeader
+          orderId={activeOrder?.id}
+          createdAt={activeOrder?.createdAt}
+        />
 
         <OrdersList
           products={activeOrder?.products || []}
-          totalPrice={activeOrder?.totalPrice}
+          totalPrice={activeOrder?.total}
           productsData={productsData?.page}
           onProductAdd={handleProductAdd}
           onProductDelete={handleProductDelete}

@@ -57,7 +57,6 @@ export const OrdersList = ({
     const productToAdd = filteredProducts[0];
     onProductAdd(productToAdd);
   };
-
   return (
     <div
       className={cn(styles.adminInvoice__orders, styles.adminInvoice__wrapper)}

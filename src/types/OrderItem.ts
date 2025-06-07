@@ -1,7 +1,7 @@
 export interface OrderItem {
   id: string;
   phoneNumber: string;
-  status: string;
-  totalPrice: number;
-  date: string;
+  deliveryStatus: string;
+  total: number;
+  createdAt: string;
 }

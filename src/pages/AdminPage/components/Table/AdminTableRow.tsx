@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Checkbox, CheckboxChangeEvent } from 'antd';
 import { convertPriceToReadable } from '@/utils/helpers/helpers';
 import { OrderItem } from '@/types/OrderItem';
+import { formatDateToDDMMYYYY } from '@/utils/helpers/format-date';
 
 
 
@@ -42,13 +43,13 @@ export const AdminTableRow = ({
       <td>{item.phoneNumber}</td>
       <td>
         <button
-          className={`button__status button__status_${item.status.toLowerCase().replace(' ', '_')}`}
+          className={`button__status button__status_${item.deliveryStatus.toLowerCase().replace(' ', '_')}`}
         >
-          {item.status}
+          {item.deliveryStatus}
         </button>
       </td>
-      <td>{convertPriceToReadable(item.totalPrice ?? 0, '₴', 'uk-UA')}</td>
-      <td>{item.date}</td>
+      <td>{convertPriceToReadable(item.total ?? 0, '₴', 'uk-UA')}</td>
+      <td>{formatDateToDDMMYYYY(item.createdAt)}</td>
     </tr>
   );
 };

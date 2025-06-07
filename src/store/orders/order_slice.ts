@@ -29,7 +29,7 @@ const initialState: IInitialState = {
   activeOrder: null,
   dataStatus: DataStatus.IDLE,
   filters: {} as IFiltersState,
-  filteredOrders: list?.page || [],
+  filteredOrders:[],
 };
 
 const order_slice = createSlice({

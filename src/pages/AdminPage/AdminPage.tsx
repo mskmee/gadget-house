@@ -1,11 +1,10 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { CheckboxProps, CheckboxChangeEvent } from 'antd';
 import cn from 'classnames';
 
 import { IProductCard } from '@/interfaces/interfaces';
 import { AppDispatch, RootState } from '@/store';
-import { setActiveOrder } from '@/store/orders/order_slice';
 import { DEFAULT_SIZE } from '@/constants/pagination';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 
@@ -13,14 +12,9 @@ import styles from './styles/admin-page.module.scss';
 import { AdminPageHeader } from './components/Header/AdminPageHeader';
 import { AdminTable } from './components/Table/AdminTable';
 import { AdminPagination } from './components/Pagination/AdminPagination';
+import { getAllOrders, getOneOrderById } from '@/store/orders/actions';
 
-interface OrderItem {
-  id: string;
-  phoneNumber: string;
-  status: string;
-  totalPrice: number;
-  date: string;
-}
+import { OrderItem } from '@/types/OrderItem';
 
 const AdminPage = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -35,17 +29,20 @@ const AdminPage = () => {
   const [, setFilteredProducts] = useState<IProductCard[]>([]);
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
 
-  const currentItems =
-    orders?.slice(
-      (currentPage - 1) * DEFAULT_SIZE,
-      currentPage * DEFAULT_SIZE,
-    ) || [];
+  const currentItems = orders?.slice(
+    (currentPage - 1) * DEFAULT_SIZE,
+    currentPage * DEFAULT_SIZE,
+  );
 
   const isAllChecked =
     currentItems.length > 0 &&
     currentItems.every((item) => checkedItems.includes(item.id));
 
   const hasIndeterminate = checkedItems.length > 0 && !isAllChecked;
+
+  useEffect(() => {
+    dispatch(getAllOrders());
+  }, [dispatch]);
 
   const handleItemCheck = (id: string) => (e: CheckboxChangeEvent) => {
     setCheckedItems((prev) => {
@@ -71,7 +68,7 @@ const AdminPage = () => {
   }, []);
 
   const handleOrderClick = (item: OrderItem) => {
-    dispatch(setActiveOrder(item));
+    dispatch(getOneOrderById(item.id));
   };
 
   const handlePageChange = (page: number) => {

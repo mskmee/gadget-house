@@ -1,16 +1,10 @@
 import { CheckboxProps, CheckboxChangeEvent } from 'antd';
 import { AdminTableHeader } from './AdminTableHeader';
 import { AdminTableRow } from './AdminTableRow';
+import { OrderItem } from '@/types/OrderItem';
 
 import styles from '../../styles/admin-page.module.scss';
 
-interface OrderItem {
-  id: string;
-  phoneNumber: string;
-  status: string;
-  totalPrice: number;
-  date: string;
-}
 
 interface AdminTableProps {
   orders: OrderItem[];
