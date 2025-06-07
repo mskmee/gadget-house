@@ -1,10 +1,10 @@
 import {
   useState,
   useRef,
-  useEffect,
   FocusEvent,
   MouseEvent,
   useLayoutEffect,
+  useEffect,
 } from 'react';
 import styles from './header.module.scss';
 import classNames from 'classnames';
@@ -34,6 +34,9 @@ export const Header = () => {
 
   const products = useTypedSelector((state) => state.shopping_card.products);
   const searchValue = useTypedSelector((state) => state.search.searchValue);
+  const isGlobalOverlayActive = useTypedSelector(
+    (state) => state.search.isGlobalOverlayActive,
+  );
 
   const headerRef = useRef<HTMLButtonElement | null>(null);
   const headerBottomRef = useRef<HTMLDivElement | null>(null);
@@ -53,7 +56,7 @@ export const Header = () => {
     location.pathname === AppRoute.BASKET_PAGE ||
     location.pathname === AppRoute.ORDER ||
     location.pathname === AppRoute.ORDER_SUCCESS;
-  const shouldShowCartTooltip = products.length && !isBasketPage;
+  const shouldShowCartTooltip = products.length > 0 && !isBasketPage;
 
   // open catalog
   const openCatalog = () => {
@@ -95,14 +98,13 @@ export const Header = () => {
     });
   };
 
-  // show overpay when user do search
   useEffect(() => {
-    if (searchValue) {
+    if (searchValue && isGlobalOverlayActive) {
       setIsOverlayActive(true);
     } else {
       setIsOverlayActive(false);
     }
-  }, [searchValue]);
+  }, [searchValue, isGlobalOverlayActive]);
 
   // add position top for overlay
   useLayoutEffect(() => {
@@ -115,7 +117,7 @@ export const Header = () => {
     let top = 0;
 
     if (isFixedHeader && headerBottom) {
-      top = headerBottom.getBoundingClientRect().bottom
+      top = headerBottom.getBoundingClientRect().bottom;
     } else if (header) {
       top = header.getBoundingClientRect().bottom;
     }
