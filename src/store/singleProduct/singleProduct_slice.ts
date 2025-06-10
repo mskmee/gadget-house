@@ -4,7 +4,6 @@ import { getReviews } from "./actions";
 import { GetReviewResponseDTO } from "@/utils/packages/singleProduct/type/types";
 
 export interface ReviewFormState {
-  userId: number | null;
   productId: number | null;
   text: string | null;
   rate: number | null;
@@ -14,7 +13,6 @@ export interface ReviewFormState {
 }
 
 const initialState: ReviewFormState = {
-  userId: null,
   productId: null,
   text: null,
   rate: null,

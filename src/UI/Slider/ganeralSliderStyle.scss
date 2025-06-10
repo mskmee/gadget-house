@@ -48,8 +48,13 @@
       opacity: 1;
       visibility: visible;
       svg {
-        color: #c3c3c5
+        color: #c3c3c5;
+        
       }
+    }
+    svg {
+      width: auto;
+      height: auto;
     }
   }
   .swiper-button-next {

@@ -1,5 +1,4 @@
 export type AddReviewRequestDTO = {
-  userId: number | null | undefined;
   productId: number | null;
   text: string | '';
   rate: number | null;

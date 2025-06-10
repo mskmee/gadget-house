@@ -44,7 +44,7 @@ function UserReview({productId}: {productId: number}) {
               <li key={index}>
                 <div>
                   <h3>{review?.user.fullName}</h3>
-                  <span>{formatDate(Number(review?.createdAt))}</span>
+                  <span>{formatDate(review?.createdAt)}</span>
                 </div>
                 <Rate
                   className="product_rate-stars"

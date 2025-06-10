@@ -4,10 +4,9 @@ import { ErrorIcon, rateEmptyImg, rateImg } from "@/assets/constants";
 import classNames from "classnames";
 import { Form, Formik } from "formik";
 import { AddReviewRequestDTO } from "@/utils/packages/singleProduct/type/types";
-import { useTypedSelector } from "@/hooks/useTypedSelector";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/store";
-import { addReview } from "@/store/singleProduct/actions";
+import { addReview, getReviews } from "@/store/singleProduct/actions";
 import { toast } from "react-toastify";
 import { reviewSchema } from "./FormReview-validation";
 
@@ -16,13 +15,10 @@ const maxLength = 500;
 function FormReview({productId}: {productId: number}) {
   const dispatch: AppDispatch = useDispatch();
 
-  const userId = useTypedSelector(state => state.auth.user?.id);
-
   return (
     <>
       <Formik<AddReviewRequestDTO> 
         initialValues={{
-          userId: userId,
           productId: productId,
           text: '',
           rate: null
@@ -31,7 +27,9 @@ function FormReview({productId}: {productId: number}) {
         validationSchema={reviewSchema}
         onSubmit={async (values, {resetForm}) => {
           try {
-           await  dispatch(addReview(values)).unwrap();
+           await  dispatch(addReview(values)).unwrap().then(() => {
+            dispatch(getReviews({ productId, page: 0 }));
+          });
            toast.success('Review submitted!', {
             type: 'success',
             autoClose: 4000,
