@@ -53,12 +53,12 @@ export const Product: FC<IProductProps> = ({dynamicCurrentProduct}) => {
     <section className={style['product']} id="product">
       {isLargerThan768px && (
         <div className={style['product_title']}>
-          <h1>{dinamicCurrentProduct?.name}</h1>
+          <h1>{dynamicCurrentProduct?.name}</h1>
           <div className={style['product_rate-box']}>
             <div className={style['product_rate']} ref={productRateRef}>
               <Rate
                 className="product_rate-stars"
-                value={dinamicCurrentProduct?.rating}
+                value={dynamicCurrentProduct?.rating}
                 character={() => {
                   return <img src={rateImg} alt="product rate star" />;
                 }}
@@ -68,7 +68,7 @@ export const Product: FC<IProductProps> = ({dynamicCurrentProduct}) => {
                 <span>({reviewsLength})</span>
               </a>
             </div>
-            <span>code:{dinamicCurrentProduct?.code}</span>
+            <span>code:{dynamicCurrentProduct?.code}</span>
           </div>
         </div>
       )}
