@@ -8,14 +8,11 @@ import classNames from 'classnames';
 
 function SliderThumbs({data, prevArrow, nextArrow, currentSlide, classNameThumb, slidesPerView, spaceBetween, classNameMain, isMobile, onSlideChange, breakpointsThumbs}: SliderThumbsProps) {
   const [thumbsSwiper, setThumbsSwiper] = useState<Swiper | null>(null);
-  // eslint-disable-next-line no-unused-vars
-  const [mainSwiper, setMainSwiper] = useState<Swiper | null>(null);
 
   return (
     <>
       <div className='w-100'>
         <SliderBase 
-          onSwiper={setMainSwiper}
           spaceBetween={10}
           navigation={true}
           thumbs={{ swiper: thumbsSwiper }}

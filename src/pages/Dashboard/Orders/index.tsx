@@ -24,7 +24,6 @@ export const UserOrders = () => {
         })),
         rating: 0,
         price: product.totalPrice.toString(),
-        anotherColors: [],
         isLiked: false,
         available: true,
       });
