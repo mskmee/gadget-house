@@ -40,20 +40,26 @@ export type TProductImageCard = {
 };
 
 export interface IProductOtherColors {
-  id: number;
-  value: string;
+  productId: number;
+  attributeValue: string;
   available: boolean;
+  href: string;
+  categoryId: number;
 }
 export interface IProductOtherModels {
-  id: number,
-  value: string;
+  productId: number,
+  attributeValue: string;
   available: boolean;
+  href: string;
+  categoryId: number;
 }
 
 export interface iProductMemoryCards {
-  id: number;
-  value: string;
+  productId: number;
+  attributeValue: string;
   available: boolean;
+  href: string;
+  categoryId: number;
 }
 export interface IProductCard {
   id: number;

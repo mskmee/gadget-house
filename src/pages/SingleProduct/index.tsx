@@ -32,10 +32,10 @@ export const SingleProductPage: FC = () => {
     dispatch(getOneProductById(String(id)))
   }, [id, dispatch])
 
-  const dinamicCurrentProduct = useTypedSelector((state: RootState) => state.products.activeProduct);
+  const dynamicCurrentProduct = useTypedSelector((state: RootState) => state.products.activeProduct);
 
 
-  useDocumentTitle(dinamicCurrentProduct?.name || 'Product');
+  useDocumentTitle(dynamicCurrentProduct?.name || 'Product');
 
   const isLargerThan992px = useMediaQuery({
     query: '(max-width: 992px)',
@@ -78,9 +78,9 @@ export const SingleProductPage: FC = () => {
         className={classNames(style['single-product__wrap'], 'container-xxl')}
       >
         <div ref={(el) => sectionRefs.current['#product'] = el}>
-          {dinamicCurrentProduct && (
+          {dynamicCurrentProduct && (
             <Product
-              dinamicCurrentProduct={dinamicCurrentProduct}
+              dynamicCurrentProduct={dynamicCurrentProduct}
             />
           )}
         </div>
@@ -90,12 +90,12 @@ export const SingleProductPage: FC = () => {
         </div>
 
         <div ref={(el) => sectionRefs.current['#product-reviews'] = el}>
-          <ProductReviews productTitle={dinamicCurrentProduct?.name ?? ''} productId={Number(dinamicCurrentProduct?.id)} />
+          <ProductReviews productTitle={dynamicCurrentProduct?.name ?? ''} productId={Number(dynamicCurrentProduct?.id)} />
         </div>
 
         <div ref={(el) => sectionRefs.current['#product-photos'] = el}>
-          {dinamicCurrentProduct && (
-            <ProductPhotos productImageCards={dinamicCurrentProduct?.images} />
+          {dynamicCurrentProduct && (
+            <ProductPhotos productImageCards={dynamicCurrentProduct?.images} />
           )}
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { FC, useRef } from 'react';
+import { FC, useRef, useState } from 'react';
 import style from './Product.module.scss';
 import { Rate } from 'antd';
 
@@ -18,36 +18,36 @@ import { IProductCard } from '@/interfaces/interfaces';
 
 import ArrowIcon from '@/assets/single_product/ArrowIcon';
 
-
-import SliderWithTumbsAndModal from '@/UI/Slider/SliderWithTumbsAndModal/SliderWithTumbsAndModal';
 import { ArrowNext, ArrowPrev } from '@/UI/Slider/SliderArrows/SliderArrow';
 import ProductColors from './ProductDetails/ProductColors';
 import ProductModels from './ProductDetails/ProductModels';
 import ProductMemory from './ProductDetails/ProductMemory';
-import { useProductDetails } from './ProductDetails/hook/useProductDetails';
+
+import SliderWithThumbsAndModal from '@/UI/Slider/SliderWithThumbsAndModal/SliderWithThumbsAndModal';
+import { useParams } from 'react-router-dom';
 
 interface IProductProps {
-  dinamicCurrentProduct: IProductCard;
+  dynamicCurrentProduct: IProductCard;
 }
 
-export const Product: FC<IProductProps> = ({dinamicCurrentProduct}) => {
+export const Product: FC<IProductProps> = ({dynamicCurrentProduct}) => {
   const reviews = useTypedSelector(state => state.singleProduct.reviews);
   const reviewsLength = reviews?.totalElements;
 
-  const { changeCharacteristic, productCharacteristics } = useProductDetails({
-    selectedColor: dinamicCurrentProduct?.alternativeProducts?.color?.find(c => c.available)?.value ?? null,
-    selectedModel: dinamicCurrentProduct?.alternativeProducts?.model?.find(m => m.available)?.value ?? null,
-    selectedMemory: dinamicCurrentProduct?.alternativeProducts?.romMemory?.find(r => r.available)?.value ?? null,
-  });
-  
+  const {id} = useParams();
+
+  const [selectedColor, setSelectedColor] = useState(
+    dynamicCurrentProduct?.alternativeProducts?.color?.find(c => c.productId === Number(id))?.attributeValue ?? null
+  )
+  const [selectedModel, setSelectedModel] = useState(dynamicCurrentProduct?.alternativeProducts?.model?.find(m => m.productId === Number(id))?.attributeValue ?? null);
+  const [selectedMemory, setSelectedMemory] = useState(dynamicCurrentProduct?.alternativeProducts?.romMemory?.find(r => r.productId ===  Number(id))?.attributeValue ?? null)
+
   const { currency, locale } = useTypedSelector((state) => state.shopping_card);
-  const dinamicCurrentProductImages = dinamicCurrentProduct?.images;
+  const dynamicCurrentProductImages = dynamicCurrentProduct?.images;
   const productRateRef = useRef<HTMLDivElement>(null);
 
   const isLargerThan768px = useMediaQuery({query: '(max-width: 768px)'});
   const isWidth575 = useMediaQuery({ query: '(max-width: 575px)',})
-
-  console.log('dinamicCurrentProduct', dinamicCurrentProduct?.alternativeProducts)
 
   return (
     <section className={style['product']} id="product">
@@ -76,11 +76,11 @@ export const Product: FC<IProductProps> = ({dinamicCurrentProduct}) => {
       {/* Slider */}
       <div className={style['product_custom-carousel-wrap']}>
         <div className='relative'>
-          <SliderWithTumbsAndModal 
-            data={dinamicCurrentProductImages} 
+          <SliderWithThumbsAndModal 
+            data={dynamicCurrentProductImages} 
             prevArrow={<ArrowPrev classNameArrow='arrowLeft'><ArrowIcon color="#1C1817" /></ArrowPrev>}
             nextArrow={<ArrowNext classNameArrow='arrowRight'><ArrowIcon color="#1C1817" /></ArrowNext>}
-            dinamicCurrentProduct={dinamicCurrentProduct}
+            dynamicCurrentProduct={dynamicCurrentProduct}
             slidesPerView={6}
             breakpointsThumbs={{
               575: {
@@ -105,12 +105,12 @@ export const Product: FC<IProductProps> = ({dinamicCurrentProduct}) => {
       <div className={style['product_info']}>
         {!isLargerThan768px && (
           <div className={style['product_title']}>
-            <h1>{dinamicCurrentProduct?.name}</h1>
+            <h1>{dynamicCurrentProduct?.name}</h1>
             <div className={style['product_rate-box']}>
               <div className={style['product_rate']} ref={productRateRef}>
                 <Rate
                   className="product_rate-stars"
-                  value={dinamicCurrentProduct?.rating}
+                  value={dynamicCurrentProduct?.rating}
                   character={() => {
                     return <img src={rateImg} alt="product rate star" />;
                   }}
@@ -120,34 +120,37 @@ export const Product: FC<IProductProps> = ({dinamicCurrentProduct}) => {
                   <span>({reviewsLength})</span>
                 </a>
               </div>
-              <span>code:{dinamicCurrentProduct?.code}</span>
+              <span>code:{dynamicCurrentProduct?.code}</span>
             </div>
           </div>
         )}
         <div className={style['product_details']}>
-          {dinamicCurrentProduct?.alternativeProducts?.color && (  
+          {dynamicCurrentProduct?.alternativeProducts?.color && (  
               <ProductColors 
-                colors={dinamicCurrentProduct?.alternativeProducts?.color ?? []} 
-                selectedColor={productCharacteristics?.selectedColor ?? ''} 
-                onSelectedColor={(val,inStock) => changeCharacteristic(val, inStock, 'selectedColor')}
+                key={selectedColor }
+                colors={dynamicCurrentProduct?.alternativeProducts?.color ?? []} 
+                selectedColor={selectedColor ?? ''} 
+                onSelectedColor={setSelectedColor}
               />
             )
           }
 
-          {dinamicCurrentProduct?.alternativeProducts?.model && (  
+          {dynamicCurrentProduct?.alternativeProducts?.model && (  
               <ProductModels 
-                models={dinamicCurrentProduct?.alternativeProducts?.model ?? []} 
-                selectedModel={productCharacteristics?.selectedModel ?? ''}
-                onSelectedModels={(val, inStock) => changeCharacteristic(val, inStock, 'selectedModel')}
+                key={selectedModel }
+                models={dynamicCurrentProduct?.alternativeProducts?.model ?? []} 
+                selectedModel={selectedModel ?? ''}
+                onSelectedModels={setSelectedModel}
               />
             )
           }
           
-          {dinamicCurrentProduct?.alternativeProducts?.romMemory && (
+          {dynamicCurrentProduct?.alternativeProducts?.romMemory && (
               <ProductMemory 
-                memories={dinamicCurrentProduct?.alternativeProducts?.romMemory ?? []}
-                selectedMemory={productCharacteristics?.selectedMemory ?? ''}
-                onSelectedMemory={(val, inStock) => changeCharacteristic(val, inStock, 'selectedMemory')}
+                key={selectedMemory}
+                memories={dynamicCurrentProduct?.alternativeProducts?.romMemory ?? []}
+                selectedMemory={selectedMemory ?? ''}
+                onSelectedMemory={setSelectedMemory}
               />
             )
           }
@@ -169,12 +172,12 @@ export const Product: FC<IProductProps> = ({dinamicCurrentProduct}) => {
           <div className={style['product_bottom-section']}>
             <span className={style['product_price']}>
               {convertPriceToReadable(
-                dinamicCurrentProduct?.price || 0,
+                dynamicCurrentProduct?.price || 0,
                 currency,
                 locale,
               )}
             </span>
-            <AddToBasketButton product={dinamicCurrentProduct} />
+            <AddToBasketButton product={dynamicCurrentProduct} />
           </div>
         </div>
       </div>

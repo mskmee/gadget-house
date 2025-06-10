@@ -55,7 +55,7 @@ export interface SliderThumbsProps {
 }
 
 export interface SliderThumbsAndModalProps extends SliderThumbsProps {
-  dinamicCurrentProduct: IProductCard,
+  dynamicCurrentProduct: IProductCard,
   isMobile?: boolean,
   className?: string
   

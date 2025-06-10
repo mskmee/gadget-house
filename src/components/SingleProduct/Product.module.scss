@@ -192,7 +192,7 @@
           }
           > li.selected-color {
             transform: scale(1.2);
-            border: 3px solid #808080;
+            border: 3px solid #00820D;
           }
           > li.not-available {
             border: 1px solid #808080;
@@ -1606,4 +1606,19 @@
   font-size: 12px;
   line-height: 150%;
   color: var(--error-color);
+}
+.product-detail__link {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+.product-detail__item {
+  position: relative;
+}
+.product-detail__notAvailable {
+  position: absolute;
+  width: calc(100% - 4px);
+  height: calc(100% - 4px);
+  top: 2px;
+  left: 2px;
 }

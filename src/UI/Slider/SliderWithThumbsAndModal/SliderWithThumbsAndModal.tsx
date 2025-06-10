@@ -7,7 +7,7 @@ import { PhotoModal } from '@/components/SingleProduct/PhotoModal';
 import SliderBase from '../SliderBase/SliderBase';
 import classNames from 'classnames';
 
-function SliderWithTumbsAndModal({data, prevArrow, nextArrow, dinamicCurrentProduct, isMobile, className}: SliderThumbsAndModalProps) {
+function SliderWithThumbsAndModal({data, prevArrow, nextArrow, dynamicCurrentProduct, isMobile, className}: SliderThumbsAndModalProps) {
   const [thumbsSwiper, setThumbsSwiper] = useState<Swiper | null>(null);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -68,10 +68,10 @@ function SliderWithTumbsAndModal({data, prevArrow, nextArrow, dinamicCurrentProd
         setModalImageSrc={setModalImageSrc}
         currentSlide={currentSlide}
         setCurrentSlide={setCurrentSlide}
-        dinamicCurrentProduct={dinamicCurrentProduct}
+        dynamicCurrentProduct={dynamicCurrentProduct}
       />)}
     </>
   );
 }
 
-export default SliderWithTumbsAndModal;
+export default SliderWithThumbsAndModal;

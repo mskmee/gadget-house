@@ -15,7 +15,8 @@ import { useActions } from '@/hooks/useActions';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { convertPriceToReadable } from '@/utils/helpers/product';
 import useLocalStorage from '@/hooks/useLocalStorage';
-import { Category } from '@/enums/category';
+import getFormattedCategoryName from '@/hooks/getFormattedCategoryName';
+
 
 interface ISmartphoneCardProps {
   tempProduct: IProductCard | TProductImageCard | IBrandCard | undefined;
@@ -96,22 +97,9 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
       saveReviewedItem(product);
     }
   };
-  const anotherColors = (product as IProductCard)?.anotherColors;
+  const anotherColors = (product as IProductCard)?.alternativeProducts?.color;
 
-  const getCategoryByName = (categoryId: number): string | undefined => {
-    // eslint-disable-next-line no-unused-vars
-    return Object.entries(Category).find(([_, value]) => value === categoryId)?.[0];
-  }
-
-  const categoryName = product?.categoryId !== undefined
-  ? getCategoryByName(product.categoryId)
-  : undefined;
-
-  const getFormattedName = (categoryName?: string): string | undefined => {
-    return categoryName?.toLocaleLowerCase().replace(/_/g, '-')
-  }
-
-  const formatCategoryName = getFormattedName(categoryName)
+  const formatCategoryName = getFormattedCategoryName(product?.categoryId)
 
 
   return (
@@ -127,8 +115,8 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
         >
           <div
             className={classNames(styles.cardContainerTop, {
-              [styles.alignCenter]: Array.isArray(product?.anotherColors),
-              [styles.alignStart]: !Array.isArray(product?.anotherColors),
+              [styles.alignCenter]: Array.isArray(anotherColors),
+              [styles.alignStart]: !Array.isArray(anotherColors),
             })}
           >
             <div
@@ -155,7 +143,7 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
 
             <div
               className={`${styles.cardConatinerLike} ${
-                !Array.isArray(product?.anotherColors) ? styles.marginTop : ''
+                !Array.isArray(anotherColors) ? styles.marginTop : ''
               }`}
             >
               <HeartIcon
@@ -166,12 +154,12 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
 
               {anotherColors && anotherColors?.length > 0 && (
                 <div className={styles['accessories-colors']}>
-                  {anotherColors?.map((color: string) => (
+                  {anotherColors?.map((color) => (
                     <div
-                      key={color}
-                      style={{ backgroundColor: color }}
+                      key={color.attributeValue}
+                      style={{ backgroundColor: color.attributeValue }}
                       className={classNames({
-                        [styles['hasBorder']]: color === '#ffffff',
+                        [styles['hasBorder']]: color.attributeValue === '#ffffff',
                       })}
                     ></div>
                   ))}

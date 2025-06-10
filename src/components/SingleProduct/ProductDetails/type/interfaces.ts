@@ -2,22 +2,24 @@ import { iProductMemoryCards, IProductOtherModels } from "@/interfaces/interface
 
 export interface ProductColorsProps {
   colors: {
-    id: number;
+    productId: number;
     available: boolean;
-    value: string;
+    attributeValue: string;
+    href: string;
+    categoryId: number;
   }[];
   selectedColor: string;
-  onSelectedColor: (val: string, inStock: boolean) => void;
+  onSelectedColor: (val: string) => void;
 }
 
 export interface ProductModelsProps {
   models: IProductOtherModels[];
-  selectedModel: string | [];
-  onSelectedModels: (val: string, inStock: boolean) => void;
+  selectedModel: string;
+  onSelectedModels: (val: string) => void;
 }
 
 export interface ProductMemoryProps {
   memories: iProductMemoryCards[];
-  selectedMemory: string | [],
-  onSelectedMemory: (val: string, inStock: boolean) => void;
+  selectedMemory: string,
+  onSelectedMemory: (val: string) => void;
 }

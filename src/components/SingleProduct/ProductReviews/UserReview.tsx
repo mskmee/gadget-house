@@ -34,8 +34,6 @@ function UserReview({productId}: {productId: number}) {
     }
   }, [dispatch, productId, currentPage, currentProductStatus])
 
-  console.log('reviews asd', reviews?.page.length)
-
   return (
    <div className={style['review_users-review']} id="users-review">
       {reviews?.page.length ? (

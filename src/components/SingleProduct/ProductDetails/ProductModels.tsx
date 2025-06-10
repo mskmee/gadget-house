@@ -1,6 +1,8 @@
 import style from '../Product.module.scss';
 import classNames from 'classnames';
 import { ProductModelsProps } from './type/interfaces';
+import { Link } from 'react-router-dom';
+import getFormattedCategoryName from '@/hooks/getFormattedCategoryName';
 
 function ProductModels({models, selectedModel, onSelectedModels}: ProductModelsProps) {
 
@@ -10,20 +12,28 @@ function ProductModels({models, selectedModel, onSelectedModels}: ProductModelsP
       <ul>
         {models?.map((model) => {
           const isAvailable = model?.available;
+          const formatCategoryName = getFormattedCategoryName(model?.categoryId);
           return (
             <li
-              key={model?.id}
+              key={model?.productId}
               tabIndex={0}
               className={classNames({
-                [style['selected-model']]: selectedModel === model.value && isAvailable,
+                [style['selected-model']]: selectedModel === model.attributeValue && isAvailable,
                 [style['not-available']]: !isAvailable,
               })}
               onClick={() => {
                 if(!isAvailable) return;
-                onSelectedModels(model.value, true)
+                onSelectedModels(model.attributeValue)
               }}
             >
-              {model.value}
+              { isAvailable ? (
+                  <Link to={`/${formatCategoryName}/${model.productId}/${model.href}`}>{model.attributeValue}</Link>
+                ) : (
+                  model.attributeValue
+                )
+              }
+              
+              
             </li>
           )
         })}

@@ -23,7 +23,7 @@ interface iPhotoModalProps {
   setModalImageSrc: Dispatch<SetStateAction<string | null>>;
   currentSlide: ICurrentSlide;
   setCurrentSlide: Dispatch<SetStateAction<ICurrentSlide>>;
-  dinamicCurrentProduct: IProductCard;
+  dynamicCurrentProduct: IProductCard;
   forceUpdateKey?: number
 }
 
@@ -33,7 +33,7 @@ export const PhotoModal: FC<iPhotoModalProps> = ({
   modalImageSrc,
   setModalImageSrc,
   currentSlide,
-  dinamicCurrentProduct,
+  dynamicCurrentProduct,
 }) => {
 
   const { currency, locale } = useTypedSelector((state) => state.shopping_card);
@@ -62,10 +62,10 @@ export const PhotoModal: FC<iPhotoModalProps> = ({
           <div className={style.photoModal}>
             <div className={style.photoModal__inner}>
               <div className={style.photoModal__slideCounter}>
-                {currentSlideIndex + 1} / {dinamicCurrentProduct?.images?.length}
+                {currentSlideIndex + 1} / {dynamicCurrentProduct?.images?.length}
               </div>
               <SliderThumbs 
-                data={dinamicCurrentProduct?.images} 
+                data={dynamicCurrentProduct?.images} 
                 prevArrow={<ArrowPrev classNameArrow='arrowLeft'><ArrowIcon color="#1C1817"/></ArrowPrev>} 
                 nextArrow={<ArrowNext classNameArrow='arrowRight'><ArrowIcon color="#1C1817"/></ArrowNext>}
                 currentSlide={currentSlide}
@@ -93,12 +93,12 @@ export const PhotoModal: FC<iPhotoModalProps> = ({
               <div className={style.photoModalBottom_right}>
                 <span>
                   {convertPriceToReadable(
-                    dinamicCurrentProduct.price,
+                    dynamicCurrentProduct.price,
                     currency,
                     locale,
                   )}
                 </span>
-                <AddToBasketButton product={dinamicCurrentProduct} />
+                <AddToBasketButton product={dynamicCurrentProduct} />
               </div>
             </div>
           </div>
