@@ -60,22 +60,20 @@ export const NavButton: FC<INavButtonProps> = ({ button, onAuthClick }) => {
     ) {
       return (
         <>
-          {refreshToken && user?.id 
-            ? (
-              <Link to={button.href} className={styles.headerButton}>
-                <IconComponent />
-                {favoriteProducts.length > 0 && (
-                  <div>
-                    <span>{favoriteProducts.length}</span>
-                  </div>
-                )}
-              </Link>
-            ) : (
+          {refreshToken && user?.id ? (
+            <Link to={button.href} className={styles.headerButton}>
+              <IconComponent />
+              {favoriteProducts.length > 0 && (
+                <div>
+                  <span>{favoriteProducts.length}</span>
+                </div>
+              )}
+            </Link>
+          ) : (
             <button onClick={onAuthClick} className={styles.headerButton}>
               <IconComponent />
             </button>
-            )
-          }
+          )}
         </>
       );
     }
@@ -89,6 +87,7 @@ export const NavButton: FC<INavButtonProps> = ({ button, onAuthClick }) => {
           </div>
         </Link>
       ) : (
+        // ???? LINK || <a> works but not <button>
         <button className={styles.headerButton} onClick={openEmptyBasketPopup}>
           <IconComponent />
         </button>

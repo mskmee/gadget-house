@@ -14,12 +14,16 @@
       path {
         stroke: #a5a5a5;
       }
+      // on hover ? 
+      &:hover path {
+        stroke: #6f4c9a;
+      }
     }
     .active {
       display: flex;
       cursor: pointer;
       svg path {
-        stroke: #1c1817;
+        stroke: #6f4c9a;
       }
       &:hover,
       &:active {
@@ -98,16 +102,12 @@
     }
   }
 
-  @media screen and (max-width: 1400px) {
-    margin-left: 18px; 
-  }
-
-  @media screen and (max-width: 1200px) {
+  @media screen and (max-width: 1440px) {
     margin-left: 18px;
   }
 
-  @media screen and (max-width: 1070px) {
-    margin-left: 0px; 
+  @media screen and (max-width: 1060px) {
+    margin-left: 2px;
   }
 }
 .autocomplete-search-bar__active {
