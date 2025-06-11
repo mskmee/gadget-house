@@ -20,9 +20,9 @@ export interface IOrderItemAddress {
 
 type OrderItemResponseDto = {
   id: string;
-  date: string;
-  status: string;
-  totalPrice: number;
+  createdAt: string;
+  deliveryStatus: string;
+  total: number;
   email: string;
   fullName: string;
   phoneNumber: string;
