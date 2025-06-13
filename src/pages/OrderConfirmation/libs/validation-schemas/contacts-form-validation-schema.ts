@@ -19,7 +19,7 @@ const email = Yup.string()
 const phoneNumber = Yup.string()
   .matches(regx.phone, 'Wrong phone number format')
   .required('This field is required ');
-const comment = Yup.string().optional().max(1000, 'Comment is too long');
+const comment = Yup.string().optional().max(200, 'Comment is too long');
 
 const contactsFormValidationSchema: Yup.Schema<ContactsFormDto> =
   Yup.object().shape({
