@@ -87,7 +87,6 @@ export const NavButton: FC<INavButtonProps> = ({ button, onAuthClick }) => {
           </div>
         </Link>
       ) : (
-        // ???? LINK || <a> works but not <button>
         <button className={styles.headerButton} onClick={openEmptyBasketPopup}>
           <IconComponent />
         </button>
