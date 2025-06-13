@@ -78,7 +78,7 @@ export const FormInput = <T extends FormikValues>({
                   {...field}
                   {...(props as TextAreaProps)}
                   id={inputId}
-                  maxLength={1000}
+                  maxLength={maxLength + 1}
                   status={isError ? 'error' : ''}
                 />
                 <span
