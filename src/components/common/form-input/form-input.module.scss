@@ -18,6 +18,27 @@
     transition: all 0.3s ease;
   }
 
+  &__counter {
+    position: absolute;
+    bottom: 8px;
+    right: 12px;
+    color: var(--secondary-text-color);
+    pointer-events: none;
+    z-index: 1;
+    line-height: 150%;
+    transition: color 0.3s ease;
+    
+    &Error {
+      color: var(--error-color);
+    }
+  }
+
+  &__textareaWrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+
   &__input {
     width: 100%;
     position: relative;
@@ -69,6 +90,7 @@
     textarea {
       min-height: 126px;
       resize: none;
+      padding-bottom: 30px; 
     }
 
     :global {
