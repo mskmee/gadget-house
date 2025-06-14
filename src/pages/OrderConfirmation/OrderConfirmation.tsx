@@ -38,6 +38,7 @@ const OrderConfirmation: FC = () => {
   const { products, cardTotalAmount, currency, locale } = useTypedSelector(
     (state) => state.shopping_card,
   );
+  const initialUserData = useTypedSelector((state) => state.auth.user);
 
   useEffect(() => {
     if (products.length === 0) {
@@ -47,6 +48,14 @@ const OrderConfirmation: FC = () => {
   }, [products, navigate]);
 
   const isOrderButtonDisabled = !isOrderReady || !isRulesAccepted || isEditing;
+
+  const initialContactsValue = {
+    fullName: contactsFormValue.fullName || initialUserData?.fullName || '',
+    email: contactsFormValue.email || initialUserData?.email || '',
+    phoneNumber:
+      contactsFormValue.phoneNumber || initialUserData?.phoneNumber || '',
+    comment: contactsFormValue.comment,
+  };
 
   return (
     <section className={styles.order}>
@@ -58,7 +67,7 @@ const OrderConfirmation: FC = () => {
             <ContactsForm
               stage={orderProcessStage}
               onSubmit={onContactsFormSubmit}
-              initialValues={contactsFormValue}
+              initialValues={initialContactsValue}
               onEditForm={onEditForm}
             />
 
