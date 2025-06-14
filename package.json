@@ -41,6 +41,7 @@
     "stylelint": "^16.8.1",
     "stylelint-config-standard": "^36.0.1",
     "stylelint-order": "^6.0.4",
+    "swiper": "^11.2.8",
     "yup": "^1.6.1",
     "zxcvbn": "^4.4.2"
   },

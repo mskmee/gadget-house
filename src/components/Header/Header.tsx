@@ -61,7 +61,10 @@ export const Header = () => {
   // open catalog
   const openCatalog = () => {
     if (isLessThan992px || (location.pathname !== '/' && !isCatalogListOpen)) {
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+
       document.body.style.overflow = 'hidden';
+      document.body.style.paddingRight = `${scrollbarWidth}px`;
       setIsCatalogListOpen(true);
     }
   };
@@ -79,6 +82,7 @@ export const Header = () => {
       !catalogSection.contains(e.relatedTarget)
     ) {
       document.body.style.overflow = 'initial';
+      document.body.style.paddingRight = `0px`;
       setIsCatalogListOpen(false);
     }
   };

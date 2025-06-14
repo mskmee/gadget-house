@@ -37,6 +37,7 @@ export const ContactsForm: FC<Properties> = ({
         validateOnBlur={true}
         validateOnChange={true}
         validationSchema={contactsFormValidationSchema}
+        enableReinitialize={true}
         onSubmit={(values) => {
           onSubmit(values);
           setIsEditable(false);
