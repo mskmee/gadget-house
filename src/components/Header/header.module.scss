@@ -135,7 +135,8 @@
       }
     }
 
-    > a:nth-child(4) svg {
+    > a:nth-child(4) svg,
+    > button:nth-child(4) svg {
       width: 34px;
       height: 34px;
       path {
@@ -173,8 +174,6 @@
   left: 0;
   z-index: 999;
   width: 100%;
-  z-index: 4;
-
   > div {
     max-width: 1540px;
     margin: 0 auto;
@@ -251,10 +250,9 @@
   transform: translateY(0);
 }
 .headerBottomWrap {
-  // container styling to match headerTop
   max-width: 1540px;
   margin: 0 auto;
-  padding: 0 50px; // Match headerTop padding
+  padding: 0 50px; 
   background-color: var(--carousel-theme-color);
   
   &.fixedHeader {
@@ -264,14 +262,13 @@
     z-index: 999;
     width: 100%;
     z-index: 4;
-    max-width: 100%; // Allow full width when fixed
+    max-width: 100%; 
     margin: 0;
     padding: 0;
     
     > .headerBottom {
       max-width: 1540px;
       margin: 0 auto;
-      background-color: var(--carousel-theme-color);
     }
   }
 }

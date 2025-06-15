@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Input } from 'antd';
 import { FieldInputProps } from 'formik';
 
@@ -12,9 +12,16 @@ type Props = {
 };
 
 export const PhoneInput = ({ field, id, ...props }: Props) => {
-  const [phone, setPhone] = useState(field.value || '');
+  const [phone, setPhone] = useState(() => {
+    return field.value ? formatPhoneNumber(field.value) : '';
+  });
 
-  const formatPhoneNumber = (value: string) => {
+  useEffect(() => {
+    if (field.value) setPhone(formatPhoneNumber(field.value));
+    else setPhone('');
+  }, [field.value]);
+
+  function formatPhoneNumber(value: string) {
     const numbers = value.replace(/\D/g, '');
 
     if (numbers.length > 0) {
@@ -26,7 +33,7 @@ export const PhoneInput = ({ field, id, ...props }: Props) => {
     }
 
     return numbers;
-  };
+  }
 
   const normalizePhoneNumber = (value: string) =>
     value.replace(/\D/g, '').slice(0, 10);

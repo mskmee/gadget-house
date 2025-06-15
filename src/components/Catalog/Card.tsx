@@ -36,7 +36,6 @@ export const Card: FC<ISmartphoneCardProps> = ({
       name: product.name,
       isLiked: false,
       rating: product.rating,
-      anotherColors: [],
       code: 'product_code',
       price: product.price.toString(),
       category: product.category,

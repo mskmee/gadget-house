@@ -34,6 +34,8 @@ export const FormInput = <T extends FormikValues>({
   const id = useId();
   const inputId = props.id ?? id;
   const isError = meta.touched && meta.error;
+  const maxLength = 200;
+  const leftCharactersCount = maxLength - (field?.value?.length || 0);
 
   return (
     <>
@@ -71,13 +73,22 @@ export const FormInput = <T extends FormikValues>({
                 />
               )
             ) : (
-              <Input.TextArea
-                {...field}
-                {...(props as TextAreaProps)}
-                id={inputId}
-                maxLength={1000}
-                status={isError ? 'error' : ''}
-              />
+              <>
+                <Input.TextArea
+                  {...field}
+                  {...(props as TextAreaProps)}
+                  id={inputId}
+                  maxLength={maxLength + 1}
+                  status={isError ? 'error' : ''}
+                />
+                <span
+                  className={cn(styles.formInput__counter, {
+                    [styles.formInput__counterError]: leftCharactersCount < 10,
+                  })}
+                >
+                  {leftCharactersCount >= 0 ? leftCharactersCount : null}
+                </span>
+              </>
             )}
             {isError ? (
               <div className={styles.formInput__error}>
