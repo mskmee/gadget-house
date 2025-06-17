@@ -4,7 +4,7 @@ import { ProductMemoryProps } from './type/interfaces';
 import { Link } from 'react-router-dom';
 import getFormattedCategoryName from '@/hooks/getFormattedCategoryName';
 
-function ProductMemory({memories, selectedMemory, onSelectedMemory}: ProductMemoryProps) {  
+function ProductMemory({memories, selectedMemory}: ProductMemoryProps) {  
 
   return (
     <div className={style['product_memory-card']}>
@@ -23,7 +23,6 @@ function ProductMemory({memories, selectedMemory, onSelectedMemory}: ProductMemo
               })}
               onClick={() => {
                 if(!isAvailable) return;
-                onSelectedMemory(memory.attributeValue)
               }}
             >
               {isAvailable ? (

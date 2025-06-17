@@ -8,7 +8,7 @@ import getFormattedCategoryName from '@/hooks/getFormattedCategoryName';
 
 
 
-function ProductColors({colors, selectedColor, onSelectedColor}: ProductColorsProps) {
+function ProductColors({colors, selectedColor}: ProductColorsProps) {
 
   return (
     <div className={style['product_other-colors']}>
@@ -29,7 +29,6 @@ function ProductColors({colors, selectedColor, onSelectedColor}: ProductColorsPr
               style={{ backgroundColor: `#${color.attributeValue}` }}
               onClick={() => {
                 if(!isAvailable) return;
-                onSelectedColor(color.attributeValue)
               }}
             >
               <Link to={`/${formatCategoryName}/${color.productId}/${color.href}`} className={classNames(style['product-detail__link'])}></Link>

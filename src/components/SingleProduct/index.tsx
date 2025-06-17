@@ -34,11 +34,11 @@ export const Product: FC<IProductProps> = ({dynamicCurrentProduct}) => {
   const reviews = useTypedSelector(state => state.singleProduct.reviews);
   const reviewsLength = reviews?.totalElements;
 
-  const {id} = useParams();
+  const {id}  = dynamicCurrentProduct;
 
-  const [selectedColor, setSelectedColor] = useState<string | undefined>('')
-  const [selectedModel, setSelectedModel] = useState<string | undefined>('');
-  const [selectedMemory, setSelectedMemory] = useState<string | undefined>('');
+  const selectedColor = dynamicCurrentProduct?.alternativeProducts?.color?.find(c => c.productId === Number(id))?.attributeValue;
+  const selectedModel = dynamicCurrentProduct?.alternativeProducts?.model?.find(m => m.productId === Number(id))?.attributeValue;
+  const selectedMemory = dynamicCurrentProduct?.alternativeProducts?.romMemory?.find(r => r.productId ===  Number(id))?.attributeValue;
 
   const { currency, locale } = useTypedSelector((state) => state.shopping_card);
   const dynamicCurrentProductImages = dynamicCurrentProduct?.images;
@@ -46,16 +46,6 @@ export const Product: FC<IProductProps> = ({dynamicCurrentProduct}) => {
 
   const isLargerThan768px = useMediaQuery({query: '(max-width: 768px)'});
   const isWidth575 = useMediaQuery({ query: '(max-width: 575px)',})
-
-  useEffect(() => {
-    const color = dynamicCurrentProduct?.alternativeProducts?.color?.find(c => c.productId === Number(id))?.attributeValue;
-    const model = dynamicCurrentProduct?.alternativeProducts?.model?.find(m => m.productId === Number(id))?.attributeValue;
-    const memory = dynamicCurrentProduct?.alternativeProducts?.romMemory?.find(r => r.productId ===  Number(id))?.attributeValue;
-
-    setSelectedColor(color);
-    setSelectedModel(model);
-    setSelectedMemory(memory)
-  }, [dynamicCurrentProduct, id])
 
   return (
     <section className={style['product']} id="product">
@@ -137,7 +127,6 @@ export const Product: FC<IProductProps> = ({dynamicCurrentProduct}) => {
                 key={selectedColor}
                 colors={dynamicCurrentProduct?.alternativeProducts?.color ?? []} 
                 selectedColor={selectedColor ?? ''} 
-                onSelectedColor={setSelectedColor}
               />
             )
           }
@@ -147,7 +136,6 @@ export const Product: FC<IProductProps> = ({dynamicCurrentProduct}) => {
                 key={selectedModel }
                 models={dynamicCurrentProduct?.alternativeProducts?.model ?? []} 
                 selectedModel={selectedModel ?? ''}
-                onSelectedModels={setSelectedModel}
               />
             )
           }
@@ -157,7 +145,6 @@ export const Product: FC<IProductProps> = ({dynamicCurrentProduct}) => {
                 key={selectedMemory}
                 memories={dynamicCurrentProduct?.alternativeProducts?.romMemory ?? []}
                 selectedMemory={selectedMemory ?? ''}
-                onSelectedMemory={setSelectedMemory}
               />
             )
           }
