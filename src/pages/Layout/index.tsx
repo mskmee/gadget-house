@@ -9,8 +9,7 @@ import BasketPopup from '@/components/BasketPopup/BasketPopup.tsx';
 import { PopUp } from '@/components/PopUp/PopUp.tsx';
 import { useTypedSelector } from '@/hooks/useTypedSelector.ts';
 import { useActions } from '@/hooks/useActions.ts';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 import { useBodyScrollLock } from '@/hooks/useBodyScrollLock';
 
 const Layout = () => {
@@ -46,7 +45,7 @@ const Layout = () => {
       </PopUp>
       <Footer />
       <ScrollRestoration />
-      <ToastContainer />
+
     </>
   );
 };
