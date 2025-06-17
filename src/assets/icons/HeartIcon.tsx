@@ -1,9 +1,10 @@
-import { FC } from 'react';
+import  React, { FC } from 'react';
 import styles from '@/components/Card/card.module.scss';
 import classNames from 'classnames';
 
 interface IHeartIcon {
-  onClick?: () => void;
+  // eslint-disable-next-line no-unused-vars
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   isLiked?: boolean;
   type?: string;
   fill?: string;
@@ -20,7 +21,8 @@ export const HeartIcon: FC<IHeartIcon> = ({
   height,
 }) => {
   return (
-    <span
+    <button
+      type='button'
       data-ignore-close
       className={classNames({
         [styles.likedIcon]: isLiked,
@@ -28,7 +30,7 @@ export const HeartIcon: FC<IHeartIcon> = ({
       })}
       onClick={(e) => {
         e.preventDefault();
-        onClick?.();
+        onClick?.(e);
       }}
     >
       <svg
@@ -53,6 +55,6 @@ export const HeartIcon: FC<IHeartIcon> = ({
           {isLiked ? 'Remove from' : 'Add to'} favorite
         </span>
       )}
-    </span>
+    </button>
   );
 };

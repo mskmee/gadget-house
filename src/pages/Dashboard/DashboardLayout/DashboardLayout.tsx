@@ -21,9 +21,7 @@ export const DashboardLayout = () => {
   const { logout } = useActions();
 
   const [activeSection, setActiveSection] = useState<string>('');
-  const { user: currentUser, isAuthenticated } = useTypedSelector(
-    (state) => state.auth,
-  );
+  const { user: currentUser, isAuthenticated } = useTypedSelector((state) => state.auth);
   const userToken = useTypedSelector(state => state.auth.userToken)
 
   useEffect(() => {
