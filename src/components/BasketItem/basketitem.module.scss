@@ -365,9 +365,9 @@
           align-items: center;
           justify-content: center;
         }
-        > svg {
-          fill: #000;
-        }
+        // > svg {
+        //   fill: #000;
+        // }
         .likedIcon svg path:first-child,
         .likedIcon svg path:last-child {
           fill: rgba(111, 76, 154, 1);
