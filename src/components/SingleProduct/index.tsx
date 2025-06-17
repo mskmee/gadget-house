@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useRef } from 'react';
 import style from './Product.module.scss';
 import { Rate } from 'antd';
 
@@ -24,7 +24,6 @@ import ProductModels from './ProductDetails/ProductModels';
 import ProductMemory from './ProductDetails/ProductMemory';
 
 import SliderWithThumbsAndModal from '@/UI/Slider/SliderWithThumbsAndModal/SliderWithThumbsAndModal';
-import { useParams } from 'react-router-dom';
 
 interface IProductProps {
   dynamicCurrentProduct: IProductCard;
