@@ -1,4 +1,4 @@
-import { FC, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import style from './Product.module.scss';
 import { Rate } from 'antd';
 
@@ -36,11 +36,9 @@ export const Product: FC<IProductProps> = ({dynamicCurrentProduct}) => {
 
   const {id} = useParams();
 
-  const [selectedColor, setSelectedColor] = useState(
-    dynamicCurrentProduct?.alternativeProducts?.color?.find(c => c.productId === Number(id))?.attributeValue ?? null
-  )
-  const [selectedModel, setSelectedModel] = useState(dynamicCurrentProduct?.alternativeProducts?.model?.find(m => m.productId === Number(id))?.attributeValue ?? null);
-  const [selectedMemory, setSelectedMemory] = useState(dynamicCurrentProduct?.alternativeProducts?.romMemory?.find(r => r.productId ===  Number(id))?.attributeValue ?? null)
+  const [selectedColor, setSelectedColor] = useState<string | undefined>('')
+  const [selectedModel, setSelectedModel] = useState<string | undefined>('');
+  const [selectedMemory, setSelectedMemory] = useState<string | undefined>('');
 
   const { currency, locale } = useTypedSelector((state) => state.shopping_card);
   const dynamicCurrentProductImages = dynamicCurrentProduct?.images;
@@ -48,6 +46,16 @@ export const Product: FC<IProductProps> = ({dynamicCurrentProduct}) => {
 
   const isLargerThan768px = useMediaQuery({query: '(max-width: 768px)'});
   const isWidth575 = useMediaQuery({ query: '(max-width: 575px)',})
+
+  useEffect(() => {
+    const color = dynamicCurrentProduct?.alternativeProducts?.color?.find(c => c.productId === Number(id))?.attributeValue;
+    const model = dynamicCurrentProduct?.alternativeProducts?.model?.find(m => m.productId === Number(id))?.attributeValue;
+    const memory = dynamicCurrentProduct?.alternativeProducts?.romMemory?.find(r => r.productId ===  Number(id))?.attributeValue;
+
+    setSelectedColor(color);
+    setSelectedModel(model);
+    setSelectedMemory(memory)
+  }, [dynamicCurrentProduct, id])
 
   return (
     <section className={style['product']} id="product">
@@ -110,10 +118,9 @@ export const Product: FC<IProductProps> = ({dynamicCurrentProduct}) => {
               <div className={style['product_rate']} ref={productRateRef}>
                 <Rate
                   className="product_rate-stars"
+                  disabled
                   value={dynamicCurrentProduct?.rating}
-                  character={() => {
-                    return <img src={rateImg} alt="product rate star" />;
-                  }}
+                  style={{color: '#6F4C9A'}}
                 />
                 <a>
                   <img src={reviewImg} alt="review pic" />
@@ -125,9 +132,9 @@ export const Product: FC<IProductProps> = ({dynamicCurrentProduct}) => {
           </div>
         )}
         <div className={style['product_details']}>
-          {dynamicCurrentProduct?.alternativeProducts?.color && (  
+          {selectedColor && (  
               <ProductColors 
-                key={selectedColor }
+                key={selectedColor}
                 colors={dynamicCurrentProduct?.alternativeProducts?.color ?? []} 
                 selectedColor={selectedColor ?? ''} 
                 onSelectedColor={setSelectedColor}
@@ -135,7 +142,7 @@ export const Product: FC<IProductProps> = ({dynamicCurrentProduct}) => {
             )
           }
 
-          {dynamicCurrentProduct?.alternativeProducts?.model && (  
+          {selectedModel && (  
               <ProductModels 
                 key={selectedModel }
                 models={dynamicCurrentProduct?.alternativeProducts?.model ?? []} 
@@ -145,7 +152,7 @@ export const Product: FC<IProductProps> = ({dynamicCurrentProduct}) => {
             )
           }
           
-          {dynamicCurrentProduct?.alternativeProducts?.romMemory && (
+          {selectedMemory && (
               <ProductMemory 
                 key={selectedMemory}
                 memories={dynamicCurrentProduct?.alternativeProducts?.romMemory ?? []}
