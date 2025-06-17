@@ -5,7 +5,6 @@ import { Rate } from 'antd';
 import {
   deliverImg,
   paymentImg,
-  rateImg,
   returnImg,
   reviewImg,
 } from '@/assets/constants';
@@ -56,9 +55,6 @@ export const Product: FC<IProductProps> = ({dynamicCurrentProduct}) => {
               <Rate
                 className="product_rate-stars"
                 value={dynamicCurrentProduct?.rating}
-                character={() => {
-                  return <img src={rateImg} alt="product rate star" />;
-                }}
               />
               <a href="#users-review">
                 <img src={reviewImg} alt="review pic" />

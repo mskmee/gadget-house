@@ -21,9 +21,6 @@ function ProductModels({models, selectedModel}: ProductModelsProps) {
                 [style['selected-model']]: selectedModel === model.attributeValue && isAvailable,
                 [style['not-available']]: !isAvailable,
               })}
-              onClick={() => {
-                if(!isAvailable) return;
-              }}
             >
               { isAvailable ? (
                   <Link to={`/${formatCategoryName}/${model.productId}/${model.href}`}>{model.attributeValue}</Link>

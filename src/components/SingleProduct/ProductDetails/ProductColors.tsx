@@ -27,9 +27,6 @@ function ProductColors({colors, selectedColor}: ProductColorsProps) {
                 [style['not-available']]: !isAvailable
               }, style['product-detail__item'])}
               style={{ backgroundColor: `#${color.attributeValue}` }}
-              onClick={() => {
-                if(!isAvailable) return;
-              }}
             >
               <Link to={`/${formatCategoryName}/${color.productId}/${color.href}`} className={classNames(style['product-detail__link'])}></Link>
               {!isAvailable && (

@@ -21,9 +21,6 @@ function ProductMemory({memories, selectedMemory}: ProductMemoryProps) {
                 [style['selected-memory']]: selectedMemory === memory.attributeValue && isAvailable,
                 [style['not-available']]: !isAvailable,
               })}
-              onClick={() => {
-                if(!isAvailable) return;
-              }}
             >
               {isAvailable ? (
                 <Link to={`/${formatCategoryName}/${memory.productId}/${memory.href}`}>{memory.attributeValue}</Link>
