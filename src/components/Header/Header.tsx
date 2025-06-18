@@ -59,12 +59,23 @@ export const Header = () => {
   const shouldShowCartTooltip = products.length > 0 && !isBasketPage;
 
   // open catalog
+  const scrollbarWidthRef = useRef<number | null>(null);
+  const getScrollbarWidth = () => {
+    if (scrollbarWidthRef.current !== null) return scrollbarWidthRef.current;
+
+    scrollbarWidthRef.current = window.innerWidth - document.documentElement.clientWidth;
+
+    return scrollbarWidthRef.current;
+  };
+
   const openCatalog = () => {
     if (isLessThan992px || (location.pathname !== '/' && !isCatalogListOpen)) {
-      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      const scrollbarWidth = getScrollbarWidth();
 
       document.body.style.overflow = 'hidden';
-      document.body.style.paddingRight = `${scrollbarWidth}px`;
+      if (scrollbarWidth > 0) {
+        document.body.style.paddingRight = `${scrollbarWidth}px`;
+      }
       setIsCatalogListOpen(true);
     }
   };
