@@ -60,6 +60,8 @@ export const Header = () => {
 
   // open catalog
   const scrollbarWidthRef = useRef<number | null>(null);
+  const fixedHeaderBlock = useRef(null);
+
   const getScrollbarWidth = () => {
     if (scrollbarWidthRef.current !== null) return scrollbarWidthRef.current;
 
@@ -76,6 +78,10 @@ export const Header = () => {
       if (scrollbarWidth > 0) {
         document.body.style.paddingRight = `${scrollbarWidth}px`;
       }
+      if(isFixedHeader && scrollbarWidth > 0 && headerBottomRef.current) {
+        headerBottomRef.current.style.width = `calc(100% - ${scrollbarWidth}px)`
+      }
+
       setIsCatalogListOpen(true);
     }
   };
@@ -94,6 +100,7 @@ export const Header = () => {
     ) {
       document.body.style.overflow = 'initial';
       document.body.style.paddingRight = `0px`;
+      headerBottomRef.current.style.width = `100%`
       setIsCatalogListOpen(false);
     }
   };
@@ -164,6 +171,7 @@ export const Header = () => {
             [styles.headerBottomWithoutBG]: isFixedHeader,
           })}
           tabIndex={0}
+          ref={fixedHeaderBlock}
         >
           <div
             className={classNames({
