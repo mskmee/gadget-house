@@ -41,12 +41,11 @@ export const Search: FC<ISearchProps> = ({
     { title: string; category: string }[]
   >([]);
   const [activeIndex, setActiveIndex] = useState<number>(-1);
+  const filteredSuggestions = suggestions.filter((s) =>
+    s.title.toLowerCase().includes(searchInput.value.toLowerCase()),
+  );
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    const filteredSuggestions = suggestions.filter((s) =>
-      s.title.toLowerCase().includes(searchInput.value.toLowerCase()),
-    );
-
     if (e.key === 'ArrowDown' && activeIndex !== 5) {
       setActiveIndex((prev) =>
         Math.min(prev + 1, filteredSuggestions.slice(0, 6).length - 1),
@@ -195,7 +194,9 @@ export const Search: FC<ISearchProps> = ({
       className={classNames(styles['header-search'], {
         [styles['header-search__error']]: searchInput.hasError,
         [styles['autocomplete-search-bar__active']]:
-          suggestions.length > 0 && isOverlayActive,
+          filteredSuggestions.length > 0 &&
+          suggestions.length > 0 &&
+          isOverlayActive,
       })}
       placeholder="Searching..."
       value={
