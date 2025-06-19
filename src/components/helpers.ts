@@ -1,6 +1,6 @@
 type BreadcrumbItem = {
   title: string;
-  href: string;
+  href?: string;
 };
 
 
@@ -23,6 +23,10 @@ export const getBreadcrumbItems = (pathname: string): BreadcrumbItem[] => {
 
     breadcrumbItems.push({ title, href });
   });
+
+  if (breadcrumbItems.length > 0) {
+    delete breadcrumbItems[breadcrumbItems.length - 1].href;
+  }
 
   return breadcrumbItems;
 };

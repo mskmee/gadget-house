@@ -71,8 +71,11 @@
   }
   .dashboardLogout {
     display: flex;
-    gap: 8px;
+    gap: 5px;
     align-items: center;
+    background: #fff;
+    border-radius: 10px;
+    padding: 9px 12px;
     > span {
       color: #1c1817;
     }

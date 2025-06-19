@@ -1,11 +1,10 @@
-import { FC, useRef, useState } from 'react';
+import { FC, useRef } from 'react';
 import style from './Product.module.scss';
 import { Rate } from 'antd';
 
 import {
   deliverImg,
   paymentImg,
-  rateImg,
   returnImg,
   reviewImg,
 } from '@/assets/constants';
@@ -24,7 +23,6 @@ import ProductModels from './ProductDetails/ProductModels';
 import ProductMemory from './ProductDetails/ProductMemory';
 
 import SliderWithThumbsAndModal from '@/UI/Slider/SliderWithThumbsAndModal/SliderWithThumbsAndModal';
-import { useParams } from 'react-router-dom';
 
 interface IProductProps {
   dynamicCurrentProduct: IProductCard;
@@ -34,13 +32,11 @@ export const Product: FC<IProductProps> = ({dynamicCurrentProduct}) => {
   const reviews = useTypedSelector(state => state.singleProduct.reviews);
   const reviewsLength = reviews?.totalElements;
 
-  const {id} = useParams();
+  const {id}  = dynamicCurrentProduct;
 
-  const [selectedColor, setSelectedColor] = useState(
-    dynamicCurrentProduct?.alternativeProducts?.color?.find(c => c.productId === Number(id))?.attributeValue ?? null
-  )
-  const [selectedModel, setSelectedModel] = useState(dynamicCurrentProduct?.alternativeProducts?.model?.find(m => m.productId === Number(id))?.attributeValue ?? null);
-  const [selectedMemory, setSelectedMemory] = useState(dynamicCurrentProduct?.alternativeProducts?.romMemory?.find(r => r.productId ===  Number(id))?.attributeValue ?? null)
+  const selectedColor = dynamicCurrentProduct?.alternativeProducts?.color?.find(c => c.productId === Number(id))?.attributeValue;
+  const selectedModel = dynamicCurrentProduct?.alternativeProducts?.model?.find(m => m.productId === Number(id))?.attributeValue;
+  const selectedMemory = dynamicCurrentProduct?.alternativeProducts?.romMemory?.find(r => r.productId ===  Number(id))?.attributeValue;
 
   const { currency, locale } = useTypedSelector((state) => state.shopping_card);
   const dynamicCurrentProductImages = dynamicCurrentProduct?.images;
@@ -59,9 +55,6 @@ export const Product: FC<IProductProps> = ({dynamicCurrentProduct}) => {
               <Rate
                 className="product_rate-stars"
                 value={dynamicCurrentProduct?.rating}
-                character={() => {
-                  return <img src={rateImg} alt="product rate star" />;
-                }}
               />
               <a href="#users-review">
                 <img src={reviewImg} alt="review pic" />
@@ -110,10 +103,9 @@ export const Product: FC<IProductProps> = ({dynamicCurrentProduct}) => {
               <div className={style['product_rate']} ref={productRateRef}>
                 <Rate
                   className="product_rate-stars"
+                  disabled
                   value={dynamicCurrentProduct?.rating}
-                  character={() => {
-                    return <img src={rateImg} alt="product rate star" />;
-                  }}
+                  style={{color: '#6F4C9A'}}
                 />
                 <a>
                   <img src={reviewImg} alt="review pic" />
@@ -125,32 +117,29 @@ export const Product: FC<IProductProps> = ({dynamicCurrentProduct}) => {
           </div>
         )}
         <div className={style['product_details']}>
-          {dynamicCurrentProduct?.alternativeProducts?.color && (  
+          {selectedColor && (  
               <ProductColors 
-                key={selectedColor }
+                key={selectedColor}
                 colors={dynamicCurrentProduct?.alternativeProducts?.color ?? []} 
                 selectedColor={selectedColor ?? ''} 
-                onSelectedColor={setSelectedColor}
               />
             )
           }
 
-          {dynamicCurrentProduct?.alternativeProducts?.model && (  
+          {selectedModel && (  
               <ProductModels 
                 key={selectedModel }
                 models={dynamicCurrentProduct?.alternativeProducts?.model ?? []} 
                 selectedModel={selectedModel ?? ''}
-                onSelectedModels={setSelectedModel}
               />
             )
           }
           
-          {dynamicCurrentProduct?.alternativeProducts?.romMemory && (
+          {selectedMemory && (
               <ProductMemory 
                 key={selectedMemory}
                 memories={dynamicCurrentProduct?.alternativeProducts?.romMemory ?? []}
                 selectedMemory={selectedMemory ?? ''}
-                onSelectedMemory={setSelectedMemory}
               />
             )
           }
