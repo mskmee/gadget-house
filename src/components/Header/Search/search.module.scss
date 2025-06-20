@@ -14,7 +14,7 @@
       path {
         stroke: #a5a5a5;
       }
-      // on hover ? 
+      // on hover ?
       &:hover path {
         stroke: #6f4c9a;
       }
@@ -92,6 +92,14 @@
     outline: none;
     cursor: text;
     box-shadow: none;
+
+    .search-right-elements {
+      svg {
+        path {
+          stroke: #6f4c9a;
+        }
+      }
+    }
   }
   &__error {
     border: 1px solid #f01a1a !important;

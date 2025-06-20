@@ -8,7 +8,7 @@
     display: none;
     opacity: 0;
     padding: 0 3px;
-    font-family: "Inter", sans-serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 400;
     font-size: 12px;
     line-height: 150%;
@@ -20,14 +20,14 @@
 
   &__counter {
     position: absolute;
-    bottom: 8px;
-    right: 12px;
+    bottom: 1px;
+    right: 8px;
     color: var(--secondary-text-color);
     pointer-events: none;
     z-index: 1;
     line-height: 150%;
     transition: color 0.3s ease;
-    
+
     &Error {
       color: var(--error-color);
     }
@@ -61,7 +61,7 @@
       border: 1px solid var(--text-color);
       outline: none;
       background-color: transparent;
-      font-family: "Inter", sans-serif;
+      font-family: 'Inter', sans-serif;
       font-weight: 400;
       font-size: 16px;
       line-height: 150%;
@@ -90,7 +90,11 @@
     textarea {
       min-height: 126px;
       resize: none;
-      padding-bottom: 30px; 
+      padding-bottom: 30px;
+      overflow: hidden;
+      @media (max-width: 680px) {
+        padding-right: 25px;
+      }
     }
 
     :global {
