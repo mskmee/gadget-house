@@ -44,6 +44,8 @@ export const Search: FC<ISearchProps> = ({
   const filteredSuggestions = suggestions.filter((s) =>
     s.title.toLowerCase().includes(searchInput.value.toLowerCase()),
   );
+  const isSearchBarActive =
+    filteredSuggestions.length > 0 && suggestions.length > 0 && isOverlayActive;
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'ArrowDown' && activeIndex !== 5) {
@@ -193,10 +195,7 @@ export const Search: FC<ISearchProps> = ({
       id="header-search"
       className={classNames(styles['header-search'], {
         [styles['header-search__error']]: searchInput.hasError,
-        [styles['autocomplete-search-bar__active']]:
-          filteredSuggestions.length > 0 &&
-          suggestions.length > 0 &&
-          isOverlayActive,
+        [styles['autocomplete-search-bar__active']]: isSearchBarActive,
       })}
       placeholder="Searching..."
       value={
