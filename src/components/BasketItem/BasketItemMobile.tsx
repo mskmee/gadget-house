@@ -3,9 +3,9 @@ import styles from './basketitem.module.scss';
 
 import { useTypedSelector } from "@/hooks/useTypedSelector";
 import {
-  closeBasketPopupIcon,
-  quantityDecreaseButton,
-  quantityInreaseButtonMobile,
+  BasketMinusBtn,
+  BasketPlusBtn,
+  closeBasketPopupIcon
 } from '@/assets/constants.ts';
 import { convertPriceToReadable } from '@/utils/helpers/product';
 import { HeartIcon } from "@/assets/icons/HeartIcon";
@@ -21,7 +21,7 @@ function BasketItemMobile({product, handleDeleteFromStore, handleDecreaseItemQua
     <>
       <div className={styles.mobilePopup}>
         <div className={styles.top}>
-          <Link to={`/${formatCategoryName}/${id}/${href}`}>
+          <Link to={`/${formatCategoryName}/${id}/${href}`} className={styles.productImg}>
             <img src={images?.[0].link} alt={name} />
           </Link>
           <div>
@@ -46,18 +46,19 @@ function BasketItemMobile({product, handleDeleteFromStore, handleDecreaseItemQua
         <div className={styles.bottom}>
           <div className={styles.mobilePopupQuantity}>
             <button onClick={handleDecreaseItemQuantity}>
-              <img src={quantityDecreaseButton} alt="quantity-Decrease-Button" />
+              <img src={BasketMinusBtn} alt="quantity-Decrease-Button" />
             </button>
             <p>{quantity}</p>
             <button onClick={handleIncrementItemQuantity}>
               <img
-                src={quantityInreaseButtonMobile}
+                src={BasketPlusBtn}
                 alt="quantity-Inrease-Button"
               />
             </button>
           </div>
           <>
             <HeartIcon
+              
               onClick={handleSaveFavoriteProduct}
               isLiked={isLikedProduct}
               fill={isLikedProduct ? '#6F4C9A' : '#000'}

@@ -122,6 +122,9 @@ import noImageAvailable from './images/No_Image_Available.webp';
 import ExitIcon from './icons/exit-icon.svg';
 import AddNewUser from './icons/add-new-user.svg';
 
+import BasketPlusBtn from './icons/BasketPlusBtn.svg'
+import BasketMinusBtn from './icons/BasketMinusBtn.svg'
+
 export {
   Admin,
   BasketIcon,
@@ -241,4 +244,6 @@ export {
   noImageAvailable,
   ExitIcon,
   AddNewUser,
+  BasketPlusBtn,
+  BasketMinusBtn
 };

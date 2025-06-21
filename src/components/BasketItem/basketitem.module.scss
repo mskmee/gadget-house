@@ -11,6 +11,8 @@
 
 .product {
   &Img {
+    display: block;
+    // flex: 1;
     min-width: 180px;
     width: 180px;
     height: 200px;
@@ -220,6 +222,12 @@
     border-radius: 8px;
   }
   .product {
+    &Img {
+      min-width: 56px;
+      width: 56px;
+      height: 62px;
+      margin: 0;
+    }
     &Info {
       margin: 0 auto 0 8px;
     }
@@ -266,9 +274,9 @@
       > div:nth-child(2) {
         display: flex;
         flex-direction: column;
-        gap: 4px;
+        // gap: 4px;
         flex-grow: 1;
-        margin-top: 5px;
+        // margin-top: 5px;
       }
       > div:last-child {
         display: flex;
@@ -283,7 +291,7 @@
         font-size: 16px;
         font-weight: 400;
         color: #1c1817;
-        line-height: 150%;
+        line-height: 24px;
         -webkit-line-clamp: 2;
         line-clamp: 2;
         text-overflow: ellipsis;
@@ -298,6 +306,8 @@
       }
       .mobilePopupClose {
         align-self: flex-end;
+        width: 44px;
+        height: 44px;
         > img {
           text-align: end;
           width: 36px;
@@ -322,27 +332,13 @@
       > div:first-child {
         display: flex;
         align-items: center;
-        gap: 20px;
-        > button {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          width: 36px;
-          height: 36px;
-          border: 1.5px solid #1c1817;
-          border-radius: 50%;
-          font-size: rem(16px);
-          line-height: 150%;
-
-          &:active {
-            background-color: #eae4ee;
-          }
-          > img {
-            width: 14px;
-          }
+        gap: 10px;
+        button {
+          width: 48px;
+          height: 48px;
         }
         > p {
-          width: 15px;
+          min-width: 12px;
           text-align: center;
           font-size: 16px;
         }
@@ -394,9 +390,9 @@
         margin-left: -5px;
         width: 80px;
       }
-      .mobilePopupTitle {
-        font-size: rem(16px);
-      }
+      // .mobilePopupTitle {
+      //   font-size: rem(16px);
+      // }
       .mobilePopupCode {
         font-size: rem(12px);
       }
@@ -406,30 +402,31 @@
           height: 32px;
         }
       }
-      .mobilePopupPrice {
-        font-size: rem(16px);
-      }
-      > div:last-child {
-        min-width: 80px;
-        max-width: 85px;
-      }
+      // .mobilePopupPrice {
+      //   font-size: rem(16px);
+      // }
+      // > div:last-child {
+      //   min-width: 80px;
+      //   max-width: 85px;
+      // }
     }
     .bottom {
       > div:first-child {
         > button {
-          width: 28px;
-          height: 28px;
+          width: 48px;
+          height: 48px;
         }
       }
-      > button {
-        width: 40px;
-        height: 40px;
-        > span {
-          svg {
-            width: 30px;
-            height: 30px;
-          }
-        }
+      button {
+        width: 48px;
+        height: 48px;
+        // padding: 18px;
+        // > span {
+        //   svg {
+        //     width: 30px;
+        //     height: 30px;
+        //   }
+        // }
       }
     }
   }
