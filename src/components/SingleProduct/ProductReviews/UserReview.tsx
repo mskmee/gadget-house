@@ -65,7 +65,10 @@ function UserReview({productId}: {productId: number}) {
             ))}
         </ul>
       ) : (
-        <span>There are no reviews yet!</span>
+        <div className={style.withoutComments}>
+          <div className={style.withoutComments__title}>No comments yet</div>
+          <div className={style.withoutComments__subtitle}>Be the first to share your thoughts or ask a question.</div>
+        </div>
       )}
 
       {!showAll && (reviews?.page?.length ?? 0) > 2 && (
