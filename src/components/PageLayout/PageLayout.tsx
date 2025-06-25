@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
@@ -21,6 +21,7 @@ import { useMediaQuery } from 'react-responsive';
 import { Filters } from '../Filters/Filters';
 import { SortingDesk } from '../Sort/SortingDesk';
 import { DataStatus } from '@/enums/data-status';
+import { resetFilters } from '@/store/filters/filters_slice';
 
 interface IPageLayoutProps {
   products: IProductCard[];
@@ -33,17 +34,15 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   totalPages,
   categoryId,
 }) => {
+  const prevCategoryId = useRef<number | null | undefined>(null);
+  const shouldSkipNextProducts = useRef<boolean>(false);
   const { pathname: pathName, state } = useLocation();
   const { searchInputValue, isSuggestion } = state ? state : {};
   const dispatch: AppDispatch = useDispatch();
 
   const { pagination } = useTypedSelector((state: RootState) => state.products);
-  const {
-    selectedSort,
-    selectedPriceRange,
-    selectedCameraRange,
-  } = useTypedSelector((state: RootState) => state.filters);
-
+  const { selectedSort, selectedPriceRange, selectedCameraRange } =
+    useTypedSelector((state: RootState) => state.filters);
 
   const isMobile991 = useMediaQuery({
     query: '(max-width: 991px)',
@@ -55,9 +54,32 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   const brandIds = useSelector(selectBrandIds);
   const attributesIds = useSelector(selectFilteredAttributes, shallowEqual);
 
+  // filters state from redux
+  console.log('selectedSort: ', selectedSort);
+  console.log('selectedPriceRange: ', selectedPriceRange);
+  console.log('selectedCameraRange: ', selectedCameraRange);
+
+  console.log('brandIds: ', brandIds);
+  console.log('brandattributesIdsIds: ', attributesIds);
   const size = isMobile767 ? DEFAULT_SIZE_MOBILE : DEFAULT_SIZE;
 
   useEffect(() => {
+    if (
+      prevCategoryId.current !== categoryId &&
+      prevCategoryId.current !== null
+    ) {
+      dispatch(resetFilters());
+      shouldSkipNextProducts.current = true;
+    }
+
+    prevCategoryId.current = categoryId;
+  }, [categoryId, dispatch]);
+
+  useEffect(() => {
+    if (shouldSkipNextProducts.current === true) {
+      shouldSkipNextProducts.current = false;
+      return;
+    }
     dispatch(
       getFilteredProducts({
         page: pagination.currentPage,
@@ -80,9 +102,9 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
     selectedCameraRange,
     selectedPriceRange,
     selectedSort,
-    categoryId
+    categoryId,
+    size,
   ]);
-
 
   const pathname = pathName.slice(1);
   let category = '';
@@ -100,9 +122,8 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   }
 
   const isInitialLoading =
-  useTypedSelector((state: RootState) => state.products.dataStatus) ===
-  DataStatus.PENDING;
-
+    useTypedSelector((state: RootState) => state.products.dataStatus) ===
+    DataStatus.PENDING;
 
   return (
     <div className={styles.pageLayout}>
@@ -112,34 +133,31 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
         </div>
       )}
 
-      <div className='container'>
-
+      <div className="container">
         <div className={styles.pageLayout__header}>
           <div className={styles.pageLayout__wrapper}>
             <h2 className={styles.pageLayout__title}>{category}</h2>
 
-            {isMobile991 ? <Filters/> : <SortingDesk /> }
+            {isMobile991 ? <Filters /> : <SortingDesk />}
           </div>
         </div>
 
         <div className={styles.pageLayout__content}>
-          {!isMobile991 && <FiltersDesk /> }
-          
-          {
-            isInitialLoading && pagination.currentPage === 0 
-            ? 'Loading...'
-            : products.length > 0 ? (
-              <Catalog
-                data={products}
-                totalPages={totalPages}
-                categoryId={categoryId}
-              />
-            ) : (
-              <div>Products not found</div>
-            )
-          }
+          {!isMobile991 && <FiltersDesk key={categoryId} />}
+
+          {isInitialLoading && pagination.currentPage === 0 ? (
+            'Loading...'
+          ) : products.length > 0 ? (
+            <Catalog
+              data={products}
+              totalPages={totalPages}
+              categoryId={categoryId}
+            />
+          ) : (
+            <div>Products not found</div>
+          )}
         </div>
       </div>
     </div>
-  )
+  );
 };

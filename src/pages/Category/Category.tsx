@@ -1,28 +1,35 @@
 import { PageLayout } from '@/components/PageLayout/PageLayout';
 import { RootState } from '@/store';
-import  { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Category as CatogoryENUM } from '@/enums/enums';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { useActions } from '@/hooks/useActions';
 
 function Category() {
-  const { productsData } = useTypedSelector((state: RootState) => state.products);
+  const { productsData } = useTypedSelector(
+    (state: RootState) => state.products,
+  );
 
-  const {category} = useParams();
-  const categoryKey = category?.replace(/-/g, '_').toUpperCase() as keyof typeof CatogoryENUM;
-  const categoryId = CatogoryENUM[categoryKey]
+  const { category } = useParams();
+  const categoryKey = category
+    ?.replace(/-/g, '_')
+    .toUpperCase() as keyof typeof CatogoryENUM;
+  const categoryId = CatogoryENUM[categoryKey];
 
   const isValidCategory = categoryId !== undefined;
 
   const { setSelectedCategory } = useActions();
 
+  console.log('category: ', category);
+  console.log('categoryId FROM CATEGORY :', categoryId);
+
   useEffect(() => {
     setSelectedCategory(categoryId);
   }, [setSelectedCategory, categoryId]);
 
-  if(!isValidCategory) {
-    return <div>Invalid category</div>
+  if (!isValidCategory) {
+    return <div>Invalid category</div>;
   }
 
   return (

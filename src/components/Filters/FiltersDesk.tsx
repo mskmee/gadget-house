@@ -33,7 +33,7 @@ export const FiltersDesk = () => {
     maxValue: maxPrice,
     handleMinChange: handleMinPriceChange,
     handleMaxChange: handleMaxPriceChange,
-  } = useRangeFilter(11770, 65500);
+  } = useRangeFilter(0, 100000);
   const {
     minValue: minCameraMP,
     maxValue: maxCameraMP,
