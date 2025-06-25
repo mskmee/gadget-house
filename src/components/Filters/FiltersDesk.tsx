@@ -27,7 +27,7 @@ export const FiltersDesk = () => {
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, string[]>
   >({});
-  const [priceRange, setPriceRange] = useState<number[]>([11770, 65500]);
+  const [priceRange, setPriceRange] = useState<number[]>([0, 100000]);
   const {
     minValue: minPrice,
     maxValue: maxPrice,
