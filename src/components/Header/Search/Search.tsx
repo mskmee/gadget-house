@@ -41,6 +41,7 @@ export const Search: FC<ISearchProps> = ({
     { title: string; category: string }[]
   >([]);
   const [activeIndex, setActiveIndex] = useState<number>(-1);
+  const inputMaxLength = 100;
   const filteredSuggestions = suggestions.filter((s) =>
     s.title.toLowerCase().includes(searchInput.value.toLowerCase()),
   );
@@ -162,7 +163,7 @@ export const Search: FC<ISearchProps> = ({
 
   const handleChangeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
-    const isTooLong = inputValue.length >= 40;
+    const isTooLong = inputValue.length >= inputMaxLength;
     setActiveIndex(-1); // Reset the active index when typing
 
     setSearchInput({ value: inputValue, hasError: isTooLong });
@@ -203,7 +204,7 @@ export const Search: FC<ISearchProps> = ({
           ? suggestions[activeIndex].title
           : searchInput.value
       }
-      maxLength={40}
+      maxLength={inputMaxLength}
       onChange={handleChangeInputValue}
       onKeyDown={handleKeyDown}
       prefix={
