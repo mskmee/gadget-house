@@ -19,6 +19,7 @@ import { laptopData, smartphoneData } from '@/constants/productCards';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useActions } from '@/hooks/useActions';
 import { AppRoute } from '@/enums/Route';
+import { INPUT_MAX_LENGTH } from './constants';
 
 interface ISearchProps {
   isOverlayActive: boolean;
@@ -41,7 +42,6 @@ export const Search: FC<ISearchProps> = ({
     { title: string; category: string }[]
   >([]);
   const [activeIndex, setActiveIndex] = useState<number>(-1);
-  const inputMaxLength = 100;
   const filteredSuggestions = suggestions.filter((s) =>
     s.title.toLowerCase().includes(searchInput.value.toLowerCase()),
   );
@@ -163,7 +163,7 @@ export const Search: FC<ISearchProps> = ({
 
   const handleChangeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
-    const isTooLong = inputValue.length >= inputMaxLength;
+    const isTooLong = inputValue.length >= INPUT_MAX_LENGTH;
     setActiveIndex(-1); // Reset the active index when typing
 
     setSearchInput({ value: inputValue, hasError: isTooLong });
@@ -204,7 +204,7 @@ export const Search: FC<ISearchProps> = ({
           ? suggestions[activeIndex].title
           : searchInput.value
       }
-      maxLength={inputMaxLength}
+      maxLength={INPUT_MAX_LENGTH}
       onChange={handleChangeInputValue}
       onKeyDown={handleKeyDown}
       prefix={
