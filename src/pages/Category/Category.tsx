@@ -1,10 +1,12 @@
 import { PageLayout } from '@/components/PageLayout/PageLayout';
-import { RootState } from '@/store';
+import { AppDispatch, RootState } from '@/store';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Category as CatogoryENUM } from '@/enums/enums';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { useActions } from '@/hooks/useActions';
+import { useDispatch } from 'react-redux';
+import { resetFilters } from '@/store/filters/filters_slice';
 
 function Category() {
   const { productsData } = useTypedSelector(
@@ -20,13 +22,14 @@ function Category() {
   const isValidCategory = categoryId !== undefined;
 
   const { setSelectedCategory } = useActions();
-
-  console.log('category: ', category);
-  console.log('categoryId FROM CATEGORY :', categoryId);
+  const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
-    setSelectedCategory(categoryId);
-  }, [setSelectedCategory, categoryId]);
+    if (isValidCategory) {
+      dispatch(resetFilters());
+      setSelectedCategory(categoryId);
+    }
+  }, [setSelectedCategory, categoryId, dispatch, isValidCategory]);
 
   if (!isValidCategory) {
     return <div>Invalid category</div>;

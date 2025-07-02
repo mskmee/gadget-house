@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
@@ -21,7 +21,6 @@ import { useMediaQuery } from 'react-responsive';
 import { Filters } from '../Filters/Filters';
 import { SortingDesk } from '../Sort/SortingDesk';
 import { DataStatus } from '@/enums/data-status';
-import { resetFilters } from '@/store/filters/filters_slice';
 
 interface IPageLayoutProps {
   products: IProductCard[];
@@ -34,13 +33,14 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   totalPages,
   categoryId,
 }) => {
-  const prevCategoryId = useRef<number | null | undefined>(null);
-  const shouldSkipNextProducts = useRef<boolean>(false);
   const { pathname: pathName, state } = useLocation();
   const { searchInputValue, isSuggestion } = state ? state : {};
   const dispatch: AppDispatch = useDispatch();
 
   const { pagination } = useTypedSelector((state: RootState) => state.products);
+  const { selectedCategoryId } = useTypedSelector(
+    (state: RootState) => state.filters,
+  );
   const { selectedSort, selectedPriceRange, selectedCameraRange } =
     useTypedSelector((state: RootState) => state.filters);
 
@@ -64,36 +64,22 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   const size = isMobile767 ? DEFAULT_SIZE_MOBILE : DEFAULT_SIZE;
 
   useEffect(() => {
-    if (
-      prevCategoryId.current !== categoryId &&
-      prevCategoryId.current !== null
-    ) {
-      dispatch(resetFilters());
-      shouldSkipNextProducts.current = true;
+    if (categoryId !== null && categoryId === selectedCategoryId) {
+      dispatch(
+        getFilteredProducts({
+          page: pagination.currentPage,
+          size: size,
+          categoryId: categoryId,
+          brandIds: brandIds,
+          attributes: attributesIds,
+          minPrice: selectedPriceRange[0],
+          maxPrice: selectedPriceRange[1],
+          minCameraMP: selectedCameraRange[0],
+          maxCameraMP: selectedCameraRange[1],
+          sort: selectedSort as string,
+        }),
+      );
     }
-
-    prevCategoryId.current = categoryId;
-  }, [categoryId, dispatch]);
-
-  useEffect(() => {
-    if (shouldSkipNextProducts.current === true) {
-      shouldSkipNextProducts.current = false;
-      return;
-    }
-    dispatch(
-      getFilteredProducts({
-        page: pagination.currentPage,
-        size: size,
-        categoryId: categoryId,
-        brandIds: brandIds,
-        attributes: attributesIds,
-        minPrice: selectedPriceRange[0],
-        maxPrice: selectedPriceRange[1],
-        minCameraMP: selectedCameraRange[0],
-        maxCameraMP: selectedCameraRange[1],
-        sort: selectedSort as string,
-      }),
-    );
   }, [
     dispatch,
     pagination.currentPage,
@@ -103,6 +89,7 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
     selectedPriceRange,
     selectedSort,
     categoryId,
+    selectedCategoryId,
     size,
   ]);
 
