@@ -10,7 +10,10 @@ class ProductsService implements IProductsService {
     this.productsApi = productsApi;
   }
 
-  async getAllProducts(page: number, size: number): Promise<ProductsResponseDto> {
+  async getAllProducts(
+    page: number,
+    size: number,
+  ): Promise<ProductsResponseDto> {
     return this.productsApi.getAll(page, size);
   }
 
@@ -22,28 +25,35 @@ class ProductsService implements IProductsService {
     return this.productsApi.delete(id);
   }
 
-  async getPaginatedProducts(categoryId: number | null, page: number, size: number): Promise<ProductsResponseDto> {
+  async getPaginatedProducts(
+    categoryId: number | null,
+    page: number,
+    size: number,
+  ): Promise<ProductsResponseDto> {
     return this.productsApi.getPaginatedProducts(categoryId, page, size);
   }
 
-  async getFilteredProducts(
-    params: {
-      page: number,
-      size: number,
-      categoryId?: number,
-      brandIds?: number[],
-      attributes?: number[],
-      minPrice?: number,
-      maxPrice?: number,
-      minCameraMP?: number,
-      maxCameraMP?: number,
-      sort?: string
-    }
-  ): Promise<ProductsResponseDto> {
+  async getFilteredProducts(params: {
+    page: number;
+    size: number;
+    categoryId?: number;
+    brandIds?: number[];
+    attributeValueIds?: number[];
+    minPrice?: number;
+    maxPrice?: number;
+    minCameraMP?: number;
+    maxCameraMP?: number;
+    sort?: string;
+  }): Promise<ProductsResponseDto> {
     return this.productsApi.getFilteredProducts(params);
   }
 
-  async getByCategory(categoryId: number, page: number, size: number, sort: string | null): Promise<ProductsResponseDto> {
+  async getByCategory(
+    categoryId: number,
+    page: number,
+    size: number,
+    sort: string | null,
+  ): Promise<ProductsResponseDto> {
     return this.productsApi.getByCategory(categoryId, page, size, sort);
   }
 }
