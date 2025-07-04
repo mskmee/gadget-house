@@ -12,6 +12,7 @@ import {
   setSelectedCameraRange,
   setSelectedPriceRange,
 } from '@/store/filters/filters_slice';
+import { setIsAppending, setPageNumber } from '@/store/products/products_slice';
 import { useRangeFilter } from './hooks/useRangeFilter';
 import { handleKeyDown } from '@/utils/helpers/checkKeydownEvent';
 import { Header } from '../components';
@@ -42,8 +43,6 @@ export const FiltersMobile = ({
     handleMinChange: handleMinPriceChange,
     handleMaxChange: handleMaxPriceChange,
   } = useRangeFilter(0, 100000);
-
-  console.log('minPrice: ', minPrice);
 
   const {
     minValueCamera: minCameraMP,
@@ -99,9 +98,20 @@ export const FiltersMobile = ({
 
   const applyFilter = () => {
     dispatch(setSelectedBrands(selectedOptions.brands));
-    dispatch(setSelectedAttributes(selectedOptions.attributes));
+    dispatch(
+      setSelectedAttributes([
+        ...(selectedOptions.screens || []),
+        ...(selectedOptions.builtInMemory || []),
+        ...(selectedOptions.colors || []),
+        ...(selectedOptions.rams || []),
+        ...(selectedOptions.cores || []),
+        ...(selectedOptions.memorySlot || []),
+      ]),
+    );
     dispatch(setSelectedPriceRange(priceRange));
     dispatch(setSelectedCameraRange([minCameraMP, maxCameraMP]));
+    dispatch(setIsAppending(false));
+    dispatch(setPageNumber(0));
     toggleDrawer();
   };
 

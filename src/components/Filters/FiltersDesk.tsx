@@ -11,6 +11,7 @@ import {
   setSelectedCameraRange,
   setSelectedPriceRange,
 } from '@/store/filters/filters_slice';
+import { setPageNumber } from '@/store/products/products_slice';
 import { useRangeFilter } from './hooks/useRangeFilter';
 import { handleKeyDown } from '@/utils/helpers/checkKeydownEvent';
 import { Option } from './Option';
@@ -18,7 +19,6 @@ import { Option } from './Option';
 import ArrowUpSvg from '@/assets/icons/arrow-up.svg';
 
 import styles from './filters.module.scss';
-import { setPageNumber } from '@/store/products/products_slice';
 
 export const FiltersDesk = () => {
   const inputMinCameraMPRef = useRef<HTMLInputElement | null>(null);

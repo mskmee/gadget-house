@@ -54,13 +54,6 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   const brandIds = useSelector(selectBrandIds);
   const attributesIds = useSelector(selectFilteredAttributes, shallowEqual);
 
-  // filters state from redux
-  console.log('selectedSort: ', selectedSort);
-  console.log('selectedPriceRange: ', selectedPriceRange);
-  console.log('selectedCameraRange: ', selectedCameraRange);
-
-  console.log('brandIds: ', brandIds);
-  console.log('brandattributesIdsIds: ', attributesIds);
   const size = isMobile767 ? DEFAULT_SIZE_MOBILE : DEFAULT_SIZE;
 
   useEffect(() => {
