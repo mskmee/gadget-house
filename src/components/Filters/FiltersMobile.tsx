@@ -12,6 +12,7 @@ import {
   setSelectedCameraRange,
   setSelectedPriceRange,
 } from '@/store/filters/filters_slice';
+import { setIsAppending, setPageNumber } from '@/store/products/products_slice';
 import { useRangeFilter } from './hooks/useRangeFilter';
 import { handleKeyDown } from '@/utils/helpers/checkKeydownEvent';
 import { Header } from '../components';
@@ -29,17 +30,19 @@ export const FiltersMobile = ({
 }: IFilterProps) => {
   const inputMinCameraMPRef = useRef<HTMLInputElement | null>(null);
   const inputMaxCameraMPRef = useRef<HTMLInputElement | null>(null);
+  const inputMinPriceRef = useRef<HTMLInputElement | null>(null);
+  const inputMaxPriceRef = useRef<HTMLInputElement | null>(null);
   const dispatch: AppDispatch = useDispatch();
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, string[]>
   >({});
-  const [priceRange, setPriceRange] = useState<number[]>([11770, 65500]);
+  const [priceRange, setPriceRange] = useState<number[]>([0, 100000]);
   const {
     minValue: minPrice,
     maxValue: maxPrice,
     handleMinChange: handleMinPriceChange,
     handleMaxChange: handleMaxPriceChange,
-  } = useRangeFilter(11770, 65500);
+  } = useRangeFilter(0, 100000);
 
   const {
     minValueCamera: minCameraMP,
@@ -74,11 +77,41 @@ export const FiltersMobile = ({
     handleMaxPriceChange(value[1]);
   };
 
+  const handleInputOnBlur = (
+    inputRef: React.RefObject<HTMLInputElement>,
+    type: 'min' | 'max',
+  ) => {
+    if (
+      inputRef.current?.value === '' ||
+      inputRef.current?.value === undefined
+    ) {
+      if (type === 'min') {
+        handleMinPriceChange(0);
+        setPriceRange([0, maxPrice]);
+      }
+      if (type === 'max') {
+        handleMaxPriceChange(0);
+        setPriceRange([minPrice, 0]);
+      }
+    }
+  };
+
   const applyFilter = () => {
     dispatch(setSelectedBrands(selectedOptions.brands));
-    dispatch(setSelectedAttributes(selectedOptions.attributes));
+    dispatch(
+      setSelectedAttributes([
+        ...(selectedOptions.screens || []),
+        ...(selectedOptions.builtInMemory || []),
+        ...(selectedOptions.colors || []),
+        ...(selectedOptions.rams || []),
+        ...(selectedOptions.cores || []),
+        ...(selectedOptions.memorySlot || []),
+      ]),
+    );
     dispatch(setSelectedPriceRange(priceRange));
     dispatch(setSelectedCameraRange([minCameraMP, maxCameraMP]));
+    dispatch(setIsAppending(false));
+    dispatch(setPageNumber(0));
     toggleDrawer();
   };
 
@@ -158,6 +191,7 @@ export const FiltersMobile = ({
             <Col span={12}>
               <span className={styles.filters__priceText}>From</span>
               <InputNumber
+                ref={inputMinPriceRef}
                 type="number"
                 min={0}
                 max={99999}
@@ -167,6 +201,8 @@ export const FiltersMobile = ({
                 inputMode="numeric"
                 stringMode={false}
                 onKeyDown={handleKeyDown}
+                onFocus={() => handleFocus(inputMinPriceRef)}
+                onBlur={() => handleInputOnBlur(inputMinPriceRef, 'min')}
                 style={{
                   width: '75px',
                   border: '1px solid #1c1817',
@@ -184,6 +220,7 @@ export const FiltersMobile = ({
             <Col span={12}>
               <span className={styles.filters__priceText}>To</span>
               <InputNumber
+                ref={inputMaxPriceRef}
                 type="number"
                 min={0}
                 max={100000}
@@ -193,6 +230,8 @@ export const FiltersMobile = ({
                 inputMode="numeric"
                 stringMode={false}
                 onKeyDown={handleKeyDown}
+                onFocus={() => handleFocus(inputMaxPriceRef)}
+                onBlur={() => handleInputOnBlur(inputMaxPriceRef, 'max')}
                 style={{
                   width: '75px',
                   border: '1px solid #1c1817',

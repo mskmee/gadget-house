@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { filters } from './consts';
-import { AppDispatch } from '@/store';
+import { AppDispatch, RootState } from '@/store';
 import { setSelectedSort } from '@/store/filters/filters_slice';
 import { FiltersMobile } from './FiltersMobile';
 import { SortingMobile } from '../Sort/SortingMobile';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
 
 import FiltersSvg from '@/assets/icons/filters.svg';
 import FilterRateSvg from '@/assets/icons/filter-rate.svg';
@@ -16,6 +17,10 @@ export const Filters = () => {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [sortVisible, setSortVisible] = useState(false);
   const dispatch: AppDispatch = useDispatch();
+
+  const { selectedCategoryId } = useTypedSelector(
+    (state: RootState) => state.filters,
+  );
 
   const toggleDrawer = () => setDrawerVisible((prev) => !prev);
   const toggleSort = () => setSortVisible((prev) => !prev);
@@ -52,6 +57,7 @@ export const Filters = () => {
       </button>
 
       <FiltersMobile
+        key={selectedCategoryId}
         filters={filters}
         drawerVisible={drawerVisible}
         onFilter={handleFilter}

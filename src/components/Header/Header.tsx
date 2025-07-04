@@ -65,7 +65,8 @@ export const Header = () => {
   const getScrollbarWidth = () => {
     if (scrollbarWidthRef.current !== null) return scrollbarWidthRef.current;
 
-    scrollbarWidthRef.current = window.innerWidth - document.documentElement.clientWidth;
+    scrollbarWidthRef.current =
+      window.innerWidth - document.documentElement.clientWidth;
 
     return scrollbarWidthRef.current;
   };
@@ -78,8 +79,8 @@ export const Header = () => {
       if (scrollbarWidth > 0) {
         document.body.style.paddingRight = `${scrollbarWidth}px`;
       }
-      if(isFixedHeader && scrollbarWidth > 0 && headerBottomRef.current) {
-        headerBottomRef.current.style.paddingRight = `${scrollbarWidth}px`
+      if (isFixedHeader && scrollbarWidth > 0 && headerBottomRef.current) {
+        headerBottomRef.current.style.paddingRight = `${scrollbarWidth}px`;
       }
 
       setIsCatalogListOpen(true);
@@ -101,8 +102,8 @@ export const Header = () => {
       document.body.style.overflow = 'initial';
       document.body.style.paddingRight = `0px`;
 
-      if(headerBottomRef.current && isFixedHeader) {
-        headerBottomRef.current.style.paddingRight = `revert-layer`
+      if (headerBottomRef.current && isFixedHeader) {
+        headerBottomRef.current.style.paddingRight = `revert-layer`;
       }
       setIsCatalogListOpen(false);
     }
