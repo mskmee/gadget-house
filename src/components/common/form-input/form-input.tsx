@@ -79,6 +79,7 @@ export const FormInput = <T extends FormikValues>({
                   {...(props as TextAreaProps)}
                   id={inputId}
                   status={isError ? 'error' : ''}
+                  maxLength={INPUT_MAX_LENGTH}
                 />
                 <span
                   className={cn(styles.formInput__counter, {

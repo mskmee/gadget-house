@@ -1,7 +1,6 @@
 import * as Yup from 'yup';
 
 import { ContactsFormDto } from '../types/types';
-import { INPUT_MAX_LENGTH } from '@/components/common/form-input/constants';
 
 const regx = {
   name: /^[a-zA-Zа-яА-ЯґєіїҐЄІЇ]+((['’ -][a-zA-Zа-яА-ЯґєіїҐЄІЇ ])?[a-zA-Zа-яА-ЯґєіїҐЄІЇ]*)*$/,
@@ -21,10 +20,7 @@ const email = Yup.string()
 const phoneNumber = Yup.string()
   .matches(regx.phone, 'Wrong phone number format')
   .required('This field is required ');
-const comment = Yup.string()
-  .optional()
-  .max(INPUT_MAX_LENGTH, 'Comment is too long');
-
+const comment = Yup.string().optional();
 const contactsFormValidationSchema: Yup.Schema<ContactsFormDto> =
   Yup.object().shape({
     fullName,
