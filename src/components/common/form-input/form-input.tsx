@@ -9,6 +9,7 @@ import { PhoneInput } from './phone-input';
 import { ErrorIcon } from '@/assets/constants';
 
 import styles from './form-input.module.scss';
+import { INPUT_MAX_LENGTH } from './constants';
 
 type InputType = 'input' | 'textarea';
 
@@ -34,8 +35,7 @@ export const FormInput = <T extends FormikValues>({
   const id = useId();
   const inputId = props.id ?? id;
   const isError = meta.touched && meta.error;
-  const maxLength = 200;
-  const leftCharactersCount = maxLength - (field?.value?.length || 0);
+  const leftCharactersCount = INPUT_MAX_LENGTH - (field?.value?.length || 0);
 
   return (
     <>
@@ -78,8 +78,8 @@ export const FormInput = <T extends FormikValues>({
                   {...field}
                   {...(props as TextAreaProps)}
                   id={inputId}
-                  maxLength={maxLength + 1}
                   status={isError ? 'error' : ''}
+                  maxLength={INPUT_MAX_LENGTH}
                 />
                 <span
                   className={cn(styles.formInput__counter, {

@@ -4,7 +4,8 @@ import { ContactsFormDto } from '../types/types';
 
 const regx = {
   name: /^[a-zA-Zа-яА-ЯґєіїҐЄІЇ]+((['’ -][a-zA-Zа-яА-ЯґєіїҐЄІЇ ])?[a-zA-Zа-яА-ЯґєіїҐЄІЇ]*)*$/,
-  email: /^(?![ .])[\w!#$%&'*+/=?^_`{|}~.-]{4,63}(?<![ .])@[a-zA-Z\d.-]{2,9}(?<![ ])\.[a-zA-Z]{2,9}$/,
+  email:
+    /^(?![ .])[\w!#$%&'*+/=?^_`{|}~.-]{4,63}(?<![ .])@[a-zA-Z\d.-]{2,9}(?<![ ])\.[a-zA-Z]{2,9}$/,
   phone: /^\(0\d{2}\)-\d{3}-\d{2}-\d{2}$/,
 };
 
@@ -19,8 +20,7 @@ const email = Yup.string()
 const phoneNumber = Yup.string()
   .matches(regx.phone, 'Wrong phone number format')
   .required('This field is required ');
-const comment = Yup.string().optional().max(200, 'Comment is too long');
-
+const comment = Yup.string().optional();
 const contactsFormValidationSchema: Yup.Schema<ContactsFormDto> =
   Yup.object().shape({
     fullName,

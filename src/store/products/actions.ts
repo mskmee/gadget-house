@@ -6,7 +6,7 @@ interface IFilterParams {
   size: number;
   categoryId?: number;
   brandIds?: number[];
-  attributes?: number[];
+  attributes?: number[]; 
   minPrice?: number;
   maxPrice?: number;
 }
@@ -57,7 +57,7 @@ const getFilteredProducts = createAsyncThunk(
       size,
       ...(categoryId !== null && categoryId !== 0 ? { categoryId } : {}),
       ...(brandIds && brandIds.length > 0 ? { brandIds } : {}),
-      ...(attributes && attributes.length > 0 ? { attributes } : {}),
+      ...(attributes && attributes.length > 0 ? { attributeValueIds: attributes } : {}),
       ...(minPrice !== null && minPrice !== 0 ? { minPrice } : {}),
       ...(maxPrice !== null && maxPrice !== 0 ? { maxPrice } : {}),
       ...(minCameraMP !== null && minCameraMP !== 0 ? { minCameraMP } : {}),
