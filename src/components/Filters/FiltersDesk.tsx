@@ -11,6 +11,7 @@ import {
   setSelectedCameraRange,
   setSelectedPriceRange,
 } from '@/store/filters/filters_slice';
+import { setPageNumber } from '@/store/products/products_slice';
 import { useRangeFilter } from './hooks/useRangeFilter';
 import { handleKeyDown } from '@/utils/helpers/checkKeydownEvent';
 import { Option } from './Option';
@@ -18,7 +19,6 @@ import { Option } from './Option';
 import ArrowUpSvg from '@/assets/icons/arrow-up.svg';
 
 import styles from './filters.module.scss';
-import { setPageNumber } from '@/store/products/products_slice';
 
 export const FiltersDesk = () => {
   const inputMinCameraMPRef = useRef<HTMLInputElement | null>(null);
@@ -27,13 +27,13 @@ export const FiltersDesk = () => {
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, string[]>
   >({});
-  const [priceRange, setPriceRange] = useState<number[]>([11770, 65500]);
+  const [priceRange, setPriceRange] = useState<number[]>([0, 100000]);
   const {
     minValue: minPrice,
     maxValue: maxPrice,
     handleMinChange: handleMinPriceChange,
     handleMaxChange: handleMaxPriceChange,
-  } = useRangeFilter(11770, 65500);
+  } = useRangeFilter(0, 100000);
   const {
     minValue: minCameraMP,
     maxValue: maxCameraMP,

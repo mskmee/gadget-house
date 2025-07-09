@@ -38,12 +38,11 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   const dispatch: AppDispatch = useDispatch();
 
   const { pagination } = useTypedSelector((state: RootState) => state.products);
-  const {
-    selectedSort,
-    selectedPriceRange,
-    selectedCameraRange,
-  } = useTypedSelector((state: RootState) => state.filters);
-
+  const { selectedCategoryId } = useTypedSelector(
+    (state: RootState) => state.filters,
+  );
+  const { selectedSort, selectedPriceRange, selectedCameraRange } =
+    useTypedSelector((state: RootState) => state.filters);
 
   const isMobile991 = useMediaQuery({
     query: '(max-width: 991px)',
@@ -58,20 +57,22 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   const size = isMobile767 ? DEFAULT_SIZE_MOBILE : DEFAULT_SIZE;
 
   useEffect(() => {
-    dispatch(
-      getFilteredProducts({
-        page: pagination.currentPage,
-        size: size,
-        categoryId: categoryId,
-        brandIds: brandIds,
-        attributes: attributesIds,
-        minPrice: selectedPriceRange[0],
-        maxPrice: selectedPriceRange[1],
-        minCameraMP: selectedCameraRange[0],
-        maxCameraMP: selectedCameraRange[1],
-        sort: selectedSort as string,
-      }),
-    );
+    if (categoryId !== null && categoryId === selectedCategoryId) {
+      dispatch(
+        getFilteredProducts({
+          page: pagination.currentPage,
+          size: size,
+          categoryId: categoryId,
+          brandIds: brandIds,
+          attributes: attributesIds,
+          minPrice: selectedPriceRange[0],
+          maxPrice: selectedPriceRange[1],
+          minCameraMP: selectedCameraRange[0],
+          maxCameraMP: selectedCameraRange[1],
+          sort: selectedSort as string,
+        }),
+      );
+    }
   }, [
     dispatch,
     pagination.currentPage,
@@ -80,9 +81,10 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
     selectedCameraRange,
     selectedPriceRange,
     selectedSort,
-    categoryId
+    categoryId,
+    selectedCategoryId,
+    size,
   ]);
-
 
   const pathname = pathName.slice(1);
   let category = '';
@@ -100,9 +102,8 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   }
 
   const isInitialLoading =
-  useTypedSelector((state: RootState) => state.products.dataStatus) ===
-  DataStatus.PENDING;
-
+    useTypedSelector((state: RootState) => state.products.dataStatus) ===
+    DataStatus.PENDING;
 
   return (
     <div className={styles.pageLayout}>
@@ -112,34 +113,31 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
         </div>
       )}
 
-      <div className='container'>
-
+      <div className="container">
         <div className={styles.pageLayout__header}>
           <div className={styles.pageLayout__wrapper}>
             <h2 className={styles.pageLayout__title}>{category}</h2>
 
-            {isMobile991 ? <Filters/> : <SortingDesk /> }
+            {isMobile991 ? <Filters /> : <SortingDesk />}
           </div>
         </div>
 
         <div className={styles.pageLayout__content}>
-          {!isMobile991 && <FiltersDesk /> }
-          
-          {
-            isInitialLoading && pagination.currentPage === 0 
-            ? 'Loading...'
-            : products.length > 0 ? (
-              <Catalog
-                data={products}
-                totalPages={totalPages}
-                categoryId={categoryId}
-              />
-            ) : (
-              <div>Products not found</div>
-            )
-          }
+          {!isMobile991 && <FiltersDesk key={categoryId} />}
+
+          {isInitialLoading && pagination.currentPage === 0 ? (
+            'Loading...'
+          ) : products.length > 0 ? (
+            <Catalog
+              data={products}
+              totalPages={totalPages}
+              categoryId={categoryId}
+            />
+          ) : (
+            <div>Products not found</div>
+          )}
         </div>
       </div>
     </div>
-  )
+  );
 };

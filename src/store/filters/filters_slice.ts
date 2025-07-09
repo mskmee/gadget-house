@@ -2,7 +2,11 @@ import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 
 import { DataStatus, Sort } from '@/enums/enums';
 import { getAllAttributes, getAllBrands, getAllCategories } from './actions';
-import { BrandsResponseDto, CategoriesResponseDto, AttributesResponseDto } from '@/utils/packages/filters';
+import {
+  BrandsResponseDto,
+  CategoriesResponseDto,
+  AttributesResponseDto,
+} from '@/utils/packages/filters';
 
 export interface IInitialState {
   allBrands: BrandsResponseDto | null;
@@ -25,9 +29,9 @@ const initialState: IInitialState = {
   selectedSort: Sort.POPULARITY.value,
   selectedBrands: null,
   selectedAttributes: null,
-  selectedPriceRange: [0, 0],
+  selectedPriceRange: [0, 100000],
   selectedCameraRange: [0, 0],
-  dataStatus: DataStatus.IDLE
+  dataStatus: DataStatus.IDLE,
 };
 
 const filters_slice = createSlice({
@@ -52,6 +56,17 @@ const filters_slice = createSlice({
     setSelectedCameraRange(state, { payload }: { payload: number[] }) {
       state.selectedCameraRange = payload;
     },
+    resetFilters(state) {
+      state.allBrands = null;
+      state.allAttributes = null;
+      state.allCategories = null;
+      state.selectedSort = Sort.POPULARITY.value;
+      state.selectedBrands = null;
+      state.selectedAttributes = null;
+      state.selectedPriceRange = [0, 100000];
+      state.selectedCameraRange = [0, 0];
+      state.dataStatus = DataStatus.IDLE;
+    },
   },
   extraReducers(builder) {
     builder.addCase(getAllBrands.fulfilled, (state, { payload }) => {
@@ -68,7 +83,8 @@ const filters_slice = createSlice({
       isAnyOf(
         getAllBrands.fulfilled,
         getAllCategories.fulfilled,
-        getAllAttributes.fulfilled,),
+        getAllAttributes.fulfilled,
+      ),
       (state) => {
         state.dataStatus = DataStatus.FULFILLED;
       },
@@ -77,7 +93,8 @@ const filters_slice = createSlice({
       isAnyOf(
         getAllBrands.rejected,
         getAllCategories.rejected,
-        getAllAttributes.rejected,),
+        getAllAttributes.rejected,
+      ),
       (state) => {
         state.dataStatus = DataStatus.REJECT;
       },
@@ -86,13 +103,23 @@ const filters_slice = createSlice({
       isAnyOf(
         getAllBrands.pending,
         getAllCategories.pending,
-        getAllAttributes.pending,),
+        getAllAttributes.pending,
+      ),
       (state) => {
         state.dataStatus = DataStatus.PENDING;
       },
     );
   },
 });
-export const { setSelectedSort, setSelectedBrands, setSelectedAttributes, setSelectedPriceRange, setSelectedCameraRange, setSelectedCategory } = filters_slice.actions;
+
+export const {
+  setSelectedSort,
+  setSelectedBrands,
+  setSelectedAttributes,
+  setSelectedPriceRange,
+  setSelectedCameraRange,
+  setSelectedCategory,
+  resetFilters,
+} = filters_slice.actions;
 
 export const { actions, reducer } = filters_slice;
