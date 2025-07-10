@@ -37,13 +37,24 @@ export const Catalog: FC<ICatalogProps> = ({ data, totalPages }) => {
     query: '(max-width: 767px)',
   });
 
+  console.log('CURRENT PAGE: ', pagination.currentPage);
+  console.log('TOTAL PAGES FROM REDUX: ', pagination.totalPages);
+  console.log('TOTAL PAGES FROM PROPS: ', totalPages);
+
+
+  console.log('isFetchingMore: ', isFetchingMore);
+  // встановлення isAppending на true!
   useEffect(() => {
     if (!isMobile767 || !observerRef.current) return;
 
-    dispatch(setIsAppending(true));
+    console.log('I AM USE EFFECT THAT SETS APPENDING TO TRUE');
     const observer = new IntersectionObserver(
       ([entry]) => {
+        dispatch(setIsAppending(true));
         if (entry.isIntersecting && hasMore && !isFetchingMore) {
+          console.log('I AM MAKING NEW REQUESt');
+
+          // тригерить безкінечні ререндер (setPageNumber)
           dispatch(setPageNumber(pagination.currentPage + 1));
         }
       },

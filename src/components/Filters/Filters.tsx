@@ -12,6 +12,8 @@ import FiltersSvg from '@/assets/icons/filters.svg';
 import FilterRateSvg from '@/assets/icons/filter-rate.svg';
 
 import styles from './filters.module.scss';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { setIsAppending } from '@/store/products/products_slice';
 
 export const Filters = () => {
   const [drawerVisible, setDrawerVisible] = useState(false);
@@ -25,12 +27,20 @@ export const Filters = () => {
   const toggleDrawer = () => setDrawerVisible((prev) => !prev);
   const toggleSort = () => setSortVisible((prev) => !prev);
 
+  // TEST
+  const { isAppending } = useTypedSelector(
+    (state: RootState) => state.products,
+  );
+
   const handleFilter = () => {
     setDrawerVisible(false);
   };
+  console.log('isAppending: ', isAppending);
 
   const handleSort = (value: string) => {
     dispatch(setSelectedSort(value));
+    // дані не будуть приліпюватись до вже наявних даних - сортування ок
+    dispatch(setIsAppending(false));
   };
 
   return (
