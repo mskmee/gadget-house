@@ -381,8 +381,11 @@
       gap: 8px;
     }
   }
-  .catalogListWrap > div {
-    width: 420px;
+   .catalogListWrap {
+    > div {
+      width: 100vw;
+      height: 100vh;
+    }
   }
 }
 
@@ -445,20 +448,12 @@
       padding: 0 16px;
     }
   }
-  .catalogListWrap > div {
-    width: 360px;
-  }
 }
 
 @media (max-width: 380px) {
   .headerBottomWrap {
     .headerBottom {
       gap: 10px;
-    }
-  }
-  .catalogListWrap {
-    > div {
-      width: 320px;
     }
   }
   .headerBottomButtons {
