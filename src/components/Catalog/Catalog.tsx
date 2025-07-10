@@ -47,10 +47,9 @@ export const Catalog: FC<ICatalogProps> = ({ data, totalPages }) => {
   useEffect(() => {
     if (!isMobile767 || !observerRef.current) return;
 
-    console.log('I AM USE EFFECT THAT SETS APPENDING TO TRUE');
+    dispatch(setIsAppending(true));
     const observer = new IntersectionObserver(
       ([entry]) => {
-        dispatch(setIsAppending(true));
         if (entry.isIntersecting && hasMore && !isFetchingMore) {
           console.log('I AM MAKING NEW REQUESt');
 
