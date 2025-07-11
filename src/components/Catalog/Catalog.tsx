@@ -29,6 +29,7 @@ export const Catalog: FC<ICatalogProps> = ({ data, totalPages }) => {
   useEffect(() => {
     if (pagination.totalPages) {
       setHasMore(pagination.currentPage < pagination.totalPages - 1);
+      // 0 < (2-1)
     }
   }, [pagination]);
 
@@ -40,19 +41,20 @@ export const Catalog: FC<ICatalogProps> = ({ data, totalPages }) => {
   console.log('CURRENT PAGE: ', pagination.currentPage);
   console.log('TOTAL PAGES FROM REDUX: ', pagination.totalPages);
   console.log('TOTAL PAGES FROM PROPS: ', totalPages);
-
+  console.log('IS FETCHING MORE', isFetchingMore);
+  console.log('hasMore', hasMore);
 
   console.log('isFetchingMore: ', isFetchingMore);
   // встановлення isAppending на true!
   useEffect(() => {
     if (!isMobile767 || !observerRef.current) return;
 
-    dispatch(setIsAppending(true));
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && hasMore && !isFetchingMore) {
           console.log('I AM MAKING NEW REQUESt');
 
+          dispatch(setIsAppending(true));
           // тригерить безкінечні ререндер (setPageNumber)
           dispatch(setPageNumber(pagination.currentPage + 1));
         }
@@ -69,6 +71,8 @@ export const Catalog: FC<ICatalogProps> = ({ data, totalPages }) => {
     return () => {
       observer.unobserve(target);
     };
+
+    // ЗАЛЕЖНІСТЬ isFetchingMore вирішує безкінечний ререндер
   }, [hasMore, isMobile767, pagination.currentPage, isFetchingMore, dispatch]);
 
   return (

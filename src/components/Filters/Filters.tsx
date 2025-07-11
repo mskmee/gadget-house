@@ -12,7 +12,6 @@ import FiltersSvg from '@/assets/icons/filters.svg';
 import FilterRateSvg from '@/assets/icons/filter-rate.svg';
 
 import styles from './filters.module.scss';
-import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { setIsAppending } from '@/store/products/products_slice';
 
 export const Filters = () => {
