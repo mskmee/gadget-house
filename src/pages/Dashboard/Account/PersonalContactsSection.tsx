@@ -162,7 +162,9 @@ export const PersonalContactsSection = () => {
           >
             <div className={styles.personalContactChangeSection}>
               <div>
-                <span>E-mail*</span>
+                <span>
+                  E-mail<span className={styles.asterisk}>*</span>
+                </span>
                 <div>
                   <input
                     name="email"
@@ -182,7 +184,9 @@ export const PersonalContactsSection = () => {
                 )}
               </div>
               <div>
-                <span>Phone number*</span>
+                <span>
+                  Phone number<span className={styles.asterisk}>*</span>
+                </span>
                 <div>
                   <input
                     name="defaultNumber"

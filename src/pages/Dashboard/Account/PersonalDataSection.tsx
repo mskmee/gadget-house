@@ -163,7 +163,9 @@ export const PersonalDataSection = () => {
 
           <div className={styles.personalDatesChangeSection}>
             <div>
-              <span>Full name*</span>
+              <span>
+                Full name<span className={styles.asterisk}>*</span>
+              </span>
               <div>
                 <input
                   name="fullName"
@@ -183,7 +185,9 @@ export const PersonalDataSection = () => {
             </div>
 
             <div>
-              <span>Birthday*</span>
+              <span>
+                Birthday<span className={styles.asterisk}>*</span>
+              </span>
               <div>
                 <input
                   type="text"
@@ -216,7 +220,9 @@ export const PersonalDataSection = () => {
             </div>
 
             <div>
-              <span>City*</span>
+              <span>
+                City<span className={styles.asterisk}>*</span>
+              </span>
               <div>
                 <input
                   name="city"
@@ -236,7 +242,9 @@ export const PersonalDataSection = () => {
             </div>
 
             <div>
-              <span>Sex*</span>
+              <span>
+                Sex<span className={styles.asterisk}>*</span>
+              </span>
               <div>
                 <label>
                   <input
