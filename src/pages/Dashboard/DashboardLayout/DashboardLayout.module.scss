@@ -1,11 +1,15 @@
 @import '@/styles/functions';
 
-.dashboardContainer {
+@mixin container {
   max-width: 1540px;
   width: 100%;
-  margin: 48px auto 62px auto;
   padding: 0 50px;
-  @media(max-width: 767px) {
+}
+
+.dashboardContainer {
+  @include container();
+  margin: 48px auto 62px auto;
+  @media (max-width: 767px) {
     margin-top: 25px;
   }
 
@@ -13,13 +17,15 @@
     display: flex;
     flex-direction: column;
     gap: 40px;
-    @media(max-width: 767px) {
+    @media (max-width: 767px) {
       gap: 0;
     }
   }
 }
 .dashboardHeader {
+  @include container();
   display: flex;
+  margin: 48px auto 40px auto;
   align-items: center;
   min-height: 128px;
   background-color: #eae4ee;
@@ -130,21 +136,21 @@
       flex: 1;
       gap: 0;
       padding: 8px 15px;
-      border-bottom: 2px solid #EAE4EE;
+      border-bottom: 2px solid #eae4ee;
       justify-content: center;
       transition: 0.5s;
-      
+
       &.activeSection {
-        border-bottom: 2px solid #6F4C9A;
+        border-bottom: 2px solid #6f4c9a;
         transition: 0.5s;
       }
-      @media(max-width: 767px) {
+      @media (max-width: 767px) {
         .dashboardSidebarCounter {
           display: none;
         }
       }
     }
-    
+
     @media (max-width: 575px) {
       padding: 8px;
       text-transform: capitalize;
