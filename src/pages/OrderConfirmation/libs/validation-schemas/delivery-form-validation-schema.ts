@@ -5,6 +5,7 @@ import { DeliveryMethod } from '../enums/delivery-method';
 
 const regx = {
   useOnlyLetters: /^[a-zA-Zа-яА-ЯёЁґєіїҐЄІЇ]+(?:[ '-][a-zA-Zа-яА-ЯёЁґєіїҐЄІЇ]+)*$/,
+  useLettersAndNumbers: /^[a-zA-Zа-яА-ЯёЁґєіїҐЄІЇ0-9]+(?:[ '-][a-zA-Zа-яА-ЯёЁґєіїҐЄІЇ0-9]+)*$/,
   useOnlyNumbers: /^(?![ .])\d+(?<![ .])$/,
 };
 
@@ -20,7 +21,7 @@ const street = Yup.string().when('deliveryType', {
   otherwise: () =>
     Yup.string()
       .required('This field is required')
-      .matches(regx.useOnlyLetters, 'Wrong street format')
+      .matches(regx.useLettersAndNumbers, 'Wrong street format')
       .min(2, 'Street is too short!')
       .max(50, 'Street is too long'),
 });
@@ -40,7 +41,7 @@ const houseNumber = Yup.string().when('deliveryType', {
   then: () =>
     Yup.string()
       .required('This field is required')
-      .matches(regx.useOnlyNumbers, 'Wrong house number format')
+      .matches(regx.useLettersAndNumbers, 'Wrong house number format')
       .max(10, 'House number is too long'),
   otherwise: () => Yup.string().notRequired(),
 });
