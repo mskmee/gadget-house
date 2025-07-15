@@ -29,7 +29,6 @@ export const Catalog: FC<ICatalogProps> = ({ data, totalPages }) => {
   useEffect(() => {
     if (pagination.totalPages) {
       setHasMore(pagination.currentPage < pagination.totalPages - 1);
-      // 0 < (2-1)
     }
   }, [pagination]);
 
