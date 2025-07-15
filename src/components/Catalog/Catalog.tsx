@@ -37,13 +37,6 @@ export const Catalog: FC<ICatalogProps> = ({ data, totalPages }) => {
     query: '(max-width: 767px)',
   });
 
-  console.log('CURRENT PAGE: ', pagination.currentPage);
-  console.log('TOTAL PAGES FROM REDUX: ', pagination.totalPages);
-  console.log('TOTAL PAGES FROM PROPS: ', totalPages);
-  console.log('IS FETCHING MORE', isFetchingMore);
-  console.log('hasMore', hasMore);
-
-  console.log('isFetchingMore: ', isFetchingMore);
   useEffect(() => {
     if (!isMobile767 || !observerRef.current) return;
 
