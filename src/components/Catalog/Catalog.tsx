@@ -50,8 +50,6 @@ export const Catalog: FC<ICatalogProps> = ({ data, totalPages }) => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && hasMore && !isFetchingMore) {
-          console.log('I AM MAKING NEW REQUESt');
-
           dispatch(setIsAppending(true));
           dispatch(setPageNumber(pagination.currentPage + 1));
         }
