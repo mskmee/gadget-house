@@ -44,7 +44,6 @@ export const Catalog: FC<ICatalogProps> = ({ data, totalPages }) => {
   console.log('hasMore', hasMore);
 
   console.log('isFetchingMore: ', isFetchingMore);
-  // встановлення isAppending на true!
   useEffect(() => {
     if (!isMobile767 || !observerRef.current) return;
 
@@ -54,7 +53,6 @@ export const Catalog: FC<ICatalogProps> = ({ data, totalPages }) => {
           console.log('I AM MAKING NEW REQUESt');
 
           dispatch(setIsAppending(true));
-          // тригерить безкінечні ререндер (setPageNumber)
           dispatch(setPageNumber(pagination.currentPage + 1));
         }
       },
@@ -70,8 +68,6 @@ export const Catalog: FC<ICatalogProps> = ({ data, totalPages }) => {
     return () => {
       observer.unobserve(target);
     };
-
-    // ЗАЛЕЖНІСТЬ isFetchingMore вирішує безкінечний ререндер
   }, [hasMore, isMobile767, pagination.currentPage, isFetchingMore, dispatch]);
 
   return (
