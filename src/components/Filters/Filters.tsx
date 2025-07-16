@@ -12,6 +12,7 @@ import FiltersSvg from '@/assets/icons/filters.svg';
 import FilterRateSvg from '@/assets/icons/filter-rate.svg';
 
 import styles from './filters.module.scss';
+import { setIsAppending, setPageNumber } from '@/store/products/products_slice';
 
 export const Filters = () => {
   const [drawerVisible, setDrawerVisible] = useState(false);
@@ -31,6 +32,8 @@ export const Filters = () => {
 
   const handleSort = (value: string) => {
     dispatch(setSelectedSort(value));
+    dispatch(setPageNumber(0));
+    dispatch(setIsAppending(false));
   };
 
   return (
