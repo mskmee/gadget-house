@@ -40,10 +40,10 @@ export const Catalog: FC<ICatalogProps> = ({ data, totalPages }) => {
   useEffect(() => {
     if (!isMobile767 || !observerRef.current) return;
 
-    dispatch(setIsAppending(true));
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && hasMore && !isFetchingMore) {
+          dispatch(setIsAppending(true));
           dispatch(setPageNumber(pagination.currentPage + 1));
         }
       },
