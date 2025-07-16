@@ -18,6 +18,8 @@
 }
 
 .cardConatiner {
+position: relative;
+
   min-width: inherit;
   max-width: 305px;
   display: flex;
@@ -45,7 +47,7 @@
 }
 
 .marginTop {
-  margin-top: 20px;
+  margin-top: 0px;
 }
 
 .cardContainerTop {
@@ -78,6 +80,10 @@
 }
 
 .cardConatinerLike {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+
   display: flex;
   flex-flow: column wrap;
   justify-content: space-between;
@@ -85,6 +91,11 @@
   align-self: flex-start;
   padding-bottom: 20px;
   height: 100%;
+
+  @media (max-width: 680px) {
+    top: 8px;
+    right: 8px;
+  }
 }
 
 .likedIcon {
@@ -178,7 +189,7 @@
   }
 
   .card-code {
-    color: #808080;
+    color: #78808c;
   }
 }
 
@@ -469,11 +480,11 @@
         font-size: rem(16px);
       }
       button {
-        width: 35px;
-        height: 35px;
+        width: 48px;
+        height: 48px;
         > svg {
-          width: 23px;
-          height: 23px;
+          width: 32px;
+          height: 32px;
         }
       }
     }
@@ -483,8 +494,8 @@
         > li div div {
           line-height: 9px;
           img {
-            width: 9px;
-            height: 9px;
+            width: 7px;
+            height: 7px;
           }
         }
       }
@@ -531,8 +542,8 @@
         > ul {
           gap: 4px;
           > li div div:last-child img {
-            width: 9px;
-            height: 9px;
+            width: 7px;
+            height: 7px;
           }
         }
         .card-code {
@@ -545,11 +556,11 @@
           font-size: rem(14px);
         }
         > button {
-          width: 28px;
-          height: 28px;
+          width: 48px;
+          height: 48px;
           > svg {
-            width: 16px;
-            height: 16px;
+            width: 32px;
+            height: 32px;
           }
         }
       }
