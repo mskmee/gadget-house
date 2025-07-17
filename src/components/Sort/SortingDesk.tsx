@@ -13,6 +13,7 @@ import SortSvg from '@/assets/icons/sorting.svg';
 import ArrowUpSvg from '@/assets/icons/arrow-up.svg';
 
 import styles from './sort.module.scss';
+import { setPageNumber } from '@/store/products/products_slice';
 
 export const SortingDesk = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -30,6 +31,7 @@ export const SortingDesk = () => {
 
   const handleSortSelection = (value: string) => {
     dispatch(setSelectedSort(value));
+    dispatch(setPageNumber(0));
     setIsModalOpen(false);
   };
 
