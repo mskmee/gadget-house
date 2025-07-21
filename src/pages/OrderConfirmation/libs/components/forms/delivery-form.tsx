@@ -131,7 +131,9 @@ export const DeliveryForm: FC<Properties> = ({
                     <ErrorFields />
                   </Radio.Group>
 
-                  <div className={styles.form__inputs}>
+                  <div
+                    className={`${styles.form__inputs} ${styles.form__inputsdel}`}
+                  >
                     <FormInput<DeliveryFormDto>
                       name="city"
                       label="City*"
