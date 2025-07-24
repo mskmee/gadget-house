@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { getUserData } from './store/auth/actions';
 
 function App() {
+  console.log('App component rendered');
   const dispatch = useDispatch<AppDispatch>();
   const { user, userToken } = useTypedSelector(
     (state: RootState) => state.auth,
