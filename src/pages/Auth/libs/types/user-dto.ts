@@ -1,3 +1,20 @@
+export type PersonalDataPayload = {
+  fullName: string;
+  date: {
+    day: string | number;
+    month: string | number;
+    year: string | number;
+  };
+  city: string;
+  gender: string;
+};
+
+export type PersonalContactsPayload = {
+  email: string;
+  phoneNumber: string;
+  secondaryPhoneNumber: string;
+};
+
 type User = {
   id: number;
   fullName: string;

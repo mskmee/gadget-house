@@ -14,27 +14,13 @@ import {
 } from '@/utils/packages/local-storage';
 import { withAuthErrorHandler } from '../helpers/helpers';
 import { RootState } from '..';
+import { PersonalContactsPayload, PersonalDataPayload } from '@/pages/Auth/libs/types/user-dto';
 
-type PersonalData = {
-  fullName: string;
-  date: {
-    day: string | number;
-    month: string | number;
-    year: string | number;
-  };
-  city: string;
-  gender: string;
-};
 
-type PersonalContacts = {
-  email: string;
-  phoneNumber: string;
-  secondaryPhoneNumber: string;
-};
 
 const updateUserPersonalData = createAsyncThunk(
   'auth/updateUserPersonalData',
-  withAuthErrorHandler(async (personalData: PersonalData, { getState }) => {
+  withAuthErrorHandler(async (personalData: PersonalDataPayload, { getState }) => {
     const state = getState() as RootState;
     const currentUser = state.auth.user;
 
@@ -71,7 +57,7 @@ const updateUserPersonalData = createAsyncThunk(
 
 const updateUserContacts = createAsyncThunk(
   'auth/updateUserContacts',
-  withAuthErrorHandler(async (contactsData: PersonalContacts, { getState }) => {
+  withAuthErrorHandler(async (contactsData: PersonalContactsPayload, { getState }) => {
     const state = getState() as RootState;
     const currentUser = state.auth.user;
 
