@@ -13,7 +13,7 @@ type PersonalContactsViewProps = {
   isOpenAddPhoneNumberSection: boolean;
   contacts: PersonalContacts;
   handleSaveContacts: (
-    e: React.ChangeEvent<HTMLFormElement>,
+    e: React.FormEvent<HTMLFormElement>,
     isOnlyAdditionalNumber?: boolean,
   ) => void;
   handlePhoneNumberChange: (
