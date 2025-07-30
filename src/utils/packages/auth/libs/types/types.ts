@@ -7,3 +7,5 @@ export { type AuthForgotPasswordRequestDto } from './auth-forgotPassword-request
 export { type AuthForgotPasswordResponseDto } from './auth-forgotPassword-response-dto';
 export { type ChangePasswordRequestDto } from './changePassword-request-dto';
 export { type ChangePasswordResponseDto } from './changePassword-response-dto';
+export { type UpdateContactsRequestDto } from './user-contacts-request-dto';
+export {type UpdatePersonalDataRequestDto} from './update-personal-data-request-dto'

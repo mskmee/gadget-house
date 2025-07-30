@@ -8,6 +8,8 @@ import {
   UserResponseDto,
   ChangePasswordRequestDto,
   ChangePasswordResponseDto,
+  UpdatePersonalDataRequestDto,
+  UpdateContactsRequestDto,
 } from './libs/types/types';
 
 class AuthService implements IAuthService {
@@ -34,6 +36,14 @@ class AuthService implements IAuthService {
 
   async fetchUserProfile(): Promise<UserResponseDto> {
     return this.authApi.fetchUserProfile();
+  }
+
+  async updatePersonalData(data: UpdatePersonalDataRequestDto): Promise<UserResponseDto> {
+    return this.authApi.updatePersonalData(data);
+  }
+
+  async updateContacts(data: UpdateContactsRequestDto): Promise<UserResponseDto> {
+    return this.authApi.updateContacts(data);
   }
 }
 
