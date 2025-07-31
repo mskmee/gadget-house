@@ -156,6 +156,7 @@ const products_slice = createSlice({
         };
 
         state.isFetchingMore = false;
+        state.isAppending = false;
       })
       .addCase(getFilteredProducts.rejected, (state) => {
         state.isFetchingMore = false;
