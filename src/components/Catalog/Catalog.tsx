@@ -82,12 +82,6 @@ export const Catalog: FC<ICatalogProps> = ({ data, totalPages }) => {
               Loading more products...
             </div>
           )}
-
-          {isFetchingMore && (
-            <div className={styles.catalog__loadingIndicator}>
-              Loading more products...
-            </div>
-          )}
         </div>
       ) : (
         <div className={styles.catalog__desk}>

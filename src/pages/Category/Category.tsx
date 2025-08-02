@@ -7,7 +7,7 @@ import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { useActions } from '@/hooks/useActions';
 import { useDispatch } from 'react-redux';
 import { resetFilters } from '@/store/filters/filters_slice';
-import { setPageNumber } from '@/store/products/products_slice';
+import { setIsAppending, setPageNumber } from '@/store/products/products_slice';
 
 function Category() {
   const { productsData } = useTypedSelector(
@@ -28,6 +28,7 @@ function Category() {
   useEffect(() => {
     if (isValidCategory) {
       dispatch(setPageNumber(0));
+      dispatch(setIsAppending(false));
       dispatch(resetFilters());
       setSelectedCategory(categoryId);
     }
