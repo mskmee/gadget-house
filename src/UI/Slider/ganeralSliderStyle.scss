@@ -1,6 +1,7 @@
 .swiper-button-prev:after,
 .swiper-button-next:after {
   display: none;
+ 
 }
 .swiper-button-disabled {
   opacity: 0;
@@ -32,6 +33,7 @@
   }
   .swiper-button-next,
   .swiper-button-prev {
+  
     position: static;
     display: flex;
     justify-content: center;
@@ -97,6 +99,9 @@
     padding-bottom: 25px;
     .swiper-wrapper {
       align-items: center;
+      @media (max-width: 575px) {
+        height: 357px;
+      }
     }
     .swiper-slide > div {
       max-width: 514px;
@@ -119,8 +124,8 @@
 
 
 .swiper-pagination-bullet {
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   border: 1px solid #000;
   border-radius: 50%;
   background: #fff;
@@ -146,6 +151,7 @@
     cursor: pointer;
     border-radius: 11px;
     transition: 0.5s;
+    
   }
   img {
     border-radius: 11px;

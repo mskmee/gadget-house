@@ -18,8 +18,7 @@
 }
 
 .cardConatiner {
-position: relative;
-
+  position: relative;
   min-width: inherit;
   max-width: 305px;
   display: flex;
@@ -90,7 +89,7 @@ position: relative;
   align-items: center;
   align-self: flex-start;
   padding-bottom: 20px;
-  height: 100%;
+  // height: 100%;
 
   @media (max-width: 680px) {
     top: 8px;
@@ -194,9 +193,9 @@ position: relative;
 }
 
 .cardPriceContainer {
+  align-items: flex-end;
   display: flex;
   justify-content: space-between;
-  align-items: center;
   width: 100%;
   margin-top: 35px;
   button {
@@ -237,6 +236,7 @@ position: relative;
   font-weight: normal;
   font-size: 24px;
   line-height: 150%;
+
 }
 
 .brandImg {
@@ -359,18 +359,9 @@ position: relative;
 @media screen and (max-width: 768px) {
   .cardConatiner {
     max-width: 305px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
     gap: 30px;
-    margin: 5px 0;
-    padding: 12px;
-    font-family: Inter, sans-serif;
-    background-color: #ffffff;
-    border-radius: 20px;
-    box-shadow: 0 0 8px 0 hsla(0deg 0% 0% / 10%);
-    transition: all 0.2s;
-    text-decoration: none;
+    padding: 0 12px 12px 12px;
+    border-radius: 12px;
     .cardImage {
       .smartphoneImg,
       .laptopImg {
@@ -433,18 +424,7 @@ position: relative;
   .cardConatiner {
     min-width: 175px;
     max-width: 305px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 10px;
-    margin: 5px 0;
-    padding: 12px;
-    font-family: Inter, sans-serif;
-    background-color: #ffffff;
-    border-radius: 20px;
-    box-shadow: 0 0 8px 0 hsla(0deg 0% 0% / 10%);
-    transition: all 0.2s;
-    text-decoration: none;
+    gap: 12px;
   }
 
   .cardContainerTop {
@@ -458,6 +438,12 @@ position: relative;
     }
     .cardConatinerLike {
       padding-bottom: 10px;
+      > button {
+        > svg {
+          width: 24px;
+          height: 24px;
+        }
+      }
       > span svg {
         width: 24px;
         height: 24px;
@@ -494,14 +480,16 @@ position: relative;
         > li div div {
           line-height: 9px;
           img {
-            width: 7px;
-            height: 7px;
+            width: 10px;
+            height: 10px;
           }
         }
       }
     }
     .card-code {
-      font-size: rem(11px);
+      font-weight: 300;
+      font-size: rem(12px);
+      line-height: 150%;
     }
   }
   .cardBrandConatiner {
