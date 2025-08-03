@@ -1,9 +1,5 @@
 import style from '@/components/SingleProduct/Product.module.scss';
-import {
-  FC,
-  useEffect,
-  useRef,
-} from 'react';
+import { FC, useEffect, useRef } from 'react';
 import { CustomBreadcrumbs } from '@/components/SingleProduct/CustomBreadcrumbs';
 import { MenuItems } from '@/components/SingleProduct/MenuItems';
 import { Product } from '@/components/SingleProduct';
@@ -21,7 +17,6 @@ import { AppDispatch, RootState } from '@/store';
 import { getOneProductById } from '@/store/products/actions';
 import ProductReviews from '@/components/SingleProduct/ProductReviews/ProductReviews';
 
-
 export const SingleProductPage: FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
@@ -29,11 +24,12 @@ export const SingleProductPage: FC = () => {
   const { id } = useParams();
 
   useEffect(() => {
-    dispatch(getOneProductById(String(id)))
-  }, [id, dispatch])
+    dispatch(getOneProductById(String(id)));
+  }, [id, dispatch]);
 
-  const dynamicCurrentProduct = useTypedSelector((state: RootState) => state.products.activeProduct);
-
+  const dynamicCurrentProduct = useTypedSelector(
+    (state: RootState) => state.products.activeProduct,
+  );
 
   useDocumentTitle(dynamicCurrentProduct?.name || 'Product');
 
@@ -44,7 +40,6 @@ export const SingleProductPage: FC = () => {
   const isLargerThan768px = useMediaQuery({
     query: '(max-width: 768px)',
   });
-
 
   return (
     <div className={style['single-product']}>
@@ -77,30 +72,38 @@ export const SingleProductPage: FC = () => {
       <div
         className={classNames(style['single-product__wrap'], 'container-xxl')}
       >
-        <div ref={(el) => sectionRefs.current['#product'] = el}>
+        <div ref={(el) => (sectionRefs.current['#product'] = el)}>
           {dynamicCurrentProduct && (
-            <Product
-              dynamicCurrentProduct={dynamicCurrentProduct}
-            />
+            <Product dynamicCurrentProduct={dynamicCurrentProduct} />
           )}
         </div>
 
-        <div ref={(el) => sectionRefs.current['#product-characteristics'] = el}>
+        <div
+          ref={(el) => (sectionRefs.current['#product-characteristics'] = el)}
+        >
+          {dynamicCurrentProduct && (
+            <ProductCharacteristics product={dynamicCurrentProduct} />
+          )}
+        </div>
+        {/* <div ref={(el) => sectionRefs.current['#product-characteristics'] = el}>
           <ProductCharacteristics />
+        </div> */}
+
+        <div ref={(el) => (sectionRefs.current['#product-reviews'] = el)}>
+          <ProductReviews
+            productTitle={dynamicCurrentProduct?.name ?? ''}
+            productId={Number(dynamicCurrentProduct?.id)}
+          />
         </div>
 
-        <div ref={(el) => sectionRefs.current['#product-reviews'] = el}>
-          <ProductReviews productTitle={dynamicCurrentProduct?.name ?? ''} productId={Number(dynamicCurrentProduct?.id)} />
-        </div>
-
-        <div ref={(el) => sectionRefs.current['#product-photos'] = el}>
+        <div ref={(el) => (sectionRefs.current['#product-photos'] = el)}>
           {dynamicCurrentProduct && (
             <ProductPhotos productImageCards={dynamicCurrentProduct?.images} />
           )}
         </div>
       </div>
 
-      <div ref={(el) => sectionRefs.current['#product-accessories'] = el}>
+      <div ref={(el) => (sectionRefs.current['#product-accessories'] = el)}>
         <ProductAccessories />
       </div>
 
