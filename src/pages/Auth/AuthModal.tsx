@@ -61,6 +61,7 @@ const AuthModal: FC<IAuthModalProps> = ({ isOpen, onClose }) => {
               onRegister={onRegisterFormSubmit}
               onSwitch={() => setCurrentForm(FormEnum.LOGIN)}
               isLoading={isLoading}
+              onClose={handleClose}
             />
           )}
           {currentForm === FormEnum.FORGOT && (
