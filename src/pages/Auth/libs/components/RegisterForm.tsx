@@ -15,6 +15,7 @@ interface IRegisterFormProps {
   onRegister: (dto: RegisterFormDto) => void;
   onSwitch: () => void;
   isLoading: boolean;
+  onClose: () => void;
 }
 
 const RegisterForm: FC<IRegisterFormProps> = ({
@@ -22,6 +23,7 @@ const RegisterForm: FC<IRegisterFormProps> = ({
   onRegister,
   onSwitch,
   isLoading,
+  onClose,
 }) => {
   const passwordRules = [
     'Password length must be between 8 and 24 characters',
@@ -35,10 +37,12 @@ const RegisterForm: FC<IRegisterFormProps> = ({
       <Formik<RegisterFormDto>
         initialValues={initialValues}
         validateOnBlur={true}
+        validateOnMount={true}
         validationSchema={registerFormValidationSchema}
         onSubmit={(values, { resetForm }) => {
           onRegister(values);
           resetForm();
+          onClose();
         }}
       >
         {({ isValid }) => (
