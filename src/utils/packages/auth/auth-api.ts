@@ -9,6 +9,8 @@ import {
   ChangePasswordRequestDto,
   AuthForgotPasswordResponseDto,
   ChangePasswordResponseDto,
+  UpdatePersonalDataRequestDto,
+  UpdateContactsRequestDto,
 } from './libs/types/types';
 import { LocalStorageKey, localStorageService } from '../local-storage';
 
@@ -50,6 +52,24 @@ class AuthApi implements IAuthApi {
       method: HttpMethod.GET,
       url: ApiEndpoint.USER,
       headers: { Authorization: `Bearer ${localStorageService.getItem(LocalStorageKey.ACCESS_TOKEN)}` },
+    });
+  }
+
+    async updatePersonalData(data: UpdatePersonalDataRequestDto): Promise<UserResponseDto> {
+    return request({
+      method: HttpMethod.PUT,
+      url: ApiEndpoint.USER, 
+      headers: { Authorization: `Bearer ${localStorageService.getItem(LocalStorageKey.ACCESS_TOKEN)}` },
+      body: data,
+    });
+  }
+
+   async updateContacts(data: UpdateContactsRequestDto): Promise<UserResponseDto> {
+    return request({
+      method: HttpMethod.PUT,
+      url: ApiEndpoint.USER, 
+      headers: { Authorization: `Bearer ${localStorageService.getItem(LocalStorageKey.ACCESS_TOKEN)}` },
+      body: data,
     });
   }
 }

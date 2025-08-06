@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import cn from 'classnames';
 
@@ -49,13 +49,24 @@ const OrderConfirmation: FC = () => {
 
   const isOrderButtonDisabled = !isOrderReady || !isRulesAccepted || isEditing;
 
-  const initialContactsValue = {
-    fullName: contactsFormValue.fullName || initialUserData?.fullName || '',
-    email: contactsFormValue.email || initialUserData?.email || '',
-    phoneNumber:
-      contactsFormValue.phoneNumber || initialUserData?.phoneNumber || '',
-    comment: contactsFormValue.comment,
-  };
+  const initialContactsValue = useMemo(
+    () => ({
+      fullName: contactsFormValue.fullName || initialUserData?.fullName || '',
+      email: contactsFormValue.email || initialUserData?.email || '',
+      phoneNumber:
+        contactsFormValue.phoneNumber || initialUserData?.phoneNumber || '',
+      comment: contactsFormValue.comment,
+    }),
+    [
+      contactsFormValue.fullName,
+      contactsFormValue.email,
+      contactsFormValue.phoneNumber,
+      contactsFormValue.comment,
+      initialUserData?.fullName,
+      initialUserData?.email,
+      initialUserData?.phoneNumber,
+    ],
+  );
 
   return (
     <section className={styles.order}>

@@ -1,6 +1,6 @@
 import styles from './MyAccount.module.scss';
-import { PersonalDataSection } from './PersonalDataSection';
-import { PersonalContactsSection } from './PersonalContactsSection';
+import { PersonalDataSection } from './PersonalDataSection/PersonalDataSection';
+import { PersonalContactsSection } from './PersonalContactsSection/PersonalContactsSection';
 
 export const UserAccount = () => {
   return (

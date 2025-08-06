@@ -1,8 +1,14 @@
-type UserResponseDto = {
-  id: number;
-  email: string;
-  fullName: string;
-  role: string;
-};
+import { IAddress, IOrder } from '@/pages/Auth/libs/types/user-dto';
 
-export type { UserResponseDto };
+export type UserResponseDto = {
+  id: number;
+  fullName: string;
+  email: string;
+  phoneNumber: string;
+  secondaryPhoneNumber: string;
+  birthdate: string;
+  sex: string;
+  address: IAddress;
+  role: string;
+  orders: IOrder[];
+};
