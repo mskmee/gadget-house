@@ -10,9 +10,8 @@ import { Navigation } from 'swiper/modules';
 import { MyCard } from '../components';
 import classNames from 'classnames';
 
-
 export const ProductAccessories = () => {
-  const isMobile = useMediaQuery({query: '(max-width: 991px)',})
+  const isMobile = useMediaQuery({ query: '(max-width: 991px)' });
   const shouldShowNavigation = isMobile ? false : true;
 
   const [previouslyReviewed] = useLocalStorage<IProductCard[]>(
@@ -24,25 +23,38 @@ export const ProductAccessories = () => {
     <section className={style['accessories']} id="product-accessories">
       <div>
         <h2>Previously reviewed offers</h2>
-        <div className={classNames('base-slider', style['product-accessories__slider'])}>
-          <SliderBase 
-            prevArrow={<ArrowPrev classNameArrow={['arrowLeft', 'base__slider-arrow']}><SmallSliderArrowPrev/></ArrowPrev>}
-            nextArrow={<ArrowNext classNameArrow={['arrowLeft', 'base__slider-arrow']}><SmallSliderArrowNext/></ArrowNext>}
+        <div
+          className={classNames(
+            'base-slider',
+            style['product-accessories__slider'],
+          )}
+        >
+          <SliderBase
+            prevArrow={
+              <ArrowPrev classNameArrow={['arrowLeft', 'base__slider-arrow']}>
+                <SmallSliderArrowPrev />
+              </ArrowPrev>
+            }
+            nextArrow={
+              <ArrowNext classNameArrow={['arrowLeft', 'base__slider-arrow']}>
+                <SmallSliderArrowNext />
+              </ArrowNext>
+            }
             modules={[Navigation]}
             navigation={shouldShowNavigation}
             // slidesPerView={2.5}
             breakpoints={{
               320: {
-                slidesPerView: 1.5,
-                spaceBetween: '10px'
+                slidesPerView: 2,
+                spaceBetween: '8px',
               },
               575: {
                 slidesPerView: 2,
-                spaceBetween: '10px'
+                spaceBetween: '10px',
               },
               640: {
                 slidesPerView: 2.4,
-                spaceBetween: '10px'
+                spaceBetween: '10px',
               },
               768: {
                 slidesPerView: 3,
@@ -50,21 +62,17 @@ export const ProductAccessories = () => {
               },
               1100: {
                 slidesPerView: 4,
-                spaceBetween: '40'
+                spaceBetween: '40',
               },
             }}
           >
-
-            {
-              previouslyReviewed?.map(product => (
-                <MyCard 
-                  key={product.id} 
-                  classname="previously-reviewed"
-                  tempProduct={product}
-                />
-              ))
-            }
-
+            {previouslyReviewed?.map((product) => (
+              <MyCard
+                key={product.id}
+                classname="previously-reviewed"
+                tempProduct={product}
+              />
+            ))}
           </SliderBase>
         </div>
       </div>
