@@ -9,26 +9,46 @@ import { SuccessPopUp } from './libs/components/components';
 import { SliderNav } from '@/components/SliderNav/SliderNav.tsx';
 import Carousels from '@/components/Carousel/Carousel.tsx';
 import Benefits from '@/components/benefitsList/benefits.tsx';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '../../store';
+import { getAllProducts } from '@/store/products/actions';
+import {
+  DEFAULT_PAGE,
+  DEFAULT_SIZE,
+  DEFAULT_SIZE_MOBILE,
+} from '@/constants/pagination';
 
 export const BasketPage = () => {
   const [isPopUpOpened, setIsPopUpOpened] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
 
   const { products, cardTotalAmount, currency, locale } = useTypedSelector(
     (state) => state.shopping_card,
   );
 
+  const { productsData, loaded: productsLoaded } = useTypedSelector(
+    (state) => state.products,
+  );
+
   const productsLength = products.reduce((acc, item) => acc + item.quantity, 0);
 
-  const isMobile = innerWidth < 768;
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
   const onPopUpClose = () => setIsPopUpOpened(false);
+
+  useEffect(() => {
+    if (!productsLoaded || !productsData) {
+      const size = isMobile ? DEFAULT_SIZE_MOBILE : DEFAULT_SIZE;
+      dispatch(getAllProducts({ page: DEFAULT_PAGE, size }));
+    }
+  }, [dispatch, productsLoaded, productsData, isMobile]);
 
   useEffect(() => {
     if (!productsLength) {
       navigate('/');
     }
-  }, [productsLength]);
+  }, [productsLength, navigate]);
 
   return (
     <>
@@ -72,8 +92,8 @@ export const BasketPage = () => {
 
       <SliderNav
         text={isMobile ? 'Recommendations' : 'Recommendations for you'}
-        link="/smartphones"
-        isVisibleSeeMoreBtn={isMobile}
+        // link="/smartphones"
+        // isVisibleSeeMoreBtn={isMobile}
       />
       <Carousels classname="smartphone-carousel" />
       <Benefits />

@@ -12,7 +12,7 @@ export const menuItems = [
   { id: 2, title: 'Characteristics', href: '#product-characteristics' },
   { id: 3, title: 'Reviews', href: '#product-reviews' },
   { id: 4, title: 'Photos', href: '#product-photos' },
-  { id: 5, title: 'Accessories', href: '#product-accessories' },
+  { id: 5, title: 'Previously reviewed offers', href: '#product-accessories' },
 ];
 
 export const staticCurrentProduct = [

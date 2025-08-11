@@ -66,7 +66,7 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
       if (classname === 'basket-popup') {
         notification.open({
           className: 'basket-popup-notification',
-          placement: 'top',
+          placement: 'bottom',
           message: 'Product added to the basket',
           duration: 3,
           closeIcon: false,
