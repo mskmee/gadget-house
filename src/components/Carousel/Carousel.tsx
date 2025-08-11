@@ -59,7 +59,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
 
   const smartphones = products?.filter((item) => item.id >= 1 && item.id <= 8);
   const laptops = products?.filter((item) => item.id >= 9 && item.id <= 11);
-  const otherProducts = products?.filter((item) => item.id >= 12);
+  const otherProducts = products?.filter((item) => item.id <= 12);
 
   const itemWidth = isLargerThan1440px
     ? responsiveCarouselSettings.itemWidth
@@ -131,7 +131,6 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
         );
       } else if (swipeDistance < -50 && currentIndex < maxIndex) {
         setCurrentIndex((prev) => prev + 1);
-
         setCurrentTranslate(
           -(currentIndex + 1) * (itemWidth + responsiveCarouselSettings.gap),
         );
@@ -184,7 +183,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        style={{ touchAction: 'pan-y' }} // Prevent vertical scrolling
+        style={{ touchAction: 'pan-y' }}
       >
         <div
           className={styles.track}
@@ -206,34 +205,38 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
                         ? laptops?.length
                         : 8,
             } as { length: number },
-            (_, i) => (
-              <>
-                {classname === 'brands-carousel' ? (
+            (_, i) => {
+              if (classname === 'brands-carousel') {
+                return (
                   <BrandCard
+                    key={`brand-${i}`}
                     width={itemWidth}
-                    key={crypto.randomUUID()}
                     product={brandData[i % brandData.length]}
                   />
-                ) : classname === 'photos-carousel' ? (
-                  productImageCards?.map((productImageCard) => (
-                    <img
-                      style={{ minWidth: `${itemWidth}px` }}
-                      key={crypto.randomUUID()}
-                      className="product-photo"
-                      src={productImageCard.link}
-                      alt="product's photos"
-                    />
-                  ))
-                ) : (
-                  <MyCard
-                    width={itemWidth}
-                    key={crypto.randomUUID()}
-                    tempProduct={getProduct(i)}
-                    classname={classMap[classname]}
+                );
+              }
+
+              if (classname === 'photos-carousel') {
+                return productImageCards?.map((productImageCard, idx) => (
+                  <img
+                    style={{ minWidth: `${itemWidth}px` }}
+                    key={`photo-${idx}-${productImageCard.link}`}
+                    className="product-photo"
+                    src={productImageCard.link}
+                    alt="product's photos"
                   />
-                )}
-              </>
-            ),
+                ));
+              }
+
+              return (
+                <MyCard
+                  key={`product-${i}`}
+                  width={itemWidth}
+                  tempProduct={getProduct(i)}
+                  classname={classMap[classname]}
+                />
+              );
+            },
           )}
         </div>
 
@@ -290,5 +293,338 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
     </div>
   );
 };
-
 export default CustomCarousel;
+
+// -------------------------------------------
+
+// import React, { useState, useEffect } from 'react';
+// import styles from './carousel.module.scss';
+// import classNames from 'classnames';
+// import { BrandCard, MyCard } from '../components';
+// import { brandData } from '@/constants/productCards';
+// import { useMediaQuery } from 'react-responsive';
+// import { useResponsiveCarouselSettings } from '@/hooks/useResponsiveCarouselSettings';
+// import { IProductCard, TProductImageCard } from '@/interfaces/interfaces';
+// import { useTypedSelector } from '@/hooks/useTypedSelector';
+// import useLocalStorage from '@/hooks/useLocalStorage';
+
+// type CarouselClassname =
+//   | 'brands-carousel'
+//   | 'laptop-carousel'
+//   | 'smartphone-carousel'
+//   | 'viewed-carousel'
+//   | 'basket-popup-carousel'
+//   | 'photos-carousel';
+
+// interface CustomCarouselProps {
+//   classname: CarouselClassname;
+//   productImageCards?: TProductImageCard[];
+// }
+
+// const classMap: Record<CarouselClassname, string> = {
+//   'laptop-carousel': 'laptops',
+//   'smartphone-carousel': 'smartphones',
+//   'basket-popup-carousel': 'basket-popup',
+//   'viewed-carousel': 'previously-reviewed',
+//   'brands-carousel': '',
+//   'photos-carousel': '',
+// };
+
+// const CustomCarousel: React.FC<CustomCarouselProps> = ({
+//   classname,
+//   productImageCards,
+// }) => {
+//   const [currentIndex, setCurrentIndex] = useState(0);
+//   const [startX, setStartX] = useState<number | null>(null);
+//   const [currentTranslate, setCurrentTranslate] = useState(0);
+//   const [animation, setAnimation] = useState(true);
+//   const [previouslyReviewed] = useLocalStorage<IProductCard[]>(
+//     'previouslyReviewed',
+//     [],
+//   );
+
+//   const isLargerThan1440px = useMediaQuery({
+//     query: '(max-width: 1440px)',
+//   });
+
+//   const products = useTypedSelector(
+//     (state) => state.products.productsData?.page,
+//   );
+
+//   const smartphones = products?.filter((item) => item.id >= 1 && item.id <= 8) || [];
+//   const laptops = products?.filter((item) => item.id >= 9 && item.id <= 11) || [];
+//   const otherProducts = products?.filter((item) => item.id >= 12) || [];
+
+//   const totalItems =
+//     classname === 'brands-carousel'
+//       ? 10
+//       : classname === 'photos-carousel'
+//         ? productImageCards?.length
+//         : classname === 'basket-popup-carousel'
+//           ? 8
+//           : classname === 'viewed-carousel'
+//             ? previouslyReviewed.length
+//             : classname === 'laptop-carousel'
+//               ? laptops?.length
+//               : smartphones.length;
+
+//   const responsiveCarouselSettings = useResponsiveCarouselSettings(
+//     classname,
+//     totalItems ?? 0,
+//   );
+
+//   const itemWidth = isLargerThan1440px
+//     ? responsiveCarouselSettings.itemWidth
+//     : classname === 'brands-carousel'
+//       ? 256
+//       : 305;
+
+//   const maxIndex = Math.max(0, (totalItems ?? 0) - responsiveCarouselSettings.count);
+
+//   const handleNext = () => {
+//     if (currentIndex < maxIndex) {
+//       setAnimation(true);
+//       setCurrentIndex(currentIndex + 1);
+//       setCurrentTranslate(
+//         -(currentIndex + 1) * (itemWidth + responsiveCarouselSettings.gap),
+//       );
+//     }
+//   };
+
+//   const handlePrev = () => {
+//     if (currentIndex > 0) {
+//       setAnimation(true);
+//       setCurrentIndex(currentIndex - 1);
+//       setCurrentTranslate(
+//         -(currentIndex - 1) * (itemWidth + responsiveCarouselSettings.gap),
+//       );
+//     }
+//   };
+
+//   const handleTouchStart = (e: React.TouchEvent) => {
+//     setAnimation(false);
+//     setStartX(e.touches[0].clientX);
+//   };
+
+//   const handleTouchMove = (e: React.TouchEvent) => {
+//     if (startX !== null) {
+//       const currentX = e.touches[0].clientX;
+//       const diff = currentX - startX;
+//       setCurrentTranslate(
+//         -currentIndex * (itemWidth + responsiveCarouselSettings.gap) + diff,
+//       );
+//     }
+//   };
+
+//   const handleTouchEnd = () => {
+//     if (startX !== null) {
+//       const swipeDistance =
+//         currentTranslate +
+//         currentIndex * (itemWidth + responsiveCarouselSettings.gap);
+
+//       // Define a minimum swipe distance threshold (e.g., 50px)
+//       if (swipeDistance > 50 && currentIndex > 0) {
+//         setCurrentIndex((prev) => prev - 1);
+//         setCurrentTranslate(
+//           -(currentIndex - 1) * (itemWidth + responsiveCarouselSettings.gap),
+//         );
+//       } else if (swipeDistance < -50 && currentIndex < maxIndex) {
+//         setCurrentIndex((prev) => prev + 1);
+//         setCurrentTranslate(
+//           -(currentIndex + 1) * (itemWidth + responsiveCarouselSettings.gap),
+//         );
+//       } else {
+//         // If the swipe distance is not enough, reset to the current index
+//         setCurrentTranslate(
+//           -currentIndex * (itemWidth + responsiveCarouselSettings.gap),
+//         );
+//       }
+
+//       setAnimation(true);
+//       setStartX(null);
+//     }
+//   };
+
+//   useEffect(() => {
+//     const rateComponent = document.querySelectorAll('.reviews_rate-stars');
+//     const rateComponentDivs = document.querySelectorAll('.ant-rate-star div');
+//     if (rateComponent) {
+//       rateComponent.forEach((el) => {
+//         el.setAttribute('tabindex', '-1');
+//       });
+//     }
+//     if (rateComponentDivs) {
+//       rateComponentDivs.forEach((el) => {
+//         el.setAttribute('tabindex', '-1');
+//       });
+//     }
+//   }, []);
+
+//   const productMap = {
+//     'laptop-carousel': laptops,
+//     'smartphone-carousel': smartphones,
+//     'basket-popup-carousel': otherProducts,
+//     'viewed-carousel': previouslyReviewed,
+//     'brands-carousel': brandData,
+//     'photos-carousel': productImageCards,
+//   };
+
+//   const getProduct = (i: number) => {
+//     const products = productMap[classname] || [];
+//     const safeIndex = i % (products.length > 0 ? products.length : 1);
+//     return products[safeIndex];
+//   };
+
+//   const currentProducts = productMap[classname] || [];
+//   if (currentProducts.length === 0 && classname !== 'brands-carousel') {
+//     return null;
+//   }
+
+//   return (
+//     <div className={classNames(styles.carousel, styles[classname])}>
+//       <div
+//         className={styles.trackContainer}
+//         onTouchStart={handleTouchStart}
+//         onTouchMove={handleTouchMove}
+//         onTouchEnd={handleTouchEnd}
+//         style={{ touchAction: 'pan-y' }}
+//       >
+//         <div
+//           className={styles.track}
+//           style={{
+//             transform: `translate3d(${currentTranslate}px, 0, 0)`,
+//             transition: animation ? 'transform 0.4s ease-in-out' : 'none',
+//           }}
+//         >
+//           {currentProducts.map((_, i) => (
+//             <React.Fragment key={`${classname}-item-${i}`}>
+//               {classname === 'brands-carousel' ? (
+//                 <BrandCard
+//                   width={itemWidth}
+//                   product={brandData[i % brandData.length]}
+//                 />
+//               ) : classname === 'photos-carousel' ? (
+//                 productImageCards?.map((productImageCard, index) => (
+//                   <img
+//                     style={{ minWidth: `${itemWidth}px` }}
+//                     key={`${productImageCard.link}-${index}`}
+//                     className="product-photo"
+//                     src={productImageCard.link}
+//                     alt="product's photos"
+//                   />
+//                 ))
+//               ) : (
+//                 <MyCard
+//                   width={itemWidth}
+//                   tempProduct={getProduct(i)}
+//                   classname={classMap[classname]}
+//                 />
+//               )}
+//             </React.Fragment>
+//           ))}
+//         </div>
+
+//         {maxIndex > 0 && (
+//           <div className={classNames(styles['slider-buttons'])}>
+//             <button
+//               className={classNames(styles['btn-arrow-prev'], {
+//                 [styles['btn-arrow-prev-disabled']]: currentIndex === 0,
+//               })}
+//               disabled={currentIndex === 0}
+//               onClick={handlePrev}
+//             >
+//               <svg
+//                 width="9"
+//                 height="16"
+//                 viewBox="0 0 9 16"
+//                 fill="none"
+//                 xmlns="http://www.w3.org/2000/svg"
+//               >
+//                 <path
+//                   d="M8.00016 1.33331L1.3335 7.99998L8.00016 14.6666"
+//                   stroke="#00820D"
+//                   strokeWidth={2}
+//                   strokeLinecap="round"
+//                   strokeLinejoin="round"
+//                 />
+//               </svg>
+//             </button>
+//             <button
+//               className={classNames(styles['btn-arrow-next'], {
+//                 [styles['btn-arrow-next-disabled']]:
+//                   currentIndex === maxIndex || maxIndex < currentIndex,
+//               })}
+//               disabled={currentIndex === maxIndex || maxIndex < currentIndex}
+//               onClick={handleNext}
+//             >
+//               <svg
+//                 width="9"
+//                 height="16"
+//                 viewBox="0 0 9 16"
+//                 fill="none"
+//                 xmlns="http://www.w3.org/2000/svg"
+//               >
+//                 <path
+//                   d="M1.3335 1.33331L8.00016 7.99998L1.3335 14.6666"
+//                   stroke="#00820D"
+//                   strokeWidth={2}
+//                   strokeLinecap="round"
+//                   strokeLinejoin="round"
+//                 />
+//               </svg>
+//             </button>
+//           </div>
+//         )}
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default CustomCarousel;
+
+// ------------------------------------
+
+{
+  /* {Array.from(
+            {
+              length:
+                classname === 'brands-carousel'
+                  ? 10
+                  : classname === 'photos-carousel'
+                    ? 1
+                    : classname === 'viewed-carousel'
+                      ? previouslyReviewed.length
+                      : classname === 'laptop-carousel'
+                        ? laptops?.length
+                        : 8,
+            } as { length: number },
+            (_, i) => (
+              <>
+                {classname === 'brands-carousel' ? (
+                  <BrandCard
+                    width={itemWidth}
+                    key={crypto.randomUUID()}
+                    product={brandData[i % brandData.length]}
+                  />
+                ) : classname === 'photos-carousel' ? (
+                  productImageCards?.map((productImageCard) => (
+                    <img
+                      style={{ minWidth: `${itemWidth}px` }}
+                      key={crypto.randomUUID()}
+                      className="product-photo"
+                      src={productImageCard.link}
+                      alt="product's photos"
+                    />
+                  ))
+                ) : (
+                  <MyCard
+                    width={itemWidth}
+                    key={crypto.randomUUID()}
+                    tempProduct={getProduct(i)}
+                    classname={classMap[classname]}
+                  />
+                )}
+              </>
+            ),
+          )} */
+}

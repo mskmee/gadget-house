@@ -7,8 +7,14 @@ import getFormattedCategoryName from '@/hooks/getFormattedCategoryName';
 function ProductModels({ models, selectedModel }: ProductModelsProps) {
   const formatModelName = (name: string) => {
     return name
-      .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+      .replace(/Applei/g, 'Apple i')
+      .replace(/Apple([A-Z])/g, 'Apple $1')
+      .replace(/Galaxy([A-Z])/g, 'Galaxy $1')
+      .replace(/([a-z])([A-Z])/g, '$1 $2')
+      .replace(/([0-9])([A-Z])/g, '$1 $2')
       .replace(/([a-zA-Z])([0-9])/g, '$1 $2')
+      .replace(/i\s+Phone/g, 'iPhone')
+      .replace(/\s+/g, ' ')
       .trim();
   };
 
