@@ -47,7 +47,7 @@ export interface IProductOtherColors {
   categoryId: number;
 }
 export interface IProductOtherModels {
-  productId: number,
+  productId: number;
   attributeValue: string;
   available: boolean;
   href: string;
@@ -73,11 +73,17 @@ export interface IProductCard {
   category?: string;
   available?: boolean;
   categoryId?: number;
+  categoryResponseDto?: {
+    id: number;
+    name: string;
+    urlSlug?: string;
+    displayName?: string;
+  };
   alternativeProducts?: {
     color?: IProductOtherColors[];
-    model?: IProductOtherModels[],
-    romMemory?: iProductMemoryCards[],
-  }
+    model?: IProductOtherModels[];
+    romMemory?: iProductMemoryCards[];
+  };
 }
 
 export interface IShoppingCard extends IProductCard {

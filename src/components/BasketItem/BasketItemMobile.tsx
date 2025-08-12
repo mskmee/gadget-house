@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import styles from './basketitem.module.scss';
-
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import {
   BasketMinusBtn,
@@ -20,27 +19,38 @@ function BasketItemMobile({
   handleSaveFavoriteProduct,
   isLikedProduct,
 }: IBasketChildren) {
-  const { id, name, code, images, quantity, totalPrice, href, categoryId } =
-    product;
+  const {
+    id,
+    name,
+    code,
+    images,
+    quantity,
+    totalPrice,
+    href,
+    categoryId,
+    categoryResponseDto,
+  } = product;
+
   const { locale, currency } = useTypedSelector((state) => state.shopping_card);
-  const formatCategoryName = getFormattedCategoryName(categoryId);
+  const actualCategoryId = categoryResponseDto?.id || categoryId;
+  const formatCategoryName = getFormattedCategoryName(actualCategoryId);
+  const targetUrl = `/${formatCategoryName}/${id}/${href}`;
 
   return (
     <>
       <div className={styles.mobilePopup}>
         <div className={styles.top}>
-          <Link
-            to={`/${formatCategoryName}/${id}/${href}`}
-            className={styles.productImg}
-          >
+          <Link to={targetUrl} className={styles.productImg}>
             <img src={images?.[0].link} alt={name} />
           </Link>
+
           <div>
-            <Link to={`/${formatCategoryName}/${id}/${href}`}>
+            <Link to={targetUrl}>
               <h2 className={styles.mobilePopupTitle}>{name}</h2>
             </Link>
             <p className={styles.mobilePopupCode}>code:{code}</p>
           </div>
+
           <div>
             <button
               className={styles.mobilePopupClose}
@@ -53,7 +63,9 @@ function BasketItemMobile({
             </h3>
           </div>
         </div>
+
         <div className={styles.devider}></div>
+
         <div className={styles.bottom}>
           <div className={styles.mobilePopupQuantity}>
             <button onClick={handleDecreaseItemQuantity}>
@@ -64,6 +76,7 @@ function BasketItemMobile({
               <img src={BasketPlusBtn} alt="quantity-Inrease-Button" />
             </button>
           </div>
+
           <>
             <HeartIcon
               onClick={handleSaveFavoriteProduct}
