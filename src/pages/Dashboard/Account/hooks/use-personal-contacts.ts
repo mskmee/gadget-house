@@ -2,12 +2,7 @@ import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { AppDispatch } from '@/store';
 import { updateUserContacts } from '@/store/auth/actions';
 import { formatPhoneNumber } from '@/utils/helpers/formatPhoneNumber';
-import {
-  ChangeEvent,
-  FormEvent,
-  useEffect,
-  useState,
-} from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 export type PersonalContacts = {
@@ -47,12 +42,15 @@ const usePersonalContacts = () => {
     if (currentUser) {
       setContacts({
         email: currentUser.email || '',
-        defaultNumber: currentUser.phoneNumber ? formatPhoneNumber(currentUser.phoneNumber)  : '',
-        additionalNumber: currentUser.secondaryPhoneNumber ? formatPhoneNumber(currentUser.secondaryPhoneNumber) : '',
+        defaultNumber: currentUser.phoneNumber
+          ? formatPhoneNumber(currentUser.phoneNumber)
+          : '',
+        additionalNumber: currentUser.secondaryPhoneNumber
+          ? formatPhoneNumber(currentUser.secondaryPhoneNumber)
+          : '',
       });
     }
   }, [currentUser]);
-  
 
   const handleChangeContacts = () => {
     setIsOpenContactsSection(true);
@@ -66,8 +64,12 @@ const usePersonalContacts = () => {
     if (currentUser) {
       setContacts({
         email: currentUser.email ?? '',
-        defaultNumber: currentUser.phoneNumber ? formatPhoneNumber(currentUser.phoneNumber)  : '',
-        additionalNumber: currentUser.secondaryPhoneNumber ? formatPhoneNumber(currentUser.secondaryPhoneNumber) : '',
+        defaultNumber: currentUser.phoneNumber
+          ? formatPhoneNumber(currentUser.phoneNumber)
+          : '',
+        additionalNumber: currentUser.secondaryPhoneNumber
+          ? formatPhoneNumber(currentUser.secondaryPhoneNumber)
+          : '',
       });
     } else {
       setContacts({ email: '', defaultNumber: '', additionalNumber: '' });
@@ -103,7 +105,7 @@ const usePersonalContacts = () => {
         newErrors.defaultNumber = 'Phone number is required';
         isValid = false;
       } else if (contacts.defaultNumber.length !== 19) {
-        newErrors.defaultNumber = 'Please enter a phone number';
+        newErrors.defaultNumber = 'Please enter a valid phone number';
         isValid = false;
       }
     }
@@ -114,7 +116,7 @@ const usePersonalContacts = () => {
       contacts.additionalNumber.length !== 19 &&
       isOpenAddPhoneNumberSection
     ) {
-      newErrors.additionalNumber = 'Please enter a phone number';
+      newErrors.additionalNumber = 'Please enter a valid phone number';
       isValid = false;
     } else if (!newErrors.email && !newErrors.defaultNumber) {
       setContacts({ ...contacts, additionalNumber: '' });
@@ -142,11 +144,11 @@ const usePersonalContacts = () => {
       };
 
       try {
-        await dispatch(updateUserContacts(data)).unwrap();
+        await dispatch(updateUserContacts(data));
         setIsOpenContactsSection(false);
         setIsOpenAddPhoneNumberSection(false);
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
     }
   };

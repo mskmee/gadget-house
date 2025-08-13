@@ -2,6 +2,7 @@
 
 import { ErrorIcon } from '@/assets/icons/ErrorIcon';
 import { PersonalData } from '@/pages/Dashboard/Account/hooks/use-personal-data';
+import classNames from 'classnames';
 import React from 'react';
 
 type PersonalDataFormProps = {
@@ -54,10 +55,13 @@ const PersonalDataForm = ({
               maxLength={40}
               value={personalData?.fullName}
               onChange={handleInputChange}
+              className={classNames({
+                [styles.errorInput]: errors.fullName,
+              })}
             />
           </div>
           {errors.fullName && (
-            <div className={styles.inputError}>
+            <div className={styles.errorMessage}>
               <ErrorIcon />
               <span>{errors.fullName}</span>
             </div>
@@ -75,6 +79,9 @@ const PersonalDataForm = ({
               maxLength={2}
               value={personalData.date.day}
               onChange={(e) => handleDateChange(e, 'day')}
+              className={classNames({
+                [styles.errorInput]: errors.date,
+              })}
             />
             <input
               type="text"
@@ -82,6 +89,9 @@ const PersonalDataForm = ({
               maxLength={2}
               value={personalData.date.month}
               onChange={(e) => handleDateChange(e, 'month')}
+              className={classNames({
+                [styles.errorInput]: errors.date,
+              })}
             />
             <input
               type="text"
@@ -89,10 +99,13 @@ const PersonalDataForm = ({
               maxLength={4}
               value={personalData.date.year}
               onChange={(e) => handleDateChange(e, 'year')}
+              className={classNames({
+                [styles.errorInput]: errors.date,
+              })}
             />
           </div>
           {errors.date && (
-            <div className={styles.inputError}>
+            <div className={styles.errorMessage}>
               <ErrorIcon />
               <span>{errors.date}</span>
             </div>
@@ -111,10 +124,13 @@ const PersonalDataForm = ({
               maxLength={30}
               value={personalData.city}
               onChange={handleInputChange}
+              className={classNames({
+                [styles.errorInput]: errors.city,
+              })}
             />
           </div>
           {errors.city && (
-            <div className={styles.inputError}>
+            <div className={styles.errorMessage}>
               <ErrorIcon />
               <span>{errors.city}</span>
             </div>
@@ -125,7 +141,11 @@ const PersonalDataForm = ({
           <span>
             Sex<span className={styles.asterisk}>*</span>
           </span>
-          <div>
+          <div
+            className={classNames({
+              [styles.errorInput]: errors.gender,
+            })}
+          >
             <label>
               <input
                 type="radio"
@@ -133,7 +153,7 @@ const PersonalDataForm = ({
                 value="male"
                 checked={personalData.gender === 'male'}
                 onChange={handleInputChange}
-              />{' '}
+              />
               Male
             </label>
             <label>
@@ -143,12 +163,12 @@ const PersonalDataForm = ({
                 value="female"
                 checked={personalData.gender === 'female'}
                 onChange={handleInputChange}
-              />{' '}
+              />
               Female
             </label>
           </div>
           {errors.gender && (
-            <div className={styles.inputError}>
+            <div className={styles.errorMessage}>
               <ErrorIcon />
               <span>{errors.gender}</span>
             </div>

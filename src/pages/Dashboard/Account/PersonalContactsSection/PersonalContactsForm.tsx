@@ -3,6 +3,7 @@
 import React from 'react';
 import { Errors, PersonalContacts } from '../hooks/use-personal-contacts';
 import { ErrorIcon } from '@/assets/icons/ErrorIcon';
+import classNames from 'classnames';
 
 type PersonalContactsFormProps = {
   contacts: PersonalContacts;
@@ -56,10 +57,13 @@ const PersonalContactsForm = ({
                 minLength={2}
                 maxLength={50}
                 onChange={handleEmailChange}
+                className={classNames({
+                  [styles.errorInput]: errors.email,
+                })}
               />
             </div>
             {errors.email && (
-              <div className={styles.inputError}>
+              <div className={styles.errorMessage}>
                 <ErrorIcon />
                 <span>{errors.email}</span>
               </div>
@@ -81,10 +85,13 @@ const PersonalContactsForm = ({
                     : ''
                 }
                 onChange={(e) => handlePhoneNumberChange(e, 'defaultNumber')}
+                className={classNames({
+                  [styles.errorInput]: errors.defaultNumber,
+                })}
               />
             </div>
             {errors.defaultNumber && (
-              <div className={styles.inputError}>
+              <div className={styles.errorMessage}>
                 <ErrorIcon />
                 <span>{errors.defaultNumber}</span>
               </div>
@@ -104,9 +111,12 @@ const PersonalContactsForm = ({
                 }
                 onChange={(e) => handlePhoneNumberChange(e, 'additionalNumber')}
                 maxLength={19}
+                className={classNames({
+                  [styles.errorInput]: errors.additionalNumber,
+                })}
               />
               {errors.additionalNumber && (
-                <div className={styles.inputError}>
+                <div className={styles.errorMessage}>
                   <ErrorIcon />
                   <span>{errors.additionalNumber}</span>
                 </div>
