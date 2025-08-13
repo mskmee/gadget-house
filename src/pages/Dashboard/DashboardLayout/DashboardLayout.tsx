@@ -38,6 +38,7 @@ export const DashboardLayout = () => {
   const favoriteProducts = useTypedSelector(
     (state) => state.products.favoriteProducts,
   );
+  const orders = useTypedSelector((state) => state.auth.user?.orders);
 
   const handleClickAccount = () => {
     setActiveSection('account');
@@ -125,6 +126,9 @@ export const DashboardLayout = () => {
                 <span>
                   <span className={styles.dashboardSidebarLink__pref}>My</span>{' '}
                   orders
+                </span>
+                <span className={styles.dashboardSidebarCounter}>
+                  ({orders?.length})
                 </span>
               </Link>
               <Link

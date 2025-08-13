@@ -174,7 +174,7 @@
       font-size: rem(24px);
       line-height: 150%;
     }
-    .dashboardSidebarCounter{
+    .dashboardSidebarCounter {
       color: var(--secondary-text-color);
     }
   }
@@ -193,6 +193,13 @@
         stroke: #1c1817;
       }
     }
+    // .activeSection > span:first-child {
+    //   > div > svg path,
+    //   > svg path {
+    //     fill: #6f4c9a;
+    //     stroke: none;
+    //   }
+    // }
   }
   .dashboardSidebarOrders {
     svg {
@@ -214,9 +221,14 @@
       color: #6f4c9a;
     }
   }
-  .dashboardSidebarFavorites.aactiveSection {
+
+ 
+
+  .dashboardSidebarFavorites.activeSection {
+    > div > svg path,
     > svg path {
       fill: #6f4c9a;
+      stroke: none;
     }
   }
 }
