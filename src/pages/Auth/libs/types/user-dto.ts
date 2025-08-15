@@ -1,10 +1,6 @@
 export type PersonalDataPayload = {
   fullName: string;
-  date: {
-    day: string | number;
-    month: string | number;
-    year: string | number;
-  };
+  birthdate:string;
   city: string;
   gender: string;
 };

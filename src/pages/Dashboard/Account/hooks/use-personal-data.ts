@@ -19,7 +19,7 @@ export type PersonalData = {
 const usePersonalData = () => {
   const dispatch: AppDispatch = useDispatch();
   const { user: currentUser } = useTypedSelector((state) => state.auth);
-  const mappedUser: IMappedUser  = useMemo(() => {
+  const mappedUser: IMappedUser = useMemo(() => {
     return currentUser
       ? mapDtoToUser(currentUser)
       : {
@@ -162,19 +162,22 @@ const usePersonalData = () => {
 
   const handleSavePersonalData = async (e: FormEvent) => {
     e.preventDefault();
+    const birthdate = new Date(
+      Number(personalData.date.year),
+      Number(personalData.date.month) - 1,
+      Number(personalData.date.day),
+    ).toISOString();
     const data = {
       fullName: personalData.fullName,
-      date: {
-        day: personalData.date.day,
-        month: personalData.date.month,
-        year: personalData.date.year,
-      },
       city: personalData.city,
       gender: personalData.gender,
+      birthdate,
+
+
     };
     if (validateForm()) {
       try {
-        await dispatch(updateUserPersonalData(data)).unwrap();
+        await dispatch(updateUserPersonalData(data));
 
         console.log('SUCCESS UPDATING USER PERSONAL DATA');
 
