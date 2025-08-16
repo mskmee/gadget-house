@@ -3,20 +3,20 @@ import styles from './styles.module.scss';
 import Checkmark from '@/assets/icons/checkmark.svg';
 import CheckmarkWhite from '@/assets/icons/checkmark-white.svg';
 
-export const StatusIcon = ({ status }: { status: string }) => {
-  const isCompleted = status === 'COMPLETED';
+export const StatusIcon = ({ status }: { status: boolean }) => {
+  const isActive = status === true;
 
   return (
     <div
       className={classNames(styles.orderStatusIcon, {
-        [styles.completed]: isCompleted,
-        [styles.pending]: !isCompleted,
+        [styles.completed]: isActive,
+        [styles.pending]: !isActive,
       })}
     >
       <img
-        src={isCompleted ? CheckmarkWhite : Checkmark}
+        src={isActive ? CheckmarkWhite : Checkmark}
         className={styles.orderStatusIcon__icon}
-        alt={isCompleted ? 'Completed' : 'Pending'}
+        alt={isActive ? 'Active icon' : 'Idle icon'}
       />
     </div>
   );

@@ -8,8 +8,20 @@ import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { formatOrderDate } from '@/utils/helpers/formatOrderDate';
 import { generateProductUrl } from '@/utils/helpers/generateProductUrl';
+import { useState } from 'react';
 
 export const UserOrders = () => {
+  const [openCollapses, setOpenCollapses] = useState<{
+    [key: string | number]: boolean;
+  }>({});
+
+  const toggleCollapse = (orderId: string | number) => {
+    setOpenCollapses((prev) => ({
+      ...prev,
+      [orderId]: !prev[orderId],
+    }));
+  };
+
   const orders = useTypedSelector((state) => state?.auth?.user?.orders);
   const { locale, currency } = useTypedSelector((state) => state.shopping_card);
 
@@ -22,12 +34,16 @@ export const UserOrders = () => {
             (acc, product) => acc + product.quantity,
             0,
           );
+
+          const isOpen = openCollapses[order.id] || false;
           return (
             <Collapse
+              isOpen={isOpen}
+              onToggle={() => toggleCollapse(order.id)}
               key={order.id}
               title={
                 <div className={styles.orderTitle}>
-                  <StatusIcon status={order.deliveryStatus} />
+                  <StatusIcon status={isOpen} />
                   <div className={styles.orderInfoHeader}>
                     <div className={styles.orderNumber}>№{order.id}</div>
                     <p className={styles.productQuantity}>
