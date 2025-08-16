@@ -12,10 +12,10 @@ import { useState } from 'react';
 
 export const UserOrders = () => {
   const [openCollapses, setOpenCollapses] = useState<{
-    [key: string | number]: boolean;
+    [key: number]: boolean;
   }>({});
 
-  const toggleCollapse = (orderId: string | number) => {
+  const toggleCollapse = (orderId: number) => {
     setOpenCollapses((prev) => ({
       ...prev,
       [orderId]: !prev[orderId],
