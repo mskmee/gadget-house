@@ -1,5 +1,3 @@
-//
-
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { authService } from '@/utils/packages/auth';
 import {
