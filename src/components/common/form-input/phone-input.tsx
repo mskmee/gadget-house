@@ -56,8 +56,10 @@ export const PhoneInput = ({ field, id, ...props }: Props) => {
       <Input
         {...props}
         id={id}
+        name={field.name}
         value={phone}
         onChange={handleChange}
+        onBlur={field.onBlur}
         inputMode="numeric"
         placeholder="(___)-___-__-__"
       />

@@ -23,6 +23,7 @@ export const Catalog: FC<ICatalogProps> = ({ data, totalPages }) => {
   const [hasMore, setHasMore] = useState(false);
   const dispatch: AppDispatch = useDispatch();
   const { pagination } = useTypedSelector((state: RootState) => state.products);
+  const [prevPage, setPrevPage] = useState<number | null>(null);
   const isFetchingMore = useTypedSelector(
     (state: RootState) => state.products.isFetchingMore,
   );
@@ -61,6 +62,20 @@ export const Catalog: FC<ICatalogProps> = ({ data, totalPages }) => {
     };
   }, [hasMore, isMobile767, pagination.currentPage, isFetchingMore, dispatch]);
 
+  useEffect(() => {
+    if (
+      prevPage !== null &&
+      pagination.currentPage !== prevPage &&
+      !isMobile767
+    ) {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
+    setPrevPage(pagination.currentPage);
+  }, [pagination.currentPage, prevPage, isMobile767]);
+
   return (
     <div className={styles.catalog}>
       {isMobile767 ? (
@@ -79,12 +94,6 @@ export const Catalog: FC<ICatalogProps> = ({ data, totalPages }) => {
 
           {hasMore && (
             <div ref={observerRef} className={styles.catalog__loadingIndicator}>
-              Loading more products...
-            </div>
-          )}
-
-          {isFetchingMore && (
-            <div className={styles.catalog__loadingIndicator}>
               Loading more products...
             </div>
           )}
