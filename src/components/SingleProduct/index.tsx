@@ -10,12 +10,14 @@ import {
 } from '@/assets/constants';
 import { AddToBasketButton } from './AddToBasketButton';
 
+import { useActions } from '@/hooks/useActions';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { convertPriceToReadable } from '@/utils/helpers/product';
 import { useMediaQuery } from 'react-responsive';
 import { IProductCard } from '@/interfaces/interfaces';
 
 import ArrowIcon from '@/assets/single_product/ArrowIcon';
+import { HeartIcon } from '@/assets/icons/HeartIcon';
 
 import { ArrowNext, ArrowPrev } from '@/UI/Slider/SliderArrows/SliderArrow';
 import ProductColors from './ProductDetails/ProductColors';
@@ -28,22 +30,42 @@ interface IProductProps {
   dynamicCurrentProduct: IProductCard;
 }
 
-export const Product: FC<IProductProps> = ({dynamicCurrentProduct}) => {
-  const reviews = useTypedSelector(state => state.singleProduct.reviews);
+export const Product: FC<IProductProps> = ({ dynamicCurrentProduct }) => {
+  const { toggleFavorite } = useActions();
+  const reviews = useTypedSelector((state) => state.singleProduct.reviews);
+  const isLikedProduct = useTypedSelector((state) =>
+    state.products.favoriteProducts.some(
+      (fav) => fav.id === dynamicCurrentProduct?.id,
+    ),
+  );
+
   const reviewsLength = reviews?.totalElements;
 
-  const {id}  = dynamicCurrentProduct;
+  const { id } = dynamicCurrentProduct;
 
-  const selectedColor = dynamicCurrentProduct?.alternativeProducts?.color?.find(c => c.productId === Number(id))?.attributeValue;
-  const selectedModel = dynamicCurrentProduct?.alternativeProducts?.model?.find(m => m.productId === Number(id))?.attributeValue;
-  const selectedMemory = dynamicCurrentProduct?.alternativeProducts?.romMemory?.find(r => r.productId ===  Number(id))?.attributeValue;
+  const selectedColor = dynamicCurrentProduct?.alternativeProducts?.color?.find(
+    (c) => c.productId === Number(id),
+  )?.attributeValue;
+  const selectedModel = dynamicCurrentProduct?.alternativeProducts?.model?.find(
+    (m) => m.productId === Number(id),
+  )?.attributeValue;
+  const selectedMemory =
+    dynamicCurrentProduct?.alternativeProducts?.romMemory?.find(
+      (r) => r.productId === Number(id),
+    )?.attributeValue;
 
   const { currency, locale } = useTypedSelector((state) => state.shopping_card);
   const dynamicCurrentProductImages = dynamicCurrentProduct?.images;
   const productRateRef = useRef<HTMLDivElement>(null);
 
-  const isLargerThan768px = useMediaQuery({query: '(max-width: 768px)'});
-  const isWidth575 = useMediaQuery({ query: '(max-width: 575px)',})
+  const isLargerThan768px = useMediaQuery({ query: '(max-width: 768px)' });
+  const isWidth575 = useMediaQuery({ query: '(max-width: 575px)' });
+
+  const handleSaveFavoriteProduct = () => {
+    if (dynamicCurrentProduct) {
+      toggleFavorite(dynamicCurrentProduct);
+    }
+  };
 
   return (
     <section className={style['product']} id="product">
@@ -65,32 +87,48 @@ export const Product: FC<IProductProps> = ({dynamicCurrentProduct}) => {
           </div>
         </div>
       )}
-      
-      {/* Slider */}
-      <div className={style['product_custom-carousel-wrap']}>
-        <div className='relative'>
-          <SliderWithThumbsAndModal 
-            data={dynamicCurrentProductImages} 
-            prevArrow={<ArrowPrev classNameArrow='arrowLeft'><ArrowIcon color="#1C1817" /></ArrowPrev>}
-            nextArrow={<ArrowNext classNameArrow='arrowRight'><ArrowIcon color="#1C1817" /></ArrowNext>}
-            dynamicCurrentProduct={dynamicCurrentProduct}
-            slidesPerView={6}
-            breakpointsThumbs={{
-              575: {
-                slidesPerView: 2.5,
-              },
-              640: {
-                slidesPerView: 3.5,
-              },
-              768: {
-                slidesPerView: 4,
-              },
-              1024: {
-                slidesPerView: 6,
-              },
-            }}
-            isMobile={isWidth575}
-            className="productSlider"
+      <div className={style['product_custom-block']}>
+        {/* Slider */}
+        <div className={style['product_custom-carousel-wrap']}>
+          <div className="relative">
+            <SliderWithThumbsAndModal
+              data={dynamicCurrentProductImages}
+              prevArrow={
+                <ArrowPrev classNameArrow="arrowLeft">
+                  <ArrowIcon color="#1C1817" />
+                </ArrowPrev>
+              }
+              nextArrow={
+                <ArrowNext classNameArrow="arrowRight">
+                  <ArrowIcon color="#1C1817" />
+                </ArrowNext>
+              }
+              dynamicCurrentProduct={dynamicCurrentProduct}
+              slidesPerView={6}
+              breakpointsThumbs={{
+                575: {
+                  slidesPerView: 2.5,
+                },
+                640: {
+                  slidesPerView: 3.5,
+                },
+                768: {
+                  slidesPerView: 4,
+                },
+                1024: {
+                  slidesPerView: 6,
+                },
+              }}
+              isMobile={isWidth575}
+              className="productSlider"
+            />
+          </div>
+        </div>
+
+        <div className={style['product_favorite-button']}>
+          <HeartIcon
+            onClick={handleSaveFavoriteProduct}
+            isLiked={isLikedProduct}
           />
         </div>
       </div>
@@ -105,7 +143,7 @@ export const Product: FC<IProductProps> = ({dynamicCurrentProduct}) => {
                   className="product_rate-stars"
                   disabled
                   value={dynamicCurrentProduct?.rating}
-                  style={{color: '#6F4C9A'}}
+                  style={{ color: '#6F4C9A' }}
                 />
                 <a>
                   <img src={reviewImg} alt="review pic" />
@@ -117,32 +155,31 @@ export const Product: FC<IProductProps> = ({dynamicCurrentProduct}) => {
           </div>
         )}
         <div className={style['product_details']}>
-          {selectedColor && (  
-              <ProductColors 
-                key={selectedColor}
-                colors={dynamicCurrentProduct?.alternativeProducts?.color ?? []} 
-                selectedColor={selectedColor ?? ''} 
-              />
-            )
-          }
+          {selectedColor && (
+            <ProductColors
+              key={selectedColor}
+              colors={dynamicCurrentProduct?.alternativeProducts?.color ?? []}
+              selectedColor={selectedColor ?? ''}
+            />
+          )}
 
-          {selectedModel && (  
-              <ProductModels 
-                key={selectedModel }
-                models={dynamicCurrentProduct?.alternativeProducts?.model ?? []} 
-                selectedModel={selectedModel ?? ''}
-              />
-            )
-          }
-          
+          {selectedModel && (
+            <ProductModels
+              key={selectedModel}
+              models={dynamicCurrentProduct?.alternativeProducts?.model ?? []}
+              selectedModel={selectedModel ?? ''}
+            />
+          )}
+
           {selectedMemory && (
-              <ProductMemory 
-                key={selectedMemory}
-                memories={dynamicCurrentProduct?.alternativeProducts?.romMemory ?? []}
-                selectedMemory={selectedMemory ?? ''}
-              />
-            )
-          }
+            <ProductMemory
+              key={selectedMemory}
+              memories={
+                dynamicCurrentProduct?.alternativeProducts?.romMemory ?? []
+              }
+              selectedMemory={selectedMemory ?? ''}
+            />
+          )}
 
           <div className={style['product_deliver-section']}>
             <div>
