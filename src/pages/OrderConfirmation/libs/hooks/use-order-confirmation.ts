@@ -18,6 +18,7 @@ import {
 import { OrderDto } from '@/utils/packages/orders/libs/types/order-item';
 import { AppDispatch } from '@/store';
 import { createOrder } from '@/store/shopping_cart/actions';
+import { getUserData } from '@/store/auth/actions';
 
 type Return = {
   orderProcessStage: OrderStage;
@@ -72,12 +73,13 @@ type ReducerAction =
       type: OrderConfirmationAction.ORDER_READY;
     }
   | {
-    type: OrderConfirmationAction.CONFIRM_ORDER;
-    payload: { orderId: number };
-  } | {
-    type: OrderConfirmationAction.EDIT_FORM;
-    payload: OrderStage;
-  };
+      type: OrderConfirmationAction.CONFIRM_ORDER;
+      payload: { orderId: number };
+    }
+  | {
+      type: OrderConfirmationAction.EDIT_FORM;
+      payload: OrderStage;
+    };
 
 const INITIAL_STATE: State = {
   acceptWithRules: false,
@@ -148,7 +150,6 @@ const reducer: Reducer<State, ReducerAction> = (state, action) => {
         isEditing: true,
       };
 
-
     default:
       console.error('Unknown action type');
       return state;
@@ -159,9 +160,7 @@ const useOrderConfirmation = (): Return => {
   const navigate = useNavigate();
   const dispatchApp: AppDispatch = useDispatch();
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
-  const { products } = useTypedSelector(
-    (state) => state.shopping_card,
-  );
+  const { products } = useTypedSelector((state) => state.shopping_card);
 
   const onContactsFormSubmit = (contactsFormValue: ContactsFormDto) =>
     dispatch({
@@ -207,6 +206,8 @@ const useOrderConfirmation = (): Return => {
 
     const result = await dispatchApp(createOrder(orderData)).unwrap();
     const orderId = result;
+
+     await dispatchApp(getUserData()).unwrap();
 
     dispatch({
       type: OrderConfirmationAction.CONFIRM_ORDER,

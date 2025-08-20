@@ -85,7 +85,6 @@ const authSlice = createSlice({
       state.user = payload;
     });
     builder.addCase(getUserData.fulfilled, (state, { payload }) => {
-      console.log('GET USER DATA REDUCER:', payload);
       state.user = payload;
       state.isAuthenticated = true;
     });
