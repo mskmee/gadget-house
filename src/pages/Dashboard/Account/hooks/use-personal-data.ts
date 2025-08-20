@@ -120,10 +120,10 @@ const usePersonalData = () => {
     if (!day || !month || !year) {
       newErrors.date = 'Birthday is required';
       isValid = false;
-    } else if (dayNum > 31) {
+    } else if (dayNum > 31 || day === '0' || day === '00') {
       newErrors.date = 'Enter please correct day';
       isValid = false;
-    } else if (monthNum > 12) {
+    } else if (monthNum > 12 || month === '0' || month === '00') {
       newErrors.date = 'Enter please correct month';
       isValid = false;
     } else if (yearNum < minYear) {
@@ -172,8 +172,6 @@ const usePersonalData = () => {
       city: personalData.city,
       gender: personalData.gender,
       birthdate,
-
-
     };
     if (validateForm()) {
       try {
