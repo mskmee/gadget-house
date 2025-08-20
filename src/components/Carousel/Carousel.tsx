@@ -169,7 +169,9 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
   }, []);
 
   useEffect(() => {
-    dispatch(getAllProducts({ page: DEFAULT_PAGE, size: DEFAULT_SIZE }));
+    if (!products) {
+      dispatch(getAllProducts({ page: DEFAULT_PAGE, size: DEFAULT_SIZE }));
+    }
   }, [getAllProducts]);
 
   const productMap = {
