@@ -46,21 +46,29 @@ export const UserOrders = () => {
                   <StatusIcon status={isOpen} />
                   <div className={styles.orderInfoHeader}>
                     <div className={styles.orderNumber}>№{order.id}</div>
-                    <p className={styles.productQuantity}>
-                      {`${totalQuantity} ${totalQuantity > 1 ? 'pieces' : 'piece'}`}
-                    </p>
-                    <div className={styles.productPrice}>
-                      {convertPriceToReadable(order.total, currency, locale)}
-                    </div>
-                  </div>
-                  <div className={styles.orderProductPreview}>
-                    <img
-                      src={
-                        order.orderItems[0]?.shortProductResponseDto.images[0]
-                          .link || ''
-                      }
-                      className={styles.productImage}
-                    />
+                    {!isOpen ? (
+                      <>
+                        <p className={styles.productQuantity}>
+                          {`${totalQuantity} ${totalQuantity > 1 ? 'pieces' : 'piece'}`}
+                        </p>
+                        <div className={styles.productPrice}>
+                          {convertPriceToReadable(
+                            order.total,
+                            currency,
+                            locale,
+                          )}
+                        </div>
+                        <div className={styles.orderProductPreview}>
+                          <img
+                            src={
+                              order.orderItems[0]?.shortProductResponseDto
+                                .images[0].link || ''
+                            }
+                            className={styles.productImage}
+                          />
+                        </div>
+                      </>
+                    ) : null}
                   </div>
                 </div>
               }
