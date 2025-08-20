@@ -8,10 +8,6 @@ import { useResponsiveCarouselSettings } from '@/hooks/useResponsiveCarouselSett
 import { IProductCard, TProductImageCard } from '@/interfaces/interfaces';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import useLocalStorage from '@/hooks/useLocalStorage';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '@/store';
-import { getAllProducts } from '@/store/products/actions';
-import { DEFAULT_PAGE, DEFAULT_SIZE } from '@/constants/pagination';
 
 type CarouselClassname =
   | 'brands-carousel'
@@ -47,8 +43,6 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
     'previouslyReviewed',
     [],
   );
-
-  const dispatch: AppDispatch = useDispatch();
 
   const isLargerThan1440px = useMediaQuery({
     query: '(max-width: 1440px)',
@@ -167,12 +161,6 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
       });
     }
   }, []);
-
-  useEffect(() => {
-    if (!products) {
-      dispatch(getAllProducts({ page: DEFAULT_PAGE, size: DEFAULT_SIZE }));
-    }
-  }, [getAllProducts]);
 
   const productMap = {
     'laptop-carousel': laptops,
