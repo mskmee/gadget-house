@@ -9,6 +9,8 @@ import { Link } from 'react-router-dom';
 import { formatOrderDate } from '@/utils/helpers/formatOrderDate';
 import { generateProductUrl } from '@/utils/helpers/generateProductUrl';
 import { useState } from 'react';
+import { useActions } from '@/hooks/useActions';
+import { IOrderItem } from '@/pages/Auth/libs/types/user-dto';
 
 export const UserOrders = () => {
   const [openCollapses, setOpenCollapses] = useState<{
@@ -24,6 +26,26 @@ export const UserOrders = () => {
 
   const orders = useTypedSelector((state) => state?.auth?.user?.orders);
   const { locale, currency } = useTypedSelector((state) => state.shopping_card);
+
+  const { addToStore } = useActions();
+
+  const handleOrderAgain = (orderItems: IOrderItem[]) => {
+    orderItems.forEach((item) => {
+      addToStore({
+        ...item.shortProductResponseDto, // Береми дані з shortProductResponseDto
+        id: item.shortProductResponseDto.id,
+        images:
+          item.shortProductResponseDto.images?.map((image) => ({
+            link: image.link,
+            order: image.order,
+          })) || [],
+        rating: item.shortProductResponseDto.rating,
+        price: item.shortProductResponseDto.price.toString(),
+        isLiked: false,
+        available: item.shortProductResponseDto.available,
+      });
+    });
+  };
 
   return (
     <main className={styles.dashboardOrders}>
@@ -112,16 +134,16 @@ export const UserOrders = () => {
                     <p>{order.deliveryMethod}</p>
                   </div>
 
-                  <Link
+                  <button
                     className={classNames(
                       'button',
                       'button-secondary',
                       styles.orderAgainButton,
                     )}
-                    to="/basket"
+                    onClick={() => handleOrderAgain(order.orderItems)}
                   >
                     Order again
-                  </Link>
+                  </button>
                 </div>
               </div>
             </Collapse>
