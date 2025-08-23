@@ -5,6 +5,7 @@ import cn from 'classnames';
 import { LoginFormDto } from '../types/form-dto';
 import { loginFormValidationSchema } from '../validation-schemas/login-form-validation-schema';
 import { FormInput } from '@/components/components';
+import { ErrorIcon } from '@/assets/constants';
 
 import styles from './form.module.scss';
 import { AuthLoader } from './AuthLoader/AuthLoader';
@@ -16,6 +17,7 @@ interface ILoginFormProps {
   onSwitch: () => void;
   onForgot: () => void;
   isLoading: boolean;
+  serverError: string | null;
 }
 
 const LoginForm: FC<ILoginFormProps> = ({
@@ -24,6 +26,7 @@ const LoginForm: FC<ILoginFormProps> = ({
   onSwitch,
   onForgot,
   isLoading,
+  serverError,
 }) => {
   return (
     <div className={styles.form}>
@@ -32,67 +35,87 @@ const LoginForm: FC<ILoginFormProps> = ({
         validateOnBlur={true}
         validateOnChange={true}
         validationSchema={loginFormValidationSchema}
-        onSubmit={(values, { resetForm }) => {
+        onSubmit={(values) => {
           onLogin(values);
-          resetForm();
         }}
       >
-        {({ isValid }) => (
-          <Form className={styles.form__form}>
-            <h3 className={styles.form__title}>Log in</h3>
+        {({ isValid, errors, touched }) => {
+          const showGeneralError =
+            (touched.email &&
+              touched.password &&
+              (errors.email || errors.password)) ||
+            !!serverError;
 
-            <div className={styles.form__inputs}>
-              <FormInput<LoginFormDto>
-                name="email"
-                type="text"
-                label="E-mail"
-                placeholder="E-mail"
-              />
+          return (
+            <Form className={styles.form__form}>
+              <h3 className={styles.form__title}>Log in</h3>
 
-              <FormInput<LoginFormDto>
-                name="password"
-                type="password"
-                label="Password"
-                placeholder="Password"
-              />
-            </div>
+              <div className={styles.form__inputs}>
+                <FormInput<LoginFormDto>
+                  name="email"
+                  type="text"
+                  label="E-mail"
+                  placeholder="E-mail"
+                  hideError={true}
+                />
 
-            <button
-              className={styles.form__buttonForgot}
-              type="button"
-              onClick={onForgot}
-            >
-              Forgot Password
-            </button>
-            <div className={styles.form__buttons}>
-              {isLoading ? (
-                <AuthLoader />
-              ) : (
-                <>
-                  <button
-                    className={cn(
-                      'button',
-                      'button-secondary',
-                      styles.form__btn,
-                    )}
-                    type="submit"
-                    disabled={!isValid}
-                  >
-                    Log in
-                  </button>
+                <FormInput<LoginFormDto>
+                  name="password"
+                  type="password"
+                  label="Password"
+                  placeholder="Password"
+                  hideError={true}
+                />
 
-                  <button
-                    className={cn('button', 'button-primary', styles.form__btn)}
-                    type="button"
-                    onClick={onSwitch}
-                  >
-                    Sign up
-                  </button>
-                </>
-              )}
-            </div>
-          </Form>
-        )}
+                {showGeneralError && (
+                  <div className={styles.form__error}>
+                    <img src={ErrorIcon} alt="Error icon" />
+                    Incorrect e-mail or password
+                  </div>
+                )}
+              </div>
+
+              <button
+                className={styles.form__buttonForgot}
+                type="button"
+                onClick={onForgot}
+              >
+                Forgot Password
+              </button>
+              <div className={styles.form__buttons}>
+                {isLoading ? (
+                  <AuthLoader />
+                ) : (
+                  <>
+                    <button
+                      className={cn(
+                        'button',
+                        'button-secondary',
+                        styles.form__btn,
+                      )}
+                      type="submit"
+                      disabled={!isValid}
+                    >
+                      Log in
+                    </button>
+
+                    <button
+                      className={cn(
+                        'button',
+                        'button-primary',
+                        styles.form__btn,
+                      )}
+                      type="button"
+                      onClick={onSwitch}
+                    >
+                      Sign up
+                    </button>
+                  </>
+                )}
+              </div>
+            </Form>
+          );
+        }}
       </Formik>
     </div>
   );
