@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import { formatOrderDate } from '@/utils/helpers/formatOrderDate';
 import { generateProductUrl } from '@/utils/helpers/generateProductUrl';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useActions } from '@/hooks/useActions';
 import { IOrderItem } from '@/pages/Auth/libs/types/user-dto';
 
@@ -26,13 +26,16 @@ export const UserOrders = () => {
 
   const orders = useTypedSelector((state) => state?.auth?.user?.orders);
   const { locale, currency } = useTypedSelector((state) => state.shopping_card);
-
   const { addToStore } = useActions();
+
+  const sortedOrders = useMemo(() => {
+    return [...(orders ?? [])].sort((a, b) => b.id - a.id);
+  }, [orders]);
 
   const handleOrderAgain = (orderItems: IOrderItem[]) => {
     orderItems.forEach((item) => {
       addToStore({
-        ...item.shortProductResponseDto, // Береми дані з shortProductResponseDto
+        ...item.shortProductResponseDto,
         id: item.shortProductResponseDto.id,
         images:
           item.shortProductResponseDto.images?.map((image) => ({
@@ -51,7 +54,7 @@ export const UserOrders = () => {
     <main className={styles.dashboardOrders}>
       <h2 className={styles.dashboardOrdersTitle}>My orders</h2>
       <div className="dashboardOrders__items">
-        {orders?.map((order) => {
+        {sortedOrders?.map((order) => {
           const totalQuantity = order.orderItems.reduce(
             (acc, product) => acc + product.quantity,
             0,
