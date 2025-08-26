@@ -77,15 +77,15 @@ img {
   margin: 0 auto;
 
   @media (width <= 1445px) {
-    padding: 0px 50px;
+    // padding: 0px 50px;
   }
 
   @media (width <= 1070px) {
-    padding: 0px 30px;
+    // padding: 0px 30px;
   }
 
   @media (width <= 570px) {
-    padding: 0px 20px;
+    // padding: 0px 20px;
   }
 }
 
@@ -202,7 +202,7 @@ img {
 .reviews_rate-stars > li,
 .product_rate-stars > li {
   margin-inline-end: 0 !important;
-  color: #6F4C9A;
+  color: #6f4c9a;
 }
 
 .reviews_rate-stars > li div:hover,
