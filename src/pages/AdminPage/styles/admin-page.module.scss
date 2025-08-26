@@ -11,23 +11,36 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 50px;
+    gap: 20px;
     padding: 50px 58px 0 58px;
     margin-bottom: 35px;
   }
 
   &__title {
-    font-family: "Inter", sans-serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 400;
     font-size: 24px;
     line-height: 150%;
     color: var(--theme-color);
+    flex-shrink: 0;
   }
 
   &__search {
-    width: 693px;
+    flex: 1 1 auto;
+    min-width: 150px;
+
+    :global {
+      .ant-input-search,
+      .ant-input,
+      .ant-input-group,
+      .ant-input-affix-wrapper {
+        width: 100% !important;
+      }
+    }
 
     span {
+      display: block;
+      width: 100%;
       border: 1px solid var(--secondary-background-color);
       background-color: var(--bg-color);
     }
@@ -37,6 +50,8 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    flex-shrink: 0;
+    margin-left: auto;
 
     &Add {
       height: 56px;
@@ -68,7 +83,7 @@
         &-inner {
           width: 24px;
           height: 24px;
-          background-image: url("../../../assets/icons/checkbox.svg");
+          background-image: url('../../../assets/icons/checkbox.svg');
           background-repeat: no-repeat;
           background-position: center center;
           background-size: contain;
@@ -91,7 +106,7 @@
         }
 
         &-checked .ant-checkbox-inner {
-          background-image: url("../../../assets/icons/checkbox-checked.svg") !important;
+          background-image: url('../../../assets/icons/checkbox-checked.svg') !important;
           border-color: transparent !important;
           background-color: transparent !important;
         }
@@ -102,12 +117,18 @@
       width: 100%;
       padding: 0 57px 50px 57px;
       border-collapse: collapse;
-      font-family: "Inter", sans-serif;
+      font-family: 'Inter', sans-serif;
       font-weight: 400;
       font-size: 16px;
       line-height: 150%;
       text-align: center;
       color: var(--black);
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+      }
 
       thead {
         background-color: var(--bg-color);
@@ -116,21 +137,21 @@
         margin-bottom: 35px;
 
         th {
-          padding: 16px 100px 16px 80px;
-          font-family: "Inter", sans-serif;
+          padding: 12px 16px;
+          font-family: 'Inter', sans-serif;
           font-weight: 400;
           font-size: 24px;
           line-height: 150%;
           color: var(--text-color);
 
           &:first-child {
-            text-align: left;
             display: flex;
+            justify-content: center;
             gap: 8px;
           }
 
           &:last-child {
-            text-align: right;
+            text-align: center;
           }
         }
       }
@@ -139,7 +160,7 @@
         :global {
           .ant-checkbox {
             &.ant-checkbox-indeterminate .ant-checkbox-inner {
-              background-image: url("../../../assets/icons/checkbox-checked.svg") !important;
+              background-image: url('../../../assets/icons/checkbox-checked.svg') !important;
               border-color: transparent !important;
               background-color: transparent !important;
             }
@@ -162,8 +183,8 @@
         }
 
         td {
-          padding: 24px 80px;
-          font-family: "Inter", sans-serif;
+          padding: 12px 16px;
+          font-family: 'Inter', sans-serif;
           font-weight: 400;
           font-size: 16px;
           line-height: 150%;
@@ -173,9 +194,11 @@
           &:first-child {
             display: flex;
             align-items: flex-end;
+            justify-content: center;
             gap: 8px;
             padding-top: 37px;
             text-align: left;
+            transform: translateX(-15px);
 
             a {
               text-decoration: underline;
@@ -189,7 +212,7 @@
 
           &:last-child {
             width: 15%;
-            text-align: right;
+            text-align: center;
           }
         }
       }
@@ -215,7 +238,7 @@
         width: auto;
         border: none;
         background-color: transparent;
-        font-family: "Inter", sans-serif;
+        font-family: 'Inter', sans-serif;
 
         a {
           display: inline-block;
