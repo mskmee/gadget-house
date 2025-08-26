@@ -26,7 +26,7 @@ export const useProductCategory = (
 
     if (categoryId && categoryId !== Category.ALL_PRODUCTS) {
       const categoryEntry = Object.entries(Category).find(
-        ([_, value]) => value === categoryId,
+        ([, value]) => value === categoryId,
       );
 
       if (categoryEntry) {
