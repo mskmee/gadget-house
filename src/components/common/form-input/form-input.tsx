@@ -20,6 +20,7 @@ type Properties<T extends FormikValues> = Omit<InputProps, 'name'> &
     label?: string;
     span?: string;
     isRegister?: boolean;
+    hideError?: boolean;
   };
 
 export const FormInput = <T extends FormikValues>({
@@ -29,6 +30,7 @@ export const FormInput = <T extends FormikValues>({
   span,
   type = 'text',
   isRegister,
+  hideError = false,
   ...props
 }: Properties<T>) => {
   const [field, meta] = useField(name as string);
@@ -90,7 +92,7 @@ export const FormInput = <T extends FormikValues>({
                 </span>
               </>
             )}
-            {isError ? (
+            {isError && !hideError ? (
               <div className={styles.formInput__error}>
                 <img src={ErrorIcon} alt="Error icon" />
                 {meta.error}

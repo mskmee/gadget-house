@@ -26,6 +26,7 @@ const AuthModal: FC<IAuthModalProps> = ({ isOpen, onClose }) => {
     successType,
     setSuccessType,
     isLoading,
+    authError,
   } = useAuth();
 
   const handleClose = () => {
@@ -38,7 +39,7 @@ const AuthModal: FC<IAuthModalProps> = ({ isOpen, onClose }) => {
       setCurrentForm(FormEnum.LOGIN);
       setSuccessType(null);
     }
-  }, [isOpen]);
+  }, [isOpen, setCurrentForm, setSuccessType]);
 
   return (
     <PopUp isOpened={isOpen} onClose={handleClose} classname="authModal">
@@ -53,6 +54,7 @@ const AuthModal: FC<IAuthModalProps> = ({ isOpen, onClose }) => {
               onSwitch={() => setCurrentForm(FormEnum.REGISTER)}
               onForgot={() => setCurrentForm(FormEnum.FORGOT)}
               isLoading={isLoading}
+              serverError={authError}
             />
           )}
           {currentForm === FormEnum.REGISTER && (
