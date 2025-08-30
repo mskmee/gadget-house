@@ -1,4 +1,5 @@
 @import '@/styles/functions';
+@import '@/styles/variables.css';
 
 /* Hide number input arrows in Chrome, Safari, Edge */
 input[type='number']::-webkit-outer-spin-button,
@@ -19,10 +20,10 @@ input[type='number'] {
   background-color: #fff;
   border-radius: 20px;
   box-shadow: 0 0 8px #0000001a;
-  @media(max-width: 1100px) {
+  @media (max-width: 1100px) {
     margin: 0 15px;
   }
-  @media(max-width: 991px) {
+  @media (max-width: 991px) {
     background: transparent;
     box-shadow: none;
     border-radius: 0;
@@ -34,8 +35,13 @@ input[type='number'] {
     line-height: 150%;
     font-weight: 500;
   }
+
   .personalDataWrap,
   .personalContactWrap {
+    input:focus-visible {
+      outline: none;
+    }
+
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -82,7 +88,7 @@ input[type='number'] {
       display: flex;
       gap: 32px;
       > div {
-        .inputError {
+        .errorMessage {
           display: flex;
           gap: 4px;
           align-items: center;
@@ -90,11 +96,11 @@ input[type='number'] {
           > span {
             font-size: rem(12px);
             line-height: 150%;
-            color: #f01a1a;
+            color: var(--error-color);
           }
         }
         > div {
-          .inputError {
+          .errorMessage {
             display: flex;
             gap: 4px;
             align-items: center;
@@ -102,7 +108,7 @@ input[type='number'] {
             > span {
               font-size: rem(12px);
               line-height: 150%;
-              color: #f01a1a;
+              color: var(--error-color);
             }
           }
         }
@@ -121,6 +127,9 @@ input[type='number'] {
             border-radius: 12px;
             border: 1px solid #78808c;
           }
+          input.errorInput {
+            border-color: var(--error-color);
+          }
         }
       }
 
@@ -132,7 +141,7 @@ input[type='number'] {
         }
       }
       > div:nth-child(2) {
-        > div:not(.inputError) {
+        > div:not(.errorMessage) {
           display: flex;
           gap: 8px;
 
@@ -153,7 +162,7 @@ input[type='number'] {
         }
       }
       > div:nth-child(4) {
-        > div:not(.inputError) {
+        > div:not(.errorMessage) {
           display: flex;
           gap: 16px;
           height: 52px;
@@ -183,7 +192,7 @@ input[type='number'] {
       > div {
         display: flex;
         flex-direction: column;
-        .inputError {
+        .errorMessage {
           display: flex;
           gap: 4px;
           align-items: center;
@@ -191,7 +200,7 @@ input[type='number'] {
           > span {
             font-size: rem(12px);
             line-height: 150%;
-            color: #f01a1a;
+            color: var(--error-color);
           }
         }
 
@@ -204,6 +213,9 @@ input[type='number'] {
             padding: 16px 14px;
             border-radius: 12px;
             border: 1px solid #78808c;
+          }
+          input.errorInput {
+            border-color: var(--error-color);
           }
         }
       }
@@ -268,8 +280,11 @@ input[type='number'] {
             border-radius: 12px;
             border: 1px solid #78808c;
           }
+          input.errorInput {
+            border-color: var(--error-color);
+          }
         }
-        .inputError {
+        .errorMessage {
           display: flex;
           gap: 4px;
           align-items: center;
@@ -277,7 +292,7 @@ input[type='number'] {
           > span {
             font-size: rem(12px);
             line-height: 150%;
-            color: #f01a1a;
+            color: var(--error-color);
           }
         }
       }
@@ -291,5 +306,8 @@ input[type='number'] {
   }
   .addPhoneNumber {
     padding: 16px 0;
+  }
+  .asterisk {
+    color: var(--error-color);
   }
 }
