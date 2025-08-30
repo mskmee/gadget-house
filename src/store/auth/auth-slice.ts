@@ -8,6 +8,8 @@ import {
   forgotPassword,
   getCredentials,
   getUserData,
+  updateUserContacts,
+  updateUserPersonalData,
 } from './actions';
 import {
   LocalStorageKey,
@@ -102,6 +104,13 @@ const authSlice = createSlice({
         payload.refreshToken,
       );
     });
+    builder.addCase(updateUserPersonalData.fulfilled, (state, { payload }) => {
+      console.log('FULFIELD PUT FETCH:', payload);
+      state.user = payload;
+    });
+    builder.addCase(updateUserContacts.fulfilled, (state, { payload }) => {
+      state.user = payload;
+    });
 
     builder.addMatcher(
       isAnyOf(
@@ -120,6 +129,8 @@ const authSlice = createSlice({
         createUser.rejected,
         forgotPassword.rejected,
         getUserData.rejected,
+        updateUserPersonalData.rejected,
+        updateUserContacts.rejected,
       ),
       (state) => {
         state.dataStatus = DataStatus.REJECT;
@@ -131,6 +142,8 @@ const authSlice = createSlice({
         createUser.pending,
         forgotPassword.pending,
         getUserData.pending,
+        updateUserPersonalData.pending,
+        updateUserContacts.pending,
       ),
       (state) => {
         state.dataStatus = DataStatus.PENDING;

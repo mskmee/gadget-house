@@ -1,10 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-
 import { authService } from '@/utils/packages/auth';
 import {
   AuthSignInRequestDto,
   AuthSignUpRequestDto,
   ChangePasswordRequestDto,
+  UpdateContactsRequestDto,
+  UpdatePersonalDataRequestDto,
   UserResponseDto,
 } from '@/utils/packages/auth/libs/types/types';
 import {
@@ -12,6 +13,69 @@ import {
   localStorageService,
 } from '@/utils/packages/local-storage';
 import { withAuthErrorHandler } from '../helpers/helpers';
+import { RootState } from '..';
+import {
+  PersonalContactsPayload,
+  PersonalDataPayload,
+} from '@/pages/Auth/libs/types/user-dto';
+
+
+const updateUserPersonalData = createAsyncThunk(
+  'auth/updateUserPersonalData',
+  withAuthErrorHandler(
+    async (personalData: PersonalDataPayload, { getState }) => {
+      const state = getState() as RootState;
+      const currentUser = state.auth.user;
+
+      if (!currentUser) {
+        throw new Error('No current user data');
+      }
+
+      const payload: UpdatePersonalDataRequestDto = {
+        ...currentUser,
+        fullName: personalData.fullName,
+        birthdate: personalData.birthdate,
+        address: {
+          ...(currentUser.address ?? {}),
+          city: personalData.city,
+          street: currentUser.address?.street ?? '',
+          houseNumber: currentUser.address?.houseNumber ?? '',
+          flat: currentUser.address?.flat ?? '',
+          departmentNumber: currentUser.address?.departmentNumber ?? '',
+          addressLine: currentUser.address?.addressLine ?? '',
+        },
+        sex: personalData.gender.toUpperCase(),
+        orders: currentUser.orders ?? [],
+      };
+
+      return await authService.updatePersonalData(payload);
+    },
+  ),
+);
+
+const updateUserContacts = createAsyncThunk(
+  'auth/updateUserContacts',
+  withAuthErrorHandler(
+    async (contactsData: PersonalContactsPayload, { getState }) => {
+      const state = getState() as RootState;
+      const currentUser = state.auth.user;
+
+      if (!currentUser) {
+        throw new Error('No current user data');
+      }
+
+      const payload: UpdateContactsRequestDto = {
+        ...currentUser,
+        email: contactsData.email,
+        phoneNumber: contactsData.phoneNumber,
+        secondaryPhoneNumber: contactsData.secondaryPhoneNumber,
+        orders: currentUser.orders || [],
+      };
+
+      return await authService.updateContacts(payload);
+    },
+  ),
+);
 
 const getCredentials = createAsyncThunk(
   'auth/fetchCredentials',
@@ -65,4 +129,6 @@ export {
   forgotPassword,
   changePassword,
   getUserData,
+  updateUserPersonalData,
+  updateUserContacts,
 };
