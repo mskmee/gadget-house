@@ -7,10 +7,10 @@
   flex-direction: column;
   // gap: 16px;
   background-color: var(--bg-color);
-  @media(max-width: 1100px) {
+  @media (max-width: 1100px) {
     padding: 0 20px;
   }
-  @media(max-width: 767px) {
+  @media (max-width: 767px) {
     padding: 0 15px 40px;
     background: #f8f7fa;
   }
@@ -22,8 +22,8 @@
   font-size: 2.625rem;
   line-height: 150%;
   font-weight: 500;
-  @media(max-width: 767px) {
-  display: block;
+  @media (max-width: 767px) {
+    display: block;
     margin-bottom: 16px;
   }
 }
@@ -42,11 +42,16 @@
     justify-content: space-between;
     align-items: center;
     gap: 16px;
+
+    .productPrice {
+      color: var(--text-color);
+    }
   }
 
   .orderNumber {
     flex-grow: 1;
     text-align: left;
+    color: var(--text-color);
   }
 
   .productQuantity {
@@ -55,13 +60,19 @@
     font-weight: 400;
   }
 
+  > div > img{
+    
+  }
+
+  
+
   .orderProductPreview {
     width: 58px;
     height: 58px;
     border-radius: 12px;
     overflow: hidden;
-    border: 1px solid #EAE4EE;
-    @media(max-width: 767px) {
+    border: 1px solid #eae4ee;
+    @media (max-width: 767px) {
       width: 40px;
       height: 40px;
       border: 0;
@@ -92,7 +103,7 @@
     padding: 16px 30px;
     // border-bottom: 1px solid var(--button-disabled-color);
     // margin-bottom: 1rem;
-    @media(max-width: 767px) {
+    @media (max-width: 767px) {
       padding: 16px;
     }
 
@@ -115,7 +126,7 @@
 
     .productName {
       flex-grow: 1;
-      color: #6f4c9a;;
+      color: #6f4c9a;
       font-size: 16px;
       line-height: 1.5;
       font-weight: 400;
@@ -130,6 +141,7 @@
 
     .productPrice {
       font-size: 24px;
+      color: var(--text-color);
     }
   }
 }
@@ -143,7 +155,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  @media(max-width: 800px) {
+  @media (max-width: 800px) {
     flex-direction: column;
     align-items: flex-start;
     padding: 16px;
@@ -152,10 +164,10 @@
     display: grid;
     grid-template-columns: min-content min-content auto;
     grid-template-rows: repeat(3, auto);
-    gap: 12px 50px;  
-    @media(max-width: 800px) {
+    gap: 12px 50px;
+    @media (max-width: 800px) {
       margin-bottom: 16px;
-      gap: 12px; 
+      gap: 12px;
     }
   }
   label {

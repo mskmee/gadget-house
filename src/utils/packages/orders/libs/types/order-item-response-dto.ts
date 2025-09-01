@@ -18,6 +18,29 @@ export interface IOrderItemAddress {
   flat?: string;
 }
 
+type ShortProductResponseImage = {
+  link: string;
+  order: number;
+};
+
+type ShortProductResponseDto = {
+  available: boolean;
+  categoryId: number;
+  code: string;
+  href: string;
+  id: number;
+  images: ShortProductResponseImage[];
+  name: string;
+  price: number;
+  rating: number;
+};
+
+export interface IOrderItem {
+  price: number;
+  quantity: number;
+  shortProductResponseDto: ShortProductResponseDto;
+}
+
 type OrderItemResponseDto = {
   id: string;
   createdAt: string;

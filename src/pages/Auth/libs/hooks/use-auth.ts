@@ -48,6 +48,7 @@ type Return = {
   setSuccessType: (type: SuccessType) => void;
   isLoading: boolean;
   switchAuthForm: (newForm: FormEnum) => void;
+  authError: string | null;
 };
 
 type State = {
@@ -143,11 +144,20 @@ const useAuth = (): Return => {
   const dispatchApp: AppDispatch = useDispatch();
   const { userToken, refreshToken } = useTypedSelector((state) => state.auth);
   const [successType, setSuccessType] = useState<SuccessType>(null);
+  const [authError, setAuthError] = useState<string | null>(null);
   const isLoading = useTypedSelector(
     (state) => state.auth.dataStatus === DataStatus.PENDING,
   );
   const navigate = useNavigate();
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
+  useEffect(() => {
+    if (authError) {
+      const timer = setTimeout(() => {
+        setAuthError(null);
+      }, 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [authError]);
 
   useEffect(() => {
     if (userToken && refreshToken) {
@@ -155,24 +165,30 @@ const useAuth = (): Return => {
     }
   }, [dispatchApp, refreshToken, userToken]);
 
-  const setCurrentForm = (form: FormType) => {
+  const setCurrentForm = useCallback((form: FormType) => {
+    setAuthError(null);
     dispatch({ type: AuthAction.SET_FORM, payload: form });
-  };
+  }, []);
 
   const onLoginFormSubmit = async (loginFormValue: LoginFormDto) => {
+    setAuthError(null);
     const val: LoginFormDto = {
       email: loginFormValue.email,
       password: loginFormValue.password,
     };
 
-    const result = await dispatchApp(getCredentials(val)).unwrap();
-    if (!result) {
-      return;
+    try {
+      const result = await dispatchApp(getCredentials(val)).unwrap();
+      if (!result) {
+        return;
+      }
+      setSuccessType(FormEnum.LOGIN);
+      dispatch({
+        type: AuthAction.RESET_FORM,
+      });
+    } catch (error) {
+      setAuthError('Incorrect e-mail or password');
     }
-    setSuccessType(FormEnum.LOGIN);
-    dispatch({
-      type: AuthAction.RESET_FORM,
-    });
   };
 
   const onLoginPermissionFormSubmit = async (
@@ -263,6 +279,7 @@ const useAuth = (): Return => {
     setSuccessType,
     isLoading,
     switchAuthForm,
+    authError,
   };
 };
 
