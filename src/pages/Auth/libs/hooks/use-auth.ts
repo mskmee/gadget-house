@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Reducer, useEffect, useReducer, useState } from 'react';
+import { Reducer, useCallback, useEffect, useReducer, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { AppDispatch } from '@/store';
@@ -27,6 +27,9 @@ import { SuccessType } from '../types/successType';
 import { LOGIN_PERMISSION_FORM_INITIAL_VALUE } from '../constants/login-permission-form-initial-value';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { DataStatus } from '@/enums/data-status';
+import { useNavigate } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
+import { AppRoute } from '@/enums/Route';
 
 type Return = {
   currentForm: FormType;
@@ -44,6 +47,7 @@ type Return = {
   successType: SuccessType;
   setSuccessType: (type: SuccessType) => void;
   isLoading: boolean;
+  switchAuthForm: (newForm: FormEnum) => void;
 };
 
 type State = {
@@ -142,6 +146,8 @@ const useAuth = (): Return => {
   const isLoading = useTypedSelector(
     (state) => state.auth.dataStatus === DataStatus.PENDING,
   );
+  const navigate = useNavigate();
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
 
   useEffect(() => {
     if (userToken && refreshToken) {
@@ -228,6 +234,20 @@ const useAuth = (): Return => {
     dispatch({ type: AuthAction.RESET_FORM });
   };
 
+  const switchAuthForm = useCallback(
+    (newForm: FormEnum) => {
+      if (isMobile) {
+        const routeMap = {
+          [FormEnum.LOGIN]: AppRoute.SIGN_IN,
+          [FormEnum.REGISTER]: AppRoute.SIGN_UP,
+          [FormEnum.FORGOT]: AppRoute.AUTH_FORGOT_PASSWORD,
+        };
+        navigate(routeMap[newForm]);
+      }
+    },
+    [isMobile, navigate, setCurrentForm],
+  );
+
   return {
     currentForm: state.currentForm,
     setCurrentForm,
@@ -242,6 +262,7 @@ const useAuth = (): Return => {
     successType,
     setSuccessType,
     isLoading,
+    switchAuthForm,
   };
 };
 

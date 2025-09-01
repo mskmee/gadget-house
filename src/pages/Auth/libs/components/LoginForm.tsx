@@ -16,6 +16,7 @@ interface ILoginFormProps {
   onSwitch: () => void;
   onForgot: () => void;
   isLoading: boolean;
+  showLabels?: boolean;
 }
 
 const LoginForm: FC<ILoginFormProps> = ({
@@ -24,6 +25,7 @@ const LoginForm: FC<ILoginFormProps> = ({
   onSwitch,
   onForgot,
   isLoading,
+  showLabels = false,
 }) => {
   return (
     <div className={styles.form}>
@@ -42,12 +44,15 @@ const LoginForm: FC<ILoginFormProps> = ({
             <h3 className={styles.form__title}>Log in</h3>
 
             <div className={styles.form__inputs}>
+              {showLabels && <label htmlFor="email">Email</label>}
               <FormInput<LoginFormDto>
                 name="email"
                 type="text"
                 label="E-mail"
                 placeholder="E-mail"
               />
+
+              {showLabels && <label htmlFor="password">Password</label>}
 
               <FormInput<LoginFormDto>
                 name="password"
