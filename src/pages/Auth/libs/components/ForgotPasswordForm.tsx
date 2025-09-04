@@ -14,6 +14,7 @@ interface IForgotPasswordFormProps {
   // eslint-disable-next-line no-unused-vars
   onReset: (dto: ForgotFormDto) => void;
   onSwitch: () => void;
+  showLabels?: boolean;
   isLoading: boolean;
 }
 
@@ -21,6 +22,7 @@ const ForgotPasswordForm: FC<IForgotPasswordFormProps> = ({
   initialValues,
   onReset,
   onSwitch,
+  showLabels = false,
   isLoading,
 }) => {
   return (
@@ -43,12 +45,17 @@ const ForgotPasswordForm: FC<IForgotPasswordFormProps> = ({
               className={styles.form__inputs}
               style={{ marginBottom: '24px' }}
             >
-              <FormInput<ForgotFormDto>
-                name="email"
-                type="email"
-                label="E-mail"
-                placeholder="E-mail"
-              />
+              <div className={styles.form__field}>
+                {showLabels && (
+                  <label className={styles.form__label}>E-mail</label>
+                )}
+                <FormInput<ForgotFormDto>
+                  name="email"
+                  type="email"
+                  label="E-mail"
+                  placeholder="E-mail"
+                />
+              </div>
             </div>
 
             <div className={styles.form__buttons}>
@@ -63,10 +70,11 @@ const ForgotPasswordForm: FC<IForgotPasswordFormProps> = ({
                       styles.form__btn,
                     )}
                     type="submit"
-                    onClick={onSwitch}
+                    // temporary mock
+                    onClick={() => {}}
                     disabled={!isValid}
                   >
-                    Reset Password
+                    Submit
                   </button>
 
                   <button
@@ -74,7 +82,7 @@ const ForgotPasswordForm: FC<IForgotPasswordFormProps> = ({
                     type="button"
                     onClick={onSwitch}
                   >
-                    Log in
+                    Sign Up
                   </button>
                 </>
               )}

@@ -14,6 +14,7 @@ const SignUp = () => {
         onRegister={onRegisterFormSubmit}
         onSwitch={() => switchAuthForm(FormEnum.LOGIN)}
         isLoading={isLoading}
+        showLabels={true}
         onClose={() => {}}
       />
     </MobileAuthLayout>

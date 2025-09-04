@@ -1,5 +1,13 @@
+import { AppRoute } from '@/enums/enums';
 /* eslint-disable no-unused-vars */
-import { Reducer, useCallback, useEffect, useReducer, useState } from 'react';
+import {
+  Reducer,
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+} from 'react';
 import { useDispatch } from 'react-redux';
 
 import { AppDispatch } from '@/store';
@@ -29,7 +37,7 @@ import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { DataStatus } from '@/enums/data-status';
 import { useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
-import { AppRoute } from '@/enums/Route';
+import { RoutePath } from '@/enums/Route';
 
 type Return = {
   currentForm: FormType;
@@ -182,10 +190,14 @@ const useAuth = (): Return => {
       if (!result) {
         return;
       }
-      setSuccessType(FormEnum.LOGIN);
-      dispatch({
-        type: AuthAction.RESET_FORM,
-      });
+      if (isMobile) {
+        navigate('/');
+      } else {
+        setSuccessType(FormEnum.LOGIN);
+        dispatch({
+          type: AuthAction.RESET_FORM,
+        });
+      }
     } catch (error) {
       setAuthError('Incorrect e-mail or password');
     }
@@ -226,9 +238,12 @@ const useAuth = (): Return => {
     if (!result) {
       return;
     }
-
-    setSuccessType(FormEnum.REGISTER);
-    dispatch({ type: AuthAction.RESET_FORM });
+    if (isMobile) {
+      navigate('/');
+    } else {
+      setSuccessType(FormEnum.REGISTER);
+      dispatch({ type: AuthAction.RESET_FORM });
+    }
   };
 
   const onForgotFormSubmit = async (forgotFormValue: ForgotFormDto) => {
@@ -250,18 +265,22 @@ const useAuth = (): Return => {
     dispatch({ type: AuthAction.RESET_FORM });
   };
 
+  const routeMap: Partial<Record<FormEnum, RoutePath>> = useMemo(() => {
+    return {
+      [FormEnum.LOGIN]: AppRoute.SIGN_IN,
+      [FormEnum.REGISTER]: AppRoute.SIGN_UP,
+      [FormEnum.FORGOT]: AppRoute.AUTH_FORGOT_PASSWORD,
+      [FormEnum.CHANGE_PASSWORD]: AppRoute.AUTH_CHANGE_PASSWORD,
+    };
+  }, []);
   const switchAuthForm = useCallback(
     (newForm: FormEnum) => {
       if (isMobile) {
-        const routeMap = {
-          [FormEnum.LOGIN]: AppRoute.SIGN_IN,
-          [FormEnum.REGISTER]: AppRoute.SIGN_UP,
-          [FormEnum.FORGOT]: AppRoute.AUTH_FORGOT_PASSWORD,
-        };
-        navigate(routeMap[newForm]);
+        const route = routeMap[newForm];
+        if (route) navigate(route);
       }
     },
-    [isMobile, navigate, setCurrentForm],
+    [isMobile, navigate, routeMap],
   );
 
   return {

@@ -48,44 +48,34 @@ const LoginForm: FC<ILoginFormProps> = ({
               (errors.email || errors.password)) ||
             !!serverError;
 
-          <div className={styles.form__inputs}>
-            {showLabels && <label htmlFor="email">Email</label>}
-            <FormInput<LoginFormDto>
-              name="email"
-              type="text"
-              label="E-mail"
-              placeholder="E-mail"
-            />
-
-            {showLabels && <label htmlFor="password">Password</label>}
-
-            <FormInput<LoginFormDto>
-              name="password"
-              type="password"
-              label="Password"
-              placeholder="Password"
-            />
-          </div>;
           return (
             <Form className={styles.form__form}>
               <h3 className={styles.form__title}>Log in</h3>
 
               <div className={styles.form__inputs}>
-                <FormInput<LoginFormDto>
-                  name="email"
-                  type="text"
-                  label="E-mail"
-                  placeholder="E-mail"
-                  hideError={true}
-                />
-
-                <FormInput<LoginFormDto>
-                  name="password"
-                  type="password"
-                  label="Password"
-                  placeholder="Password"
-                  hideError={true}
-                />
+                <div className={styles.form__field}>
+                  {showLabels && (
+                    <label className={styles.form__label}>E-mail</label>
+                  )}
+                  <FormInput<LoginFormDto>
+                    name="email"
+                    type="text"
+                    label="E-mail"
+                    placeholder="E-mail"
+                  />
+                </div>
+                <div className={styles.form__field}>
+                  {showLabels && (
+                    <label className={styles.form__label}>Password</label>
+                  )}
+                  <FormInput<LoginFormDto>
+                    name="password"
+                    type="password"
+                    label="Password"
+                    placeholder="Password"
+                    hideError={true}
+                  />
+                </div>
 
                 {showGeneralError && (
                   <div className={styles.form__error}>

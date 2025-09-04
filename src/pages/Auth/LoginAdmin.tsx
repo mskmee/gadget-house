@@ -12,7 +12,7 @@ import { loginFormValidationSchema } from './libs/validation-schemas/validation-
 import SuccessPopup from './libs/components/SuccessPopup';
 import { FormInput, PopUp } from '@/components/components';
 
-import styles from './change-password.module.scss';
+import styles from './libs/components/change-password-form.module.scss';
 import style from './libs/components/form.module.scss';
 
 const LoginAdmin = () => {
