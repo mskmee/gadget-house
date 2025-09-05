@@ -62,6 +62,7 @@ const LoginForm: FC<ILoginFormProps> = ({
                     type="text"
                     label="E-mail"
                     placeholder="E-mail"
+                    showGeneralError={!!showGeneralError}
                   />
                 </div>
                 <div className={styles.form__field}>
@@ -74,6 +75,7 @@ const LoginForm: FC<ILoginFormProps> = ({
                     label="Password"
                     placeholder="Password"
                     hideError={true}
+                    showGeneralError={!!showGeneralError}
                   />
                 </div>
 
