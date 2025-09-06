@@ -14,6 +14,15 @@
     color: var(--text-color);
     margin-bottom: 24px;
   }
+  &__label {
+    color: var(--text-color);
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
 
   &__inputs {
     display: flex;
@@ -178,6 +187,16 @@
       display: flex;
       align-items: start;
       justify-content: end;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .form {
+    &__buttonForgot {
+      margin-top: 24px;
+      margin-bottom: 40px;
+      padding-left: 8px;
     }
   }
 }
