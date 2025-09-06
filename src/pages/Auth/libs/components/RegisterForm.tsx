@@ -15,6 +15,7 @@ interface IRegisterFormProps {
   onRegister: (dto: RegisterFormDto) => void;
   onSwitch: () => void;
   isLoading: boolean;
+  showLabels?: boolean;
   onClose: () => void;
 }
 
@@ -23,6 +24,7 @@ const RegisterForm: FC<IRegisterFormProps> = ({
   onRegister,
   onSwitch,
   isLoading,
+  showLabels = false,
   onClose,
 }) => {
   const passwordRules = [
@@ -53,7 +55,10 @@ const RegisterForm: FC<IRegisterFormProps> = ({
               className={styles.form__inputs}
               style={{ marginBottom: '24px' }}
             >
-              <div className={styles.form__inputsName}>
+              <div className={styles.form__field}>
+                {showLabels && (
+                  <label className={styles.form__label}>Full name</label>
+                )}
                 <FormInput
                   name="fullName"
                   type="text"
@@ -62,27 +67,44 @@ const RegisterForm: FC<IRegisterFormProps> = ({
                 />
               </div>
 
-              <FormInput
-                name="email"
-                type="text"
-                label="E-mail"
-                placeholder="E-mail"
-              />
+              <div className={styles.form__field}>
+                {' '}
+                {showLabels && (
+                  <label className={styles.form__label}>E-mail</label>
+                )}
+                <FormInput
+                  name="email"
+                  type="text"
+                  label="E-mail"
+                  placeholder="E-mail"
+                />
+              </div>
+              <div className={styles.form__field}>
+                {' '}
+                {showLabels && (
+                  <label className={styles.form__label}>Phone number</label>
+                )}
+                <FormInput
+                  name="phoneNumber"
+                  type="tel"
+                  label="Phone number"
+                  placeholder="Phone number"
+                />
+              </div>
 
-              <FormInput
-                name="phoneNumber"
-                type="tel"
-                label="Phone number"
-                placeholder="Phone number"
-              />
-
-              <FormInput
-                name="password"
-                type="password"
-                label="Password"
-                placeholder="Password"
-                isRegister={true}
-              />
+              <div className={styles.form__field}>
+                {' '}
+                {showLabels && (
+                  <label className={styles.form__label}>Password</label>
+                )}
+                <FormInput
+                  name="password"
+                  type="password"
+                  label="Password"
+                  placeholder="Password"
+                  isRegister={true}
+                />
+              </div>
 
               <ul className={styles.form__passwordRules}>
                 {passwordRules.map((rule) => (
@@ -90,12 +112,18 @@ const RegisterForm: FC<IRegisterFormProps> = ({
                 ))}
               </ul>
 
-              <FormInput
-                name="passwordRepeat"
-                type="password"
-                label="Password"
-                placeholder="Password"
-              />
+              <div className={styles.form__field}>
+                {' '}
+                {showLabels && (
+                  <label className={styles.form__label}>Password</label>
+                )}
+                <FormInput
+                  name="passwordRepeat"
+                  type="password"
+                  label="Password"
+                  placeholder="Password"
+                />
+              </div>
             </div>
 
             <div className={styles.form__buttons}>

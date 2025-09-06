@@ -1,5 +1,13 @@
+import { AppRoute } from '@/enums/enums';
 /* eslint-disable no-unused-vars */
-import { Reducer, useCallback, useEffect, useReducer, useState } from 'react';
+import {
+  Reducer,
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+} from 'react';
 import { useDispatch } from 'react-redux';
 
 import { AppDispatch } from '@/store';
@@ -27,6 +35,9 @@ import { SuccessType } from '../types/successType';
 import { LOGIN_PERMISSION_FORM_INITIAL_VALUE } from '../constants/login-permission-form-initial-value';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { DataStatus } from '@/enums/data-status';
+import { useNavigate } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
+import { RoutePath } from '@/enums/Route';
 
 type Return = {
   currentForm: FormType;
@@ -44,6 +55,7 @@ type Return = {
   successType: SuccessType;
   setSuccessType: (type: SuccessType) => void;
   isLoading: boolean;
+  switchAuthForm: (newForm: FormEnum) => void;
   authError: string | null;
 };
 
@@ -144,6 +156,8 @@ const useAuth = (): Return => {
   const isLoading = useTypedSelector(
     (state) => state.auth.dataStatus === DataStatus.PENDING,
   );
+  const navigate = useNavigate();
+  const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
   useEffect(() => {
     if (authError) {
       const timer = setTimeout(() => {
@@ -176,10 +190,14 @@ const useAuth = (): Return => {
       if (!result) {
         return;
       }
-      setSuccessType(FormEnum.LOGIN);
-      dispatch({
-        type: AuthAction.RESET_FORM,
-      });
+      if (isMobile) {
+        navigate('/');
+      } else {
+        setSuccessType(FormEnum.LOGIN);
+        dispatch({
+          type: AuthAction.RESET_FORM,
+        });
+      }
     } catch (error) {
       setAuthError('Incorrect e-mail or password');
     }
@@ -220,9 +238,12 @@ const useAuth = (): Return => {
     if (!result) {
       return;
     }
-
-    setSuccessType(FormEnum.REGISTER);
-    dispatch({ type: AuthAction.RESET_FORM });
+    if (isMobile) {
+      navigate('/');
+    } else {
+      setSuccessType(FormEnum.REGISTER);
+      dispatch({ type: AuthAction.RESET_FORM });
+    }
   };
 
   const onForgotFormSubmit = async (forgotFormValue: ForgotFormDto) => {
@@ -244,6 +265,24 @@ const useAuth = (): Return => {
     dispatch({ type: AuthAction.RESET_FORM });
   };
 
+  const routeMap: Partial<Record<FormEnum, RoutePath>> = useMemo(() => {
+    return {
+      [FormEnum.LOGIN]: AppRoute.SIGN_IN,
+      [FormEnum.REGISTER]: AppRoute.SIGN_UP,
+      [FormEnum.FORGOT]: AppRoute.AUTH_FORGOT_PASSWORD,
+      [FormEnum.CHANGE_PASSWORD]: AppRoute.AUTH_CHANGE_PASSWORD,
+    };
+  }, []);
+  const switchAuthForm = useCallback(
+    (newForm: FormEnum) => {
+      if (isMobile) {
+        const route = routeMap[newForm];
+        if (route) navigate(route);
+      }
+    },
+    [isMobile, navigate, routeMap],
+  );
+
   return {
     currentForm: state.currentForm,
     setCurrentForm,
@@ -258,6 +297,7 @@ const useAuth = (): Return => {
     successType,
     setSuccessType,
     isLoading,
+    switchAuthForm,
     authError,
   };
 };

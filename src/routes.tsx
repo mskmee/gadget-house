@@ -19,9 +19,11 @@ import { UserOrders } from './pages/Dashboard/Orders';
 import { DashboardLayout } from './pages/Dashboard/DashboardLayout/DashboardLayout';
 import AdminPage from './pages/AdminPage/AdminPage';
 import AdminInvoice from './pages/AdminInvoice/AdminInvoice';
-import ForgotPassword from './pages/Auth/ChangePassword';
 import LoginAdmin from './pages/Auth/LoginAdmin';
 import Category from './pages/Category/Category';
+import SignUp from './pages/SignUp';
+import { ForgotPassword } from './pages/ForgotPassword';
+import { ChangePassword } from './pages/ChangePassword/ChagePassword';
 
 export const routes = createBrowserRouter(
   [
@@ -67,6 +69,10 @@ export const routes = createBrowserRouter(
           element: <SignIn />,
         },
         {
+          path: AppRoute.SIGN_UP,
+          element: <SignUp />,
+        },
+        {
           path: AppRoute.BASKET_PAGE,
           element: <BasketPage />,
         },
@@ -84,6 +90,10 @@ export const routes = createBrowserRouter(
         {
           path: AppRoute.AUTH_FORGOT_PASSWORD,
           element: <ForgotPassword />,
+        },
+        {
+          path: AppRoute.AUTH_CHANGE_PASSWORD,
+          element: <ChangePassword />,
         },
         {
           path: AppRoute.ADMIN_PAGE,

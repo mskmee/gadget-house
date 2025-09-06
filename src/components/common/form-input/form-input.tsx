@@ -21,6 +21,7 @@ type Properties<T extends FormikValues> = Omit<InputProps, 'name'> &
     span?: string;
     isRegister?: boolean;
     hideError?: boolean;
+    showGeneralError?: boolean;
   };
 
 export const FormInput = <T extends FormikValues>({
@@ -31,12 +32,14 @@ export const FormInput = <T extends FormikValues>({
   type = 'text',
   isRegister,
   hideError = false,
+  showGeneralError = false,
   ...props
 }: Properties<T>) => {
   const [field, meta] = useField(name as string);
   const id = useId();
   const inputId = props.id ?? id;
   const isError = meta.touched && meta.error;
+  const shouldShowErrorBorder = isError || showGeneralError;
   const leftCharactersCount = INPUT_MAX_LENGTH - (field?.value?.length || 0);
 
   return (
@@ -47,7 +50,7 @@ export const FormInput = <T extends FormikValues>({
             {...field}
             {...props}
             id={inputId}
-            status={isError ? 'error' : ''}
+            status={shouldShowErrorBorder ? 'error' : ''}
           />
           {span && <span>{span}</span>}
         </label>
@@ -61,7 +64,7 @@ export const FormInput = <T extends FormikValues>({
                   field={field}
                   id={inputId}
                   isRegister={isRegister}
-                  error={isError ? 'error' : ''}
+                  error={shouldShowErrorBorder ? 'error' : ''}
                   {...props}
                 />
               ) : type === 'tel' ? (
@@ -71,7 +74,7 @@ export const FormInput = <T extends FormikValues>({
                   {...field}
                   {...(props as InputProps)}
                   id={inputId}
-                  status={isError ? 'error' : ''}
+                  status={shouldShowErrorBorder ? 'error' : ''}
                 />
               )
             ) : (
@@ -80,7 +83,7 @@ export const FormInput = <T extends FormikValues>({
                   {...field}
                   {...(props as TextAreaProps)}
                   id={inputId}
-                  status={isError ? 'error' : ''}
+                  status={shouldShowErrorBorder ? 'error' : ''}
                   maxLength={INPUT_MAX_LENGTH}
                 />
                 <span

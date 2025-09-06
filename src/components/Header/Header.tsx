@@ -15,7 +15,7 @@ import { buttonData } from '@/constants/ButtonConstants';
 import { motion } from 'framer-motion';
 import { AppRoute } from '@/enums/Route';
 
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { CardTooltip } from '../CartTooltip/CartTooltip';
@@ -23,9 +23,12 @@ import { useIsFixedHeader } from '@/hooks/useIsFixedHeader';
 import { useMediaQuery } from 'react-responsive';
 import AuthModal from '@/pages/Auth/AuthModal';
 import CatalogBlock from './CatalogBlock/CatalogBlock';
+import { isAuthRoute } from '@/pages/Auth/libs/utils/isAuthRoute';
+import { LeftArrow } from '@/assets/constants';
 
 export const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const isFixedHeader = useIsFixedHeader();
 
   const [isCatalogListOpen, setIsCatalogListOpen] = useState(false);
@@ -43,14 +46,34 @@ export const Header = () => {
   const OverlayRef = useRef<HTMLDivElement | null>(null);
   const catalogSectionRef = useRef<HTMLDivElement | null>(null);
 
-  const handleAuthClick = () => {
-    setAuthModalOpen(true);
-  };
-
   const isLessThan992px = useMediaQuery({
     query: '(max-width: 992px)',
   });
 
+  const isMobile767 = useMediaQuery({
+    query: '(max-width: 767px)',
+  });
+
+  const isAuthPage = isAuthRoute(location.pathname);
+
+  const handleAuthClick = () => {
+    if (isCatalogListOpen) {
+      setIsCatalogListOpen(false);
+      document.body.style.overflow = 'initial';
+      document.body.style.paddingRight = `0px`;
+    }
+    if (isMobile767) {
+      navigate(AppRoute.SIGN_IN);
+    } else {
+      setAuthModalOpen(true);
+    }
+  };
+
+  useEffect(() => {
+    setIsCatalogListOpen(false);
+    document.body.style.overflow = 'initial';
+    document.body.style.paddingRight = `0px`;
+  }, [location.pathname]);
   // pop-up basket
   const isBasketPage =
     location.pathname === AppRoute.BASKET_PAGE ||
@@ -184,10 +207,20 @@ export const Header = () => {
             })}
           >
             <div
-              className="catalog-section"
+              className={styles['catalog-section']}
               ref={catalogSectionRef}
               onMouseLeave={closeCatalog}
             >
+              {isAuthPage && !isCatalogListOpen && (
+                <button
+                  type="button"
+                  className={styles['auth-back-button']}
+                  onClick={() => navigate(-1)}
+                >
+                  <img src={LeftArrow} alt="Back" />
+                </button>
+              )}
+
               <CatalogBlock
                 isCatalogListOpen={isCatalogListOpen}
                 setIsCatalogListOpen={setIsCatalogListOpen}
