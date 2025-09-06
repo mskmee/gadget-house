@@ -466,7 +466,7 @@
 }
 
 .catalog-section {
-  display: flex;
+  display: block;
   align-items: center;
   justify-content: center;
   gap: 16px;
@@ -489,7 +489,7 @@
     }
 
     @media (max-width: 992px) {
-      display: flex;
+      display: inline-block;
       width: 25px;
       height: 42px;
       img {
@@ -497,5 +497,9 @@
         margin: 0 6.5px;
       }
     }
+  }
+
+  @media (max-width: 992px){
+    display: flex;
   }
 }
