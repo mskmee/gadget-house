@@ -77,7 +77,7 @@ export const DashboardLayout = () => {
               <BasketIcon />
               <span>My orders</span>
             </div>
-            <span>3</span>
+            <span>{orders?.length}</span>
           </div>
           <div className={styles.userStatisticsFavorites}>
             <div>
