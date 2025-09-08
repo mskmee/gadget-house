@@ -16,7 +16,6 @@ export const UserAvatar: FC<UserAvatarProps> = ({ name, imgUrl }) => {
         fontWeight: 500,
         lineHeight: '150%',
         color: '#F8F7FA',
-        border: '4px solid #fff',
         backgroundColor: '#00820D',
       }}
     >

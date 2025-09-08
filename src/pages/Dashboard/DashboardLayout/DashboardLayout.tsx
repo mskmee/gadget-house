@@ -69,7 +69,9 @@ export const DashboardLayout = () => {
         <div className={styles.dashboardUserAvatar}>
           <UserAvatar name={currentUser?.fullName || ''} />
           <h2 className={styles.dashboardUserName}>{currentUser?.fullName}</h2>
-          <ChangeUserData />
+          <Link to={'/dashboard/2'}>
+            <ChangeUserData />
+          </Link>
         </div>
         <div className={styles.dashboardUserStatistics}>
           <div className={styles.userStatisticsOrders}>
