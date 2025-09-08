@@ -241,14 +241,16 @@
 .cardMobile__bottom {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .addToBasker {
-  width: 43px;
-  height: 43px;
+  width: 50px;
+  height: 50px;
   border: none;
   background-color: #00820d;
   border-radius: 10px;
   cursor: pointer;
+
 }
 
 @keyframes spin {

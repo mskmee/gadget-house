@@ -116,7 +116,7 @@ export const FavoriteProductCard: FC<IFavoriteProductProps> = ({
             tabIndex={-1}
             className={styles.addToBasker}
           >
-            <BasketIcon />
+            <BasketIcon color="#fff" size={{ width: '34', height: '34' }} />
           </button>
         </div>
       </Link>
