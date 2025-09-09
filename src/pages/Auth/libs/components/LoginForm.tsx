@@ -62,6 +62,7 @@ const LoginForm: FC<ILoginFormProps> = ({
                     type="text"
                     label="E-mail"
                     placeholder="E-mail"
+                    hideError={true}
                     showGeneralError={!!showGeneralError}
                   />
                 </div>
