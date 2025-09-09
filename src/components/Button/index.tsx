@@ -12,9 +12,14 @@ import styles from './button.module.scss';
 interface INavButtonProps {
   button: IButton;
   onAuthClick?: () => void;
+  onNavigate?: () => void;
 }
 
-export const NavButton: FC<INavButtonProps> = ({ button, onAuthClick }) => {
+export const NavButton: FC<INavButtonProps> = ({
+  button,
+  onAuthClick,
+  onNavigate,
+}) => {
   const IconComponent = button.img;
   const products = useTypedSelector((state) => state.shopping_card.products);
   const user = useTypedSelector((state) => state.auth.user);
@@ -31,10 +36,22 @@ export const NavButton: FC<INavButtonProps> = ({ button, onAuthClick }) => {
   const closeEmptyBasketPopup = () => setIsEmptyBasketPopupOpen(false);
 
   const renderButton = () => {
+    const handleAuthClick = () => {
+      onNavigate?.();
+      onAuthClick?.();
+    };
+    const handleClick = () => {
+      onNavigate?.();
+    };
+
     if (button.href === '/sign-in') {
       if (refreshToken && user?.id) {
         return (
-          <Link to={`/dashboard/${user.id}`} className={styles.headerButton}>
+          <Link
+            to={`/dashboard/${user.id}`}
+            className={styles.headerButton}
+            onClick={handleAuthClick}
+          >
             <span className={styles.navBtn__buttonAvatar}>
               {getUserInitials(user?.fullName || '')}
             </span>
@@ -42,13 +59,13 @@ export const NavButton: FC<INavButtonProps> = ({ button, onAuthClick }) => {
         );
       }
       return refreshToken ? (
-        <button className={styles.navBtn__button} onClick={onAuthClick}>
+        <button className={styles.navBtn__button} onClick={handleAuthClick}>
           <span className={styles.navBtn__buttonAvatar}>
             {getUserInitials(user?.fullName || '')}
           </span>
         </button>
       ) : (
-        <button onClick={onAuthClick} className={styles.navBtn__button}>
+        <button onClick={handleAuthClick} className={styles.navBtn__button}>
           <IconComponent />
         </button>
       );
@@ -61,7 +78,11 @@ export const NavButton: FC<INavButtonProps> = ({ button, onAuthClick }) => {
       return (
         <>
           {refreshToken && user?.id ? (
-            <Link to={button.href} className={styles.headerButton}>
+            <Link
+              to={button.href}
+              className={styles.headerButton}
+              onClick={handleClick}
+            >
               <IconComponent />
               {favoriteProducts.length > 0 && (
                 <div>
@@ -70,7 +91,7 @@ export const NavButton: FC<INavButtonProps> = ({ button, onAuthClick }) => {
               )}
             </Link>
           ) : (
-            <button onClick={onAuthClick} className={styles.headerButton}>
+            <button onClick={handleAuthClick} className={styles.headerButton}>
               <IconComponent />
             </button>
           )}

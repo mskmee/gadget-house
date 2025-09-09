@@ -36,6 +36,12 @@ const CatalogBlock = ({
     setIsCatalogListOpen((prev) => !prev);
   };
 
+  const handleCloseandNavigate = () => {
+    setIsCatalogListOpen(false);
+    document.body.style.overflow = 'initial';
+    document.body.style.paddingRight = '0px';
+  };
+
   return (
     <>
       {isLessThan992px ? (
@@ -66,14 +72,12 @@ const CatalogBlock = ({
       )}
 
       {isCatalogListOpen && (
-        <div
-          className={classNames(styles.catalogListWrap)}
-          onClick={handleOpenCloseBurgerMenu}
-        >
+        <div className={classNames(styles.catalogListWrap)}>
           <CatalogList
             onAuthClick={onAuthClick}
             isCatalogListOpen={isCatalogListOpen}
             closeCatalog={closeCatalog}
+            onNavigate={handleCloseandNavigate}
           />
         </div>
       )}
