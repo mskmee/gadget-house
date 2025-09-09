@@ -17,7 +17,7 @@ interface IProductListProps {
       HTMLButtonElement | HTMLDivElement | KeyboardEvent | HTMLAnchorElement
     >,
   ) => void;
-  onNavigate: () => void;
+  onNavigate?: () => void;
 }
 
 export const CatalogList: FC<IProductListProps> = ({
