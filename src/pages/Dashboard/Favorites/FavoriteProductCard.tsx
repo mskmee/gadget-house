@@ -95,7 +95,7 @@ export const FavoriteProductCard: FC<IFavoriteProductProps> = ({
               className={styles.basketPopupRemoveProduct}
               onClick={handleClickClearBtn}
             >
-              <CloseModal size="35" />
+              <CloseModal size="28" />
             </button>
             <div className={styles.mobilePrice}>
               {convertPriceToReadable(price, currency, locale)}

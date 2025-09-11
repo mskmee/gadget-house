@@ -237,6 +237,9 @@
   }
   .cardMobile__topRight {
     text-align: right;
+    .basketPopupRemoveProduct{
+      margin-bottom: 8px;
+    }
   }
 }
 .cardMobile__topLeft {
@@ -267,9 +270,10 @@
 }
 
 @media (max-width: 767px) {
-  .favoriteProducts {
-    .favoriteProductsWrap {
-      .favoriteProductsMessageText {
+  .favoriteProducts{
+
+    .favoriteProductsWrap{
+      .favoriteProductsMessageText{
         font-size: 16px;
       }
     }
