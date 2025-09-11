@@ -50,7 +50,7 @@ export const NavButton: FC<INavButtonProps> = ({
           <Link
             to={`/dashboard/${user.id}`}
             className={styles.headerButton}
-            onClick={handleAuthClick}
+            onClick={handleClick}
           >
             <span className={styles.navBtn__buttonAvatar}>
               {getUserInitials(user?.fullName || '')}

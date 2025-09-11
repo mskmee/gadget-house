@@ -34,10 +34,10 @@
       }
     }
     .favoriteProductsMessageText {
+      font-size: 24px;
       margin-bottom: 57px;
       font-weight: 400;
       line-height: 150%;
-      font-size: rem(24px);
       color: #1c1817;
     }
     .favoriteProductsBtn {
@@ -267,21 +267,28 @@
 }
 
 @media (max-width: 767px) {
-  .favoriteProductCardsWrap {
-    .cardWrap {
-      border-radius: 8px;
-      box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.08);
-      padding: 12px;
+  .favoriteProducts {
+    .favoriteProductsWrap {
+      .favoriteProductsMessageText {
+        font-size: 16px;
+      }
     }
-  }
-  .cardInfoAddFavorite {
-    border-radius: 8px;
-    border: 1px solid #eae4ee;
-    background: #f8f7fa;
-    padding: 7px;
-    svg {
-      width: 34px;
-      height: 34px;
+    .favoriteProductCardsWrap {
+      .cardWrap {
+        border-radius: 8px;
+        box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.08);
+        padding: 12px;
+      }
+    }
+    .cardInfoAddFavorite {
+      border-radius: 8px;
+      border: 1px solid #eae4ee;
+      background: #f8f7fa;
+      padding: 7px;
+      svg {
+        width: 34px;
+        height: 34px;
+      }
     }
   }
 }
