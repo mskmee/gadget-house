@@ -31,8 +31,8 @@ export interface IInitialState {
     totalElements: number;
   };
   loaded: boolean; // Added loaded flag
-  isFetchingMore: boolean,
-  isAppending: boolean
+  isFetchingMore: boolean;
+  isAppending: boolean;
 }
 
 const initialState: IInitialState = {
@@ -50,7 +50,7 @@ const initialState: IInitialState = {
   },
   loaded: false, // Added loaded flag
   isFetchingMore: false,
-  isAppending: false
+  isAppending: false,
 };
 
 const products_slice = createSlice({
@@ -68,16 +68,23 @@ const products_slice = createSlice({
         (item) => item.id === payload.id,
       );
 
-      if (!product) return;
+      if (product) {
+        product.isLiked = !product.isLiked;
+      }
 
-      product.isLiked = !product.isLiked;
+      const favoriteProductIndex = state.favoriteProducts.findIndex(
+        (item) => item.id === payload.id,
+      );
 
-      if (product.isLiked) {
-        state.favoriteProducts.push(product);
-      } else {
+      const isCurrentlyFavorite = favoriteProductIndex !== -1;
+
+      if (isCurrentlyFavorite) {
         state.favoriteProducts = state.favoriteProducts.filter(
-          (fav) => fav.id !== payload.id,
+          (item) => item.id !== payload.id,
         );
+      } else {
+        const favoriteProduct = { ...payload, isLiked: true };
+        state.favoriteProducts.push(favoriteProduct);
       }
 
       localStorage.setItem(
