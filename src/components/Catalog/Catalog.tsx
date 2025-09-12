@@ -8,7 +8,6 @@ import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { IProductCard } from '@/interfaces/interfaces';
 import { AppDispatch, RootState } from '@/store';
 import { setIsAppending, setPageNumber } from '@/store/products/products_slice';
-
 import { MyCard } from '../components';
 
 import styles from './catalog.module.scss';

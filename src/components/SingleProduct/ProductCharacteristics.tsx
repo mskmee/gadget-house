@@ -1,84 +1,3 @@
-// import { FC, useState } from 'react';
-// import { staticCurrentProduct } from '@/constants/singleProduct';
-// import style from './Product.module.scss';
-// import { useMediaQuery } from 'react-responsive';
-
-// export const ProductCharacteristics: FC = () => {
-//   const [isShowed, setIsShowed] = useState(false);
-
-//   const isLargerThan500px = useMediaQuery({
-//     query: '(max-width: 500px)',
-//   });
-
-//   const showedAllCharacteristics = () => {
-//     setIsShowed(true);
-//   };
-//   return (
-//     <section className={style['characteristics']} id="product-characteristics">
-//       <h2>Characteristics</h2>
-//       <div className={style['characteristics_detail']}>
-//         <div className={style['characteristics_screen']}>
-//           <h3>Screen</h3>
-//           <ul>
-//             {staticCurrentProduct?.[0]?.characteristics?.screen?.map((item) => (
-//               <li key={item?.id}>
-//                 <span>{item?.name}</span>
-//                 {!isLargerThan500px && <p></p>}
-//                 <span>{item?.value}</span>
-//               </li>
-//             ))}
-//           </ul>
-//         </div>
-//         <div className={style['characteristics_communacation']}>
-//           <h3>Communication</h3>
-//           <ul>
-//             {staticCurrentProduct?.[0]?.characteristics?.communication?.map(
-//               (item) => (
-//                 <li key={item?.id}>
-//                   <span>{item?.name}</span>
-//                   {!isLargerThan500px && <p></p>}
-//                   <span>{item?.value}</span>
-//                 </li>
-//               ),
-//             )}
-//           </ul>
-//         </div>
-//         <div className={style['characteristics_os']}>
-//           <h3>OS</h3>
-//           <ul>
-//             {staticCurrentProduct?.[0]?.characteristics?.os?.map((item) => (
-//               <li key={item?.id}>
-//                 <span>{item?.name}</span>
-//                 {!isLargerThan500px && <p></p>}
-//                 <span>{item?.value}</span>
-//               </li>
-//             ))}
-//           </ul>
-//         </div>
-//         {isShowed && (
-//           <div className={style['characteristics_camera']}>
-//             <h3>Camera</h3>
-//             <ul>
-//               {staticCurrentProduct?.[0]?.characteristics?.camera?.map(
-//                 (item) => (
-//                   <li key={item?.id}>
-//                     <span>{item?.name}</span>
-//                     {!isLargerThan500px && <p></p>}
-//                     <span>{item?.value}</span>
-//                   </li>
-//                 ),
-//               )}
-//             </ul>
-//           </div>
-//         )}
-//       </div>
-//       {!isShowed && (
-//         <button onClick={showedAllCharacteristics}>All characteristics</button>
-//       )}
-//     </section>
-//   );
-// };
-
 import { FC, useState } from 'react';
 import style from './Product.module.scss';
 import { useMediaQuery } from 'react-responsive';
@@ -112,10 +31,10 @@ export const ProductCharacteristics: FC<Props> = ({ product }) => {
       'Communication standards',
       'Number of SIM cards',
       'SIM card size',
-      'Flesh card',
       'Max play time',
       'Bluetooth version',
       'Weight',
+      'Flesh card',
     ].includes(item.name),
   );
 
@@ -124,12 +43,17 @@ export const ProductCharacteristics: FC<Props> = ({ product }) => {
       'Operating system',
       'Processor model',
       'Processor frequency',
+      'Ram Memory',
+      'Rom Memory',
       'Video card',
+      'Number of processor cores',
     ].includes(item.name),
   );
 
   const camera = characteristics.filter((item) =>
-    ['Main camera', 'Selfie camera', 'Sensor resolution'].includes(item.name),
+    ['Main camera resolution', 'Selfie camera', 'Sensor resolution'].includes(
+      item.name,
+    ),
   );
 
   return (
