@@ -1,17 +1,17 @@
 import { FC } from 'react';
 import classNames from 'classnames';
 import styles from './slidernav.module.scss';
-//  import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 // import { SliderRightArrow } from '@/assets/icons/SliderRightArrow';
 interface ISliderNavProps {
   text: string;
   link: string;
-  // isVisibleSeeMoreBtn?: boolean;
+  isVisibleSeeMoreBtn?: boolean;
 }
 
 export const SliderNav: FC<ISliderNavProps> = ({
   text,
-  //  link,
+  // link,
   // isVisibleSeeMoreBtn = true,
 }) => {
   return (
