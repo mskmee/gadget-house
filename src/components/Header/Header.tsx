@@ -55,6 +55,7 @@ export const Header = () => {
   });
 
   const isAuthPage = isAuthRoute(location.pathname);
+  const isUserDashboardPage = location.pathname.startsWith('/dashboard/');
 
   const handleAuthClick = () => {
     if (isCatalogListOpen) {
@@ -211,7 +212,7 @@ export const Header = () => {
               ref={catalogSectionRef}
               onMouseLeave={closeCatalog}
             >
-              {isAuthPage && !isCatalogListOpen && (
+              {(isAuthPage || isUserDashboardPage) && !isCatalogListOpen && (
                 <button
                   type="button"
                   className={styles['auth-back-button']}

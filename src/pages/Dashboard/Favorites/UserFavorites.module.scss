@@ -28,16 +28,16 @@
       color: #1c1817;
       > span {
         color: #78808c;
-        @media(max-width: 767px) {
+        @media (max-width: 767px) {
           display: none;
         }
       }
     }
     .favoriteProductsMessageText {
+      font-size: 24px;
       margin-bottom: 57px;
       font-weight: 400;
       line-height: 150%;
-      font-size: rem(24px);
       color: #1c1817;
     }
     .favoriteProductsBtn {
@@ -206,7 +206,7 @@
   align-items: center;
   padding-bottom: 12px;
   margin-bottom: 12px;
-  border-bottom: 1px solid #EAE4EE;
+  border-bottom: 1px solid #eae4ee;
   .cardImage {
     width: 56px !important;
     height: 62px;
@@ -220,9 +220,14 @@
   }
   .cardMobile__rating {
     margin-bottom: 4px;
-    img {
-      width: 16px;
-      height: 16px;
+
+    > ul {
+      display: flex;
+      gap: 4px;
+      > li div div img {
+        width: 12px;
+        height: 12px;
+      }
     }
   }
   .cardMobile__code {
@@ -231,7 +236,10 @@
     color: #808080;
   }
   .cardMobile__topRight {
-    text-align: right; 
+    text-align: right;
+    .basketPopupRemoveProduct{
+      margin-bottom: 8px;
+    }
   }
 }
 .cardMobile__topLeft {
@@ -241,10 +249,11 @@
 .cardMobile__bottom {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .addToBasker {
-  width: 43px;
-  height: 43px;
+  width: 50px;
+  height: 50px;
   border: none;
   background-color: #00820d;
   border-radius: 10px;
@@ -260,24 +269,30 @@
   }
 }
 
-
-
 @media (max-width: 767px) {
-  .favoriteProductCardsWrap {
-    .cardWrap {
-      border-radius: 8px;
-      box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.08);
-      padding: 12px;
+  .favoriteProducts{
+
+    .favoriteProductsWrap{
+      .favoriteProductsMessageText{
+        font-size: 16px;
+      }
     }
-  }
-  .cardInfoAddFavorite {
-    border-radius: 8px;
-    border: 1px solid #EAE4EE;
-    background: #F8F7FA;
-    padding: 7px;
-    svg {
-      width: 34px;
-      height: 34px;
+    .favoriteProductCardsWrap {
+      .cardWrap {
+        border-radius: 8px;
+        box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.08);
+        padding: 12px;
+      }
+    }
+    .cardInfoAddFavorite {
+      border-radius: 8px;
+      border: 1px solid #eae4ee;
+      background: #f8f7fa;
+      padding: 7px;
+      svg {
+        width: 34px;
+        height: 34px;
+      }
     }
   }
 }
