@@ -1,29 +1,30 @@
 import { useActions } from '@/hooks/useActions.ts';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { useMediaQuery } from 'react-responsive';
-import React, { MouseEvent, useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import { MAX_PRODUCT_QUANTITY } from '@/constants/globalConstans';
 import BasketItemMobile from './BasketItemMobile';
 import BasketItemPC from './BasketItemPC';
 import { IBasketItemProps } from './type/interfaces';
 import AuthModal from '@/pages/Auth/AuthModal';
 
-
 export default function BasketItem({ product }: IBasketItemProps) {
   const { id, quantity } = product;
 
   const [isAuthModalOpen, setAuthModalOpen] = useState(false);
 
-  const { isAuthenticated } = useTypedSelector((state) => state.auth);
-  const userToken = useTypedSelector(state => state.auth.userToken)
-  
-  const { toggleFavorite } = useActions();
   const {
+    toggleFavorite,
     deleteFromStore,
     closeBasketPopup,
     increaseItemQuantity,
     decreaseItemQuantity,
   } = useActions();
+
+  const isAuthenticated = useTypedSelector(
+    (state) => state.auth.isAuthenticated,
+  );
+  const userToken = useTypedSelector((state) => state.auth.userToken);
 
   const isLikedProduct = useTypedSelector((state) =>
     state.products.favoriteProducts.some((fav) => fav.id === product.id),
@@ -53,10 +54,9 @@ export default function BasketItem({ product }: IBasketItemProps) {
     }
   };
 
-
   // eslint-disable-next-line no-unused-vars
-  const handleSaveFavoriteProduct = (_e: React.MouseEvent<HTMLButtonElement>) => {
-    if(!isAuthenticated && !userToken) {
+  const handleSaveFavoriteProduct = () => {
+    if (!isAuthenticated && !userToken) {
       setAuthModalOpen(true);
     } else {
       if (product) {
@@ -68,24 +68,24 @@ export default function BasketItem({ product }: IBasketItemProps) {
   return (
     <>
       {isLessThan768px ? (
-        <BasketItemMobile product={product} 
-          handleDeleteFromStore={handleDeleteFromStore} 
-          handleDecreaseItemQuantity={handleDecreaseItemQuantity} 
-          handleIncrementItemQuantity={handleIncrementItemQuantity} 
-          handleSaveFavoriteProduct={handleSaveFavoriteProduct} 
+        <BasketItemMobile
+          product={product}
+          handleDeleteFromStore={handleDeleteFromStore}
+          handleDecreaseItemQuantity={handleDecreaseItemQuantity}
+          handleIncrementItemQuantity={handleIncrementItemQuantity}
+          handleSaveFavoriteProduct={handleSaveFavoriteProduct}
           isLikedProduct={isLikedProduct}
         />
-
       ) : (
-        <BasketItemPC product={product} 
-          handleDeleteFromStore={handleDeleteFromStore} 
-          handleDecreaseItemQuantity={handleDecreaseItemQuantity} 
-          handleIncrementItemQuantity={handleIncrementItemQuantity} 
-          handleSaveFavoriteProduct={handleSaveFavoriteProduct} 
+        <BasketItemPC
+          product={product}
+          handleDeleteFromStore={handleDeleteFromStore}
+          handleDecreaseItemQuantity={handleDecreaseItemQuantity}
+          handleIncrementItemQuantity={handleIncrementItemQuantity}
+          handleSaveFavoriteProduct={handleSaveFavoriteProduct}
           isLikedProduct={isLikedProduct}
         />
-      )
-      }
+      )}
 
       <AuthModal
         isOpen={isAuthModalOpen}

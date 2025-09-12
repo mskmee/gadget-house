@@ -182,10 +182,25 @@
 
 @media screen and (max-width: 500px) {
   .footer-wrapper div div:first-child {
-    column-gap: 25px;
+    width: 173px;
+    column-gap: 36px;
     .contact-info {
+      > div {
+        > a {
+          > img, svg {height: 18px; width: 18px;}
+        }
+      }
       font-size: rem(12px);
     }
+    .social-links {
+        > .icons {
+          > a {
+             width: 34px;
+            height: 34px;
+            
+          }
+        }
+      }
   }
 }
 
@@ -193,12 +208,12 @@
   .footer-wrapper div {
     > div:first-child {
       .contact-info {
-        > div > a > {
-          img {
-            width: 24px;
-            height: 24px;
-          }
-        }
+        // > div > a  {
+        //   > img {
+        //     width: 24px;
+        //     height: 24px;
+        //   }
+        // }
         div:nth-child(2) a svg {
           width: 20px;
           height: 20px;
