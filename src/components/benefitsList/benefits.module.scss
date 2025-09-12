@@ -80,8 +80,13 @@
 
 @media screen and (max-width: 500px) {
   .wrapper {
-    padding: 24px 16px;
+    padding: 32px 16px;
     .card {
+      div {
+        width: 60px; 
+        height: 60px; 
+        margin: 0 auto 12px auto;
+      }
       max-width: 180px;
       > p {
         font-size: rem(19px);
@@ -92,24 +97,27 @@
 
 @media screen and (max-width: 450px) {
   .wrapper {
+    gap: 26px;
     .card {
+      text-align: center;
       max-width: 166px;
-      padding: 8px 10px;
+      max-height: 166px;
+      padding: 23px 24px;
       .text {
         font-size: rem(16px);
       }
     }
   }
 }
-@media screen and (max-width: 407px) {
-  .wrapper {
-    gap: 15px;
-    .card {
-      max-width: 300px;
-      padding: 8px 10px;
-      .text {
-        font-size: rem(16px);
-      }
-    }
-  }
-}
+// @media screen and (max-width: 407px) {
+//   .wrapper {
+//     gap: 15px;
+//     .card {
+//       max-width: 300px;
+//       padding: 8px 10px;
+//       .text {
+//         font-size: rem(16px);
+//       }
+//     }
+//   }
+// }

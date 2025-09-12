@@ -27,14 +27,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
     background-color: #6f4c9a;
     border-radius: 50%;
     > span {
-      font-size: rem(10px);
+      font-weight: 300;
+      font-size: rem(12px);
       color: #fff;
-      line-height: 8px;
+      line-height: 100%;
     }
   }
 }

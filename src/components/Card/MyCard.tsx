@@ -17,7 +17,6 @@ import { convertPriceToReadable } from '@/utils/helpers/product';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import getFormattedCategoryName from '@/hooks/getFormattedCategoryName';
 
-
 interface ISmartphoneCardProps {
   tempProduct: IProductCard | TProductImageCard | IBrandCard | undefined;
   classname: string;
@@ -31,9 +30,8 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
   tempProduct,
   classname,
   index,
-  width
+  width,
 }) => {
-
   const { toggleFavorite } = useActions();
   const product = tempProduct as IProductCard;
 
@@ -68,7 +66,7 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
       if (classname === 'basket-popup') {
         notification.open({
           className: 'basket-popup-notification',
-          placement: 'top',
+          placement: 'bottom',
           message: 'Product added to the basket',
           duration: 3,
           closeIcon: false,
@@ -99,8 +97,7 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
   };
   const anotherColors = (product as IProductCard)?.alternativeProducts?.color;
 
-  const formatCategoryName = getFormattedCategoryName(product?.categoryId)
-
+  const formatCategoryName = getFormattedCategoryName(product?.categoryId);
 
   return (
     <>
@@ -150,7 +147,6 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
                 onClick={handleSaveFavoriteProduct}
                 isLiked={isLikedProduct}
               />
-              
 
               {anotherColors && anotherColors?.length > 0 && (
                 <div className={styles['accessories-colors']}>
@@ -159,7 +155,8 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
                       key={color.attributeValue}
                       style={{ backgroundColor: color.attributeValue }}
                       className={classNames({
-                        [styles['hasBorder']]: color.attributeValue === '#ffffff',
+                        [styles['hasBorder']]:
+                          color.attributeValue === '#ffffff',
                       })}
                     ></div>
                   ))}
@@ -203,6 +200,9 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
             </div>
           </div>
         </Link>
+        {/* <button onClick={handleaddToBasket} tabIndex={-1}>
+                <BasketIcon />
+              </button> */}
       </div>
     </>
   );
