@@ -43,7 +43,7 @@ const PersonalDataView = ({
         </div>
         <div>
           <span>Sex</span>
-          <span>{`${personalData.gender[0].toUpperCase()}${personalData.gender.slice(1)}`}</span>
+          <span>{`${personalData?.gender[0]?.toUpperCase()}${personalData?.gender?.slice(1)}`}</span>
         </div>
       </div>
     </div>
