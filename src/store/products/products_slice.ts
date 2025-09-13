@@ -30,13 +30,31 @@ export interface IInitialState {
     totalPages: number;
     totalElements: number;
   };
-  loaded: boolean; // Added loaded flag
-  isFetchingMore: boolean,
-  isAppending: boolean
+  loaded: boolean;
+  isFetchingMore: boolean;
+  isAppending: boolean;
 }
 
+// const saveProductsToStorage = (products: ProductsResponseDto) => {
+//   try {
+//     localStorage.setItem('productsData', JSON.stringify(products));
+//   } catch (error) {
+//     console.error('Error saving products to localStorage:', error);
+//   }
+// };
+
+const loadProductsFromStorage = (): ProductsResponseDto | null => {
+  try {
+    const saved = localStorage.getItem('productsData');
+    return saved ? JSON.parse(saved) : null;
+  } catch (error) {
+    console.error('Error loading products from localStorage:', error);
+    return null;
+  }
+};
+
 const initialState: IInitialState = {
-  productsData: null,
+  productsData: loadProductsFromStorage(),
   activeProduct: null,
   favoriteProducts: JSON.parse(
     localStorage.getItem('favorite_products') || '[]',
@@ -48,9 +66,9 @@ const initialState: IInitialState = {
     totalPages: DEFAULT_PAGES,
     totalElements: DEFAULT_SIZE,
   },
-  loaded: false, // Added loaded flag
+  loaded: false, 
   isFetchingMore: false,
-  isAppending: false
+  isAppending: false,
 };
 
 const products_slice = createSlice({
@@ -64,20 +82,32 @@ const products_slice = createSlice({
       state.loaded = payload;
     },
     toggleFavorite: (state, { payload }: PayloadAction<IProductCard>) => {
+      console.log('PAYLOAD THAT REDUCER RECIEVE', payload);
+      console.log('STATE PRODUCST DATA FROM REDUX:', state.productsData);
+
       const product = state.productsData?.page.find(
         (item) => item.id === payload.id,
       );
 
-      if (!product) return;
+      console.log('PRODUCT ', product);
 
-      product.isLiked = !product.isLiked;
+      if (product) {
+        product.isLiked = !product.isLiked;
+      }
 
-      if (product.isLiked) {
-        state.favoriteProducts.push(product);
-      } else {
+      const favoriteIndex = state.favoriteProducts.findIndex(
+        (fav) => fav.id === payload.id,
+      );
+
+      const isCurrentlyFavorite = favoriteIndex !== -1;
+
+      if (isCurrentlyFavorite) {
         state.favoriteProducts = state.favoriteProducts.filter(
           (fav) => fav.id !== payload.id,
         );
+      } else {
+        const favoriteProduct = { ...payload, isLiked: true };
+        state.favoriteProducts.push(favoriteProduct);
       }
 
       localStorage.setItem(
@@ -87,11 +117,12 @@ const products_slice = createSlice({
     },
     clearProductsData: (state) => {
       state.productsData = null;
+      localStorage.removeItem('productsData');
     },
-    setIsAppending: (state, {payload}: {payload: boolean}) => {
-      console.log('payload', payload)
-      state.isAppending = payload
-    }
+    setIsAppending: (state, { payload }: { payload: boolean }) => {
+      console.log('payload', payload);
+      state.isAppending = payload;
+    },
   },
   extraReducers(builder) {
     builder.addCase(getAllProducts.fulfilled, (state, { payload }) => {
@@ -99,7 +130,7 @@ const products_slice = createSlice({
         state.favoriteProducts.map((product) => product.id),
       );
 
-      state.productsData = {
+      const processedPayload = {
         ...payload,
         page: payload.page.map((product) => ({
           ...product,
@@ -108,6 +139,8 @@ const products_slice = createSlice({
           href: generateHrefSlug(product.name),
         })),
       };
+
+      state.productsData = processedPayload;
       state.pagination = {
         currentPage: payload.currentPage,
         totalPages: payload.totalPages,
@@ -115,9 +148,11 @@ const products_slice = createSlice({
       };
       state.loaded = true;
     });
+
     builder.addCase(getOneProductById.fulfilled, (state, { payload }) => {
       state.activeProduct = payload;
     });
+
     builder.addCase(getPaginatedProducts.fulfilled, (state, { payload }) => {
       state.productsData = payload;
       state.pagination = {
@@ -126,21 +161,21 @@ const products_slice = createSlice({
         totalElements: payload.totalElements,
       };
     });
+
     builder.addCase(getByCategory.fulfilled, (state, { payload }) => {
       state.productsData = payload;
-      
       state.pagination = {
         currentPage: payload.currentPage,
         totalPages: payload.totalPages,
         totalElements: payload.totalElements,
       };
     });
+
     builder
       .addCase(getFilteredProducts.pending, (state) => {
         state.isFetchingMore = true;
       })
       .addCase(getFilteredProducts.fulfilled, (state, { payload }) => {
-        // state.productsData = payload;
         if (!state.isAppending) {
           state.productsData = payload;
         } else {
@@ -168,14 +203,13 @@ const products_slice = createSlice({
         getOneProductById.fulfilled,
         getPaginatedProducts.fulfilled,
         getByCategory.fulfilled,
-
         getFilteredProducts.fulfilled,
       ),
-
       (state) => {
         state.dataStatus = DataStatus.FULFILLED;
       },
     );
+
     builder.addMatcher(
       isAnyOf(
         getAllProducts.rejected,
@@ -184,11 +218,11 @@ const products_slice = createSlice({
         getByCategory.rejected,
         getFilteredProducts.rejected,
       ),
-
       (state) => {
         state.dataStatus = DataStatus.REJECT;
       },
     );
+
     builder.addMatcher(
       isAnyOf(
         getAllProducts.pending,
@@ -197,7 +231,6 @@ const products_slice = createSlice({
         getByCategory.pending,
         getFilteredProducts.pending,
       ),
-
       (state) => {
         state.dataStatus = DataStatus.PENDING;
       },
@@ -205,7 +238,12 @@ const products_slice = createSlice({
   },
 });
 
-export const { setPageNumber, clearProductsData, toggleFavorite, setIsAppending } =
-  products_slice.actions;
+export const {
+  setPageNumber,
+  clearProductsData,
+  toggleFavorite,
+  setIsAppending,
+  setLoaded,
+} = products_slice.actions;
 
 export const { actions, reducer } = products_slice;

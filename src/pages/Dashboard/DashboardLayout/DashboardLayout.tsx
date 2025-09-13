@@ -14,6 +14,7 @@ import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { AppRoute } from '@/enums/Route';
 import { useActions } from '@/hooks/useActions';
 import { DEFAULT_PAGE, DEFAULT_SIZE } from '@/constants/pagination';
+import { useMediaQuery } from 'react-responsive';
 
 export const DashboardLayout = () => {
   const { pathname } = useLocation();
@@ -25,6 +26,10 @@ export const DashboardLayout = () => {
   );
   const userToken = useTypedSelector((state) => state.auth.userToken);
   const { getAllProducts } = useActions();
+
+  const isMobile767 = useMediaQuery({
+    query: '(max-width: 767px)',
+  });
 
   useEffect(() => {
     const parts = pathname.split('/').filter(Boolean);
@@ -69,7 +74,9 @@ export const DashboardLayout = () => {
         <div className={styles.dashboardUserAvatar}>
           <UserAvatar name={currentUser?.fullName || ''} />
           <h2 className={styles.dashboardUserName}>{currentUser?.fullName}</h2>
-          <ChangeUserData />
+          <Link to={'/dashboard/2'}>
+            <ChangeUserData />
+          </Link>
         </div>
         <div className={styles.dashboardUserStatistics}>
           <div className={styles.userStatisticsOrders}>
@@ -77,7 +84,7 @@ export const DashboardLayout = () => {
               <BasketIcon />
               <span>My orders</span>
             </div>
-            <span>3</span>
+            <span>{orders?.length}</span>
           </div>
           <div className={styles.userStatisticsFavorites}>
             <div>
@@ -168,11 +175,13 @@ export const DashboardLayout = () => {
         </div>
       </div>
 
-      <SliderNav
-        text="Recommendations for you"
-        link="/smartphones"
-        isVisibleSeeMoreBtn={false}
-      />
+      {!isMobile767 && (
+        <SliderNav
+          text="Recommendations for you"
+          link="/smartphone"
+          isVisibleSeeMoreBtn={false}
+        />
+      )}
       <Carousels classname="smartphone-carousel" />
       <Benefits />
     </>

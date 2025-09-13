@@ -1,10 +1,13 @@
-import { IconProps } from "./type/interfaces";
+import { IconProps } from './type/interfaces';
 
-export const BasketIcon = ({color="currentColor"}: IconProps) => {
+export const BasketIcon = ({
+  color = 'currentColor',
+  size = { width: '24', height: '24' },
+}: IconProps) => {
   return (
     <svg
-      width="24"
-      height="24"
+      width={size.width}
+      height={size.height}
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

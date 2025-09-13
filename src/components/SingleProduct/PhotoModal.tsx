@@ -6,7 +6,6 @@ import { convertPriceToReadable } from '@/utils/helpers/product';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { useMediaQuery } from 'react-responsive';
 import { IProductCard } from '@/interfaces/interfaces';
-
 import ArrowIcon from '@/assets/single_product/ArrowIcon';
 import SliderThumbs from '@/UI/Slider/SliderThumbs/SliderThumbs';
 import { ArrowNext, ArrowPrev } from '@/UI/Slider/SliderArrows/SliderArrow';
@@ -24,7 +23,7 @@ interface iPhotoModalProps {
   currentSlide: ICurrentSlide;
   setCurrentSlide: Dispatch<SetStateAction<ICurrentSlide>>;
   dynamicCurrentProduct: IProductCard;
-  forceUpdateKey?: number
+  forceUpdateKey?: number;
 }
 
 export const PhotoModal: FC<iPhotoModalProps> = ({
@@ -35,10 +34,11 @@ export const PhotoModal: FC<iPhotoModalProps> = ({
   currentSlide,
   dynamicCurrentProduct,
 }) => {
-
   const { currency, locale } = useTypedSelector((state) => state.shopping_card);
-  const isWidth575 = useMediaQuery({ query: '(max-width: 575px)'})
-  const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(currentSlide.id - 1);
+  const isWidth575 = useMediaQuery({ query: '(max-width: 575px)' });
+  const [currentSlideIndex, setCurrentSlideIndex] = useState<number>(
+    currentSlide.id - 1,
+  );
 
   const handleModalCancel = () => {
     setIsModalVisible(false);
@@ -62,12 +62,21 @@ export const PhotoModal: FC<iPhotoModalProps> = ({
           <div className={style.photoModal}>
             <div className={style.photoModal__inner}>
               <div className={style.photoModal__slideCounter}>
-                {currentSlideIndex + 1} / {dynamicCurrentProduct?.images?.length}
+                {currentSlideIndex + 1} /{' '}
+                {dynamicCurrentProduct?.images?.length}
               </div>
-              <SliderThumbs 
-                data={dynamicCurrentProduct?.images} 
-                prevArrow={<ArrowPrev classNameArrow='arrowLeft'><ArrowIcon color="#1C1817"/></ArrowPrev>} 
-                nextArrow={<ArrowNext classNameArrow='arrowRight'><ArrowIcon color="#1C1817"/></ArrowNext>}
+              <SliderThumbs
+                data={dynamicCurrentProduct?.images}
+                prevArrow={
+                  <ArrowPrev classNameArrow="arrowLeft">
+                    <ArrowIcon color="#1C1817" />
+                  </ArrowPrev>
+                }
+                nextArrow={
+                  <ArrowNext classNameArrow="arrowRight">
+                    <ArrowIcon color="#1C1817" />
+                  </ArrowNext>
+                }
                 currentSlide={currentSlide}
                 breakpointsThumbs={{
                   575: {

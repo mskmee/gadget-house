@@ -25,7 +25,7 @@ export function mapDtoToUser(data:IUser): IMappedUser {
     day: birthdate ? String(birthdate.getDate()).padStart(2, '0') : '',
     month: birthdate ? String(birthdate.getMonth() + 1).padStart(2, '0') : '',
     year: birthdate ? String(birthdate.getFullYear()) : '',
-    gender: data.sex ? data.sex[0] + data.sex.slice(1).toLowerCase() : '',
+    gender: data.sex ? data.sex.toLowerCase() : '',
     role: data.role,
   };
 }
