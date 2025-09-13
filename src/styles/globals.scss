@@ -149,7 +149,8 @@ img {
   }
 
   &__status {
-    min-width: 146px;
+    // min-width: 146px;
+    min-width: 118px;
     height: 44px;
     padding: 10px 24px;
     border: 1px solid #065d0f;
@@ -172,6 +173,7 @@ img {
       border-color: #7d3a0a;
       background-color: #f6d3b9;
       color: #7d3a0a;
+      padding: 10px 14px;
     }
 
     &_awaiting {
