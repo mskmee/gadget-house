@@ -1,6 +1,7 @@
 .swiper-button-prev:after,
 .swiper-button-next:after {
   display: none;
+ 
 }
 .swiper-button-disabled {
   opacity: 0;
@@ -33,6 +34,7 @@
   }
   .swiper-button-next,
   .swiper-button-prev {
+  
     position: static;
     display: flex;
     justify-content: center;
@@ -165,6 +167,7 @@
     cursor: pointer;
     border-radius: 11px;
     transition: 0.5s;
+    
   }
   img {
     border-radius: 11px;

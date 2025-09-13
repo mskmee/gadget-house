@@ -1,4 +1,5 @@
 @import '@/styles/functions';
+@import '@/styles/variables.css';
 
 /* Hide number input arrows in Chrome, Safari, Edge */
 input[type='number']::-webkit-outer-spin-button,
@@ -19,33 +20,31 @@ input[type='number'] {
   background-color: #fff;
   border-radius: 20px;
   box-shadow: 0 0 8px #0000001a;
-  @media(max-width: 1100px) {
-    margin: 0 15px;
-  }
-  @media(max-width: 991px) {
-    background: transparent;
-    box-shadow: none;
-    border-radius: 0;
-    padding: 0 16px;
-  }
   .dashboardAccountTitle {
     margin-bottom: 28px;
     font-size: rem(42px);
     line-height: 150%;
     font-weight: 500;
   }
+
   .personalDataWrap,
   .personalContactWrap {
+    input:focus-visible {
+      outline: none;
+    }
+
     display: flex;
     flex-direction: column;
     gap: 12px;
     width: 402px;
     margin-bottom: 22px;
+
     .personalDataTitle,
     .personalContactTitle {
       display: flex;
       align-items: center;
       gap: 8px;
+
       > h3 {
         font-size: rem(24px);
         font-weight: 400;
@@ -81,8 +80,9 @@ input[type='number'] {
     .personalDatesChangeSection {
       display: flex;
       gap: 32px;
+
       > div {
-        .inputError {
+        .errorMessage {
           display: flex;
           gap: 4px;
           align-items: center;
@@ -90,11 +90,11 @@ input[type='number'] {
           > span {
             font-size: rem(12px);
             line-height: 150%;
-            color: #f01a1a;
+            color: var(--error-color);
           }
         }
         > div {
-          .inputError {
+          .errorMessage {
             display: flex;
             gap: 4px;
             align-items: center;
@@ -102,7 +102,7 @@ input[type='number'] {
             > span {
               font-size: rem(12px);
               line-height: 150%;
-              color: #f01a1a;
+              color: var(--error-color);
             }
           }
         }
@@ -121,6 +121,9 @@ input[type='number'] {
             border-radius: 12px;
             border: 1px solid #78808c;
           }
+          input.errorInput {
+            border-color: var(--error-color);
+          }
         }
       }
 
@@ -132,7 +135,7 @@ input[type='number'] {
         }
       }
       > div:nth-child(2) {
-        > div:not(.inputError) {
+        > div:not(.errorMessage) {
           display: flex;
           gap: 8px;
 
@@ -153,7 +156,7 @@ input[type='number'] {
         }
       }
       > div:nth-child(4) {
-        > div:not(.inputError) {
+        > div:not(.errorMessage) {
           display: flex;
           gap: 16px;
           height: 52px;
@@ -180,10 +183,11 @@ input[type='number'] {
     .personalContacts .personalContactChangeSection {
       display: flex;
       gap: 32px !important;
+
       > div {
         display: flex;
         flex-direction: column;
-        .inputError {
+        .errorMessage {
           display: flex;
           gap: 4px;
           align-items: center;
@@ -191,7 +195,7 @@ input[type='number'] {
           > span {
             font-size: rem(12px);
             line-height: 150%;
-            color: #f01a1a;
+            color: var(--error-color);
           }
         }
 
@@ -204,6 +208,9 @@ input[type='number'] {
             padding: 16px 14px;
             border-radius: 12px;
             border: 1px solid #78808c;
+          }
+          input.errorInput {
+            border-color: var(--error-color);
           }
         }
       }
@@ -223,6 +230,7 @@ input[type='number'] {
       display: flex;
       align-items: center;
       gap: 8px;
+
       > button {
         padding: 16px 32px;
         border: 2px solid #00820d;
@@ -230,6 +238,7 @@ input[type='number'] {
       }
       > button:first-child {
         color: #00820d;
+
         &:hover {
           color: #fff;
           border-color: #4da856;
@@ -268,8 +277,11 @@ input[type='number'] {
             border-radius: 12px;
             border: 1px solid #78808c;
           }
+          input.errorInput {
+            border-color: var(--error-color);
+          }
         }
-        .inputError {
+        .errorMessage {
           display: flex;
           gap: 4px;
           align-items: center;
@@ -277,7 +289,7 @@ input[type='number'] {
           > span {
             font-size: rem(12px);
             line-height: 150%;
-            color: #f01a1a;
+            color: var(--error-color);
           }
         }
       }
@@ -291,5 +303,98 @@ input[type='number'] {
   }
   .addPhoneNumber {
     padding: 16px 0;
+  }
+  .asterisk {
+    color: var(--error-color);
+  }
+}
+
+@media (max-width: 1100px) {
+  .dashboardAccount {
+    margin: 0 15px;
+
+    .personalDataWrap,
+    .personalContactWrap {
+      width: 100%;
+
+      .personalDataTitle,
+      .personalContactTitle {
+        margin-bottom: 12px;
+      }
+
+      .personalDates,
+      .personalContacts {
+        .addPhoneNumber {
+          text-decoration: none;
+        }
+      }
+
+      .personalDatesChangeSection {
+        flex-direction: column;
+        gap: 24px;
+
+        > div {
+          > div {
+            input {
+              width: 100%;
+            }
+          }
+        }
+        > div:nth-child(1) {
+          > div input {
+            max-width: 100%;
+          }
+        }
+        > div:nth-child(3) {
+          > div input {
+            max-width: 100%;
+          }
+        }
+      }
+
+      .personalContacts .personalContactChangeSection {
+        flex-direction: column;
+        gap: 16px !important;
+
+        > div:nth-child(1) {
+          > div input {
+            width: 100%;
+          }
+        }
+        > div:nth-child(2) {
+          > div input {
+            width: 100%;
+          }
+        }
+      }
+      .buttonsSection {
+        flex-direction: column;
+
+        > button {
+          width: 100%;
+        }
+
+        > button:first-child {
+          order: 2;
+        }
+      }
+
+      .personalContacts {
+        .addPhoneNumberSection {
+          > div input {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  .dashboardAccount {
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0 16px;
   }
 }

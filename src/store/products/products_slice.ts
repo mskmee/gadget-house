@@ -35,13 +35,13 @@ export interface IInitialState {
   isAppending: boolean;
 }
 
-const saveProductsToStorage = (products: ProductsResponseDto) => {
-  try {
-    localStorage.setItem('productsData', JSON.stringify(products));
-  } catch (error) {
-    console.error('Error saving products to localStorage:', error);
-  }
-};
+// const saveProductsToStorage = (products: ProductsResponseDto) => {
+//   try {
+//     localStorage.setItem('productsData', JSON.stringify(products));
+//   } catch (error) {
+//     console.error('Error saving products to localStorage:', error);
+//   }
+// };
 
 const loadProductsFromStorage = (): ProductsResponseDto | null => {
   try {
@@ -66,7 +66,7 @@ const initialState: IInitialState = {
     totalPages: DEFAULT_PAGES,
     totalElements: DEFAULT_SIZE,
   },
-  loaded: Boolean(loadProductsFromStorage()), 
+  loaded: false,
   isFetchingMore: false,
   isAppending: false,
 };
@@ -82,26 +82,34 @@ const products_slice = createSlice({
       state.loaded = payload;
     },
     toggleFavorite: (state, { payload }: PayloadAction<IProductCard>) => {
-      const existingFavoriteIndex = state.favoriteProducts.findIndex(
+      console.log('PAYLOAD THAT REDUCER RECIEVE', payload);
+      console.log('STATE PRODUCST DATA FROM REDUX:', state.productsData);
+
+      const product = state.productsData?.page.find(
+        (item) => item.id === payload.id,
+      );
+
+      console.log('PRODUCT ', product);
+
+      if (product) {
+        product.isLiked = !product.isLiked;
+      }
+
+      const favoriteIndex = state.favoriteProducts.findIndex(
         (fav) => fav.id === payload.id,
       );
 
-      if (existingFavoriteIndex >= 0) {
-        state.favoriteProducts.splice(existingFavoriteIndex, 1);
-      } else {
-        state.favoriteProducts.push({
-          ...payload,
-          isLiked: true,
-        });
-      }
-      if (state.productsData?.page) {
-        const product = state.productsData.page.find(
-          (item) => item.id === payload.id,
+      const isCurrentlyFavorite = favoriteIndex !== -1;
+
+      if (isCurrentlyFavorite) {
+        state.favoriteProducts = state.favoriteProducts.filter(
+          (fav) => fav.id !== payload.id,
         );
-        if (product) {
-          product.isLiked = existingFavoriteIndex < 0;
-        }
+      } else {
+        const favoriteProduct = { ...payload, isLiked: true };
+        state.favoriteProducts.push(favoriteProduct);
       }
+
       localStorage.setItem(
         'favorite_products',
         JSON.stringify(state.favoriteProducts),
@@ -139,8 +147,6 @@ const products_slice = createSlice({
         totalElements: payload.totalElements,
       };
       state.loaded = true;
-      
-      saveProductsToStorage(processedPayload);
     });
 
     builder.addCase(getOneProductById.fulfilled, (state, { payload }) => {
@@ -154,8 +160,6 @@ const products_slice = createSlice({
         totalPages: payload.totalPages,
         totalElements: payload.totalElements,
       };
-      
-      saveProductsToStorage(payload);
     });
 
     builder.addCase(getByCategory.fulfilled, (state, { payload }) => {
@@ -165,8 +169,6 @@ const products_slice = createSlice({
         totalPages: payload.totalPages,
         totalElements: payload.totalElements,
       };
-      
-      saveProductsToStorage(payload);
     });
 
     builder
@@ -189,10 +191,7 @@ const products_slice = createSlice({
         };
 
         state.isFetchingMore = false;
-        
-        if (state.productsData) {
-          saveProductsToStorage(state.productsData);
-        }
+        state.isAppending = false;
       })
       .addCase(getFilteredProducts.rejected, (state) => {
         state.isFetchingMore = false;
@@ -248,4 +247,3 @@ export const {
 } = products_slice.actions;
 
 export const { actions, reducer } = products_slice;
-export default products_slice.reducer;

@@ -81,8 +81,8 @@ export const FavoriteProductCard: FC<IFavoriteProductProps> = ({
                     <img
                       src={index < productRating ? rateImg : rateEmptyImg}
                       alt="product rate star"
-                      width={24}
-                      height={24}
+                      width={12}
+                      height={12}
                     />
                   )}
                 />
@@ -95,7 +95,7 @@ export const FavoriteProductCard: FC<IFavoriteProductProps> = ({
               className={styles.basketPopupRemoveProduct}
               onClick={handleClickClearBtn}
             >
-              <CloseModal size="35" />
+              <CloseModal size="28" />
             </button>
             <div className={styles.mobilePrice}>
               {convertPriceToReadable(price, currency, locale)}
@@ -116,7 +116,7 @@ export const FavoriteProductCard: FC<IFavoriteProductProps> = ({
             tabIndex={-1}
             className={styles.addToBasker}
           >
-            <BasketIcon />
+            <BasketIcon color="#fff" size={{ width: '34', height: '34' }} />
           </button>
         </div>
       </Link>

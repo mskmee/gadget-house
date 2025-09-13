@@ -194,6 +194,7 @@
 
 .cardPriceContainer {
   align-items: flex-end;
+  align-items: flex-end;
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -376,6 +377,7 @@
     min-width: 175px;
     max-width: 305px;
     gap: 12px;
+    gap: 12px;
   }
 
   .cardContainerTop {
@@ -389,6 +391,12 @@
     }
     .cardConatinerLike {
       padding-bottom: 10px;
+      > button {
+        > svg {
+          width: 24px;
+          height: 24px;
+        }
+      }
       > button {
         > svg {
           width: 24px;
@@ -433,11 +441,16 @@
           img {
             width: 10px;
             height: 10px;
+            width: 10px;
+            height: 10px;
           }
         }
       }
     }
     .card-code {
+      font-weight: 300;
+      font-size: rem(12px);
+      line-height: 150%;
       font-weight: 300;
       font-size: rem(12px);
       line-height: 150%;

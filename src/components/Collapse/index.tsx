@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import styles from './styles.module.scss';
 import ArrowUp from '@/assets/icons/arrow-up.svg';
@@ -6,24 +6,28 @@ import ArrowUp from '@/assets/icons/arrow-up.svg';
 interface CollapseProps {
   children: React.ReactNode;
   title: React.ReactNode;
+  onToggle: () => void;
+  isOpen: boolean;
   className?: string;
 }
 
 export const Collapse: React.FC<CollapseProps> = ({
   children,
   title,
+  onToggle,
+  isOpen,
   className,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
   return (
     <div
       className={classNames(styles.collapse, className)}
       aria-expanded={isOpen}
     >
       <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={classNames(styles['collapse__header'], {[styles['isOpen']]: isOpen})}
+        onClick={onToggle}
+        className={classNames(styles['collapse__header'], {
+          [styles['isOpen']]: isOpen,
+        })}
       >
         <div className={styles['collapse__header-title']}>{title}</div>
         <div>

@@ -38,6 +38,9 @@ const toastMiddleware: Middleware =
   (next) =>
   (action: unknown) => {
     if (isRejected(action)) {
+      if (action.type === 'auth/fetchCredentials/rejected') {
+        return next(action);
+      }
       const error = action.error;
 
       if (AuthorizationError.isAuthorizationError(error)) {
