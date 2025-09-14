@@ -5,7 +5,7 @@ import styles from './slidernav.module.scss';
 // import { SliderRightArrow } from '@/assets/icons/SliderRightArrow';
 interface ISliderNavProps {
   text: string;
-  link: string;
+  // link: string;
   // isVisibleSeeMoreBtn?: boolean;
 }
 

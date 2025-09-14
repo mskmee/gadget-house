@@ -178,8 +178,8 @@ export const DashboardLayout = () => {
       {!isMobile767 && (
         <SliderNav
           text="Recommendations for you"
-          link="/smartphone"
-          isVisibleSeeMoreBtn={false}
+          // link="/smartphone"
+          // isVisibleSeeMoreBtn={false}
         />
       )}
       <Carousels classname="smartphone-carousel" />

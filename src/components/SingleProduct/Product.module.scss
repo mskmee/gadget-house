@@ -23,7 +23,6 @@
   }
   > ol > li > a {
     color: var(--secondary-text-color);
-    color: var(--secondary-text-color);
   }
   > ol > li:last-child > a {
     color: #1c1817;
@@ -271,7 +270,6 @@
             cursor: pointer;
             &:hover {
               border: 3px solid var(--secondary-text-color);
-              border: 3px solid var(--secondary-text-color);
             }
           }
           > li.selected-color {
@@ -282,7 +280,6 @@
             border: 1px solid #00820d;
           }
           > li.not-available {
-            border: 1px solid var(--secondary-text-color);
             border: 1px solid var(--secondary-text-color);
             display: flex;
             justify-content: center;
@@ -452,6 +449,7 @@
 }
 
 //prodoct photo modal
+
 .photoModal {
   &__inner {
     display: flex;
@@ -467,9 +465,6 @@
       font-size: 20px;
     }
   }
-}
-
-.photoModal {
   > div {
     max-width: initial;
     padding: 0;
