@@ -178,7 +178,7 @@ export const DashboardLayout = () => {
       {!isMobile767 && (
         <SliderNav
           text="Recommendations for you"
-          // link="/smartphone"
+          link="/smartphone"
           // isVisibleSeeMoreBtn={false}
         />
       )}

@@ -95,7 +95,7 @@ export const SearchResults = () => {
       </div>
       <SliderNav
         text="Recommendations for you"
-        // link="/recommendations"
+        link="/recommendations"
         // isVisibleSeeMoreBtn={false}
       />
 

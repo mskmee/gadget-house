@@ -92,7 +92,7 @@ export const BasketPage = () => {
 
       <SliderNav
         text={isMobile ? 'Recommendations' : 'Recommendations for you'}
-        // link="/smartphones"
+        link="/smartphones"
         // isVisibleSeeMoreBtn={isMobile}
       />
       <Carousels classname="smartphone-carousel" />
