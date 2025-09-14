@@ -50,11 +50,11 @@ export const ProductPhotos: FC<IProductPhotosProps> = ({
                 spaceBetween: '20px',
               },
               768: {
-                slidesPerView: 3.5,
+                slidesPerView: 2.5,
                 spaceBetween: '30px',
               },
               1024: {
-                slidesPerView: 3.5,
+                slidesPerView: 2.5,
                 spaceBetween: '40px',
               },
             }}
