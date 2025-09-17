@@ -23,7 +23,7 @@ export default function BasketPopup() {
   const isLessThan768px = useMediaQuery({
     query: '(max-width: 768px)',
   });
-
+  ``;
   const { products, currency, locale, selectedProductId } = useTypedSelector(
     (state) => state.shopping_card,
   );
@@ -118,7 +118,10 @@ export default function BasketPopup() {
                 </button>
                 <p>{quantity}</p>
                 <button onClick={handleIncreaseItemQuantity}>
-                  <img src={quantityInreaseButtonMobile} alt="increase button" />
+                  <img
+                    src={quantityInreaseButtonMobile}
+                    alt="increase button"
+                  />
                 </button>
               </div>
               <span className={styles.basketPopupProductPrice}>
@@ -144,6 +147,11 @@ export default function BasketPopup() {
         <div className={styles.basketPopupProduct}>
           <div className={styles.basketPopupImg}>
             <img src={imageSrc} alt={name || 'Product image'} />
+            {/* <img
+              src="https://res.cloudinary.com/dtbnu6abl/image/upload/c_trim,c_fill,w_180,h_200/v1745928806/Product_image_yjtuqd.png
+"
+              alt={name || 'Product image'}
+            /> */}
             <img
               className={styles.basketPopupAdded}
               src={inBasket}
@@ -168,18 +176,20 @@ export default function BasketPopup() {
               <h3 className={styles.basketPopupProductPrice}>
                 {convertPriceToReadable(totalPrice, currency, locale)}
               </h3>
-              <button
-                className={styles.basketPopupContinueShopping}
-                onClick={handleClosePopup}
-              >
-                Continue Shopping
-              </button>
-              <button
-                className={styles.basketPopupGotoBasket}
-                onClick={handleGotoBasket}
-              >
-                Go to basket
-              </button>
+              <div>
+                <button
+                  className={styles.basketPopupContinueShopping}
+                  onClick={handleClosePopup}
+                >
+                  Continue Shopping
+                </button>
+                <button
+                  className={styles.basketPopupGotoBasket}
+                  onClick={handleGotoBasket}
+                >
+                  Go to basket
+                </button>
+              </div>
             </div>
           </div>
           <button
