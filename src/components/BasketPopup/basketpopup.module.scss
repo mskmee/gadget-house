@@ -5,7 +5,7 @@
   min-height: 401px;
   padding: 79px 56px 74px 56px;
   background: #f8f7fa;
-  border-radius: 20px;
+  border-radius: 30px;
 
   &Close {
     position: absolute;
@@ -18,7 +18,7 @@
     align-items: center;
     column-gap: 24px;
     background: #fff;
-    border-radius: 24px;
+    border-radius: 20px;
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
     padding: 24px 16px 24px 24px;
     &Title {
@@ -36,7 +36,7 @@
     }
     &Code {
       margin-top: 8px;
-      color: rgba(128, 128, 128, 1);
+      color: var(--secondary-text-color);
       font-weight: 400;
       font-size: 16px;
       line-height: 24px;
@@ -45,6 +45,7 @@
     &Quantity {
       display: flex;
       align-items: center;
+      justify-content: center;
       column-gap: 8px;
       width: fit-content;
       margin-top: 8px;
@@ -86,6 +87,7 @@
       font-weight: 400;
       font-size: 24px;
       line-height: 36px;
+      align-self: flex-end;
     }
   }
 
@@ -95,6 +97,11 @@
     height: 200px;
     display: grid;
     place-content: center;
+
+    > img {
+      mix-blend-mode: multiply;
+      background: #fff;
+    }
   }
   &Added {
     position: absolute;
@@ -125,17 +132,22 @@
   }
 
   &Bottom {
-    margin-top: auto;
+    margin-top: 64px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    > div {
+      display: flex;
+      gap: 16px;
+    }
   }
 
   &ContinueShopping {
-    padding: 14px 30px;
-    box-sizing: initial;
-    margin-left: auto;
-    margin-right: 16px;
+    display: flex;
+    align-items: center;
+    padding: 16px 32px;
+    height: 56px;
+    box-sizing: border-box;
     color: var(--green-color);
     background-color: var(--white-color);
     border: 2px solid var(--green-color);
@@ -154,7 +166,7 @@
     }
   }
   &GotoBasket {
-    padding: 16px 34px;
+    padding: 16px 32px;
     color: var(--white-color);
     background-color: var(--green-color);
     font-weight: 500;
