@@ -147,11 +147,6 @@ export default function BasketPopup() {
         <div className={styles.basketPopupProduct}>
           <div className={styles.basketPopupImg}>
             <img src={imageSrc} alt={name || 'Product image'} />
-            {/* <img
-              src="https://res.cloudinary.com/dtbnu6abl/image/upload/c_trim,c_fill,w_180,h_200/v1745928806/Product_image_yjtuqd.png
-"
-              alt={name || 'Product image'}
-            /> */}
             <img
               className={styles.basketPopupAdded}
               src={inBasket}
