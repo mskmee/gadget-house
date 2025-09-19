@@ -16,8 +16,12 @@ import { useMediaQuery } from 'react-responsive';
 import { Carousels } from '../components';
 import { notification } from 'antd';
 import { MAX_PRODUCT_QUANTITY } from '@/constants/globalConstans';
+import { useState } from 'react';
+import classNames from 'classnames';
 
 export default function BasketPopup() {
+  const [isClosing, setIsClosing] = useState(false);
+
   const navigate = useNavigate();
 
   const isLessThan768px = useMediaQuery({
@@ -69,21 +73,52 @@ export default function BasketPopup() {
   };
 
   const handleClosePopup = () => {
-    closeBasketPopup();
+    if (isLessThan768px) {
+      setIsClosing(true);
+      setTimeout(() => {
+        setIsClosing(false);
+        closeBasketPopup();
+      }, 200);
+    } else {
+      closeBasketPopup();
+    }
   };
 
   const handleGotoBasket = () => {
-    closeBasketPopup();
-    navigate(AppRoute.BASKET_PAGE);
+    if (isLessThan768px) {
+      setIsClosing(true);
+      setTimeout(() => {
+        setIsClosing(false);
+        closeBasketPopup();
+        navigate(AppRoute.BASKET_PAGE);
+      }, 200);
+    } else {
+      closeBasketPopup();
+      navigate(AppRoute.BASKET_PAGE);
+    }
   };
 
   const handleRemoveProduct = () => {
-    closeBasketPopup();
-    deleteFromStore(id);
+    if (isLessThan768px) {
+      setIsClosing(true);
+      setTimeout(() => {
+        setIsClosing(false);
+        closeBasketPopup();
+        deleteFromStore(id);
+      }, 200);
+    } else {
+      closeBasketPopup();
+      deleteFromStore(id);
+    }
   };
 
   return (
-    <div className={styles.basketPopup}>
+    <div
+      className={classNames({
+        [styles.basketPopup]: true,
+        [styles.closing]: isClosing,
+      })}
+    >
       <button className={styles.basketPopupClose} onClick={handleClosePopup}>
         <img src={closeBasketPopupIcon} alt="close" />
       </button>
@@ -118,7 +153,10 @@ export default function BasketPopup() {
                 </button>
                 <p>{quantity}</p>
                 <button onClick={handleIncreaseItemQuantity}>
-                  <img src={quantityInreaseButtonMobile} alt="increase button" />
+                  <img
+                    src={quantityInreaseButtonMobile}
+                    alt="increase button"
+                  />
                 </button>
               </div>
               <span className={styles.basketPopupProductPrice}>
