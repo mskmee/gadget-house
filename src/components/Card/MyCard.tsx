@@ -63,15 +63,13 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
       selectedProduct === undefined
     ) {
       addToStore(product as IProductCard);
-      if (classname === 'basket-popup') {
-        notification.open({
-          className: 'basket-popup-notification',
-          placement: 'bottom',
-          message: 'Product added to the basket',
-          duration: 3,
-          closeIcon: false,
-        });
-      }
+      notification.open({
+        className: 'basket-popup-notification',
+        placement: 'bottom',
+        message: 'Product added to the basket',
+        duration: 3,
+        closeIcon: false,
+      });
     }
     if (selectedProduct?.quantity == 20) {
       notification.open({

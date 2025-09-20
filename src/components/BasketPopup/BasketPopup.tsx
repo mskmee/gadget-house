@@ -16,8 +16,12 @@ import { useMediaQuery } from 'react-responsive';
 import { Carousels } from '../components';
 import { notification } from 'antd';
 import { MAX_PRODUCT_QUANTITY } from '@/constants/globalConstans';
+import { useEffect, useState } from 'react';
+import classNames from 'classnames';
 
 export default function BasketPopup() {
+  const [isClosing, setIsClosing] = useState(false);
+
   const navigate = useNavigate();
 
   const isLessThan768px = useMediaQuery({
@@ -38,7 +42,18 @@ export default function BasketPopup() {
   const selectedProduct = products.find(
     (product) => product.id === selectedProductId,
   );
+  const isOpen = Boolean(selectedProduct);
 
+  useEffect(() => {
+    if (isOpen) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+
+      return () => {
+        document.body.style.overflow = prev;
+      };
+    }
+  }, [isOpen]);
   if (!selectedProduct) return null;
 
   const { id, name, code, images, quantity, totalPrice } = selectedProduct;
@@ -69,26 +84,61 @@ export default function BasketPopup() {
   };
 
   const handleClosePopup = () => {
-    closeBasketPopup();
+    if (isLessThan768px) {
+      setIsClosing(true);
+      setTimeout(() => {
+        setIsClosing(false);
+        closeBasketPopup();
+      }, 200);
+    } else {
+      closeBasketPopup();
+    }
   };
 
   const handleGotoBasket = () => {
-    closeBasketPopup();
-    navigate(AppRoute.BASKET_PAGE);
+    if (isLessThan768px) {
+      setIsClosing(true);
+      setTimeout(() => {
+        setIsClosing(false);
+        closeBasketPopup();
+        navigate(AppRoute.BASKET_PAGE);
+      }, 200);
+    } else {
+      closeBasketPopup();
+      navigate(AppRoute.BASKET_PAGE);
+    }
   };
 
   const handleRemoveProduct = () => {
-    closeBasketPopup();
-    deleteFromStore(id);
+    if (isLessThan768px) {
+      setIsClosing(true);
+      setTimeout(() => {
+        setIsClosing(false);
+        closeBasketPopup();
+        deleteFromStore(id);
+      }, 200);
+    } else {
+      closeBasketPopup();
+      deleteFromStore(id);
+    }
   };
 
   return (
-    <div className={styles.basketPopup}>
-      <button className={styles.basketPopupClose} onClick={handleClosePopup}>
+    <div
+      className={classNames({
+        [styles.basketPopup]: true,
+        [styles.closing]: isClosing,
+      })}
+    >
+      <button
+        className={styles.basketPopupClose}
+        onClick={handleClosePopup}
+        aria-label="Close basket popup"
+      >
         <img src={closeBasketPopupIcon} alt="close" />
       </button>
       {isLessThan768px ? (
-        <>
+        <div className={styles.basketPopupScrollArea}>
           <div className={styles.basketPopupContent}>
             <h2 className={styles.basketPopupTitle}>
               Has been added to the basket
@@ -118,7 +168,10 @@ export default function BasketPopup() {
                 </button>
                 <p>{quantity}</p>
                 <button onClick={handleIncreaseItemQuantity}>
-                  <img src={quantityInreaseButtonMobile} alt="increase button" />
+                  <img
+                    src={quantityInreaseButtonMobile}
+                    alt="increase button"
+                  />
                 </button>
               </div>
               <span className={styles.basketPopupProductPrice}>
@@ -139,7 +192,7 @@ export default function BasketPopup() {
             <h2>You may also like</h2>
             <Carousels classname="basket-popup-carousel" />
           </div>
-        </>
+        </div>
       ) : (
         <div className={styles.basketPopupProduct}>
           <div className={styles.basketPopupImg}>
