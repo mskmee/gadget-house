@@ -997,34 +997,22 @@
         }
       }
 
-      > button {
-        border-radius: 12px;
-        padding: 16px 24px;
-        width: 187px;
-        height: 56px;
-        > svg {
-          width: 24px;
-          height: 24px;
+      .product_deliver-section {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        > div {
+          width: 200px;
         }
       }
     }
-
-    .product_deliver-section {
-      flex-wrap: wrap;
-      justify-content: flex-start;
-      > div {
-        width: 200px;
+    .product_title {
+      margin-top: 22px;
+      padding: 0;
+      h1 {
+        font-size: rem(28px);
       }
     }
   }
-  .product_title {
-    margin-top: 22px;
-    padding: 0;
-    h1 {
-      font-size: rem(28px);
-    }
-  }
-
   .characteristics h2,
   .reviews h2,
   .photos h2 {

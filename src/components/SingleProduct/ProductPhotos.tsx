@@ -41,6 +41,10 @@ export const ProductPhotos: FC<IProductPhotosProps> = ({
             navigation={shouldShowNavigation}
             slidesPerView={2.5}
             breakpoints={{
+              360: {
+                slidesPerView: 1.5,
+                spaceBetween: '10px',
+              },
               575: {
                 slidesPerView: 2,
                 spaceBetween: '10px',
