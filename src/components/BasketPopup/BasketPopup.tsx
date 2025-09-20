@@ -123,7 +123,7 @@ export default function BasketPopup() {
         <img src={closeBasketPopupIcon} alt="close" />
       </button>
       {isLessThan768px ? (
-        <>
+        <div className={styles.basketPopupScrollArea}>
           <div className={styles.basketPopupContent}>
             <h2 className={styles.basketPopupTitle}>
               Has been added to the basket
@@ -177,7 +177,7 @@ export default function BasketPopup() {
             <h2>You may also like</h2>
             <Carousels classname="basket-popup-carousel" />
           </div>
-        </>
+        </div>
       ) : (
         <div className={styles.basketPopupProduct}>
           <div className={styles.basketPopupImg}>

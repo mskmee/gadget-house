@@ -301,7 +301,6 @@
 
 @media screen and (max-width: 768px) {
   .basketPopup {
-    // overflow-y: auto;
     max-height: calc(100dvh - 100px);
     position: absolute;
     bottom: 0;
@@ -311,6 +310,9 @@
     border-bottom-left-radius: 0;
     min-height: auto;
 
+    display: flex;
+    flex-direction: column;
+
     animation: slideUp 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 
     &.closing {
@@ -318,6 +320,7 @@
     }
 
     &Close {
+      position: absolute;
       background-color: #fff;
       width: 48px;
       height: 48px;
@@ -328,6 +331,16 @@
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+    &ScrollArea {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
     .basketPopupTitle {
       margin-bottom: 32px;
