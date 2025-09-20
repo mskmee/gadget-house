@@ -326,6 +326,14 @@
   }
 
   .cardContainerTop {
+    height: 150px;
+    .cardImage {
+      align-self: auto;
+      .smartphoneImg,
+      .laptopImg {
+        width: 150px;
+      }
+    }
     .cardConatinerLike {
       padding-bottom: 10px;
       > span svg {
