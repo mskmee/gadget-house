@@ -104,7 +104,7 @@ const usePersonalContacts = () => {
       if (!contacts.defaultNumber) {
         newErrors.defaultNumber = 'Phone number is required';
         isValid = false;
-      } else if (contacts.defaultNumber.length !== 19) {
+      } else if (contacts.defaultNumber.length !== 17) {
         newErrors.defaultNumber = 'Please enter a valid phone number';
         isValid = false;
       }
@@ -113,7 +113,7 @@ const usePersonalContacts = () => {
     // additionalNumber Validation
     if (
       contacts.additionalNumber.length > 4 &&
-      contacts.additionalNumber.length !== 19 &&
+      contacts.additionalNumber.length !== 17 &&
       isOpenAddPhoneNumberSection
     ) {
       newErrors.additionalNumber = 'Please enter a valid phone number';
