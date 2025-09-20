@@ -107,7 +107,10 @@ export const PhotoModal: FC<iPhotoModalProps> = ({
                     locale,
                   )}
                 </span>
-                <AddToBasketButton product={dynamicCurrentProduct} />
+                <AddToBasketButton
+                  product={dynamicCurrentProduct}
+                  onAddToBasket={handleModalCancel}
+                />
               </div>
             </div>
           </div>

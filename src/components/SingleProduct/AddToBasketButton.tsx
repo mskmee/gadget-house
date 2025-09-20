@@ -6,13 +6,19 @@ import { IProductCard } from '@/interfaces/interfaces';
 
 interface IAddToBasketButtonProps {
   product: IProductCard;
+  onAddToBasket?: () => void;
 }
 
-export const AddToBasketButton: FC<IAddToBasketButtonProps> = ({ product }) => {
+export const AddToBasketButton: FC<IAddToBasketButtonProps> = ({
+  product,
+  onAddToBasket,
+}) => {
   const { addProductToBasket } = useAddProductToBasket();
+
   const addToBasket = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     addProductToBasket(product);
+    onAddToBasket?.();
   };
   return (
     <button className={styles.AddToBasketButton} onClick={addToBasket}>

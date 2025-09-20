@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { FreeMode, Navigation, Thumbs, Pagination } from 'swiper/modules';
 import { SlideInfo, SliderThumbsAndModalProps } from '../type/interfaces';
 import { Swiper } from 'swiper/types';
@@ -15,13 +15,37 @@ function SliderWithThumbsAndModal({
   className,
 }: SliderThumbsAndModalProps) {
   const [thumbsSwiper, setThumbsSwiper] = useState<Swiper | null>(null);
-
+  const [mainSwiper, setMainSwiper] = useState<Swiper | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [currentSlide, setCurrentSlide] = useState<SlideInfo>({
     id: 1,
     img: data[0]?.link || '',
   });
   const [modalImageSrc, setModalImageSrc] = useState<string | null>(null);
+
+  const previousProductId = useRef(dynamicCurrentProduct?.id);
+
+  useEffect(() => {
+    const productChanged =
+      previousProductId.current !== dynamicCurrentProduct?.id;
+
+    if (productChanged) {
+      previousProductId.current = dynamicCurrentProduct?.id;
+      setCurrentSlide({
+        id: 1,
+        img: data[0]?.link || '',
+      });
+      setIsModalVisible(false);
+      setModalImageSrc(null);
+
+      if (mainSwiper) {
+        mainSwiper.slideTo(0, 0);
+      }
+      if (thumbsSwiper) {
+        thumbsSwiper.slideTo(0, 0);
+      }
+    }
+  }, [dynamicCurrentProduct?.id, data, mainSwiper, thumbsSwiper]);
 
   function handleMainImageClick(index: number) {
     setCurrentSlide({
@@ -43,6 +67,7 @@ function SliderWithThumbsAndModal({
         pagination={isMobile ? true : false}
         prevArrow={prevArrow}
         nextArrow={nextArrow}
+        onSwiper={setMainSwiper}
       >
         {data.map((image, index) => (
           <div

@@ -6,7 +6,7 @@ import styles from './slidernav.module.scss';
 interface ISliderNavProps {
   text: string;
   link: string;
-  isVisibleSeeMoreBtn?: boolean;
+  // isVisibleSeeMoreBtn?: boolean;
 }
 
 export const SliderNav: FC<ISliderNavProps> = ({

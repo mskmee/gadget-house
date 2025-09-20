@@ -1,7 +1,6 @@
 .swiper-button-prev:after,
 .swiper-button-next:after {
   display: none;
- 
 }
 .swiper-button-disabled {
   opacity: 0;
@@ -9,6 +8,7 @@
 }
 .relative {
   position: relative;
+  width: 100%;
 }
 .w-100 {
   width: 100%;
@@ -18,10 +18,23 @@
 }
 
 .base-slider {
-  padding-bottom: 70px;
+  padding-bottom: 72px;
   position: relative;
-  @media(max-width: 991px) {
+  @media (max-width: 991px) {
     padding-bottom: 0;
+  }
+  .swiper-slide {
+    height: 495px;
+    @media (max-width: 1280px) {
+      height: auto;
+    }
+    > img {
+      height: 100%;
+      @media (max-width: 1280px) {
+        width: 100%;
+        height: auto;
+      }
+    }
   }
   .slider-nav__arrows {
     display: flex;
@@ -33,14 +46,13 @@
   }
   .swiper-button-next,
   .swiper-button-prev {
-  
     position: static;
     display: flex;
     justify-content: center;
     align-items: center;
     // bottom: -70px;
     // top: auto;
-    width: 32px;
+    width: 36px;
     height: 32px;
     margin-top: 0;
     background-color: #fff;
@@ -51,7 +63,6 @@
       visibility: visible;
       svg {
         color: #c3c3c5;
-        
       }
     }
     svg {
@@ -65,7 +76,6 @@
     border-left: 0;
     &.swiper-button-disabled {
       border-left: 0;
-      
     }
   }
   .swiper-button-prev {
@@ -81,22 +91,37 @@
 
 .mainSlider {
   &.photoModal__main {
-    @media(max-width: 575px) {
-      padding-bottom: 30px;
-    }
     .swiper-slide > div {
       display: flex;
       align-items: center;
       justify-content: center;
       max-width: 720px;
-      margin: 0 auto;
-      @media(max-width: 991px){
-        max-width: 300px;
+      max-height: fit-content;
+      margin: 0 auto 25px auto;
+      > img {
+        height: 420px;
       }
+    }
+
+    @media (max-width: 991px) {
+      .swiper-slide > div {
+        margin: 0 auto 20px auto;
+        > img {
+          height: 350px;
+        }
+      }
+    }
+    @media (max-width: 767px) {
+      .swiper-slide > div > img {
+        height: 300px;
+      }
+    }
+    @media (max-width: 575px) {
+      padding-bottom: 30px;
     }
   }
   &.productSlider {
-    padding-bottom: 25px;
+    padding-bottom: 24px;
     .swiper-wrapper {
       align-items: center;
       @media (max-width: 575px) {
@@ -105,11 +130,13 @@
     }
     .swiper-slide > div {
       max-width: 514px;
+      height: 549px;
       margin: 0 auto;
       display: flex;
       justify-content: center;
       @media (max-width: 575px) {
         max-width: 300px;
+        height: 300px;
       }
     }
     .swiper-pagination {
@@ -120,8 +147,6 @@
     }
   }
 }
-
-
 
 .swiper-pagination-bullet {
   width: 12px;
@@ -136,10 +161,13 @@
 }
 
 .thumb-wrapper {
+  padding: 0 16px;
+
   .thumb__item {
     width: 100%;
     height: 100%;
   }
+
   .swiper-slide {
     display: flex;
     align-items: center;
@@ -151,33 +179,57 @@
     cursor: pointer;
     border-radius: 11px;
     transition: 0.5s;
-    
   }
+  .swiper-slide-thumb-active {
+    border: 1px solid #00820d;
+    transition: 0.5s;
+  }
+
   img {
     border-radius: 11px;
     width: 100%;
     height: 100%;
     object-fit: contain;
   }
-  .swiper-slide-thumb-active {
-    border: 1px solid #00820d;
-    transition: 0.5s;
+
+  .swiper-slide,
+  .thumb__item,
+  .thumb__item img {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
   }
+
   &.photoModal__slider {
-    width: 600px;
-    @media(max-width: 991px) {
-      width: 60%;
+    @media (max-width: 991px) {
       .swiper-button-next,
       .swiper-button-prev {
         display: none;
       }
     }
+    > div {
+      // display: flex;
+      justify-content: center;
+    }
     .swiper-slide {
       max-width: 80px;
       height: 80px;
       flex: 0 0 auto;
+      border: 1px solid #eae4ee;
+      border-radius: 12px;
+    }
+    .swiper-slide,
+    .thumb__item,
+    .thumb__item img {
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+    }
+    .swiper-slide-thumb-active {
+      border: 1px solid #00820d;
+      transition: 0.5s;
     }
   }
-  
 }
-

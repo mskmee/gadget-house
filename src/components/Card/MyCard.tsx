@@ -40,7 +40,10 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
   >('previouslyReviewed', []);
 
   const saveReviewedItem = (newItem: IProductCard) => {
-    const updatedItems = [newItem, ...previouslyReviewed];
+    const filteredItems = previouslyReviewed.filter(
+      (item) => item.id !== newItem.id,
+    );
+    const updatedItems = [newItem, ...filteredItems];
 
     const limitedItems = updatedItems.slice(0, MAX_ITEMS);
     setPreviouslyReviewed(limitedItems);

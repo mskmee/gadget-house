@@ -96,7 +96,7 @@ export const SearchResults = () => {
       <SliderNav
         text="Recommendations for you"
         link="/recommendations"
-        isVisibleSeeMoreBtn={false}
+        // isVisibleSeeMoreBtn={false}
       />
 
       <Carousels classname="laptop-carousel" />

@@ -1,27 +1,30 @@
-.swiper-button{
+.swiper-button {
   width: 48px;
   height: 48px;
   flex: 0 0 auto;
- 
+  transition: all 0.3s ease;
 }
+
+.swiper-button:focus,
+.swiper-button:hover {
+  width: 68px;
+  height: 68px;
+}
+
 .arrowRight {
   transform: rotate(180deg);
-  
 }
 
 .base__slider-arrow {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #00820D;
+  color: #00820d;
   width: 32px;
   height: 32px;
-  
+
   & svg {
     width: auto;
     height: auto;
   }
-
 }
-
-
