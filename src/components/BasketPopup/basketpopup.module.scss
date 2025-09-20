@@ -301,6 +301,8 @@
 
 @media screen and (max-width: 768px) {
   .basketPopup {
+    // overflow-y: auto;
+    max-height: calc(100vh - 100px);
     position: absolute;
     bottom: 0;
     top: auto;
