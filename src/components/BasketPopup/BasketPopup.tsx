@@ -16,7 +16,7 @@ import { useMediaQuery } from 'react-responsive';
 import { Carousels } from '../components';
 import { notification } from 'antd';
 import { MAX_PRODUCT_QUANTITY } from '@/constants/globalConstans';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import classNames from 'classnames';
 
 export default function BasketPopup() {
@@ -42,7 +42,18 @@ export default function BasketPopup() {
   const selectedProduct = products.find(
     (product) => product.id === selectedProductId,
   );
+  const isOpen = Boolean(selectedProduct);
 
+  useEffect(() => {
+    if (isOpen) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+
+      return () => {
+        document.body.style.overflow = prev;
+      };
+    }
+  }, [isOpen]);
   if (!selectedProduct) return null;
 
   const { id, name, code, images, quantity, totalPrice } = selectedProduct;
@@ -119,7 +130,11 @@ export default function BasketPopup() {
         [styles.closing]: isClosing,
       })}
     >
-      <button className={styles.basketPopupClose} onClick={handleClosePopup}>
+      <button
+        className={styles.basketPopupClose}
+        onClick={handleClosePopup}
+        aria-label="Close basket popup"
+      >
         <img src={closeBasketPopupIcon} alt="close" />
       </button>
       {isLessThan768px ? (
