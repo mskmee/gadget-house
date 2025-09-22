@@ -28,7 +28,7 @@ export const ProductItem: FC<IProductItemProps> = ({ product }) => {
         </div>
         <div className={styles.priceWrapper}>
           <span className={styles.details}>
-            {product.quantity} {isPlural ? 'pieces' : 'piece'}{' '}
+            {product.quantity} {isPlural ? 'pieces' : 'piece'}
           </span>
           <span className={styles.price}>
             {convertPriceToReadable(
