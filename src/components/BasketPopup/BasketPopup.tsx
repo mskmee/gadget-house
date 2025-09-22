@@ -28,7 +28,7 @@ export default function BasketPopup() {
   const isLessThan768px = useMediaQuery({
     query: '(max-width: 768px)',
   });
-
+  ``;
   const { products, currency, locale, selectedProductId } = useTypedSelector(
     (state) => state.shopping_card,
   );
@@ -222,18 +222,20 @@ export default function BasketPopup() {
               <h3 className={styles.basketPopupProductPrice}>
                 {convertPriceToReadable(totalPrice, currency, locale)}
               </h3>
-              <button
-                className={styles.basketPopupContinueShopping}
-                onClick={handleClosePopup}
-              >
-                Continue Shopping
-              </button>
-              <button
-                className={styles.basketPopupGotoBasket}
-                onClick={handleGotoBasket}
-              >
-                Go to basket
-              </button>
+              <div>
+                <button
+                  className={styles.basketPopupContinueShopping}
+                  onClick={handleClosePopup}
+                >
+                  Continue Shopping
+                </button>
+                <button
+                  className={styles.basketPopupGotoBasket}
+                  onClick={handleGotoBasket}
+                >
+                  Go to basket
+                </button>
+              </div>
             </div>
           </div>
           <button

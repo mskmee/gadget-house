@@ -80,11 +80,10 @@
     padding: 48px;
   }
 }
-@media screen and (min-width: 1540px) {
+@media screen and (min-width: 1140px) {
   .basket-modal {
     .content {
-      max-width: 1240px;
-      width: 100%;
+      width: 1240px;
     }
   }
 }
