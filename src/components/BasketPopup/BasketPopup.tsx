@@ -18,6 +18,7 @@ import { notification } from 'antd';
 import { MAX_PRODUCT_QUANTITY } from '@/constants/globalConstans';
 import { useEffect, useState } from 'react';
 import classNames from 'classnames';
+import { SLIDE_DOWN_DURATION_MS } from './constants';
 
 export default function BasketPopup() {
   const [isClosing, setIsClosing] = useState(false);
@@ -89,7 +90,7 @@ export default function BasketPopup() {
       setTimeout(() => {
         setIsClosing(false);
         closeBasketPopup();
-      }, 200);
+      }, SLIDE_DOWN_DURATION_MS);
     } else {
       closeBasketPopup();
     }
@@ -102,7 +103,7 @@ export default function BasketPopup() {
         setIsClosing(false);
         closeBasketPopup();
         navigate(AppRoute.BASKET_PAGE);
-      }, 200);
+      }, SLIDE_DOWN_DURATION_MS);
     } else {
       closeBasketPopup();
       navigate(AppRoute.BASKET_PAGE);
@@ -116,7 +117,7 @@ export default function BasketPopup() {
         setIsClosing(false);
         closeBasketPopup();
         deleteFromStore(id);
-      }, 200);
+      }, SLIDE_DOWN_DURATION_MS);
     } else {
       closeBasketPopup();
       deleteFromStore(id);

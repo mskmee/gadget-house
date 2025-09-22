@@ -1,0 +1,1 @@
+export const SLIDE_DOWN_DURATION_MS = 300;
