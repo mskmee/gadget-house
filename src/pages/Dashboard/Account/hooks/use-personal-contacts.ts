@@ -4,6 +4,7 @@ import { updateUserContacts } from '@/store/auth/actions';
 import { formatPhoneNumber } from '@/utils/helpers/formatPhoneNumber';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { PHONE_NUMBER_MAX_LENGTH } from '../PersonalContactsSection/constants';
 
 export type PersonalContacts = {
   email: string;
@@ -104,7 +105,7 @@ const usePersonalContacts = () => {
       if (!contacts.defaultNumber) {
         newErrors.defaultNumber = 'Phone number is required';
         isValid = false;
-      } else if (contacts.defaultNumber.length !== 17) {
+      } else if (contacts.defaultNumber.length !== PHONE_NUMBER_MAX_LENGTH) {
         newErrors.defaultNumber = 'Please enter a valid phone number';
         isValid = false;
       }
@@ -113,7 +114,7 @@ const usePersonalContacts = () => {
     // additionalNumber Validation
     if (
       contacts.additionalNumber.length > 4 &&
-      contacts.additionalNumber.length !== 17 &&
+      contacts.additionalNumber.length !== PHONE_NUMBER_MAX_LENGTH &&
       isOpenAddPhoneNumberSection
     ) {
       newErrors.additionalNumber = 'Please enter a valid phone number';
