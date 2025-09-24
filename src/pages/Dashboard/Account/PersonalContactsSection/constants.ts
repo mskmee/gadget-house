@@ -1,0 +1,1 @@
+export const PHONE_NUMBER_MAX_LENGTH = 17;
