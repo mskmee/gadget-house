@@ -6,6 +6,8 @@ import { Form, Formik } from 'formik';
 import { AddReviewRequestDTO } from '@/utils/packages/singleProduct/type/types';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/store';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { useAuthRequired } from '@/hooks/useAuthRequired';
 import { addReview, getReviews } from '@/store/singleProduct/actions';
 import { toast } from 'react-toastify';
 import { reviewSchema } from './FormReview-validation';
@@ -13,6 +15,8 @@ import { reviewSchema } from './FormReview-validation';
 const maxLength = 500;
 
 function FormReview({ productId }: { productId: number }) {
+  const { userToken } = useTypedSelector((state) => state.auth);
+  const { triggerAuthRequired } = useAuthRequired();
   const dispatch: AppDispatch = useDispatch();
 
   return (
@@ -26,12 +30,13 @@ function FormReview({ productId }: { productId: number }) {
         enableReinitialize
         validationSchema={reviewSchema}
         onSubmit={async (values, { resetForm }) => {
+          if (!userToken) {
+            triggerAuthRequired('review');
+            return;
+          }
           try {
-            await dispatch(addReview(values))
-              .unwrap()
-              .then(() => {
-                dispatch(getReviews({ productId, page: 0 }));
-              });
+            await dispatch(addReview(values)).unwrap();
+            dispatch(getReviews({ productId, page: 0 }));
             toast.success('Review submitted!', {
               type: 'success',
               autoClose: 4000,

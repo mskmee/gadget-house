@@ -20,6 +20,7 @@ const PopUp: FC<PopUpProperties> = ({
 }) => {
   return createPortal(
     <div
+      data-test="popup-overlay"
       className={classNames(
         styles.overlay,
         { [styles.opened]: isOpened },
