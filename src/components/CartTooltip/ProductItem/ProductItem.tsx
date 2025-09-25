@@ -13,6 +13,7 @@ interface IProductItemProps {
 
 export const ProductItem: FC<IProductItemProps> = ({ product }) => {
   const { locale, currency } = useTypedSelector((state) => state.shopping_card);
+  const isPlural = product.quantity > 1;
 
   return (
     <div key={product.id} className={styles.card}>
@@ -26,7 +27,9 @@ export const ProductItem: FC<IProductItemProps> = ({ product }) => {
           <span className={styles.details}>code:{product.code}</span>
         </div>
         <div className={styles.priceWrapper}>
-          <span className={styles.details}>{product.quantity} piece</span>
+          <span className={styles.details}>
+            {product.quantity} {isPlural ? 'pieces' : 'piece'}
+          </span>
           <span className={styles.price}>
             {convertPriceToReadable(
               convertPriceToNumber(product.price) * product.quantity,
