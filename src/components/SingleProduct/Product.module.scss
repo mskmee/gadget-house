@@ -451,6 +451,10 @@
 //prodoct photo modal
 
 .photoModal {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
   &__inner {
     display: flex;
     flex-wrap: wrap;
@@ -525,6 +529,7 @@
       font-weight: 500;
       line-height: 150%;
       color: #1c1817;
+
       @media (max-width: 767px) {
         font-size: 26px;
       }
