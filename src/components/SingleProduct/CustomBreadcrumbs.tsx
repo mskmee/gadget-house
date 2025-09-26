@@ -1,11 +1,11 @@
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Breadcrumb } from 'antd';
 import style from './Product.module.scss';
 import classNames from 'classnames';
 import { getBreadcrumbItems } from '@/components/helpers.ts';
 
 export const CustomBreadcrumbs = () => {
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
 
   const breadcrumbItems = getBreadcrumbItems(pathname);
 
@@ -31,6 +31,9 @@ export const CustomBreadcrumbs = () => {
         </svg>
       }
       items={breadcrumbItems}
+      itemRender={(item) =>
+        item.href ? <Link to={item.href}>{item.title}</Link> : item.title
+      }
     />
   );
 };

@@ -8,6 +8,10 @@
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 8px;
     margin-bottom: 40px;
+    @media screen and (min-width: 500px) {
+      justify-items: center;
+      grid-gap: 34px;
+    }
   }
 
   &__deskList {
@@ -43,7 +47,7 @@
         width: auto;
         border: none;
         background-color: transparent;
-        font-family: "Inter", sans-serif;
+        font-family: 'Inter', sans-serif;
 
         a {
           display: inline-block;

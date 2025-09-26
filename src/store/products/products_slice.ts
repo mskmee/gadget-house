@@ -66,7 +66,7 @@ const initialState: IInitialState = {
     totalPages: DEFAULT_PAGES,
     totalElements: DEFAULT_SIZE,
   },
-  loaded: false, 
+  loaded: false,
   isFetchingMore: false,
   isAppending: false,
 };
