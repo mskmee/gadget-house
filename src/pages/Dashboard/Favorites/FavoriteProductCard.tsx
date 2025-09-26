@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 import { HeartIcon } from '@/assets/icons/HeartIcon';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { convertPriceToReadable } from '@/utils/helpers/product';
+import getFormattedCategoryName from '@/hooks/getFormattedCategoryName';
 
 interface IFavoriteProductProps {
   favoriteProduct: IProductCard;
@@ -22,9 +23,10 @@ interface IFavoriteProductProps {
 export const FavoriteProductCard: FC<IFavoriteProductProps> = ({
   favoriteProduct,
 }) => {
-  const { id, category, href, images, name, code, price, rating, isLiked } =
+  const { id, categoryId, href, images, name, code, price, rating, isLiked } =
     favoriteProduct;
 
+  const formatCategoryName = getFormattedCategoryName(categoryId);
   const { locale, currency } = useTypedSelector((state) => state.shopping_card);
 
   const [isMobile575, setIsMobile575] = useState(false);
@@ -68,7 +70,10 @@ export const FavoriteProductCard: FC<IFavoriteProductProps> = ({
 
   const CardMobile = () => {
     return (
-      <Link to={`/${category}/${id}/${href}`} className={styles.cardWrap}>
+      <Link
+        to={`/${formatCategoryName}/${id}/${href}`}
+        className={styles.cardWrap}
+      >
         <div className={styles.cardMobile__top}>
           <div className={styles.cardMobile__topLeft}>
             <img className={styles.cardImage} src={images[0].link} alt={name} />
@@ -124,7 +129,10 @@ export const FavoriteProductCard: FC<IFavoriteProductProps> = ({
   };
 
   return !isMobile575 ? (
-    <Link to={`/${category}/${id}/${href}`} className={styles.cardWrap}>
+    <Link
+      to={`/${formatCategoryName}/${id}/${href}`}
+      className={styles.cardWrap}
+    >
       <img className={styles.cardImage} src={images[0].link} alt={name} />
       <div className={styles.cardInfo}>
         <div className={styles.cardInfoTop}>
