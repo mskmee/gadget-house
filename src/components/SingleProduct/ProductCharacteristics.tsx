@@ -112,10 +112,10 @@ export const ProductCharacteristics: FC<Props> = ({ product }) => {
       'Communication standards',
       'Number of SIM cards',
       'SIM card size',
-      'Flesh card',
       'Max play time',
       'Bluetooth version',
       'Weight',
+      'Flesh card',
     ].includes(item.name),
   );
 
@@ -124,12 +124,17 @@ export const ProductCharacteristics: FC<Props> = ({ product }) => {
       'Operating system',
       'Processor model',
       'Processor frequency',
+      'Ram Memory',
+      'Rom Memory',
       'Video card',
+      'Number of processor cores',
     ].includes(item.name),
   );
 
   const camera = characteristics.filter((item) =>
-    ['Main camera', 'Selfie camera', 'Sensor resolution'].includes(item.name),
+    ['Main camera resolution', 'Selfie camera', 'Sensor resolution'].includes(
+      item.name,
+    ),
   );
 
   return (
