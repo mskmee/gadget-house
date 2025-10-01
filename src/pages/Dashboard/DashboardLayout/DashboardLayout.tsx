@@ -179,7 +179,7 @@ export const DashboardLayout = () => {
         <SliderNav
           text="Recommendations for you"
           link="/smartphone"
-          isVisibleSeeMoreBtn={false}
+          // isVisibleSeeMoreBtn={false}
         />
       )}
       <Carousels classname="smartphone-carousel" />

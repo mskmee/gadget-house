@@ -16,14 +16,19 @@ import { useMediaQuery } from 'react-responsive';
 import { Carousels } from '../components';
 import { notification } from 'antd';
 import { MAX_PRODUCT_QUANTITY } from '@/constants/globalConstans';
+import { useEffect, useState } from 'react';
+import classNames from 'classnames';
+import { SLIDE_DOWN_DURATION_MS } from './constants';
 
 export default function BasketPopup() {
+  const [isClosing, setIsClosing] = useState(false);
+
   const navigate = useNavigate();
 
   const isLessThan768px = useMediaQuery({
     query: '(max-width: 768px)',
   });
-
+  ``;
   const { products, currency, locale, selectedProductId } = useTypedSelector(
     (state) => state.shopping_card,
   );
@@ -38,7 +43,18 @@ export default function BasketPopup() {
   const selectedProduct = products.find(
     (product) => product.id === selectedProductId,
   );
+  const isOpen = Boolean(selectedProduct);
 
+  useEffect(() => {
+    if (isOpen) {
+      const prev = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+
+      return () => {
+        document.body.style.overflow = prev;
+      };
+    }
+  }, [isOpen]);
   if (!selectedProduct) return null;
 
   const { id, name, code, images, quantity, totalPrice } = selectedProduct;
@@ -69,26 +85,61 @@ export default function BasketPopup() {
   };
 
   const handleClosePopup = () => {
-    closeBasketPopup();
+    if (isLessThan768px) {
+      setIsClosing(true);
+      setTimeout(() => {
+        setIsClosing(false);
+        closeBasketPopup();
+      }, SLIDE_DOWN_DURATION_MS);
+    } else {
+      closeBasketPopup();
+    }
   };
 
   const handleGotoBasket = () => {
-    closeBasketPopup();
-    navigate(AppRoute.BASKET_PAGE);
+    if (isLessThan768px) {
+      setIsClosing(true);
+      setTimeout(() => {
+        setIsClosing(false);
+        closeBasketPopup();
+        navigate(AppRoute.BASKET_PAGE);
+      }, SLIDE_DOWN_DURATION_MS);
+    } else {
+      closeBasketPopup();
+      navigate(AppRoute.BASKET_PAGE);
+    }
   };
 
   const handleRemoveProduct = () => {
-    closeBasketPopup();
-    deleteFromStore(id);
+    if (isLessThan768px) {
+      setIsClosing(true);
+      setTimeout(() => {
+        setIsClosing(false);
+        closeBasketPopup();
+        deleteFromStore(id);
+      }, SLIDE_DOWN_DURATION_MS);
+    } else {
+      closeBasketPopup();
+      deleteFromStore(id);
+    }
   };
 
   return (
-    <div className={styles.basketPopup}>
-      <button className={styles.basketPopupClose} onClick={handleClosePopup}>
+    <div
+      className={classNames({
+        [styles.basketPopup]: true,
+        [styles.closing]: isClosing,
+      })}
+    >
+      <button
+        className={styles.basketPopupClose}
+        onClick={handleClosePopup}
+        aria-label="Close basket popup"
+      >
         <img src={closeBasketPopupIcon} alt="close" />
       </button>
       {isLessThan768px ? (
-        <>
+        <div className={styles.basketPopupScrollArea}>
           <div className={styles.basketPopupContent}>
             <h2 className={styles.basketPopupTitle}>
               Has been added to the basket
@@ -118,7 +169,10 @@ export default function BasketPopup() {
                 </button>
                 <p>{quantity}</p>
                 <button onClick={handleIncreaseItemQuantity}>
-                  <img src={quantityInreaseButtonMobile} alt="increase button" />
+                  <img
+                    src={quantityInreaseButtonMobile}
+                    alt="increase button"
+                  />
                 </button>
               </div>
               <span className={styles.basketPopupProductPrice}>
@@ -139,7 +193,7 @@ export default function BasketPopup() {
             <h2>You may also like</h2>
             <Carousels classname="basket-popup-carousel" />
           </div>
-        </>
+        </div>
       ) : (
         <div className={styles.basketPopupProduct}>
           <div className={styles.basketPopupImg}>
@@ -168,18 +222,20 @@ export default function BasketPopup() {
               <h3 className={styles.basketPopupProductPrice}>
                 {convertPriceToReadable(totalPrice, currency, locale)}
               </h3>
-              <button
-                className={styles.basketPopupContinueShopping}
-                onClick={handleClosePopup}
-              >
-                Continue Shopping
-              </button>
-              <button
-                className={styles.basketPopupGotoBasket}
-                onClick={handleGotoBasket}
-              >
-                Go to basket
-              </button>
+              <div>
+                <button
+                  className={styles.basketPopupContinueShopping}
+                  onClick={handleClosePopup}
+                >
+                  Continue Shopping
+                </button>
+                <button
+                  className={styles.basketPopupGotoBasket}
+                  onClick={handleGotoBasket}
+                >
+                  Go to basket
+                </button>
+              </div>
             </div>
           </div>
           <button

@@ -16,49 +16,61 @@ interface IProductPhotosProps {
 export const ProductPhotos: FC<IProductPhotosProps> = ({
   productImageCards,
 }) => {
-  const isMobile = useMediaQuery({query: '(max-width: 991px)',})
+  const isMobile = useMediaQuery({ query: '(max-width: 991px)' });
   const shouldShowNavigation = isMobile ? false : true;
   return (
     <section className={style['photos']} id="product-photos">
       <h2 className={style['product-photos__title']}>Photos</h2>
 
       {productImageCards?.length > 0 ? (
-        <div className={classNames('base-slider', style['product-photos__slider'])}>
+        <div
+          className={classNames('base-slider', style['product-photos__slider'])}
+        >
           <SliderBase
-            prevArrow={<ArrowPrev classNameArrow={['arrowLeft', 'base__slider-arrow']}><SmallSliderArrowPrev/></ArrowPrev>}
-            nextArrow={<ArrowNext classNameArrow={['arrowLeft', 'base__slider-arrow']}><SmallSliderArrowNext/></ArrowNext>}
+            prevArrow={
+              <ArrowPrev classNameArrow={['arrowLeft', 'base__slider-arrow']}>
+                <SmallSliderArrowPrev />
+              </ArrowPrev>
+            }
+            nextArrow={
+              <ArrowNext classNameArrow={['arrowLeft', 'base__slider-arrow']}>
+                <SmallSliderArrowNext />
+              </ArrowNext>
+            }
             modules={[Navigation]}
             navigation={shouldShowNavigation}
             slidesPerView={2.5}
             breakpoints={{
+              360: {
+                slidesPerView: 1.5,
+                spaceBetween: '10px',
+              },
               575: {
                 slidesPerView: 2,
-                spaceBetween: '10px'
+                spaceBetween: '10px',
               },
               640: {
                 slidesPerView: 2.5,
-                spaceBetween: '20px'
+                spaceBetween: '20px',
               },
               768: {
-                slidesPerView: 3.5,
+                slidesPerView: 2.5,
                 spaceBetween: '30px',
               },
               1024: {
-                slidesPerView: 3.5,
+                slidesPerView: 2.5,
                 spaceBetween: '40px',
               },
             }}
           >
-            {
-              productImageCards?.map((productImageCard) => (
-                <img
-                  key={crypto.randomUUID()}
-                  className="product-photo"
-                  src={productImageCard.link}
-                  alt="product's photos"
-                />
-              ))
-            }
+            {productImageCards?.map((productImageCard) => (
+              <img
+                key={crypto.randomUUID()}
+                className="product-photo"
+                src={productImageCard.link}
+                alt="product's photos"
+              />
+            ))}
           </SliderBase>
         </div>
       ) : (

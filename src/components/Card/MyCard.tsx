@@ -42,7 +42,10 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
   >('previouslyReviewed', []);
 
   const saveReviewedItem = (newItem: IProductCard) => {
-    const updatedItems = [newItem, ...previouslyReviewed];
+    const filteredItems = previouslyReviewed.filter(
+      (item) => item.id !== newItem.id,
+    );
+    const updatedItems = [newItem, ...filteredItems];
 
     const limitedItems = updatedItems.slice(0, MAX_ITEMS);
     setPreviouslyReviewed(limitedItems);
@@ -65,15 +68,13 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
       selectedProduct === undefined
     ) {
       addToStore(product as IProductCard);
-      if (classname === 'basket-popup') {
-        notification.open({
-          className: 'basket-popup-notification',
-          placement: 'bottom',
-          message: 'Product added to the basket',
-          duration: 3,
-          closeIcon: false,
-        });
-      }
+      notification.open({
+        className: 'basket-popup-notification',
+        placement: 'bottom',
+        message: 'Product added to the basket',
+        duration: 3,
+        closeIcon: false,
+      });
     }
     if (selectedProduct?.quantity == 20) {
       notification.open({

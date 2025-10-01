@@ -16,18 +16,20 @@
     max-height: 514px;
     margin-bottom: 24px;
     overflow-x: hidden;
+    
   }
 
   .total {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    margin-right: 32px;
+    padding-right: 32px;
+    margin-right: 8px;
     column-gap: 32px;
   }
 
   a {
-    padding: 16px 33px;
+    padding: 16px 32px;
     color: var(--white-color);
     background-color: var(--green-color);
     font-weight: 500;
@@ -51,12 +53,16 @@
 }
 
 .cards::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
+}
+
+.cards::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .cards::-webkit-scrollbar-thumb {
-  background-color: #d1d1d1;
-  border-radius: 3px;
+  background-color: #fff;
+  border-radius: 5px;
 
   &:hover {
     background-color: #a8a8a8;
