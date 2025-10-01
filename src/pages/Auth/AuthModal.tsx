@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { PopUp } from '@/components/components';
 import LoginForm from './libs/components/LoginForm';
 import RegisterForm from './libs/components/RegisterForm';
@@ -28,7 +28,7 @@ const AuthModal: FC<IAuthModalProps> = ({ isOpen, onClose, initialForm }) => {
     isLoading,
     authError,
   } = useAuth();
-
+  const [modalKey, setModalKey] = useState(0);
   const handleClose = () => {
     setSuccessType(null);
     onClose();
@@ -39,9 +39,20 @@ const AuthModal: FC<IAuthModalProps> = ({ isOpen, onClose, initialForm }) => {
       setCurrentForm(initialForm);
     }
   }, [initialForm, setCurrentForm]);
+  useEffect(() => {
+    if (isOpen) {
+      // Обновляем ключ при каждом открытии для пересоздания PopUp
+      setModalKey((prev) => prev + 1);
+    }
+  }, [isOpen]);
 
   return (
-    <PopUp isOpened={isOpen} onClose={handleClose} classname="authModal">
+    <PopUp
+      key={modalKey}
+      isOpened={isOpen}
+      onClose={handleClose}
+      classname="authModal"
+    >
       {successType ? (
         <SuccessPopup type={successType} onClose={handleClose} />
       ) : (
