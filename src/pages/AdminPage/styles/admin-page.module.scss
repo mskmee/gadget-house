@@ -1,5 +1,5 @@
 .admin {
-  padding: 56px 0px 100px 0px;
+  padding: 56px 50px;
 
   &__container {
     border-radius: 28px;
@@ -17,7 +17,7 @@
   }
 
   &__title {
-    font-family: "Inter", sans-serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 400;
     font-size: 24px;
     line-height: 150%;
@@ -59,8 +59,6 @@
   }
 
   &__table {
-    padding: 0 0 50px 0;
-
     :global {
       .ant-checkbox {
         align-items: center;
@@ -68,7 +66,7 @@
         &-inner {
           width: 24px;
           height: 24px;
-          background-image: url("../../../assets/icons/checkbox.svg");
+          background-image: url('../../../assets/icons/checkbox.svg');
           background-repeat: no-repeat;
           background-position: center center;
           background-size: contain;
@@ -91,7 +89,7 @@
         }
 
         &-checked .ant-checkbox-inner {
-          background-image: url("../../../assets/icons/checkbox-checked.svg") !important;
+          background-image: url('../../../assets/icons/checkbox-checked.svg') !important;
           border-color: transparent !important;
           background-color: transparent !important;
         }
@@ -99,10 +97,10 @@
     }
 
     &Wrapper {
-      width: 100%;
-      padding: 0 57px 50px 57px;
+      display: flex;
+      flex-direction: column;
       border-collapse: collapse;
-      font-family: "Inter", sans-serif;
+      font-family: 'Inter', sans-serif;
       font-weight: 400;
       font-size: 16px;
       line-height: 150%;
@@ -117,7 +115,7 @@
 
         th {
           padding: 16px 100px 16px 80px;
-          font-family: "Inter", sans-serif;
+          font-family: 'Inter', sans-serif;
           font-weight: 400;
           font-size: 24px;
           line-height: 150%;
@@ -139,7 +137,7 @@
         :global {
           .ant-checkbox {
             &.ant-checkbox-indeterminate .ant-checkbox-inner {
-              background-image: url("../../../assets/icons/checkbox-checked.svg") !important;
+              background-image: url('../../../assets/icons/checkbox-checked.svg') !important;
               border-color: transparent !important;
               background-color: transparent !important;
             }
@@ -163,7 +161,7 @@
 
         td {
           padding: 24px 80px;
-          font-family: "Inter", sans-serif;
+          font-family: 'Inter', sans-serif;
           font-weight: 400;
           font-size: 16px;
           line-height: 150%;
@@ -215,7 +213,7 @@
         width: auto;
         border: none;
         background-color: transparent;
-        font-family: "Inter", sans-serif;
+        font-family: 'Inter', sans-serif;
 
         a {
           display: inline-block;
