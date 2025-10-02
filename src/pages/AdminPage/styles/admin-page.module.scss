@@ -11,10 +11,14 @@
   &__header {
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
     gap: 3.375rem;
     padding: 50px 0 0 0;
     margin-bottom: 35px;
+  }
+
+  &__titleWrap {
+    padding: 0.625rem;
   }
 
   &__title {

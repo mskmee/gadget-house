@@ -1,4 +1,3 @@
-// components/AdminPage/AdminPageHeader.tsx
 import { useCallback, useState } from 'react';
 
 import { IProductCard } from '@/interfaces/interfaces';
@@ -50,7 +49,9 @@ export const AdminPageHeader = ({
   return (
     <>
       <header className={styles.admin__header}>
-        <h2 className={styles.admin__title}>Invoice</h2>
+        <div className={styles.admin__title__container}>
+          <h2 className={styles.admin__title}>Invoice</h2>
+        </div>
 
         <div className={styles.admin__search}>
           <AdminSearch placeholder="Searching..." onSearch={handleSearch} />
