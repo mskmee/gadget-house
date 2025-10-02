@@ -4,8 +4,7 @@ import { Checkbox, CheckboxChangeEvent } from 'antd';
 import { convertPriceToReadable } from '@/utils/helpers/helpers';
 import { OrderItem } from '@/types/OrderItem';
 import { formatDateToDDMMYYYY } from '@/utils/helpers/format-date';
-
-
+import { formatPhoneDisplay } from '@/utils/helpers/formatPhoneNumber';
 
 interface AdminTableRowProps {
   item: OrderItem;
@@ -40,7 +39,7 @@ export const AdminTableRow = ({
           {item.id}
         </Link>
       </td>
-      <td>{item.phoneNumber}</td>
+      <td>{formatPhoneDisplay(item.phoneNumber)}</td>
       <td>
         <button
           className={`button__status button__status_${item.deliveryStatus.toLowerCase().replace(' ', '_')}`}
