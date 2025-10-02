@@ -4,24 +4,32 @@ import { PopUp } from '@/components/components';
 import LoginForm from './libs/components/LoginForm';
 import RegisterForm from './libs/components/RegisterForm';
 import ForgotPasswordForm from './libs/components/ForgotPasswordForm';
-import { useAuth } from './libs/hooks/use-auth';
+import { useAuth } from './libs/hooks/hooks';
 import { FormEnum } from './libs/enums/form.enum';
 import SuccessPopup from './libs/components/SuccessPopup';
+import ChangePasswordForm from './libs/components/ChangePasswordForm';
 
 interface IAuthModalProps {
   isOpen: boolean;
   onClose: () => void;
+  initialForm?: FormEnum;
 }
 
-const AuthModal: FC<IAuthModalProps> = ({ isOpen, onClose }) => {
+const AuthModal: FC<IAuthModalProps> = ({
+  isOpen,
+  onClose,
+  initialForm = FormEnum.LOGIN,
+}) => {
   const {
     currentForm,
     setCurrentForm,
     loginFormValue,
     registerFormValue,
     forgotFormValue,
+    changePasswordFormValue,
     onLoginFormSubmit,
     onForgotFormSubmit,
+    onChangePasswordFormSubmit,
     onRegisterFormSubmit,
     successType,
     setSuccessType,
@@ -36,10 +44,13 @@ const AuthModal: FC<IAuthModalProps> = ({ isOpen, onClose }) => {
 
   useEffect(() => {
     if (isOpen) {
-      setCurrentForm(FormEnum.LOGIN);
+      setCurrentForm(initialForm);
       setSuccessType(null);
     }
-  }, [isOpen, setCurrentForm, setSuccessType]);
+  }, [isOpen, setCurrentForm, setSuccessType, initialForm]);
+
+  console.log('is Auth modal open', isOpen);
+  console.log('current form:', currentForm);
 
   return (
     <PopUp isOpened={isOpen} onClose={handleClose} classname="authModal">
@@ -72,6 +83,14 @@ const AuthModal: FC<IAuthModalProps> = ({ isOpen, onClose }) => {
               onReset={onForgotFormSubmit}
               onSwitch={() => setCurrentForm(FormEnum.LOGIN)}
               isLoading={isLoading}
+            />
+          )}
+          {currentForm === FormEnum.CHANGE_PASSWORD && (
+            <ChangePasswordForm
+              initialValues={changePasswordFormValue}
+              onSubmit={onChangePasswordFormSubmit}
+              isLoading={isLoading}
+              serverError={authError}
             />
           )}
         </>
