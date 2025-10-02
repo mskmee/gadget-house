@@ -1,7 +1,8 @@
 .admin {
   padding: 56px 50px;
 
-  &__container {
+  &__wrapper {
+    padding: 0;
     border-radius: 28px;
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
     background: var(--white-color);
@@ -10,9 +11,9 @@
   &__header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 50px;
-    padding: 50px 58px 0 58px;
+    justify-content: space-around;
+    gap: 3.375rem;
+    padding: 50px 0 0 0;
     margin-bottom: 35px;
   }
 
@@ -35,8 +36,18 @@
 
   &__buttons {
     display: flex;
+    width: 17.875rem;
     align-items: center;
-    gap: 8px;
+    gap: 0.5rem;
+
+    > * {
+      flex: 0 0 56px;
+      height: 56px;
+
+      &:last-child {
+        flex: 1;
+      }
+    }
 
     &Add {
       height: 56px;

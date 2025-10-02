@@ -77,7 +77,7 @@ const AdminPage = () => {
 
   return (
     <div className={styles.admin}>
-      <div className={cn(styles.admin__container, 'container')}>
+      <div className={cn(styles.admin__wrapper, 'wrapper')}>
         <AdminPageHeader
           productsData={productsData?.page}
           checkedItems={checkedItems}
