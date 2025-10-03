@@ -181,15 +181,14 @@
           font-size: 16px;
           line-height: 150%;
           text-align: center;
+          vertical-align: middle;
           color: var(--black);
 
           &:first-child {
             display: flex;
-            align-items: flex-end;
+            align-items: center;
             gap: 8px;
-            padding-top: 37px;
             text-align: left;
-
             a {
               text-decoration: underline;
               color: var(--theme-color);
@@ -198,6 +197,14 @@
 
           &:nth-child(2) {
             font-variant-numeric: tabular-nums;
+          }
+
+          &:nth-child(5) {
+            font-variant-numeric: tabular-nums;
+          }
+
+          &:nth-child(4) {
+            text-align: right;
           }
 
           span {

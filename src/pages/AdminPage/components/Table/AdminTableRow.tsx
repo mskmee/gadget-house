@@ -5,6 +5,7 @@ import { convertPriceToReadable } from '@/utils/helpers/helpers';
 import { OrderItem } from '@/types/OrderItem';
 import { formatDateToDDMMYYYY } from '@/utils/helpers/format-date';
 import { formatPhoneDisplay } from '@/utils/helpers/formatPhoneNumber';
+import { useLocale } from '@/context/localeContext';
 
 interface AdminTableRowProps {
   item: OrderItem;
@@ -21,6 +22,8 @@ export const AdminTableRow = ({
   onChecked,
   onOrderClick,
 }: AdminTableRowProps) => {
+  const locale = useLocale();
+
   return (
     <tr>
       <td>
@@ -47,7 +50,7 @@ export const AdminTableRow = ({
           {item.deliveryStatus}
         </button>
       </td>
-      <td>{convertPriceToReadable(item.total ?? 0, '₴', 'uk-UA')}</td>
+      <td>{convertPriceToReadable(item.total ?? 0, '₴', locale)}</td>
       <td>{formatDateToDDMMYYYY(item.createdAt)}</td>
     </tr>
   );

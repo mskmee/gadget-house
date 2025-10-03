@@ -5,7 +5,6 @@ import { OrderItem } from '@/types/OrderItem';
 
 import styles from '../../styles/admin-page.module.scss';
 
-
 interface AdminTableProps {
   orders: OrderItem[];
   checkedItems: string[];
