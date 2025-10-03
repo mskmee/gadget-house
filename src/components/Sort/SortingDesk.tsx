@@ -56,6 +56,7 @@ export const SortingDesk = () => {
         title=""
         trigger="click"
         open={isModalOpen}
+        onOpenChange={(open) => setIsModalOpen(open)}
         placement="bottomRight"
         className={styles.sortDesk__sortPopover}
         content={content}
