@@ -193,13 +193,17 @@
 
           &:first-child {
             padding: 24px 78px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
             text-align: left;
+
             a {
               text-decoration: underline;
               color: var(--theme-color);
+            }
+
+            > div {
+              display: flex;
+              align-items: center;
+              gap: 8px;
             }
           }
 

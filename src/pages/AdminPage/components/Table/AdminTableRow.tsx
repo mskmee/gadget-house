@@ -27,20 +27,22 @@ export const AdminTableRow = ({
   return (
     <tr>
       <td>
-        <Checkbox
-          onChange={onChecked}
-          checked={isChecked}
-          className={styles.admin__tableWrapperCheckbox}
-        />
-        <Link
-          to={`/admin/${item.id}`}
-          onClick={(e) => {
-            e.stopPropagation();
-            onOrderClick(item);
-          }}
-        >
-          {item.id}
-        </Link>
+        <div>
+          <Checkbox
+            onChange={onChecked}
+            checked={isChecked}
+            className={styles.admin__tableWrapperCheckbox}
+          />
+          <Link
+            to={`/admin/${item.id}`}
+            onClick={(e) => {
+              e.stopPropagation();
+              onOrderClick(item);
+            }}
+          >
+            {item.id}
+          </Link>
+        </div>
       </td>
       <td>{formatPhoneDisplay(item.phoneNumber)}</td>
       <td>
