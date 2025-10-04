@@ -2,7 +2,7 @@
   padding: 56px 50px;
 
   &__wrapper {
-    padding: 0;
+    padding: 50px 0px;
     border-radius: 28px;
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
     background: var(--white-color);
@@ -11,9 +11,9 @@
   &__header {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 0px 76px;
     gap: 3.375rem;
-    padding: 50px 0 0 0;
     margin-bottom: 35px;
   }
 
@@ -112,8 +112,9 @@
     }
 
     &Wrapper {
-      display: flex;
-      flex-direction: column;
+      display: table;
+      table-layout: fixed;
+      width: 100%;
       border-collapse: collapse;
       font-family: 'Inter', sans-serif;
       font-weight: 400;
@@ -121,28 +122,34 @@
       line-height: 150%;
       text-align: center;
       color: var(--black);
-
+      margin: 0 auto;
       thead {
         background-color: var(--bg-color);
         border-top: 1px solid var(--secondary-background-color);
         border-bottom: 1px solid var(--secondary-background-color);
-        margin-bottom: 35px;
+
+        tr {
+          display: table-row;
+        }
 
         th {
-          padding: 16px 100px 16px 80px;
+          padding: 24px 0px;
           font-family: 'Inter', sans-serif;
           font-weight: 400;
           font-size: 24px;
           line-height: 150%;
           color: var(--text-color);
+          width: auto;
+          vertical-align: middle;
+          text-align: center;
 
           &:first-child {
+            padding: 0px 78px;
             text-align: left;
-            display: flex;
-            gap: 8px;
           }
 
-          &:last-child {
+          &:nth-child(4) {
+            padding: 0px 89px;
             text-align: right;
           }
         }
@@ -175,7 +182,7 @@
         }
 
         td {
-          padding: 24px 80px;
+          padding: 24px 0;
           font-family: 'Inter', sans-serif;
           font-weight: 400;
           font-size: 16px;
@@ -185,6 +192,7 @@
           color: var(--black);
 
           &:first-child {
+            padding: 24px 78px;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -204,16 +212,12 @@
           }
 
           &:nth-child(4) {
+            padding: 0px 89px;
             text-align: right;
           }
 
           span {
             display: inline-block !important;
-          }
-
-          &:last-child {
-            width: 15%;
-            text-align: right;
           }
         }
       }
