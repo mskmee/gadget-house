@@ -19,6 +19,8 @@ import { useMediaQuery } from 'react-responsive';
 import CatalogBlock from '../Header/CatalogBlock/CatalogBlock';
 import { isAuthRoute } from '@/pages/Auth/libs/utils/isAuthRoute';
 import { LeftArrow } from '@/assets/constants';
+import { NavButton } from '../Button';
+import { ExitIcon } from '@/assets/icons';
 
 export const AdminHeader = () => {
   const location = useLocation();
@@ -213,7 +215,14 @@ export const AdminHeader = () => {
               />
             </div>
             <div className={styles.headerBottomButtons}>
-              {/** Add components here **/}
+              <NavButton
+                button={{
+                  id: '',
+                  img: ExitIcon,
+                  href: '/sign-in',
+                }}
+                onAuthClick={handleAuthClick}
+              ></NavButton>
             </div>
           </div>
         </div>
