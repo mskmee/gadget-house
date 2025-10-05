@@ -146,6 +146,12 @@
           &:first-child {
             padding: 0px 78px;
             text-align: left;
+
+            > div {
+              display: flex;
+              align-items: center;
+              gap: 8px;
+            }
           }
 
           &:nth-child(4) {

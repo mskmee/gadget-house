@@ -66,7 +66,7 @@
     padding: 15px 194px 16px 22px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     flex-direction: row;
     gap: 10px;
     border: none;
@@ -195,6 +195,7 @@
     background-color: initial;
     > div {
       display: flex;
+      justify-content: space-between;
       align-items: center;
       width: 100%;
       gap: 40px;
@@ -282,6 +283,7 @@
 
     > .headerBottom {
       max-width: 1540px;
+      justify-content: space-between;
       margin: 0 auto;
     }
   }
@@ -296,6 +298,7 @@
     .headerBottom {
       padding-right: 8px;
       gap: 25px;
+      justify-content: space-between;
       padding: 0 50px;
       background-color: inherit;
       &Catalog {
@@ -307,6 +310,7 @@
     .headerBottom {
       padding-right: 0;
       > div {
+        justify-content: space-between;
         gap: 25px;
       }
     }
@@ -337,6 +341,7 @@
   }
   .headerBottomWrap {
     .headerBottom {
+      justify-content: space-between;
       padding: 0 20px;
 
       gap: 25px;
@@ -356,6 +361,7 @@
   }
   .catalogListWrap {
     > div {
+      justify-content: space-between;
       width: 320px;
     }
   }
@@ -374,6 +380,8 @@
     padding-right: 30px;
     gap: 20px;
     > div {
+      justify-content: space-between;
+
       > img {
         width: 22px;
         cursor: pointer;
