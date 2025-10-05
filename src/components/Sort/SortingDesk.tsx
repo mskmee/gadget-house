@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Popover } from 'antd';
 import cn from 'classnames';
@@ -6,7 +5,10 @@ import cn from 'classnames';
 import { Sort } from '@/enums/enums';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { AppDispatch, RootState } from '@/store';
-import { setSelectedSort } from '@/store/filters/filters_slice';
+import {
+  setSelectedSort,
+  setSortPopoverOpen,
+} from '@/store/filters/filters_slice';
 import { SortOption } from './SortOption';
 
 import SortSvg from '@/assets/icons/sorting.svg';
@@ -16,9 +18,8 @@ import styles from './sort.module.scss';
 import { setPageNumber } from '@/store/products/products_slice';
 
 export const SortingDesk = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch: AppDispatch = useDispatch();
-  const { selectedSort } = useTypedSelector(
+  const { selectedSort, isSortPopoverOpen } = useTypedSelector(
     (state: RootState) => state.filters,
   );
   const selectedSortName = Object.values(Sort).find(
@@ -26,13 +27,13 @@ export const SortingDesk = () => {
   )?.name;
 
   const showModal = () => {
-    setIsModalOpen(true);
+    dispatch(setSortPopoverOpen(true));
   };
 
   const handleSortSelection = (value: string) => {
     dispatch(setSelectedSort(value));
     dispatch(setPageNumber(0));
-    setIsModalOpen(false);
+    dispatch(setSortPopoverOpen(false));
   };
 
   const content = (
@@ -55,8 +56,8 @@ export const SortingDesk = () => {
       <Popover
         title=""
         trigger="click"
-        open={isModalOpen}
-        onOpenChange={(open) => setIsModalOpen(open)}
+        open={isSortPopoverOpen}
+        onOpenChange={(open) => dispatch(setSortPopoverOpen(open))}
         placement="bottomRight"
         className={styles.sortDesk__sortPopover}
         content={content}
@@ -69,7 +70,7 @@ export const SortingDesk = () => {
             alt="Arrow Up Icon"
             className={cn(
               styles.sortDesk__arrow,
-              !isModalOpen && styles.arrowDown,
+              !isSortPopoverOpen && styles.arrowDown,
             )}
           />
         </button>
