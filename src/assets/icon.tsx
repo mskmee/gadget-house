@@ -8,7 +8,11 @@ interface IconProps extends HTMLAttributes<HTMLDivElement> {
 
 export type { IconProps };
 
-export function createIconComponent(importFn: () => Promise<any>, alt: string) {
+export function createIconComponent(
+  importFn: () => Promise<any>,
+  alt: string,
+  defaultStyles?: CSSProperties,
+) {
   const LazyIcon = lazy(async () => {
     const module = await importFn();
     const iconUrl = module.default;
@@ -28,6 +32,7 @@ export function createIconComponent(importFn: () => Promise<any>, alt: string) {
         justifyContent: 'center',
         alignItems: 'center',
         transform: rotate ? `rotate(${rotate}deg)` : undefined,
+        ...defaultStyles,
       }}
       {...rest}
     >

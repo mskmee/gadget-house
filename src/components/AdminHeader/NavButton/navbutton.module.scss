@@ -1,0 +1,68 @@
+@import '@/styles//functions';
+
+.headerButton {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  align-items: center;
+  padding: 9px 12px;
+  background-color: #ffffff;
+  border: none;
+  border: 1px solid #eae4ee;
+  border-radius: 10px;
+  cursor: pointer;
+  position: relative;
+  width: fit-content !important;
+  height: fit-content !important;
+  font-family: 'Inter';
+  font-weight: normal;
+  font-size: 1rem;
+  color: #000;
+  line-height: 150%;
+  &:active {
+    background-color: #00820d;
+    > svg path {
+      stroke: #fff;
+    }
+  }
+
+  > div {
+    display: flex;
+    gap: 5px;
+    flex-direction: row;
+    border-radius: 50%;
+  }
+}
+
+.navBtn {
+  &__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 9px 12px;
+    background-color: #ffffff;
+    border: none;
+    border: 1px solid #eae4ee;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+
+    &:active {
+      background-color: #00820d;
+      > svg path {
+        stroke: #fff;
+      }
+    }
+
+    &Avatar {
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 24px;
+      line-height: 150%;
+      color: var(--text-color);
+    }
+  }
+}
