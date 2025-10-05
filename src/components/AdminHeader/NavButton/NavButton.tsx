@@ -28,7 +28,7 @@ export const NavButton: FC<INavButtonProps> = ({
 
   return (
     <button className={buttonClass} onClick={onClick}>
-      <div className={styles.navBtn__buttonExit}>{children}</div>
+      {children}
     </button>
   );
 };

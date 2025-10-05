@@ -19,10 +19,21 @@
   font-size: 1rem;
   color: #000;
   line-height: 150%;
+
   &:active {
     background-color: #00820d;
+    color: #fff;
+
     > svg path {
       stroke: #fff;
+    }
+
+    > svg {
+      fill: #fff;
+    }
+
+    span {
+      color: #fff;
     }
   }
 
@@ -39,6 +50,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 8px;
     padding: 9px 12px;
     background-color: #ffffff;
     border: none;
@@ -49,11 +61,29 @@
     position: relative;
     width: fit-content;
     height: fit-content;
+    font-family: 'Inter';
+    font-weight: normal;
+    font-size: 1rem;
+    color: #000;
+    line-height: 150%;
+    transition: all 0.2s ease;
 
-    &:active {
+    &:active,
+    &:focus,
+    &:hover {
       background-color: #00820d;
+      color: #fff;
+
       > svg path {
         stroke: #fff;
+      }
+
+      > svg {
+        fill: #fff;
+      }
+
+      span {
+        color: #fff;
       }
     }
 
