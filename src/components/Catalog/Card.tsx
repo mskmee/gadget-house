@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { toast } from 'react-toastify';
 import { Rate } from 'antd';
-
 import { useActions } from '@/hooks/useActions';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { useAuthRequired } from '@/hooks/useAuthRequired';
 import { convertPriceToReadable } from '@/utils/helpers/product';
 import { ProductItem } from '@/utils/packages/products';
 import { rateImg, rateEmptyImg } from '@/assets/constants';
@@ -25,8 +25,9 @@ export const Card: FC<ISmartphoneCardProps> = ({
   index,
 }) => {
   const { addToStore, toggleFavorite } = useActions();
+  const { triggerAuthRequired } = useAuthRequired();
+  const { user } = useTypedSelector((state) => state.auth);
   const { locale, currency } = useTypedSelector((state) => state.shopping_card);
-
   const productRating = product.rating ?? 0;
 
   const addToBasket = (e: MouseEvent<HTMLButtonElement>) => {
@@ -49,9 +50,11 @@ export const Card: FC<ISmartphoneCardProps> = ({
   };
 
   const handleSaveFavoriteProduct = () => {
-    if (product) {
-      toggleFavorite(product);
+    if (!user) {
+      triggerAuthRequired('favorite');
+      return;
     }
+    toggleFavorite(product);
   };
 
   return (
