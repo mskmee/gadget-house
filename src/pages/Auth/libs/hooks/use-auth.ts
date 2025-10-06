@@ -20,7 +20,6 @@ import {
 import {
   ChangePasswordFormDto,
   ForgotFormDto,
-  FormType,
   LoginFormDto,
   LoginPermissionFormDto,
   RegisterFormDto,
@@ -37,7 +36,7 @@ import { SuccessType } from '../types/successType';
 import { LOGIN_PERMISSION_FORM_INITIAL_VALUE } from '../constants/login-permission-form-initial-value';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { DataStatus } from '@/enums/data-status';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import { RoutePath } from '@/enums/Route';
 import { CHANGE_PASSWORD_FORM_INITIAL_VALUE } from '../constants/change-password-form-initial-value';
@@ -46,8 +45,8 @@ import { setTokens } from '@/store/auth/auth-slice';
 
 // шо повертає хук
 type Return = {
-  currentForm: FormType;
-  setCurrentForm: (form: FormType) => void;
+  currentForm: FormEnum;
+  setCurrentForm: (form: FormEnum) => void;
   loginFormValue: LoginFormDto;
   registerFormValue: RegisterFormDto;
   forgotFormValue: ForgotFormDto;
@@ -72,7 +71,7 @@ type Return = {
 
 // поточна форма, значення всіх інших форм
 type State = {
-  currentForm: FormType;
+  currentForm: FormEnum;
   loginFormValue: LoginFormDto;
   forgotFormValue: ForgotFormDto;
   changePasswordFormValue: ChangePasswordFormDto;
@@ -100,7 +99,7 @@ type ReducerAction =
     }
   | {
       type: AuthAction.SET_FORM;
-      payload: FormType;
+      payload: FormEnum;
     }
   | {
       type: AuthAction.RESET_FORM;
@@ -110,7 +109,6 @@ type ReducerAction =
       payload: ChangePasswordFormDto;
     };
 
-// початковий стан
 const INITIAL_STATE: State = {
   currentForm: FormEnum.LOGIN,
   loginFormValue: LOGIN_FORM_INITIAL_VALUE,
@@ -120,10 +118,8 @@ const INITIAL_STATE: State = {
   changePasswordFormValue: CHANGE_PASSWORD_FORM_INITIAL_VALUE,
 };
 
-// reducer
 const reducer: Reducer<State, ReducerAction> = (state, action) => {
   switch (action.type) {
-    // зберігають значення відповідних форм у стані
     case AuthAction.LOGIN_FORM:
       return {
         ...state,
@@ -154,15 +150,12 @@ const reducer: Reducer<State, ReducerAction> = (state, action) => {
         changePasswordFormValue: action.payload,
       };
 
-    // setCurrentForm dispatch
-    // змінює поточну активну форму (наприклад, з логіну на реєстрацію)
     case AuthAction.SET_FORM:
       return {
         ...state,
         currentForm: action.payload,
       };
 
-    // скидає всі форми до початкових значень
     case AuthAction.RESET_FORM:
       return {
         ...state,
@@ -180,7 +173,6 @@ const reducer: Reducer<State, ReducerAction> = (state, action) => {
 };
 
 const useAuth = (): Return => {
-  // стан та ф-ія для виклику дій редюсера
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
   const dispatchApp: AppDispatch = useDispatch();
   const { userToken, refreshToken } = useTypedSelector((state) => state.auth);
@@ -191,8 +183,11 @@ const useAuth = (): Return => {
   );
   const [searchParams] = useSearchParams();
   const token = searchParams.get('token');
+  const location = useLocation();
   const navigate = useNavigate();
   const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
+  const redirectPath = (location.state as any)?.from || '/';
+
   useEffect(() => {
     if (authError) {
       const timer = setTimeout(() => {
@@ -208,32 +203,22 @@ const useAuth = (): Return => {
     }
   }, [dispatchApp, refreshToken, userToken]);
 
-  const setCurrentForm = useCallback((form: FormType) => {
+  const setCurrentForm = useCallback((form: FormEnum) => {
     setAuthError(null);
     dispatch({ type: AuthAction.SET_FORM, payload: form });
   }, []);
 
   const onLoginFormSubmit = async (loginFormValue: LoginFormDto) => {
     setAuthError(null);
-    const val: LoginFormDto = {
-      email: loginFormValue.email,
-      password: loginFormValue.password,
-    };
-
     try {
-      const result = await dispatchApp(getCredentials(val)).unwrap();
-      if (!result) {
-        return;
-      }
-      if (isMobile) {
-        navigate('/');
-      } else {
+      const result = await dispatchApp(getCredentials(loginFormValue)).unwrap();
+      if (!result) return;
+      if (isMobile) navigate(redirectPath);
+      else {
         setSuccessType(FormEnum.LOGIN);
-        dispatch({
-          type: AuthAction.RESET_FORM,
-        });
+        dispatch({ type: AuthAction.RESET_FORM });
       }
-    } catch (error) {
+    } catch {
       setAuthError('Incorrect e-mail or password');
     }
   };
@@ -262,42 +247,30 @@ const useAuth = (): Return => {
   };
 
   const onRegisterFormSubmit = async (registerFormValue: RegisterFormDto) => {
-    const val: RegisterFormDto = {
-      email: registerFormValue.email,
-      password: registerFormValue.password,
-      fullName: registerFormValue.fullName,
-      phoneNumber: registerFormValue.phoneNumber,
-    };
-
-    const result = await dispatchApp(createUser(val)).unwrap();
-    if (!result) {
-      return;
-    }
-    if (isMobile) {
-      navigate('/');
-    } else {
-      setSuccessType(FormEnum.REGISTER);
-      dispatch({ type: AuthAction.RESET_FORM });
+    try {
+      const result = await dispatchApp(createUser(registerFormValue)).unwrap();
+      if (!result) return;
+      if (isMobile) navigate(redirectPath);
+      else {
+        setSuccessType(FormEnum.REGISTER);
+        dispatch({ type: AuthAction.RESET_FORM });
+      }
+    } catch {
+      setAuthError('Registration error');
     }
   };
 
   const onForgotFormSubmit = async (forgotFormValue: ForgotFormDto) => {
-    const val = {
-      email: forgotFormValue.email,
-    };
-
-    const result = await dispatchApp(forgotPassword(val.email)).unwrap();
-
-    if (result) {
-      setSuccessType(FormEnum.FORGOT);
+    try {
+      const result = await dispatchApp(
+        forgotPassword(forgotFormValue.email),
+      ).unwrap();
+      if (result) setSuccessType(FormEnum.FORGOT);
+      dispatch({ type: AuthAction.FORGOT_FORM, payload: forgotFormValue });
+      dispatch({ type: AuthAction.RESET_FORM });
+    } catch {
+      setAuthError('Forgot password error');
     }
-
-    dispatch({
-      type: AuthAction.FORGOT_FORM,
-      payload: forgotFormValue,
-    });
-
-    dispatch({ type: AuthAction.RESET_FORM });
   };
 
   const onChangePasswordFormSubmit = async (
@@ -331,14 +304,17 @@ const useAuth = (): Return => {
       [FormEnum.CHANGE_PASSWORD]: AppRoute.AUTH_CHANGE_PASSWORD,
     };
   }, []);
+
   const switchAuthForm = useCallback(
     (newForm: FormEnum) => {
       if (isMobile) {
         const route = routeMap[newForm];
-        if (route) navigate(route);
+        if (route) navigate(route, { state: { from: redirectPath } });
+      } else {
+        setCurrentForm(newForm);
       }
     },
-    [isMobile, navigate, routeMap],
+    [isMobile, navigate, redirectPath, setCurrentForm, routeMap], // добавили routeMap
   );
 
   const handleSuccessCloseMobile = () => {

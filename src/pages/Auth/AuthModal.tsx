@@ -1,13 +1,12 @@
-import { FC, useEffect } from 'react';
-
+import { FC, useEffect, useState } from 'react';
 import { PopUp } from '@/components/components';
 import LoginForm from './libs/components/LoginForm';
 import RegisterForm from './libs/components/RegisterForm';
 import ForgotPasswordForm from './libs/components/ForgotPasswordForm';
-import { useAuth } from './libs/hooks/hooks';
-import { FormEnum } from './libs/enums/form.enum';
-import SuccessPopup from './libs/components/SuccessPopup';
 import ChangePasswordForm from './libs/components/ChangePasswordForm';
+import { useAuth } from './libs/hooks/use-auth';
+import SuccessPopup from './libs/components/SuccessPopup';
+import { FormEnum } from './libs/enums/form.enum';
 
 interface IAuthModalProps {
   isOpen: boolean;
@@ -36,7 +35,7 @@ const AuthModal: FC<IAuthModalProps> = ({
     isLoading,
     authError,
   } = useAuth();
-
+  const [modalKey, setModalKey] = useState(0);
   const handleClose = () => {
     setSuccessType(null);
     onClose();
@@ -46,19 +45,31 @@ const AuthModal: FC<IAuthModalProps> = ({
     if (isOpen) {
       setCurrentForm(initialForm);
       setSuccessType(null);
+
+      if (initialForm) {
+        setCurrentForm(initialForm);
+      }
     }
   }, [isOpen, setCurrentForm, setSuccessType, initialForm]);
 
-  console.log('is Auth modal open', isOpen);
-  console.log('current form:', currentForm);
+  useEffect(() => {
+    if (isOpen) {
+      setModalKey((prev) => prev + 1);
+    }
+  }, [isOpen]);
 
   return (
-    <PopUp isOpened={isOpen} onClose={handleClose} classname="authModal">
+    <PopUp
+      key={modalKey}
+      isOpened={isOpen}
+      onClose={handleClose}
+      classname="authModal"
+    >
       {successType ? (
         <SuccessPopup type={successType} onClose={handleClose} />
       ) : (
         <>
-          {currentForm === FormEnum.LOGIN && (
+          {currentForm === 'login' && (
             <LoginForm
               initialValues={loginFormValue}
               onLogin={onLoginFormSubmit}
@@ -68,7 +79,7 @@ const AuthModal: FC<IAuthModalProps> = ({
               serverError={authError}
             />
           )}
-          {currentForm === FormEnum.REGISTER && (
+          {currentForm === 'register' && (
             <RegisterForm
               initialValues={registerFormValue}
               onRegister={onRegisterFormSubmit}
@@ -77,7 +88,7 @@ const AuthModal: FC<IAuthModalProps> = ({
               onClose={handleClose}
             />
           )}
-          {currentForm === FormEnum.FORGOT && (
+          {currentForm === 'forgot' && (
             <ForgotPasswordForm
               initialValues={forgotFormValue}
               onReset={onForgotFormSubmit}

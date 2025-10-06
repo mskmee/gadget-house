@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from 'react';
+import { FC, PropsWithChildren, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import classNames from 'classnames';
 
@@ -18,11 +18,27 @@ const PopUp: FC<PopUpProperties> = ({
   onClose,
   classname = '',
 }) => {
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  useEffect(() => {
+    if (isOpened) {
+      const timer = setTimeout(() => {
+        setIsAnimating(true);
+      }, 10);
+      return () => clearTimeout(timer);
+    } else {
+      setIsAnimating(false);
+    }
+  }, [isOpened]);
+
+  if (!isOpened && !isAnimating) return null;
+
   return createPortal(
     <div
+      data-test="popup-overlay"
       className={classNames(
         styles.overlay,
-        { [styles.opened]: isOpened },
+        { [styles.opened]: isAnimating },
         styles[classname],
       )}
       onClick={onClose}
