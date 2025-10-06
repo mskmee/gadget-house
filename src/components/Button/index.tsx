@@ -10,6 +10,7 @@ import { EmptyBasketPopup } from '../BasketPopup/EmptyBasketPopup';
 import styles from './button.module.scss';
 import { useDispatch } from 'react-redux';
 import { setSortPopoverOpen } from '@/store/filters/filters_slice';
+import { AppDispatch } from '@/store';
 
 interface INavButtonProps {
   button: IButton;
@@ -27,7 +28,7 @@ export const NavButton: FC<INavButtonProps> = ({
   const user = useTypedSelector((state) => state.auth.user);
   const refreshToken = localStorage.getItem('refresh_token');
   const productsLength = products.reduce((acc, item) => acc + item.quantity, 0);
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   const favoriteProducts = useTypedSelector(
     (state) => state.products.favoriteProducts,
