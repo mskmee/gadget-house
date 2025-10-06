@@ -12,6 +12,7 @@ import { AddToBasketButton } from './AddToBasketButton';
 
 import { useActions } from '@/hooks/useActions';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { useAuthRequired } from '@/hooks/useAuthRequired';
 import { convertPriceToReadable } from '@/utils/helpers/product';
 import { useMediaQuery } from 'react-responsive';
 import { IProductCard } from '@/interfaces/interfaces';
@@ -32,6 +33,8 @@ interface IProductProps {
 
 export const Product: FC<IProductProps> = ({ dynamicCurrentProduct }) => {
   const { toggleFavorite } = useActions();
+  const { userToken } = useTypedSelector((state) => state.auth);
+  const { triggerAuthRequired } = useAuthRequired();
   const reviews = useTypedSelector((state) => state.singleProduct.reviews);
   const isLikedProduct = useTypedSelector((state) =>
     state.products.favoriteProducts.some(
@@ -62,6 +65,10 @@ export const Product: FC<IProductProps> = ({ dynamicCurrentProduct }) => {
   const isWidth575 = useMediaQuery({ query: '(max-width: 575px)' });
 
   const handleSaveFavoriteProduct = () => {
+    if (!userToken) {
+      triggerAuthRequired('favorite');
+      return;
+    }
     if (dynamicCurrentProduct) {
       toggleFavorite(dynamicCurrentProduct);
     }
