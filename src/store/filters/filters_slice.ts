@@ -14,6 +14,7 @@ export interface IInitialState {
   allCategories: CategoriesResponseDto | null;
   selectedCategoryId: number | null;
   selectedSort: string | null;
+  isSortPopoverOpen: boolean;
   selectedBrands: string[] | null;
   selectedAttributes: string[] | null;
   selectedPriceRange: number[];
@@ -27,6 +28,7 @@ const initialState: IInitialState = {
   allCategories: null,
   selectedCategoryId: null,
   selectedSort: Sort.POPULARITY.value,
+  isSortPopoverOpen: false,
   selectedBrands: null,
   selectedAttributes: null,
   selectedPriceRange: [0, 100000],
@@ -43,6 +45,9 @@ const filters_slice = createSlice({
     },
     setSelectedSort(state, { payload }: { payload: string }) {
       state.selectedSort = payload;
+    },
+    setSortPopoverOpen(state, { payload }: { payload: boolean }) {
+      state.isSortPopoverOpen = payload;
     },
     setSelectedBrands(state, { payload }: { payload: string[] }) {
       state.selectedBrands = payload;
@@ -115,6 +120,7 @@ const filters_slice = createSlice({
 export const {
   setSelectedSort,
   setSelectedBrands,
+  setSortPopoverOpen,
   setSelectedAttributes,
   setSelectedPriceRange,
   setSelectedCameraRange,
