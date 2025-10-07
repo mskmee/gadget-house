@@ -82,9 +82,6 @@ const products_slice = createSlice({
       state.loaded = payload;
     },
     toggleFavorite: (state, { payload }: PayloadAction<IProductCard>) => {
-      console.log('PAYLOAD THAT REDUCER RECIEVE', payload);
-      console.log('STATE PRODUCST DATA FROM REDUX:', state.productsData);
-
       const product = state.productsData?.page.find(
         (item) => item.id === payload.id,
       );
@@ -192,6 +189,7 @@ const products_slice = createSlice({
 
         state.isFetchingMore = false;
         state.isAppending = false;
+        state.loaded = true;
       })
       .addCase(getFilteredProducts.rejected, (state) => {
         state.isFetchingMore = false;
