@@ -9,7 +9,7 @@ interface IconProps extends HTMLAttributes<HTMLDivElement> {
 export type { IconProps };
 
 export function createIconComponent(
-  importFn: () => Promise<any>,
+  importFn: () => Promise<{ default: string }>,
   alt: string,
   defaultStyles?: CSSProperties,
 ) {
