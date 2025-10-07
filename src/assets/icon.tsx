@@ -1,15 +1,21 @@
 import { lazy, HTMLAttributes, ComponentType, CSSProperties } from 'react';
 import { Suspense } from 'react';
+import React from 'react';
 
 interface IconProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;
   rotate?: number;
 }
 
+interface SVGModule {
+  default: string;
+  ReactComponent?: React.FC<React.SVGProps<SVGSVGElement>>;
+}
+
 export type { IconProps };
 
 export function createIconComponent(
-  importFn: () => Promise<{ default: string }>,
+  importFn: () => Promise<SVGModule>,
   alt: string,
   defaultStyles?: CSSProperties,
 ) {
