@@ -27,6 +27,13 @@ export const Catalog: FC<ICatalogProps> = ({ data, totalPages }) => {
     (state: RootState) => state.products.isFetchingMore,
   );
   useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'instant',
+    });
+  }, []);
+
+  useEffect(() => {
     if (pagination.totalPages) {
       setHasMore(pagination.currentPage < pagination.totalPages - 1);
     }
