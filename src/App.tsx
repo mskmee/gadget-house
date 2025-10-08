@@ -19,8 +19,9 @@ function App() {
   const { loaded: productsLoaded } = useTypedSelector(
     (state: RootState) => state.products,
   );
+
   useEffect(() => {
-    if (!productsLoaded) {
+    if (!productsLoaded && window.location.pathname === '/') {
       dispatch(getAllProducts({ page: DEFAULT_PAGE, size: DEFAULT_SIZE }));
     }
   }, [dispatch, productsLoaded]);

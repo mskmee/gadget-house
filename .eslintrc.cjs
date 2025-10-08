@@ -23,7 +23,10 @@ module.exports = {
       { allowConstantExport: true },
     ],
     'react/prop-types': 'warn',
-    'no-unused-vars': ['error', { varsIgnorePattern: 'React' }],
+    'no-unused-vars': [
+      'error',
+      { varsIgnorePattern: 'React', argsIgnorePattern: '^_' },
+    ],
   },
   overrides: [
     {

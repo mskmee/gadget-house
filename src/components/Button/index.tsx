@@ -8,6 +8,9 @@ import { PopUp } from '../components';
 import { EmptyBasketPopup } from '../BasketPopup/EmptyBasketPopup';
 
 import styles from './button.module.scss';
+import { useDispatch } from 'react-redux';
+import { setSortPopoverOpen } from '@/store/filters/filters_slice';
+import { AppDispatch } from '@/store';
 
 interface INavButtonProps {
   button: IButton;
@@ -25,6 +28,7 @@ export const NavButton: FC<INavButtonProps> = ({
   const user = useTypedSelector((state) => state.auth.user);
   const refreshToken = localStorage.getItem('refresh_token');
   const productsLength = products.reduce((acc, item) => acc + item.quantity, 0);
+  const dispatch: AppDispatch = useDispatch();
 
   const favoriteProducts = useTypedSelector(
     (state) => state.products.favoriteProducts,
@@ -34,6 +38,9 @@ export const NavButton: FC<INavButtonProps> = ({
 
   const openEmptyBasketPopup = () => setIsEmptyBasketPopupOpen(true);
   const closeEmptyBasketPopup = () => setIsEmptyBasketPopupOpen(false);
+  const handleCartHover = () => {
+    dispatch(setSortPopoverOpen(false));
+  };
 
   const renderButton = () => {
     const handleAuthClick = () => {
@@ -101,7 +108,11 @@ export const NavButton: FC<INavButtonProps> = ({
 
     if (button.href === '/basket') {
       return products.length > 0 ? (
-        <Link to={button.href} className={styles.headerButton}>
+        <Link
+          to={button.href}
+          className={styles.headerButton}
+          onMouseEnter={handleCartHover}
+        >
           <IconComponent />
           <div>
             <span>{productsLength}</span>

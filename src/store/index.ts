@@ -5,10 +5,10 @@ import { reducer as productsReducer } from './products';
 import { reducer as authReducer } from './auth/auth-slice';
 import { reducer as filtersReducer } from './filters/filters_slice';
 import { reducer as orderReducer } from './orders/order_slice';
-import { reducer as singleProductSlice} from './singleProduct/singleProduct_slice';
+import { reducer as singleProductSlice } from './singleProduct/singleProduct_slice';
 import { logger, toastMiddleware } from './middlewares/middlewares';
 import { isDevelopment } from '@/constants/IsDevelopment';
-
+import authPortalsReducer from './auth/authPortalsSlice';
 
 const reducers = combineReducers({
   shopping_card: shoppingCartReducer,
@@ -17,7 +17,8 @@ const reducers = combineReducers({
   auth: authReducer,
   filters: filtersReducer,
   order: orderReducer,
-  singleProduct: singleProductSlice
+  singleProduct: singleProductSlice,
+  authPortals: authPortalsReducer,
 });
 
 export const store = configureStore({
