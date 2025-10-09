@@ -8,6 +8,7 @@ import { updateOrdersStatus } from '@/store/orders/order_slice';
 import { CheckedOrderIcon } from '@/assets/icons/CheckedOrder';
 import { patchMultipleOrders } from '@/store/orders/actions';
 import styles from './change-status.module.scss';
+import { OrderStatus } from '@/enums/order-status';
 
 interface IChangeStatusProps {
   // eslint-disable-next-line no-unused-vars
@@ -46,7 +47,7 @@ const ChangeStatus: FC<IChangeStatusProps> = ({ checkedItems }) => {
         <h3>Change Status to:</h3>
 
         <div className={styles.statusPopup__options}>
-          {['Paid', 'Returned', 'Cancel', 'Order', 'Sent'].map((status) => (
+          {Object.values(OrderStatus).map((status) => (
             <button
               key={status}
               className={cn(
