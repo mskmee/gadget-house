@@ -56,6 +56,18 @@ class ProductsService implements IProductsService {
   ): Promise<ProductsResponseDto> {
     return this.productsApi.getByCategory(categoryId, page, size, sort);
   }
+
+  async getSuggestions(query: string): Promise<string[]> {
+    return this.productsApi.getSuggestions(query);
+  }
+  async searchProducts(
+    query: string,
+    page: number,
+    size: number,
+    sort?: string,
+  ): Promise<ProductsResponseDto> {
+    return this.productsApi.searchProducts(query, page, size, sort);
+  }
 }
 
 export { ProductsService };
