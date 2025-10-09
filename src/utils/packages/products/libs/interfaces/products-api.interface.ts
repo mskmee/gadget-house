@@ -29,7 +29,6 @@ interface IProductsApi {
     sort?: string;
   }) => Promise<ProductsResponseDto>;
   getSuggestions(query: string): Promise<string[]>;
-  getSuggestions(query: string): Promise<string[]>;
   searchProducts(
     query: string,
     page: number,
