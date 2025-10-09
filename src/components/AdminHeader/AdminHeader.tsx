@@ -18,7 +18,7 @@ import { useIsFixedHeader } from '@/hooks/useIsFixedHeader';
 import { useMediaQuery } from 'react-responsive';
 import CatalogBlock from '../Header/CatalogBlock/CatalogBlock';
 import { isAuthRoute } from '@/pages/Auth/libs/utils/isAuthRoute';
-import { LeftArrow } from '@/assets/constants';
+import { LeftArrow } from '@/assets/icons';
 import { DashboardButton } from './components/DashboardButton';
 import { LogoutButton } from './components/LogoutButton';
 
@@ -201,7 +201,7 @@ export const AdminHeader = () => {
                   className={styles['auth-back-button']}
                   onClick={() => navigate(-1)}
                 >
-                  <img src={LeftArrow} alt="Back" />
+                  <LeftArrow />
                 </button>
               )}
 
