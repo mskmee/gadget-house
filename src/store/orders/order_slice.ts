@@ -1,10 +1,18 @@
-import { createSlice, isAnyOf, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit';
 
-import { orderList } from "@/mock/order-list";
-import { DataStatus } from "@/enums/data-status";
-import { getAllOrders, getOneOrderById, patchOrder } from "./actions";
-import { filterOrders } from "@/utils/helpers/filter-orders";
-import { OrderItemResponseDto, OrdersResponseDto } from "@/utils/packages/orders/libs/types/types";
+import { orderList } from '@/mock/order-list';
+import { DataStatus } from '@/enums/data-status';
+import {
+  getAllOrders,
+  getOneOrderById,
+  patchOrder,
+  patchMultipleOrders,
+} from './actions';
+import { filterOrders } from '@/utils/helpers/filter-orders';
+import {
+  OrderItemResponseDto,
+  OrdersResponseDto,
+} from '@/utils/packages/orders/libs/types/types';
 
 const list = orderList(18);
 
@@ -21,7 +29,7 @@ export interface IInitialState {
   activeOrder: OrderItemResponseDto | null;
   dataStatus: DataStatus;
   filters: IFiltersState;
-  filteredOrders: OrderItemResponseDto[]; 
+  filteredOrders: OrderItemResponseDto[];
 }
 
 const initialState: IInitialState = {
@@ -29,7 +37,7 @@ const initialState: IInitialState = {
   activeOrder: null,
   dataStatus: DataStatus.IDLE,
   filters: {} as IFiltersState,
-  filteredOrders:[],
+  filteredOrders: [],
 };
 
 const order_slice = createSlice({
@@ -52,8 +60,8 @@ const order_slice = createSlice({
 
       state.filteredOrders = state.orders.page.map((order) =>
         ids.includes(order.id)
-          ? { ...order, status: newStatus }
-          : order
+          ? { ...order, deliveryStatus: newStatus }
+          : order,
       );
     },
   },
@@ -61,19 +69,25 @@ const order_slice = createSlice({
     builder.addCase(getAllOrders.fulfilled, (state, { payload }) => {
       state.orders = payload;
       state.filteredOrders = filterOrders(payload.page, state.filters);
-    })
+    });
     builder.addCase(getOneOrderById.fulfilled, (state, { payload }) => {
       state.activeOrder = payload;
-    })
+    });
     builder.addCase(patchOrder.fulfilled, (state, { payload }) => {
       state.activeOrder = payload;
-    })
+    });
+
+    builder.addCase(patchMultipleOrders.fulfilled, () => {
+      return;
+    });
 
     builder.addMatcher(
       isAnyOf(
         getAllOrders.fulfilled,
         getOneOrderById.fulfilled,
-        patchOrder.fulfilled),
+        patchOrder.fulfilled,
+        patchMultipleOrders.fulfilled,
+      ),
       (state) => {
         state.dataStatus = DataStatus.FULFILLED;
       },
@@ -82,7 +96,9 @@ const order_slice = createSlice({
       isAnyOf(
         getAllOrders.rejected,
         getOneOrderById.rejected,
-        patchOrder.rejected),
+        patchOrder.rejected,
+        patchMultipleOrders.rejected,
+      ),
       (state) => {
         state.dataStatus = DataStatus.REJECT;
       },
@@ -91,7 +107,9 @@ const order_slice = createSlice({
       isAnyOf(
         getAllOrders.pending,
         getOneOrderById.pending,
-        patchOrder.pending),
+        patchOrder.pending,
+        patchMultipleOrders.pending,
+      ),
       (state) => {
         state.dataStatus = DataStatus.PENDING;
       },

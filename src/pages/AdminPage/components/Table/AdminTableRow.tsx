@@ -49,7 +49,7 @@ export const AdminTableRow = ({
         <button
           className={`button__status button__status_${item.deliveryStatus.toLowerCase().replace(' ', '_')}`}
         >
-          {item.deliveryStatus}
+          {item.deliveryStatus.toUpperCase()}
         </button>
       </td>
       <td>{convertPriceToReadable(item.total ?? 0, '₴', locale)}</td>
