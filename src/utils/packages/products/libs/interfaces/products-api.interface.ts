@@ -28,7 +28,6 @@ interface IProductsApi {
     maxCameraMP?: number;
     sort?: string;
   }) => Promise<ProductsResponseDto>;
-  // шо це за інтерфейси
   getSuggestions(query: string): Promise<string[]>;
   getSuggestions(query: string): Promise<string[]>;
   searchProducts(
