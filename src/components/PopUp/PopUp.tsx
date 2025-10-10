@@ -41,9 +41,8 @@ const PopUp: FC<PopUpProperties> = ({
         { [styles.opened]: isAnimating },
         styles[classname],
       )}
-      onClick={onClose}
     >
-      <div className={styles.content} onClick={(e) => e.stopPropagation()}>
+      <div className={styles.content}>
         <button onClick={onClose} className={styles.close}>
           <CloseModal />
         </button>
