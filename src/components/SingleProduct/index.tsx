@@ -94,7 +94,7 @@ export const Product: FC<IProductProps> = ({ dynamicCurrentProduct }) => {
                 className="product_rate-stars"
                 value={dynamicCurrentProduct?.rating}
               />
-              <a href="#users-review">
+              <a href="#product-reviews" onClick={handleScrollToReviews}>
                 <img src={reviewImg} alt="review pic" />
                 <span>({reviewsLength})</span>
               </a>
