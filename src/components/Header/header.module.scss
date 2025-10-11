@@ -149,14 +149,14 @@
       height: 34px;
       path {
         stroke-width: 1px;
-        stroke: var(--text-color, #1c1817);
+        // stroke: var(--text-color, #1c1817);
       }
     }
-    > a:nth-child(4) {
-      &:hover svg path {
-        stroke: #fff;
-      }
-    }
+    // > a:nth-child(4) {
+    //   &:hover svg path {
+    //     stroke: #fff;
+    //   }
+    // }
 
     > a:nth-child(4):hover + div {
       display: block;

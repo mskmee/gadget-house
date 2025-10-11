@@ -41,7 +41,6 @@ const AuthModal: FC<IAuthModalProps> = ({ isOpen, onClose, initialForm }) => {
   }, [initialForm, setCurrentForm]);
   useEffect(() => {
     if (isOpen) {
-      // Обновляем ключ при каждом открытии для пересоздания PopUp
       setModalKey((prev) => prev + 1);
     }
   }, [isOpen]);

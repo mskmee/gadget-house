@@ -70,17 +70,18 @@ export const Header = () => {
     }
   };
 
+  const isBasketPage =
+    location.pathname === AppRoute.BASKET_PAGE ||
+    location.pathname === AppRoute.ORDER ||
+    location.pathname === AppRoute.ORDER_SUCCESS;
+  const shouldShowCartTooltip = products.length > 0 && !isBasketPage;
+
   useEffect(() => {
     setIsCatalogListOpen(false);
     document.body.style.overflow = 'initial';
     document.body.style.paddingRight = `0px`;
   }, [location.pathname]);
   // pop-up basket
-  const isBasketPage =
-    location.pathname === AppRoute.BASKET_PAGE ||
-    location.pathname === AppRoute.ORDER ||
-    location.pathname === AppRoute.ORDER_SUCCESS;
-  const shouldShowCartTooltip = products.length > 0 && !isBasketPage;
 
   // open catalog
   const scrollbarWidthRef = useRef<number | null>(null);
