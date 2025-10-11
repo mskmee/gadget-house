@@ -208,7 +208,6 @@ export const Search: FC<ISearchProps> = ({
       AppRoute.SEARCH_RESULTS_NOT_FOUND,
     ];
     if (!searchPages.includes(location.pathname as RoutePath)) {
-      setSearchInput({ value: '', hasError: false });
       dispatch(clearSuggestions());
       setIsOverlayActive(false);
     }
@@ -305,7 +304,9 @@ export const Search: FC<ISearchProps> = ({
           <Link
             to={`${AppRoute.SEARCH_RESULTS_FOUND}/?text=${searchInput.value}`}
             state={{ searchInputValue: searchInput.value, isSuggestion: false }}
-            className={classNames({ [styles.active]: !!searchInput.value })}
+            className={classNames({
+              [styles.active]: displayValue,
+            })}
             onClick={async (e) => {
               e.preventDefault();
               const query = searchInput.value.trim();
