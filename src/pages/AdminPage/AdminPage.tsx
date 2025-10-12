@@ -20,6 +20,7 @@ const AdminPage = () => {
   const dispatch: AppDispatch = useDispatch();
 
   const { data: ordersResponse, isLoading } = useGetAllOrdersQuery();
+
   const orders = ordersResponse?.page || [];
 
   const { productsData } = useTypedSelector(

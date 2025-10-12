@@ -9,15 +9,8 @@ import { convertPriceToReadable } from '@/utils/helpers/helpers';
 import { IOrderItemProduct } from '@/utils/packages/orders/libs/types/order-item-response-dto';
 
 interface OrdersListProps {
-  products: Array<{
-    id: string;
-    quantity: number;
-    totalPrice: number;
-    images: string[];
-    name: string;
-  }>;
   totalPrice?: number;
-  productsData?: IOrderItemProduct[];
+  productsData: IOrderItemProduct[];
   // eslint-disable-next-line no-unused-vars
   onProductAdd: (product: IOrderItemProduct) => void;
   // eslint-disable-next-line no-unused-vars
@@ -25,7 +18,6 @@ interface OrdersListProps {
 }
 
 export const OrdersList = ({
-  products,
   totalPrice,
   productsData,
   onProductAdd,
@@ -34,6 +26,7 @@ export const OrdersList = ({
   const [filteredProducts, setFilteredProducts] = useState<IOrderItemProduct[]>(
     [],
   );
+  console.log(JSON.stringify(productsData));
 
   const handleProductSearch = useCallback(
     (query: string) => {
@@ -41,8 +34,12 @@ export const OrdersList = ({
 
       const filtered = productsData?.filter(
         (product) =>
-          product.name?.toLowerCase().includes(normalized) ||
-          product.code?.toLowerCase().includes(normalized),
+          product.shortProductResponseDto.name
+            ?.toLowerCase()
+            .includes(normalized) ||
+          product.shortProductResponseDto.code
+            ?.toLowerCase()
+            .includes(normalized),
       );
 
       setFilteredProducts(filtered || []);
@@ -85,13 +82,14 @@ export const OrdersList = ({
       </div>
 
       <ul className={styles.adminInvoice__ordersList}>
-        {products.map((product) => (
-          <OrderItem
-            key={product.id}
-            product={product}
-            onDelete={onProductDelete}
-          />
-        ))}
+        {productsData &&
+          productsData.map((product) => (
+            <OrderItem
+              key={product.shortProductResponseDto.id}
+              product={product}
+              onDelete={onProductDelete}
+            />
+          ))}
       </ul>
 
       <div className={styles.adminInvoice__ordersTotal}>

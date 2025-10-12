@@ -12,15 +12,15 @@ import {
   StatusSection,
 } from './components';
 import { useParams } from 'react-router-dom';
-import { useGetOrderByIdQuery } from '@/store/orders/api';
+import { useGetOrderQuery } from '@/store/orders/api';
 import { patchOrder } from '@/store/orders/actions';
 import { IOrderItemProduct } from '@/utils/packages/orders/libs/types/order-item-response-dto';
+import { skipToken } from '@reduxjs/toolkit/query';
 
 const AdminInvoice = () => {
   const dispatch: AppDispatch = useDispatch();
   const { id = '' } = useParams<{ id: string }>();
-  const { data: order } = useGetOrderByIdQuery(id);
-
+  const { data: order } = useGetOrderQuery(id ?? skipToken);
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
 
   const handleStatusClick = (status: string) => {
@@ -44,17 +44,14 @@ const AdminInvoice = () => {
     console.log('Confirm status');
   }, []);
 
-  console.log(`Admin invoice ${JSON.stringify(order?.products)}.`);
-
   return (
     <div className={styles.adminInvoice}>
       <div className={cn('container', styles.adminInvoice__container)}>
         <AdminInvoiceHeader orderId={order?.id} createdAt={order?.createdAt} />
 
         <OrdersList
-          products={order?.products || []}
           totalPrice={order?.total}
-          productsData={order?.products}
+          productsData={order?.orderItems || []}
           onProductAdd={handleProductAdd}
           onProductDelete={handleProductDelete}
         />

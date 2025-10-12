@@ -13,18 +13,12 @@ export const ordersApi = createApi({
   tagTypes: ['Order'],
   endpoints: (builder) => ({
     getAllOrders: builder.query<OrdersResponseDto, void>({
-      query: () => ({
-        url: '/orders',
-        method: 'GET',
-      }),
+      query: () => '/orders',
       providesTags: ['Order'],
     }),
 
-    getOrderById: builder.query<OrderItemResponseDto, string>({
-      query: (id) => ({
-        url: `/orders/${id}`,
-        method: 'GET',
-      }),
+    getOrder: builder.query<OrderItemResponseDto, string>({
+      query: (orderId) => `/orders/${orderId}`,
       providesTags: (result, error, id) => [{ type: 'Order', id }],
     }),
 
@@ -64,7 +58,7 @@ export const ordersApi = createApi({
 
 export const {
   useGetAllOrdersQuery,
-  useGetOrderByIdQuery,
+  useGetOrderQuery,
   useCreateOrderMutation,
   usePatchOrderMutation,
   useDeleteOrderMutation,

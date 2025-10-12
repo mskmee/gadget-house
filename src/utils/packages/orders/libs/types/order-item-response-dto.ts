@@ -1,13 +1,7 @@
-type OrderItemProduct = {
-  id: string;
+export interface IOrderItemProduct {
+  shortProductResponseDto: ShortProductResponseDto;
   quantity: number;
-};
-
-export interface IOrderItemProduct extends OrderItemProduct {
-  images: string[];
-  totalPrice: number;
-  name: string;
-  code: string;
+  price: number;
 }
 
 export interface IOrderItemAddress {
@@ -23,23 +17,18 @@ type ShortProductResponseImage = {
   order: number;
 };
 
-type ShortProductResponseDto = {
-  available: boolean;
-  categoryId: number;
-  code: string;
-  href: string;
-  id: number;
-  images: ShortProductResponseImage[];
+export type ShortProductResponseDto = {
+  id: string;
   name: string;
+  href: string;
   price: number;
+  images: ShortProductResponseImage[];
+  code: string;
+  categoryId: number;
+
+  available: boolean;
   rating: number;
 };
-
-export interface IOrderItem {
-  price: number;
-  quantity: number;
-  shortProductResponseDto: ShortProductResponseDto;
-}
 
 type OrderItemResponseDto = {
   id: string;
@@ -53,7 +42,7 @@ type OrderItemResponseDto = {
   paymentMethod: string;
   comment?: string;
   address: IOrderItemAddress;
-  products: IOrderItemProduct[];
+  orderItems: IOrderItemProduct[];
 };
 
 export { type OrderItemResponseDto };

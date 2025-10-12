@@ -28,7 +28,7 @@ const AppRoute = {
   KIDS: '/kids',
   SALE: '/sale',
   ADMIN_PAGE: '/admin',
-  ADMIN_INVOICE: '/admin/:order-id',
+  ADMIN_INVOICE: '/admin/:id',
   LOGIN_ADMIN: '/auth/login-admin',
 } as const;
 

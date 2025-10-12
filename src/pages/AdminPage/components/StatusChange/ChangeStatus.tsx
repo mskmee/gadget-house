@@ -1,14 +1,11 @@
 import { FC, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Popover } from 'antd';
 import cn from 'classnames';
 
-import { AppDispatch } from '@/store';
-import { updateOrdersStatus } from '@/store/orders/order_slice';
 import { CheckedOrderIcon } from '@/assets/icons/CheckedOrder';
-import { patchMultipleOrders } from '@/store/orders/actions';
 import styles from './change-status.module.scss';
 import { OrderStatus } from '@/enums/order-status';
+import { usePatchOrderMutation } from '@/store/orders/api';
 
 interface IChangeStatusProps {
   // eslint-disable-next-line no-unused-vars
@@ -16,9 +13,9 @@ interface IChangeStatusProps {
 }
 
 const ChangeStatus: FC<IChangeStatusProps> = ({ checkedItems }) => {
-  const dispatch: AppDispatch = useDispatch();
   const [isStatusMenuOpen, setStatusMenuOpen] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
+  const [patchOrder] = usePatchOrderMutation();
 
   const toggleStatusPopup = () => {
     if (checkedItems.length > 0) {
@@ -29,12 +26,10 @@ const ChangeStatus: FC<IChangeStatusProps> = ({ checkedItems }) => {
   const handleApplyStatus = async () => {
     if (!selectedStatus) return;
 
-    dispatch(
-      updateOrdersStatus({ ids: checkedItems, newStatus: selectedStatus }),
-    );
-
-    await dispatch(
-      patchMultipleOrders({ ids: checkedItems, status: selectedStatus }),
+    await Promise.allSettled(
+      checkedItems.map((id) =>
+        patchOrder({ id, status: selectedStatus }).unwrap(),
+      ),
     );
 
     setStatusMenuOpen(false);

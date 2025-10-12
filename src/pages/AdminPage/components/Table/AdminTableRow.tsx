@@ -6,6 +6,8 @@ import { OrderItem } from '@/types/OrderItem';
 import { formatDateToDDMMYYYY } from '@/utils/helpers/format-date';
 import { formatPhoneDisplay } from '@/utils/helpers/formatPhoneNumber';
 import { useLocale } from '@/context/localeContext';
+import LoadingSpinner from '@/components/LoadingSpinner';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
 
 interface AdminTableRowProps {
   item: OrderItem;
@@ -24,6 +26,15 @@ export const AdminTableRow = ({
 }: AdminTableRowProps) => {
   const locale = useLocale();
 
+  const isPatching = useTypedSelector((state) => {
+    const mutations = state.ordersApi.mutations;
+
+    return Object.values(mutations).some(
+      (mutation) =>
+        mutation?.endpointName === 'patchOrder' &&
+        mutation?.status === 'pending',
+    );
+  });
   return (
     <tr>
       <td>
@@ -46,11 +57,15 @@ export const AdminTableRow = ({
       </td>
       <td>{formatPhoneDisplay(item.phoneNumber)}</td>
       <td>
-        <button
-          className={`button__status button__status_${item.deliveryStatus.toLowerCase().replace(' ', '_')}`}
-        >
-          {item.deliveryStatus.toUpperCase()}
-        </button>
+        {isChecked && isPatching ? (
+          <LoadingSpinner style={{ height: '44px' }} />
+        ) : (
+          <button
+            className={`button__status button__status_${item.deliveryStatus.toLowerCase().replace(' ', '_')}`}
+          >
+            {item.deliveryStatus.toUpperCase()}
+          </button>
+        )}
       </td>
       <td>{convertPriceToReadable(item.total ?? 0, '₴', locale)}</td>
       <td>{formatDateToDDMMYYYY(item.createdAt)}</td>
