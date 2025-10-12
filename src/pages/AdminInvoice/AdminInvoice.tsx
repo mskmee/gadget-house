@@ -1,11 +1,8 @@
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import cn from 'classnames';
-
-import { IProductCard } from '@/interfaces/interfaces';
-import { AppDispatch, RootState } from '@/store';
-import { patchOrder } from '@/store/orders/actions';
-import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { useState } from 'react';
+import { AppDispatch } from '@/store';
 
 import styles from './admin-invoice.module.scss';
 import {
@@ -14,21 +11,24 @@ import {
   OrdersList,
   StatusSection,
 } from './components';
+import { useParams } from 'react-router-dom';
+import { useGetOrderByIdQuery } from '@/store/orders/api';
+import { patchOrder } from '@/store/orders/actions';
+import { IOrderItemProduct } from '@/utils/packages/orders/libs/types/order-item-response-dto';
 
 const AdminInvoice = () => {
   const dispatch: AppDispatch = useDispatch();
-  const { activeOrder } = useTypedSelector((state: RootState) => state.order);
-  const { productsData } = useTypedSelector(
-    (state: RootState) => state.products,
-  );
+  const { id = '' } = useParams<{ id: string }>();
+  const { data: order } = useGetOrderByIdQuery(id);
+
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
 
   const handleStatusClick = (status: string) => {
     setSelectedStatus(status);
-    dispatch(patchOrder({ id: activeOrder?.id || '', status }));
+    dispatch(patchOrder({ id: order?.id || '', status }));
   };
 
-  const handleProductAdd = useCallback((product: IProductCard) => {
+  const handleProductAdd = useCallback((product: IOrderItemProduct) => {
     console.log('Add product:', product);
   }, []);
 
@@ -44,25 +44,24 @@ const AdminInvoice = () => {
     console.log('Confirm status');
   }, []);
 
+  console.log(`Admin invoice ${JSON.stringify(order?.products)}.`);
+
   return (
     <div className={styles.adminInvoice}>
       <div className={cn('container', styles.adminInvoice__container)}>
-        <AdminInvoiceHeader
-          orderId={activeOrder?.id}
-          createdAt={activeOrder?.createdAt}
-        />
+        <AdminInvoiceHeader orderId={order?.id} createdAt={order?.createdAt} />
 
         <OrdersList
-          products={activeOrder?.products || []}
-          totalPrice={activeOrder?.total}
-          productsData={productsData?.page}
+          products={order?.products || []}
+          totalPrice={order?.total}
+          productsData={order?.products}
           onProductAdd={handleProductAdd}
           onProductDelete={handleProductDelete}
         />
 
         <DeliveryDetails
-          fullName={activeOrder?.fullName}
-          address={activeOrder?.address}
+          fullName={order?.fullName}
+          address={order?.address}
           onFieldChange={handleFieldChange}
         />
 

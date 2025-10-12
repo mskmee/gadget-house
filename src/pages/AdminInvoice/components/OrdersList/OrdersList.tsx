@@ -1,12 +1,12 @@
 import { useCallback, useState } from 'react';
 import cn from 'classnames';
 
-import { IProductCard } from '@/interfaces/interfaces';
 import { OrderItem } from '../OrderItem/OrderItem';
 
 import styles from '../../admin-invoice.module.scss';
 import { AdminSearch } from '@/pages/AdminPage/components/Search/AdminSearch';
 import { convertPriceToReadable } from '@/utils/helpers/helpers';
+import { IOrderItemProduct } from '@/utils/packages/orders/libs/types/order-item-response-dto';
 
 interface OrdersListProps {
   products: Array<{
@@ -17,9 +17,9 @@ interface OrdersListProps {
     name: string;
   }>;
   totalPrice?: number;
-  productsData?: IProductCard[];
+  productsData?: IOrderItemProduct[];
   // eslint-disable-next-line no-unused-vars
-  onProductAdd: (product: IProductCard) => void;
+  onProductAdd: (product: IOrderItemProduct) => void;
   // eslint-disable-next-line no-unused-vars
   onProductDelete: (productId: string) => void;
 }
@@ -31,7 +31,9 @@ export const OrdersList = ({
   onProductAdd,
   onProductDelete,
 }: OrdersListProps) => {
-  const [filteredProducts, setFilteredProducts] = useState<IProductCard[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<IOrderItemProduct[]>(
+    [],
+  );
 
   const handleProductSearch = useCallback(
     (query: string) => {

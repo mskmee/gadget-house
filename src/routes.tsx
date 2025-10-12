@@ -97,10 +97,6 @@ export const routes = createBrowserRouter(
           element: <ChangePassword />,
         },
         {
-          path: AppRoute.ADMIN_INVOICE,
-          element: <AdminInvoice />,
-        },
-        {
           path: AppRoute.LOGIN_ADMIN,
           element: <LoginAdmin />,
         },
@@ -116,6 +112,10 @@ export const routes = createBrowserRouter(
         {
           path: AppRoute.ADMIN_PAGE,
           element: <AdminPage />,
+        },
+        {
+          path: AppRoute.ADMIN_INVOICE,
+          element: <AdminInvoice />,
         },
       ],
     },

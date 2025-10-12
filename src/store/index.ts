@@ -5,10 +5,15 @@ import { reducer as productsReducer } from './products';
 import { reducer as authReducer } from './auth/auth-slice';
 import { reducer as filtersReducer } from './filters/filters_slice';
 import { reducer as orderReducer } from './orders/order_slice';
-import { reducer as singleProductSlice} from './singleProduct/singleProduct_slice';
+import { reducer as singleProductSlice } from './singleProduct/singleProduct_slice';
 import { logger, toastMiddleware } from './middlewares/middlewares';
 import { isDevelopment } from '@/constants/IsDevelopment';
+import { ordersApi } from './orders/api';
+import { routes } from '@/routes';
 
+export const extraArgument = {
+  routes,
+};
 
 const reducers = combineReducers({
   shopping_card: shoppingCartReducer,
@@ -17,13 +22,16 @@ const reducers = combineReducers({
   auth: authReducer,
   filters: filtersReducer,
   order: orderReducer,
-  singleProduct: singleProductSlice
+  singleProduct: singleProductSlice,
+  [ordersApi.reducerPath]: ordersApi.reducer,
 });
 
 export const store = configureStore({
   reducer: reducers,
   middleware: (getDefaultMiddleware) => {
-    const middleware = getDefaultMiddleware().concat(toastMiddleware);
+    const middleware = getDefaultMiddleware()
+      .concat(toastMiddleware)
+      .concat(ordersApi.middleware);
     return isDevelopment ? middleware.concat(logger) : middleware;
   },
 });

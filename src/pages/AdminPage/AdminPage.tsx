@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { CheckboxProps, CheckboxChangeEvent } from 'antd';
 import cn from 'classnames';
-
+import LoadingSpinner from '@/components/LoadingSpinner';
 import { IProductCard } from '@/interfaces/interfaces';
 import { AppDispatch, RootState } from '@/store';
 import { DEFAULT_SIZE } from '@/constants/pagination';
@@ -12,15 +12,16 @@ import styles from './styles/admin-page.module.scss';
 import { AdminPageHeader } from './components/Header/AdminPageHeader';
 import { AdminTable } from './components/Table/AdminTable';
 import { AdminPagination } from './components/Pagination/AdminPagination';
-import { getAllOrders, getOneOrderById } from '@/store/orders/actions';
-
+import { getOneOrderById } from '@/store/orders/actions';
+import { useGetAllOrdersQuery } from '@/store/orders/api';
 import { OrderItem } from '@/types/OrderItem';
 
 const AdminPage = () => {
   const dispatch: AppDispatch = useDispatch();
-  const orders = useTypedSelector(
-    (state: RootState) => state.order.filteredOrders,
-  );
+
+  const { data: ordersResponse, isLoading } = useGetAllOrdersQuery();
+  const orders = ordersResponse?.page || [];
+
   const { productsData } = useTypedSelector(
     (state: RootState) => state.products,
   );
@@ -39,10 +40,6 @@ const AdminPage = () => {
     currentItems.every((item) => checkedItems.includes(item.id));
 
   const hasIndeterminate = checkedItems.length > 0 && !isAllChecked;
-
-  useEffect(() => {
-    dispatch(getAllOrders());
-  }, [dispatch]);
 
   const handleItemCheck = (id: string) => (e: CheckboxChangeEvent) => {
     setCheckedItems((prev) => {
@@ -84,15 +81,19 @@ const AdminPage = () => {
           onSearch={handleSearch}
         />
 
-        <AdminTable
-          orders={currentItems}
-          checkedItems={checkedItems}
-          isAllChecked={isAllChecked}
-          hasIndeterminate={hasIndeterminate}
-          onCheckAll={handleCheckAll}
-          onItemCheck={handleItemCheck}
-          onOrderClick={handleOrderClick}
-        />
+        {isLoading ? (
+          <LoadingSpinner />
+        ) : (
+          <AdminTable
+            orders={currentItems}
+            checkedItems={checkedItems}
+            isAllChecked={isAllChecked}
+            hasIndeterminate={hasIndeterminate}
+            onCheckAll={handleCheckAll}
+            onItemCheck={handleItemCheck}
+            onOrderClick={handleOrderClick}
+          />
+        )}
       </div>
 
       <AdminPagination
