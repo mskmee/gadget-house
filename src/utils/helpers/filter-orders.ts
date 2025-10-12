@@ -5,11 +5,13 @@ import { OrderItemResponseDto } from '@/utils/packages/orders/libs/types/types';
 
 export const filterOrders = (
   orders: OrderItemResponseDto[],
-  filters: IFiltersState
+  filters: IFiltersState,
 ): OrderItemResponseDto[] => {
   return orders.filter((order) => {
     const orderDate = dayjs(order.createdAt);
-    const from = filters.dateFrom ? dayjs(filters.dateFrom, 'DD/MM/YYYY') : null;
+    const from = filters.dateFrom
+      ? dayjs(filters.dateFrom, 'DD/MM/YYYY')
+      : null;
     const to = filters.dateTo ? dayjs(filters.dateTo, 'DD/MM/YYYY') : null;
 
     const matchesDate =
@@ -21,7 +23,8 @@ export const filterOrders = (
       (!filters.priceTo || order.total <= filters.priceTo);
 
     const matchesStatus =
-      !filters.status || order.deliveryStatus === filters.status;
+      !filters.status ||
+      order.deliveryStatus.toUpperCase() === filters.status.toUpperCase();
 
     return matchesDate && matchesPrice && matchesStatus;
   });

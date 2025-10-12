@@ -2,6 +2,7 @@ import { RouterProvider } from 'react-router-dom';
 import { routes } from './routes';
 import './styles/globals.scss';
 import { StorageProvider } from './providers/providers';
+import { LocaleProvider } from './context/localeContext.tsx';
 import { useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from './store';
 import { useTypedSelector } from './hooks/useTypedSelector';
@@ -34,7 +35,9 @@ function App() {
 
   return (
     <StorageProvider>
-      <RouterProvider router={routes} future={{ v7_startTransition: true }} />
+      <LocaleProvider>
+        <RouterProvider router={routes} future={{ v7_startTransition: true }} />
+      </LocaleProvider>
     </StorageProvider>
   );
 }

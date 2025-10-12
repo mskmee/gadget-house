@@ -142,16 +142,19 @@ const Filters = () => {
         <Flex align="center" justify="space-between" gap={12}>
           <Flex gap={10} wrap>
             {Object.values(OrderStatus).map((status) => (
-              <label
-                key={status}
-                className={styles.admin__filterRadio}
-                onClick={() => setSelectedStatus(status)}
-              >
+              <label key={status} className={styles.admin__filterRadio}>
                 <input
                   className={styles.admin__filterRadioInput}
                   type="radio"
                   value={status}
                   name="status"
+                  checked={selectedStatus === status}
+                  onClick={() => {
+                    if (selectedStatus === status) {
+                      setSelectedStatus('');
+                    }
+                  }}
+                  onChange={() => setSelectedStatus(status)}
                 />
                 <span
                   className={cn(

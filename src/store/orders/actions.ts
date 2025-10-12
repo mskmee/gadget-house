@@ -23,4 +23,15 @@ const patchOrder = createAsyncThunk(
   },
 );
 
+export const patchMultipleOrders = createAsyncThunk(
+  'orders/patchMultiple',
+  async ({ ids, status }: { ids: string[]; status: string }) => {
+    const results = await Promise.all(
+      ids.map((id) => ordersService.patchOrder(id, status)),
+    );
+
+    return results;
+  },
+);
+
 export { getAllOrders, getOneOrderById, deleteOrder, patchOrder };
