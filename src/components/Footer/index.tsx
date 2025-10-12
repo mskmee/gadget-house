@@ -11,7 +11,7 @@ import { mailImg, locationImg } from '@/assets/constants';
 import { NavPhoneIcon } from '@/assets/icons/NavPhoneIcon';
 import classNames from 'classnames';
 import { useMediaQuery } from 'react-responsive';
-import { categoriesMenu, toClientsMenu } from '@/constants/footer';
+import { categoriesMenu } from '@/constants/footer';
 
 const Footer = () => {
   const isLargerThan1440px = useMediaQuery({
@@ -59,7 +59,7 @@ const Footer = () => {
 
           {!isLargerThan1024px ? (
             <>
-              <div className={styles['client-links']}>
+              {/* <div className={styles['client-links']}>
                 <h3>To clients</h3>
                 <ul>
                   {toClientsMenu.map((item) => (
@@ -68,7 +68,7 @@ const Footer = () => {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </div> */}
               <div className={styles['categories']}>
                 <h3>Categories</h3>
                 <ul>
@@ -122,7 +122,7 @@ const Footer = () => {
                   </a>
                 </div>
               </div>
-              <div className={styles['client-links']}>
+              {/* <div className={styles['client-links']}>
                 <h3>To clients</h3>
                 <ul>
                   {toClientsMenu.map((item) => (
@@ -131,7 +131,7 @@ const Footer = () => {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </div> */}
               {!isLargerThan370px && (
                 <div className={styles['categories']}>
                   <h3>Categories</h3>
