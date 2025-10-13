@@ -8,6 +8,7 @@ import { LocalStorageKey } from '@/utils/packages/local-storage';
 import { setTokens } from './auth/auth-slice';
 import { logout } from './auth/auth-slice';
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { AppRoute } from '@/enums/Route';
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -71,16 +72,22 @@ export const baseQuery: BaseQueryFn<
 
           result = await rawBaseQuery(args, api, extraOptions);
         } else {
-          api.dispatch(logout());
+          handleForceLogout(api);
         }
       } catch (error) {
-        console.error('Token refresh failed:', error);
-        api.dispatch(logout());
+        handleForceLogout(api);
       }
     } else {
-      api.dispatch(logout());
+      handleForceLogout(api);
     }
   }
 
   return result;
 };
+
+function handleForceLogout(api: any) {
+  localStorageService.removeItem(LocalStorageKey.ACCESS_TOKEN);
+  localStorageService.removeItem(LocalStorageKey.REFRESH_TOKEN);
+  api.dispatch(logout());
+  window.location.href = AppRoute.SIGN_IN;
+}
