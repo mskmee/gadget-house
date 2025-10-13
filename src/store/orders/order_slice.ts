@@ -1,13 +1,7 @@
-import { createSlice, isAnyOf, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { orderList } from '@/mock/order-list';
 import { DataStatus } from '@/enums/data-status';
-import {
-  getAllOrders,
-  getOneOrderById,
-  patchOrder,
-  patchMultipleOrders,
-} from './actions';
 import { filterOrders } from '@/utils/helpers/filter-orders';
 import {
   OrderItemResponseDto,
@@ -64,56 +58,6 @@ const order_slice = createSlice({
           : order,
       );
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(getAllOrders.fulfilled, (state, { payload }) => {
-      state.orders = payload;
-      state.filteredOrders = filterOrders(payload.page, state.filters);
-    });
-    builder.addCase(getOneOrderById.fulfilled, (state, { payload }) => {
-      state.activeOrder = payload;
-    });
-    builder.addCase(patchOrder.fulfilled, (state, { payload }) => {
-      state.activeOrder = payload;
-    });
-
-    builder.addCase(patchMultipleOrders.fulfilled, () => {
-      return;
-    });
-
-    builder.addMatcher(
-      isAnyOf(
-        getAllOrders.fulfilled,
-        getOneOrderById.fulfilled,
-        patchOrder.fulfilled,
-        patchMultipleOrders.fulfilled,
-      ),
-      (state) => {
-        state.dataStatus = DataStatus.FULFILLED;
-      },
-    );
-    builder.addMatcher(
-      isAnyOf(
-        getAllOrders.rejected,
-        getOneOrderById.rejected,
-        patchOrder.rejected,
-        patchMultipleOrders.rejected,
-      ),
-      (state) => {
-        state.dataStatus = DataStatus.REJECT;
-      },
-    );
-    builder.addMatcher(
-      isAnyOf(
-        getAllOrders.pending,
-        getOneOrderById.pending,
-        patchOrder.pending,
-        patchMultipleOrders.pending,
-      ),
-      (state) => {
-        state.dataStatus = DataStatus.PENDING;
-      },
-    );
   },
 });
 
