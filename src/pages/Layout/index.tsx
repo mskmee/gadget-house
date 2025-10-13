@@ -45,7 +45,6 @@ const Layout = () => {
       </PopUp>
       <Footer />
       <ScrollRestoration />
-
     </>
   );
 };
