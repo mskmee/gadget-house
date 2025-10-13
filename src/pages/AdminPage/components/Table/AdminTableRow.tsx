@@ -8,6 +8,7 @@ import { formatPhoneDisplay } from '@/utils/helpers/formatPhoneNumber';
 import { useLocale } from '@/context/localeContext';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { formatTitle } from '@/utils/helpers/formatTitle';
 
 interface AdminTableRowProps {
   item: OrderItem;
@@ -63,7 +64,7 @@ export const AdminTableRow = ({
           <button
             className={`button__status button__status_${item.deliveryStatus.toLowerCase().replace(' ', '_')}`}
           >
-            {item.deliveryStatus.toUpperCase()}
+            {formatTitle(item.deliveryStatus)}
           </button>
         )}
       </td>
