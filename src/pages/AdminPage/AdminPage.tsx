@@ -40,7 +40,8 @@ const AdminPage = () => {
     currentItems.length > 0 &&
     currentItems.every((item) => checkedItems.includes(item.id));
 
-  const hasIndeterminate = checkedItems.length > 0 && !isAllChecked;
+  const hasIndeterminate =
+    checkedItems.length === currentItems.length && !isAllChecked;
 
   const handleItemCheck = (id: string) => (e: CheckboxChangeEvent) => {
     setCheckedItems((prev) => {
