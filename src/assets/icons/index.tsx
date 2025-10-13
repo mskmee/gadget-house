@@ -9,3 +9,8 @@ export const LeftArrow = createIconComponent(
   () => import('./arrow-left.svg'),
   'left-arrow-icon',
 );
+
+export const CalendarIcon = createIconComponent(
+  () => import('./calendar-icon.svg'),
+  'calendar-icon',
+);

@@ -13,7 +13,7 @@ import {
   handleNumberChange,
 } from '@/utils/helpers/handleFormChange';
 import { FilterIcon } from '@/assets/icons/FilterIcon';
-import { CalendarIcon } from '@/assets/icons/CalendarIcon';
+import { CalendarIcon } from '@/assets/icons';
 
 import styles from './filters.module.scss';
 
