@@ -52,15 +52,14 @@ const Filters = () => {
 
   const handleApplyFilters = () => {
     const filters = {
-      dateFrom,
-      dateTo,
-      priceFrom,
-      priceTo,
-      status: selectedStatus,
+      dateFrom: filterVisibility.date ? dateFrom : null,
+      dateTo: filterVisibility.date ? dateTo : null,
+      priceFrom: filterVisibility.price ? priceFrom : null,
+      priceTo: filterVisibility.price ? priceTo : null,
+      status: filterVisibility.status ? selectedStatus : '',
     };
 
     dispatch(setFilters(filters));
-
     setShowFilters(false);
   };
 

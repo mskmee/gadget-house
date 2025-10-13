@@ -1,6 +1,5 @@
 import { useCallback, useState } from 'react';
 
-import { IProductCard } from '@/interfaces/interfaces';
 import { AddNewUser } from '@/assets/constants';
 
 import styles from '../../styles/admin-page.module.scss';
@@ -8,12 +7,13 @@ import { AdminSearch } from '../Search/AdminSearch';
 import { ChangeStatus } from '../StatusChange/ChangeStatus';
 import { Filters } from '../Filters/Filters';
 import { AddNewAdminModal } from '../Modals/AddNewAdmin';
+import { OrderItemResponseDto } from '@/utils/packages/orders/libs/types/order-item-response-dto';
 
 interface AdminPageHeaderProps {
-  productsData?: IProductCard[];
+  productsData?: OrderItemResponseDto[];
   checkedItems: string[];
   // eslint-disable-next-line no-unused-vars
-  onSearch: (filteredProducts: IProductCard[]) => void;
+  onSearch: (filteredProducts: OrderItemResponseDto[]) => void;
 }
 
 export const AdminPageHeader = ({
@@ -29,8 +29,8 @@ export const AdminPageHeader = ({
 
       const filteredProducts = productsData?.filter(
         (product) =>
-          product.name?.toLowerCase().includes(normalized) ||
-          product.code?.toLowerCase().includes(normalized),
+          product.phoneNumber?.toLowerCase().includes(normalized) ||
+          product.id?.toString().toLowerCase().includes(normalized),
       );
 
       onSearch(filteredProducts || []);

@@ -19,11 +19,16 @@ export const filterOrders = (
       (!to || orderDate.isSameOrBefore(to, 'day'));
 
     const matchesPrice =
-      (!filters.priceFrom || order.total >= filters.priceFrom) &&
-      (!filters.priceTo || order.total <= filters.priceTo);
+      (filters.priceFrom === undefined ||
+        filters.priceFrom === null ||
+        order.total >= filters.priceFrom) &&
+      (filters.priceTo === undefined ||
+        filters.priceTo === null ||
+        order.total <= filters.priceTo);
 
     const matchesStatus =
       !filters.status ||
+      filters.status === '' ||
       order.deliveryStatus.toUpperCase() === filters.status.toUpperCase();
 
     return matchesDate && matchesPrice && matchesStatus;

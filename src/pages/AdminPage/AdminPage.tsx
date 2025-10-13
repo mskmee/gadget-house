@@ -1,12 +1,10 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { CheckboxProps, CheckboxChangeEvent } from 'antd';
 import cn from 'classnames';
 import LoadingSpinner from '@/components/LoadingSpinner';
-import { IProductCard } from '@/interfaces/interfaces';
-import { AppDispatch, RootState } from '@/store';
+import { AppDispatch } from '@/store';
 import { DEFAULT_SIZE } from '@/constants/pagination';
-import { useTypedSelector } from '@/hooks/useTypedSelector';
 
 import styles from './styles/admin-page.module.scss';
 import { AdminPageHeader } from './components/Header/AdminPageHeader';
@@ -15,21 +13,24 @@ import { AdminPagination } from './components/Pagination/AdminPagination';
 import { getOneOrderById } from '@/store/orders/actions';
 import { useGetAllOrdersQuery } from '@/store/orders/api';
 import { OrderItem } from '@/types/OrderItem';
+import { OrderItemResponseDto } from '@/utils/packages/orders/libs/types/order-item-response-dto';
 
 const AdminPage = () => {
   const dispatch: AppDispatch = useDispatch();
 
   const { data: ordersResponse, isLoading } = useGetAllOrdersQuery();
-
+  const [currentPage, setCurrentPage] = useState(1);
+  const [filteredProducts, setFilteredProducts] = useState<
+    OrderItemResponseDto[]
+  >([]);
+  const [checkedItems, setCheckedItems] = useState<string[]>([]);
   const orders = ordersResponse?.page || [];
 
-  const { productsData } = useTypedSelector(
-    (state: RootState) => state.products,
-  );
-
-  const [currentPage, setCurrentPage] = useState(1);
-  const [, setFilteredProducts] = useState<IProductCard[]>([]);
-  const [checkedItems, setCheckedItems] = useState<string[]>([]);
+  useEffect(() => {
+    if (ordersResponse) {
+      setFilteredProducts(ordersResponse?.page);
+    }
+  }, [ordersResponse, dispatch]);
 
   const currentItems = orders?.slice(
     (currentPage - 1) * DEFAULT_SIZE,
@@ -62,9 +63,13 @@ const AdminPage = () => {
     }
   };
 
-  const handleSearch = useCallback((filteredProducts: IProductCard[]) => {
-    setFilteredProducts(filteredProducts);
-  }, []);
+  const handleSearch = useCallback(
+    (filteredProducts: OrderItemResponseDto[]) => {
+      // temporary doesn't work
+      return filteredProducts;
+    },
+    [],
+  );
 
   const handleOrderClick = (item: OrderItem) => {
     dispatch(getOneOrderById(item.id));
@@ -78,7 +83,7 @@ const AdminPage = () => {
     <div className={styles.admin}>
       <div className={cn(styles.admin__wrapper, 'wrapper')}>
         <AdminPageHeader
-          productsData={productsData?.page}
+          productsData={filteredProducts}
           checkedItems={checkedItems}
           onSearch={handleSearch}
         />
@@ -87,7 +92,7 @@ const AdminPage = () => {
           <LoadingSpinner />
         ) : (
           <AdminTable
-            orders={currentItems}
+            orders={filteredProducts}
             checkedItems={checkedItems}
             isAllChecked={isAllChecked}
             hasIndeterminate={hasIndeterminate}
