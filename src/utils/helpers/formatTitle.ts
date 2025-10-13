@@ -1,10 +1,10 @@
 /**
  *
  * @param str - The input string
- * @returns - Returns the string with first capitalized letter and lowered others
+ * @returns Returns the string with first capitalized letter and lowered others
  * @example
  * ```ts
- * capitalize('heLLO'); // 'Hello'
+ * formatTitle('heLLO'); // 'Hello'
  * ```
  */
 export function formatTitle(str: string): string {
