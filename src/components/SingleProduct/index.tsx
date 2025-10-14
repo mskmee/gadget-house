@@ -1,4 +1,4 @@
-import { FC, useRef } from 'react';
+import React, { FC, useRef } from 'react';
 import style from './Product.module.scss';
 import { Rate } from 'antd';
 
@@ -73,6 +73,15 @@ export const Product: FC<IProductProps> = ({ dynamicCurrentProduct }) => {
       toggleFavorite(dynamicCurrentProduct);
     }
   };
+  const handleScrollToReviews = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const reviewSection = document.querySelector('#product-reviews');
+    if (reviewSection) {
+      const offsetTop =
+        reviewSection.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+    }
+  };
 
   return (
     <section className={style['product']} id="product">
@@ -85,7 +94,7 @@ export const Product: FC<IProductProps> = ({ dynamicCurrentProduct }) => {
                 className="product_rate-stars"
                 value={dynamicCurrentProduct?.rating}
               />
-              <a href="#users-review">
+              <a href="#product-reviews" onClick={handleScrollToReviews}>
                 <img src={reviewImg} alt="review pic" />
                 <span>({reviewsLength})</span>
               </a>
@@ -152,7 +161,7 @@ export const Product: FC<IProductProps> = ({ dynamicCurrentProduct }) => {
                   value={dynamicCurrentProduct?.rating}
                   style={{ color: '#6F4C9A' }}
                 />
-                <a>
+                <a href="#product-reviews" onClick={handleScrollToReviews}>
                   <img src={reviewImg} alt="review pic" />
                   <span>({reviewsLength})</span>
                 </a>
