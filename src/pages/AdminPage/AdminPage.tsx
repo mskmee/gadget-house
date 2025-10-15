@@ -14,25 +14,19 @@ import { getOneOrderById } from '@/store/orders/actions';
 import { useGetAllOrdersQuery } from '@/store/orders/api';
 import { OrderItem } from '@/types/OrderItem';
 import { OrderItemResponseDto } from '@/utils/packages/orders/libs/types/order-item-response-dto';
+import { setFilterOrders } from '@/store/orders/order_slice';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
 
 const AdminPage = () => {
   const dispatch: AppDispatch = useDispatch();
 
   const { data: ordersResponse, isLoading } = useGetAllOrdersQuery();
+  const { filteredOrders } = useTypedSelector((state) => state.order);
+
   const [currentPage, setCurrentPage] = useState(1);
-  const [filteredProducts, setFilteredProducts] = useState<
-    OrderItemResponseDto[]
-  >([]);
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
-  const orders = ordersResponse?.page || [];
 
-  useEffect(() => {
-    if (ordersResponse) {
-      setFilteredProducts(ordersResponse?.page);
-    }
-  }, [ordersResponse, dispatch]);
-
-  const currentItems = orders?.slice(
+  const currentItems = filteredOrders?.slice(
     (currentPage - 1) * DEFAULT_SIZE,
     currentPage * DEFAULT_SIZE,
   );
@@ -43,6 +37,13 @@ const AdminPage = () => {
 
   const hasIndeterminate =
     checkedItems.length === currentItems.length && !isAllChecked;
+
+  useEffect(() => {
+    if (ordersResponse?.page) {
+      dispatch(setFilterOrders({ orders: ordersResponse.page }));
+      console.log(ordersResponse.page);
+    }
+  }, [ordersResponse, dispatch]);
 
   const handleItemCheck = (id: string) => (e: CheckboxChangeEvent) => {
     setCheckedItems((prev) => {
@@ -83,7 +84,7 @@ const AdminPage = () => {
     <div className={styles.admin}>
       <div className={cn(styles.admin__wrapper, 'wrapper')}>
         <AdminPageHeader
-          productsData={filteredProducts}
+          productsData={filteredOrders}
           checkedItems={checkedItems}
           onSearch={handleSearch}
         />
@@ -92,7 +93,7 @@ const AdminPage = () => {
           <LoadingSpinner />
         ) : (
           <AdminTable
-            orders={filteredProducts}
+            orders={filteredOrders}
             checkedItems={checkedItems}
             isAllChecked={isAllChecked}
             hasIndeterminate={hasIndeterminate}
@@ -105,7 +106,7 @@ const AdminPage = () => {
 
       <AdminPagination
         currentPage={currentPage}
-        totalItems={orders?.length || 0}
+        totalItems={filteredOrders?.length || 0}
         pageSize={DEFAULT_SIZE}
         onPageChange={handlePageChange}
       />

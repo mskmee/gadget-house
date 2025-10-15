@@ -5,7 +5,6 @@ import en from 'antd/es/date-picker/locale/en_US';
 import cn from 'classnames';
 
 import { AppDispatch } from '@/store';
-import { setFilters } from '@/store/orders/order_slice';
 import { OrderStatus } from '@/enums/enums';
 import { handleKeyDown } from '@/utils/helpers/checkKeydownEvent';
 import {
@@ -16,6 +15,7 @@ import { FilterIcon } from '@/assets/icons/FilterIcon';
 import { CalendarIcon } from '@/assets/icons';
 
 import styles from './filters.module.scss';
+import { applyFilters, IFiltersState } from '@/store/orders/order_slice';
 
 const Filters = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -51,7 +51,7 @@ const Filters = () => {
     };
 
   const handleApplyFilters = () => {
-    const filters = {
+    const filters: IFiltersState = {
       dateFrom: filterVisibility.date ? dateFrom : null,
       dateTo: filterVisibility.date ? dateTo : null,
       priceFrom: filterVisibility.price ? priceFrom : null,
@@ -59,7 +59,7 @@ const Filters = () => {
       status: filterVisibility.status ? selectedStatus : '',
     };
 
-    dispatch(setFilters(filters));
+    dispatch(applyFilters({ filters }));
     setShowFilters(false);
   };
 
