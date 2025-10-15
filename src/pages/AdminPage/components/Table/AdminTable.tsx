@@ -4,9 +4,10 @@ import { AdminTableRow } from './AdminTableRow';
 import { OrderItem } from '@/types/OrderItem';
 
 import styles from '../../styles/admin-page.module.scss';
+import { OrderItemResponseDto } from '@/utils/packages/orders/libs/types/order-item-response-dto';
 
 interface AdminTableProps {
-  orders: OrderItem[];
+  orders: OrderItemResponseDto[];
   checkedItems: string[];
   isAllChecked: boolean;
   hasIndeterminate: boolean;

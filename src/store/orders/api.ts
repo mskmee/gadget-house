@@ -6,17 +6,44 @@ import {
   OrderDto,
   OrderResponseDto,
 } from '@/utils/packages/orders/libs/types/order-item';
+import { OrderStatus } from '@/enums/order-status';
+import { type DeliveryMethodType } from '@/pages/OrderConfirmation/libs/enums/delivery-method';
+import { DEFAULT_SIZE } from '@/constants/pagination';
+import { PageableParams } from '@/interfaces/pageable-params.interface';
+
+export interface OrderFilterParams {
+  deliveryMethods?: DeliveryMethodType[];
+  statuses?: OrderStatus[];
+  isPaid?: boolean;
+  createdBefore?: string;
+  createdAfter?: string;
+  totalMore?: number;
+  totalLess?: number;
+}
+
+export const DEFAULT_ORDER_PARAMS: PageableParams = {
+  page: 0,
+  size: DEFAULT_SIZE,
+};
 
 export const ordersApi = createApi({
   reducerPath: 'ordersApi',
   baseQuery: baseQuery,
   tagTypes: ['Order'],
   endpoints: (builder) => ({
-    getAllOrders: builder.query<OrdersResponseDto, void>({
-      query: () => '/orders',
+    getAllOrders: builder.query<
+      OrdersResponseDto,
+      PageableParams | OrderFilterParams | void
+    >({
+      query: (params) => ({
+        url: '/orders',
+        params: {
+          ...DEFAULT_ORDER_PARAMS,
+          ...params,
+        },
+      }),
       providesTags: ['Order'],
     }),
-
     getOrder: builder.query<OrderItemResponseDto, string>({
       query: (orderId) => `/orders/${orderId}`,
       providesTags: (_, __, id) => [{ type: 'Order', id }],
