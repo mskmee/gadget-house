@@ -10,15 +10,18 @@ import { AdminPageHeader } from './components/Header/AdminPageHeader';
 import { AdminTable } from './components/Table/AdminTable';
 import { AdminPagination } from './components/Pagination/AdminPagination';
 import { getOneOrderById } from '@/store/orders/actions';
-import { useGetAllOrdersQuery } from '@/store/orders/api';
+import { OrderFilterParams, useGetAllOrdersQuery } from '@/store/orders/api';
 import { OrderItem } from '@/types/OrderItem';
 import { OrderItemResponseDto } from '@/utils/packages/orders/libs/types/order-item-response-dto';
 
 const AdminPage = () => {
   const dispatch: AppDispatch = useDispatch();
+  const [appliedFilters, setAppliedFilters] = useState<OrderFilterParams>({});
+
   const [currentPageState, setCurrentPageState] = useState(0);
   const { data: ordersResponse, isLoading } = useGetAllOrdersQuery({
     page: currentPageState,
+    ...appliedFilters,
   });
 
   const [checkedItems, setCheckedItems] = useState<string[]>([]);
@@ -38,6 +41,10 @@ const AdminPage = () => {
     },
     [ordersResponse?.page],
   );
+
+  const handleApplyFilters = (filters: OrderFilterParams) => {
+    setAppliedFilters(filters);
+  };
 
   const handleSearch = useCallback(
     (filteredProducts: OrderItemResponseDto[]) => {
@@ -80,6 +87,7 @@ const AdminPage = () => {
           productsData={orders}
           checkedItems={checkedItems}
           onSearch={handleSearch}
+          handleApplyFilter={handleApplyFilters}
         />
 
         <AdminTable

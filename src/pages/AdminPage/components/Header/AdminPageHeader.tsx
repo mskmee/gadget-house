@@ -8,18 +8,22 @@ import { ChangeStatus } from '../StatusChange/ChangeStatus';
 import { Filters } from '../Filters/Filters';
 import { AddNewAdminModal } from '../Modals/AddNewAdmin';
 import { OrderItemResponseDto } from '@/utils/packages/orders/libs/types/order-item-response-dto';
+import { OrderFilterParams } from '@/store/orders/api';
 
 interface AdminPageHeaderProps {
   productsData?: OrderItemResponseDto[];
   checkedItems: string[];
   // eslint-disable-next-line no-unused-vars
   onSearch: (filteredProducts: OrderItemResponseDto[]) => void;
+  // eslint-disable-next-line no-unused-vars
+  handleApplyFilter: (filters: OrderFilterParams) => void;
 }
 
 export const AdminPageHeader = ({
   productsData,
   checkedItems,
   onSearch,
+  handleApplyFilter,
 }: AdminPageHeaderProps) => {
   const [isAuthModalOpen, setAuthModalOpen] = useState(false);
 
@@ -67,7 +71,7 @@ export const AdminPageHeader = ({
 
           <ChangeStatus checkedItems={checkedItems} />
 
-          <Filters />
+          <Filters handleApplyFilter={handleApplyFilter} />
         </div>
       </header>
 

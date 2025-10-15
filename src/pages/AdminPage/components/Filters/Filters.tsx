@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { DatePicker, Flex, InputNumber, Popover, Switch } from 'antd';
 import en from 'antd/es/date-picker/locale/en_US';
 import cn from 'classnames';
 
-import { AppDispatch } from '@/store';
 import { OrderStatus } from '@/enums/enums';
 import { handleKeyDown } from '@/utils/helpers/checkKeydownEvent';
 import {
@@ -15,22 +13,28 @@ import { FilterIcon } from '@/assets/icons/FilterIcon';
 import { CalendarIcon } from '@/assets/icons';
 
 import styles from './filters.module.scss';
-import { applyFilters, IFiltersState } from '@/store/orders/order_slice';
+import { OrderFilterParams } from '@/store/orders/api';
 
-const Filters = () => {
-  const dispatch: AppDispatch = useDispatch();
+interface FiltersProps {
+  // eslint-disable-next-line no-unused-vars
+  handleApplyFilter: (appliedFilters: OrderFilterParams) => void;
+}
+
+const Filters = ({ handleApplyFilter }: FiltersProps) => {
+  const [filters, setFilters] = useState<OrderFilterParams>({
+    createdAfter: null,
+    createdBefore: null,
+    totalMore: null,
+    totalLess: null,
+    statuses: null,
+  });
+
   const [showFilters, setShowFilters] = useState(false);
   const [filterVisibility, setFilterVisibility] = useState({
     date: true,
     price: true,
     status: true,
   });
-
-  const [dateFrom, setDateFrom] = useState<string | null>(null);
-  const [dateTo, setDateTo] = useState<string | null>(null);
-  const [priceFrom, setPriceFrom] = useState<number | null>(null);
-  const [priceTo, setPriceTo] = useState<number | null>(null);
-  const [selectedStatus, setSelectedStatus] = useState<string>('');
 
   const dateLocale: typeof en = {
     ...en,
@@ -50,16 +54,25 @@ const Filters = () => {
       }));
     };
 
+  const updateFilter = <K extends keyof typeof filters>(
+    key: K,
+    value: (typeof filters)[K],
+  ) => {
+    setFilters((prev) => ({ ...prev, [key]: value }));
+  };
+
   const handleApplyFilters = () => {
-    const filters: IFiltersState = {
-      dateFrom: filterVisibility.date ? dateFrom : null,
-      dateTo: filterVisibility.date ? dateTo : null,
-      priceFrom: filterVisibility.price ? priceFrom : null,
-      priceTo: filterVisibility.price ? priceTo : null,
-      status: filterVisibility.status ? selectedStatus : '',
+    const appliedFilters: OrderFilterParams = {
+      createdAfter: filterVisibility.date ? filters.createdAfter : undefined,
+      createdBefore: filterVisibility.date ? filters.createdBefore : undefined,
+      totalMore: filterVisibility.price ? filters.totalMore : undefined,
+      totalLess: filterVisibility.price ? filters.totalLess : undefined,
+      statuses: filterVisibility.status
+        ? filters.statuses?.map((item) => item.toUpperCase())
+        : undefined,
     };
 
-    dispatch(applyFilters({ filters }));
+    handleApplyFilter(appliedFilters);
     setShowFilters(false);
   };
 
@@ -79,7 +92,9 @@ const Filters = () => {
           <DatePicker
             className={styles.admin__filterDatePicker}
             locale={dateLocale}
-            onChange={handleDateChange(setDateFrom)}
+            onChange={handleDateChange((value) =>
+              updateFilter('createdAfter', value || undefined),
+            )}
             format="DD/MM/YYYY"
             popupClassName={styles.admin__filterDatePopup}
             allowClear
@@ -90,7 +105,9 @@ const Filters = () => {
           <DatePicker
             className={styles.admin__filterDatePicker}
             locale={dateLocale}
-            onChange={handleDateChange(setDateTo)}
+            onChange={handleDateChange((value) =>
+              updateFilter('createdBefore', value || undefined),
+            )}
             format="DD/MM/YYYY"
             popupClassName={styles.admin__filterDatePopup}
             allowClear
@@ -108,28 +125,32 @@ const Filters = () => {
           <InputNumber
             className={styles.admin__filterInput}
             addonAfter="₴"
-            value={priceFrom ?? undefined}
+            value={filters.totalMore ?? undefined}
             min={0}
             max={99999}
             maxLength={5}
             controls={false}
             inputMode="numeric"
             onKeyDown={handleKeyDown}
-            onChange={handleNumberChange(setPriceFrom)}
+            onChange={handleNumberChange((value) =>
+              updateFilter('totalMore', value || undefined),
+            )}
           />
           <span>-</span>
           <span>To</span>
           <InputNumber
             className={styles.admin__filterInput}
             addonAfter="₴"
-            value={priceTo ?? undefined}
+            value={filters.totalLess ?? undefined}
             min={0}
             max={100000}
             maxLength={6}
             controls={false}
             inputMode="numeric"
             onKeyDown={handleKeyDown}
-            onChange={handleNumberChange(setPriceTo)}
+            onChange={handleNumberChange((value) =>
+              updateFilter('totalLess', value || undefined),
+            )}
           />
         </Flex>
       ),
@@ -147,13 +168,15 @@ const Filters = () => {
                   type="radio"
                   value={status}
                   name="status"
-                  checked={selectedStatus === status}
+                  checked={filters.statuses?.[0] === status}
                   onClick={() => {
-                    if (selectedStatus === status) {
-                      setSelectedStatus('');
+                    if (filters.statuses?.[0] === status) {
+                      updateFilter('statuses', undefined);
                     }
                   }}
-                  onChange={() => setSelectedStatus(status)}
+                  onChange={() =>
+                    updateFilter('statuses', [status as OrderStatus])
+                  }
                 />
                 <span
                   className={cn(
@@ -162,7 +185,7 @@ const Filters = () => {
                     `button__status_${status.toLowerCase().replace(' ', '_')}`,
                   )}
                 >
-                  {selectedStatus === status && <span>✓ </span>}
+                  {filters.statuses?.[0] === status && <span>✓ </span>}
                   {status}
                 </span>
               </label>

@@ -6,19 +6,19 @@ import {
   OrderDto,
   OrderResponseDto,
 } from '@/utils/packages/orders/libs/types/order-item';
-import { OrderStatus } from '@/enums/order-status';
 import { type DeliveryMethodType } from '@/pages/OrderConfirmation/libs/enums/delivery-method';
 import { DEFAULT_SIZE } from '@/constants/pagination';
 import { PageableParams } from '@/interfaces/pageable-params.interface';
+import { cleanOrderParams } from '@/utils/helpers/clean-params.util';
 
 export interface OrderFilterParams {
-  deliveryMethods?: DeliveryMethodType[];
-  statuses?: OrderStatus[];
-  isPaid?: boolean;
-  createdBefore?: string;
-  createdAfter?: string;
-  totalMore?: number;
-  totalLess?: number;
+  deliveryMethods?: DeliveryMethodType[] | null;
+  statuses?: string[] | null;
+  isPaid?: boolean | null;
+  createdBefore?: string | null;
+  createdAfter?: string | null;
+  totalMore?: number | null;
+  totalLess?: number | null;
 }
 
 export const DEFAULT_ORDER_PARAMS: PageableParams = {
@@ -37,10 +37,10 @@ export const ordersApi = createApi({
     >({
       query: (params) => ({
         url: '/orders',
-        params: {
+        params: cleanOrderParams({
           ...DEFAULT_ORDER_PARAMS,
           ...params,
-        },
+        }),
       }),
       providesTags: ['Order'],
     }),
