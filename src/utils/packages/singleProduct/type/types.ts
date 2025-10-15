@@ -2,12 +2,12 @@ export type AddReviewRequestDTO = {
   productId: number | null;
   text: string | '';
   rate: number | null;
-}
+};
 
 export type GetReviewPages = {
-  productId: number,
-  page: number
-}
+  productId: number;
+  page: number;
+};
 
 export type AddReviewResponseDTO = {
   user: {
@@ -16,20 +16,20 @@ export type AddReviewResponseDTO = {
   text: string;
   rate: number;
   createdAt: number;
-}
+};
+
+export type ReviewItem = {
+  user: {
+    fullName: string;
+  };
+  text: string;
+  rate: number;
+  createdAt: string;
+};
 
 export type GetReviewResponseDTO = {
-  page: [
-    {
-      user: {
-        fullName: string
-      },
-      text: string;
-      rate: number;
-      createdAt: string;
-    }
-  ],
-  totalElements: number,
-  currentPage: number,
-  totalPages: number
-}
+  page: ReviewItem[];
+  totalElements: number;
+  currentPage: number;
+  totalPages: number;
+};
