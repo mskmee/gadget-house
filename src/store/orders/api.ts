@@ -19,7 +19,7 @@ export const ordersApi = createApi({
 
     getOrder: builder.query<OrderItemResponseDto, string>({
       query: (orderId) => `/orders/${orderId}`,
-      providesTags: (result, error, id) => [{ type: 'Order', id }],
+      providesTags: (_, __, id) => [{ type: 'Order', id }],
     }),
 
     createOrder: builder.mutation<OrderResponseDto, OrderDto>({
@@ -40,10 +40,7 @@ export const ordersApi = createApi({
         method: 'PATCH',
         params: { status: status.toUpperCase() },
       }),
-      invalidatesTags: (result, error, { id }) => [
-        { type: 'Order', id },
-        'Order',
-      ],
+      invalidatesTags: (_, __, { id }) => [{ type: 'Order', id }, 'Order'],
     }),
 
     deleteOrder: builder.mutation<void, string>({
