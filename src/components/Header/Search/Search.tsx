@@ -186,11 +186,6 @@ export const Search: FC<ISearchProps> = ({
     [],
   );
 
-  const debouncedSearchHandler = useCallback(
-    debounce(handleSaveSearchValueToStore, 500),
-    [],
-  );
-
   const handleChangeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     const isTooLong = inputValue.length >= INPUT_MAX_LENGTH;
@@ -199,7 +194,7 @@ export const Search: FC<ISearchProps> = ({
     setSearchInput({ value: inputValue, hasError: isTooLong });
     setDisplayValue(inputValue);
     debouncedSuggestionHandler(inputValue);
-    debouncedSearchHandler(inputValue);
+    handleSaveSearchValueToStore(inputValue);
   };
 
   useEffect(() => {
@@ -214,7 +209,6 @@ export const Search: FC<ISearchProps> = ({
 
     return () => {
       debouncedSuggestionHandler.cancel();
-      debouncedSearchHandler.cancel();
     };
   }, [location.pathname]);
 
