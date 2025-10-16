@@ -7,40 +7,22 @@ import { AdminSearch } from '../Search/AdminSearch';
 import { ChangeStatus } from '../StatusChange/ChangeStatus';
 import { Filters } from '../Filters/Filters';
 import { AddNewAdminModal } from '../Modals/AddNewAdmin';
-import { OrderItemResponseDto } from '@/utils/packages/orders/libs/types/order-item-response-dto';
 import { OrderFilterParams } from '@/store/orders/api';
 
 interface AdminPageHeaderProps {
-  productsData?: OrderItemResponseDto[];
   checkedItems: string[];
   // eslint-disable-next-line no-unused-vars
-  onSearch: (filteredProducts: OrderItemResponseDto[]) => void;
+  onSearch: (search: string) => void;
   // eslint-disable-next-line no-unused-vars
   handleApplyFilter: (filters: OrderFilterParams) => void;
 }
 
 export const AdminPageHeader = ({
-  productsData,
   checkedItems,
   onSearch,
   handleApplyFilter,
 }: AdminPageHeaderProps) => {
   const [isAuthModalOpen, setAuthModalOpen] = useState(false);
-
-  const handleSearch = useCallback(
-    (query: string) => {
-      const normalized = query.trim().toLowerCase();
-
-      const filteredProducts = productsData?.filter(
-        (product) =>
-          product.phoneNumber?.toLowerCase().includes(normalized) ||
-          product.id?.toString().toLowerCase().includes(normalized),
-      );
-
-      onSearch(filteredProducts || []);
-    },
-    [productsData, onSearch],
-  );
 
   const handleModalToggle = useCallback(() => {
     setAuthModalOpen((prev) => !prev);
@@ -58,7 +40,7 @@ export const AdminPageHeader = ({
         </div>
 
         <div className={styles.admin__search}>
-          <AdminSearch placeholder="Searching..." onSearch={handleSearch} />
+          <AdminSearch placeholder="Searching..." onSearch={onSearch} />
         </div>
 
         <div className={styles.admin__buttons}>

@@ -11,14 +11,15 @@ import { AdminPagination } from './components/Pagination/AdminPagination';
 import { getOneOrderById } from '@/store/orders/actions';
 import { OrderFilterParams, useGetAllOrdersQuery } from '@/store/orders/api';
 import { OrderItem } from '@/types/OrderItem';
-import { OrderItemResponseDto } from '@/utils/packages/orders/libs/types/order-item-response-dto';
 import { DEFAULT_SIZE } from '@/constants/pagination';
+import { searchOrder } from '@/utils/helpers/search-order';
 
 const AdminPage = () => {
   const dispatch: AppDispatch = useDispatch();
   const [appliedFilters, setAppliedFilters] = useState<OrderFilterParams>({});
   const [page, setPage] = useState(1);
   const [selected, setSelected] = useState(new Set());
+  const [search, setSearch] = useState<string>('');
 
   const { data: ordersResponse, isLoading } = useGetAllOrdersQuery({
     page: page - 1,
@@ -53,13 +54,10 @@ const AdminPage = () => {
     setAppliedFilters(filters);
   };
 
-  const handleSearch = useCallback(
-    (filteredProducts: OrderItemResponseDto[]) => {
-      // temporary doesn't work
-      return filteredProducts;
-    },
-    [],
-  );
+  const handleSearch = useCallback((search: string) => {
+    setSearch(search);
+    console.log(search);
+  }, []);
 
   const handleOrderClick = useCallback(
     (item: OrderItem) => {
@@ -68,33 +66,27 @@ const AdminPage = () => {
     [dispatch],
   );
 
-  const handlePageChange = useCallback(
-    (page: number) => {
-      setPage(() => page);
-    },
-    [page],
-  );
+  const handlePageChange = useCallback((page: number) => {
+    setPage(() => page);
+  }, []);
 
   if (!ordersResponse || isLoading) {
     return <LoadingSpinner />;
   }
 
-  const { page: orders, totalElements, totalPages } = ordersResponse;
-
-  console.log(`totalElements: ${totalElements}; totalPages: ${totalPages}`);
+  const { page: orders, totalElements } = ordersResponse;
 
   return (
     <div className={styles.admin}>
       <div className={cn(styles.admin__wrapper, 'wrapper')}>
         <AdminPageHeader
-          productsData={orders}
           checkedItems={Array.from(selected) as string[]}
           onSearch={handleSearch}
           handleApplyFilter={handleApplyFilters}
         />
 
         <AdminTable
-          orders={orders}
+          orders={orders.filter((order) => searchOrder(order, search))}
           checkedItems={Array.from(selected) as string[]}
           isAllChecked={selected.size === orders.length}
           hasIndeterminate={selected.size > 0}
