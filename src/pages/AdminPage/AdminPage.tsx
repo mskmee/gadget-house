@@ -89,7 +89,9 @@ const AdminPage = () => {
           orders={orders.filter((order) => searchOrder(order, search))}
           checkedItems={Array.from(selected) as string[]}
           isAllChecked={selected.size === orders.length}
-          hasIndeterminate={selected.size > 0}
+          hasIndeterminate={
+            selected.size > 0 && selected.size === orders.length
+          }
           onCheckAll={toggleAll}
           toggleSelect={toggleSelect}
           onOrderClick={handleOrderClick}
