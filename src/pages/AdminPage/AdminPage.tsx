@@ -1,6 +1,5 @@
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { CheckboxProps, CheckboxChangeEvent } from 'antd';
 import cn from 'classnames';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { AppDispatch } from '@/store';
@@ -13,34 +12,42 @@ import { getOneOrderById } from '@/store/orders/actions';
 import { OrderFilterParams, useGetAllOrdersQuery } from '@/store/orders/api';
 import { OrderItem } from '@/types/OrderItem';
 import { OrderItemResponseDto } from '@/utils/packages/orders/libs/types/order-item-response-dto';
+import { DEFAULT_SIZE } from '@/constants/pagination';
 
 const AdminPage = () => {
   const dispatch: AppDispatch = useDispatch();
   const [appliedFilters, setAppliedFilters] = useState<OrderFilterParams>({});
+  const [page, setPage] = useState(1);
+  const [selected, setSelected] = useState(new Set());
 
-  const [currentPageState, setCurrentPageState] = useState(0);
   const { data: ordersResponse, isLoading } = useGetAllOrdersQuery({
-    page: currentPageState,
+    page: page - 1,
     ...appliedFilters,
   });
 
-  const [checkedItems, setCheckedItems] = useState<string[]>([]);
+  const toggleSelect = useCallback((id: string) => {
+    setSelected((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(id)) {
+        newSet.delete(id);
+      } else {
+        newSet.add(id);
+      }
+      return newSet;
+    });
+  }, []);
 
-  const handleItemCheck = (id: string) => (e: CheckboxChangeEvent) => {
-    setCheckedItems((prev) =>
-      e.target.checked ? [...prev, id] : prev.filter((itemId) => itemId !== id),
-    );
-  };
+  const toggleAll = useCallback(() => {
+    if (!ordersResponse) return;
 
-  const handleCheckAll: CheckboxProps['onChange'] = useCallback(
-    (e: any) => {
-      if (!ordersResponse?.page) return;
-      setCheckedItems(
-        e.target.checked ? ordersResponse.page.map((item) => item.id) : [],
-      );
-    },
-    [ordersResponse?.page],
-  );
+    const { page: orders } = ordersResponse;
+
+    if (orders.length === selected.size) {
+      setSelected(() => new Set());
+    } else {
+      setSelected(() => new Set(orders.map((item) => item.id)));
+    }
+  }, [ordersResponse, selected]);
 
   const handleApplyFilters = (filters: OrderFilterParams) => {
     setAppliedFilters(filters);
@@ -61,50 +68,46 @@ const AdminPage = () => {
     [dispatch],
   );
 
-  const handlePageChange = useCallback((page: number) => {
-    setCurrentPageState(page - 1);
-  }, []);
+  const handlePageChange = useCallback(
+    (page: number) => {
+      setPage(() => page);
+    },
+    [page],
+  );
 
   if (!ordersResponse || isLoading) {
     return <LoadingSpinner />;
   }
 
-  const {
-    page: orders,
-    currentPage,
-    totalElements,
-    totalPages,
-  } = ordersResponse;
-  const isAllChecked =
-    orders.length > 0 && orders.every((item) => checkedItems.includes(item.id));
-  const hasIndeterminate = checkedItems.length > 0 && !isAllChecked;
-  const pageSize = Math.ceil(totalElements / totalPages);
+  const { page: orders, totalElements, totalPages } = ordersResponse;
+
+  console.log(`totalElements: ${totalElements}; totalPages: ${totalPages}`);
 
   return (
     <div className={styles.admin}>
       <div className={cn(styles.admin__wrapper, 'wrapper')}>
         <AdminPageHeader
           productsData={orders}
-          checkedItems={checkedItems}
+          checkedItems={Array.from(selected) as string[]}
           onSearch={handleSearch}
           handleApplyFilter={handleApplyFilters}
         />
 
         <AdminTable
           orders={orders}
-          checkedItems={checkedItems}
-          isAllChecked={isAllChecked}
-          hasIndeterminate={hasIndeterminate}
-          onCheckAll={handleCheckAll}
-          onItemCheck={handleItemCheck}
+          checkedItems={Array.from(selected) as string[]}
+          isAllChecked={selected.size === orders.length}
+          hasIndeterminate={selected.size > 0}
+          onCheckAll={toggleAll}
+          toggleSelect={toggleSelect}
           onOrderClick={handleOrderClick}
         />
       </div>
 
       <AdminPagination
-        currentPage={currentPage}
+        currentPage={page}
         totalItems={totalElements}
-        pageSize={pageSize}
+        pageSize={DEFAULT_SIZE}
         onPageChange={handlePageChange}
       />
     </div>

@@ -1,4 +1,4 @@
-import { CheckboxProps, CheckboxChangeEvent } from 'antd';
+import { CheckboxProps } from 'antd';
 import { AdminTableHeader } from './AdminTableHeader';
 import { AdminTableRow } from './AdminTableRow';
 import { OrderItem } from '@/types/OrderItem';
@@ -13,7 +13,7 @@ interface AdminTableProps {
   hasIndeterminate: boolean;
   onCheckAll: CheckboxProps['onChange'];
   // eslint-disable-next-line no-unused-vars
-  onItemCheck: (id: string) => (e: CheckboxChangeEvent) => void;
+  toggleSelect: (id: string) => void;
   // eslint-disable-next-line no-unused-vars
   onOrderClick: (item: OrderItem) => void;
 }
@@ -24,7 +24,7 @@ export const AdminTable = ({
   isAllChecked,
   hasIndeterminate,
   onCheckAll,
-  onItemCheck,
+  toggleSelect,
   onOrderClick,
 }: AdminTableProps) => {
   return (
@@ -42,7 +42,7 @@ export const AdminTable = ({
               key={item.id}
               item={item}
               isChecked={checkedItems.includes(item.id)}
-              onChecked={onItemCheck(item.id)}
+              onChecked={() => toggleSelect(item.id)}
               onOrderClick={onOrderClick}
             />
           ))}
