@@ -37,15 +37,37 @@ export const AdminTable = ({
         />
 
         <tbody>
-          {orders.map((item) => (
-            <AdminTableRow
-              key={item.id}
-              item={item}
-              isChecked={checkedItems.includes(item.id)}
-              onChecked={() => toggleSelect(item.id)}
-              onOrderClick={onOrderClick}
-            />
-          ))}
+          {orders.length > 0 ? (
+            orders.map((item) => (
+              <AdminTableRow
+                key={item.id}
+                item={item}
+                isChecked={checkedItems.includes(item.id)}
+                onChecked={() => toggleSelect(item.id)}
+                onOrderClick={onOrderClick}
+              />
+            ))
+          ) : (
+            <tr>
+              <td colSpan={5}>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    padding: '48px 0',
+                    fontFamily: 'Inter, sans-serif',
+                    fontSize: '20px',
+                    color: 'var(--text-color)',
+                    opacity: 0.6,
+                    textAlign: 'center',
+                  }}
+                >
+                  Orders not found
+                </div>
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>
