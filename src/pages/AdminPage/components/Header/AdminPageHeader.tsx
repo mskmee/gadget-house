@@ -1,6 +1,5 @@
 import { useCallback, useState } from 'react';
-
-import { AddNewUser } from '@/assets/constants';
+import { AddNewUserIcon } from '@/assets/icons';
 
 import styles from '../../styles/admin-page.module.scss';
 import { AdminSearch } from '../Search/AdminSearch';
@@ -48,7 +47,7 @@ export const AdminPageHeader = ({
             className={styles.admin__buttonsAdd}
             onClick={handleModalToggle}
           >
-            <img src={AddNewUser} alt="Add user icon" />
+            <AddNewUserIcon />
           </button>
 
           <ChangeStatus checkedItems={checkedItems} />

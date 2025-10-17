@@ -14,3 +14,8 @@ export const CalendarIcon = createIconComponent(
   () => import('./calendar-icon.svg'),
   'calendar-icon',
 );
+
+export const AddNewUserIcon = createIconComponent(
+  () => import('./add-new-user.svg'),
+  'add-new-user',
+);

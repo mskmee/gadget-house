@@ -10,6 +10,7 @@ import { logger, toastMiddleware } from './middlewares/middlewares';
 import { isDevelopment } from '@/constants/IsDevelopment';
 import { ordersApi } from './orders/api';
 import { routes } from '@/routes';
+import { authApi } from './auth/api';
 
 export const extraArgument = {
   routes,
@@ -24,6 +25,7 @@ const reducers = combineReducers({
   order: orderReducer,
   singleProduct: singleProductSlice,
   [ordersApi.reducerPath]: ordersApi.reducer,
+  [authApi.reducerPath]: authApi.reducer,
 });
 
 export const store = configureStore({
@@ -31,7 +33,8 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) => {
     const middleware = getDefaultMiddleware()
       .concat(toastMiddleware)
-      .concat(ordersApi.middleware);
+      .concat(ordersApi.middleware)
+      .concat(authApi.middleware);
     return isDevelopment ? middleware.concat(logger) : middleware;
   },
 });
