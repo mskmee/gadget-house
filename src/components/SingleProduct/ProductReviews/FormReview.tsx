@@ -60,7 +60,6 @@ function FormReview({ productId }: { productId: number }) {
         {({ values, handleChange, setFieldValue, errors, touched }) => {
           const leftCharactersCount = maxLength - values.text.length;
           const isButtonDisabled = values.rate === null || values.rate === 0;
-          // const isButtonDisabled = values.text.trim().length === 0 && (values.rate === null || values.rate === 0);
           return (
             <Form className={style['review_leave-review']}>
               <div className={style['reviews_rate__block']}>

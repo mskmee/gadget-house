@@ -16,19 +16,18 @@ import { useMediaQuery } from 'react-responsive';
 import { Carousels } from '../components';
 import { notification } from 'antd';
 import { MAX_PRODUCT_QUANTITY } from '@/constants/globalConstans';
-import { useEffect, useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import classNames from 'classnames';
 import { SLIDE_DOWN_DURATION_MS } from './constants';
 
 export default function BasketPopup() {
   const [isClosing, setIsClosing] = useState(false);
-
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
   const navigate = useNavigate();
 
   const isLessThan768px = useMediaQuery({
     query: '(max-width: 768px)',
   });
-  ``;
   const { products, currency, locale, selectedProductId } = useTypedSelector(
     (state) => state.shopping_card,
   );
@@ -44,6 +43,22 @@ export default function BasketPopup() {
     (product) => product.id === selectedProductId,
   );
   const isOpen = Boolean(selectedProduct);
+
+  useEffect(() => {
+    const previouslyFocusedElement =
+      document.activeElement as HTMLElement | null;
+
+    if (isOpen && closeButtonRef.current) {
+      closeButtonRef.current.focus();
+      const prevOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+
+      return () => {
+        document.body.style.overflow = prevOverflow;
+        previouslyFocusedElement?.focus();
+      };
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     if (isOpen) {
@@ -132,6 +147,7 @@ export default function BasketPopup() {
       })}
     >
       <button
+        ref={closeButtonRef}
         className={styles.basketPopupClose}
         onClick={handleClosePopup}
         aria-label="Close basket popup"
