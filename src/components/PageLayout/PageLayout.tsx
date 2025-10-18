@@ -50,12 +50,29 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   const isMobile767 = useMediaQuery({
     query: '(max-width: 767px)',
   });
+  const isInitialLoading =
+    useTypedSelector((state: RootState) => state.products.dataStatus) ===
+    DataStatus.PENDING;
 
   const brandIds = useSelector(selectBrandIds);
   const attributesIds = useSelector(selectFilteredAttributes, shallowEqual);
 
   const size = isMobile767 ? DEFAULT_SIZE_MOBILE : DEFAULT_SIZE;
 
+  const pathname = pathName.slice(1);
+  let category = '';
+
+  if (pathname.includes('search') && searchInputValue) {
+    category = isSuggestion
+      ? searchInputValue.split('-').join(' ')
+      : `Search results for "${searchInputValue}"`;
+  } else {
+    pathname.includes('-')
+      ? (category =
+          pathname.charAt(0).toUpperCase() +
+          pathname.slice(1).split('-').join(' '))
+      : (category = pathname.charAt(0).toUpperCase() + pathname.slice(1));
+  }
   useEffect(() => {
     if (categoryId !== null && categoryId === selectedCategoryId) {
       dispatch(
@@ -85,25 +102,6 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
     selectedCategoryId,
     size,
   ]);
-
-  const pathname = pathName.slice(1);
-  let category = '';
-
-  if (pathname.includes('search') && searchInputValue) {
-    category = isSuggestion
-      ? searchInputValue.split('-').join(' ')
-      : `Search results for "${searchInputValue}"`;
-  } else {
-    pathname.includes('-')
-      ? (category =
-          pathname.charAt(0).toUpperCase() +
-          pathname.slice(1).split('-').join(' '))
-      : (category = pathname.charAt(0).toUpperCase() + pathname.slice(1));
-  }
-
-  const isInitialLoading =
-    useTypedSelector((state: RootState) => state.products.dataStatus) ===
-    DataStatus.PENDING;
 
   return (
     <div className={styles.pageLayout}>
