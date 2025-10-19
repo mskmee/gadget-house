@@ -1,8 +1,6 @@
 import { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 import cn from 'classnames';
 import { useState } from 'react';
-import { AppDispatch } from '@/store';
 
 import styles from './admin-invoice.module.scss';
 import {
@@ -12,20 +10,19 @@ import {
   StatusSection,
 } from './components';
 import { useParams } from 'react-router-dom';
-import { useGetOrderQuery } from '@/store/orders/api';
-import { patchOrder } from '@/store/orders/actions';
+import { useGetOrderQuery, usePatchOrderMutation } from '@/store/orders/api';
 import { IOrderItemProduct } from '@/utils/packages/orders/libs/types/order-item-response-dto';
 import { skipToken } from '@reduxjs/toolkit/query';
 
 const AdminInvoice = () => {
-  const dispatch: AppDispatch = useDispatch();
   const { id = '' } = useParams<{ id: string }>();
   const { data: order } = useGetOrderQuery(id ?? skipToken);
+  const [patchOrder] = usePatchOrderMutation();
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
 
   const handleStatusClick = (status: string) => {
     setSelectedStatus(status);
-    dispatch(patchOrder({ id: order?.id || '', status }));
+    patchOrder({ id: order?.id || '', status });
   };
 
   const handleProductAdd = useCallback((product: IOrderItemProduct) => {
