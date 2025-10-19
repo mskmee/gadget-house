@@ -26,7 +26,6 @@ export const OrdersList = ({
   const [filteredProducts, setFilteredProducts] = useState<IOrderItemProduct[]>(
     [],
   );
-  console.log(JSON.stringify(productsData));
 
   const handleProductSearch = useCallback(
     (query: string) => {
