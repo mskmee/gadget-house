@@ -1,30 +1,40 @@
 import { Link } from 'react-router-dom';
-import styles from './basketitem.module.scss';
-
 import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { useAuthRequired } from '@/hooks/useAuthRequired';
+import getFormattedCategoryName from '@/hooks/getFormattedCategoryName';
 import {
   BasketMinusBtn,
   BasketPlusBtn,
   closeBasketPopupIcon,
 } from '@/assets/constants.ts';
-import { convertPriceToReadable } from '@/utils/helpers/product';
 import { HeartIcon } from '@/assets/icons/HeartIcon';
+import { convertPriceToReadable } from '@/utils/helpers/product';
 import { IBasketChildren } from './type/interfaces';
-import getFormattedCategoryName from '@/hooks/getFormattedCategoryName';
+import styles from './basketitem.module.scss';
+import { useActions } from '@/hooks/useActions';
 
 function BasketItemMobile({
   product,
   handleDeleteFromStore,
   handleDecreaseItemQuantity,
   handleIncrementItemQuantity,
-  handleSaveFavoriteProduct,
   isLikedProduct,
 }: IBasketChildren) {
   const { id, name, code, images, quantity, totalPrice, href, categoryId } =
     product;
   const { locale, currency } = useTypedSelector((state) => state.shopping_card);
+  const { user } = useTypedSelector((state) => state.auth);
   const formatCategoryName = getFormattedCategoryName(categoryId);
+  const { toggleFavorite } = useActions();
+  const { triggerAuthRequired } = useAuthRequired();
 
+  const handleSaveFavoriteProduct = () => {
+    if (!user) {
+      triggerAuthRequired('favorite');
+      return;
+    }
+    toggleFavorite(product);
+  };
   return (
     <>
       <div className={styles.mobilePopup}>
