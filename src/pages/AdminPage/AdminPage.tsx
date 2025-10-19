@@ -56,7 +56,6 @@ const AdminPage = () => {
 
   const handleSearch = useCallback((search: string) => {
     setSearch(search);
-    console.log(search);
   }, []);
 
   const handleOrderClick = useCallback(
