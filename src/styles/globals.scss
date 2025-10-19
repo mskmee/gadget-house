@@ -149,6 +149,9 @@ img {
   }
 
   &__status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     min-width: 146px;
     height: 44px;
     padding: 10px 24px;

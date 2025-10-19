@@ -162,12 +162,23 @@
       }
 
       &Checkbox {
+        display: flex;
+        width: 24px;
+        height: 24px;
+
+        span {
+          width: 24px;
+          height: 24px;
+        }
+
         :global {
           .ant-checkbox {
             &.ant-checkbox-indeterminate .ant-checkbox-inner {
               background-image: url('../../../assets/icons/checkbox-checked.svg') !important;
               border-color: transparent !important;
               background-color: transparent !important;
+              width: 24px;
+              height: 24px;
             }
 
             &-inner::after {
@@ -203,6 +214,7 @@
 
             a {
               text-decoration: underline;
+              text-underline-offset: 2.6px;
               color: var(--theme-color);
             }
 
