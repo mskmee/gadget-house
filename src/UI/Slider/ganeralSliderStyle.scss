@@ -233,3 +233,15 @@
     }
   }
 }
+.swiper,
+.swiper-wrapper,
+.swiper-slide,
+.swiper-button-next,
+.swiper-button-prev,
+.base-slider,
+.base__slider-arrow {
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+}
