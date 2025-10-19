@@ -15,7 +15,6 @@ interface AdminTableRowProps {
   // eslint-disable-next-line no-unused-vars
   onChecked: (e: CheckboxChangeEvent) => void;
   // eslint-disable-next-line no-unused-vars
-  onOrderClick: (item: OrderItem) => void;
   isPatching: boolean;
 }
 
@@ -23,7 +22,6 @@ export const AdminTableRow = ({
   item,
   isChecked,
   onChecked,
-  onOrderClick,
   isPatching,
 }: AdminTableRowProps) => {
   const locale = useLocale();
@@ -37,15 +35,7 @@ export const AdminTableRow = ({
             checked={isChecked}
             className={styles.admin__tableWrapperCheckbox}
           />
-          <Link
-            to={`/admin/${item.id}`}
-            onClick={(e) => {
-              e.stopPropagation();
-              onOrderClick(item);
-            }}
-          >
-            {item.id}
-          </Link>
+          <Link to={`/admin/${item.id}`}>{item.id}</Link>
         </div>
       </td>
       <td>{formatPhoneDisplay(item.phoneNumber)}</td>

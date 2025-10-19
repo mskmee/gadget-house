@@ -1,25 +1,20 @@
 import { useCallback, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import cn from 'classnames';
 import LoadingSpinner from '@/components/LoadingSpinner';
-import { AppDispatch } from '@/store';
 
 import styles from './styles/admin-page.module.scss';
 import { AdminPageHeader } from './components/Header/AdminPageHeader';
 import { AdminTable } from './components/Table/AdminTable';
 import { AdminPagination } from './components/Pagination/AdminPagination';
-import { getOneOrderById } from '@/store/orders/actions';
 import {
   OrderFilterParams,
   useGetAllOrdersQuery,
   usePatchOrderMutation,
 } from '@/store/orders/api';
-import { OrderItem } from '@/types/OrderItem';
 import { DEFAULT_SIZE } from '@/constants/pagination';
 import { searchOrder } from '@/utils/helpers/search-order';
 
 const AdminPage = () => {
-  const dispatch: AppDispatch = useDispatch();
   const [appliedFilters, setAppliedFilters] = useState<OrderFilterParams>({});
   const [page, setPage] = useState(1);
   const [selected, setSelected] = useState(new Set());
@@ -63,13 +58,6 @@ const AdminPage = () => {
     setSearch(search);
   }, []);
 
-  const handleOrderClick = useCallback(
-    (item: OrderItem) => {
-      dispatch(getOneOrderById(item.id));
-    },
-    [dispatch],
-  );
-
   const handlePageChange = useCallback((page: number) => {
     setPage(() => page);
   }, []);
@@ -100,7 +88,6 @@ const AdminPage = () => {
           }
           onCheckAll={toggleAll}
           toggleSelect={toggleSelect}
-          onOrderClick={handleOrderClick}
         />
       </div>
 

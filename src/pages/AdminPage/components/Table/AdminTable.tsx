@@ -1,7 +1,6 @@
 import { CheckboxProps } from 'antd';
 import { AdminTableHeader } from './AdminTableHeader';
 import { AdminTableRow } from './AdminTableRow';
-import { OrderItem } from '@/types/OrderItem';
 
 import styles from '../../styles/admin-page.module.scss';
 import { OrderItemResponseDto } from '@/utils/packages/orders/libs/types/order-item-response-dto';
@@ -15,8 +14,6 @@ interface AdminTableProps {
   isPatchingStatus: boolean;
   // eslint-disable-next-line no-unused-vars
   toggleSelect: (id: string) => void;
-  // eslint-disable-next-line no-unused-vars
-  onOrderClick: (item: OrderItem) => void;
 }
 
 export const AdminTable = ({
@@ -26,7 +23,6 @@ export const AdminTable = ({
   hasIndeterminate,
   onCheckAll,
   toggleSelect,
-  onOrderClick,
   isPatchingStatus,
 }: AdminTableProps) => {
   return (
@@ -47,7 +43,6 @@ export const AdminTable = ({
                 item={item}
                 isChecked={checkedItems.includes(item.id)}
                 onChecked={() => toggleSelect(item.id)}
-                onOrderClick={onOrderClick}
               />
             ))
           ) : (
