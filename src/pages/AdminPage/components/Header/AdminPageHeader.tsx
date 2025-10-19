@@ -6,7 +6,7 @@ import { AdminSearch } from '../Search/AdminSearch';
 import { ChangeStatus } from '../StatusChange/ChangeStatus';
 import { Filters } from '../Filters/Filters';
 import { AddNewAdminModal } from '../Modals/AddNewAdmin';
-import { OrderFilterParams } from '@/store/orders/api';
+import { OrderFilterParams, usePatchOrderMutation } from '@/store/orders/api';
 
 interface AdminPageHeaderProps {
   checkedItems: string[];
@@ -14,12 +14,15 @@ interface AdminPageHeaderProps {
   onSearch: (search: string) => void;
   // eslint-disable-next-line no-unused-vars
   handleApplyFilter: (filters: OrderFilterParams) => void;
+  // eslint-disable-next-line no-unused-vars
+  patchOrder: ReturnType<typeof usePatchOrderMutation>[0];
 }
 
 export const AdminPageHeader = ({
   checkedItems,
   onSearch,
   handleApplyFilter,
+  patchOrder,
 }: AdminPageHeaderProps) => {
   const [isAuthModalOpen, setAuthModalOpen] = useState(false);
 
@@ -50,7 +53,7 @@ export const AdminPageHeader = ({
             <AddNewUserIcon />
           </button>
 
-          <ChangeStatus checkedItems={checkedItems} />
+          <ChangeStatus patchOrder={patchOrder} checkedItems={checkedItems} />
 
           <Filters handleApplyFilter={handleApplyFilter} />
         </div>

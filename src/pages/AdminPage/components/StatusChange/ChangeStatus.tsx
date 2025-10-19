@@ -10,12 +10,13 @@ import { usePatchOrderMutation } from '@/store/orders/api';
 interface IChangeStatusProps {
   // eslint-disable-next-line no-unused-vars
   checkedItems: string[];
+  // eslint-disable-next-line no-unused-vars
+  patchOrder: ReturnType<typeof usePatchOrderMutation>[0];
 }
 
-const ChangeStatus: FC<IChangeStatusProps> = ({ checkedItems }) => {
+const ChangeStatus: FC<IChangeStatusProps> = ({ checkedItems, patchOrder }) => {
   const [isStatusMenuOpen, setStatusMenuOpen] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
-  const [patchOrder] = usePatchOrderMutation();
 
   const toggleStatusPopup = () => {
     if (checkedItems.length > 0) {
@@ -27,9 +28,13 @@ const ChangeStatus: FC<IChangeStatusProps> = ({ checkedItems }) => {
     if (!selectedStatus) return;
 
     await Promise.allSettled(
-      checkedItems.map((id) =>
-        patchOrder({ id, status: selectedStatus }).unwrap(),
-      ),
+      checkedItems.map(async (id) => {
+        try {
+          await patchOrder({ id, status: selectedStatus }).unwrap();
+        } catch (error) {
+          console.error(`Failed to update order ${id}:`, error);
+        }
+      }),
     );
 
     setStatusMenuOpen(false);

@@ -12,6 +12,7 @@ interface AdminTableProps {
   isAllChecked: boolean;
   hasIndeterminate: boolean;
   onCheckAll: CheckboxProps['onChange'];
+  isPatchingStatus: boolean;
   // eslint-disable-next-line no-unused-vars
   toggleSelect: (id: string) => void;
   // eslint-disable-next-line no-unused-vars
@@ -26,6 +27,7 @@ export const AdminTable = ({
   onCheckAll,
   toggleSelect,
   onOrderClick,
+  isPatchingStatus,
 }: AdminTableProps) => {
   return (
     <div className={styles.admin__table}>
@@ -40,6 +42,7 @@ export const AdminTable = ({
           {orders.length > 0 ? (
             orders.map((item) => (
               <AdminTableRow
+                isPatching={isPatchingStatus}
                 key={item.id}
                 item={item}
                 isChecked={checkedItems.includes(item.id)}

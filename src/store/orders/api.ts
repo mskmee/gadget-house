@@ -21,6 +21,11 @@ export interface OrderFilterParams {
   totalLess?: number | null;
 }
 
+export interface IPatchOrderStatus {
+  id: string;
+  status: string;
+}
+
 export const DEFAULT_ORDER_PARAMS: PageableParams = {
   page: 0,
   size: DEFAULT_SIZE,
@@ -58,10 +63,7 @@ export const ordersApi = createApi({
       invalidatesTags: ['Order'],
     }),
 
-    patchOrder: builder.mutation<
-      OrderItemResponseDto,
-      { id: string; status: string }
-    >({
+    patchOrder: builder.mutation<OrderItemResponseDto, IPatchOrderStatus>({
       query: ({ id, status }) => ({
         url: `/orders/${id}`,
         method: 'PATCH',

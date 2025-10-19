@@ -4,7 +4,6 @@ import { reducer as searchReducer } from './search/search_slice';
 import { reducer as productsReducer } from './products';
 import { reducer as authReducer } from './auth/auth-slice';
 import { reducer as filtersReducer } from './filters/filters_slice';
-import { reducer as orderReducer } from './orders/order_slice';
 import { reducer as singleProductSlice } from './singleProduct/singleProduct_slice';
 import { logger, toastMiddleware } from './middlewares/middlewares';
 import { isDevelopment } from '@/constants/IsDevelopment';
@@ -22,7 +21,6 @@ const reducers = combineReducers({
   products: productsReducer,
   auth: authReducer,
   filters: filtersReducer,
-  order: orderReducer,
   singleProduct: singleProductSlice,
   [ordersApi.reducerPath]: ordersApi.reducer,
   [authApi.reducerPath]: authApi.reducer,

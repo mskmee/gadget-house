@@ -9,7 +9,11 @@ import { AdminPageHeader } from './components/Header/AdminPageHeader';
 import { AdminTable } from './components/Table/AdminTable';
 import { AdminPagination } from './components/Pagination/AdminPagination';
 import { getOneOrderById } from '@/store/orders/actions';
-import { OrderFilterParams, useGetAllOrdersQuery } from '@/store/orders/api';
+import {
+  OrderFilterParams,
+  useGetAllOrdersQuery,
+  usePatchOrderMutation,
+} from '@/store/orders/api';
 import { OrderItem } from '@/types/OrderItem';
 import { DEFAULT_SIZE } from '@/constants/pagination';
 import { searchOrder } from '@/utils/helpers/search-order';
@@ -20,6 +24,7 @@ const AdminPage = () => {
   const [page, setPage] = useState(1);
   const [selected, setSelected] = useState(new Set());
   const [search, setSearch] = useState<string>('');
+  const [patchOrder, { isLoading: isPatching }] = usePatchOrderMutation();
 
   const { data: ordersResponse, isLoading } = useGetAllOrdersQuery({
     page: page - 1,
@@ -82,11 +87,13 @@ const AdminPage = () => {
           checkedItems={Array.from(selected) as string[]}
           onSearch={handleSearch}
           handleApplyFilter={handleApplyFilters}
+          patchOrder={patchOrder}
         />
 
         <AdminTable
           orders={orders.filter((order) => searchOrder(order, search))}
           checkedItems={Array.from(selected) as string[]}
+          isPatchingStatus={isPatching}
           isAllChecked={selected.size === orders.length}
           hasIndeterminate={
             selected.size > 0 && selected.size === orders.length

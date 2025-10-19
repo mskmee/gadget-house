@@ -7,7 +7,6 @@ import { formatDateToDDMMYYYY } from '@/utils/helpers/format-date';
 import { formatPhoneDisplay } from '@/utils/helpers/formatPhoneNumber';
 import { useLocale } from '@/context/localeContext';
 import LoadingSpinner from '@/components/LoadingSpinner';
-import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { formatTitle } from '@/utils/helpers/formatTitle';
 
 interface AdminTableRowProps {
@@ -17,6 +16,7 @@ interface AdminTableRowProps {
   onChecked: (e: CheckboxChangeEvent) => void;
   // eslint-disable-next-line no-unused-vars
   onOrderClick: (item: OrderItem) => void;
+  isPatching: boolean;
 }
 
 export const AdminTableRow = ({
@@ -24,18 +24,10 @@ export const AdminTableRow = ({
   isChecked,
   onChecked,
   onOrderClick,
+  isPatching,
 }: AdminTableRowProps) => {
   const locale = useLocale();
 
-  const isPatching = useTypedSelector((state) => {
-    const mutations = state.ordersApi.mutations;
-
-    return Object.values(mutations).some(
-      (mutation) =>
-        mutation?.endpointName === 'patchOrder' &&
-        mutation?.status === 'pending',
-    );
-  });
   return (
     <tr>
       <td>
