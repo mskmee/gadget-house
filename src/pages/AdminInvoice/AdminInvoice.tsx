@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 import cn from 'classnames';
-import { useState } from 'react';
 
 import styles from './admin-invoice.module.scss';
 import {
@@ -17,11 +16,9 @@ import { skipToken } from '@reduxjs/toolkit/query';
 const AdminInvoice = () => {
   const { id = '' } = useParams<{ id: string }>();
   const { data: order } = useGetOrderQuery(id ?? skipToken);
-  const [patchOrder] = usePatchOrderMutation();
-  const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
+  const [patchOrder, { isLoading: isPatching }] = usePatchOrderMutation();
 
   const handleStatusClick = (status: string) => {
-    setSelectedStatus(status);
     patchOrder({ id: order?.id || '', status });
   };
 
@@ -35,10 +32,6 @@ const AdminInvoice = () => {
 
   const handleFieldChange = useCallback((field: string, value: string) => {
     console.log('Field change:', field, value);
-  }, []);
-
-  const handleStatusConfirm = useCallback(() => {
-    console.log('Confirm status');
   }, []);
 
   return (
@@ -62,9 +55,9 @@ const AdminInvoice = () => {
         />
 
         <StatusSection
-          selectedStatus={selectedStatus}
-          onStatusClick={handleStatusClick}
-          onConfirm={handleStatusConfirm}
+          initialStatus={order?.deliveryStatus}
+          isLoading={isPatching}
+          onConfirm={handleStatusClick}
         />
       </div>
     </div>

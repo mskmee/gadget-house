@@ -1,22 +1,37 @@
 import { Flex } from 'antd';
 import cn from 'classnames';
+import { useState } from 'react';
 
 import { OrderStatus } from '@/enums/enums';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 import styles from '../../admin-invoice.module.scss';
 
 interface StatusSectionProps {
-  selectedStatus: string | null;
+  initialStatus: string | undefined;
+  isLoading: boolean;
   // eslint-disable-next-line no-unused-vars
-  onStatusClick: (status: string) => void;
-  onConfirm: () => void;
+  onConfirm: (status: string) => void;
 }
 
 export const StatusSection = ({
-  selectedStatus,
-  onStatusClick,
+  initialStatus,
+  isLoading,
   onConfirm,
 }: StatusSectionProps) => {
+  const [selectedStatus, setSelectedStatus] = useState<OrderStatus | null>(
+    (initialStatus as OrderStatus) || null,
+  );
+
+  const handleConfirm = () => {
+    if (selectedStatus && selectedStatus !== initialStatus) {
+      onConfirm(selectedStatus);
+    }
+  };
+
+  const isChanged = selectedStatus !== initialStatus;
+  const canConfirm = selectedStatus && isChanged;
+
   return (
     <div
       className={cn(styles.adminInvoice__wrapper, styles.adminInvoice__status)}
@@ -25,31 +40,49 @@ export const StatusSection = ({
 
       <Flex gap={12} justify="space-between">
         <div className={styles.adminInvoice__statusButtons}>
-          {Object.values(OrderStatus).map((status) => (
-            <button
-              key={status}
-              type="button"
-              className={cn(
-                'button__status',
-                styles.admin__statusInput,
-                `button__status_${status.toLocaleLowerCase().replace(' ', '_')}`,
-              )}
-              onClick={() => onStatusClick(status)}
-            >
-              {selectedStatus === status && <span>✓ </span>}
-              {status}
-            </button>
-          ))}
+          {Object.values(OrderStatus).map((status) => {
+            const isActive =
+              selectedStatus?.toLowerCase() === status.toLowerCase();
+            const isCurrent =
+              initialStatus?.toLowerCase() === status.toLowerCase();
+
+            return (
+              <button
+                key={status}
+                type="button"
+                disabled={isLoading}
+                className={cn(
+                  'button__status',
+                  styles.admin__statusInput,
+                  `button__status_${status.toLowerCase().replace(/\s+/g, '_')}`,
+                  {
+                    [styles.admin__statusInput_active]: isActive,
+                    [styles.admin__statusInput_current]:
+                      isCurrent && !isChanged,
+                  },
+                )}
+                onClick={() => setSelectedStatus(status)}
+              >
+                {isActive && <span>✓ </span>}
+                {status}
+              </button>
+            );
+          })}
         </div>
 
         <div className={styles.adminInvoice__statusConfirm}>
-          <button
-            type="button"
-            className="button button-secondary"
-            onClick={onConfirm}
-          >
-            Confirm
-          </button>
+          {isLoading ? (
+            <LoadingSpinner style={{ width: '260px', height: '59px' }} />
+          ) : (
+            <button
+              type="button"
+              disabled={!canConfirm}
+              className="button button-secondary"
+              onClick={handleConfirm}
+            >
+              Confirm
+            </button>
+          )}
         </div>
       </Flex>
     </div>
