@@ -56,6 +56,8 @@ const AdminInvoice = () => {
         <DeliveryDetails
           fullName={order?.fullName}
           address={order?.address}
+          comment={order?.comment}
+          delivery={order?.deliveryMethod}
           onFieldChange={handleFieldChange}
         />
 

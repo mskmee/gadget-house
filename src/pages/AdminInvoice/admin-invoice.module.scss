@@ -1,14 +1,14 @@
 .adminInvoice {
-  padding: 42px 0 100px;
+  padding: 50px 0px;
 
   &__container {
     display: flex;
     flex-direction: column;
-    gap: 42px;
+    gap: 24px;
   }
 
   &__wrapper {
-    padding: 28px 60px;
+    padding: 50px;
     border-radius: 28px;
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
     background: var(--white-color);
@@ -16,7 +16,7 @@
 
   &__wrapper {
     h3 {
-      font-family: "Inter", sans-serif;
+      font-family: 'Inter', sans-serif;
       font-weight: 500;
       font-size: 42px;
       line-height: 150%;
@@ -58,7 +58,7 @@
       border-radius: 20px;
       padding: 16px 28px;
       background: var(--bg-color);
-      font-family: "Inter", sans-serif;
+      font-family: 'Inter', sans-serif;
       font-weight: 400;
       line-height: 150%;
       color: var(--text-color);
@@ -80,10 +80,10 @@
           justify-content: center;
 
           &::after {
-            content: "";
+            content: '';
             width: 22px;
             height: 20px;
-            mask-image: url("../../assets/icons/checked.svg");
+            mask-image: url('../../assets/icons/checked.svg');
             mask-size: cover;
             mask-repeat: no-repeat;
             mask-position: center;
@@ -127,7 +127,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-family: "Inter", sans-serif;
+      font-family: 'Inter', sans-serif;
       font-weight: 500;
       font-size: 42px;
       line-height: 150%;
@@ -136,15 +136,24 @@
   }
 
   &__delivery {
-    h3 {
-      margin-bottom: 24px;
+    &Header {
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+    }
+
+    &Method {
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 150%;
+      color: var(--secondary-text-color);
     }
 
     form {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      column-gap: 90px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      column-gap: 80px;
       row-gap: 24px;
     }
 
@@ -153,13 +162,8 @@
       flex-direction: column;
       gap: 8px;
 
-      &:nth-child(2),
-      &:nth-child(1) {
-        width: 500px;
-      }
-
       span {
-        font-family: "Inter", sans-serif;
+        font-family: 'Inter', sans-serif;
         font-weight: 400;
         font-size: 16px;
         line-height: 150%;
@@ -175,7 +179,7 @@
         border-radius: 12px;
         padding: 16px;
         background-color: var(--bg-color);
-        font-family: "Inter", sans-serif;
+        font-family: 'Inter', sans-serif;
         font-weight: 400;
         font-size: 16px;
         line-height: 150%;
@@ -185,10 +189,6 @@
   }
 
   &__status {
-    h3 {
-      margin-bottom: 24px;
-    }
-
     &Buttons {
       display: flex;
       align-items: center;
@@ -201,5 +201,28 @@
         width: 260px !important;
       }
     }
+  }
+
+  &__comment {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 50rem;
+  }
+
+  &__commentTitle {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    color: var(--secondary-text-color);
+  }
+
+  &__commentText {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    color: var(--secondary-text-color);
   }
 }
