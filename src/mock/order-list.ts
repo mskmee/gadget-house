@@ -25,8 +25,8 @@ const getRandomDate = (): string => {
   return randomTime.toISOString();
 };
 
-const getRandomStatus = (): string => {
-  const statuses = Object.values(OrderStatus);
+const getRandomStatus = (): OrderStatus => {
+  const statuses = Object.values(OrderStatus) as OrderStatus[];
   return statuses[Math.floor(Math.random() * statuses.length)];
 };
 

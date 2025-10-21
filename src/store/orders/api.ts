@@ -28,7 +28,7 @@ export interface IPatchOrderStatus {
 
 export interface IPutOrder {
   orderId: string;
-  body: OrderDto;
+  selectOrderDto: OrderDto;
 }
 
 export const DEFAULT_ORDER_PARAMS: PageableParams = {
@@ -77,10 +77,10 @@ export const ordersApi = createApi({
       invalidatesTags: (_, __, { id }) => [{ type: 'Order', id }, 'Order'],
     }),
     putOrder: builder.mutation<OrderItemResponseDto, IPutOrder>({
-      query: ({ orderId, body }) => ({
+      query: ({ orderId, selectOrderDto }) => ({
         url: `/orders/${orderId}`,
         method: 'PUT',
-        body: body,
+        body: selectOrderDto,
       }),
     }),
   }),

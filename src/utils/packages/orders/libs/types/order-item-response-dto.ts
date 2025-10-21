@@ -1,3 +1,4 @@
+import { OrderStatus } from '@/enums/order-status';
 import { DeliveryMethodType } from '@/pages/OrderConfirmation/libs/enums/delivery-method';
 import { PaymentMethodType } from '@/pages/OrderConfirmation/libs/enums/payment-method';
 
@@ -36,7 +37,7 @@ export type ShortProductResponseDto = {
 type OrderItemResponseDto = {
   id: string;
   createdAt: string;
-  deliveryStatus: string;
+  deliveryStatus: OrderStatus;
   total: number;
   email: string;
   fullName: string;

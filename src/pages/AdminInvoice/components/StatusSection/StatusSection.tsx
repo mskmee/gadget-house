@@ -1,36 +1,28 @@
 import { Flex } from 'antd';
 import cn from 'classnames';
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { OrderStatus } from '@/enums/enums';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import { setStatus, selectOrderDto } from '@/store/orders/orderDtoSlice';
+import { formatTitle } from '@/utils/helpers/formatTitle';
 
 import styles from '../../admin-invoice.module.scss';
 
 interface StatusSectionProps {
-  initialStatus: string | undefined;
   isLoading: boolean;
-  // eslint-disable-next-line no-unused-vars
-  onConfirm: (status: string) => void;
+  isDisabled: boolean;
+  onConfirm: () => void;
 }
 
 export const StatusSection = ({
-  initialStatus,
   isLoading,
+  isDisabled,
   onConfirm,
 }: StatusSectionProps) => {
-  const [selectedStatus, setSelectedStatus] = useState<OrderStatus | null>(
-    (initialStatus as OrderStatus) || null,
-  );
-
-  const handleConfirm = () => {
-    if (selectedStatus && selectedStatus !== initialStatus) {
-      onConfirm(selectedStatus);
-    }
-  };
-
-  const isChanged = selectedStatus !== initialStatus;
-  const canConfirm = selectedStatus && isChanged;
+  const dispatch = useDispatch();
+  const orderDto = useSelector(selectOrderDto);
+  const currentStatus = orderDto?.deliveryStatus;
 
   return (
     <div
@@ -41,11 +33,6 @@ export const StatusSection = ({
       <Flex gap={12} justify="space-between">
         <div className={styles.adminInvoice__statusButtons}>
           {Object.values(OrderStatus).map((status) => {
-            const isActive =
-              selectedStatus?.toLowerCase() === status.toLowerCase();
-            const isCurrent =
-              initialStatus?.toLowerCase() === status.toLowerCase();
-
             return (
               <button
                 key={status}
@@ -55,16 +42,13 @@ export const StatusSection = ({
                   'button__status',
                   styles.admin__statusInput,
                   `button__status_${status.toLowerCase().replace(/\s+/g, '_')}`,
-                  {
-                    [styles.admin__statusInput_active]: isActive,
-                    [styles.admin__statusInput_current]:
-                      isCurrent && !isChanged,
-                  },
                 )}
-                onClick={() => setSelectedStatus(status)}
+                onClick={() => dispatch(setStatus({ status }))}
               >
-                {isActive && <span>✓ </span>}
-                {status}
+                {status.toUpperCase() === currentStatus?.toUpperCase() && (
+                  <span>✓ </span>
+                )}
+                {status.split(' ').map(formatTitle).join(' ')}
               </button>
             );
           })}
@@ -76,9 +60,9 @@ export const StatusSection = ({
           ) : (
             <button
               type="button"
-              disabled={!canConfirm}
+              disabled={isDisabled}
               className="button button-secondary"
-              onClick={handleConfirm}
+              onClick={onConfirm}
             >
               Confirm
             </button>

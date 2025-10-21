@@ -1,3 +1,4 @@
+import { OrderStatus } from '@/enums/order-status';
 import { DeliveryMethodType } from '@/pages/OrderConfirmation/libs/enums/delivery-method';
 import { PaymentMethodType } from '@/pages/OrderConfirmation/libs/enums/payment-method';
 
@@ -64,6 +65,7 @@ export interface OrderDto {
   address: Address;
   deliveryMethod: DeliveryMethodType;
   paymentMethod: PaymentMethodType;
+  deliveryStatus: OrderStatus;
 }
 
 export type Address = {

@@ -5,6 +5,7 @@ import {
   Address,
 } from '@/utils/packages/orders/libs/types/order-item';
 import { RootState } from '..';
+import { OrderStatus } from '@/enums/order-status';
 
 type IInitialState = OrderDto | null;
 
@@ -55,6 +56,11 @@ const orderDtoSlice = createSlice({
         state.address = { ...state.address, ...payload };
       }
     },
+    setStatus: (state, { payload }: PayloadAction<{ status: OrderStatus }>) => {
+      if (state) {
+        state.deliveryStatus = payload.status;
+      }
+    },
   },
 });
 
@@ -64,6 +70,7 @@ export const {
   setOrderDto,
   updateOrderDto,
   setFieldValue,
+  setStatus,
   clearOrderDto,
   addCartItem,
   deleteCartItem,

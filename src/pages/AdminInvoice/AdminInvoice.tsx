@@ -1,5 +1,6 @@
 import { useCallback, useEffect } from 'react';
 import cn from 'classnames';
+import { useSelector } from 'react-redux';
 
 import styles from './admin-invoice.module.scss';
 import {
@@ -9,7 +10,7 @@ import {
   StatusSection,
 } from './components';
 import { useParams } from 'react-router-dom';
-import { useGetOrderQuery, usePatchOrderMutation } from '@/store/orders/api';
+import { useGetOrderQuery, usePutOrderMutation } from '@/store/orders/api';
 import { skipToken } from '@reduxjs/toolkit/query';
 import { useDispatch } from 'react-redux';
 import {
@@ -17,14 +18,22 @@ import {
   clearOrderDto,
   addCartItem,
   deleteCartItem,
+  selectOrderDto,
+  setFieldValue,
 } from '@/store/orders/orderDtoSlice';
-import { CartItem } from '@/utils/packages/orders/libs/types/order-item';
+import {
+  CartItem,
+  OrderDto,
+} from '@/utils/packages/orders/libs/types/order-item';
+import { weakObjectsCompare } from '@/utils/weakObjectsCompare';
 
 const AdminInvoice = () => {
   const dispatch = useDispatch();
   const { id = '' } = useParams<{ id: string }>();
   const { data: order } = useGetOrderQuery(id ?? skipToken);
-  const [patchOrder, { isLoading: isPatching }] = usePatchOrderMutation();
+  const [putOrder, { isLoading: isPutting }] = usePutOrderMutation();
+
+  const orderDto = useSelector(selectOrderDto);
 
   useEffect(() => {
     if (order) {
@@ -41,6 +50,7 @@ const AdminInvoice = () => {
           address: order.address,
           deliveryMethod: order.deliveryMethod,
           paymentMethod: order.paymentMethod,
+          deliveryStatus: order.deliveryStatus,
         }),
       );
     }
@@ -50,21 +60,35 @@ const AdminInvoice = () => {
     };
   }, [order, dispatch]);
 
-  const handleStatusClick = (status: string) => {
-    patchOrder({ id: order?.id || '', status });
+  const handleConfirmationClick = () => {
+    if (order && orderDto && !weakObjectsCompare(order, orderDto)) {
+      putOrder({
+        orderId: id,
+        selectOrderDto: orderDto,
+      });
+    }
   };
 
-  const handleProductAdd = useCallback((product: CartItem) => {
-    dispatch(addCartItem(product));
-  }, []);
+  const handleProductAdd = useCallback(
+    (product: CartItem) => {
+      dispatch(addCartItem(product));
+    },
+    [dispatch],
+  );
 
-  const handleProductDelete = useCallback((productId: string) => {
-    dispatch(deleteCartItem({ productId }));
-  }, []);
+  const handleProductDelete = useCallback(
+    (productId: string) => {
+      dispatch(deleteCartItem({ productId }));
+    },
+    [dispatch],
+  );
 
-  const handleFieldChange = useCallback((field: string, value: string) => {
-    handleFieldChange(field, value);
-  }, []);
+  const handleFieldChange = useCallback(
+    (field: keyof OrderDto, value: any) => {
+      dispatch(setFieldValue({ field, value }));
+    },
+    [dispatch],
+  );
 
   return (
     <div className={styles.adminInvoice}>
@@ -79,17 +103,19 @@ const AdminInvoice = () => {
         />
 
         <DeliveryDetails
-          fullName={order?.fullName}
-          address={order?.address}
-          comment={order?.comment}
+          fullName={orderDto?.fullName}
+          address={orderDto?.address}
+          comment={orderDto?.comment}
           delivery={order?.deliveryMethod}
           onFieldChange={handleFieldChange}
         />
 
         <StatusSection
-          initialStatus={order?.deliveryStatus}
-          isLoading={isPatching}
-          onConfirm={handleStatusClick}
+          isDisabled={
+            !order || !orderDto || weakObjectsCompare(order, orderDto)
+          }
+          isLoading={isPutting}
+          onConfirm={handleConfirmationClick}
         />
       </div>
     </div>

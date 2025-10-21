@@ -3,6 +3,7 @@ import cn from 'classnames';
 import styles from '../../admin-invoice.module.scss';
 import { IOrderItemAddress } from '@/utils/packages/orders/libs/types/order-item-response-dto';
 import { formatKeyToLabel } from '@/utils/helpers/formatKeyToLabel';
+import { OrderDto } from '@/utils/packages/orders/libs/types/order-item';
 
 interface DeliveryDetailsProps {
   fullName?: string;
@@ -10,7 +11,7 @@ interface DeliveryDetailsProps {
   comment?: string;
   delivery?: string;
   // eslint-disable-next-line no-unused-vars
-  onFieldChange: (field: string, value: string) => void;
+  onFieldChange: (field: keyof OrderDto, value: any) => void;
 }
 
 export const DeliveryDetails = ({
@@ -58,7 +59,9 @@ export const DeliveryDetails = ({
                     type="text"
                     value={value}
                     name={key}
-                    onChange={(e) => onFieldChange(key, e.target.value)}
+                    onChange={(e) =>
+                      onFieldChange(key as keyof OrderDto, e.target.value)
+                    }
                   />
                 </label>
               ),
