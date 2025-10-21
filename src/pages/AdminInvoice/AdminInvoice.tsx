@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import cn from 'classnames';
 
 import styles from './admin-invoice.module.scss';
@@ -10,20 +10,51 @@ import {
 } from './components';
 import { useParams } from 'react-router-dom';
 import { useGetOrderQuery, usePatchOrderMutation } from '@/store/orders/api';
-import { IOrderItemProduct } from '@/utils/packages/orders/libs/types/order-item-response-dto';
 import { skipToken } from '@reduxjs/toolkit/query';
+import { useDispatch } from 'react-redux';
+import {
+  setOrderDto,
+  clearOrderDto,
+  addCartItem,
+} from '@/store/orders/orderDtoSlice';
+import { CartItem } from '@/utils/packages/orders/libs/types/order-item';
 
 const AdminInvoice = () => {
+  const dispatch = useDispatch();
   const { id = '' } = useParams<{ id: string }>();
   const { data: order } = useGetOrderQuery(id ?? skipToken);
   const [patchOrder, { isLoading: isPatching }] = usePatchOrderMutation();
+
+  useEffect(() => {
+    if (order) {
+      dispatch(
+        setOrderDto({
+          fullName: order.fullName,
+          email: order.email,
+          phoneNumber: order.phoneNumber,
+          comment: order.comment,
+          cartItems: order.orderItems.map((item) => ({
+            productId: item.shortProductResponseDto.id,
+            quantity: item.quantity,
+          })),
+          address: order.address,
+          deliveryMethod: order.deliveryMethod,
+          paymentMethod: order.paymentMethod,
+        }),
+      );
+    }
+
+    return () => {
+      dispatch(clearOrderDto());
+    };
+  }, [order, dispatch]);
 
   const handleStatusClick = (status: string) => {
     patchOrder({ id: order?.id || '', status });
   };
 
-  const handleProductAdd = useCallback((product: IOrderItemProduct) => {
-    console.log('Add product:', product);
+  const handleProductAdd = useCallback((product: CartItem) => {
+    dispatch(addCartItem(product));
   }, []);
 
   const handleProductDelete = useCallback((productId: string) => {

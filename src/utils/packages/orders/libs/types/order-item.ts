@@ -51,7 +51,7 @@ export type OrderItem = {
 };
 
 export type CartItem = {
-  productId: number;
+  productId: string;
   quantity: number;
 };
 

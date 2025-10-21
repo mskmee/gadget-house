@@ -1,3 +1,6 @@
+import { DeliveryMethodType } from '@/pages/OrderConfirmation/libs/enums/delivery-method';
+import { PaymentMethodType } from '@/pages/OrderConfirmation/libs/enums/payment-method';
+
 export interface IOrderItemProduct {
   shortProductResponseDto: ShortProductResponseDto;
   quantity: number;
@@ -38,8 +41,8 @@ type OrderItemResponseDto = {
   email: string;
   fullName: string;
   phoneNumber: string;
-  deliveryMethod: string;
-  paymentMethod: string;
+  deliveryMethod: DeliveryMethodType;
+  paymentMethod: PaymentMethodType;
   comment?: string;
   address: IOrderItemAddress;
   orderItems: IOrderItemProduct[];

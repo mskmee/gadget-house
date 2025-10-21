@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import cn from 'classnames';
 
 import { OrderItem } from '../OrderItem/OrderItem';
@@ -7,12 +7,13 @@ import styles from '../../admin-invoice.module.scss';
 import { AdminSearch } from '@/pages/AdminPage/components/Search/AdminSearch';
 import { convertPriceToReadable } from '@/utils/helpers/helpers';
 import { IOrderItemProduct } from '@/utils/packages/orders/libs/types/order-item-response-dto';
+import { CartItem } from '@/utils/packages/orders/libs/types/order-item';
 
 interface OrdersListProps {
   totalPrice?: number;
   productsData: IOrderItemProduct[];
   // eslint-disable-next-line no-unused-vars
-  onProductAdd: (product: IOrderItemProduct) => void;
+  onProductAdd: (product: CartItem) => void;
   // eslint-disable-next-line no-unused-vars
   onProductDelete: (productId: string) => void;
 }
@@ -23,38 +24,26 @@ export const OrdersList = ({
   onProductAdd,
   onProductDelete,
 }: OrdersListProps) => {
-  const [filteredProducts, setFilteredProducts] = useState<IOrderItemProduct[]>(
-    [],
-  );
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const handleProductSearch = useCallback(
-    (query: string) => {
-      const normalized = query.trim().toLowerCase();
-
-      const filtered = productsData?.filter(
-        (product) =>
-          product.shortProductResponseDto.name
-            ?.toLowerCase()
-            .includes(normalized) ||
-          product.shortProductResponseDto.code
-            ?.toLowerCase()
-            .includes(normalized),
-      );
-
-      setFilteredProducts(filtered || []);
-    },
-    [productsData],
-  );
+  const handleProductSearch = (query: string) => {
+    setSearchQuery(query);
+  };
 
   const handleAddProduct = () => {
-    if (filteredProducts.length === 0) {
-      console.log('No products found');
+    if (!searchQuery.trim()) {
       return;
     }
 
-    const productToAdd = filteredProducts[0];
-    onProductAdd(productToAdd);
+    const cartItem: CartItem = {
+      productId: searchQuery,
+      quantity: 1,
+    };
+
+    onProductAdd(cartItem);
+    setSearchQuery('');
   };
+
   return (
     <div
       className={cn(styles.adminInvoice__orders, styles.adminInvoice__wrapper)}

@@ -27,7 +27,7 @@ const orderDtoSlice = createSlice({
     },
     deleteCartItem: (
       state,
-      { payload }: PayloadAction<{ productId: number }>,
+      { payload }: PayloadAction<{ productId: string }>,
     ) => {
       return state
         ? {
