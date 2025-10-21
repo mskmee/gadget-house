@@ -175,7 +175,7 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
               <Rate
                 className="reviews_rate-stars"
                 disabled
-                style={{ pointerEvents: 'none' }}
+                // style={{ pointerEvents: 'none' }}
                 character={({ index = 0 }) => (
                   <img
                     src={index < productRating ? rateImg : rateEmptyImg}

@@ -50,6 +50,7 @@ export default function BasketPopup() {
 
     if (isOpen && closeButtonRef.current) {
       closeButtonRef.current.focus();
+
       const prevOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
 
@@ -60,16 +61,6 @@ export default function BasketPopup() {
     }
   }, [isOpen]);
 
-  useEffect(() => {
-    if (isOpen) {
-      const prev = document.body.style.overflow;
-      document.body.style.overflow = 'hidden';
-
-      return () => {
-        document.body.style.overflow = prev;
-      };
-    }
-  }, [isOpen]);
   if (!selectedProduct) return null;
 
   const { id, name, code, images, quantity, totalPrice } = selectedProduct;
