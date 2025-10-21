@@ -104,6 +104,7 @@ const AdminInvoice = () => {
 
         <DeliveryDetails
           fullName={orderDto?.fullName}
+          phoneNumber={orderDto?.phoneNumber}
           address={orderDto?.address}
           comment={orderDto?.comment}
           delivery={order?.deliveryMethod}
