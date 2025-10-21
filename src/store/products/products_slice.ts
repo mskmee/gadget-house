@@ -39,14 +39,6 @@ export interface IInitialState {
   isAppending: boolean;
 }
 
-// const saveProductsToStorage = (products: ProductsResponseDto) => {
-//   try {
-//     localStorage.setItem('productsData', JSON.stringify(products));
-//   } catch (error) {
-//     console.error('Error saving products to localStorage:', error);
-//   }
-// };
-
 const loadProductsFromStorage = (): ProductsResponseDto | null => {
   try {
     const saved = localStorage.getItem('productsData');
@@ -92,8 +84,6 @@ const products_slice = createSlice({
         (item) => item.id === payload.id,
       );
 
-      console.log('PRODUCT ', product);
-
       if (product) {
         product.isLiked = !product.isLiked;
       }
@@ -123,7 +113,6 @@ const products_slice = createSlice({
       localStorage.removeItem('productsData');
     },
     setIsAppending: (state, { payload }: { payload: boolean }) => {
-      console.log('payload', payload);
       state.isAppending = payload;
     },
     clearSuggestions: (state) => {
