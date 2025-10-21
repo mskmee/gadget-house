@@ -69,8 +69,12 @@ export const DeliveryDetails = ({
       </form>
 
       <div className={styles.adminInvoice__comment}>
-        <h4 className={styles.adminInvoice__commentTitle}>Comment</h4>
-        <p className={styles.adminInvoice__commentText}>{comment}</p>
+        {comment ? (
+          <>
+            <h4 className={styles.adminInvoice__commentTitle}>Comment</h4>
+            <p className={styles.adminInvoice__commentText}>{comment}</p>
+          </>
+        ) : null}
       </div>
     </section>
   );
