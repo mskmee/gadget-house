@@ -16,6 +16,7 @@ import {
   setOrderDto,
   clearOrderDto,
   addCartItem,
+  deleteCartItem,
 } from '@/store/orders/orderDtoSlice';
 import { CartItem } from '@/utils/packages/orders/libs/types/order-item';
 
@@ -58,11 +59,11 @@ const AdminInvoice = () => {
   }, []);
 
   const handleProductDelete = useCallback((productId: string) => {
-    console.log('Delete product:', productId);
+    dispatch(deleteCartItem({ productId }));
   }, []);
 
   const handleFieldChange = useCallback((field: string, value: string) => {
-    console.log('Field change:', field, value);
+    handleFieldChange(field, value);
   }, []);
 
   return (

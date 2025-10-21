@@ -16,6 +16,15 @@ const orderDtoSlice = createSlice({
   reducers: {
     setOrderDto: (_, { payload }: PayloadAction<OrderDto>) => payload,
 
+    setFieldValue: <K extends keyof OrderDto>(
+      state: IInitialState,
+      { payload }: PayloadAction<{ field: K; value: OrderDto[K] }>,
+    ) => {
+      if (state) {
+        state[payload.field] = payload.value;
+      }
+    },
+
     updateOrderDto: (state, { payload }: PayloadAction<Partial<OrderDto>>) => {
       if (state) {
         Object.assign(state, payload);
@@ -54,6 +63,7 @@ export const selectOrderDto = (state: RootState) => state.orderDto;
 export const {
   setOrderDto,
   updateOrderDto,
+  setFieldValue,
   clearOrderDto,
   addCartItem,
   deleteCartItem,
