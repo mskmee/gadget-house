@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   OrderDto,
   CartItem,
+  Address,
 } from '@/utils/packages/orders/libs/types/order-item';
 import { RootState } from '..';
 
@@ -14,29 +15,36 @@ const orderDtoSlice = createSlice({
   initialState: initialState as IInitialState,
   reducers: {
     setOrderDto: (_, { payload }: PayloadAction<OrderDto>) => payload,
-    updateOrderDto: (state, { payload }: PayloadAction<Partial<OrderDto>>) =>
-      state ? { ...state, ...payload } : state,
-    clearOrderDto: () => null,
-    addCartItem: (state, { payload }: PayloadAction<CartItem>) => {
-      return state
-        ? {
-            ...state,
-            cartItems: [...state.cartItems, payload],
-          }
-        : state;
+
+    updateOrderDto: (state, { payload }: PayloadAction<Partial<OrderDto>>) => {
+      if (state) {
+        Object.assign(state, payload);
+      }
     },
+
+    clearOrderDto: () => null,
+
+    addCartItem: (state, { payload }: PayloadAction<CartItem>) => {
+      if (state) {
+        state.cartItems.push(payload);
+      }
+    },
+
     deleteCartItem: (
       state,
       { payload }: PayloadAction<{ productId: string }>,
     ) => {
-      return state
-        ? {
-            ...state,
-            cartItems: state.cartItems.filter(
-              (item) => item.productId !== payload.productId,
-            ),
-          }
-        : state;
+      if (state) {
+        state.cartItems = state.cartItems.filter(
+          (item: CartItem) => item.productId !== payload.productId,
+        );
+      }
+    },
+
+    updateAddress: (state, { payload }: PayloadAction<Address>) => {
+      if (state) {
+        state.address = { ...state.address, ...payload };
+      }
     },
   },
 });
@@ -49,6 +57,7 @@ export const {
   clearOrderDto,
   addCartItem,
   deleteCartItem,
+  updateAddress,
 } = orderDtoSlice.actions;
 
 export const reducer = orderDtoSlice.reducer;

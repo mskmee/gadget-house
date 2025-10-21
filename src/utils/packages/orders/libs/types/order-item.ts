@@ -55,21 +55,23 @@ export type CartItem = {
   quantity: number;
 };
 
-export type OrderDto = {
+export interface OrderDto {
   fullName: string;
   email: string;
   phoneNumber: string;
   comment?: string;
   cartItems: CartItem[];
-  address: {
-    city: string;
-    street?: string;
-    departmentNumber?: string;
-    houseNumber?: string;
-    flat?: string;
-  };
+  address: Address;
   deliveryMethod: DeliveryMethodType;
   paymentMethod: PaymentMethodType;
+}
+
+export type Address = {
+  city: string;
+  street?: string;
+  departmentNumber?: string;
+  houseNumber?: string;
+  flat?: string;
 };
 
 export type OrderResponseDto = number;
