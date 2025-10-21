@@ -6,8 +6,7 @@ const regx = {
   name: /^[a-zA-Zа-яА-Я-ЯґєіїҐЄІЇ]+(([' -][a-zA-Zа-яА-Я-ЯґєіїҐЄІЇ ])?[a-zA-Zа-яА-Я-ЯґєіїҐЄІЇ]*)*$/,
   email:
     /^(?![ .])[\w!#$%&'*+/=?^_`{|}~.-]{4,63}(?<![ .])@[a-zA-Z\d.-]{2,9}(?<![ ])\.[a-zA-Z]{2,9}$/,
-  password:
-    /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–/[{}\]:;',?/*~$^+=<>])\S{8,}$/,
+  password: /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,24}$/,
 };
 
 const fullName = Yup.string()
@@ -19,21 +18,22 @@ const fullName = Yup.string()
 const email = Yup.string()
   .trim()
   .required('This field is required')
-  .test("is-valid-email", "Incorrect e-mail or password", (value) =>
-    value ? regx.email.test(value) : true
+  .test('is-valid-email', 'Incorrect e-mail or password', (value) =>
+    value ? regx.email.test(value) : true,
   );
 
 const password = Yup.string()
   .trim()
   .required('This field is required')
-  .test("is-valid-password", "Incorrect e-mail or password", (value) =>
-    value ? regx.password.test(value) : true
+  .test('is-valid-password', 'Incorrect e-mail or password', (value) =>
+    value ? regx.password.test(value) : true,
   );
 
-const loginPermissionFormValidationSchema: Yup.Schema<LoginFormDto> = Yup.object().shape({
-  fullName,
-  email,
-  password,
-});
+const loginPermissionFormValidationSchema: Yup.Schema<LoginFormDto> =
+  Yup.object().shape({
+    fullName,
+    email,
+    password,
+  });
 
 export { loginPermissionFormValidationSchema };
