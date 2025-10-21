@@ -21,6 +21,7 @@ import { useMediaQuery } from 'react-responsive';
 import { Filters } from '../Filters/Filters';
 import { SortingDesk } from '../Sort/SortingDesk';
 import { DataStatus } from '@/enums/data-status';
+import { formatCategoryUrlName } from '@/utils/helpers/formatCategoryUrlName';
 
 interface IPageLayoutProps {
   products: IProductCard[];
@@ -67,11 +68,7 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
       ? searchInputValue.split('-').join(' ')
       : `Search results for "${searchInputValue}"`;
   } else {
-    pathname.includes('-')
-      ? (category =
-          pathname.charAt(0).toUpperCase() +
-          pathname.slice(1).split('-').join(' '))
-      : (category = pathname.charAt(0).toUpperCase() + pathname.slice(1));
+    formatCategoryUrlName(pathname);
   }
   useEffect(() => {
     if (categoryId !== null && categoryId === selectedCategoryId) {
