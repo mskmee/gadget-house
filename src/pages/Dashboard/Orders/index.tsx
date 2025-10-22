@@ -26,8 +26,6 @@ export const UserOrders = () => {
 
   const orders = useTypedSelector((state) => state?.auth?.user?.orders);
 
-  console.log('ORDERS: ', orders);
-
   const { locale, currency } = useTypedSelector((state) => state.shopping_card);
   const { addToStore } = useActions();
 
@@ -138,8 +136,10 @@ export const UserOrders = () => {
                     <p>{formatOrderDate(order.createdAt)}</p>
                     <label>Delivery address</label>
                     <p>{formatDeliveryInfo(order.address)}</p>
-                    <label>Payment method</label>
+                    <label>Delivery method</label>
                     <p>{order.deliveryMethod}</p>
+                    <label>Payment method</label>
+                    <p>{order.paymentMethod}</p>
                   </div>
 
                   <button
