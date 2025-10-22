@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo, useCallback } from 'react';
-import styles from './SearchResults.module.scss';
+import styles from './SearchResultsNotFound.module.scss';
 import { useDocumentTitle } from '@/hooks/useDocumentTitle';
 import { Benefits, Carousels, SliderNav } from '@/components/components';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -11,7 +11,7 @@ import { AppDispatch } from '../../store';
 import { getAllProducts } from '@/store/products/actions';
 import { DEFAULT_PAGE, DEFAULT_SIZE } from '@/constants/pagination';
 
-export const SearchResults = () => {
+export const SearchResultsNotFound = () => {
   useDocumentTitle(`Search results`);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
