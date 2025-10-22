@@ -4,7 +4,7 @@ import { ChangePasswordFormDto } from '../types/form-dto';
 
 const regx = {
   password:
-    /(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–/[{}\]:;',?/*~$^+=<>])\S{8,}$/,
+    /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_\-+=[\]{};':"\\|,.<>/?])\S{8,24}$/,
 };
 
 const password = Yup.string()
