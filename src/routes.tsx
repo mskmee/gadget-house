@@ -23,6 +23,7 @@ import Category from './pages/Category/Category';
 import SignUp from './pages/SignUp';
 import { ForgotPassword } from './pages/ForgotPassword';
 import { ChangePassword } from './pages/ChangePassword/ChagePassword';
+import CategoryEmpty from './pages/CategoryEmpty/CategoryEmpty';
 import SearchResultsFound from './pages/SearchResultFound/SearchResultsFound';
 
 export const routes = createBrowserRouter(
@@ -44,6 +45,10 @@ export const routes = createBrowserRouter(
         {
           path: AppRoute.SEARCH_RESULTS_NOT_FOUND,
           element: <SearchResultsNotFound />,
+        },
+        {
+          path: AppRoute.CATEGORY_EMPTY,
+          element: <CategoryEmpty />,
         },
         {
           path: AppRoute.USER_ACCOUNT,
