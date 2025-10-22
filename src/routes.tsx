@@ -4,11 +4,10 @@ import Layout from './pages/Layout';
 import Main from './pages/Main/Main';
 
 import { SingleProductPage } from './pages/SingleProduct';
-import { SearchResults } from './pages/SearchResults';
+import { SearchResultsNotFound } from './pages/SearchResultsNotFound';
 import { UserFavorites } from './pages/Dashboard/Favorites';
 import { SignIn } from './pages/SignIn';
 import { BasketPage } from './pages/Basket';
-import AllProducts from './pages/AllProducts/AllProducts';
 
 import OrderConfirmation from './pages/OrderConfirmation/OrderConfirmation';
 import OrderSuccess from './pages/OrderSuccess/OrderSuccess';
@@ -25,6 +24,7 @@ import SignUp from './pages/SignUp';
 import { ForgotPassword } from './pages/ForgotPassword';
 import { ChangePassword } from './pages/ChangePassword/ChagePassword';
 import CategoryEmpty from './pages/CategoryEmpty/CategoryEmpty';
+import SearchResultsFound from './pages/SearchResultFound/SearchResultsFound';
 
 export const routes = createBrowserRouter(
   [
@@ -40,11 +40,11 @@ export const routes = createBrowserRouter(
         },
         {
           path: AppRoute.SEARCH_RESULTS_FOUND,
-          element: <AllProducts />,
+          element: <SearchResultsFound />,
         },
         {
           path: AppRoute.SEARCH_RESULTS_NOT_FOUND,
-          element: <SearchResults />,
+          element: <SearchResultsNotFound />,
         },
         {
           path: AppRoute.CATEGORY_EMPTY,
