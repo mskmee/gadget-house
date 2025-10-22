@@ -26,6 +26,7 @@ export const UserOrders = () => {
   };
 
   const orders = useTypedSelector((state) => state?.auth?.user?.orders);
+  console.log(orders);
 
   const { locale, currency } = useTypedSelector((state) => state.shopping_card);
   const { addToStore } = useActions();
