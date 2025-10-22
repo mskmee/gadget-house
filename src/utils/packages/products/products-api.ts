@@ -29,8 +29,11 @@ class ProductsApi implements IProductsApi {
     });
   }
 
-  async getPaginatedProducts(categoryId: number | null, page: number,
-    size: number): Promise<ProductsResponseDto> {
+  async getPaginatedProducts(
+    categoryId: number | null,
+    page: number,
+    size: number,
+  ): Promise<ProductsResponseDto> {
     return request({
       method: HttpMethod.GET,
       url: ApiEndpoint.PRODUCTS,
@@ -38,20 +41,18 @@ class ProductsApi implements IProductsApi {
     });
   }
 
-  async getFilteredProducts(
-    params: {
-      page: number,
-      size: number,
-      categoryId?: number,
-      brandIds?: number[],
-      attributeValueIds?: number[],
-      minPrice?: number,
-      maxPrice?: number,
-      minCameraMP?: number,
-      maxCameraMP?: number,
-      sort?: string
-    }
-  ): Promise<ProductsResponseDto> {
+  async getFilteredProducts(params: {
+    page: number;
+    size: number;
+    categoryId?: number;
+    brandIds?: number[];
+    attributeValueIds?: number[];
+    minPrice?: number;
+    maxPrice?: number;
+    minCameraMP?: number;
+    maxCameraMP?: number;
+    sort?: string;
+  }): Promise<ProductsResponseDto> {
     return request({
       method: HttpMethod.GET,
       url: `${ApiEndpoint.PRODUCTS}`,
@@ -60,21 +61,48 @@ class ProductsApi implements IProductsApi {
         size: params.size,
         categoryId: params.categoryId,
         brandIds: params.brandIds && params.brandIds.join(','),
-        attributeValueIds: params.attributeValueIds && params.attributeValueIds.join(','),
+        attributeValueIds:
+          params.attributeValueIds && params.attributeValueIds.join(','),
         minPrice: params.minPrice,
         maxPrice: params.maxPrice,
         minCameraMP: params.minCameraMP,
         maxCameraMP: params.maxCameraMP,
-        sort: params.sort
+        sort: params.sort,
       },
     });
   }
 
-  async getByCategory(categoryId: number, page: number, size: number, sort: string | null): Promise<ProductsResponseDto> {
+  async getByCategory(
+    categoryId: number,
+    page: number,
+    size: number,
+    sort: string | null,
+  ): Promise<ProductsResponseDto> {
     return request({
       method: HttpMethod.GET,
       url: `${ApiEndpoint.PRODUCTS}`,
       query: { categoryId, page, size, sort },
+    });
+  }
+
+  async getSuggestions(query: string): Promise<string[]> {
+    return request({
+      method: HttpMethod.GET,
+      url: `${ApiEndpoint.PRODUCTS_SUGGESTIONS}`,
+      query: { query },
+    });
+  }
+
+  async searchProducts(
+    query: string,
+    page: number,
+    size: number,
+    sort?: string,
+  ): Promise<ProductsResponseDto> {
+    return request({
+      method: HttpMethod.GET,
+      url: ApiEndpoint.PRODUCTS_SEARCH,
+      query: { query, page, size, sort },
     });
   }
 }

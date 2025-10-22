@@ -2,15 +2,15 @@ import { RootState } from '@/store';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { PageLayout } from '@/components/PageLayout/PageLayout';
 
-export default function AllProducts() {
-  const { productsData } = useTypedSelector(
+export default function SearchResultsFound() {
+  const { searchResults } = useTypedSelector(
     (state: RootState) => state.products,
   );
 
   return (
     <PageLayout
-      products={productsData?.page || []}
-      totalPages={productsData?.totalPages || 0}
+      products={searchResults?.page || []}
+      totalPages={searchResults?.totalPages || 0}
     />
   );
 }
