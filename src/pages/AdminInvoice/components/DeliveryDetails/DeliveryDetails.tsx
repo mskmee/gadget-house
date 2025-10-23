@@ -7,6 +7,7 @@ import { IOrderItemAddress } from '@/utils/packages/orders/libs/types/order-item
 import { formatKeyToLabel } from '@/utils/helpers/formatKeyToLabel';
 import { OrderDto } from '@/utils/packages/orders/libs/types/order-item';
 import { formatTitle } from '@/utils/helpers/formatTitle';
+import { UkrainianFlagIcon } from '@/assets/icons';
 
 interface DeliveryDetailsProps {
   fullName?: string;
@@ -46,11 +47,6 @@ export const DeliveryDetails = ({
       return `(${digits.slice(0, 3)})-${digits.slice(3, 6)}-${digits.slice(6)}`;
 
     return `(${digits.slice(0, 3)})-${digits.slice(3, 6)}-${digits.slice(6, 8)}-${digits.slice(8, 10)}`;
-  };
-
-  const parsePhoneInput = (formattedPhone: string): string => {
-    const digits = formattedPhone.replace(/\D/g, '');
-    return digits ? `+38${digits}` : '';
   };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -116,7 +112,27 @@ export const DeliveryDetails = ({
                 fontWeight: 500,
               }}
             >
-              <span style={{ fontSize: '20px' }}>🇺🇦</span>
+              <span style={{ fontSize: '20px' }}>
+                {' '}
+                <div
+                  style={{
+                    display: 'flex',
+                    position: 'relative',
+                    justifyContent: 'center',
+                    border: '1px solid var(--secondary-text-color)',
+                    borderRadius: '2px',
+                    width: '32px',
+                    height: '24px',
+                    overflow: 'hidden',
+                  }}
+                >
+                  <UkrainianFlagIcon
+                    style={{
+                      position: 'absolute',
+                    }}
+                  />
+                </div>
+              </span>
               <span style={{ color: 'white' }}>+38</span>
             </div>
             <Input
@@ -144,9 +160,7 @@ export const DeliveryDetails = ({
                 <Input
                   value={value || ''}
                   name={key}
-                  onChange={(e) =>
-                    handleAddressChange(key, parsePhoneInput(e.target.value))
-                  }
+                  onChange={(e) => handleAddressChange(key, e.target.value)}
                 />
               </Form.Item>
             ))}
