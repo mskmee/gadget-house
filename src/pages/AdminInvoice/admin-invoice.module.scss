@@ -225,4 +225,48 @@
     line-height: 150%;
     color: var(--secondary-text-color);
   }
+
+  &__phoneWrapper {
+    position: relative;
+  }
+
+  &__phonePrefix {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: var(--theme-color);
+    color: var(--white-color);
+    border-radius: 12px 0 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 16px;
+    z-index: 1;
+    min-width: 95px;
+    font-weight: 500;
+  }
+
+  &__phoneFlag {
+    display: flex;
+    position: relative;
+    justify-content: center;
+    border: 1px solid var(--secondary-text-color);
+    border-radius: 2px;
+    width: 32px;
+    height: 24px;
+    overflow: hidden;
+
+    svg {
+      position: absolute;
+    }
+  }
+
+  &__phoneInput {
+    padding-left: 120px !important;
+  }
+
+  &__phoneCode {
+    color: white !important;
+  }
 }

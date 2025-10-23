@@ -93,47 +93,12 @@ export const DeliveryDetails = ({
           label="Phone number"
           className={styles.adminInvoice__deliveryInput}
         >
-          <div style={{ position: 'relative' }}>
-            <div
-              style={{
-                position: 'absolute',
-                left: 0,
-                top: 0,
-                bottom: 0,
-                background: 'var(--theme-color)',
-                color: 'white',
-                borderRadius: '12px 0 0 12px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                padding: '0 16px',
-                zIndex: 1,
-                minWidth: '95px',
-                fontWeight: 500,
-              }}
-            >
-              <span style={{ fontSize: '20px' }}>
-                {' '}
-                <div
-                  style={{
-                    display: 'flex',
-                    position: 'relative',
-                    justifyContent: 'center',
-                    border: '1px solid var(--secondary-text-color)',
-                    borderRadius: '2px',
-                    width: '32px',
-                    height: '24px',
-                    overflow: 'hidden',
-                  }}
-                >
-                  <UkrainianFlagIcon
-                    style={{
-                      position: 'absolute',
-                    }}
-                  />
-                </div>
-              </span>
-              <span style={{ color: 'white' }}>+38</span>
+          <div className={styles.adminInvoice__phoneWrapper}>
+            <div className={styles.adminInvoice__phonePrefix}>
+              <div className={styles.adminInvoice__phoneFlag}>
+                <UkrainianFlagIcon />
+              </div>
+              <span className={styles.adminInvoice__phoneCode}>+38</span>
             </div>
             <Input
               value={displayPhone}
@@ -141,9 +106,7 @@ export const DeliveryDetails = ({
               name="phoneNumber"
               placeholder="(063)-333-33-33"
               maxLength={15}
-              style={{
-                paddingLeft: '120px',
-              }}
+              className={styles.adminInvoice__phoneInput}
             />
           </div>
         </Form.Item>
