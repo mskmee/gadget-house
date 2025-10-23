@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import cn from 'classnames';
 import { useSelector } from 'react-redux';
 
@@ -26,6 +26,7 @@ import {
   OrderDto,
 } from '@/utils/packages/orders/libs/types/order-item';
 import { weakObjectsCompare } from '@/utils/weakObjectsCompare';
+import { IOrderItemProduct } from '@/utils/packages/orders/libs/types/order-item-response-dto';
 
 const AdminInvoice = () => {
   const dispatch = useDispatch();
@@ -59,6 +60,37 @@ const AdminInvoice = () => {
       dispatch(clearOrderDto());
     };
   }, [order, dispatch]);
+
+  // NOT THE BEST DECISION!
+  // PLEASE REWRITE!
+  const displayData = useMemo(() => {
+    if (!orderDto?.cartItems || !order?.orderItems) {
+      return { products: [], total: 0 };
+    }
+
+    const products = orderDto.cartItems
+      .map((cartItem) => {
+        const originalProduct = order.orderItems.find(
+          (item) => item.shortProductResponseDto.id === cartItem.productId,
+        );
+
+        if (!originalProduct) return null;
+
+        return {
+          ...originalProduct,
+          quantity: cartItem.quantity,
+        };
+      })
+      .filter(Boolean) as IOrderItemProduct[];
+
+    const total = products.reduce(
+      (sum, product) =>
+        sum + product.shortProductResponseDto.price * product.quantity,
+      0,
+    );
+
+    return { products, total };
+  }, [orderDto?.cartItems, order?.orderItems]);
 
   const handleConfirmationClick = () => {
     if (order && orderDto && !weakObjectsCompare(order, orderDto)) {
@@ -96,8 +128,8 @@ const AdminInvoice = () => {
         <AdminInvoiceHeader orderId={order?.id} createdAt={order?.createdAt} />
 
         <OrdersList
-          totalPrice={order?.total}
-          productsData={order?.orderItems || []}
+          totalPrice={displayData?.total}
+          productsData={displayData?.products || []}
           onProductAdd={handleProductAdd}
           onProductDelete={handleProductDelete}
         />
