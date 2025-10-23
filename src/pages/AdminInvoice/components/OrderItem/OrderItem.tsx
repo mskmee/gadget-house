@@ -1,5 +1,6 @@
 import { IOrderItemProduct } from '@/utils/packages/orders/libs/types/order-item-response-dto';
 import styles from '../../admin-invoice.module.scss';
+import { CancelCrossIcon } from '@/assets/icons';
 
 interface OrderItemProps {
   product: IOrderItemProduct;
@@ -34,7 +35,9 @@ export const OrderItem = ({ product, onDelete }: OrderItemProps) => {
           />
         )}
 
-        <button onClick={handleDelete}>x</button>
+        <button onClick={handleDelete}>
+          <CancelCrossIcon />
+        </button>
       </div>
     </li>
   );

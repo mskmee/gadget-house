@@ -26,6 +26,6 @@ export const UkrainianFlagIcon = createIconComponent(
 );
 
 export const CancelCrossIcon = createIconComponent(
-  () => import('./cancel-cross.svg'),
+  () => import('./cancel-cross-icon.svg'),
   'cancel-cross-icon',
 );
