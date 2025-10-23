@@ -1,62 +1,50 @@
-import { useCallback, useState } from 'react';
 import cn from 'classnames';
-
-import { IProductCard } from '@/interfaces/interfaces';
 import { OrderItem } from '../OrderItem/OrderItem';
-
+import { AdminSearchWithSuggestions } from '@/pages/AdminPage/components/AdminSearchWIthSuggestion/SearchWithSuggestion';
 import styles from '../../admin-invoice.module.scss';
-import { AdminSearch } from '@/pages/AdminPage/components/Search/AdminSearch';
 import { convertPriceToReadable } from '@/utils/helpers/helpers';
+import { IOrderItemProduct } from '@/utils/packages/orders/libs/types/order-item-response-dto';
+import { CartItem } from '@/utils/packages/orders/libs/types/order-item';
+
+interface Suggestion {
+  title: string;
+  category: string;
+  productId: string;
+  price: number;
+  image?: string;
+}
 
 interface OrdersListProps {
-  products: Array<{
-    id: string;
-    quantity: number;
-    totalPrice: number;
-    images: string[];
-    name: string;
-  }>;
   totalPrice?: number;
-  productsData?: IProductCard[];
+  productsData: IOrderItemProduct[];
+  suggestions: Suggestion[];
   // eslint-disable-next-line no-unused-vars
-  onProductAdd: (product: IProductCard) => void;
+  onSearchChange: (query: string) => void;
+  // eslint-disable-next-line no-unused-vars
+  onProductAdd: (product: CartItem) => void;
   // eslint-disable-next-line no-unused-vars
   onProductDelete: (productId: string) => void;
 }
 
 export const OrdersList = ({
-  products,
   totalPrice,
   productsData,
+  suggestions,
+  onSearchChange,
   onProductAdd,
   onProductDelete,
 }: OrdersListProps) => {
-  const [filteredProducts, setFilteredProducts] = useState<IProductCard[]>([]);
+  const handleAddProduct = (productId: string) => {
+    if (!productId) return;
 
-  const handleProductSearch = useCallback(
-    (query: string) => {
-      const normalized = query.trim().toLowerCase();
+    const cartItem: CartItem = {
+      productId,
+      quantity: 1,
+    };
 
-      const filtered = productsData?.filter(
-        (product) =>
-          product.name?.toLowerCase().includes(normalized) ||
-          product.code?.toLowerCase().includes(normalized),
-      );
-
-      setFilteredProducts(filtered || []);
-    },
-    [productsData],
-  );
-
-  const handleAddProduct = () => {
-    if (filteredProducts.length === 0) {
-      console.log('No products found');
-      return;
-    }
-
-    const productToAdd = filteredProducts[0];
-    onProductAdd(productToAdd);
+    onProductAdd(cartItem);
   };
+
   return (
     <div
       className={cn(styles.adminInvoice__orders, styles.adminInvoice__wrapper)}
@@ -65,28 +53,24 @@ export const OrdersList = ({
         <h3>Order list</h3>
 
         <div className={styles.adminInvoice__ordersSearch}>
-          <AdminSearch
+          <AdminSearchWithSuggestions
             placeholder="Add the product"
-            onSearch={handleProductSearch}
+            suggestions={suggestions}
+            onSearchChange={onSearchChange}
+            onProductSelect={handleAddProduct}
           />
-
-          <button
-            className={cn(
-              styles.adminInvoice__ordersAdd,
-              'button button-secondary',
-            )}
-            onClick={handleAddProduct}
-          >
-            Add
-          </button>
         </div>
       </div>
 
       <ul className={styles.adminInvoice__ordersList}>
-        {products.map((product) => (
+        {productsData.map((product) => (
           <OrderItem
-            key={product.id}
-            product={product}
+            key={product.shortProductResponseDto.id}
+            id={product.shortProductResponseDto.id}
+            name={product.shortProductResponseDto.name}
+            image={product.shortProductResponseDto.images[0].link}
+            quantity={product.quantity}
+            price={product.price}
             onDelete={onProductDelete}
           />
         ))}

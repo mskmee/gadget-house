@@ -1,5 +1,3 @@
-export const CalendarIcon = () => {
-  return (
     <svg
       width="24"
       height="24"
@@ -39,5 +37,3 @@ export const CalendarIcon = () => {
         </clipPath>
       </defs>
     </svg>
-  );
-};

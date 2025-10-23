@@ -1,13 +1,11 @@
-type OrderItemProduct = {
-  id: string;
-  quantity: number;
-};
+import { OrderStatus } from '@/enums/order-status';
+import { DeliveryMethodType } from '@/pages/OrderConfirmation/libs/enums/delivery-method';
+import { PaymentMethodType } from '@/pages/OrderConfirmation/libs/enums/payment-method';
 
-export interface IOrderItemProduct extends OrderItemProduct {
-  images: string[];
-  totalPrice: number;
-  name: string;
-  code: string;
+export interface IOrderItemProduct {
+  shortProductResponseDto: ShortProductResponseDto;
+  quantity: number;
+  price: number;
 }
 
 export interface IOrderItemAddress {
@@ -23,37 +21,32 @@ type ShortProductResponseImage = {
   order: number;
 };
 
-type ShortProductResponseDto = {
-  available: boolean;
-  categoryId: number;
-  code: string;
-  href: string;
-  id: number;
-  images: ShortProductResponseImage[];
+export type ShortProductResponseDto = {
+  id: string;
   name: string;
+  href: string;
   price: number;
+  images: ShortProductResponseImage[];
+  code: string;
+  categoryId: number;
+
+  available: boolean;
   rating: number;
 };
-
-export interface IOrderItem {
-  price: number;
-  quantity: number;
-  shortProductResponseDto: ShortProductResponseDto;
-}
 
 type OrderItemResponseDto = {
   id: string;
   createdAt: string;
-  deliveryStatus: string;
+  deliveryStatus: OrderStatus;
   total: number;
   email: string;
   fullName: string;
   phoneNumber: string;
-  deliveryMethod: string;
-  paymentMethod: string;
+  deliveryMethod: DeliveryMethodType;
+  paymentMethod: PaymentMethodType;
   comment?: string;
   address: IOrderItemAddress;
-  products: IOrderItemProduct[];
+  orderItems: IOrderItemProduct[];
 };
 
 export { type OrderItemResponseDto };
