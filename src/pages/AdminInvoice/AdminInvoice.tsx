@@ -88,6 +88,7 @@ const AdminInvoice = () => {
     }));
   }, [searchResults]);
 
+  // Refactor: Keep only relevant props
   const displayData = useMemo(() => {
     if (!orderDto?.cartItems) return { products: [], total: 0 };
 
