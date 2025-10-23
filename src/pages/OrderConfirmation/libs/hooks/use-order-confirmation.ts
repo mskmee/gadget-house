@@ -19,6 +19,7 @@ import { OrderDto } from '@/utils/packages/orders/libs/types/order-item';
 import { AppDispatch } from '@/store';
 import { createOrder } from '@/store/shopping_cart/actions';
 import { getUserData } from '@/store/auth/actions';
+import { OrderStatus } from '@/enums/order-status';
 
 type Return = {
   orderProcessStage: OrderStage;
@@ -190,7 +191,7 @@ const useOrderConfirmation = (): Return => {
       phoneNumber: state.contactsFormValue.phoneNumber,
       comment: state.contactsFormValue.comment,
       cartItems: products.map(({ id, quantity }) => ({
-        productId: id,
+        productId: id.toString(),
         quantity,
       })),
       address: {
@@ -202,12 +203,13 @@ const useOrderConfirmation = (): Return => {
       },
       deliveryMethod: state.deliveryFormValue.deliveryType,
       paymentMethod: state.paymentFormValue.paymentType,
+      deliveryStatus: OrderStatus.PAID,
     };
 
     const result = await dispatchApp(createOrder(orderData)).unwrap();
     const orderId = result;
 
-     await dispatchApp(getUserData()).unwrap();
+    await dispatchApp(getUserData()).unwrap();
 
     dispatch({
       type: OrderConfirmationAction.CONFIRM_ORDER,
