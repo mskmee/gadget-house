@@ -21,12 +21,14 @@ import {
   selectOrderDto,
   setFieldValue,
 } from '@/store/orders/orderDtoSlice';
-import { weakObjectsCompare } from '@/utils/weakObjectsCompare';
 import {
   CartItem,
   OrderDto,
 } from '@/utils/packages/orders/libs/types/order-item';
-import { IOrderItemProduct } from '@/utils/packages/orders/libs/types/order-item-response-dto';
+import {
+  IOrderItemAddress,
+  IOrderItemProduct,
+} from '@/utils/packages/orders/libs/types/order-item-response-dto';
 
 interface Suggestion {
   title: string;
@@ -88,7 +90,6 @@ const AdminInvoice = () => {
     }));
   }, [searchResults]);
 
-  // Refactor: Keep only relevant props
   const displayData = useMemo(() => {
     if (!orderDto?.cartItems) return { products: [], total: 0 };
 
@@ -136,6 +137,55 @@ const AdminInvoice = () => {
     return { products, total };
   }, [orderDto?.cartItems, order?.orderItems, suggestions]);
 
+  const hasChanges = useMemo(() => {
+    if (!order || !orderDto) return false;
+
+    if (
+      order.fullName !== orderDto.fullName ||
+      order.email !== orderDto.email ||
+      order.phoneNumber !== orderDto.phoneNumber ||
+      order.comment !== orderDto.comment ||
+      order.deliveryMethod !== orderDto.deliveryMethod ||
+      order.paymentMethod !== orderDto.paymentMethod ||
+      order.deliveryStatus !== orderDto.deliveryStatus
+    ) {
+      return true;
+    }
+
+    const addressKeys = Object.keys(order.address || {}) as Array<
+      keyof IOrderItemAddress
+    >;
+    if (
+      addressKeys.some((key: keyof IOrderItemAddress) => {
+        const left = (order.address as Record<string, any>)?.[key as string];
+        const right = (orderDto.address as Record<string, any>)?.[
+          key as string
+        ];
+        return left !== right;
+      })
+    ) {
+      return true;
+    }
+
+    if (order.orderItems.length !== orderDto.cartItems.length) {
+      return true;
+    }
+
+    const orderItemsMap = new Map(
+      order.orderItems.map((item) => [
+        item.shortProductResponseDto.id,
+        item.quantity,
+      ]),
+    );
+
+    const hasCartChanges = orderDto.cartItems.some((cartItem) => {
+      const originalQuantity = orderItemsMap.get(cartItem.productId);
+      return originalQuantity !== cartItem.quantity;
+    });
+
+    return hasCartChanges;
+  }, [order, orderDto]);
+
   const handleSearchChange = useCallback((query: string) => {
     setSearchQuery(query);
   }, []);
@@ -163,7 +213,7 @@ const AdminInvoice = () => {
   );
 
   const handleConfirmationClick = () => {
-    if (order && orderDto && !weakObjectsCompare(order, orderDto)) {
+    if (order && orderDto && hasChanges) {
       putOrder({
         orderId: id,
         selectOrderDto: orderDto,
@@ -195,9 +245,7 @@ const AdminInvoice = () => {
         />
 
         <StatusSection
-          isDisabled={
-            !order || !orderDto || weakObjectsCompare(order, orderDto)
-          }
+          isDisabled={!hasChanges}
           isLoading={isPutting}
           onConfirm={handleConfirmationClick}
         />
