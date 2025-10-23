@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { AppRoute } from './enums/enums';
 import Layout from './pages/Layout';
+import AdminLayout from './pages/AdminLayout/AdminLayout';
 import Main from './pages/Main/Main';
 
 import { SingleProductPage } from './pages/SingleProduct';
@@ -101,20 +102,25 @@ export const routes = createBrowserRouter(
           element: <ChangePassword />,
         },
         {
-          path: AppRoute.ADMIN_PAGE,
-          element: <AdminPage />,
-        },
-        {
-          path: AppRoute.ADMIN_INVOICE,
-          element: <AdminInvoice />,
-        },
-        {
           path: AppRoute.LOGIN_ADMIN,
           element: <LoginAdmin />,
         },
         {
           path: '*',
           element: <NotFound />,
+        },
+      ],
+    },
+    {
+      element: <AdminLayout />,
+      children: [
+        {
+          path: AppRoute.ADMIN_PAGE,
+          element: <AdminPage />,
+        },
+        {
+          path: AppRoute.ADMIN_INVOICE,
+          element: <AdminInvoice />,
         },
       ],
     },

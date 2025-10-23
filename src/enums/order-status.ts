@@ -3,7 +3,7 @@ const OrderStatus = {
   NOT_PAID: 'Not Paid',
   RETURNED: 'Returned',
   ORDER: 'Order',
-  AWAITING: 'Awaiting',
+  AWAITING: 'Sent',
   CANCEL: 'Cancel',
 } as const;
 
