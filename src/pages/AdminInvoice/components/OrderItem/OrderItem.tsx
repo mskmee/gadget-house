@@ -1,39 +1,43 @@
-import { IOrderItemProduct } from '@/utils/packages/orders/libs/types/order-item-response-dto';
 import styles from '../../admin-invoice.module.scss';
 import { CancelCrossIcon } from '@/assets/icons';
 
 interface OrderItemProps {
-  product: IOrderItemProduct;
+  id: string;
+  name: string;
+  image: string;
+  quantity: number;
+  price: number;
   // eslint-disable-next-line no-unused-vars
   onDelete: (productId: string) => void;
 }
 
-export const OrderItem = ({ product, onDelete }: OrderItemProps) => {
-  const handleDelete = () => {
-    onDelete(product.shortProductResponseDto.id);
-  };
+export const OrderItem = ({
+  id,
+  name,
+  image,
+  quantity,
+  price,
+  onDelete,
+}: OrderItemProps) => {
+  const handleDelete = () => onDelete(id);
+
   return (
     <li className={styles.adminInvoice__ordersItem}>
       <div className={styles.adminInvoice__ordersItemName}>
         <span></span>
-        <span>№{product.shortProductResponseDto.id}</span>
+        <span>No{id}</span>
       </div>
 
       <div className={styles.adminInvoice__ordersItemDetails}>
         <span className={styles.adminInvoice__ordersItemDetailsCount}>
-          {product.quantity} piece
+          {quantity} piece
         </span>
 
         <span className={styles.adminInvoice__ordersItemDetailsPrice}>
-          {product.price * product.quantity} ₴
+          {price * quantity} ₴
         </span>
 
-        {product.shortProductResponseDto.images?.[0] && (
-          <img
-            src={product.shortProductResponseDto.images[0].link}
-            alt={product.shortProductResponseDto.name}
-          />
-        )}
+        {image && <img src={image} alt={name} />}
 
         <button onClick={handleDelete}>
           <CancelCrossIcon />

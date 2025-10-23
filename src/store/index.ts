@@ -12,6 +12,7 @@ import { ordersApi } from './orders/api';
 import { routes } from '@/routes';
 import { authApi } from './auth/api';
 import authPortalsReducer from './auth/authPortalsSlice';
+import { productsApi } from './products/api';
 
 export const extraArgument = {
   routes,
@@ -27,6 +28,7 @@ const reducers = combineReducers({
   orderDto: orderDtoSlice,
   [ordersApi.reducerPath]: ordersApi.reducer,
   [authApi.reducerPath]: authApi.reducer,
+  [productsApi.reducerPath]: productsApi.reducer,
   authPortals: authPortalsReducer,
 });
 
@@ -36,7 +38,8 @@ export const store = configureStore({
     const middleware = getDefaultMiddleware()
       .concat(toastMiddleware)
       .concat(ordersApi.middleware)
-      .concat(authApi.middleware);
+      .concat(authApi.middleware)
+      .concat(productsApi.middleware);
     return isDevelopment ? middleware.concat(logger) : middleware;
   },
 });

@@ -1,17 +1,25 @@
-import { useState } from 'react';
 import cn from 'classnames';
-
 import { OrderItem } from '../OrderItem/OrderItem';
-
+import { AdminSearchWithSuggestions } from '@/pages/AdminPage/components/AdminSearchWIthSuggestion/SearchWithSuggestion';
 import styles from '../../admin-invoice.module.scss';
-import { AdminSearch } from '@/pages/AdminPage/components/Search/AdminSearch';
 import { convertPriceToReadable } from '@/utils/helpers/helpers';
 import { IOrderItemProduct } from '@/utils/packages/orders/libs/types/order-item-response-dto';
 import { CartItem } from '@/utils/packages/orders/libs/types/order-item';
 
+interface Suggestion {
+  title: string;
+  category: string;
+  productId: string;
+  price: number;
+  image?: string;
+}
+
 interface OrdersListProps {
   totalPrice?: number;
   productsData: IOrderItemProduct[];
+  suggestions: Suggestion[];
+  // eslint-disable-next-line no-unused-vars
+  onSearchChange: (query: string) => void;
   // eslint-disable-next-line no-unused-vars
   onProductAdd: (product: CartItem) => void;
   // eslint-disable-next-line no-unused-vars
@@ -21,27 +29,20 @@ interface OrdersListProps {
 export const OrdersList = ({
   totalPrice,
   productsData,
+  suggestions,
+  onSearchChange,
   onProductAdd,
   onProductDelete,
 }: OrdersListProps) => {
-  const [searchQuery, setSearchQuery] = useState('');
-
-  const handleProductSearch = (query: string) => {
-    setSearchQuery(query);
-  };
-
-  const handleAddProduct = () => {
-    if (!searchQuery.trim()) {
-      return;
-    }
+  const handleAddProduct = (productId: string) => {
+    if (!productId) return;
 
     const cartItem: CartItem = {
-      productId: searchQuery,
+      productId,
       quantity: 1,
     };
 
     onProductAdd(cartItem);
-    setSearchQuery('');
   };
 
   return (
@@ -52,32 +53,27 @@ export const OrdersList = ({
         <h3>Order list</h3>
 
         <div className={styles.adminInvoice__ordersSearch}>
-          <AdminSearch
+          <AdminSearchWithSuggestions
             placeholder="Add the product"
-            onSearch={handleProductSearch}
+            suggestions={suggestions}
+            onSearchChange={onSearchChange}
+            onProductSelect={handleAddProduct}
           />
-
-          <button
-            className={cn(
-              styles.adminInvoice__ordersAdd,
-              'button button-secondary',
-            )}
-            onClick={handleAddProduct}
-          >
-            Add
-          </button>
         </div>
       </div>
 
       <ul className={styles.adminInvoice__ordersList}>
-        {productsData &&
-          productsData.map((product) => (
-            <OrderItem
-              key={product.shortProductResponseDto.id}
-              product={product}
-              onDelete={onProductDelete}
-            />
-          ))}
+        {productsData.map((product) => (
+          <OrderItem
+            key={product.shortProductResponseDto.id}
+            id={product.shortProductResponseDto.id}
+            name={product.shortProductResponseDto.name}
+            image={product.shortProductResponseDto.images[0].link}
+            quantity={product.quantity}
+            price={product.price}
+            onDelete={onProductDelete}
+          />
+        ))}
       </ul>
 
       <div className={styles.adminInvoice__ordersTotal}>

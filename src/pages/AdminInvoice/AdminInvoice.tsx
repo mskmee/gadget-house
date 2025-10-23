@@ -1,6 +1,8 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import cn from 'classnames';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { skipToken } from '@reduxjs/toolkit/query';
 
 import styles from './admin-invoice.module.scss';
 import {
@@ -9,10 +11,8 @@ import {
   OrdersList,
   StatusSection,
 } from './components';
-import { useParams } from 'react-router-dom';
 import { useGetOrderQuery, usePutOrderMutation } from '@/store/orders/api';
-import { skipToken } from '@reduxjs/toolkit/query';
-import { useDispatch } from 'react-redux';
+import { useSearchProductsQuery } from '@/store/products/api';
 import {
   setOrderDto,
   clearOrderDto,
@@ -21,18 +21,33 @@ import {
   selectOrderDto,
   setFieldValue,
 } from '@/store/orders/orderDtoSlice';
+import { weakObjectsCompare } from '@/utils/weakObjectsCompare';
 import {
   CartItem,
   OrderDto,
 } from '@/utils/packages/orders/libs/types/order-item';
-import { weakObjectsCompare } from '@/utils/weakObjectsCompare';
 import { IOrderItemProduct } from '@/utils/packages/orders/libs/types/order-item-response-dto';
+
+interface Suggestion {
+  title: string;
+  category: string;
+  productId: string;
+  price: number;
+  image?: string;
+}
 
 const AdminInvoice = () => {
   const dispatch = useDispatch();
   const { id = '' } = useParams<{ id: string }>();
   const { data: order } = useGetOrderQuery(id ?? skipToken);
   const [putOrder, { isLoading: isPutting }] = usePutOrderMutation();
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const { data: searchResults } = useSearchProductsQuery(
+    searchQuery.trim()
+      ? { query: searchQuery, pageable: { size: 6 } }
+      : skipToken,
+  );
 
   const orderDto = useSelector(selectOrderDto);
 
@@ -61,49 +76,73 @@ const AdminInvoice = () => {
     };
   }, [order, dispatch]);
 
-  // NOT THE BEST DECISION!
-  // PLEASE REWRITE!
+  const suggestions = useMemo<Suggestion[]>(() => {
+    if (!searchResults?.page) return [];
+
+    return searchResults.page.map((product) => ({
+      title: product.name,
+      category: `Code: ${product.code}`,
+      productId: product.id.toString(),
+      price: product.price,
+      image: product.images?.[0]?.link,
+    }));
+  }, [searchResults]);
+
   const displayData = useMemo(() => {
-    if (!orderDto?.cartItems || !order?.orderItems) {
-      return { products: [], total: 0 };
-    }
+    if (!orderDto?.cartItems) return { products: [], total: 0 };
 
     const products = orderDto.cartItems
       .map((cartItem) => {
-        const originalProduct = order.orderItems.find(
-          (item) => item.shortProductResponseDto.id === cartItem.productId,
-        );
+        const originalProduct =
+          order?.orderItems.find(
+            (item) => item.shortProductResponseDto.id === cartItem.productId,
+          ) || suggestions.find((s) => s.productId === cartItem.productId);
 
         if (!originalProduct) return null;
 
+        if ('shortProductResponseDto' in originalProduct) {
+          return {
+            ...originalProduct,
+            quantity: cartItem.quantity,
+          };
+        }
+
         return {
-          ...originalProduct,
+          shortProductResponseDto: {
+            id: originalProduct.productId,
+            name: originalProduct.title,
+            href: '',
+            price: originalProduct.price,
+            images: originalProduct.image
+              ? [{ link: originalProduct.image, order: 0 }]
+              : [],
+            code: originalProduct.category.replace('Code: ', ''),
+            categoryId: 0,
+            available: true,
+            rating: 0,
+          },
+          price: originalProduct.price,
           quantity: cartItem.quantity,
         };
       })
       .filter(Boolean) as IOrderItemProduct[];
 
     const total = products.reduce(
-      (sum, product) =>
-        sum + product.shortProductResponseDto.price * product.quantity,
+      (sum, p) => sum + p.shortProductResponseDto.price * p.quantity,
       0,
     );
 
     return { products, total };
-  }, [orderDto?.cartItems, order?.orderItems]);
+  }, [orderDto?.cartItems, order?.orderItems, suggestions]);
 
-  const handleConfirmationClick = () => {
-    if (order && orderDto && !weakObjectsCompare(order, orderDto)) {
-      putOrder({
-        orderId: id,
-        selectOrderDto: orderDto,
-      });
-    }
-  };
+  const handleSearchChange = useCallback((query: string) => {
+    setSearchQuery(query);
+  }, []);
 
   const handleProductAdd = useCallback(
     (product: CartItem) => {
       dispatch(addCartItem(product));
+      setSearchQuery('');
     },
     [dispatch],
   );
@@ -122,14 +161,25 @@ const AdminInvoice = () => {
     [dispatch],
   );
 
+  const handleConfirmationClick = () => {
+    if (order && orderDto && !weakObjectsCompare(order, orderDto)) {
+      putOrder({
+        orderId: id,
+        selectOrderDto: orderDto,
+      });
+    }
+  };
+
   return (
     <div className={styles.adminInvoice}>
       <div className={cn('container', styles.adminInvoice__container)}>
         <AdminInvoiceHeader orderId={order?.id} createdAt={order?.createdAt} />
 
         <OrdersList
-          totalPrice={displayData?.total}
-          productsData={displayData?.products || []}
+          totalPrice={displayData.total}
+          productsData={displayData.products}
+          suggestions={suggestions}
+          onSearchChange={handleSearchChange}
           onProductAdd={handleProductAdd}
           onProductDelete={handleProductDelete}
         />
