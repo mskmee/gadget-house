@@ -27,11 +27,13 @@ class OrdersApi implements IOrdersApi {
   }
 
   async patch(id: string, status: string): Promise<OrderItemResponseDto> {
-    return request({
+    const response = await request({
       method: HttpMethod.PATCH,
       url: `${ApiEndpoint.ORDERS}/${id}`,
-      body: { status },
+      query: { status: status.toUpperCase() },
     });
+
+    return response as OrderItemResponseDto;
   }
 
   async create(data: OrderDto): Promise<OrderResponseDto> {

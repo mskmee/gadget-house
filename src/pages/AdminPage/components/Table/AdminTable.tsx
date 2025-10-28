@@ -1,21 +1,19 @@
-import { CheckboxProps, CheckboxChangeEvent } from 'antd';
+import { CheckboxProps } from 'antd';
 import { AdminTableHeader } from './AdminTableHeader';
 import { AdminTableRow } from './AdminTableRow';
-import { OrderItem } from '@/types/OrderItem';
 
 import styles from '../../styles/admin-page.module.scss';
-
+import { OrderItemResponseDto } from '@/utils/packages/orders/libs/types/order-item-response-dto';
 
 interface AdminTableProps {
-  orders: OrderItem[];
+  orders: OrderItemResponseDto[];
   checkedItems: string[];
   isAllChecked: boolean;
   hasIndeterminate: boolean;
   onCheckAll: CheckboxProps['onChange'];
+  isPatchingStatus: boolean;
   // eslint-disable-next-line no-unused-vars
-  onItemCheck: (id: string) => (e: CheckboxChangeEvent) => void;
-  // eslint-disable-next-line no-unused-vars
-  onOrderClick: (item: OrderItem) => void;
+  toggleSelect: (id: string) => void;
 }
 
 export const AdminTable = ({
@@ -24,8 +22,8 @@ export const AdminTable = ({
   isAllChecked,
   hasIndeterminate,
   onCheckAll,
-  onItemCheck,
-  onOrderClick,
+  toggleSelect,
+  isPatchingStatus,
 }: AdminTableProps) => {
   return (
     <div className={styles.admin__table}>
@@ -37,15 +35,37 @@ export const AdminTable = ({
         />
 
         <tbody>
-          {orders.map((item) => (
-            <AdminTableRow
-              key={item.id}
-              item={item}
-              isChecked={checkedItems.includes(item.id)}
-              onChecked={onItemCheck(item.id)}
-              onOrderClick={onOrderClick}
-            />
-          ))}
+          {orders.length > 0 ? (
+            orders.map((item) => (
+              <AdminTableRow
+                isPatching={isPatchingStatus}
+                key={item.id}
+                item={item}
+                isChecked={checkedItems.includes(item.id)}
+                onChecked={() => toggleSelect(item.id)}
+              />
+            ))
+          ) : (
+            <tr>
+              <td colSpan={5}>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    padding: '48px 0',
+                    fontFamily: 'Inter, sans-serif',
+                    fontSize: '20px',
+                    color: 'var(--text-color)',
+                    opacity: 0.6,
+                    textAlign: 'center',
+                  }}
+                >
+                  Orders not found
+                </div>
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>

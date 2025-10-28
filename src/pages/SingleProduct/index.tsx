@@ -85,9 +85,6 @@ export const SingleProductPage: FC = () => {
             <ProductCharacteristics product={dynamicCurrentProduct} />
           )}
         </div>
-        {/* <div ref={(el) => sectionRefs.current['#product-characteristics'] = el}>
-          <ProductCharacteristics />
-        </div> */}
 
         <div ref={(el) => (sectionRefs.current['#product-reviews'] = el)}>
           <ProductReviews
