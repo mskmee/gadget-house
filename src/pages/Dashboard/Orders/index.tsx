@@ -139,7 +139,11 @@ export const UserOrders = () => {
                     <label>Delivery address</label>
                     <p>{formatDeliveryInfo(order.address)}</p>
                     <label>Delivery method</label>
-                    <p>{order.deliveryMethod}</p>
+                    <p>
+                      {formatDeliveryInfo({
+                        deliveryType: order.deliveryMethod,
+                      })}
+                    </p>
                     <label>Payment method</label>
                     <p>{formatPaymentInfo(order.paymentMethod)}</p>
                   </div>
