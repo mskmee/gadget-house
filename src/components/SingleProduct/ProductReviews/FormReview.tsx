@@ -53,7 +53,7 @@ function FormReview({ productId }: { productId: number }) {
               'The review has already been submitted. The user can leave one review for a product.',
               {
                 autoClose: 4000,
-                theme: 'dark',
+                theme: 'colored',
                 toastId: 'duplicate-review-warning',
               },
             );
@@ -67,7 +67,7 @@ function FormReview({ productId }: { productId: number }) {
 
             toast.success('Review submitted!', {
               autoClose: 4000,
-              theme: 'dark',
+              theme: 'light',
             });
             resetForm();
           } catch (error: any) {
@@ -87,7 +87,7 @@ function FormReview({ productId }: { productId: number }) {
                 'The review has already been submitted. The user can leave one review for a product.',
                 {
                   autoClose: 5000,
-                  theme: 'dark',
+                  theme: 'colored',
                   toastId: 'duplicate-review-error',
                 },
               );
