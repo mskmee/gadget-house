@@ -6,8 +6,7 @@ const formatDeliveryInfo = (initialValues: {
   houseNumber?: string;
   flat?: string;
 }): string => {
-  const { city, deliveryType, departmentNumber, street, houseNumber, flat } =
-    initialValues;
+  const { city, deliveryType } = initialValues;
   const parts: string[] = [];
 
   if (city) parts.push(city);
