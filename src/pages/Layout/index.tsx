@@ -1,16 +1,20 @@
-import { Outlet, ScrollRestoration } from 'react-router-dom';
+import { Outlet, ScrollRestoration, useLocation } from 'react-router-dom';
 import { Header } from '@/components/Header/Header';
 import Footer from '@/components/Footer';
 import styles from './Layout.module.scss';
-
+import Loader from '@/components/Loader/Loader';
 import { useIsFixedHeader } from '@/hooks/useIsFixedHeader';
 import classNames from 'classnames';
-import BasketPopup from '@/components/BasketPopup/BasketPopup.tsx';
-import { PopUp } from '@/components/PopUp/PopUp.tsx';
+import BasketPopup from '@/components/BasketPopup/BasketPopup';
+import { PopUp } from '@/components/PopUp/PopUp';
 import { useTypedSelector } from '@/hooks/useTypedSelector.ts';
 import { useActions } from '@/hooks/useActions.ts';
 import AuthPortals from '@/pages/Auth/AuthPortals/AuthPortals';
 import { useBodyScrollLock } from '@/hooks/useBodyScrollLock';
+import { useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { setGlobalLoading } from '@/store/ui/ui_slice';
+import { DataStatus } from '@/enums/data-status';
 
 const Layout = () => {
   const isFixedHeader = useIsFixedHeader();
@@ -18,10 +22,31 @@ const Layout = () => {
     (state) => state.shopping_card,
   );
   const { closeBasketPopup } = useActions();
+  const isGlobalLoading = useTypedSelector((state) => state.ui.isGlobalLoading);
+  const productsDataStatus = useTypedSelector(
+    (state) => state.products.dataStatus,
+  );
+  const dispatch = useDispatch();
 
-  //if modal open - block scroll body
   useBodyScrollLock(isBasketPopupOpen);
+  const location = useLocation();
+  const pathRef = useRef(location.pathname);
+  useEffect(() => {
+    if (location.pathname !== pathRef.current) {
+      dispatch(setGlobalLoading(true));
+      pathRef.current = location.pathname;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
 
+  useEffect(() => {
+    if (
+      productsDataStatus === DataStatus.FULFILLED ||
+      productsDataStatus === DataStatus.REJECT
+    ) {
+      dispatch(setGlobalLoading(false));
+    }
+  }, [productsDataStatus, dispatch]);
   const handleClosePopup = () => {
     closeBasketPopup();
   };
@@ -36,6 +61,7 @@ const Layout = () => {
       >
         <Outlet />
       </main>
+      <Loader isVisible={isGlobalLoading} />
       <PopUp
         isOpened={isBasketPopupOpen}
         onClose={handleClosePopup}
