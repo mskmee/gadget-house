@@ -1,34 +1,40 @@
 import classNames from 'classnames';
-import {productIsNotAvailableImg} from '@/assets/constants';
+import { productIsNotAvailableImg } from '@/assets/constants';
 
 import style from '../Product.module.scss';
 import { ProductColorsProps } from './type/interfaces';
 import { Link } from 'react-router-dom';
 import getFormattedCategoryName from '@/hooks/getFormattedCategoryName';
 
-
-
-function ProductColors({colors, selectedColor}: ProductColorsProps) {
-
+function ProductColors({ colors, selectedColor }: ProductColorsProps) {
   return (
     <div className={style['product_other-colors']}>
       <h3>Other colors</h3>
       <ul>
         {colors?.map((color) => {
           const isAvailable = color?.available;
-          const formatCategoryName = getFormattedCategoryName(color?.categoryId);
+          const formatCategoryName = getFormattedCategoryName(
+            color?.categoryId,
+          );
 
           return (
             <li
               key={color.productId}
-              tabIndex={0}
-              className={classNames({
-                [style['selected-color']]: selectedColor === color.attributeValue && isAvailable,
-                [style['not-available']]: !isAvailable
-              }, style['product-detail__item'])}
+              tabIndex={-1}
+              className={classNames(
+                {
+                  [style['selected-color']]:
+                    selectedColor === color.attributeValue && isAvailable,
+                  [style['not-available']]: !isAvailable,
+                },
+                style['product-detail__item'],
+              )}
               style={{ backgroundColor: `#${color.attributeValue}` }}
             >
-              <Link to={`/${formatCategoryName}/${color.productId}/${color.href}`} className={classNames(style['product-detail__link'])}></Link>
+              <Link
+                to={`/${formatCategoryName}/${color.productId}/${color.href}`}
+                className={classNames(style['product-detail__link'])}
+              ></Link>
               {!isAvailable && (
                 <img
                   src={productIsNotAvailableImg}
@@ -39,7 +45,7 @@ function ProductColors({colors, selectedColor}: ProductColorsProps) {
                 />
               )}
             </li>
-          )
+          );
         })}
       </ul>
     </div>

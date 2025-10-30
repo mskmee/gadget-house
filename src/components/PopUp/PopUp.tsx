@@ -1,15 +1,14 @@
-import { FC, PropsWithChildren, useEffect, useState } from 'react';
+import { FC, PropsWithChildren, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import classNames from 'classnames';
-
 import { CloseModal } from '@/assets/constants';
-
 import styles from './PopUp.module.scss';
 
 type PopUpProperties = {
   isOpened: boolean;
   onClose: () => void;
-  classname: string;
+  classname?: string;
+  width?: number;
 } & PropsWithChildren;
 
 const PopUp: FC<PopUpProperties> = ({
@@ -17,16 +16,37 @@ const PopUp: FC<PopUpProperties> = ({
   isOpened,
   onClose,
   classname = '',
+  width,
 }) => {
   const [isAnimating, setIsAnimating] = useState(false);
-
+  const previouslyFocusedElement = useRef<HTMLElement | null>(null);
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
   useEffect(() => {
     if (isOpened) {
+      previouslyFocusedElement.current = document.activeElement as HTMLElement;
+
       const timer = setTimeout(() => {
         setIsAnimating(true);
+
+        if (closeButtonRef.current) {
+          closeButtonRef.current.classList.add(styles.noFocusOutline);
+          closeButtonRef.current.focus();
+
+          setTimeout(() => {
+            closeButtonRef.current?.classList.remove(styles.noFocusOutline);
+          }, 300);
+        }
       }, 10);
-      return () => clearTimeout(timer);
+
+      const prevOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+
+      return () => {
+        clearTimeout(timer);
+        document.body.style.overflow = prevOverflow;
+      };
     } else {
+      previouslyFocusedElement.current?.focus();
       setIsAnimating(false);
     }
   }, [isOpened]);
@@ -41,9 +61,19 @@ const PopUp: FC<PopUpProperties> = ({
         { [styles.opened]: isAnimating },
         styles[classname],
       )}
+      role="dialog"
+      aria-modal="true"
     >
-      <div className={styles.content}>
-        <button onClick={onClose} className={styles.close}>
+      <div
+        className={styles.content}
+        style={{ maxWidth: width ? `${width}px` : undefined }}
+      >
+        <button
+          ref={closeButtonRef}
+          onClick={onClose}
+          className={styles.close}
+          aria-label="Close modal"
+        >
           <CloseModal />
         </button>
         {children}
