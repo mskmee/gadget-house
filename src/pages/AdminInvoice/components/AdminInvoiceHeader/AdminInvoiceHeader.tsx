@@ -1,8 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
 import { AppRoute } from '@/enums/enums';
-import { LeftArrow } from '@/assets/constants';
-
+import { LeftArrow } from '@/assets/icons';
 import styles from './admin-invoice-header.module.scss';
 import { formatDateToDDMMYYYY } from '@/utils/helpers/format-date';
 
@@ -28,7 +27,7 @@ export const AdminInvoiceHeader = ({
     <header className={styles.adminInvoice__header}>
       <div className={styles.adminInvoice__header_title}>
         <button type="button" onClick={handleBackClick}>
-          <img src={LeftArrow} alt="Left Arrow Icon" />
+          <LeftArrow style={{ width: '12px', height: '24px' }} />
         </button>
         <h2>Order {orderId}</h2>
       </div>
