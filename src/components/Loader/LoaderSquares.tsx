@@ -21,7 +21,7 @@ const LoaderSquares: React.FC = () => {
         if (!sq) return;
         sq.style.transition = 'none';
         sq.style.transform = 'none';
-        [
+        const styleProps = [
           'width',
           'height',
           'top',
@@ -29,9 +29,10 @@ const LoaderSquares: React.FC = () => {
           'left',
           'right',
           'borderRadius',
-        ].forEach((prop) => {
-          // @ts-ignore
-          sq.style[prop] = '';
+        ] as const;
+
+        styleProps.forEach((prop) => {
+          (sq.style as Partial<CSSStyleDeclaration>)[prop] = '';
         });
       });
 
@@ -137,7 +138,6 @@ const LoaderSquares: React.FC = () => {
           squares[1].style.width = '43px';
           squares[1].style.height = '59px';
           squares[1].style.top = '31px';
-          // squares[1].style.right = '0';
 
           squares[2].style.width = '43px';
           squares[2].style.height = '28px';

@@ -12,9 +12,14 @@ import { useActions } from '@/hooks/useActions.ts';
 import AuthPortals from '@/pages/Auth/AuthPortals/AuthPortals';
 import { useBodyScrollLock } from '@/hooks/useBodyScrollLock';
 import { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
-import { setGlobalLoading } from '@/store/ui/ui_slice';
+import { useDispatch, useSelector } from 'react-redux';
 import { DataStatus } from '@/enums/data-status';
+import { AppRoute } from '@/enums/Route';
+import {
+  selectIsGlobalLoading,
+  startGlobalLoading,
+  stopGlobalLoading,
+} from '@/store/ui/ui_slice';
 
 const Layout = () => {
   const isFixedHeader = useIsFixedHeader();
@@ -22,7 +27,8 @@ const Layout = () => {
     (state) => state.shopping_card,
   );
   const { closeBasketPopup } = useActions();
-  const isGlobalLoading = useTypedSelector((state) => state.ui.isGlobalLoading);
+  const isGlobalLoading = useSelector(selectIsGlobalLoading);
+
   const productsDataStatus = useTypedSelector(
     (state) => state.products.dataStatus,
   );
@@ -31,20 +37,33 @@ const Layout = () => {
   useBodyScrollLock(isBasketPopupOpen);
   const location = useLocation();
   const pathRef = useRef(location.pathname);
+
   useEffect(() => {
-    if (location.pathname !== pathRef.current) {
-      dispatch(setGlobalLoading(true));
-      pathRef.current = location.pathname;
+    const authRoutes = [
+      AppRoute.SIGN_IN,
+      AppRoute.SIGN_UP,
+      AppRoute.AUTH_FORGOT_PASSWORD,
+      AppRoute.AUTH_CHANGE_PASSWORD,
+      AppRoute.LOGIN_ADMIN,
+    ];
+
+    const isAuthPage = authRoutes.some((route) =>
+      location.pathname.startsWith(route),
+    );
+
+    if (!isAuthPage && location.pathname !== pathRef.current) {
+      dispatch(startGlobalLoading());
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location.pathname]);
+
+    pathRef.current = location.pathname;
+  }, [location.pathname, dispatch]);
 
   useEffect(() => {
     if (
       productsDataStatus === DataStatus.FULFILLED ||
       productsDataStatus === DataStatus.REJECT
     ) {
-      dispatch(setGlobalLoading(false));
+      dispatch(stopGlobalLoading());
     }
   }, [productsDataStatus, dispatch]);
   const handleClosePopup = () => {

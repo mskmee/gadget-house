@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { productsService } from '@/utils/packages/products';
-import { setGlobalLoading } from '@/store/ui/ui_slice';
+import { startGlobalLoading, stopGlobalLoading } from '@/store/ui/ui_slice';
 
 interface IFilterParams {
   page: number;
@@ -15,12 +15,12 @@ interface IFilterParams {
 const getAllProducts = createAsyncThunk(
   'products/fetch',
   async ({ page, size }: { page: number; size: number }, thunkAPI) => {
+    thunkAPI.dispatch(startGlobalLoading());
     try {
-      thunkAPI.dispatch(setGlobalLoading(true));
       const res = await productsService.getAllProducts(page, size);
       return res;
     } finally {
-      thunkAPI.dispatch(setGlobalLoading(false));
+      thunkAPI.dispatch(stopGlobalLoading());
     }
   },
 );
@@ -46,8 +46,8 @@ const getPaginatedProducts = createAsyncThunk(
     },
     thunkAPI,
   ) => {
+    thunkAPI.dispatch(startGlobalLoading());
     try {
-      thunkAPI.dispatch(setGlobalLoading(true));
       const filteredParams = {
         page,
         size,
@@ -61,7 +61,7 @@ const getPaginatedProducts = createAsyncThunk(
       );
       return res;
     } finally {
-      thunkAPI.dispatch(setGlobalLoading(false));
+      thunkAPI.dispatch(stopGlobalLoading());
     }
   },
 );
@@ -94,8 +94,8 @@ const getFilteredProducts = createAsyncThunk(
     },
     thunkAPI,
   ) => {
+    thunkAPI.dispatch(startGlobalLoading());
     try {
-      thunkAPI.dispatch(setGlobalLoading(true));
       const filteredParams: IFilterParams = {
         page,
         size,
@@ -114,7 +114,7 @@ const getFilteredProducts = createAsyncThunk(
       const res = await productsService.getFilteredProducts(filteredParams);
       return res;
     } finally {
-      thunkAPI.dispatch(setGlobalLoading(false));
+      thunkAPI.dispatch(stopGlobalLoading());
     }
   },
 );
@@ -135,8 +135,8 @@ const getByCategory = createAsyncThunk(
     },
     thunkAPI,
   ) => {
+    thunkAPI.dispatch(startGlobalLoading());
     try {
-      thunkAPI.dispatch(setGlobalLoading(true));
       const res = await productsService.getByCategory(
         categoryId,
         page,
@@ -145,7 +145,7 @@ const getByCategory = createAsyncThunk(
       );
       return res;
     } finally {
-      thunkAPI.dispatch(setGlobalLoading(false));
+      thunkAPI.dispatch(stopGlobalLoading());
     }
   },
 );

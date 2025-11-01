@@ -73,15 +73,13 @@ function FormReview({ productId }: { productId: number }) {
           } catch (error: any) {
             console.error('Error submitting review:', error);
 
-            const errorMessage = error?.message || '';
+            const errorCode = error?.code || error?.response?.data?.code;
             const errorStatus = error?.status || error?.response?.status;
 
             if (
-              errorStatus === 409 ||
-              errorStatus === 400 ||
-              errorMessage.toLowerCase().includes('already') ||
-              errorMessage.toLowerCase().includes('duplicate') ||
-              errorMessage.toLowerCase().includes('exists')
+              errorCode === 'DUPLICATE_REVIEW' ||
+              errorCode === 'REVIEW_ALREADY_EXISTS' ||
+              errorStatus === 409
             ) {
               toast.error(
                 'The review has already been submitted. The user can leave one review for a product.',
@@ -94,14 +92,15 @@ function FormReview({ productId }: { productId: number }) {
 
               dispatch(getReviews({ productId, page: 0 }));
             } else {
-              toast.error(
-                errorMessage ||
-                  'Something went wrong while submitting your review. Please try again later.',
-                {
-                  autoClose: 4000,
-                  theme: 'dark',
-                },
-              );
+              const errorMessage =
+                error?.message ||
+                error?.response?.data?.message ||
+                'Something went wrong while submitting your review. Please try again later.';
+
+              toast.error(errorMessage, {
+                autoClose: 4000,
+                theme: 'dark',
+              });
             }
           } finally {
             setSubmitting(false);
