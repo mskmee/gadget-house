@@ -1,6 +1,14 @@
 .adminInvoice {
   padding: 50px 0px;
 
+  &__header {
+    font-family: 'Inter', sans-serif;
+    font-size: 2.625rem;
+    font-weight: 500;
+    color: var(--text-color);
+    line-height: 1.5;
+  }
+
   &__container {
     display: flex;
     flex-direction: column;
@@ -12,16 +20,6 @@
     border-radius: 28px;
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
     background: var(--white-color);
-  }
-
-  &__wrapper {
-    h3 {
-      font-family: 'Inter', sans-serif;
-      font-weight: 500;
-      font-size: 42px;
-      line-height: 150%;
-      color: var(--buttons-and-accent-color);
-    }
   }
 
   &__orders {

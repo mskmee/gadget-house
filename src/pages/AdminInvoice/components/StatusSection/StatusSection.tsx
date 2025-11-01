@@ -28,7 +28,7 @@ export const StatusSection = ({
     <div
       className={cn(styles.adminInvoice__wrapper, styles.adminInvoice__status)}
     >
-      <h3>Status</h3>
+      <h3 className={styles.adminInvoice__header}>Status</h3>
 
       <Flex gap={12} justify="space-between">
         <div className={styles.adminInvoice__statusButtons}>

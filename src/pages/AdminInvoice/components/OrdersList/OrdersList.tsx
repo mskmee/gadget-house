@@ -50,7 +50,7 @@ export const OrdersList = ({
       className={cn(styles.adminInvoice__orders, styles.adminInvoice__wrapper)}
     >
       <div className={styles.adminInvoice__ordersTop}>
-        <h3>Order list</h3>
+        <h3 className={styles.adminInvoice__header}>Order list</h3>
 
         <div className={styles.adminInvoice__ordersSearch}>
           <AdminSearchWithSuggestions

@@ -69,7 +69,7 @@ export const DeliveryDetails = ({
       )}
     >
       <div className={styles.adminInvoice__deliveryHeader}>
-        <h3 className={styles.adminInvoice__deliveryTitle}>
+        <h3 className={styles.adminInvoice__header}>
           Delivery details{' '}
           <span
             className={styles.adminInvoice__deliveryMethod}
