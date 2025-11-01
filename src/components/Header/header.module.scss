@@ -93,6 +93,15 @@
     align-items: center;
     gap: 16px;
     position: relative;
+    > a:nth-child(4) svg,
+    > button:nth-child(4) svg {
+      width: 34px;
+      height: 34px;
+      path {
+        stroke-width: 1px;
+        stroke: var(--text-color, #1c1817);
+      }
+    }
     > a,
     > button {
       display: flex;
@@ -143,15 +152,15 @@
       }
     }
 
-    > a:nth-child(4) svg,
-    > button:nth-child(4) svg {
-      width: 34px;
-      height: 34px;
-      path {
-        stroke-width: 1px;
-        // stroke: var(--text-color, #1c1817);
-      }
-    }
+    // > a:nth-child(4) svg,
+    // > button:nth-child(4) svg {
+    //   width: 34px;
+    //   height: 34px;
+    //   path {
+    //     stroke-width: 1px;
+    //     stroke: var(--text-color, #1c1817);
+    //   }
+    // }
     // > a:nth-child(4) {
     //   &:hover svg path {
     //     stroke: #fff;
