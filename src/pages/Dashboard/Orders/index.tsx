@@ -11,7 +11,6 @@ import { generateProductUrl } from '@/utils/helpers/generateProductUrl';
 import { useMemo, useState } from 'react';
 import { useActions } from '@/hooks/useActions';
 import { IOrderItem } from '@/pages/Auth/libs/types/user-dto';
-import formatPaymentInfo from '@/pages/OrderConfirmation/libs/utils/formatPaymentInfo';
 
 export const UserOrders = () => {
   const [openCollapses, setOpenCollapses] = useState<{
@@ -139,13 +138,9 @@ export const UserOrders = () => {
                     <label>Delivery address</label>
                     <p>{formatDeliveryInfo(order.address)}</p>
                     <label>Delivery method</label>
-                    <p>
-                      {formatDeliveryInfo({
-                        deliveryType: order.deliveryMethod,
-                      })}
-                    </p>
+                    <p>{order.deliveryMethod}</p>
                     <label>Payment method</label>
-                    <p>{formatPaymentInfo(order.paymentMethod)}</p>
+                    <p>{order.paymentMethod}</p>
                   </div>
 
                   <button
