@@ -27,8 +27,13 @@ const getAllProducts = createAsyncThunk(
 
 const getOneProductById = createAsyncThunk(
   'products/fetchOne',
-  async (id: string) => {
-    return await productsService.getOneProductById(id);
+  async (id: string, thunkAPI) => {
+    thunkAPI.dispatch(startGlobalLoading());
+    try {
+      return await productsService.getOneProductById(id);
+    } finally {
+      thunkAPI.dispatch(stopGlobalLoading());
+    }
   },
 );
 
@@ -152,25 +157,33 @@ const getByCategory = createAsyncThunk(
 
 const getSuggestions = createAsyncThunk(
   'products/fetchSuggestions',
-  async (query: string) => {
-    return await productsService.getSuggestions(query);
+  async (query: string, thunkAPI) => {
+    thunkAPI.dispatch(startGlobalLoading());
+    try {
+      return await productsService.getSuggestions(query);
+    } finally {
+      thunkAPI.dispatch(stopGlobalLoading());
+    }
   },
 );
 
 const searchProducts = createAsyncThunk(
   'products/searchProducts',
-  async ({
-    query,
-    page,
-    size,
-    sort,
-  }: {
-    query: string;
-    page: number;
-    size: number;
-    sort: string;
-  }) => {
-    return await productsService.searchProducts(query, page, size, sort);
+  async (
+    {
+      query,
+      page,
+      size,
+      sort,
+    }: { query: string; page: number; size: number; sort: string },
+    thunkAPI,
+  ) => {
+    thunkAPI.dispatch(startGlobalLoading());
+    try {
+      return await productsService.searchProducts(query, page, size, sort);
+    } finally {
+      thunkAPI.dispatch(stopGlobalLoading());
+    }
   },
 );
 
