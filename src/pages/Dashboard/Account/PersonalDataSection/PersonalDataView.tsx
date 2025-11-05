@@ -19,9 +19,9 @@ const PersonalDataView = ({
     <div className={styles.personalDataWrap}>
       <div className={styles.personalDataTitle}>
         <h3>Personal data</h3>
-        <span onClick={() => handleStartEditing(true)}>
+        <button onClick={() => handleStartEditing(true)} type="button">
           <ChangeUserData />
-        </span>
+        </button>
       </div>
       <div className={styles.personalDates}>
         <div>

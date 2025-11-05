@@ -40,9 +40,9 @@ const PersonalContactsView = ({
     <div className={styles.personalContactWrap}>
       <div className={styles.personalContactTitle}>
         <h3>Contacts</h3>
-        <span onClick={handleChangeContacts}>
+        <button onClick={handleChangeContacts} type="button">
           <ChangeUserData />
-        </span>
+        </button>
       </div>
       <div className={styles.personalContacts}>
         <div>
