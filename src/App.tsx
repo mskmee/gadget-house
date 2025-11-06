@@ -15,7 +15,7 @@ function App() {
   const { user, userToken } = useTypedSelector(
     (state: RootState) => state.auth,
   );
-  // ---------------
+
   const { loaded: productsLoaded } = useTypedSelector(
     (state: RootState) => state.products,
   );
@@ -25,7 +25,7 @@ function App() {
       dispatch(getAllProducts({ page: DEFAULT_PAGE, size: DEFAULT_SIZE }));
     }
   }, [dispatch, productsLoaded]);
-  // ---------------
+
   useEffect(() => {
     if (!user && userToken) {
       dispatch(getUserData());
