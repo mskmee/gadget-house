@@ -120,9 +120,8 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
         <div className={styles.pageLayout__content}>
           {!isMobile991 && <FiltersDesk key={categoryId} />}
 
-          {isInitialLoading && pagination.currentPage === 0 ? (
-            'Loading...'
-          ) : products.length > 0 ? (
+          {isInitialLoading &&
+          pagination.currentPage === 0 ? null : products.length > 0 ? (
             <Catalog
               data={products}
               totalPages={totalPages}

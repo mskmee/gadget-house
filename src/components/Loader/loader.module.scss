@@ -1,0 +1,61 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(5px);
+  pointer-events: auto;
+}
+
+.loaderBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+.container {
+  width: 90px;
+  height: 90px;
+  position: relative;
+  margin: auto;
+  overflow: hidden;
+  border: none;
+}
+
+.square {
+  position: absolute;
+  background: #b371cc;
+  border-radius: 30%;
+  transition: all 0.5s ease-in-out;
+}
+
+.square1 {
+  width: 43px;
+  height: 30px;
+  top: 0;
+  left: 0;
+}
+
+.square2 {
+  width: 43px;
+  height: 56px;
+  top: 0;
+  right: 0;
+}
+
+.square3 {
+  width: 43px;
+  height: 30px;
+  bottom: 0;
+  right: 0;
+}
+
+.square4 {
+  width: 43px;
+  height: 56px;
+  bottom: 0;
+  left: 0;
+}
