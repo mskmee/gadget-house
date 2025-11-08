@@ -2,7 +2,6 @@ import { FC } from 'react';
 import styles from './benefits.module.scss';
 import type { BenefitItem } from './libs/types/types';
 import { BENEFIT_ITEMS } from './libs/constants/constants';
-// import { Link } from 'react-router-dom';
 
 const Benefit: FC<BenefitItem> = ({ imageUri, text, imageAlt }) => {
   return (
