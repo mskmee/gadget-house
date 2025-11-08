@@ -4,8 +4,10 @@ import { DeliveryFormDto } from '../types/types';
 import { DeliveryMethod } from '../enums/delivery-method';
 
 const regx = {
-  useOnlyLetters: /^[a-zA-Zа-яА-ЯёЁґєіїҐЄІЇ]+(?:[ '\u2019\u2018-][a-zA-Zа-яА-ЯёЁґєіїҐЄІЇ]+)*$/,                          
-  useLettersAndNumbers: /^[a-zA-Zа-яА-ЯёЁґєіїҐЄІЇ0-9]+(?:[ '\u2019\u2018-][a-zA-Zа-яА-ЯёЁґєіїҐЄІЇ0-9]+)*$/,                                     
+  useOnlyLetters:
+    /^[a-zA-Zа-яА-ЯёЁґєіїҐЄІЇ]+(?:[ '\u2019\u2018\u02BC-][a-zA-Zа-яА-ЯёЁґєіїҐЄІЇ]+)*$/,
+  useLettersAndNumbers:
+    /^[a-zA-Zа-яА-ЯёЁґєіїҐЄІЇ0-9]+(?:[ '\u2019\u2018\u02BC-][a-zA-Zа-яА-ЯёЁґєіїҐЄІЇ0-9]+)*$/,
   useOnlyNumbers: /^(?![ .])\d+(?<![ .])$/,
 };
 
