@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { getAllProducts } from '@/store/products/actions';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/store';
-import { DEFAULT_PAGE, DEFAULT_SIZE } from '@/constants/pagination';
+import { DEFAULT_PAGE, DEFAULT_SIZE_ALL } from '@/constants/pagination';
 
 const CategoryEmpty = () => {
   const location = useLocation();
@@ -15,7 +15,7 @@ const CategoryEmpty = () => {
   const categoryName = location?.state?.categoryName || 'This category';
 
   useEffect(() => {
-    dispatch(getAllProducts({ page: DEFAULT_PAGE, size: DEFAULT_SIZE }));
+    dispatch(getAllProducts({ page: DEFAULT_PAGE, size: DEFAULT_SIZE_ALL }));
   }, [dispatch]);
 
   return (
