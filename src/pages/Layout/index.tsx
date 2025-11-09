@@ -27,38 +27,6 @@ const Layout = () => {
     closeBasketPopup();
   };
 
-  // useEffect(() => {
-  //   const authRoutes = [
-  //     AppRoute.SIGN_IN,
-  //     AppRoute.SIGN_UP,
-  //     AppRoute.AUTH_FORGOT_PASSWORD,
-  //     AppRoute.AUTH_CHANGE_PASSWORD,
-  //     AppRoute.LOGIN_ADMIN,
-  //   ];
-
-  //   const isAuthPage = authRoutes.some((route) =>
-  //     location.pathname.startsWith(route),
-  //   );
-
-  //   if (!isAuthPage && location.pathname !== pathRef.current) {
-  //     dispatch(startGlobalLoading());
-  //   }
-
-  //   pathRef.current = location.pathname;
-  // }, [location.pathname, dispatch]);
-
-  // useEffect(() => {
-  //   if (
-  //     productsDataStatus === DataStatus.FULFILLED ||
-  //     productsDataStatus === DataStatus.REJECT
-  //   ) {
-  //     dispatch(stopGlobalLoading());
-  //   }
-  // }, [productsDataStatus, dispatch]);
-  // const handleClosePopup = () => {
-  //   closeBasketPopup();
-  // };
-
   return (
     <>
       <Header />

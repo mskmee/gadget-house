@@ -9,7 +9,7 @@ import { outOfStockProductsList } from '@/constants/outOfStockProductsList';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store';
 import { getAllProducts } from '@/store/products/actions';
-import { DEFAULT_PAGE, DEFAULT_SIZE } from '@/constants/pagination';
+import { DEFAULT_PAGE, DEFAULT_SIZE_ALL } from '@/constants/pagination';
 
 export const SearchResultsNotFound = () => {
   useDocumentTitle(`Search results`);
@@ -51,7 +51,7 @@ export const SearchResultsNotFound = () => {
 
   useEffect(() => {
     if (!productsLoaded || !productsData) {
-      dispatch(getAllProducts({ page: DEFAULT_PAGE, size: DEFAULT_SIZE }));
+      dispatch(getAllProducts({ page: DEFAULT_PAGE, size: DEFAULT_SIZE_ALL }));
     }
   }, [dispatch, productsLoaded, productsData]);
 
