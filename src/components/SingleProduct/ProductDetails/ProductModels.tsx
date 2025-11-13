@@ -30,7 +30,7 @@ function ProductModels({ models, selectedModel }: ProductModelsProps) {
           return (
             <li
               key={model?.productId}
-              tabIndex={0}
+              tabIndex={-1}
               className={classNames({
                 [style['selected-model']]:
                   selectedModel === model.attributeValue && isAvailable,

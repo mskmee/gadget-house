@@ -174,16 +174,16 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
             <div className={styles.cardRate}>
               <Rate
                 className="reviews_rate-stars"
-                character={({ index = 0 }) => {
-                  return (
-                    <img
-                      src={index < productRating ? rateImg : rateEmptyImg}
-                      alt="product rate star"
-                      width={24}
-                      height={24}
-                    />
-                  );
-                }}
+                disabled
+                // style={{ pointerEvents: 'none' }}
+                character={({ index = 0 }) => (
+                  <img
+                    src={index < productRating ? rateImg : rateEmptyImg}
+                    alt="product rate star"
+                    width={24}
+                    height={24}
+                  />
+                )}
               />
               <div className={styles['card-code']}>
                 <span>code:</span>
@@ -198,15 +198,12 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
                   locale,
                 )}
               </p>
-              <button onClick={handleaddToBasket} tabIndex={-1}>
+              <button onClick={handleaddToBasket} tabIndex={0}>
                 <BasketIcon />
               </button>
             </div>
           </div>
         </Link>
-        {/* <button onClick={handleaddToBasket} tabIndex={-1}>
-                <BasketIcon />
-              </button> */}
       </div>
     </>
   );
