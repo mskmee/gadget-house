@@ -4,7 +4,7 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import { DEFAULT_SIZE, DEFAULT_SIZE_MOBILE } from '@/constants/pagination';
 import { AppDispatch, RootState } from '@/store';
-import { getFilteredProducts } from '@/store/products/actions';
+import { getFilteredProducts, searchProducts } from '@/store/products/actions';
 import {
   selectBrandIds,
   selectFilteredAttributes,
@@ -70,6 +70,29 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   } else {
     formatCategoryUrlName(pathname);
   }
+
+  const isSearchPage = pathname.includes('/search/');
+
+  useEffect(() => {
+    if (!searchInputValue) return;
+    // delete this condition when backend will fix all sort options for seach fetch
+    if (selectedSort === 'popularity' || selectedSort === 'rating') return;
+    dispatch(
+      searchProducts({
+        query: searchInputValue,
+        page: pagination.currentPage,
+        size: 20,
+        sort: selectedSort || 'DESC',
+      }),
+    );
+  }, [
+    isSearchPage,
+    searchInputValue,
+    selectedSort,
+    pagination.currentPage,
+    dispatch,
+  ]);
+
   useEffect(() => {
     if (categoryId !== null && categoryId === selectedCategoryId) {
       dispatch(
