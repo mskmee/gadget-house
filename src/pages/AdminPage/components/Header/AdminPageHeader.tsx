@@ -1,43 +1,30 @@
-// components/AdminPage/AdminPageHeader.tsx
 import { useCallback, useState } from 'react';
-
-import { IProductCard } from '@/interfaces/interfaces';
-import { AddNewUser } from '@/assets/constants';
+import { AddNewUserIcon } from '@/assets/icons';
 
 import styles from '../../styles/admin-page.module.scss';
 import { AdminSearch } from '../Search/AdminSearch';
 import { ChangeStatus } from '../StatusChange/ChangeStatus';
 import { Filters } from '../Filters/Filters';
 import { AddNewAdminModal } from '../Modals/AddNewAdmin';
+import { OrderFilterParams, usePatchOrderMutation } from '@/store/orders/api';
 
 interface AdminPageHeaderProps {
-  productsData?: IProductCard[];
   checkedItems: string[];
   // eslint-disable-next-line no-unused-vars
-  onSearch: (filteredProducts: IProductCard[]) => void;
+  onSearch: (search: string) => void;
+  // eslint-disable-next-line no-unused-vars
+  handleApplyFilter: (filters: OrderFilterParams) => void;
+  // eslint-disable-next-line no-unused-vars
+  patchOrder: ReturnType<typeof usePatchOrderMutation>[0];
 }
 
 export const AdminPageHeader = ({
-  productsData,
   checkedItems,
   onSearch,
+  handleApplyFilter,
+  patchOrder,
 }: AdminPageHeaderProps) => {
   const [isAuthModalOpen, setAuthModalOpen] = useState(false);
-
-  const handleSearch = useCallback(
-    (query: string) => {
-      const normalized = query.trim().toLowerCase();
-
-      const filteredProducts = productsData?.filter(
-        (product) =>
-          product.name?.toLowerCase().includes(normalized) ||
-          product.code?.toLowerCase().includes(normalized),
-      );
-
-      onSearch(filteredProducts || []);
-    },
-    [productsData, onSearch],
-  );
 
   const handleModalToggle = useCallback(() => {
     setAuthModalOpen((prev) => !prev);
@@ -50,10 +37,12 @@ export const AdminPageHeader = ({
   return (
     <>
       <header className={styles.admin__header}>
-        <h2 className={styles.admin__title}>Invoice</h2>
+        <div className={styles.admin__title__container}>
+          <h2 className={styles.admin__title}>Invoice</h2>
+        </div>
 
         <div className={styles.admin__search}>
-          <AdminSearch placeholder="Searching..." onSearch={handleSearch} />
+          <AdminSearch placeholder="Searching..." onSearch={onSearch} />
         </div>
 
         <div className={styles.admin__buttons}>
@@ -61,12 +50,12 @@ export const AdminPageHeader = ({
             className={styles.admin__buttonsAdd}
             onClick={handleModalToggle}
           >
-            <img src={AddNewUser} alt="Add user icon" />
+            <AddNewUserIcon />
           </button>
 
-          <ChangeStatus checkedItems={checkedItems} />
+          <ChangeStatus patchOrder={patchOrder} checkedItems={checkedItems} />
 
-          <Filters />
+          <Filters handleApplyFilter={handleApplyFilter} />
         </div>
       </header>
 

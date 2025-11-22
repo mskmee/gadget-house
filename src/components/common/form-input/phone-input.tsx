@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { Input } from 'antd';
 import { FieldInputProps } from 'formik';
-
 import { FlagUA } from '@/assets/constants';
-
 import styles from './form-input.module.scss';
 
 type Props = {

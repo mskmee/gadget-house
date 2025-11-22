@@ -1,7 +1,7 @@
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { AppDispatch } from '@/store';
 import { updateUserContacts } from '@/store/auth/actions';
-import { formatPhoneNumber } from '@/utils/helpers/formatPhoneNumber';
+import { formatPhoneInput } from '@/utils/helpers/formatPhoneNumber';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { PHONE_NUMBER_MAX_LENGTH } from '../PersonalContactsSection/constants';
@@ -44,10 +44,10 @@ const usePersonalContacts = () => {
       setContacts({
         email: currentUser.email || '',
         defaultNumber: currentUser.phoneNumber
-          ? formatPhoneNumber(currentUser.phoneNumber)
+          ? formatPhoneInput(currentUser.phoneNumber)
           : '',
         additionalNumber: currentUser.secondaryPhoneNumber
-          ? formatPhoneNumber(currentUser.secondaryPhoneNumber)
+          ? formatPhoneInput(currentUser.secondaryPhoneNumber)
           : '',
       });
     }
@@ -66,10 +66,10 @@ const usePersonalContacts = () => {
       setContacts({
         email: currentUser.email ?? '',
         defaultNumber: currentUser.phoneNumber
-          ? formatPhoneNumber(currentUser.phoneNumber)
+          ? formatPhoneInput(currentUser.phoneNumber)
           : '',
         additionalNumber: currentUser.secondaryPhoneNumber
-          ? formatPhoneNumber(currentUser.secondaryPhoneNumber)
+          ? formatPhoneInput(currentUser.secondaryPhoneNumber)
           : '',
       });
     } else {
@@ -172,7 +172,7 @@ const usePersonalContacts = () => {
     const value = e.target.value;
     setContacts((prev) => ({
       ...prev,
-      [field]: formatPhoneNumber(value),
+      [field]: formatPhoneInput(value),
     }));
 
     setErrors((prev) => ({ ...prev, [field]: '' }));

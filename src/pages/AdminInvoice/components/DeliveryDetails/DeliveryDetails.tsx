@@ -3,6 +3,7 @@ import cn from 'classnames';
 import styles from '../../admin-invoice.module.scss';
 import { IOrderItemAddress } from '@/utils/packages/orders/libs/types/order-item-response-dto';
 import { formatKeyToLabel } from '@/utils/helpers/formatKeyToLabel';
+import { formatTitle } from '@/utils/helpers/formatTitle';
 
 interface DeliveryDetailsProps {
   fullName?: string;
@@ -41,7 +42,7 @@ export const DeliveryDetails = ({
             ([key, value]) =>
               value && (
                 <label key={key} className={styles.adminInvoice__deliveryInput}>
-                  <span>{formatKeyToLabel(key)}</span>
+                  <span>{formatTitle(formatKeyToLabel(key))}</span>
                   <input
                     type="text"
                     value={value}

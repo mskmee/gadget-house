@@ -5,18 +5,22 @@ import cn from 'classnames';
 import { LoginPermissionFormDto } from '../types/form-dto';
 import { loginPermissionFormValidationSchema } from '../validation-schemas/validation-schemas';
 import { FormInput } from '@/components/components';
-
+import LoadingSpinner from '@/components/LoadingSpinner';
 import styles from './form.module.scss';
 
 interface ILoginFormProps {
   initialValues: LoginPermissionFormDto;
   // eslint-disable-next-line no-unused-vars
   onLogin: (dto: LoginPermissionFormDto) => void;
+  isLoading?: boolean;
+  error?: string | null | undefined;
 }
 
 const LoginPermissionForm: FC<ILoginFormProps> = ({
   initialValues,
   onLogin,
+  isLoading = false,
+  error,
 }) => {
   return (
     <div className={styles.form}>
@@ -27,7 +31,9 @@ const LoginPermissionForm: FC<ILoginFormProps> = ({
         validationSchema={loginPermissionFormValidationSchema}
         onSubmit={(values, { resetForm }) => {
           onLogin(values);
-          resetForm();
+          if (!error) {
+            resetForm();
+          }
         }}
       >
         {({ isValid }) => (
@@ -40,6 +46,7 @@ const LoginPermissionForm: FC<ILoginFormProps> = ({
                 type="text"
                 label="Full name*"
                 placeholder="Full name*"
+                disabled={isLoading}
               />
 
               <FormInput<LoginPermissionFormDto>
@@ -47,6 +54,7 @@ const LoginPermissionForm: FC<ILoginFormProps> = ({
                 type="text"
                 label="E-mail*"
                 placeholder="E-mail*"
+                disabled={isLoading}
               />
 
               <FormInput<LoginPermissionFormDto>
@@ -54,6 +62,7 @@ const LoginPermissionForm: FC<ILoginFormProps> = ({
                 type="password"
                 label="Password*"
                 placeholder="Password*"
+                disabled={isLoading}
               />
             </div>
 
@@ -61,10 +70,20 @@ const LoginPermissionForm: FC<ILoginFormProps> = ({
               <button
                 className={cn('button', 'button-secondary')}
                 type="submit"
-                disabled={!isValid}
+                disabled={!isValid || isLoading}
               >
-                Activate Account
+                {isLoading ? (
+                  <>
+                    <div style={{ height: '15px' }}>
+                      <LoadingSpinner />
+                    </div>
+                  </>
+                ) : (
+                  'Activate Account'
+                )}
               </button>
+
+              {error && <div className={styles.form__error}>{error}</div>}
             </div>
           </Form>
         )}

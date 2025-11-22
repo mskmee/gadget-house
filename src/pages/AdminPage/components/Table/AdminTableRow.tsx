@@ -4,8 +4,10 @@ import { Checkbox, CheckboxChangeEvent } from 'antd';
 import { convertPriceToReadable } from '@/utils/helpers/helpers';
 import { OrderItem } from '@/types/OrderItem';
 import { formatDateToDDMMYYYY } from '@/utils/helpers/format-date';
-
-
+import { formatPhoneDisplay } from '@/utils/helpers/formatPhoneNumber';
+import { useLocale } from '@/context/localeContext';
+import LoadingSpinner from '@/components/LoadingSpinner';
+import { formatTitle } from '@/utils/helpers/formatTitle';
 
 interface AdminTableRowProps {
   item: OrderItem;
@@ -13,42 +15,44 @@ interface AdminTableRowProps {
   // eslint-disable-next-line no-unused-vars
   onChecked: (e: CheckboxChangeEvent) => void;
   // eslint-disable-next-line no-unused-vars
-  onOrderClick: (item: OrderItem) => void;
+  isPatching: boolean;
 }
 
 export const AdminTableRow = ({
   item,
   isChecked,
   onChecked,
-  onOrderClick,
+  isPatching,
 }: AdminTableRowProps) => {
+  const locale = useLocale();
+
   return (
     <tr>
       <td>
-        <Checkbox
-          onChange={onChecked}
-          checked={isChecked}
-          className={styles.admin__tableWrapperCheckbox}
-        />
-        <Link
-          to={`/admin/${item.id}`}
-          onClick={(e) => {
-            e.stopPropagation();
-            onOrderClick(item);
-          }}
-        >
-          {item.id}
-        </Link>
+        <div>
+          <Checkbox
+            onChange={onChecked}
+            checked={isChecked}
+            className={styles.admin__tableWrapperCheckbox}
+          />
+          <Link to={`/admin/${item.id}`}>{item.id}</Link>
+        </div>
       </td>
-      <td>{item.phoneNumber}</td>
+      <td>{formatPhoneDisplay(item.phoneNumber)}</td>
       <td>
-        <button
-          className={`button__status button__status_${item.deliveryStatus.toLowerCase().replace(' ', '_')}`}
-        >
-          {item.deliveryStatus}
-        </button>
+        {isChecked && isPatching ? (
+          <div style={{ height: '44px' }}>
+            <LoadingSpinner />
+          </div>
+        ) : (
+          <button
+            className={`button__status button__status_${item.deliveryStatus.toLowerCase().replace(' ', '_')}`}
+          >
+            {formatTitle(item.deliveryStatus)}
+          </button>
+        )}
       </td>
-      <td>{convertPriceToReadable(item.total ?? 0, '₴', 'uk-UA')}</td>
+      <td>{convertPriceToReadable(item.total ?? 0, '₴', locale)}</td>
       <td>{formatDateToDDMMYYYY(item.createdAt)}</td>
     </tr>
   );

@@ -1,103 +1,99 @@
-import { useCallback, useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { CheckboxProps, CheckboxChangeEvent } from 'antd';
+import { useCallback, useState } from 'react';
 import cn from 'classnames';
-
-import { IProductCard } from '@/interfaces/interfaces';
-import { AppDispatch, RootState } from '@/store';
-import { DEFAULT_SIZE } from '@/constants/pagination';
-import { useTypedSelector } from '@/hooks/useTypedSelector';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 import styles from './styles/admin-page.module.scss';
 import { AdminPageHeader } from './components/Header/AdminPageHeader';
 import { AdminTable } from './components/Table/AdminTable';
 import { AdminPagination } from './components/Pagination/AdminPagination';
-import { getAllOrders, getOneOrderById } from '@/store/orders/actions';
-
-import { OrderItem } from '@/types/OrderItem';
+import {
+  OrderFilterParams,
+  useGetAllOrdersQuery,
+  usePatchOrderMutation,
+} from '@/store/orders/api';
+import { DEFAULT_SIZE } from '@/constants/pagination';
+import { searchOrder } from '@/utils/helpers/search-order';
 
 const AdminPage = () => {
-  const dispatch: AppDispatch = useDispatch();
-  const orders = useTypedSelector(
-    (state: RootState) => state.order.filteredOrders,
-  );
-  const { productsData } = useTypedSelector(
-    (state: RootState) => state.products,
-  );
+  const [appliedFilters, setAppliedFilters] = useState<OrderFilterParams>({});
+  const [page, setPage] = useState(1);
+  const [selected, setSelected] = useState(new Set());
+  const [search, setSearch] = useState<string>('');
+  const [patchOrder, { isLoading: isPatching }] = usePatchOrderMutation();
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [, setFilteredProducts] = useState<IProductCard[]>([]);
-  const [checkedItems, setCheckedItems] = useState<string[]>([]);
+  const { data: ordersResponse, isLoading } = useGetAllOrdersQuery({
+    page: page - 1,
+    ...appliedFilters,
+  });
 
-  const currentItems = orders?.slice(
-    (currentPage - 1) * DEFAULT_SIZE,
-    currentPage * DEFAULT_SIZE,
-  );
-
-  const isAllChecked =
-    currentItems.length > 0 &&
-    currentItems.every((item) => checkedItems.includes(item.id));
-
-  const hasIndeterminate = checkedItems.length > 0 && !isAllChecked;
-
-  useEffect(() => {
-    dispatch(getAllOrders());
-  }, [dispatch]);
-
-  const handleItemCheck = (id: string) => (e: CheckboxChangeEvent) => {
-    setCheckedItems((prev) => {
-      if (e.target.checked) {
-        return [...prev, id];
+  const toggleSelect = useCallback((id: string) => {
+    setSelected((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(id)) {
+        newSet.delete(id);
       } else {
-        return prev.filter((itemId) => itemId !== id);
+        newSet.add(id);
       }
+      return newSet;
     });
-  };
-
-  const handleCheckAll: CheckboxProps['onChange'] = (e) => {
-    if (e.target.checked) {
-      const allIds = currentItems.map((item) => item.id);
-      setCheckedItems(allIds);
-    } else {
-      setCheckedItems([]);
-    }
-  };
-
-  const handleSearch = useCallback((filteredProducts: IProductCard[]) => {
-    setFilteredProducts(filteredProducts);
   }, []);
 
-  const handleOrderClick = (item: OrderItem) => {
-    dispatch(getOneOrderById(item.id));
+  const toggleAll = useCallback(() => {
+    if (!ordersResponse) return;
+
+    const { page: orders } = ordersResponse;
+
+    if (orders.length === selected.size) {
+      setSelected(() => new Set());
+    } else {
+      setSelected(() => new Set(orders.map((item) => item.id)));
+    }
+  }, [ordersResponse, selected]);
+
+  const handleApplyFilters = (filters: OrderFilterParams) => {
+    setAppliedFilters(filters);
   };
 
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
+  const handleSearch = useCallback((search: string) => {
+    setSearch(search);
+  }, []);
+
+  const handlePageChange = useCallback((page: number) => {
+    setPage(() => page);
+  }, []);
+
+  if (!ordersResponse || isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  const { page: orders, totalElements } = ordersResponse;
 
   return (
     <div className={styles.admin}>
-      <div className={cn(styles.admin__container, 'container')}>
+      <div className={cn(styles.admin__wrapper, 'wrapper')}>
         <AdminPageHeader
-          productsData={productsData?.page}
-          checkedItems={checkedItems}
+          checkedItems={Array.from(selected) as string[]}
           onSearch={handleSearch}
+          handleApplyFilter={handleApplyFilters}
+          patchOrder={patchOrder}
         />
 
         <AdminTable
-          orders={currentItems}
-          checkedItems={checkedItems}
-          isAllChecked={isAllChecked}
-          hasIndeterminate={hasIndeterminate}
-          onCheckAll={handleCheckAll}
-          onItemCheck={handleItemCheck}
-          onOrderClick={handleOrderClick}
+          orders={orders.filter((order) => searchOrder(order, search))}
+          checkedItems={Array.from(selected) as string[]}
+          isPatchingStatus={isPatching}
+          isAllChecked={selected.size === orders.length}
+          hasIndeterminate={
+            selected.size > 0 && selected.size === orders.length
+          }
+          onCheckAll={toggleAll}
+          toggleSelect={toggleSelect}
         />
       </div>
 
       <AdminPagination
-        currentPage={currentPage}
-        totalItems={orders?.length || 0}
+        currentPage={page}
+        totalItems={totalElements}
         pageSize={DEFAULT_SIZE}
         onPageChange={handlePageChange}
       />
