@@ -1,9 +1,10 @@
-import { CSSProperties } from 'react';
+import { FC } from 'react';
+import style from './LoadingSpinner.module.scss';
 
-const LoadingSpinner = ({ style = {} }: { style?: CSSProperties }) => {
+const LoadingSpinner: FC = () => {
   return (
-    <div className={styles.spinnerContainer} style={{ ...style }}>
-      <div className={styles.spinner} />
+    <div className={style['spinner-container']}>
+      <div className={style['spinner']}></div>
     </div>
   );
 };
