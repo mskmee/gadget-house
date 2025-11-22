@@ -15,7 +15,10 @@ type ModalContent = {
   text?: string;
 };
 const modalContent: Record<'review' | 'favorite', ModalContent> = {
-  review: { title: 'Only registered users can leave reviews' },
+  review: {
+    title: 'Log in to leave a review',
+    text: 'You need to be logged in to share your feedback. Please sign in or create an account to continue.',
+  },
   favorite: {
     title: 'Save Your Favorites',
     text: 'To keep track of your favorite, please create an account or log in.',
@@ -30,9 +33,15 @@ const AuthRequiredModal: FC<IAuthRequiredModalProps> = ({
   type,
 }) => {
   const content = modalContent[type];
+  const width = type === 'favorite' ? 533 : 606;
 
   return (
-    <PopUp isOpened={isOpen} onClose={onClose} classname="authRequiredModal">
+    <PopUp
+      isOpened={isOpen}
+      onClose={onClose}
+      classname="authRequiredModal"
+      width={width}
+    >
       <div className={styles.form}>
         <h3 className={styles.form__title2}>{content.title}</h3>
         {content.text && <p className={styles.form__text}>{content.text}</p>}

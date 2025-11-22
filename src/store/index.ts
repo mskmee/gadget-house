@@ -11,6 +11,7 @@ import { ordersApi } from './orders/api';
 import { routes } from '@/routes';
 import { authApi } from './auth/api';
 import authPortalsReducer from './auth/authPortalsSlice';
+import uiReducer from './ui/ui_slice';
 
 export const extraArgument = {
   routes,
@@ -26,6 +27,7 @@ const reducers = combineReducers({
   [ordersApi.reducerPath]: ordersApi.reducer,
   [authApi.reducerPath]: authApi.reducer,
   authPortals: authPortalsReducer,
+  ui: uiReducer,
 });
 
 export const store = configureStore({

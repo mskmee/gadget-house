@@ -1,4 +1,4 @@
-import {
+import React, {
   FC,
   ChangeEvent,
   useEffect,
@@ -15,11 +15,15 @@ import { Input } from 'antd';
 import classNames from 'classnames';
 import debounce from 'lodash.debounce';
 import { searchInputClear } from '@/assets/constants';
-import { laptopData, smartphoneData } from '@/constants/productCards';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useActions } from '@/hooks/useActions';
-import { AppRoute } from '@/enums/Route';
+import { AppRoute, RoutePath } from '@/enums/Route';
 import { INPUT_MAX_LENGTH } from './constants';
+import { AppDispatch } from '@/store';
+import { useDispatch } from 'react-redux';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { getSuggestions, searchProducts } from '@/store/products/actions';
+import { clearSuggestions } from '@/store/products/products_slice';
 
 interface ISearchProps {
   isOverlayActive: boolean;
@@ -30,165 +34,193 @@ export const Search: FC<ISearchProps> = ({
   isOverlayActive,
   setIsOverlayActive,
 }) => {
+  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const currentPath = useRef(location.pathname); // Store latest path in a ref
+  const currentPath = useRef(location.pathname);
+
+  const suggestions = useTypedSelector((state) => state.products.suggestions);
   const { setSearchValue, setIsGlobalOverlayActive } = useActions();
+
   const [searchInput, setSearchInput] = useState({
     value: '',
     hasError: false,
   });
-  const [suggestions, setSuggestions] = useState<
-    { title: string; category: string }[]
-  >([]);
+  const [displayValue, setDisplayValue] = useState('');
   const [activeIndex, setActiveIndex] = useState<number>(-1);
-  const filteredSuggestions = suggestions.filter((s) =>
-    s.title.toLowerCase().includes(searchInput.value.toLowerCase()),
-  );
-  const isSearchBarActive =
-    filteredSuggestions.length > 0 && suggestions.length > 0 && isOverlayActive;
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+  const filteredSuggestions = suggestions.filter((s) =>
+    s.toLowerCase().includes(searchInput.value.toLowerCase()),
+  );
+  const isSearchBarActive = filteredSuggestions.length > 0 && isOverlayActive;
+
+  const handleSearchProducts = async (query: string) => {
+    try {
+      const result = await dispatch(
+        searchProducts({ query, page: 0, size: 20, sort: 'DESC' }),
+      ).unwrap();
+      return result;
+    } catch (error) {
+      console.error('Error searching products:', error);
+      return null;
+    }
+  };
+
+  const handleKeyDown = async (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'ArrowDown' && activeIndex !== 5) {
       setActiveIndex((prev) =>
         Math.min(prev + 1, filteredSuggestions.slice(0, 6).length - 1),
       );
+      const newIndex = Math.min(
+        activeIndex + 1,
+        filteredSuggestions.slice(0, 6).length - 1,
+      );
+      if (filteredSuggestions[newIndex])
+        setDisplayValue(filteredSuggestions[newIndex]);
     } else if (e.key === 'ArrowUp') {
       setActiveIndex((prev) => Math.max(prev - 1, 0));
-    } else if (e.key === 'Enter' && suggestions.length) {
+      const newIndex = Math.max(activeIndex - 1, 0);
+      if (filteredSuggestions[newIndex])
+        setDisplayValue(filteredSuggestions[newIndex]);
+    } else if (e.key === 'Enter' && searchInput.value.trim()) {
+      debouncedSuggestionHandler.cancel();
+
+      dispatch(clearSuggestions());
+      setIsOverlayActive(false);
+      setIsGlobalOverlayActive(false);
+
+      let query = searchInput.value.trim();
+      let isSuggestion = false;
+
       if (activeIndex >= 0) {
-        const selectedSuggestion = filteredSuggestions[activeIndex];
-        const selectedTitle = selectedSuggestion.title;
-        setIsOverlayActive(false);
+        query = filteredSuggestions[activeIndex];
+        isSuggestion = true;
+      }
+
+      const result = await handleSearchProducts(query);
+
+      if (!result?.page.length) {
+        navigate(AppRoute.SEARCH_RESULTS_NOT_FOUND, {
+          state: { searchInputValue: query },
+        });
+      } else {
         navigate(
-          `${AppRoute.SEARCH_RESULTS_FOUND}/?text=${selectedTitle.replace(
-            /[\s/]/g,
-            '-',
-          )}`,
+          `${AppRoute.SEARCH_RESULTS_FOUND}/?text=${query.replace(/[\s/]/g, '-')}`,
           {
-            state: {
-              searchInputValue: selectedTitle,
-              isSuggestion: true,
-            },
-          },
-        );
-        setSearchInput({ value: selectedTitle, hasError: false });
-      } else if (searchInput.value.trim()) {
-        setIsOverlayActive(false);
-        navigate(
-          `${AppRoute.SEARCH_RESULTS_FOUND}/?text=${searchInput.value.trim()}`,
-          {
-            state: {
-              searchInputValue: searchInput.value.trim(),
-              isSuggestion: false,
-            },
+            state: { searchInputValue: query, isSuggestion },
           },
         );
       }
+
+      setActiveIndex(-1);
+      setSearchInput({ value: query, hasError: false });
+      setDisplayValue(query);
     }
   };
 
-  const allProducts = [...laptopData, ...smartphoneData];
+  const onSuggestionClick = async (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    trend: string,
+  ) => {
+    e.preventDefault();
+
+    debouncedSuggestionHandler.cancel();
+    dispatch(clearSuggestions());
+    setIsOverlayActive(false);
+    setIsGlobalOverlayActive(false);
+
+    const result = await handleSearchProducts(trend);
+
+    if (!result?.page.length) {
+      navigate(AppRoute.SEARCH_RESULTS_NOT_FOUND, {
+        state: { searchInputValue: trend },
+      });
+    } else {
+      navigate(
+        `${AppRoute.SEARCH_RESULTS_FOUND}/?text=${trend.replace(/[\s/]/g, '-')}`,
+        {
+          state: { searchInputValue: trend, isSuggestion: true },
+        },
+      );
+    }
+
+    setActiveIndex(-1);
+    setSearchInput({ value: trend, hasError: false });
+    setDisplayValue(trend);
+  };
 
   useEffect(() => {
     currentPath.current = location.pathname;
   }, [location.pathname]);
 
-  const handleSuggestions = (inputValue: string) => {
-    const tempSuggestions = new Map<
-      string,
-      { title: string; category: string }
-    >();
-    const normalizedInput = inputValue.toLowerCase().trim();
+  const handleSuggestions = async (inputValue: string) => {
+    const normalizedInput = inputValue.trim();
 
     if (!normalizedInput) {
-      setSuggestions([]);
+      dispatch(clearSuggestions());
       return;
     }
 
-    allProducts.forEach((product) => {
-      const titleLower = product.name.toLowerCase();
+    try {
+      const result = await dispatch(getSuggestions(normalizedInput)).unwrap();
 
-      if (titleLower.includes(normalizedInput)) {
-        const words = titleLower.split(' ');
-        const inputWords = normalizedInput.split(' ');
-
-        for (let i = 0; i < words.length; i++) {
-          const allWordsMatch = inputWords.every((word, index) =>
-            words[i + index]?.startsWith(word),
-          );
-
-          if (allWordsMatch) {
-            for (let j = i; j < words.length; j++) {
-              const suggestionTitle = words.slice(i, j + 1).join(' ');
-              tempSuggestions.set(suggestionTitle, {
-                title: suggestionTitle,
-                category: product.category,
-              });
-            }
-          }
-        }
+      if (result.length > 0) {
+        setIsOverlayActive(true);
+        setIsGlobalOverlayActive(true);
+      } else {
+        setIsOverlayActive(false);
+        setIsGlobalOverlayActive(false);
       }
-    });
-
-    if (tempSuggestions.size) {
-      setIsOverlayActive(true);
-      setIsGlobalOverlayActive(true);
-      setSuggestions(Array.from(tempSuggestions.values()));
-    } else {
+    } catch (error) {
+      console.error('Error fetching suggestions:', error);
       setIsOverlayActive(false);
       setIsGlobalOverlayActive(false);
-      if (currentPath.current !== '/search-results') {
-        //because here closure with location pathname, therefor i use currentPath (useRef)
-
-        navigate('/search-results', {
-          state: inputValue,
-        });
-      }
     }
   };
 
   const handleSaveSearchValueToStore = (inputValue: string) => {
     setSearchValue(inputValue);
   };
-
   const debouncedSuggestionHandler = useCallback(
     debounce(handleSuggestions, 500),
-    [],
-  );
-  const debouncedSearchHandler = useCallback(
-    debounce(handleSaveSearchValueToStore, 500),
     [],
   );
 
   const handleChangeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     const isTooLong = inputValue.length >= INPUT_MAX_LENGTH;
-    setActiveIndex(-1); // Reset the active index when typing
+    setActiveIndex(-1);
 
     setSearchInput({ value: inputValue, hasError: isTooLong });
+    setDisplayValue(inputValue);
     debouncedSuggestionHandler(inputValue);
-    debouncedSearchHandler(inputValue);
+    handleSaveSearchValueToStore(inputValue);
   };
 
   useEffect(() => {
-    if (location.pathname !== '/search-results') {
-      setSearchInput({ value: '', hasError: false });
-      setSuggestions([]);
+    const searchPages: RoutePath[] = [
+      AppRoute.SEARCH_RESULTS_FOUND,
+      AppRoute.SEARCH_RESULTS_NOT_FOUND,
+    ];
+    if (!searchPages.includes(location.pathname as RoutePath)) {
+      dispatch(clearSuggestions());
       setIsOverlayActive(false);
     }
 
     return () => {
       debouncedSuggestionHandler.cancel();
-      debouncedSearchHandler.cancel();
     };
   }, [location.pathname]);
 
   const clearSearchInputValue = () => {
     setSearchInput({ value: '', hasError: false });
-    setSuggestions([]);
-    debouncedSuggestionHandler('');
-    debouncedSearchHandler('');
+    setDisplayValue('');
+    debouncedSuggestionHandler.cancel();
+    dispatch(clearSuggestions());
+    setIsOverlayActive(false);
+    setIsGlobalOverlayActive(false);
+
+    navigate(AppRoute.ALL_PRODUCTS);
   };
 
   return (
@@ -199,11 +231,7 @@ export const Search: FC<ISearchProps> = ({
         [styles['autocomplete-search-bar__active']]: isSearchBarActive,
       })}
       placeholder="Searching..."
-      value={
-        activeIndex >= 0 && suggestions[activeIndex]
-          ? suggestions[activeIndex].title
-          : searchInput.value
-      }
+      value={displayValue}
       maxLength={INPUT_MAX_LENGTH}
       onChange={handleChangeInputValue}
       onKeyDown={handleKeyDown}
@@ -217,16 +245,14 @@ export const Search: FC<ISearchProps> = ({
               {searchInput.value.trim() &&
                 suggestions
                   .filter((trend) =>
-                    trend.title
+                    trend
                       .toLowerCase()
                       .includes(searchInput.value.trim().toLowerCase()),
                   )
                   .slice(0, 6)
                   .map((trend, index) => {
                     const searchValue = searchInput.value.trim().toLowerCase();
-                    const startIndex = trend.title
-                      .toLowerCase()
-                      .indexOf(searchValue);
+                    const startIndex = trend.toLowerCase().indexOf(searchValue);
                     const endIndex = startIndex + searchValue.length;
 
                     return (
@@ -238,18 +264,16 @@ export const Search: FC<ISearchProps> = ({
                       >
                         {startIndex !== -1 && (
                           <Link
-                            to={`${AppRoute.SEARCH_RESULTS_FOUND}/?text=${trend.title.replace(/[\s/]/g, '-')}`}
+                            to={`${AppRoute.SEARCH_RESULTS_FOUND}/?text=${trend.replace(/[\s/]/g, '-')}`}
                             state={{
-                              searchInputValue: `${trend.title.replace(/[\s/]/g, '-')}`,
+                              searchInputValue: trend,
                               isSuggestion: true,
                             }}
-                            onClick={() => setIsOverlayActive(false)}
+                            onClick={(e) => onSuggestionClick(e, trend)}
                           >
-                            <span>{trend.title.slice(0, startIndex)}</span>
-                            <strong>
-                              {trend.title.slice(startIndex, endIndex)}
-                            </strong>
-                            <span>{trend.title.slice(endIndex)}</span>
+                            <span>{trend.slice(0, startIndex)}</span>
+                            <strong>{trend.slice(startIndex, endIndex)}</strong>
+                            <span>{trend.slice(endIndex)}</span>
                           </Link>
                         )}
                       </li>
@@ -271,22 +295,40 @@ export const Search: FC<ISearchProps> = ({
               <div className={styles['search-right-elements_devider']}></div>
             </>
           )}
+          <Link
+            to={`${AppRoute.SEARCH_RESULTS_FOUND}/?text=${searchInput.value}`}
+            state={{ searchInputValue: searchInput.value, isSuggestion: false }}
+            className={classNames({
+              [styles.active]: displayValue,
+            })}
+            onClick={async (e) => {
+              e.preventDefault();
+              const query = searchInput.value.trim();
+              if (!query) return;
 
-          {isOverlayActive ? (
-            <Link
-              to={`${AppRoute.SEARCH_RESULTS_FOUND}/?text=${searchInput.value}`}
-              state={{
-                searchInputValue: searchInput.value,
-                isSuggestion: false,
-              }}
-              className={classNames({ [styles.active]: searchInput.value })}
-              onClick={() => setIsOverlayActive(false)}
-            >
-              <SearchIcon />
-            </Link>
-          ) : (
+              debouncedSuggestionHandler.cancel();
+              dispatch(clearSuggestions());
+              setIsOverlayActive(false);
+              setIsGlobalOverlayActive(false);
+
+              const result = await handleSearchProducts(query);
+
+              if (!result?.page.length) {
+                navigate(AppRoute.SEARCH_RESULTS_NOT_FOUND, {
+                  state: { searchInputValue: query },
+                });
+              } else {
+                navigate(
+                  `${AppRoute.SEARCH_RESULTS_FOUND}/?text=${query.replace(/[\s/]/g, '-')}`,
+                  {
+                    state: { searchInputValue: query, isSuggestion: false },
+                  },
+                );
+              }
+            }}
+          >
             <SearchIcon />
-          )}
+          </Link>
         </div>
       }
     />

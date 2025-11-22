@@ -14,7 +14,7 @@ import { AppDispatch } from '../../store';
 import { getAllProducts } from '@/store/products/actions';
 import {
   DEFAULT_PAGE,
-  DEFAULT_SIZE,
+  DEFAULT_SIZE_ALL,
   DEFAULT_SIZE_MOBILE,
 } from '@/constants/pagination';
 
@@ -39,7 +39,7 @@ export const BasketPage = () => {
 
   useEffect(() => {
     if (!productsLoaded || !productsData) {
-      const size = isMobile ? DEFAULT_SIZE_MOBILE : DEFAULT_SIZE;
+      const size = isMobile ? DEFAULT_SIZE_MOBILE : DEFAULT_SIZE_ALL;
       dispatch(getAllProducts({ page: DEFAULT_PAGE, size }));
     }
   }, [dispatch, productsLoaded, productsData, isMobile]);

@@ -23,9 +23,9 @@ const items = [
   { key: '3', title: 'Tablet', img: Tablet, link: AppRoute.TABLET },
   { key: '6', title: 'Smart-watch', img: Watch, link: AppRoute.WATCH },
   { key: '4', title: 'PC', img: PC, link: AppRoute.PC },
-  { key: '5', title: 'TVs and Multimedia', img: TV, link: AppRoute.TV },
+  { key: '5', title: 'TV and Multimedia', img: TV, link: AppRoute.TV },
   { key: '8', title: 'Game console', img: GameConsole, link: AppRoute.GAME_CONSOLE },
-  { key: '10', title: 'KIDS', img: Kids, link: AppRoute.KIDS },
+  { key: '10', title: 'For kids', img: Kids, link: AppRoute.KIDS },
   {
     key: '11',
     title: 'SALE',
