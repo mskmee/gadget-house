@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, React } from 'react';
 import styles from './LoadingSpinner.module.scss';
 
 interface LoadingSpinnerProps {
