@@ -1,9 +1,11 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 
-import { useAuth } from '@/pages/Auth/libs/hooks/use-auth';
+import { useCreateNewAdminMutation } from '@/store/auth/api';
 import SuccessPopup from '@/pages/Auth/libs/components/SuccessPopup';
 import LoginPermissionForm from '@/pages/Auth/libs/components/LoginPermissionForm';
 import { PopUp } from '@/components/components';
+import { LoginPermissionFormDto } from '@/pages/Auth/libs/types/form-dto';
+import { LOGIN_PERMISSION_FORM_INITIAL_VALUE } from '@/pages/Auth/libs/constants/login-permission-form-initial-value';
 
 interface IAddNewAdminModalProps {
   isOpen: boolean;
@@ -11,15 +13,26 @@ interface IAddNewAdminModalProps {
 }
 
 const AddNewAdminModal: FC<IAddNewAdminModalProps> = ({ isOpen, onClose }) => {
-  const {
-    successType = 'loginAdmin',
-    setSuccessType,
-    loginPermissionFormValue,
-    onLoginPermissionFormSubmit,
-  } = useAuth();
+  const [createNewAdmin, { isLoading, error }] = useCreateNewAdminMutation();
+  const [successType, setSuccessType] = useState<'loginAdmin' | null>(null);
+  const [createdEmail, setCreatedEmail] = useState<string>('');
+
+  const handleSubmit = async (values: LoginPermissionFormDto) => {
+    const result = await createNewAdmin({
+      fullName: values.fullName,
+      email: values.email,
+      password: values.password,
+    }).unwrap();
+
+    if (result) {
+      setCreatedEmail(values.email);
+      setSuccessType('loginAdmin');
+    }
+  };
 
   const handleClose = () => {
     setSuccessType(null);
+    setCreatedEmail('');
     onClose();
   };
 
@@ -27,13 +40,23 @@ const AddNewAdminModal: FC<IAddNewAdminModalProps> = ({ isOpen, onClose }) => {
     <SuccessPopup
       type={successType}
       onClose={handleClose}
-      emailValue={loginPermissionFormValue.email}
+      emailValue={createdEmail}
     />
   ) : (
     <PopUp isOpened={isOpen} onClose={handleClose} classname="authModal">
       <LoginPermissionForm
-        initialValues={loginPermissionFormValue}
-        onLogin={onLoginPermissionFormSubmit}
+        initialValues={LOGIN_PERMISSION_FORM_INITIAL_VALUE}
+        onLogin={handleSubmit}
+        isLoading={isLoading}
+        error={
+          typeof error === 'string'
+            ? error
+            : error && 'data' in error && typeof error.data === 'string'
+              ? error.data
+              : error && 'message' in error && typeof error.message === 'string'
+                ? error.message
+                : null
+        }
       />
     </PopUp>
   );

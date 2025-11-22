@@ -9,7 +9,7 @@
 .adminSearch__input {
   width: 100%;
   padding: 16px 90px 16px 22px;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 150%;
@@ -18,6 +18,39 @@
   border-radius: 12px;
   border: 1px solid var(--secondary-background-color);
   outline: none;
+  transition: border-color 0.2s ease;
+
+  &::placeholder {
+    color: var(--text-disable-color);
+  }
+
+  &:disabled {
+    background-color: var(--bg-disabled-color, #f3f4f6);
+    color: var(--text-disabled-color, #9ca3af);
+    border-color: var(--border-disabled-color, #e5e7eb);
+    cursor: not-allowed;
+    opacity: 0.6;
+
+    &::placeholder {
+      color: var(--text-disabled-color, #d1d5db);
+    }
+  }
+
+  &--error {
+    border-color: var(--error-color);
+    color: var(--error-color);
+
+    &:hover,
+    &:focus,
+    &:active {
+      border-color: var(--error-color);
+      color: var(--error-color);
+    }
+
+    &::placeholder {
+      color: var(--error-color);
+    }
+  }
 }
 
 .adminSearch__button {
@@ -31,4 +64,27 @@
   border: none;
   outline: none;
   cursor: pointer;
+  pointer-events: none;
+
+  svg path {
+    stroke: var(--icon-color, #6b7280);
+    transition: stroke 0.2s ease;
+  }
+
+  .adminSearch__input:hover:not(:disabled) ~ & svg path,
+  .adminSearch__input:focus ~ & svg path {
+    stroke: var(--theme-color);
+  }
+
+  .adminSearch__input:disabled ~ & {
+    opacity: 0.5;
+
+    svg path {
+      stroke: var(--icon-disabled-color, #d1d5db);
+    }
+  }
+
+  .adminSearch__input--error ~ & svg path {
+    stroke: var(--error-color, #ef4444);
+  }
 }

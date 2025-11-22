@@ -1,7 +1,8 @@
 .admin {
-  padding: 56px 0px 100px 0px;
+  padding: 56px 50px;
 
-  &__container {
+  &__wrapper {
+    padding: 50px 0px;
     border-radius: 28px;
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
     background: var(--white-color);
@@ -11,13 +12,17 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 50px;
-    padding: 50px 58px 0 58px;
+    padding: 0px 76px;
+    gap: 3.375rem;
     margin-bottom: 35px;
   }
 
+  &__titleWrap {
+    padding: 0.625rem;
+  }
+
   &__title {
-    font-family: "Inter", sans-serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 400;
     font-size: 24px;
     line-height: 150%;
@@ -35,8 +40,18 @@
 
   &__buttons {
     display: flex;
+    width: 17.875rem;
     align-items: center;
-    gap: 8px;
+    gap: 0.5rem;
+
+    > * {
+      flex: 0 0 56px;
+      height: 56px;
+
+      &:last-child {
+        flex: 1;
+      }
+    }
 
     &Add {
       height: 56px;
@@ -59,8 +74,6 @@
   }
 
   &__table {
-    padding: 0 0 50px 0;
-
     :global {
       .ant-checkbox {
         align-items: center;
@@ -68,7 +81,7 @@
         &-inner {
           width: 24px;
           height: 24px;
-          background-image: url("../../../assets/icons/checkbox.svg");
+          background-image: url('../../../assets/icons/checkbox.svg');
           background-repeat: no-repeat;
           background-position: center center;
           background-size: contain;
@@ -91,7 +104,7 @@
         }
 
         &-checked .ant-checkbox-inner {
-          background-image: url("../../../assets/icons/checkbox-checked.svg") !important;
+          background-image: url('../../../assets/icons/checkbox-checked.svg') !important;
           border-color: transparent !important;
           background-color: transparent !important;
         }
@@ -99,49 +112,73 @@
     }
 
     &Wrapper {
+      display: table;
+      table-layout: fixed;
       width: 100%;
-      padding: 0 57px 50px 57px;
       border-collapse: collapse;
-      font-family: "Inter", sans-serif;
+      font-family: 'Inter', sans-serif;
       font-weight: 400;
       font-size: 16px;
       line-height: 150%;
       text-align: center;
       color: var(--black);
-
+      margin: 0 auto;
       thead {
         background-color: var(--bg-color);
         border-top: 1px solid var(--secondary-background-color);
         border-bottom: 1px solid var(--secondary-background-color);
-        margin-bottom: 35px;
+
+        tr {
+          display: table-row;
+        }
 
         th {
-          padding: 16px 100px 16px 80px;
-          font-family: "Inter", sans-serif;
+          padding: 24px 0px;
+          font-family: 'Inter', sans-serif;
           font-weight: 400;
           font-size: 24px;
           line-height: 150%;
           color: var(--text-color);
+          width: auto;
+          vertical-align: middle;
+          text-align: center;
 
           &:first-child {
+            padding: 0px 78px;
             text-align: left;
-            display: flex;
-            gap: 8px;
+
+            > div {
+              display: flex;
+              align-items: center;
+              gap: 8px;
+            }
           }
 
-          &:last-child {
+          &:nth-child(4) {
+            padding: 0px 89px;
             text-align: right;
           }
         }
       }
 
       &Checkbox {
+        display: flex;
+        width: 24px;
+        height: 24px;
+
+        span {
+          width: 24px;
+          height: 24px;
+        }
+
         :global {
           .ant-checkbox {
             &.ant-checkbox-indeterminate .ant-checkbox-inner {
-              background-image: url("../../../assets/icons/checkbox-checked.svg") !important;
+              background-image: url('../../../assets/icons/checkbox-checked.svg') !important;
               border-color: transparent !important;
               background-color: transparent !important;
+              width: 24px;
+              height: 24px;
             }
 
             &-inner::after {
@@ -162,34 +199,47 @@
         }
 
         td {
-          padding: 24px 80px;
-          font-family: "Inter", sans-serif;
+          padding: 24px 0;
+          font-family: 'Inter', sans-serif;
           font-weight: 400;
           font-size: 16px;
           line-height: 150%;
           text-align: center;
+          vertical-align: middle;
           color: var(--black);
 
           &:first-child {
-            display: flex;
-            align-items: flex-end;
-            gap: 8px;
-            padding-top: 37px;
+            padding: 24px 78px;
             text-align: left;
 
             a {
               text-decoration: underline;
+              text-underline-offset: 2.6px;
               color: var(--theme-color);
             }
+
+            > div {
+              display: flex;
+              align-items: center;
+              gap: 8px;
+            }
+          }
+
+          &:nth-child(2) {
+            font-variant-numeric: tabular-nums;
+          }
+
+          &:nth-child(5) {
+            font-variant-numeric: tabular-nums;
+          }
+
+          &:nth-child(4) {
+            padding: 0px 89px;
+            text-align: right;
           }
 
           span {
             display: inline-block !important;
-          }
-
-          &:last-child {
-            width: 15%;
-            text-align: right;
           }
         }
       }
@@ -215,7 +265,7 @@
         width: auto;
         border: none;
         background-color: transparent;
-        font-family: "Inter", sans-serif;
+        font-family: 'Inter', sans-serif;
 
         a {
           display: inline-block;

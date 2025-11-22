@@ -1,21 +1,20 @@
 import { FC, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Popover } from 'antd';
 import cn from 'classnames';
 
-import { AppDispatch } from '@/store';
-import { updateOrdersStatus } from '@/store/orders/order_slice';
 import { CheckedOrderIcon } from '@/assets/icons/CheckedOrder';
-
 import styles from './change-status.module.scss';
+import { OrderStatus } from '@/enums/order-status';
+import { usePatchOrderMutation } from '@/store/orders/api';
 
 interface IChangeStatusProps {
   // eslint-disable-next-line no-unused-vars
   checkedItems: string[];
+  // eslint-disable-next-line no-unused-vars
+  patchOrder: ReturnType<typeof usePatchOrderMutation>[0];
 }
 
-const ChangeStatus: FC<IChangeStatusProps> = ({ checkedItems }) => {
-  const dispatch: AppDispatch = useDispatch();
+const ChangeStatus: FC<IChangeStatusProps> = ({ checkedItems, patchOrder }) => {
   const [isStatusMenuOpen, setStatusMenuOpen] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
 
@@ -25,11 +24,17 @@ const ChangeStatus: FC<IChangeStatusProps> = ({ checkedItems }) => {
     }
   };
 
-  const handleApplyStatus = () => {
+  const handleApplyStatus = async () => {
     if (!selectedStatus) return;
 
-    dispatch(
-      updateOrdersStatus({ ids: checkedItems, newStatus: selectedStatus }),
+    await Promise.allSettled(
+      checkedItems.map(async (id) => {
+        try {
+          await patchOrder({ id, status: selectedStatus }).unwrap();
+        } catch (error) {
+          console.error(`Failed to update order ${id}:`, error);
+        }
+      }),
     );
 
     setStatusMenuOpen(false);
@@ -42,7 +47,7 @@ const ChangeStatus: FC<IChangeStatusProps> = ({ checkedItems }) => {
         <h3>Change Status to:</h3>
 
         <div className={styles.statusPopup__options}>
-          {['Paid', 'Cancel', 'Order', 'Returned', 'Awaiting'].map((status) => (
+          {Object.values(OrderStatus).map((status) => (
             <button
               key={status}
               className={cn(
