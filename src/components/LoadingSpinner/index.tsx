@@ -1,8 +1,8 @@
-import { FC, React } from 'react';
+import { FC, CSSProperties } from 'react';
 import styles from './LoadingSpinner.module.scss';
 
 interface LoadingSpinnerProps {
-  style?: React.CSSProperties;
+  style?: CSSProperties;
 }
 
 const LoadingSpinner: FC = ({ style }: LoadingSpinnerProps) => {
