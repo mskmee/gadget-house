@@ -1,22 +1,44 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import styles from './basketitem.module.scss';
-import { useTypedSelector } from "@/hooks/useTypedSelector";
+import { useActions } from '@/hooks/useActions';
+import { useAuthRequired } from '@/hooks/useAuthRequired';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import getFormattedCategoryName from '@/hooks/getFormattedCategoryName';
 import { deleteFromBasketMob } from '@/assets/constants.ts';
-import { DeleteFromBasket } from "@/assets/icons/DeleteFromBasket";
-import { HeartIcon } from "@/assets/icons/HeartIcon";
+import { DeleteFromBasket } from '@/assets/icons/DeleteFromBasket';
+import { HeartIcon } from '@/assets/icons/HeartIcon';
 import { convertPriceToReadable } from '@/utils/helpers/product';
-import { IBasketChildren } from "./type/interfaces";
-import getFormattedCategoryName from "@/hooks/getFormattedCategoryName";
+import { IBasketChildren } from './type/interfaces';
 
-function BasketItemPC({product, handleDeleteFromStore, handleDecreaseItemQuantity, handleIncrementItemQuantity, handleSaveFavoriteProduct, isLikedProduct}: IBasketChildren) {
+function BasketItemPC({
+  product,
+  handleDeleteFromStore,
+  handleDecreaseItemQuantity,
+  handleIncrementItemQuantity,
+  isLikedProduct,
+}: IBasketChildren) {
   const { id, name, code, images, totalPrice, href, categoryId } = product;
+  const formatCategoryName = getFormattedCategoryName(categoryId);
+  const { triggerAuthRequired } = useAuthRequired();
+  const { toggleFavorite } = useActions();
+  const { user } = useTypedSelector((state) => state.auth);
   const { locale, currency } = useTypedSelector((state) => state.shopping_card);
-  const formatCategoryName = getFormattedCategoryName(categoryId)
-  
+
+  const handleSaveFavoriteProduct = () => {
+    if (!user) {
+      triggerAuthRequired('favorite');
+      return;
+    }
+    toggleFavorite(product);
+  };
+
   return (
     <>
       <div className={styles.basketItem}>
-        <Link to={`/${formatCategoryName}/${id}/${href}`}  className={styles.productImg}>
+        <Link
+          to={`/${formatCategoryName}/${id}/${href}`}
+          className={styles.productImg}
+        >
           <img src={images?.[0].link} alt={name} />
         </Link>
         <div className={styles.productInfo}>
@@ -49,8 +71,7 @@ function BasketItemPC({product, handleDeleteFromStore, handleDecreaseItemQuantit
               <button
                 className={styles.productQuantityButton_minus}
                 onClick={handleDecreaseItemQuantity}
-              >
-              </button>
+              ></button>
             </div>
 
             <p>{product.quantity}</p>
@@ -66,7 +87,7 @@ function BasketItemPC({product, handleDeleteFromStore, handleDecreaseItemQuantit
             {convertPriceToReadable(totalPrice, currency, locale)}
           </p>
         </div>
-      </div> 
+      </div>
     </>
   );
 }

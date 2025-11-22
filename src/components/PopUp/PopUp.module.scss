@@ -4,7 +4,6 @@
   right: 0;
   top: -5000px;
   z-index: 1500;
-  z-index: 1000;
   display: flex;
   flex: 1;
   justify-content: center;
@@ -14,7 +13,7 @@
 }
 
 .opened {
-  top: 0;
+  top: 0 !important;
   bottom: 0;
 }
 
@@ -44,32 +43,43 @@
   cursor: pointer;
   transition:
     color 0.3s ease,
+    fill 0.3s ease,
     transform 0.2s ease;
 
   &:hover {
     color: #ff5a5a;
   }
-
+  &:hover svg path {
+    fill: #ff5a5a;
+  }
   &:focus {
     outline: none;
     box-shadow: 0 0 0 2px #ff5a5a;
   }
+  &:focus:not(:focus-visible) {
+    outline: none;
+    box-shadow: none;
+  }
+}
+.noFocusOutline {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 .basket-modal {
   background: rgba(28, 24, 23, 0.7);
-  
+
   .content {
     padding: 0;
     height: auto;
-    
   }
   .close {
     display: none;
   }
 }
 
-.authModal {
+.authModal,
+.authRequiredModal {
   background: rgba(28, 24, 23, 0.7);
   backdrop-filter: none;
 
@@ -80,6 +90,12 @@
     padding: 48px;
   }
 }
+.authRequiredModal {
+  .content {
+    padding: 68px;
+  }
+}
+
 @media screen and (min-width: 1140px) {
   .basket-modal {
     .content {
@@ -104,6 +120,13 @@
       width: 100%;
       height: auto;
       border-radius: 24px 24px 0 0;
+    }
+  }
+}
+@media screen and (max-width: 600px) {
+  .authRequiredModal {
+    .content {
+      padding: 68px 28px 28px;
     }
   }
 }

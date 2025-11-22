@@ -1,4 +1,4 @@
-import { FC, useRef } from 'react';
+import React, { FC, useRef } from 'react';
 import style from './Product.module.scss';
 import { Rate } from 'antd';
 
@@ -12,6 +12,7 @@ import { AddToBasketButton } from './AddToBasketButton';
 
 import { useActions } from '@/hooks/useActions';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { useAuthRequired } from '@/hooks/useAuthRequired';
 import { convertPriceToReadable } from '@/utils/helpers/product';
 import { useMediaQuery } from 'react-responsive';
 import { IProductCard } from '@/interfaces/interfaces';
@@ -32,6 +33,8 @@ interface IProductProps {
 
 export const Product: FC<IProductProps> = ({ dynamicCurrentProduct }) => {
   const { toggleFavorite } = useActions();
+  const { userToken } = useTypedSelector((state) => state.auth);
+  const { triggerAuthRequired } = useAuthRequired();
   const reviews = useTypedSelector((state) => state.singleProduct.reviews);
   const isLikedProduct = useTypedSelector((state) =>
     state.products.favoriteProducts.some(
@@ -62,8 +65,21 @@ export const Product: FC<IProductProps> = ({ dynamicCurrentProduct }) => {
   const isWidth575 = useMediaQuery({ query: '(max-width: 575px)' });
 
   const handleSaveFavoriteProduct = () => {
+    if (!userToken) {
+      triggerAuthRequired('favorite');
+      return;
+    }
     if (dynamicCurrentProduct) {
       toggleFavorite(dynamicCurrentProduct);
+    }
+  };
+  const handleScrollToReviews = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const reviewSection = document.querySelector('#product-reviews');
+    if (reviewSection) {
+      const offsetTop =
+        reviewSection.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: offsetTop, behavior: 'smooth' });
     }
   };
 
@@ -78,7 +94,7 @@ export const Product: FC<IProductProps> = ({ dynamicCurrentProduct }) => {
                 className="product_rate-stars"
                 value={dynamicCurrentProduct?.rating}
               />
-              <a href="#users-review">
+              <a href="#product-reviews" onClick={handleScrollToReviews}>
                 <img src={reviewImg} alt="review pic" />
                 <span>({reviewsLength})</span>
               </a>
@@ -145,7 +161,7 @@ export const Product: FC<IProductProps> = ({ dynamicCurrentProduct }) => {
                   value={dynamicCurrentProduct?.rating}
                   style={{ color: '#6F4C9A' }}
                 />
-                <a>
+                <a href="#product-reviews" onClick={handleScrollToReviews}>
                   <img src={reviewImg} alt="review pic" />
                   <span>({reviewsLength})</span>
                 </a>

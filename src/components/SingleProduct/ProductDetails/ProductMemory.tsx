@@ -4,31 +4,37 @@ import { ProductMemoryProps } from './type/interfaces';
 import { Link } from 'react-router-dom';
 import getFormattedCategoryName from '@/hooks/getFormattedCategoryName';
 
-function ProductMemory({memories, selectedMemory}: ProductMemoryProps) {  
-
+function ProductMemory({ memories, selectedMemory }: ProductMemoryProps) {
   return (
     <div className={style['product_memory-card']}>
       <h3>Memory card</h3>
       <ul>
         {memories?.map((memory) => {
           const isAvailable = memory?.available;
-          const formatCategoryName = getFormattedCategoryName(memory?.categoryId);
+          const formatCategoryName = getFormattedCategoryName(
+            memory?.categoryId,
+          );
           return (
             <li
               key={memory.productId}
-              tabIndex={0}
+              tabIndex={-1}
               className={classNames({
-                [style['selected-memory']]: selectedMemory === memory.attributeValue && isAvailable,
+                [style['selected-memory']]:
+                  selectedMemory === memory.attributeValue && isAvailable,
                 [style['not-available']]: !isAvailable,
               })}
             >
               {isAvailable ? (
-                <Link to={`/${formatCategoryName}/${memory.productId}/${memory.href}`}>{memory.attributeValue}</Link>
+                <Link
+                  to={`/${formatCategoryName}/${memory.productId}/${memory.href}`}
+                >
+                  {memory.attributeValue}
+                </Link>
               ) : (
                 memory.attributeValue
               )}
             </li>
-          )
+          );
         })}
       </ul>
     </div>

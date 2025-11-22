@@ -4,12 +4,12 @@
   width: 100%;
 
   > div {
-    min-height: 515px;
+    // min-height: 515px;
     padding: 46px 53px 73px 50px;
     background-color: #1c1817;
     > div:first-child {
       display: grid;
-      grid-template-columns: 1fr 140px 150px 225px;
+      grid-template-columns: 1fr 0.5fr 225px;
       column-gap: 102px;
 
       color: #f8f7fa;
@@ -108,6 +108,7 @@
       }
     }
     .copyrightText {
+      margin-top: 50px;
       text-align: end;
       > a {
         text-decoration: none;
@@ -187,20 +188,23 @@
     .contact-info {
       > div {
         > a {
-          > img, svg {height: 18px; width: 18px;}
+          > img,
+          svg {
+            height: 18px;
+            width: 18px;
+          }
         }
       }
       font-size: rem(12px);
     }
     .social-links {
-        > .icons {
-          > a {
-             width: 34px;
-            height: 34px;
-            
-          }
+      > .icons {
+        > a {
+          width: 34px;
+          height: 34px;
         }
       }
+    }
   }
 }
 

@@ -6,14 +6,31 @@ import { Form, Formik } from 'formik';
 import { AddReviewRequestDTO } from '@/utils/packages/singleProduct/type/types';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/store';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { useAuthRequired } from '@/hooks/useAuthRequired';
 import { addReview, getReviews } from '@/store/singleProduct/actions';
 import { toast } from 'react-toastify';
 import { reviewSchema } from './FormReview-validation';
+import { useMemo } from 'react';
 
 const maxLength = 500;
 
 function FormReview({ productId }: { productId: number }) {
+  const { userToken, user } = useTypedSelector((state) => state.auth);
+  const { triggerAuthRequired } = useAuthRequired();
   const dispatch: AppDispatch = useDispatch();
+
+  const reviews = useTypedSelector((state) => state.singleProduct.reviews);
+
+  const userHasReviewed = useMemo(() => {
+    if (!user?.fullName || !reviews?.page) return false;
+
+    return reviews.page.some(
+      (review) =>
+        review.user.fullName.toLowerCase().trim() ===
+        user.fullName.toLowerCase().trim(),
+    );
+  }, [reviews?.page, user?.fullName]);
 
   return (
     <>
@@ -25,37 +42,83 @@ function FormReview({ productId }: { productId: number }) {
         }}
         enableReinitialize
         validationSchema={reviewSchema}
-        onSubmit={async (values, { resetForm }) => {
+        onSubmit={async (values, { resetForm, setSubmitting }) => {
+          if (!userToken) {
+            triggerAuthRequired('review');
+            return;
+          }
+
+          if (userHasReviewed) {
+            toast.warning(
+              'The review has already been submitted. The user can leave one review for a product.',
+              {
+                autoClose: 4000,
+                theme: 'colored',
+                toastId: 'duplicate-review-warning',
+              },
+            );
+            setSubmitting(false);
+            return;
+          }
+
           try {
-            await dispatch(addReview(values))
-              .unwrap()
-              .then(() => {
-                dispatch(getReviews({ productId, page: 0 }));
-              });
+            await dispatch(addReview(values)).unwrap();
+            await dispatch(getReviews({ productId, page: 0 }));
+
             toast.success('Review submitted!', {
-              type: 'success',
               autoClose: 4000,
-              theme: 'dark',
+              theme: 'light',
             });
             resetForm();
           } catch (error: any) {
-            console.log('error', error);
-            toast.error(
-              error?.message ||
-                'Something went wrong while submitting your review.',
-              {
-                type: 'error',
+            console.error('Error submitting review:', error);
+
+            const errorCode = error?.code || error?.response?.data?.code;
+            const errorStatus = error?.status || error?.response?.status;
+
+            if (
+              errorCode === 'DUPLICATE_REVIEW' ||
+              errorCode === 'REVIEW_ALREADY_EXISTS' ||
+              errorStatus === 409
+            ) {
+              toast.error(
+                'The review has already been submitted. The user can leave one review for a product.',
+                {
+                  autoClose: 5000,
+                  theme: 'colored',
+                  toastId: 'duplicate-review-error',
+                },
+              );
+
+              dispatch(getReviews({ productId, page: 0 }));
+            } else {
+              const errorMessage =
+                error?.message ||
+                error?.response?.data?.message ||
+                'Something went wrong while submitting your review. Please try again later.';
+
+              toast.error(errorMessage, {
                 autoClose: 4000,
                 theme: 'dark',
-              },
-            );
+              });
+            }
+          } finally {
+            setSubmitting(false);
           }
         }}
       >
-        {({ values, handleChange, setFieldValue, errors, touched }) => {
+        {({
+          values,
+          handleChange,
+          setFieldValue,
+          errors,
+          touched,
+          isSubmitting,
+        }) => {
           const leftCharactersCount = maxLength - values.text.length;
-          const isButtonDisabled = values.rate === null || values.rate === 0;
-          // const isButtonDisabled = values.text.trim().length === 0 && (values.rate === null || values.rate === 0);
+          const isButtonDisabled =
+            values.rate === null || values.rate === 0 || isSubmitting;
+
           return (
             <Form className={style['review_leave-review']}>
               <div className={style['reviews_rate__block']}>
@@ -66,6 +129,7 @@ function FormReview({ productId }: { productId: number }) {
                     onChange={(value) => setFieldValue('rate', value)}
                     value={values.rate ?? 0}
                     tabIndex={0}
+                    disabled={isSubmitting}
                     character={({ index = 0 }) => {
                       return (
                         <img
@@ -95,6 +159,7 @@ function FormReview({ productId }: { productId: number }) {
                     maxLength={maxLength}
                     value={values.text}
                     name="text"
+                    disabled={isSubmitting}
                   />
                   <span
                     className={classNames(style['review_character-counter'], {

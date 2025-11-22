@@ -1,6 +1,8 @@
+import { PaymentMethodType } from '@/pages/OrderConfirmation/libs/enums/payment-method';
+
 export type PersonalDataPayload = {
   fullName: string;
-  birthdate:string;
+  birthdate: string;
   city: string;
   gender: string;
 };
@@ -65,6 +67,7 @@ export interface IOrder {
   phoneNumber: string;
   deliveryMethod: string;
   deliveryStatus: string;
+  paymentMethod: PaymentMethodType;
   address: IAddress;
   isPaid: boolean;
   createdAt: string;

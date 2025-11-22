@@ -14,7 +14,7 @@ import { SliderNav } from '@/components/SliderNav/SliderNav';
 import { MainIntro } from '@/components/MainIntro';
 import { MainPageSkeleton } from '@/components/skeletons/MainPageSkeleton';
 import { useMediaQuery } from 'react-responsive';
-import { DEFAULT_PAGE, DEFAULT_SIZE } from '@/constants/pagination';
+import { DEFAULT_PAGE, DEFAULT_SIZE_ALL } from '@/constants/pagination';
 import { IProductCard } from '@/interfaces/interfaces';
 import useLocalStorage from '@/hooks/useLocalStorage';
 
@@ -40,7 +40,7 @@ export default function Main() {
   }, [dispatch]);
 
   useEffect(() => {
-    getAllProducts({ page: DEFAULT_PAGE, size: DEFAULT_SIZE });
+    getAllProducts({ page: DEFAULT_PAGE, size: DEFAULT_SIZE_ALL });
   }, [getAllProducts]);
 
   return (

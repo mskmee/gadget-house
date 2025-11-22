@@ -21,6 +21,7 @@ import { useMediaQuery } from 'react-responsive';
 import { Filters } from '../Filters/Filters';
 import { SortingDesk } from '../Sort/SortingDesk';
 import { DataStatus } from '@/enums/data-status';
+import { formatCategoryUrlName } from '@/utils/helpers/formatCategoryUrlName';
 
 interface IPageLayoutProps {
   products: IProductCard[];
@@ -50,12 +51,25 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   const isMobile767 = useMediaQuery({
     query: '(max-width: 767px)',
   });
+  const isInitialLoading =
+    useTypedSelector((state: RootState) => state.products.dataStatus) ===
+    DataStatus.PENDING;
 
   const brandIds = useSelector(selectBrandIds);
   const attributesIds = useSelector(selectFilteredAttributes, shallowEqual);
 
   const size = isMobile767 ? DEFAULT_SIZE_MOBILE : DEFAULT_SIZE;
 
+  const pathname = pathName.slice(1);
+  let category = '';
+
+  if (pathname.includes('search') && searchInputValue) {
+    category = isSuggestion
+      ? searchInputValue.split('-').join(' ')
+      : `Search results for "${searchInputValue}"`;
+  } else {
+    formatCategoryUrlName(pathname);
+  }
   useEffect(() => {
     if (categoryId !== null && categoryId === selectedCategoryId) {
       dispatch(
@@ -86,25 +100,6 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
     size,
   ]);
 
-  const pathname = pathName.slice(1);
-  let category = '';
-
-  if (pathname.includes('search') && searchInputValue) {
-    category = isSuggestion
-      ? searchInputValue.split('-').join(' ')
-      : `Search results for "${searchInputValue}"`;
-  } else {
-    pathname.includes('-')
-      ? (category =
-          pathname.charAt(0).toUpperCase() +
-          pathname.slice(1).split('-').join(' '))
-      : (category = pathname.charAt(0).toUpperCase() + pathname.slice(1));
-  }
-
-  const isInitialLoading =
-    useTypedSelector((state: RootState) => state.products.dataStatus) ===
-    DataStatus.PENDING;
-
   return (
     <div className={styles.pageLayout}>
       {!isMobile767 && pathName !== '/search/' && (
@@ -125,9 +120,8 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
         <div className={styles.pageLayout__content}>
           {!isMobile991 && <FiltersDesk key={categoryId} />}
 
-          {isInitialLoading && pagination.currentPage === 0 ? (
-            'Loading...'
-          ) : products.length > 0 ? (
+          {isInitialLoading &&
+          pagination.currentPage === 0 ? null : products.length > 0 ? (
             <Catalog
               data={products}
               totalPages={totalPages}

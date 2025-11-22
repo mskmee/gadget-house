@@ -1,22 +1,22 @@
 import { FC, MouseEvent } from 'react';
-import { notification, Rate } from 'antd';
-import styles from './card.module.scss';
-import { rateImg, rateEmptyImg } from '@/assets/constants';
 import { Link } from 'react-router-dom';
+import classNames from 'classnames';
+import { notification, Rate } from 'antd';
+import { HeartIcon } from '@/assets/icons/HeartIcon';
+import { BasketIcon } from '@/assets/icons/BasketIcon';
+import { useActions } from '@/hooks/useActions';
+import useLocalStorage from '@/hooks/useLocalStorage';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+import { useAuthRequired } from '@/hooks/useAuthRequired';
+import getFormattedCategoryName from '@/hooks/getFormattedCategoryName';
+import { convertPriceToReadable } from '@/utils/helpers/product';
+import { rateImg, rateEmptyImg } from '@/assets/constants';
+import styles from './card.module.scss';
 import {
   IBrandCard,
   IProductCard,
   TProductImageCard,
 } from '@/interfaces/interfaces';
-import { BasketIcon } from '@/assets/icons/BasketIcon';
-import classNames from 'classnames';
-import { HeartIcon } from '@/assets/icons/HeartIcon';
-import { useActions } from '@/hooks/useActions';
-import { useTypedSelector } from '@/hooks/useTypedSelector';
-import { convertPriceToReadable } from '@/utils/helpers/product';
-import useLocalStorage from '@/hooks/useLocalStorage';
-import getFormattedCategoryName from '@/hooks/getFormattedCategoryName';
-
 interface ISmartphoneCardProps {
   tempProduct: IProductCard | TProductImageCard | IBrandCard | undefined;
   classname: string;
@@ -33,6 +33,8 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
   width,
 }) => {
   const { toggleFavorite } = useActions();
+  const { user } = useTypedSelector((state) => state.auth);
+  const { triggerAuthRequired } = useAuthRequired();
   const product = tempProduct as IProductCard;
 
   const [previouslyReviewed, setPreviouslyReviewed] = useLocalStorage<
@@ -86,9 +88,11 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
   };
 
   const handleSaveFavoriteProduct = () => {
-    if (product) {
-      toggleFavorite(product);
+    if (!user) {
+      triggerAuthRequired('favorite');
+      return;
     }
+    toggleFavorite(product);
   };
 
   const handleSaveReviewedItem = () => {
@@ -97,7 +101,6 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
     }
   };
   const anotherColors = (product as IProductCard)?.alternativeProducts?.color;
-
   const formatCategoryName = getFormattedCategoryName(product?.categoryId);
 
   return (
@@ -171,16 +174,16 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
             <div className={styles.cardRate}>
               <Rate
                 className="reviews_rate-stars"
-                character={({ index = 0 }) => {
-                  return (
-                    <img
-                      src={index < productRating ? rateImg : rateEmptyImg}
-                      alt="product rate star"
-                      width={24}
-                      height={24}
-                    />
-                  );
-                }}
+                disabled
+                // style={{ pointerEvents: 'none' }}
+                character={({ index = 0 }) => (
+                  <img
+                    src={index < productRating ? rateImg : rateEmptyImg}
+                    alt="product rate star"
+                    width={24}
+                    height={24}
+                  />
+                )}
               />
               <div className={styles['card-code']}>
                 <span>code:</span>
@@ -195,15 +198,12 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
                   locale,
                 )}
               </p>
-              <button onClick={handleaddToBasket} tabIndex={-1}>
+              <button onClick={handleaddToBasket} tabIndex={0}>
                 <BasketIcon />
               </button>
             </div>
           </div>
         </Link>
-        {/* <button onClick={handleaddToBasket} tabIndex={-1}>
-                <BasketIcon />
-              </button> */}
       </div>
     </>
   );

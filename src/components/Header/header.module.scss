@@ -93,6 +93,15 @@
     align-items: center;
     gap: 16px;
     position: relative;
+    > a:nth-child(4) svg,
+    > button:nth-child(4) svg {
+      width: 34px;
+      height: 34px;
+      path {
+        stroke-width: 1px;
+        stroke: var(--text-color, #1c1817);
+      }
+    }
     > a,
     > button {
       display: flex;
@@ -143,20 +152,20 @@
       }
     }
 
-    > a:nth-child(4) svg,
-    > button:nth-child(4) svg {
-      width: 34px;
-      height: 34px;
-      path {
-        stroke-width: 1px;
-        stroke: var(--text-color, #1c1817);
-      }
-    }
-    > a:nth-child(4) {
-      &:hover svg path {
-        stroke: #fff;
-      }
-    }
+    // > a:nth-child(4) svg,
+    // > button:nth-child(4) svg {
+    //   width: 34px;
+    //   height: 34px;
+    //   path {
+    //     stroke-width: 1px;
+    //     stroke: var(--text-color, #1c1817);
+    //   }
+    // }
+    // > a:nth-child(4) {
+    //   &:hover svg path {
+    //     stroke: #fff;
+    //   }
+    // }
 
     > a:nth-child(4):hover + div {
       display: block;
@@ -276,6 +285,7 @@
     left: 0;
     width: 100%;
     z-index: 9999;
+
     max-width: 100%;
     margin: 0;
     padding: 0;

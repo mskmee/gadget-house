@@ -2,7 +2,7 @@ import { FC, useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Pagination } from 'antd';
 
-import { DEFAULT_SIZE } from '@/constants/pagination';
+import { DEFAULT_SIZE, DEFAULT_SIZE_MOBILE } from '@/constants/pagination';
 import { useMediaQuery } from 'react-responsive';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { IProductCard } from '@/interfaces/interfaces';
@@ -26,6 +26,13 @@ export const Catalog: FC<ICatalogProps> = ({ data, totalPages }) => {
   const isFetchingMore = useTypedSelector(
     (state: RootState) => state.products.isFetchingMore,
   );
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'instant',
+    });
+  }, []);
+
   useEffect(() => {
     if (pagination.totalPages) {
       setHasMore(pagination.currentPage < pagination.totalPages - 1);
@@ -116,8 +123,10 @@ export const Catalog: FC<ICatalogProps> = ({ data, totalPages }) => {
             showSizeChanger={false}
             showTitle={false}
             current={pagination.currentPage + 1}
-            pageSize={DEFAULT_SIZE}
-            total={totalPages * DEFAULT_SIZE}
+            pageSize={isMobile767 ? DEFAULT_SIZE_MOBILE : DEFAULT_SIZE}
+            total={
+              totalPages * (isMobile767 ? DEFAULT_SIZE_MOBILE : DEFAULT_SIZE)
+            }
             onChange={(page) => dispatch(setPageNumber(page - 1))}
             className={styles.catalog__pagination}
           />

@@ -10,6 +10,8 @@ import {
   getFilteredProducts,
   getOneProductById,
   getPaginatedProducts,
+  getSuggestions,
+  searchProducts,
 } from './actions';
 import {
   DEFAULT_PAGE,
@@ -24,6 +26,8 @@ export interface IInitialState {
   activeProduct: ProductItemResponseDto | null;
   favoriteProducts: IProductCard[];
   paginatedProducts: ProductsResponseDto | null;
+  suggestions: string[];
+  searchResults: ProductsResponseDto | null;
   dataStatus: DataStatus;
   pagination: {
     currentPage: number;
@@ -34,14 +38,6 @@ export interface IInitialState {
   isFetchingMore: boolean;
   isAppending: boolean;
 }
-
-// const saveProductsToStorage = (products: ProductsResponseDto) => {
-//   try {
-//     localStorage.setItem('productsData', JSON.stringify(products));
-//   } catch (error) {
-//     console.error('Error saving products to localStorage:', error);
-//   }
-// };
 
 const loadProductsFromStorage = (): ProductsResponseDto | null => {
   try {
@@ -60,6 +56,8 @@ const initialState: IInitialState = {
     localStorage.getItem('favorite_products') || '[]',
   ),
   paginatedProducts: null,
+  suggestions: [],
+  searchResults: null,
   dataStatus: DataStatus.IDLE,
   pagination: {
     currentPage: DEFAULT_PAGE,
@@ -82,14 +80,9 @@ const products_slice = createSlice({
       state.loaded = payload;
     },
     toggleFavorite: (state, { payload }: PayloadAction<IProductCard>) => {
-      console.log('PAYLOAD THAT REDUCER RECIEVE', payload);
-      console.log('STATE PRODUCST DATA FROM REDUX:', state.productsData);
-
       const product = state.productsData?.page.find(
         (item) => item.id === payload.id,
       );
-
-      console.log('PRODUCT ', product);
 
       if (product) {
         product.isLiked = !product.isLiked;
@@ -120,8 +113,10 @@ const products_slice = createSlice({
       localStorage.removeItem('productsData');
     },
     setIsAppending: (state, { payload }: { payload: boolean }) => {
-      console.log('payload', payload);
       state.isAppending = payload;
+    },
+    clearSuggestions: (state) => {
+      state.suggestions = [];
     },
   },
   extraReducers(builder) {
@@ -192,10 +187,18 @@ const products_slice = createSlice({
 
         state.isFetchingMore = false;
         state.isAppending = false;
+        state.loaded = true;
       })
       .addCase(getFilteredProducts.rejected, (state) => {
         state.isFetchingMore = false;
       });
+
+    builder.addCase(getSuggestions.fulfilled, (state, action) => {
+      state.suggestions = action.payload;
+    });
+    builder.addCase(searchProducts.fulfilled, (state, action) => {
+      state.searchResults = action.payload;
+    });
 
     builder.addMatcher(
       isAnyOf(
@@ -241,6 +244,7 @@ const products_slice = createSlice({
 export const {
   setPageNumber,
   clearProductsData,
+  clearSuggestions,
   toggleFavorite,
   setIsAppending,
   setLoaded,
