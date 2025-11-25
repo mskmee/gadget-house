@@ -1,7 +1,7 @@
+import { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { Popover } from 'antd';
 import cn from 'classnames';
-
 import { Sort } from '@/enums/enums';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { AppDispatch, RootState } from '@/store';
@@ -10,10 +10,8 @@ import {
   setSortPopoverOpen,
 } from '@/store/filters/filters_slice';
 import { SortOption } from './SortOption';
-
 import SortSvg from '@/assets/icons/sorting.svg';
 import ArrowUpSvg from '@/assets/icons/arrow-up.svg';
-
 import styles from './sort.module.scss';
 import { setPageNumber } from '@/store/products/products_slice';
 
@@ -22,6 +20,7 @@ export const SortingDesk = () => {
   const { selectedSort, isSortPopoverOpen } = useTypedSelector(
     (state: RootState) => state.filters,
   );
+  const mainButtonRef = useRef<HTMLButtonElement>(null);
   const selectedSortName = Object.values(Sort).find(
     (s) => s.value === selectedSort,
   )?.name;
@@ -34,20 +33,31 @@ export const SortingDesk = () => {
     dispatch(setSelectedSort(value));
     dispatch(setPageNumber(0));
     dispatch(setSortPopoverOpen(false));
+    if (mainButtonRef.current) {
+      mainButtonRef.current.focus();
+    }
   };
+  const sortOptions = Object.values(Sort);
 
   const content = (
     <div className={styles.sort__radioGroup}>
-      {Object.values(Sort).map((option) => (
-        <SortOption
-          key={option.value}
-          name={option.name}
-          value={option.value}
-          isSelected={selectedSort === option.value}
-          onSelect={handleSortSelection}
-          classNames={styles.sortDesk__radio}
-        />
-      ))}
+      {sortOptions.map((option, index) => {
+        const isCurrentSelected = selectedSort === option.value;
+        const isFirst = index === 0;
+        const enableAutoFocus = isCurrentSelected || (!selectedSort && isFirst);
+
+        return (
+          <SortOption
+            key={option.value}
+            name={option.name}
+            value={option.value}
+            isSelected={isCurrentSelected}
+            onSelect={handleSortSelection}
+            classNames={styles.sortDesk__radio}
+            autoFocus={enableAutoFocus}
+          />
+        );
+      })}
     </div>
   );
 
@@ -61,8 +71,15 @@ export const SortingDesk = () => {
         placement="bottomRight"
         className={styles.sortDesk__sortPopover}
         content={content}
+        destroyTooltipOnHide={true}
       >
-        <button onClick={showModal} className={styles.sortDesk__button}>
+        <button
+          ref={mainButtonRef}
+          onClick={showModal}
+          className={styles.sortDesk__button}
+          aria-haspopup="true"
+          aria-expanded={isSortPopoverOpen}
+        >
           <img src={SortSvg} alt="Icon sorting" />
           Sort: {selectedSortName}
           <img

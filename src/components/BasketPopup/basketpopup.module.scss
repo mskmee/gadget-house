@@ -98,6 +98,11 @@
     display: grid;
     place-content: center;
 
+    > img:first-child {
+      height: 200px;
+      object-fit: contain;
+      object-position: center;
+    }
     > img {
       mix-blend-mode: multiply;
       background: #fff;
@@ -494,7 +499,7 @@
           > div:first-child {
             align-self: auto;
             img {
-              width: 120px;
+              width: auto;
             }
           }
           > div:nth-child(2) {

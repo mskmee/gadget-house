@@ -58,16 +58,17 @@
 .cardImage {
   flex-grow: 1;
   align-self: flex-start;
+  width: 273px;
 
   .smartphoneImg,
   .laptopImg {
     display: block;
     height: 100%;
     margin: 0 auto;
+    max-height: 250px;
   }
 
   .laptopImg {
-    width: 273px;
     height: 100%;
     max-height: 250px;
   }
@@ -329,9 +330,11 @@
     height: 150px;
     .cardImage {
       align-self: auto;
+      width: 200px;
+      height: 150px;
       .smartphoneImg,
       .laptopImg {
-        width: 150px;
+        width: auto;
       }
     }
     .cardConatinerLike {
@@ -390,9 +393,11 @@
     height: 118px;
     .cardImage {
       align-self: auto;
+      width: 155px;
+      height: 118px;
       .smartphoneImg,
       .laptopImg {
-        width: 120px;
+        width: auto;
       }
     }
     .cardConatinerLike {
@@ -469,9 +474,11 @@
     .cardContainerTop {
       height: 110px;
       .cardImage {
+        width: 90px;
+        height: 110px;
         .smartphoneImg,
         .laptopImg {
-          width: 90px;
+          width: auto;
         }
       }
       .cardConatinerLike {
