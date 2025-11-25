@@ -17,13 +17,16 @@ export const AdminTableHeader = ({
     <thead>
       <tr>
         <th>
-          <Checkbox
-            className={styles.admin__tableWrapperCheckbox}
-            checked={isAllChecked}
-            indeterminate={hasIndeterminate}
-            onChange={onCheckAll}
-          />{' '}
-          Invoice
+          <div>
+            {' '}
+            <Checkbox
+              className={styles.admin__tableWrapperCheckbox}
+              checked={isAllChecked}
+              indeterminate={hasIndeterminate}
+              onChange={onCheckAll}
+            />{' '}
+            Invoice
+          </div>
         </th>
         <th>Customers</th>
         <th>Status</th>

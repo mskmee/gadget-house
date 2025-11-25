@@ -1,6 +1,7 @@
 const Locale = {
   UA: 'uk-UA',
   RU: 'ru-RU',
+  EN: 'en-US',
 } as const;
 
 // eslint-disable-next-line no-redeclare
