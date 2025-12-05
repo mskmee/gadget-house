@@ -41,7 +41,9 @@ export const AdminTableRow = ({
       <td>{formatPhoneDisplay(item.phoneNumber)}</td>
       <td>
         {isChecked && isPatching ? (
-          <LoadingSpinner style={{ height: '44px' }} />
+          <div style={{ height: '44px' }}>
+            <LoadingSpinner />
+          </div>
         ) : (
           <button
             className={`button__status button__status_${item.deliveryStatus.toLowerCase().replace(' ', '_')}`}

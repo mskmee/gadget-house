@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Input } from 'antd';
 import { FieldInputProps } from 'formik';
 import { FlagUA } from '@/assets/constants';
@@ -10,27 +10,18 @@ type Props = {
 };
 
 export const PhoneInput = ({ field, id, ...props }: Props) => {
-  const [phone, setPhone] = useState(() => {
-    return field.value ? formatPhoneNumber(field.value) : '';
-  });
-
-  useEffect(() => {
-    if (field.value) setPhone(formatPhoneNumber(field.value));
-    else setPhone('');
-  }, [field.value]);
+  const [isFocused, setIsFocused] = useState(false);
 
   function formatPhoneNumber(value: string) {
     const numbers = value.replace(/\D/g, '');
 
-    if (numbers.length > 0) {
-      let formatted = `(${numbers.slice(0, 3)}`;
-      if (numbers.length >= 4) formatted += `)-${numbers.slice(3, 6)}`;
-      if (numbers.length >= 7) formatted += `-${numbers.slice(6, 8)}`;
-      if (numbers.length >= 9) formatted += `-${numbers.slice(8, 10)}`;
-      return formatted;
-    }
+    if (numbers.length === 0) return '';
 
-    return numbers;
+    let formatted = `(${numbers.slice(0, 3)}`;
+    if (numbers.length >= 4) formatted += `)-${numbers.slice(3, 6)}`;
+    if (numbers.length >= 7) formatted += `-${numbers.slice(6, 8)}`;
+    if (numbers.length >= 9) formatted += `-${numbers.slice(8, 10)}`;
+    return formatted;
   }
 
   const normalizePhoneNumber = (value: string) =>
@@ -38,10 +29,29 @@ export const PhoneInput = ({ field, id, ...props }: Props) => {
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const rawValue = normalizePhoneNumber(event.target.value);
-    const formatted = formatPhoneNumber(rawValue);
-    setPhone(formatted);
-    field.onChange({ target: { name: field.name, value: formatted } });
+    field.onChange({ target: { name: field.name, value: rawValue } });
   };
+
+  const handleFocus = () => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    setIsFocused(false);
+    const syntheticEvent = {
+      ...event,
+      target: {
+        ...event.target,
+        name: field.name,
+        value: field.value,
+      },
+    };
+    field.onBlur(syntheticEvent as any);
+  };
+
+  const displayValue = isFocused
+    ? field.value || ''
+    : formatPhoneNumber(field.value || '');
 
   return (
     <div className={styles.phoneInput}>
@@ -55,11 +65,12 @@ export const PhoneInput = ({ field, id, ...props }: Props) => {
         {...props}
         id={id}
         name={field.name}
-        value={phone}
+        value={displayValue}
         onChange={handleChange}
-        onBlur={field.onBlur}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         inputMode="numeric"
-        placeholder="(___)-___-__-__"
+        placeholder={isFocused ? '__________' : '(___)-___-__-__'}
       />
     </div>
   );

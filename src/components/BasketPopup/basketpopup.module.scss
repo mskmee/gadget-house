@@ -570,8 +570,8 @@
 
 @media screen and (max-width: 600px) {
   .basketPopup {
-    // padding: 40px 15px 20px 15px;
-    // min-height: 250px;
+    max-height: calc(100vh - 150px);
+    max-height: calc(100dvh - 150px);
     .basketPopupClose {
       > img {
         width: 34px;

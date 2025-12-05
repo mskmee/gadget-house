@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo, useCallback } from 'react';
-import styles from './SearchResults.module.scss';
+import styles from './SearchResultsNotFound.module.scss';
 import { useDocumentTitle } from '@/hooks/useDocumentTitle';
 import { Benefits, Carousels, SliderNav } from '@/components/components';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -9,9 +9,9 @@ import { outOfStockProductsList } from '@/constants/outOfStockProductsList';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store';
 import { getAllProducts } from '@/store/products/actions';
-import { DEFAULT_PAGE, DEFAULT_SIZE } from '@/constants/pagination';
+import { DEFAULT_PAGE, DEFAULT_SIZE_ALL } from '@/constants/pagination';
 
-export const SearchResults = () => {
+export const SearchResultsNotFound = () => {
   useDocumentTitle(`Search results`);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
@@ -51,7 +51,7 @@ export const SearchResults = () => {
 
   useEffect(() => {
     if (!productsLoaded || !productsData) {
-      dispatch(getAllProducts({ page: DEFAULT_PAGE, size: DEFAULT_SIZE }));
+      dispatch(getAllProducts({ page: DEFAULT_PAGE, size: DEFAULT_SIZE_ALL }));
     }
   }, [dispatch, productsLoaded, productsData]);
 

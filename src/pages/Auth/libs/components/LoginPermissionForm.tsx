@@ -74,7 +74,9 @@ const LoginPermissionForm: FC<ILoginFormProps> = ({
               >
                 {isLoading ? (
                   <>
-                    <LoadingSpinner style={{ height: '15px' }} />
+                    <div style={{ height: '15px' }}>
+                      <LoadingSpinner />
+                    </div>
                   </>
                 ) : (
                   'Activate Account'
