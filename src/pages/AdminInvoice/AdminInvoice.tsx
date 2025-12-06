@@ -47,7 +47,7 @@ const AdminInvoice = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const { data: searchResults } = useSearchProductsQuery(
     searchQuery.trim()
-      ? { query: searchQuery, pageable: { size: 6 } }
+      ? { query: searchQuery, pageable: { size: 8 } }
       : skipToken,
   );
 

@@ -1,59 +1,159 @@
 .searchWrapper {
   position: relative;
-
-  .suggestions {
+  width: 100%;
+  .suggestionsWrapper {
     position: absolute;
-    top: 60px;
+    top: 100%;
     left: 0;
     display: block;
-    max-width: inherit;
+    border: 1px solid #eaecf0;
+    border-radius: 8px;
+    padding: 4px 6px;
+    width: 828px;
+    height: 200px;
+    box-shadow:
+      0 4px 6px -2px rgba(16, 24, 40, 0.03),
+      0 12px 16px -4px rgba(16, 24, 40, 0.08);
+    background: #fff;
+    margin: 4px 0 0 0;
+    z-index: 100;
+  }
+
+  .suggestions {
     width: 100%;
-    border-bottom-left-radius: 12px;
-    border-bottom-right-radius: 12px;
-    background-color: #fff;
-    border: 1px solid var(--secondary-background-color);
-    padding-bottom: 10px;
+    height: 192px;
+    overflow-y: auto;
+    padding: 0;
     list-style: none;
-    margin: 0;
-    z-index: 10;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: #ccc;
+      border-radius: 3px;
+    }
 
     .suggestion {
+      &:last-child {
+        border-bottom: none;
+      }
+
       .suggestionLink {
-        display: block;
+        display: flex;
+        align-items: center;
         width: 100%;
-        padding: 16px 22px;
+        padding: 5px 5px;
         text-align: left;
         background: none;
         border: none;
         cursor: pointer;
+        transition: background-color 0.2s;
 
         &:hover {
           background-color: #f8f7fa;
         }
 
-        > span {
-          color: #808080;
+        img {
+          width: 37px;
+          height: 37px;
+          object-fit: contain;
+          margin-right: 12px;
+          border-radius: 2px;
+          background-color: #fff;
         }
 
-        > strong {
-          color: #1c1817;
+        .info {
+          flex: 1;
+          margin-right: 25px;
+          display: flex;
+          justify-content: space-between;
+
+          .title {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 150%;
+            color: #182230;
+          }
+
+          .category {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 150%;
+            color: #182230;
+            text-transform: lowercase;
+          }
         }
 
-        .category {
-          display: block;
-          font-size: 14px;
-          color: #a5a5a5;
-          margin-top: 4px;
+        .price {
+          font-family: 'Inter', sans-serif;
+          font-weight: 400;
+          font-size: 18px;
+          line-height: 150%;
+          color: #182230;
         }
       }
 
       &--active {
         background-color: #f8f7fa;
-
-        .suggestionLink {
-          background-color: #f8f7fa;
-        }
       }
     }
   }
+
+  // --- Стили для выбранного товара (заменяет инпут) ---
+  // .selectedProductInput {
+  //   display: flex;
+  //   align-items: center;
+  //   justify-content: space-between;
+  //   width: 100%;
+  //   height: 48px;
+  //   padding: 0 16px;
+  //   background-color: #f9f9f9;
+  //   border: 1px solid #e1e1e1;
+  //   border-radius: 8px;
+
+  //   .selectedContent {
+  //     display: flex;
+  //     align-items: center;
+  //     overflow: hidden;
+
+  //     img {
+  //       width: 24px;
+  //       height: 24px;
+  //       object-fit: contain;
+  //       margin-right: 10px;
+  //     }
+
+  //     span {
+  //       font-size: 14px;
+  //       color: #333;
+  //       white-space: nowrap;
+  //       overflow: hidden;
+  //       text-overflow: ellipsis;
+  //     }
+  //   }
+
+  //   .clearButton {
+  //     background: none;
+  //     border: none;
+  //     cursor: pointer;
+  //     display: flex;
+  //     align-items: center;
+  //     justify-content: center;
+  //     color: #999;
+  //     padding: 4px;
+  //     margin-left: 8px;
+
+  //     &:hover {
+  //       color: #ff4d4f;
+  //     }
+
+  //     svg {
+  //       width: 16px;
+  //       height: 16px;
+  //     }
+  //   }
+  // }
 }

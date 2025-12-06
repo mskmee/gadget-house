@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import cn from 'classnames';
 import { OrderItem } from '../OrderItem/OrderItem';
 import { AdminSearchWithSuggestions } from '@/pages/AdminPage/components/AdminSearchWIthSuggestion/SearchWithSuggestion';
@@ -34,15 +35,26 @@ export const OrdersList = ({
   onProductAdd,
   onProductDelete,
 }: OrdersListProps) => {
-  const handleAddProduct = (productId: string) => {
-    if (!productId) return;
+  const [pendingProduct, setPendingProduct] = useState<Suggestion | null>(null);
+
+  const handleSelectSuggestion = (suggestion: Suggestion) => {
+    setPendingProduct(suggestion);
+  };
+
+  const handleClearSelection = () => {
+    setPendingProduct(null);
+    onSearchChange('');
+  };
+
+  const handleAddClick = () => {
+    if (!pendingProduct) return;
 
     const cartItem: CartItem = {
-      productId,
+      productId: pendingProduct.productId,
       quantity: 1,
     };
-
     onProductAdd(cartItem);
+    setPendingProduct(null);
   };
 
   return (
@@ -51,31 +63,41 @@ export const OrdersList = ({
     >
       <div className={styles.adminInvoice__ordersTop}>
         <h3 className={styles.adminInvoice__header}>Order list</h3>
-
         <div className={styles.adminInvoice__ordersSearch}>
           <AdminSearchWithSuggestions
             placeholder="Add the product"
             suggestions={suggestions}
             onSearchChange={onSearchChange}
-            onProductSelect={handleAddProduct}
+            onProductSelect={handleSelectSuggestion}
+            selectedItem={pendingProduct}
+            onClearSelection={handleClearSelection}
           />
+          <button
+            className={cn(
+              styles.adminInvoice__ordersAdd,
+              'button button-secondary',
+              { [styles.disabledButton]: !pendingProduct },
+            )}
+            onClick={handleAddClick}
+            disabled={!pendingProduct}
+          >
+            Add
+          </button>
         </div>
       </div>
-
       <ul className={styles.adminInvoice__ordersList}>
         {productsData.map((product) => (
           <OrderItem
             key={product.shortProductResponseDto.id}
             id={product.shortProductResponseDto.id}
             name={product.shortProductResponseDto.name}
-            image={product.shortProductResponseDto.images[0].link}
+            image={product.shortProductResponseDto.images[0]?.link}
             quantity={product.quantity}
             price={product.price}
             onDelete={onProductDelete}
           />
         ))}
       </ul>
-
       <div className={styles.adminInvoice__ordersTotal}>
         <span className={styles.adminInvoice__ordersTotalText}>Sum</span>
         <span className={styles.adminInvoice__ordersTotalPrice}>
