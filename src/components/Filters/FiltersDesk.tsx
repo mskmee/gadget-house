@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Row, Col, InputNumber, Slider } from 'antd';
 import cn from 'classnames';
-
 import { filters } from './consts';
 import { AppDispatch } from '@/store';
 import {
@@ -15,9 +14,7 @@ import { setPageNumber } from '@/store/products/products_slice';
 import { useRangeFilter } from './hooks/useRangeFilter';
 import { handleKeyDown } from '@/utils/helpers/checkKeydownEvent';
 import { Option } from './Option';
-
 import ArrowUpSvg from '@/assets/icons/arrow-up.svg';
-
 import styles from './filters.module.scss';
 
 export const FiltersDesk = () => {
@@ -93,6 +90,13 @@ export const FiltersDesk = () => {
   const handleFocus = (inputRef: React.RefObject<HTMLInputElement>) => {
     if (inputRef.current) {
       inputRef.current.select();
+    }
+  };
+
+  const handleCameraHeaderKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleShowCategory();
     }
   };
 
@@ -226,12 +230,22 @@ export const FiltersDesk = () => {
                 !showCategory && styles.hide,
               )}
               onClick={toggleShowCategory}
+              onKeyDown={handleCameraHeaderKeyDown}
+              role="button"
+              tabIndex={0}
+              aria-expanded={showCategory}
+              aria-controls="filter-camera"
             >
-              <h4 className={styles.filters__optionName}>Main camera, MP</h4>
+              <h4
+                className={styles.filters__optionName}
+                id="filter-title-camera"
+              >
+                Main camera, MP
+              </h4>
 
               <img
                 src={ArrowUpSvg}
-                alt="Arrow Up Icon"
+                alt={showCategory ? 'Collapse section' : 'Expand section'}
                 className={cn(
                   styles.filters__optionArrow,
                   !showCategory && styles.arrowDown,
@@ -239,64 +253,66 @@ export const FiltersDesk = () => {
               />
             </div>
             {showCategory && (
-              <Row gutter={16}>
-                <Col span={12} className={styles.filters__camera}>
-                  <span className={styles.filters__priceText}>From</span>
-                  <InputNumber
-                    ref={inputMinCameraMPRef}
-                    min={0}
-                    max={643}
-                    maxLength={3}
-                    value={minCameraMP}
-                    defaultValue={0}
-                    controls={false}
-                    onChange={handleMinMPChange}
-                    inputMode="numeric"
-                    stringMode={false}
-                    onKeyDown={handleKeyDown}
-                    onFocus={() => handleFocus(inputMinCameraMPRef)}
-                    style={{
-                      width: '74px',
-                      height: '40px',
-                      border: '1px solid #1c1817',
-                      borderRadius: '10px',
-                      backgroundColor: 'white',
-                      fontFamily: 'Inter, sans-serif',
-                      fontSize: '16px',
-                      color: '#1c1817',
-                      textAlign: 'center',
-                    }}
-                  />
-                </Col>
-                <Col span={12} className={styles.filters__camera}>
-                  <span className={styles.filters__priceText}>To</span>
-                  <InputNumber
-                    ref={inputMaxCameraMPRef}
-                    min={0}
-                    max={644}
-                    maxLength={3}
-                    value={maxCameraMP}
-                    defaultValue={0}
-                    controls={false}
-                    onChange={handleMaxMPChange}
-                    inputMode="numeric"
-                    stringMode={false}
-                    onKeyDown={handleKeyDown}
-                    onFocus={() => handleFocus(inputMaxCameraMPRef)}
-                    style={{
-                      width: '74px',
-                      height: '40px',
-                      border: '1px solid #1c1817',
-                      borderRadius: '10px',
-                      backgroundColor: 'white',
-                      fontFamily: 'Inter, sans-serif',
-                      fontSize: '16px',
-                      color: '#1c1817',
-                      textAlign: 'center',
-                    }}
-                  />
-                </Col>
-              </Row>
+              <div id="filter-camera">
+                <Row gutter={16}>
+                  <Col span={12} className={styles.filters__camera}>
+                    <span className={styles.filters__priceText}>From</span>
+                    <InputNumber
+                      ref={inputMinCameraMPRef}
+                      min={0}
+                      max={643}
+                      maxLength={3}
+                      value={minCameraMP}
+                      defaultValue={0}
+                      controls={false}
+                      onChange={handleMinMPChange}
+                      inputMode="numeric"
+                      stringMode={false}
+                      onKeyDown={handleKeyDown}
+                      onFocus={() => handleFocus(inputMinCameraMPRef)}
+                      style={{
+                        width: '74px',
+                        height: '40px',
+                        border: '1px solid #1c1817',
+                        borderRadius: '10px',
+                        backgroundColor: 'white',
+                        fontFamily: 'Inter, sans-serif',
+                        fontSize: '16px',
+                        color: '#1c1817',
+                        textAlign: 'center',
+                      }}
+                    />
+                  </Col>
+                  <Col span={12} className={styles.filters__camera}>
+                    <span className={styles.filters__priceText}>To</span>
+                    <InputNumber
+                      ref={inputMaxCameraMPRef}
+                      min={0}
+                      max={644}
+                      maxLength={3}
+                      value={maxCameraMP}
+                      defaultValue={0}
+                      controls={false}
+                      onChange={handleMaxMPChange}
+                      inputMode="numeric"
+                      stringMode={false}
+                      onKeyDown={handleKeyDown}
+                      onFocus={() => handleFocus(inputMaxCameraMPRef)}
+                      style={{
+                        width: '74px',
+                        height: '40px',
+                        border: '1px solid #1c1817',
+                        borderRadius: '10px',
+                        backgroundColor: 'white',
+                        fontFamily: 'Inter, sans-serif',
+                        fontSize: '16px',
+                        color: '#1c1817',
+                        textAlign: 'center',
+                      }}
+                    />
+                  </Col>
+                </Row>
+              </div>
             )}
           </div>
 
