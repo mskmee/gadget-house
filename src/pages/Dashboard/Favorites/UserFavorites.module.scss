@@ -73,8 +73,18 @@
     border: 1px solid #eae4ee;
     border-radius: 20px;
     background-color: #fff;
-    .cardImage {
+    .cardImageDiv {
       width: 180px;
+      height: 200px;
+      flex-shrink: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+    .cardImage {
+      width: auto;
+      height: 100%;
     }
     .cardInfo {
       flex-grow: 1;
@@ -237,7 +247,7 @@
   }
   .cardMobile__topRight {
     text-align: right;
-    .basketPopupRemoveProduct{
+    .basketPopupRemoveProduct {
       margin-bottom: 8px;
     }
   }
@@ -270,10 +280,9 @@
 }
 
 @media (max-width: 767px) {
-  .favoriteProducts{
-
-    .favoriteProductsWrap{
-      .favoriteProductsMessageText{
+  .favoriteProducts {
+    .favoriteProductsWrap {
+      .favoriteProductsMessageText {
         font-size: 16px;
       }
     }
@@ -302,9 +311,13 @@
     .cardWrap {
       flex-direction: column;
       gap: 0;
+      .cardImageDiv {
+        width: auto;
+        height: 62px;
+      }
     }
-  }
-  .cardMobile__info {
-    max-width: 160px;
+    .cardMobile__info {
+      max-width: 160px;
+    }
   }
 }

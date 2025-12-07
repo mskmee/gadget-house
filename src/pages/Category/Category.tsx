@@ -21,6 +21,10 @@ function Category() {
     (state: RootState) => state.products,
   );
 
+  const { selectedCategoryId } = useTypedSelector(
+    (state: RootState) => state.filters,
+  );
+
   const categoryName = items.find(
     (item) => item.link === `/${category}`,
   )?.title;
@@ -36,13 +40,19 @@ function Category() {
   const { setSelectedCategory } = useActions();
 
   useEffect(() => {
-    if (isValidCategory) {
+    if (isValidCategory && categoryId !== selectedCategoryId) {
       dispatch(setPageNumber(0));
       dispatch(setIsAppending(false));
       dispatch(resetFilters());
       setSelectedCategory(categoryId);
     }
-  }, [setSelectedCategory, categoryId, dispatch, isValidCategory]);
+  }, [
+    setSelectedCategory,
+    categoryId,
+    dispatch,
+    isValidCategory,
+    selectedCategoryId,
+  ]);
 
   useEffect(() => {
     if (isDataLoaded && productsData?.page?.length === 0 && isValidCategory) {

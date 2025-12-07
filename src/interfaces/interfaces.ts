@@ -147,6 +147,7 @@ export interface ISortOptionProps {
   isSelected: boolean;
   classNames: string;
   onSelect: (value: string) => void;
+  autoFocus?: boolean;
 }
 
 export interface IGadget {

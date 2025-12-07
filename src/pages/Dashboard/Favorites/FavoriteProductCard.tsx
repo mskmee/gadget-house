@@ -76,7 +76,14 @@ export const FavoriteProductCard: FC<IFavoriteProductProps> = ({
       >
         <div className={styles.cardMobile__top}>
           <div className={styles.cardMobile__topLeft}>
-            <img className={styles.cardImage} src={images[0].link} alt={name} />
+            <div className={styles.cardImageDiv}>
+              <img
+                className={styles.cardImage}
+                src={images[0].link}
+                alt={name}
+              />
+            </div>
+
             <div className={styles.cardMobile__info}>
               <div className={styles.cardMobile__title}>{name}</div>
               <div className={styles.cardMobile__rating}>
@@ -133,7 +140,10 @@ export const FavoriteProductCard: FC<IFavoriteProductProps> = ({
       to={`/${formatCategoryName}/${id}/${href}`}
       className={styles.cardWrap}
     >
-      <img className={styles.cardImage} src={images[0].link} alt={name} />
+      <div className={styles.cardImageDiv}>
+        <img className={styles.cardImage} src={images[0].link} alt={name} />
+      </div>
+
       <div className={styles.cardInfo}>
         <div className={styles.cardInfoTop}>
           <div>

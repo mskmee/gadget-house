@@ -83,6 +83,7 @@
     :global {
       .ant-checkbox-wrapper {
         align-items: center;
+        margin-bottom: 0 !important;
 
         &:hover .ant-checkbox-inner {
           border-color: transparent !important;
@@ -107,7 +108,7 @@
           padding-inline-start: 12px;
           display: flex;
           align-items: center;
-          font-family: "Inter", sans-serif;
+          font-family: 'Inter', sans-serif;
           font-weight: 400;
           font-size: 16px;
           line-height: 150%;
@@ -122,10 +123,20 @@
         &-checked .ant-checkbox-inner {
           width: 17px;
           height: 16px;
-          background-image: url("../../assets/icons/checked.svg");
+          background-image: url('../../assets/icons/checked.svg');
           border-color: transparent !important;
           background-color: transparent !important;
         }
+      }
+
+      .ant-checkbox-input:focus {
+        outline: none !important;
+        box-shadow: none !important;
+      }
+
+      .ant-checkbox-input:focus-visible ~ .ant-checkbox-inner {
+        outline: 2px solid var(--buttons-and-accent-color) !important;
+        outline-offset: 2px !important;
       }
     }
 
@@ -138,6 +149,15 @@
 
       &.hide {
         margin-bottom: 0px;
+      }
+      &:focus {
+        outline: none;
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--buttons-and-accent-color);
+        outline-offset: 2px;
+        border-radius: 8px;
       }
     }
 
@@ -164,7 +184,7 @@
       flex-direction: column;
       gap: 8px;
 
-      &[data-label="memorySlot"] {
+      &[data-label='memorySlot'] {
         :global {
           .ant-checkbox {
             border-radius: 50%;
@@ -179,7 +199,7 @@
             }
 
             &-checked .ant-checkbox-inner {
-              background-image: url("../../assets/icons/checked-circle.svg");
+              background-image: url('../../assets/icons/checked-circle.svg');
               background-repeat: no-repeat;
               background-size: cover;
             }
@@ -187,12 +207,12 @@
         }
       }
 
-      &[data-label="colors"] {
+      &[data-label='colors'] {
         :global {
           .ant-checkbox {
             + span {
               &::before {
-                content: "";
+                content: '';
                 box-sizing: border-box;
                 width: 18px;
                 height: 18px;
@@ -220,7 +240,7 @@
   }
 
   &__priceText {
-    font-family: "Inter", sans-serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 400;
     font-size: 16px;
     line-height: 150%;
@@ -229,7 +249,7 @@
   }
 
   &__priceCurrency {
-    font-family: "Lato", sans-serif;
+    font-family: 'Lato', sans-serif;
     font-weight: 400;
     font-size: 16px;
     line-height: 150%;
@@ -325,10 +345,11 @@
     transition: all 0.3s ease-in-out;
 
     &::after {
-      content: "";
+      content: '';
       width: 24px;
       height: 24px;
-      background: url("../../assets/icons/arrow-more.svg") center / cover no-repeat;
+      background: url('../../assets/icons/arrow-more.svg') center / cover
+        no-repeat;
       transition: all 0.3s ease-in-out;
     }
 
@@ -336,6 +357,16 @@
       &::after {
         transform: rotate(180deg);
       }
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--buttons-and-accent-color);
+      outline-offset: 2px;
+      border-radius: 4px;
     }
   }
 
@@ -345,7 +376,7 @@
     outline: none;
     border-radius: 12px;
     padding: 16px 100px;
-    font-family: "Inter", sans-serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 500;
     font-size: 16px;
     line-height: 150%;
@@ -361,6 +392,8 @@
     &:focus,
     &:focus-visible {
       background-color: var(--green-active-color);
+      outline: 2px solid var(--buttons-and-accent-color);
+      outline-offset: 2px;
     }
 
     &:disabled,
@@ -440,7 +473,7 @@
 
   .ant-input-number .ant-input-number-input {
     padding: 7px 8px 5px 6px;
-    font-family: "Inter", sans-serif;
+    font-family: 'Inter', sans-serif;
     text-align: center;
   }
 
