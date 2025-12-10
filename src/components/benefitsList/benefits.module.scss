@@ -8,11 +8,17 @@
   width: 100%;
   padding: 48px 50px;
   max-width: 1440px;
-  margin: 0 auto;
+  // margin: 0 auto;
   background-color: #f8f8fa;
 }
 
+.overflowcontainer {
+  overflow-x: auto;
+}
+
 .card {
+  display: flex;
+  flex-direction: column;
   background-color: inherit;
   text-decoration: none;
 
@@ -31,7 +37,7 @@
 
 @media screen and (max-width: 1250px) {
   .wrapper {
-    justify-content: center;
+    justify-content: left;
     padding: 48px 20px;
     .card {
       max-width: 450px;
@@ -45,7 +51,7 @@
 
 @media screen and (max-width: 992px) {
   .wrapper {
-    justify-content: center;
+    // justify-content: center;
     .card {
       max-width: 300px;
       width: 100%;

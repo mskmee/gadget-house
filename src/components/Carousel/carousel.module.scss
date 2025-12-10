@@ -15,6 +15,7 @@
 
   .track {
     display: flex;
+    overflow-x: auto;
     transition: transform 0.4s ease-in-out;
     will-change: transform;
     touch-action: pan-y;
