@@ -60,9 +60,6 @@
     font-weight: 400;
   }
 
-  > div > img {
-  }
-
   .orderProductPreview {
     width: 58px;
     height: 58px;
@@ -76,7 +73,7 @@
     }
 
     img {
-      width: 100%;
+      width: auto;
       height: 100%;
       object-fit: cover;
     }
@@ -106,10 +103,10 @@
     }
 
     .productImage {
-      width: 60px;
+      width: auto;
       height: 60px;
       border: 1px solid #eae4ee;
-      border-radius: 12px;
+      border-radius: 6px;
       object-fit: cover;
     }
 
