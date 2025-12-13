@@ -1,8 +1,11 @@
+import { convertPriceToReadable } from '@/utils/helpers/product';
 import styles from '../../admin-invoice.module.scss';
 import { CancelCrossIcon } from '@/assets/icons';
+import { Currency } from '@/enums/Currency';
 
 interface OrderItemProps {
   id: string;
+  code: string;
   name: string;
   image: string;
   quantity: number;
@@ -14,6 +17,7 @@ interface OrderItemProps {
 export const OrderItem = ({
   id,
   name,
+  code,
   image,
   quantity,
   price,
@@ -25,7 +29,7 @@ export const OrderItem = ({
     <li className={styles.adminInvoice__ordersItem}>
       <div className={styles.adminInvoice__ordersItemName}>
         <span></span>
-        <span>No{id}</span>
+        <span>№{code}</span>
       </div>
 
       <div className={styles.adminInvoice__ordersItemDetails}>
@@ -34,7 +38,7 @@ export const OrderItem = ({
         </span>
 
         <span className={styles.adminInvoice__ordersItemDetailsPrice}>
-          {price * quantity} ₴
+          {convertPriceToReadable(price * quantity, '₴' as Currency, 'uk-UA')}
         </span>
 
         {image && <img src={image} alt={name} />}

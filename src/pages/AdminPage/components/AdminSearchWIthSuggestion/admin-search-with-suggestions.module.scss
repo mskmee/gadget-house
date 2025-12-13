@@ -1,6 +1,6 @@
 .searchWrapper {
   position: relative;
-  width: 100%;
+  width: 828px;
   .suggestionsWrapper {
     position: absolute;
     top: 100%;
@@ -101,59 +101,4 @@
       }
     }
   }
-
-  // --- Стили для выбранного товара (заменяет инпут) ---
-  // .selectedProductInput {
-  //   display: flex;
-  //   align-items: center;
-  //   justify-content: space-between;
-  //   width: 100%;
-  //   height: 48px;
-  //   padding: 0 16px;
-  //   background-color: #f9f9f9;
-  //   border: 1px solid #e1e1e1;
-  //   border-radius: 8px;
-
-  //   .selectedContent {
-  //     display: flex;
-  //     align-items: center;
-  //     overflow: hidden;
-
-  //     img {
-  //       width: 24px;
-  //       height: 24px;
-  //       object-fit: contain;
-  //       margin-right: 10px;
-  //     }
-
-  //     span {
-  //       font-size: 14px;
-  //       color: #333;
-  //       white-space: nowrap;
-  //       overflow: hidden;
-  //       text-overflow: ellipsis;
-  //     }
-  //   }
-
-  //   .clearButton {
-  //     background: none;
-  //     border: none;
-  //     cursor: pointer;
-  //     display: flex;
-  //     align-items: center;
-  //     justify-content: center;
-  //     color: #999;
-  //     padding: 4px;
-  //     margin-left: 8px;
-
-  //     &:hover {
-  //       color: #ff4d4f;
-  //     }
-
-  //     svg {
-  //       width: 16px;
-  //       height: 16px;
-  //     }
-  //   }
-  // }
 }

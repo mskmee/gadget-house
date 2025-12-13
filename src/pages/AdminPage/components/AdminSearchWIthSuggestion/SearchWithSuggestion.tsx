@@ -8,6 +8,8 @@ import {
 } from 'react';
 import { AdminSearch } from '../Search';
 import styles from './admin-search-with-suggestions.module.scss';
+import { convertPriceToReadable } from '@/utils/helpers/product';
+import { Currency } from '@/enums/Currency';
 interface Suggestion {
   title: string;
   category: string;
@@ -153,7 +155,13 @@ const AdminSearchWithSuggestions: FC<IAdminSearchWithSuggestionsProps> = ({
                       </span>
                     </div>
 
-                    <div className={styles.price}>{suggestion.price} ₴</div>
+                    <div className={styles.price}>
+                      {convertPriceToReadable(
+                        suggestion.price,
+                        '₴' as Currency,
+                        'uk-UA',
+                      )}
+                    </div>
                   </button>
                 </li>
               );

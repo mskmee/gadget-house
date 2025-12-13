@@ -89,6 +89,7 @@ export const OrdersList = ({
         {productsData.map((product) => (
           <OrderItem
             key={product.shortProductResponseDto.id}
+            code={product.shortProductResponseDto.code}
             id={product.shortProductResponseDto.id}
             name={product.shortProductResponseDto.name}
             image={product.shortProductResponseDto.images[0]?.link}

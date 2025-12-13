@@ -36,7 +36,15 @@ const orderDtoSlice = createSlice({
 
     addCartItem: (state, { payload }: PayloadAction<CartItem>) => {
       if (state) {
-        state.cartItems.push(payload);
+        const existingItem = state.cartItems.find(
+          (item) => item.productId === payload.productId,
+        );
+
+        if (existingItem) {
+          existingItem.quantity += payload.quantity;
+        } else {
+          state.cartItems.push(payload);
+        }
       }
     },
 

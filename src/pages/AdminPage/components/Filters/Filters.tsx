@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { DatePicker, Flex, InputNumber, Popover, Switch } from 'antd';
 import en from 'antd/es/date-picker/locale/en_US';
 import cn from 'classnames';
-
+import dayjs, { Dayjs } from 'dayjs';
 import { OrderStatus } from '@/enums/enums';
 import { handleKeyDown } from '@/utils/helpers/checkKeydownEvent';
 import {
@@ -14,13 +14,22 @@ import { CalendarIcon } from '@/assets/icons';
 
 import styles from './filters.module.scss';
 import { OrderFilterParams } from '@/store/orders/api';
+import { formatTitle } from '@/utils/helpers/formatTitle';
 
 interface FiltersProps {
   // eslint-disable-next-line no-unused-vars
   handleApplyFilter: (appliedFilters: OrderFilterParams) => void;
+  isOpen: boolean;
+  onToggle: () => void;
+  onClose: () => void;
 }
 
-const Filters = ({ handleApplyFilter }: FiltersProps) => {
+const Filters = ({
+  handleApplyFilter,
+  isOpen,
+  onToggle,
+  onClose,
+}: FiltersProps) => {
   const [filters, setFilters] = useState<OrderFilterParams>({
     createdAfter: null,
     createdBefore: null,
@@ -29,7 +38,6 @@ const Filters = ({ handleApplyFilter }: FiltersProps) => {
     statuses: null,
   });
 
-  const [showFilters, setShowFilters] = useState(false);
   const [filterVisibility, setFilterVisibility] = useState({
     date: true,
     price: true,
@@ -43,8 +51,6 @@ const Filters = ({ handleApplyFilter }: FiltersProps) => {
       fieldDateFormat: 'DD/MM/YYYY',
     },
   };
-
-  const toggleFilter = () => setShowFilters((prev) => !prev);
 
   const handleSwitchChange =
     (key: keyof typeof filterVisibility) => (checked: boolean) => {
@@ -61,6 +67,26 @@ const Filters = ({ handleApplyFilter }: FiltersProps) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
   };
 
+  const disabledEndDate = (current: Dayjs) => {
+    const createdAfterDate = filters.createdAfter
+      ? dayjs(filters.createdAfter, 'DD/MM/YYYY')
+      : null;
+    if (createdAfterDate) {
+      return current.isBefore(createdAfterDate.startOf('day'));
+    }
+    return false;
+  };
+
+  const disabledStartDate = (current: Dayjs) => {
+    const createdBeforeDate = filters.createdBefore
+      ? dayjs(filters.createdBefore, 'DD/MM/YYYY')
+      : null;
+    if (createdBeforeDate) {
+      return current.isAfter(createdBeforeDate.startOf('day'));
+    }
+    return false;
+  };
+
   const handleApplyFilters = () => {
     const appliedFilters: OrderFilterParams = {
       createdAfter: filterVisibility.date ? filters.createdAfter : undefined,
@@ -73,7 +99,7 @@ const Filters = ({ handleApplyFilter }: FiltersProps) => {
     };
 
     handleApplyFilter(appliedFilters);
-    setShowFilters(false);
+    onClose();
   };
 
   type FilterKey = keyof typeof filterVisibility;
@@ -92,6 +118,11 @@ const Filters = ({ handleApplyFilter }: FiltersProps) => {
           <DatePicker
             className={styles.admin__filterDatePicker}
             locale={dateLocale}
+            value={
+              filters.createdAfter
+                ? dayjs(filters.createdAfter, 'DD/MM/YYYY')
+                : null
+            }
             onChange={handleDateChange((value) =>
               updateFilter('createdAfter', value || undefined),
             )}
@@ -99,12 +130,19 @@ const Filters = ({ handleApplyFilter }: FiltersProps) => {
             popupClassName={styles.admin__filterDatePopup}
             allowClear
             suffixIcon={<CalendarIcon />}
+            // inputReadOnly={true}
+            disabledDate={disabledStartDate}
           />
           <span>-</span>
           <span>To</span>
           <DatePicker
             className={styles.admin__filterDatePicker}
             locale={dateLocale}
+            value={
+              filters.createdBefore
+                ? dayjs(filters.createdBefore, 'DD/MM/YYYY')
+                : null
+            }
             onChange={handleDateChange((value) =>
               updateFilter('createdBefore', value || undefined),
             )}
@@ -112,6 +150,8 @@ const Filters = ({ handleApplyFilter }: FiltersProps) => {
             popupClassName={styles.admin__filterDatePopup}
             allowClear
             suffixIcon={<CalendarIcon />}
+            // inputReadOnly={true}
+            disabledDate={disabledEndDate}
           />
         </Flex>
       ),
@@ -186,7 +226,7 @@ const Filters = ({ handleApplyFilter }: FiltersProps) => {
                   )}
                 >
                   {filters.statuses?.[0] === status && <span>✓ </span>}
-                  {status}
+                  {status.split(' ').map(formatTitle).join(' ')}
                 </span>
               </label>
             ))}
@@ -238,7 +278,12 @@ const Filters = ({ handleApplyFilter }: FiltersProps) => {
       <Popover
         title=""
         trigger="click"
-        open={showFilters}
+        open={isOpen}
+        onOpenChange={(newOpen) => {
+          if (!newOpen) {
+            onClose();
+          }
+        }}
         placement="bottomRight"
         content={content}
         overlayInnerStyle={{
@@ -249,7 +294,7 @@ const Filters = ({ handleApplyFilter }: FiltersProps) => {
           backgroundColor: 'rgba(234, 228, 238, 0.8)',
         }}
       >
-        <button className={styles.admin__filterBtn} onClick={toggleFilter}>
+        <button className={styles.admin__filterBtn} onClick={onToggle}>
           <FilterIcon /> Filters
         </button>
       </Popover>
