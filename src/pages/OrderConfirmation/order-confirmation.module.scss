@@ -455,6 +455,7 @@
       background-size: contain;
       border-color: transparent;
       animation: check 180ms ease-in;
+      border: 1.5px solid var(--text-color);
     }
 
     &Input:focus + &Icon::before {

@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import cn from 'classnames';
 
@@ -46,6 +46,9 @@ const OrderConfirmation: FC = () => {
       navigate(AppRoute.ALL_PRODUCTS);
     }
   }, [products, navigate]);
+
+  console.log(isRulesAccepted);
+  
 
   const isOrderButtonDisabled = !isOrderReady || !isRulesAccepted || isEditing;
 
@@ -136,13 +139,13 @@ const OrderConfirmation: FC = () => {
               </div>
 
               <label className={styles.order__agreement}>
-                <input
+                 <input
                   className={styles.order__agreementInput}
                   type="checkbox"
                   name="agreement"
                   id="agreement"
                   onChange={onToggleRules}
-                />
+                /> 
                 <span className={styles.order__agreementIcon}></span>
                 <span className={styles.order__agreementText}>
                   I agree to the processing of my personal data
