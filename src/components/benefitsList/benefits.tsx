@@ -16,9 +16,8 @@ const Benefit: FC<BenefitItem> = ({ imageUri, text, imageAlt }) => {
 
 const Benefits = () => {
   return (
-    <div className={styles.overflowcontainer}>
     <section className={styles.wrapper}>
-        {BENEFIT_ITEMS.map((item) => (
+      {BENEFIT_ITEMS.map((item) => (
         <Benefit
           key={item.text}
           imageUri={item.imageUri}
@@ -26,8 +25,7 @@ const Benefits = () => {
           imageAlt={item.imageAlt}
         />
       ))}
-      </section>
-    </div>
+    </section>
   );
 };
 
