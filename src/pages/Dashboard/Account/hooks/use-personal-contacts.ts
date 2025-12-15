@@ -135,12 +135,19 @@ const usePersonalContacts = () => {
   ) => {
     e.preventDefault();
     if (validateForm(isOnlyAdditionalNumber)) {
-      const cleanNumber = (num: string) => num.replace(/\D/g, '');
+      const preparePhoneForBackend = (num: string) => {
+        const clean = num.replace(/\D/g, ''); // Получаем, например, 38067...
+        if (clean.startsWith('38')) {
+          return clean.slice(2); // Возвращаем 067...
+        }
+        return clean;
+      };
       const data = {
         email: contacts.email,
-        phoneNumber: `+${cleanNumber(contacts.defaultNumber)}`,
+        // Мы НЕ добавляем '+' в начало и убираем '38', отправляя только тело номера (067XXXXXXX)
+        phoneNumber: preparePhoneForBackend(contacts.defaultNumber),
         secondaryPhoneNumber: contacts.additionalNumber
-          ? `+${cleanNumber(contacts.additionalNumber)}`
+          ? preparePhoneForBackend(contacts.additionalNumber)
           : '',
       };
 
