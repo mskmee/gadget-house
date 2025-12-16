@@ -136,15 +136,14 @@ const usePersonalContacts = () => {
     e.preventDefault();
     if (validateForm(isOnlyAdditionalNumber)) {
       const preparePhoneForBackend = (num: string) => {
-        const clean = num.replace(/\D/g, ''); // Получаем, например, 38067...
+        const clean = num.replace(/\D/g, '');
         if (clean.startsWith('38')) {
-          return clean.slice(2); // Возвращаем 067...
+          return clean.slice(2);
         }
         return clean;
       };
       const data = {
         email: contacts.email,
-        // Мы НЕ добавляем '+' в начало и убираем '38', отправляя только тело номера (067XXXXXXX)
         phoneNumber: preparePhoneForBackend(contacts.defaultNumber),
         secondaryPhoneNumber: contacts.additionalNumber
           ? preparePhoneForBackend(contacts.additionalNumber)
