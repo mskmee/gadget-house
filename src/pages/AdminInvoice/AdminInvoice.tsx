@@ -45,6 +45,9 @@ const AdminInvoice = () => {
   const [putOrder, { isLoading: isPutting }] = usePutOrderMutation();
 
   const [searchQuery, setSearchQuery] = useState('');
+  const [addedProductsCache, setAddedProductsCache] = useState<Suggestion[]>(
+    [],
+  );
   const { data: searchResults } = useSearchProductsQuery(
     searchQuery.trim()
       ? { query: searchQuery, pageable: { size: 8 } }
@@ -75,6 +78,7 @@ const AdminInvoice = () => {
 
     return () => {
       dispatch(clearOrderDto());
+      setAddedProductsCache([]);
     };
   }, [order, dispatch]);
 
@@ -97,8 +101,12 @@ const AdminInvoice = () => {
       .map((cartItem) => {
         const originalProduct =
           order?.orderItems.find(
-            (item) => item.shortProductResponseDto.id === cartItem.productId,
-          ) || suggestions.find((s) => s.productId === cartItem.productId);
+            (item) =>
+              String(item.shortProductResponseDto.id) ===
+              String(cartItem.productId),
+          ) ||
+          suggestions.find((s) => s.productId === cartItem.productId) ||
+          addedProductsCache.find((s) => s.productId === cartItem.productId);
 
         if (!originalProduct) return null;
 
@@ -135,7 +143,7 @@ const AdminInvoice = () => {
     );
 
     return { products, total };
-  }, [orderDto?.cartItems, order?.orderItems, suggestions]);
+  }, [orderDto?.cartItems, order?.orderItems, suggestions, addedProductsCache]);
 
   const hasChanges = useMemo(() => {
     if (!order || !orderDto) return false;
@@ -192,10 +200,23 @@ const AdminInvoice = () => {
 
   const handleProductAdd = useCallback(
     (product: CartItem) => {
+      const productDetails = suggestions.find(
+        (s) => s.productId === product.productId,
+      );
+
+      if (productDetails) {
+        setAddedProductsCache((prev) => {
+          if (prev.some((p) => p.productId === productDetails.productId)) {
+            return prev;
+          }
+          return [...prev, productDetails];
+        });
+      }
+
       dispatch(addCartItem(product));
       setSearchQuery('');
     },
-    [dispatch],
+    [dispatch, suggestions],
   );
 
   const handleProductDelete = useCallback(

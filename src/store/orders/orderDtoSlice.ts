@@ -37,7 +37,7 @@ const orderDtoSlice = createSlice({
     addCartItem: (state, { payload }: PayloadAction<CartItem>) => {
       if (state) {
         const existingItem = state.cartItems.find(
-          (item) => item.productId === payload.productId,
+          (item) => String(item.productId) === String(payload.productId),
         );
 
         if (existingItem) {
@@ -54,7 +54,8 @@ const orderDtoSlice = createSlice({
     ) => {
       if (state) {
         state.cartItems = state.cartItems.filter(
-          (item: CartItem) => item.productId !== payload.productId,
+          (item: CartItem) =>
+            String(item.productId) !== String(payload.productId),
         );
       }
     },
