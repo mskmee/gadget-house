@@ -26,7 +26,6 @@ type LoginPermissionFormDto = {
   email: string;
   password: string;
 };
-
-type FormType = 'login' | 'register' | 'forgot';
+type FormType = 'login' | 'register' | 'forgot' | 'changePassword' | 'login-permission';
 
 export type { LoginFormDto, RegisterFormDto, ForgotFormDto, ChangePasswordFormDto, FormType, LoginPermissionFormDto };
