@@ -135,12 +135,18 @@ const usePersonalContacts = () => {
   ) => {
     e.preventDefault();
     if (validateForm(isOnlyAdditionalNumber)) {
-      const cleanNumber = (num: string) => num.replace(/\D/g, '');
+      const preparePhoneForBackend = (num: string) => {
+        const clean = num.replace(/\D/g, '');
+        if (clean.startsWith('38')) {
+          return clean.slice(2);
+        }
+        return clean;
+      };
       const data = {
         email: contacts.email,
-        phoneNumber: `+${cleanNumber(contacts.defaultNumber)}`,
+        phoneNumber: preparePhoneForBackend(contacts.defaultNumber),
         secondaryPhoneNumber: contacts.additionalNumber
-          ? `+${cleanNumber(contacts.additionalNumber)}`
+          ? preparePhoneForBackend(contacts.additionalNumber)
           : '',
       };
 
