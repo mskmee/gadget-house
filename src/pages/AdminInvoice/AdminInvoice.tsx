@@ -29,7 +29,7 @@ import {
   IOrderItemAddress,
   IOrderItemProduct,
 } from '@/utils/packages/orders/libs/types/order-item-response-dto';
-
+import { toast } from 'react-toastify';
 interface Suggestion {
   title: string;
   category: string;
@@ -233,12 +233,27 @@ const AdminInvoice = () => {
     [dispatch],
   );
 
-  const handleConfirmationClick = () => {
+  const handleConfirmationClick = async () => {
     if (order && orderDto && hasChanges) {
-      putOrder({
-        orderId: id,
-        selectOrderDto: orderDto,
-      });
+      try {
+        await putOrder({
+          orderId: id,
+          selectOrderDto: orderDto,
+        }).unwrap();
+        toast.success('The order has been updated!', {
+          autoClose: 4000,
+          theme: 'light',
+        });
+      } catch (error: any) {
+        console.error('Update error:', error);
+
+        const message =
+          error?.data?.message || 'Failed to update order. Please try again.';
+        toast.error(`Update failed: ${message}`, {
+          autoClose: 5000,
+          theme: 'dark',
+        });
+      }
     }
   };
 

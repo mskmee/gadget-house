@@ -82,6 +82,10 @@ export const ordersApi = createApi({
         method: 'PUT',
         body: selectOrderDto,
       }),
+      invalidatesTags: (_, __, { orderId }) => [
+        { type: 'Order', id: orderId },
+        { type: 'Order' as const },
+      ],
     }),
   }),
 });

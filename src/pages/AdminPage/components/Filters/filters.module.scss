@@ -93,6 +93,7 @@
           width: 52px;
           height: 32px;
           background-color: var(--secondary-background-color);
+          padding: 0 !important;
 
           &:hover {
             background-color: var(--secondary-background-color);
@@ -101,18 +102,20 @@
         .ant-switch-inner {
           border-radius: 100px;
           width: 52px;
-          height: 32px;
+          // height: 32px;
         }
         .ant-switch-checked {
           background-color: var(--theme-color) !important;
 
           & .ant-switch-handle {
-            inset-inline-start: calc(100% - 30px);
+            inset-inline-start: calc(100% - 29px);
           }
         }
         .ant-switch-handle {
+          top: 50% !important;
+          transform: translateY(-50%);
           width: 27px;
-          height: 87%;
+          height: 27px;
           border-radius: 100px;
           box-shadow:
             0 3px 1px 0 rgba(0, 0, 0, 0.06),
