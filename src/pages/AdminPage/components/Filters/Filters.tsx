@@ -99,8 +99,16 @@ const Filters = ({
     };
 
     handleApplyFilter(appliedFilters);
+    setFilters({
+      createdAfter: null,
+      createdBefore: null,
+      totalMore: null,
+      totalLess: null,
+      statuses: null,
+    });
     onClose();
   };
+
   const handleDateKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
     const allowedKeys = [
       'Backspace',
@@ -183,8 +191,8 @@ const Filters = ({
             addonAfter="₴"
             value={filters.totalMore ?? undefined}
             min={0}
-            max={99999}
-            maxLength={5}
+            max={999990}
+            maxLength={6}
             controls={false}
             inputMode="numeric"
             onKeyDown={handleKeyDown}
@@ -199,7 +207,7 @@ const Filters = ({
             addonAfter="₴"
             value={filters.totalLess ?? undefined}
             min={0}
-            max={100000}
+            max={999999}
             maxLength={6}
             controls={false}
             inputMode="numeric"
