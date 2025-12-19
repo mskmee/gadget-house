@@ -108,12 +108,13 @@
           background-color: var(--theme-color) !important;
 
           & .ant-switch-handle {
-            inset-inline-start: calc(100% - 29px);
+            inset-inline-start: calc(100% - 29.5px) !important;
           }
         }
         .ant-switch-handle {
           top: 50% !important;
           transform: translateY(-50%) !important;
+          inset-inline-start: 2.5px !important;
           width: 27px;
           height: 27px;
           border-radius: 100px;
@@ -122,7 +123,6 @@
             0 3px 8px 0 rgba(0, 0, 0, 0.15),
             0 0 0 1px rgba(0, 0, 0, 0.04);
           background: var(--white-color);
-          inset-inline-start: 2px;
 
           &::before {
             display: none;
