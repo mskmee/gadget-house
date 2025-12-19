@@ -101,7 +101,23 @@ const Filters = ({
     handleApplyFilter(appliedFilters);
     onClose();
   };
-
+  const handleDateKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
+    const allowedKeys = [
+      'Backspace',
+      'Delete',
+      'Tab',
+      'Escape',
+      'Enter',
+      'ArrowLeft',
+      'ArrowRight',
+    ];
+    if (allowedKeys.includes(e.key)) {
+      return;
+    }
+    if (!/^[0-9./]$/.test(e.key)) {
+      e.preventDefault();
+    }
+  };
   type FilterKey = keyof typeof filterVisibility;
 
   const filtersConfig: {
@@ -120,17 +136,17 @@ const Filters = ({
             locale={dateLocale}
             value={
               filters.createdAfter
-                ? dayjs(filters.createdAfter, 'DD/MM/YYYY')
+                ? dayjs(filters.createdAfter, ['DD/MM/YYYY', 'DD.MM.YYYY'])
                 : null
             }
             onChange={handleDateChange((value) =>
               updateFilter('createdAfter', value || undefined),
             )}
-            format="DD/MM/YYYY"
+            format={['DD/MM/YYYY', 'DD.MM.YYYY']}
             popupClassName={styles.admin__filterDatePopup}
             allowClear
             suffixIcon={<CalendarIcon />}
-            // inputReadOnly={true}
+            onKeyDown={handleDateKeyDown}
             disabledDate={disabledStartDate}
           />
           <span>-</span>
@@ -140,17 +156,17 @@ const Filters = ({
             locale={dateLocale}
             value={
               filters.createdBefore
-                ? dayjs(filters.createdBefore, 'DD/MM/YYYY')
+                ? dayjs(filters.createdBefore, ['DD/MM/YYYY', 'DD.MM.YYYY'])
                 : null
             }
             onChange={handleDateChange((value) =>
               updateFilter('createdBefore', value || undefined),
             )}
-            format="DD/MM/YYYY"
+            format={['DD/MM/YYYY', 'DD.MM.YYYY']}
             popupClassName={styles.admin__filterDatePopup}
             allowClear
             suffixIcon={<CalendarIcon />}
-            // inputReadOnly={true}
+            onKeyDown={handleDateKeyDown}
             disabledDate={disabledEndDate}
           />
         </Flex>
