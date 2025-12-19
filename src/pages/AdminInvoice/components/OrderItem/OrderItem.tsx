@@ -1,40 +1,51 @@
-import { IOrderItemProduct } from '@/utils/packages/orders/libs/types/order-item-response-dto';
+import { convertPriceToReadable } from '@/utils/helpers/product';
 import styles from '../../admin-invoice.module.scss';
+import { CancelCrossIcon } from '@/assets/icons';
+import { Currency } from '@/enums/Currency';
 
 interface OrderItemProps {
-  product: IOrderItemProduct;
+  id: string;
+  code: string;
+  name: string;
+  image: string;
+  quantity: number;
+  price: number;
   // eslint-disable-next-line no-unused-vars
   onDelete: (productId: string) => void;
 }
 
-export const OrderItem = ({ product, onDelete }: OrderItemProps) => {
-  const handleDelete = () => {
-    onDelete(product.shortProductResponseDto.id);
-  };
+export const OrderItem = ({
+  id,
+  name,
+  code,
+  image,
+  quantity,
+  price,
+  onDelete,
+}: OrderItemProps) => {
+  const handleDelete = () => onDelete(id);
+
   return (
     <li className={styles.adminInvoice__ordersItem}>
       <div className={styles.adminInvoice__ordersItemName}>
         <span></span>
-        <span>№{product.shortProductResponseDto.id}</span>
+        <span>№{code}</span>
       </div>
 
       <div className={styles.adminInvoice__ordersItemDetails}>
         <span className={styles.adminInvoice__ordersItemDetailsCount}>
-          {product.quantity} piece
+          {quantity} piece
         </span>
 
         <span className={styles.adminInvoice__ordersItemDetailsPrice}>
-          {product.price * product.quantity} ₴
+          {convertPriceToReadable(price * quantity, '₴' as Currency, 'uk-UA')}
         </span>
 
-        {product.shortProductResponseDto.images?.[0] && (
-          <img
-            src={product.shortProductResponseDto.images[0].link}
-            alt={product.shortProductResponseDto.name}
-          />
-        )}
+        {image && <img src={image} alt={name} />}
 
-        <button onClick={handleDelete}>x</button>
+        <button onClick={handleDelete}>
+          <CancelCrossIcon />
+        </button>
       </div>
     </li>
   );

@@ -5,12 +5,14 @@ import { reducer as productsReducer } from './products';
 import { reducer as authReducer } from './auth/auth-slice';
 import { reducer as filtersReducer } from './filters/filters_slice';
 import { reducer as singleProductSlice } from './singleProduct/singleProduct_slice';
+import { reducer as orderDtoSlice } from './orders/orderDtoSlice';
 import { logger, toastMiddleware } from './middlewares/middlewares';
 import { isDevelopment } from '@/constants/IsDevelopment';
 import { ordersApi } from './orders/api';
 import { routes } from '@/routes';
 import { authApi } from './auth/api';
 import authPortalsReducer from './auth/authPortalsSlice';
+import { productsApi } from './products/api';
 import uiReducer from './ui/ui_slice';
 
 export const extraArgument = {
@@ -24,8 +26,10 @@ const reducers = combineReducers({
   auth: authReducer,
   filters: filtersReducer,
   singleProduct: singleProductSlice,
+  orderDto: orderDtoSlice,
   [ordersApi.reducerPath]: ordersApi.reducer,
   [authApi.reducerPath]: authApi.reducer,
+  [productsApi.reducerPath]: productsApi.reducer,
   authPortals: authPortalsReducer,
   ui: uiReducer,
 });
@@ -36,7 +40,8 @@ export const store = configureStore({
     const middleware = getDefaultMiddleware()
       .concat(toastMiddleware)
       .concat(ordersApi.middleware)
-      .concat(authApi.middleware);
+      .concat(authApi.middleware)
+      .concat(productsApi.middleware);
     return isDevelopment ? middleware.concat(logger) : middleware;
   },
 });

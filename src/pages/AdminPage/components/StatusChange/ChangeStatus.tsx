@@ -6,23 +6,28 @@ import { CheckedOrderIcon } from '@/assets/icons/CheckedOrder';
 import styles from './change-status.module.scss';
 import { OrderStatus } from '@/enums/order-status';
 import { usePatchOrderMutation } from '@/store/orders/api';
+import { formatTitle } from '@/utils/helpers/formatTitle';
 
 interface IChangeStatusProps {
   // eslint-disable-next-line no-unused-vars
   checkedItems: string[];
   // eslint-disable-next-line no-unused-vars
   patchOrder: ReturnType<typeof usePatchOrderMutation>[0];
+  isOpen: boolean;
+  onToggle: () => void;
+  onClose: () => void;
+  onStatusChanged: () => void;
 }
 
-const ChangeStatus: FC<IChangeStatusProps> = ({ checkedItems, patchOrder }) => {
-  const [isStatusMenuOpen, setStatusMenuOpen] = useState(false);
+const ChangeStatus: FC<IChangeStatusProps> = ({
+  checkedItems,
+  patchOrder,
+  isOpen,
+  onToggle,
+  onClose,
+  onStatusChanged,
+}) => {
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
-
-  const toggleStatusPopup = () => {
-    if (checkedItems.length > 0) {
-      setStatusMenuOpen((prev) => !prev);
-    }
-  };
 
   const handleApplyStatus = async () => {
     if (!selectedStatus) return;
@@ -37,8 +42,9 @@ const ChangeStatus: FC<IChangeStatusProps> = ({ checkedItems, patchOrder }) => {
       }),
     );
 
-    setStatusMenuOpen(false);
+    onClose();
     setSelectedStatus(null);
+    onStatusChanged();
   };
 
   const content = (
@@ -57,7 +63,7 @@ const ChangeStatus: FC<IChangeStatusProps> = ({ checkedItems, patchOrder }) => {
               onClick={() => setSelectedStatus(status)}
             >
               {selectedStatus === status && <span>✓ </span>}
-              {status}
+              {status.split(' ').map(formatTitle).join(' ')}
             </button>
           ))}
         </div>
@@ -78,7 +84,12 @@ const ChangeStatus: FC<IChangeStatusProps> = ({ checkedItems, patchOrder }) => {
       <Popover
         title=""
         trigger="click"
-        open={isStatusMenuOpen}
+        open={isOpen}
+        onOpenChange={(newOpen) => {
+          if (!newOpen) {
+            onClose();
+          }
+        }}
         placement="bottomRight"
         content={content}
         overlayInnerStyle={{
@@ -91,10 +102,7 @@ const ChangeStatus: FC<IChangeStatusProps> = ({ checkedItems, patchOrder }) => {
           backgroundColor: 'rgba(234, 228, 238, 0.8)',
         }}
       >
-        <button
-          onClick={toggleStatusPopup}
-          disabled={checkedItems.length === 0}
-        >
+        <button onClick={onToggle} disabled={checkedItems.length === 0}>
           <CheckedOrderIcon
             stroke={
               checkedItems.length > 0

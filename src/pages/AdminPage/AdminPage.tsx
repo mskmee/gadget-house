@@ -50,6 +50,10 @@ const AdminPage = () => {
     }
   }, [ordersResponse, selected]);
 
+  const clearSelection = useCallback(() => {
+    setSelected(new Set());
+  }, []);
+
   const handleApplyFilters = (filters: OrderFilterParams) => {
     setAppliedFilters(filters);
   };
@@ -76,6 +80,7 @@ const AdminPage = () => {
           onSearch={handleSearch}
           handleApplyFilter={handleApplyFilters}
           patchOrder={patchOrder}
+          onClearSelection={clearSelection}
         />
 
         <AdminTable

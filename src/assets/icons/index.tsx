@@ -19,3 +19,13 @@ export const AddNewUserIcon = createIconComponent(
   () => import('./add-new-user.svg'),
   'add-new-user',
 );
+
+export const UkrainianFlagIcon = createIconComponent(
+  () => import('./ukrainian-flag.svg'),
+  'ua-flag',
+);
+
+export const CancelCrossIcon = createIconComponent(
+  () => import('./cancel-cross-icon.svg'),
+  'cancel-cross-icon',
+);

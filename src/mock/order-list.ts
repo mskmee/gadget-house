@@ -1,6 +1,13 @@
 import { filters } from '@/components/Filters/consts';
 import { OrderStatus } from '@/enums/order-status';
-import { DeliveryMethod } from '@/pages/OrderConfirmation/libs/enums/delivery-method';
+import {
+  DeliveryMethod,
+  DeliveryMethodType,
+} from '@/pages/OrderConfirmation/libs/enums/delivery-method';
+import {
+  PaymentMethod,
+  PaymentMethodType,
+} from '@/pages/OrderConfirmation/libs/enums/payment-method';
 import {
   IOrderItemProduct,
   IOrderItemAddress,
@@ -18,8 +25,8 @@ const getRandomDate = (): string => {
   return randomTime.toISOString();
 };
 
-const getRandomStatus = (): string => {
-  const statuses = Object.values(OrderStatus);
+const getRandomStatus = (): OrderStatus => {
+  const statuses = Object.values(OrderStatus) as OrderStatus[];
   return statuses[Math.floor(Math.random() * statuses.length)];
 };
 
@@ -51,8 +58,14 @@ const generateRandomPhone = (): string => {
   return `(0${randomDigits()}${randomDigits()}) ${randomDigits()}${randomDigits()}${randomDigits()} ${randomDigits()}${randomDigits()} ${randomDigits()}${randomDigits()}`;
 };
 
-const getRandomDeliveryMethod = (): string => {
+const getRandomDeliveryMethod = (): DeliveryMethodType => {
   const methods = Object.values(DeliveryMethod);
+  const randomIndex = Math.floor(Math.random() * methods.length);
+  return methods[randomIndex];
+};
+
+const getRandomPaymentMethod = (): PaymentMethodType => {
+  const methods = Object.values(PaymentMethod);
   const randomIndex = Math.floor(Math.random() * methods.length);
   return methods[randomIndex];
 };
@@ -89,8 +102,8 @@ export const orderList = (count: number): OrdersResponseDto => {
         email: `user${i + 1}@example.com`,
         fullName: `Name ${i + 1}`,
         phoneNumber: generateRandomPhone(),
-        deliveryMethod: deliveryMethod,
-        paymentMethod: getRandomDeliveryMethod(),
+        deliveryMethod: getRandomDeliveryMethod(),
+        paymentMethod: getRandomPaymentMethod(),
         comment: Math.random() > 0.5 ? `Comment ${i + 1}` : undefined,
         address: generateRandomContacts(deliveryMethod),
         orderItems: Array.from(

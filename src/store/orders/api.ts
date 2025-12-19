@@ -26,6 +26,11 @@ export interface IPatchOrderStatus {
   status: string;
 }
 
+export interface IPutOrder {
+  orderId: string;
+  selectOrderDto: OrderDto;
+}
+
 export const DEFAULT_ORDER_PARAMS: PageableParams = {
   page: 0,
   size: DEFAULT_SIZE,
@@ -71,13 +76,16 @@ export const ordersApi = createApi({
       }),
       invalidatesTags: (_, __, { id }) => [{ type: 'Order', id }, 'Order'],
     }),
-
-    deleteOrder: builder.mutation<void, string>({
-      query: (id) => ({
-        url: `/orders/${id}`,
-        method: 'DELETE',
+    putOrder: builder.mutation<OrderItemResponseDto, IPutOrder>({
+      query: ({ orderId, selectOrderDto }) => ({
+        url: `/orders/${orderId}`,
+        method: 'PUT',
+        body: selectOrderDto,
       }),
-      invalidatesTags: ['Order'],
+      invalidatesTags: (_, __, { orderId }) => [
+        { type: 'Order', id: orderId },
+        { type: 'Order' as const },
+      ],
     }),
   }),
 });
@@ -87,5 +95,5 @@ export const {
   useGetOrderQuery,
   useCreateOrderMutation,
   usePatchOrderMutation,
-  useDeleteOrderMutation,
+  usePutOrderMutation,
 } = ordersApi;
