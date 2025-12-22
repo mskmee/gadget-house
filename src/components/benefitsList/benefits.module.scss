@@ -2,10 +2,11 @@
 
 /* Desktop / default: 4 items in a row on a light strip */
 .wrapper {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
   align-items: center;
-  gap: 64px;
+  gap: 24px;
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
@@ -17,10 +18,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-align: center;
-  flex: 1 1 0;
-  min-width: 0;
-  background-color: transparent;
+  width: 166px;
+  height: 166px;
+  background-color: #ffffff;
+  border-radius: 24px;
   text-decoration: none;
 }
 
@@ -35,20 +38,21 @@
   line-height: 150%;
 }
 
-/* Mobile: scrollable rounded cards strip (≤500px) */
+/* Mobile: 2x2 grid, each card 166x166px */
 @media screen and (max-width: 500px) {
   .wrapper {
-    width: max-content;
+    display: grid;
+    grid-template-columns: repeat(2, 166px);
+    justify-content: center;
+    justify-items: center;
+    row-gap: 16px;
+    column-gap: 16px;
     padding: 16px 12px 24px;
-    gap: 16px;
   }
 
   .card {
-    flex: 0 0 auto;
-    min-width: 160px;
-    padding: 24px 16px;
-    border-radius: 24px;
-    background-color: #ffffff;
+    width: 166px;
+    height: 166px;
     box-shadow: rgb(149 157 165 / 20%) 0 8px 24px;
   }
 

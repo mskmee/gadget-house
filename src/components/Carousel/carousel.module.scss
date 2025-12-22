@@ -15,7 +15,8 @@
 
   .track {
     display: flex;
-    overflow-x: auto;
+    align-items: stretch;
+    overflow: hidden;
     transition: transform 0.4s ease-in-out;
     will-change: transform;
     touch-action: pan-y;
@@ -33,6 +34,9 @@
   .trackContainer {
     .track {
       gap: 15px;
+      > * {
+        flex: 0 0 auto;
+      }
     }
   }
   > div:last-child {
@@ -171,9 +175,26 @@
 @media screen and (max-width: 768px) {
   .carousel {
     padding: 16px 10px;
+    .trackContainer {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      /* hide scrollbar visually on most browsers while keeping scroll */
+      scrollbar-width: none;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+    .track {
+      overflow: visible;
+    }
   }
   .slider-buttons {
     display: none;
+  }
+  .brands-carousel {
+    .slider-buttons {
+      display: flex;
+    }
   }
 }
 @media screen and (max-width: 700px) {
