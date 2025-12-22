@@ -3,7 +3,6 @@ import styles from './carousel.module.scss';
 import classNames from 'classnames';
 import { BrandCard, MyCard } from '../components';
 import { brandData } from '@/constants/productCards';
-import { useMediaQuery } from 'react-responsive';
 import { useResponsiveCarouselSettings } from '@/hooks/useResponsiveCarouselSettings';
 import { IProductCard, TProductImageCard } from '@/interfaces/interfaces';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
@@ -39,6 +38,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
   const [startX, setStartX] = useState<number | null>(null);
   const [currentTranslate, setCurrentTranslate] = useState(0);
   const [animation, setAnimation] = useState(true);
+  const [isTouchViewport, setIsTouchViewport] = useState(false);
 
   const [randomizedProducts, setRandomizedProducts] = useState<{
     smartphones: IProductCard[];
@@ -50,10 +50,6 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
     'previouslyReviewed',
     [],
   );
-
-  const isLargerThan1440px = useMediaQuery({
-    query: '(max-width: 1440px)',
-  });
 
   const responsiveCarouselSettings = useResponsiveCarouselSettings(
     classname,
@@ -96,11 +92,19 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
     });
   }, [products]);
 
-  const itemWidth = isLargerThan1440px
-    ? responsiveCarouselSettings.itemWidth
-    : classname === 'brands-carousel'
-      ? 256
-      : 305;
+  useEffect(() => {
+    const checkViewport = () => {
+      if (typeof window !== 'undefined') {
+        setIsTouchViewport(window.innerWidth <= 768);
+      }
+    };
+
+    checkViewport();
+    window.addEventListener('resize', checkViewport);
+    return () => window.removeEventListener('resize', checkViewport);
+  }, []);
+
+  const itemWidth = responsiveCarouselSettings.itemWidth;
 
   const productMap: Record<
     CarouselClassname,
@@ -148,11 +152,13 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
+    if (isTouchViewport) return; // use native scroll on mobile
     setAnimation(false);
     setStartX(e.touches[0].clientX);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
+    if (isTouchViewport) return; // use native scroll on mobile
     if (startX !== null) {
       const currentX = e.touches[0].clientX;
       const diff = currentX - startX;
@@ -163,6 +169,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
   };
 
   const handleTouchEnd = () => {
+    if (isTouchViewport) return; // use native scroll on mobile
     if (startX !== null) {
       const swipeDistance =
         currentTranslate +
@@ -229,7 +236,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        style={{ touchAction: 'pan-y' }}
+        style={{ touchAction: isTouchViewport ? 'auto' : 'pan-y' }}
       >
         <div
           className={styles.track}

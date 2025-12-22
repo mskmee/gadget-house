@@ -42,15 +42,11 @@
   border: none;
   cursor: pointer;
   transition:
-    color 0.3s ease,
-    fill 0.3s ease,
+    opacity 0.2s ease,
     transform 0.2s ease;
 
   &:hover {
-    color: #ff5a5a;
-  }
-  &:hover svg path {
-    fill: #ff5a5a;
+    opacity: 0.8;
   }
   &:focus {
     outline: none;

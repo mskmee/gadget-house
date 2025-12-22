@@ -72,7 +72,11 @@ export default function Main() {
           )}
         </>
       )}
-      <Benefits />
+      <div className="main-benefit-container">
+        <div className="benefit-area">
+          <Benefits />
+        </div>
+      </div>
     </>
   );
 }

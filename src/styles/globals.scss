@@ -11,6 +11,7 @@ body {
   color: var(--text-color);
   font-family: Inter, sans-serif;
   background-color: var(--bg-color);
+  overflow-x: hidden !important;
 }
 
 * {
@@ -24,10 +25,23 @@ body {
   padding: 0;
 }
 
-#root {
+.main-benefit-container {
   display: flex;
-  flex-direction: column;
-  min-height: 100dvh;
+  flex-direction: row;
+  overflow-x: hidden;
+
+  .benefit-area {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 12px 0;
+    -webkit-overflow-scrolling: touch;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    scrollbar-width: none;
+  }
 }
 
 :root {
