@@ -56,6 +56,7 @@ export const Search: FC<ISearchProps> = ({
 
   const handleSearchProducts = async (query: string) => {
     try {
+      setDisplayValue('');
       const result = await dispatch(
         searchProducts({ query, page: 0, size: 20, sort: 'DESC' }),
       ).unwrap();
@@ -111,10 +112,8 @@ export const Search: FC<ISearchProps> = ({
           },
         );
       }
-
       setActiveIndex(-1);
       setSearchInput({ value: query, hasError: false });
-      setDisplayValue(query);
     }
   };
 
