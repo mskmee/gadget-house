@@ -10,7 +10,7 @@ import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { useAuthRequired } from '@/hooks/useAuthRequired';
 import getFormattedCategoryName from '@/hooks/getFormattedCategoryName';
 import { convertPriceToReadable } from '@/utils/helpers/product';
-import { rateImg, rateEmptyImg } from '@/assets/constants';
+// import { rateImg, rateEmptyImg } from '@/assets/constants';
 import styles from './card.module.scss';
 import {
   IBrandCard,
@@ -55,7 +55,7 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
   const { products, locale, currency } = useTypedSelector(
     (state) => state.shopping_card,
   );
-  const productRating = product?.rating ?? 0;
+  const productRating = Number(product?.rating) || 0;
   const selectedProduct = products.find((item) => item.id === product?.id);
   const isLikedProduct = useTypedSelector((state) =>
     state.products.favoriteProducts.some((fav) => fav.id === product?.id),
@@ -173,17 +173,10 @@ export const MyCard: FC<ISmartphoneCardProps> = ({
             <h3>{product?.name}</h3>
             <div className={styles.cardRate}>
               <Rate
-                className="reviews_rate-stars"
+                className="product_rate-stars"
                 disabled
-                // style={{ pointerEvents: 'none' }}
-                character={({ index = 0 }) => (
-                  <img
-                    src={index < productRating ? rateImg : rateEmptyImg}
-                    alt="product rate star"
-                    width={24}
-                    height={24}
-                  />
-                )}
+                allowHalf
+                value={productRating}
               />
               <div className={styles['card-code']}>
                 <span>code:</span>
