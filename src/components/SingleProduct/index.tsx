@@ -93,6 +93,7 @@ export const Product: FC<IProductProps> = ({ dynamicCurrentProduct }) => {
               <Rate
                 className="product_rate-stars"
                 value={dynamicCurrentProduct?.rating}
+                allowHalf
               />
               <a href="#product-reviews" onClick={handleScrollToReviews}>
                 <img src={reviewImg} alt="review pic" />
@@ -160,6 +161,7 @@ export const Product: FC<IProductProps> = ({ dynamicCurrentProduct }) => {
                   disabled
                   value={dynamicCurrentProduct?.rating}
                   style={{ color: '#6F4C9A' }}
+                  allowHalf
                 />
                 <a href="#product-reviews" onClick={handleScrollToReviews}>
                   <img src={reviewImg} alt="review pic" />
