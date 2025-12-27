@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import styles from './carousel.module.scss';
 import classNames from 'classnames';
 import { BrandCard, MyCard } from '../components';
@@ -40,12 +40,6 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
   const [currentTranslate, setCurrentTranslate] = useState(0);
   const [animation, setAnimation] = useState(true);
 
-  const [randomizedProducts, setRandomizedProducts] = useState<{
-    smartphones: IProductCard[];
-    laptops: IProductCard[];
-    otherProducts: IProductCard[];
-  }>({ smartphones: [], laptops: [], otherProducts: [] });
-
   const [previouslyReviewed] = useLocalStorage<IProductCard[]>(
     'previouslyReviewed',
     [],
@@ -64,6 +58,12 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
     (state) => state.products.productsData?.page,
   );
 
+  const productsKey = useMemo(() => {
+    if (!products || products.length === 0) return '';
+
+    return products.map((p) => `${p.id}-${p.categoryId}`).join(',');
+  }, [products]);
+
   const getRandomItems = (
     items: IProductCard[],
     count: number = 8,
@@ -75,26 +75,25 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
     return shuffled.slice(0, count);
   };
 
-  useEffect(() => {
+  const randomizedProducts = useMemo(() => {
     if (!products || products.length === 0) {
-      setRandomizedProducts({
+      return {
         smartphones: [],
         laptops: [],
         otherProducts: [],
-      });
-      return;
+      };
     }
 
     const smartphonesList = products.filter((item) => item.categoryId === 1);
     const laptopsList = products.filter((item) => item.categoryId === 2);
     const otherProductsList = products.slice(0, 8);
 
-    setRandomizedProducts({
+    return {
       smartphones: getRandomItems(smartphonesList, 8),
       laptops: getRandomItems(laptopsList, 8),
       otherProducts: otherProductsList,
-    });
-  }, [products]);
+    };
+  }, [productsKey]);
 
   const itemWidth = isLargerThan1440px
     ? responsiveCarouselSettings.itemWidth
