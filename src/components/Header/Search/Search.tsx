@@ -24,6 +24,7 @@ import { useDispatch } from 'react-redux';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { getSuggestions, searchProducts } from '@/store/products/actions';
 import { clearSuggestions } from '@/store/products/products_slice';
+import { DEFAULT_SIZE } from '@/constants/pagination';
 
 interface ISearchProps {
   isOverlayActive: boolean;
@@ -40,6 +41,7 @@ export const Search: FC<ISearchProps> = ({
   const currentPath = useRef(location.pathname);
 
   const suggestions = useTypedSelector((state) => state.products.suggestions);
+  const selectedSort = useTypedSelector((state) => state.filters.selectedSort);
   const { setSearchValue, setIsGlobalOverlayActive } = useActions();
 
   const [searchInput, setSearchInput] = useState({
@@ -58,7 +60,12 @@ export const Search: FC<ISearchProps> = ({
     try {
       setDisplayValue('');
       const result = await dispatch(
-        searchProducts({ query, page: 0, size: 20, sort: 'DESC' }),
+        searchProducts({
+          query,
+          page: 0,
+          size: DEFAULT_SIZE,
+          sort: selectedSort || 'rating',
+        }),
       ).unwrap();
       return result;
     } catch (error) {

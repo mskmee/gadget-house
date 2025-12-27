@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
@@ -71,25 +71,23 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
     formatCategoryUrlName(pathname);
   }
 
-  const isSearchPage = pathname.includes('/search/');
+  const isSearchPage = useMemo(() => {
+    return pathname.includes('search');
+  }, [pathname]);
 
   useEffect(() => {
-    if (!searchInputValue) return;
+    if (!isSearchPage || !searchInputValue || !selectedSort || isInitialLoading)
+      return;
+
     dispatch(
       searchProducts({
         query: searchInputValue,
         page: pagination.currentPage,
         size: 20,
-        sort: selectedSort || 'DESC',
+        sort: selectedSort,
       }),
     );
-  }, [
-    isSearchPage,
-    searchInputValue,
-    selectedSort,
-    pagination.currentPage,
-    dispatch,
-  ]);
+  }, [selectedSort]);
 
   useEffect(() => {
     if (categoryId !== null && categoryId === selectedCategoryId) {
