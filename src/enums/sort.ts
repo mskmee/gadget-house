@@ -1,5 +1,4 @@
 const Sort = {
-  POPULARITY: { name: 'By popularity', value: 'popularity' },
   RATING: { name: 'By rating', value: 'rating' },
   LOWTOHIGH: { name: 'From low to high cost', value: 'price,ASC' },
   HIGHTOLOW: { name: 'From high to low cost', value: 'price,DESC' },

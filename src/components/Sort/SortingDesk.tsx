@@ -26,7 +26,7 @@ export const SortingDesk = () => {
   )?.name;
 
   const showModal = () => {
-    dispatch(setSortPopoverOpen(true));
+    dispatch(setSortPopoverOpen(!isSortPopoverOpen));
   };
 
   const handleSortSelection = (value: string) => {

@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+
 import { DEFAULT_SIZE, DEFAULT_SIZE_MOBILE } from '@/constants/pagination';
 import { AppDispatch, RootState } from '@/store';
-import { getFilteredProducts } from '@/store/products/actions';
+import { getFilteredProducts, searchProducts } from '@/store/products/actions';
 import {
   selectBrandIds,
   selectFilteredAttributes,
@@ -13,8 +14,10 @@ import { IProductCard } from '@/interfaces/interfaces';
 import { FiltersDesk } from '@/components/Filters/FiltersDesk';
 import { Catalog } from '@/components/Catalog/Catalog';
 import { CustomBreadcrumbs } from '../SingleProduct/CustomBreadcrumbs';
+
 import styles from './page-layout.module.scss';
 import { useMediaQuery } from 'react-responsive';
+
 import { Filters } from '../Filters/Filters';
 import { SortingDesk } from '../Sort/SortingDesk';
 import { DataStatus } from '@/enums/data-status';
@@ -42,9 +45,6 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   const { selectedSort, selectedPriceRange, selectedCameraRange } =
     useTypedSelector((state: RootState) => state.filters);
 
-  const [minPrice, maxPrice] = selectedPriceRange;
-  const [minCameraMP, maxCameraMP] = selectedCameraRange;
-
   const isMobile991 = useMediaQuery({
     query: '(max-width: 991px)',
   });
@@ -71,6 +71,24 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
     formatCategoryUrlName(pathname);
   }
 
+  const isSearchPage = useMemo(() => {
+    return pathname.includes('search');
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!isSearchPage || !searchInputValue || !selectedSort || isInitialLoading)
+      return;
+
+    dispatch(
+      searchProducts({
+        query: searchInputValue,
+        page: pagination.currentPage,
+        size: 20,
+        sort: selectedSort,
+      }),
+    );
+  }, [selectedSort]);
+
   useEffect(() => {
     if (categoryId !== null && categoryId === selectedCategoryId) {
       dispatch(
@@ -80,10 +98,10 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
           categoryId: categoryId,
           brandIds: brandIds,
           attributes: attributesIds,
-          minPrice: minPrice,
-          maxPrice: maxPrice,
-          minCameraMP: minCameraMP,
-          maxCameraMP: maxCameraMP,
+          minPrice: selectedPriceRange[0],
+          maxPrice: selectedPriceRange[1],
+          minCameraMP: selectedCameraRange[0],
+          maxCameraMP: selectedCameraRange[1],
           sort: selectedSort as string,
         }),
       );
@@ -93,10 +111,8 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
     pagination.currentPage,
     brandIds,
     attributesIds,
-    minPrice,
-    maxPrice,
-    minCameraMP,
-    maxCameraMP,
+    selectedCameraRange,
+    selectedPriceRange,
     selectedSort,
     categoryId,
     selectedCategoryId,
