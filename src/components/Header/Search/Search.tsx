@@ -64,7 +64,7 @@ export const Search: FC<ISearchProps> = ({
           query,
           page: 0,
           size: DEFAULT_SIZE,
-          sort: selectedSort || 'rating',
+          sort: selectedSort || 'rating,desc',
         }),
       ).unwrap();
       return result;

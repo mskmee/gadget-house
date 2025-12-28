@@ -27,7 +27,7 @@ const initialState: IInitialState = {
   allAttributes: null,
   allCategories: null,
   selectedCategoryId: null,
-  selectedSort: Sort.RATING.value,
+  selectedSort: Sort.RATING_HIGHTOLOW.value,
   isSortPopoverOpen: false,
   selectedBrands: null,
   selectedAttributes: null,
@@ -65,7 +65,7 @@ const filters_slice = createSlice({
       state.allBrands = null;
       state.allAttributes = null;
       state.allCategories = null;
-      state.selectedSort = Sort.RATING.value;
+      state.selectedSort = Sort.RATING_HIGHTOLOW.value;
       state.selectedBrands = null;
       state.selectedAttributes = null;
       state.selectedPriceRange = [0, 100000];
