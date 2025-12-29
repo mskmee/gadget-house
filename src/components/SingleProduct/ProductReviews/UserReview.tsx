@@ -9,6 +9,8 @@ import { getReviews } from '@/store/singleProduct/actions';
 import { AppDispatch } from '@/store';
 import { DataStatus } from '@/enums/data-status';
 
+const PAGE_SIZE = 8;
+
 function UserReview({ productId }: { productId: number }) {
   const dispatch: AppDispatch = useDispatch();
   const currentProductStatus = useTypedSelector(
@@ -26,7 +28,11 @@ function UserReview({ productId }: { productId: number }) {
 
   function handlePageChange(page: number) {
     setCurrentPage(page - 1);
+    // setShowAll(true);
+  }
+  function handleShowAll() {
     setShowAll(true);
+    setCurrentPage(0);
   }
 
   useEffect(() => {
@@ -71,13 +77,15 @@ function UserReview({ productId }: { productId: number }) {
       )}
 
       {!showAll && (reviews?.page?.length ?? 0) > 2 && (
-        <button onClick={() => setShowAll(true)}>All reviews</button>
+        <button onClick={handleShowAll}>All reviews</button>
       )}
       {showAll && (reviews?.totalPages ?? 0) > 1 && (
         <Pagination
           total={reviews?.totalElements}
+          pageSize={PAGE_SIZE}
           onChange={handlePageChange}
           current={currentPage + 1}
+          showSizeChanger={false}
           className="review_users-review-pagination"
         />
       )}

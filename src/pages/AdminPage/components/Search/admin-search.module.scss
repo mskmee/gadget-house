@@ -1,6 +1,7 @@
 .adminSearch {
   position: relative;
-  width: 693px;
+  width: 100%;
+  height: 56px;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -8,7 +9,7 @@
 
 .adminSearch__input {
   width: 100%;
-  padding: 16px 90px 16px 22px;
+  padding: 14px 60px 15px 16px;
   font-family: 'Inter', sans-serif;
   font-weight: 400;
   font-size: 16px;
@@ -86,5 +87,53 @@
 
   .adminSearch__input--error ~ & svg path {
     stroke: var(--error-color, #ef4444);
+  }
+}
+.selectedChip {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  display: flex;
+  align-items: center;
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+  padding: 0px 8px;
+  max-width: 760px;
+  height: 48px;
+  background-color: #fff;
+  z-index: 5;
+
+  .selectedChipImage {
+    border-radius: 2px;
+    width: 37px;
+    height: 37px;
+    object-fit: contain;
+    margin-right: 6px;
+  }
+
+  .selectedChipText {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    color: #182230;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .clearChipButton {
+    width: 34px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    margin-left: 6px;
+    height: 100%;
   }
 }
