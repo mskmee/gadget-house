@@ -1,7 +1,8 @@
+import { OrderStatus } from '@/enums/order-status';
 import { DeliveryMethodType } from '@/pages/OrderConfirmation/libs/enums/delivery-method';
 import { PaymentMethodType } from '@/pages/OrderConfirmation/libs/enums/payment-method';
 
-type OrderItem = {
+export type OrderItem = {
   id: number;
   email: string;
   firstName: string;
@@ -50,28 +51,29 @@ type OrderItem = {
   };
 };
 
-type CartItem = {
-  productId: number;
+export type CartItem = {
+  productId: string;
   quantity: number;
 };
 
-type OrderDto = {
+export interface OrderDto {
   fullName: string;
   email: string;
   phoneNumber: string;
   comment?: string;
   cartItems: CartItem[];
-  address: {
-    city: string;
-    street?: string;
-    departmentNumber?: string;
-    houseNumber?: string;
-    flat?: string;
-  };
+  address: Address;
   deliveryMethod: DeliveryMethodType;
   paymentMethod: PaymentMethodType;
+  deliveryStatus: OrderStatus;
+}
+
+export type Address = {
+  city: string;
+  street?: string;
+  departmentNumber?: string;
+  houseNumber?: string;
+  flat?: string;
 };
 
-type OrderResponseDto = number;
-
-export { type OrderItem, type OrderDto, type OrderResponseDto };
+export type OrderResponseDto = number;

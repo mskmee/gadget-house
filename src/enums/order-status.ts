@@ -1,10 +1,10 @@
 const OrderStatus = {
-  PAID: 'Paid',
-  NOT_PAID: 'Not Paid',
-  RETURNED: 'Returned',
-  ORDER: 'Order',
-  AWAITING: 'Sent',
-  CANCEL: 'Cancel',
+  PAID: 'PAID',
+  NOT_PAID: 'NOT PAID',
+  RETURNED: 'RETURNED',
+  SENT: 'SENT',
+  CANCEL: 'CANCEL',
+  ORDER: 'ORDER',
 } as const;
 
 // eslint-disable-next-line no-redeclare
