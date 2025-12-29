@@ -46,12 +46,6 @@
     fill 0.3s ease,
     transform 0.2s ease;
 
-  &:hover {
-    color: #ff5a5a;
-  }
-  &:hover svg path {
-    fill: #ff5a5a;
-  }
   &:focus {
     outline: none;
     box-shadow: 0 0 0 2px #ff5a5a;
