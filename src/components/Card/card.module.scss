@@ -181,7 +181,7 @@
   margin-top: 4px;
   > ul {
     display: flex;
-    gap: 9px;
+    gap: 5px;
     > li div div img {
       width: 15px;
       height: 15px;
@@ -310,7 +310,7 @@
 @media screen and (max-width: 850px) {
   .cardRate {
     > ul {
-      gap: 6px;
+      gap: 5px;
       > li div div img {
         width: 12px;
         height: 12px;
@@ -372,7 +372,7 @@
     .cardRate {
       > ul {
         gap: 5px;
-        font-size: initial;
+        // font-size: initial;
       }
     }
     .card-code {
@@ -384,7 +384,7 @@
 @media screen and (max-width: 450px) {
   .cardConatiner {
     padding: 6px 7px 12px 12px;
-    min-width: 175px;
+    min-width: 175px !important;
     max-width: 305px;
     gap: 12px;
   }
@@ -446,12 +446,12 @@
     }
     .cardRate {
       > ul {
-        gap: 3px;
+        gap: 2px;
         > li div div {
           line-height: 9px;
-          img {
-            width: 10px;
-            height: 10px;
+          svg {
+            width: 11px;
+            height: 11px;
           }
         }
       }
@@ -460,6 +460,7 @@
       font-weight: 300;
       font-size: rem(12px);
       line-height: 150%;
+      margin-right: 5px;
     }
   }
   .cardBrandConatiner {
