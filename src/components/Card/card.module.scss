@@ -324,6 +324,7 @@
     gap: 30px;
     padding: 8px 12px 12px 12px;
     border-radius: 12px;
+    width: 229px;
   }
 
   .cardContainerTop {
@@ -384,8 +385,8 @@
 @media screen and (max-width: 450px) {
   .cardConatiner {
     padding: 6px 7px 12px 12px;
-    min-width: 175px !important;
-    max-width: 305px;
+    width: 175px !important;
+    // max-width: 305px;
     gap: 12px;
   }
 
