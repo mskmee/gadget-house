@@ -93,9 +93,7 @@ const Filters = ({
       createdBefore: filterVisibility.date ? filters.createdBefore : undefined,
       totalMore: filterVisibility.price ? filters.totalMore : undefined,
       totalLess: filterVisibility.price ? filters.totalLess : undefined,
-      statuses: filterVisibility.status
-        ? filters.statuses?.map((item) => item.toUpperCase())
-        : undefined,
+      statuses: filterVisibility.status ? filters.statuses : undefined,
     };
 
     handleApplyFilter(appliedFilters);
@@ -246,11 +244,15 @@ const Filters = ({
                   className={cn(
                     'button__status',
                     styles.admin__filterRadioStatus,
-                    `button__status_${status.toLowerCase().replace(' ', '_')}`,
+                    `button__status_${status.toLowerCase()}`,
                   )}
                 >
                   {filters.statuses?.[0] === status && <span>✓ </span>}
-                  {status.split(' ').map(formatTitle).join(' ')}
+                  {status
+                    .replace('_', ' ')
+                    .split(' ')
+                    .map(formatTitle)
+                    .join(' ')}
                 </span>
               </label>
             ))}

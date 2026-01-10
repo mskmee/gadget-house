@@ -58,12 +58,12 @@ const ChangeStatus: FC<IChangeStatusProps> = ({
               key={status}
               className={cn(
                 styles.statusPopup__option,
-                `button__status button__status_${status.toLowerCase().replace(' ', '_')}`,
+                `button__status button__status_${status.toLowerCase()}`,
               )}
               onClick={() => setSelectedStatus(status)}
             >
               {selectedStatus === status && <span>✓ </span>}
-              {status.split(' ').map(formatTitle).join(' ')}
+              {status.replace('_', ' ').split(' ').map(formatTitle).join(' ')}
             </button>
           ))}
         </div>

@@ -76,6 +76,10 @@ img {
   padding: 0px 0px;
   margin: 0 auto;
 
+  @media (width <= 1545px) {
+    padding: 0px 50px;
+  }
+
   @media (width <= 1445px) {
     padding: 0px 50px;
   }

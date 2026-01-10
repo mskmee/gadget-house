@@ -41,14 +41,14 @@ export const StatusSection = ({
                 className={cn(
                   'button__status',
                   styles.admin__statusInput,
-                  `button__status_${status.toLowerCase().replace(/\s+/g, '_')}`,
+                  `button__status_${status.toLowerCase()}`,
                 )}
                 onClick={() => dispatch(setStatus({ status }))}
               >
                 {status.toUpperCase() === currentStatus?.toUpperCase() && (
                   <span>✓ </span>
                 )}
-                {status.split(' ').map(formatTitle).join(' ')}
+                {status.replace('_', ' ').split(' ').map(formatTitle).join(' ')}
               </button>
             );
           })}

@@ -26,6 +26,13 @@ export const AdminTableRow = ({
 }: AdminTableRowProps) => {
   const locale = useLocale();
 
+  const statusClass = item.deliveryStatus.toLowerCase().replace(/\s+/g, '_');
+  const displayStatus = item.deliveryStatus
+    .replace('_', ' ')
+    .split(' ')
+    .map(formatTitle)
+    .join(' ');
+
   return (
     <tr>
       <td>
@@ -45,10 +52,8 @@ export const AdminTableRow = ({
             <LoadingSpinner />
           </div>
         ) : (
-          <button
-            className={`button__status button__status_${item.deliveryStatus.toLowerCase().replace(' ', '_')}`}
-          >
-            {formatTitle(item.deliveryStatus)}
+          <button className={`button__status button__status_${statusClass}`}>
+            {displayStatus}
           </button>
         )}
       </td>
