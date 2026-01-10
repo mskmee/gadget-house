@@ -23,6 +23,8 @@ import { SortingDesk } from '../Sort/SortingDesk';
 import { DataStatus } from '@/enums/data-status';
 import { formatCategoryUrlName } from '@/utils/helpers/formatCategoryUrlName';
 
+import CatalogPageSkeleton from '../skeletons/CatalogPageSkeleton';
+
 interface IPageLayoutProps {
   products: IProductCard[];
   totalPages: number;
@@ -139,8 +141,9 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
         <div className={styles.pageLayout__content}>
           {!isMobile991 && <FiltersDesk key={categoryId} />}
 
-          {isInitialLoading &&
-          pagination.currentPage === 0 ? null : products.length > 0 ? (
+          {isInitialLoading && pagination.currentPage === 0 ? (
+            <CatalogPageSkeleton />
+          ) : products.length > 0 ? (
             <Catalog
               data={products}
               totalPages={totalPages}
