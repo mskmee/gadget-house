@@ -1,6 +1,6 @@
 const OrderStatus = {
   PAID: 'PAID',
-  NOT_PAID: 'NOT PAID',
+  NOT_PAID: 'NOT_PAID',
   RETURNED: 'RETURNED',
   SENT: 'SENT',
   CANCEL: 'CANCEL',
