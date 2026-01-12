@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import cn from 'classnames';
 
 import { AppRoute } from '@/enums/Route';
@@ -19,20 +19,33 @@ interface SuccessPopupProps {
 
 const SuccessPopup: FC<SuccessPopupProps> = ({ type, onClose, emailValue }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { message } = useTypedSelector((state: RootState) => state.auth);
+
+  const redirectPath = (location.state as any)?.from;
+
   let title = '';
   let notice: React.ReactNode = '';
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       onClose();
-      type === 'loginAdmin'
-        ? navigate(AppRoute.ADMIN_PAGE)
-        : navigate(AppRoute.ROOT);
+      if (type === 'loginAdmin') {
+        navigate(AppRoute.ADMIN_PAGE);
+      } else if (redirectPath) {
+        if (window.location.pathname !== redirectPath) {
+          navigate(redirectPath);
+        }
+      } else if (
+        window.location.pathname === AppRoute.SIGN_IN ||
+        window.location.pathname === AppRoute.SIGN_UP
+      ) {
+        navigate(AppRoute.ROOT);
+      }
     }, 5000);
 
     return () => clearTimeout(timeoutId);
-  }, [navigate, onClose, type]);
+  }, [navigate, onClose, type, redirectPath]);
 
   switch (type) {
     case 'login':

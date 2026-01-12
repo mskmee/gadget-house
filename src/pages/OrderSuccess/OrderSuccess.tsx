@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import cn from 'classnames';
 
@@ -12,6 +12,12 @@ import { AppRoute } from '@/enums/Route';
 const OrderSuccess: FC = () => {
   const { clearCart } = useActions();
   const { orderId } = useTypedSelector((state) => state.shopping_card);
+
+  useEffect(() => {
+    if (orderId) {
+      clearCart();
+    }
+  }, [orderId, clearCart]);
 
   return (
     <div className={styles.orderSuccess}>
@@ -34,7 +40,6 @@ const OrderSuccess: FC = () => {
             <Link
               className={cn('button button-primary', styles.orderSuccess__link)}
               to={AppRoute.ALL_PRODUCTS}
-              onClick={() => clearCart()}
             >
               Back to Catalog
             </Link>

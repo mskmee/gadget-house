@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export type AuthRequiredType = 'review' | 'favorite';
+export type AuthRequiredType = 'review' | 'favorite' | 'order';
 
 export interface IAuthPortalsState {
   isAuthRequiredModalOpen: boolean;
