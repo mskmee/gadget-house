@@ -23,7 +23,7 @@
       align-items: center;
       gap: 8px;
       padding: 10px;
-      font-family: "Inter", sans-serif;
+      font-family: 'Inter', sans-serif;
       font-weight: 400;
       font-size: 24px;
       line-height: 150%;
@@ -60,7 +60,7 @@
       padding: 20px;
       box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
       background: var(--white-color);
-      font-family: "Inter", sans-serif;
+      font-family: 'Inter', sans-serif;
       font-weight: 400;
       font-size: 16px;
       line-height: 150%;
@@ -75,7 +75,7 @@
       gap: 20px;
 
       h3 {
-        font-family: "Inter", sans-serif;
+        font-family: 'Inter', sans-serif;
         font-weight: 400;
         font-size: 24px;
         line-height: 150%;
@@ -93,6 +93,7 @@
           width: 52px;
           height: 32px;
           background-color: var(--secondary-background-color);
+          padding: 0 !important;
 
           &:hover {
             background-color: var(--secondary-background-color);
@@ -101,25 +102,27 @@
         .ant-switch-inner {
           border-radius: 100px;
           width: 52px;
-          height: 32px;
+          // height: 32px;
         }
         .ant-switch-checked {
           background-color: var(--theme-color) !important;
 
           & .ant-switch-handle {
-            inset-inline-start: calc(100% - 30px);
+            inset-inline-start: calc(100% - 29.5px) !important;
           }
         }
         .ant-switch-handle {
+          top: 50% !important;
+          transform: translateY(-50%) !important;
+          inset-inline-start: 2.5px !important;
           width: 27px;
-          height: 28px;
+          height: 27px;
           border-radius: 100px;
           box-shadow:
             0 3px 1px 0 rgba(0, 0, 0, 0.06),
             0 3px 8px 0 rgba(0, 0, 0, 0.15),
             0 0 0 1px rgba(0, 0, 0, 0.04);
           background: var(--white-color);
-          inset-inline-start: 2px;
 
           &::before {
             display: none;
@@ -141,7 +144,7 @@
       border: 1px solid var(--secondary-background-color);
       border-radius: 10px;
       background-color: var(--bg-color);
-      font-family: "Inter", sans-serif;
+      font-family: 'Inter', sans-serif;
       font-weight: 400;
       font-size: 16px;
       line-height: 150%;
@@ -176,7 +179,7 @@
       border-radius: 12px;
       box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
       background: var(--white-color);
-      font-family: "Inter", sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 16px;
 
       :global {

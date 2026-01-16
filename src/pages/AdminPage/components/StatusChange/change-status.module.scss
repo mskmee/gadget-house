@@ -1,11 +1,12 @@
 .admin__changeStatus {
+  width: 56px;
   height: 56px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid var(--secondary-background-color);
   border-radius: 8px;
-  padding: 10px 16px;
+  padding: 10px 15px;
   background-color: var(--bg-color);
   cursor: pointer;
   transition: all 0.3s ease-in-out;

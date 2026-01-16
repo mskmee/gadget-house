@@ -127,6 +127,11 @@
       align-items: center;
       width: 100px;
       height: 100px;
+      img {
+        object-fit: contain;
+        object-position: center;
+        height: 100px;
+      }
 
       @media (width <= 820px) {
         width: 80px;
@@ -155,7 +160,7 @@
       @media (width <= 680px) {
         display: flex;
         flex-basis: auto;
-        align-items: start;
+        align-items: center;
         gap: 8px;
         width: 100%;
         margin-bottom: 12px;
@@ -191,19 +196,19 @@
         display: inline-block;
         width: 32px;
         height: 32px;
-        background-image: url("../../assets/icons/delete.svg");
+        background-image: url('../../assets/icons/delete.svg');
         background-repeat: no-repeat;
         background-position: center center;
         background-size: contain;
         border: none;
         outline: none;
         transition: all 0.3s ease-in-out;
-        content: "";
+        content: '';
 
         @media screen and (width <= 680px) {
           width: 44px;
           height: 44px;
-          background-image: url("../../assets/icons/delete-mobile.svg");
+          background-image: url('../../assets/icons/delete-mobile.svg');
         }
       }
 
@@ -211,10 +216,10 @@
       &:focus,
       &:focus-visible {
         &::before {
-          background-image: url("../../assets/icons/delete-hover.svg");
+          background-image: url('../../assets/icons/delete-hover.svg');
 
           @media screen and (width <= 680px) {
-            background-image: url("../../assets/icons/delete-mobile.svg");
+            background-image: url('../../assets/icons/delete-mobile.svg');
           }
         }
       }
@@ -262,14 +267,14 @@
             display: inline-block;
             width: 19px;
             height: 19px;
-            background-image: url("../../assets/icons/button-minus.svg");
+            background-image: url('../../assets/icons/button-minus.svg');
             background-repeat: no-repeat;
             background-position: center center;
             background-size: contain;
             border: none;
             outline: none;
             transition: all 0.3s ease-in-out;
-            content: "";
+            content: '';
 
             @media (width <= 980px) {
               width: 24px;
@@ -286,7 +291,7 @@
           &:focus,
           &:focus-visible {
             &::before {
-              background-image: url("../../assets/icons/button-minus-hover.svg");
+              background-image: url('../../assets/icons/button-minus-hover.svg');
             }
           }
         }
@@ -296,14 +301,14 @@
             display: inline-block;
             width: 19px;
             height: 19px;
-            background-image: url("../../assets/icons/button-plus.svg");
+            background-image: url('../../assets/icons/button-plus.svg');
             background-repeat: no-repeat;
             background-position: center center;
             background-size: contain;
             border: none;
             outline: none;
             transition: all 0.3s ease-in-out;
-            content: "";
+            content: '';
 
             @media (width <= 980px) {
               width: 24px;
@@ -320,9 +325,9 @@
           &:focus,
           &:focus-visible {
             &::before {
-              background-image: url("../../assets/icons/button-plus-hover.svg");
+              background-image: url('../../assets/icons/button-plus-hover.svg');
             }
-          } 
+          }
         }
       }
 
@@ -445,11 +450,11 @@
       margin-right: 5px;
       border: 1.5px solid var(--text-color);
       border-radius: 4px;
-      content: "";
+      content: '';
     }
 
     &Input:checked + &Icon::before {
-      background-image: url("../../assets/icons/checked.svg");
+      background-image: url('../../assets/icons/checked.svg');
       background-repeat: no-repeat;
       background-position: center center;
       background-size: contain;

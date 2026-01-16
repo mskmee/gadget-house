@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import { DEFAULT_SIZE, DEFAULT_SIZE_MOBILE } from '@/constants/pagination';
 import { AppDispatch, RootState } from '@/store';
-import { getFilteredProducts } from '@/store/products/actions';
+import { getFilteredProducts, searchProducts } from '@/store/products/actions';
 import {
   selectBrandIds,
   selectFilteredAttributes,
@@ -70,6 +70,25 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   } else {
     formatCategoryUrlName(pathname);
   }
+
+  const isSearchPage = useMemo(() => {
+    return pathname.includes('search');
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!isSearchPage || !searchInputValue || !selectedSort || isInitialLoading)
+      return;
+
+    dispatch(
+      searchProducts({
+        query: searchInputValue,
+        page: pagination.currentPage,
+        size: 20,
+        sort: selectedSort,
+      }),
+    );
+  }, [selectedSort]);
+
   useEffect(() => {
     if (categoryId !== null && categoryId === selectedCategoryId) {
       dispatch(

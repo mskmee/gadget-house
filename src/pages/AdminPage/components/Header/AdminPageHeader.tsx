@@ -16,17 +16,36 @@ interface AdminPageHeaderProps {
   handleApplyFilter: (filters: OrderFilterParams) => void;
   // eslint-disable-next-line no-unused-vars
   patchOrder: ReturnType<typeof usePatchOrderMutation>[0];
+  onClearSelection: () => void;
 }
+type ActivePopover = 'status' | 'filters' | null;
 
 export const AdminPageHeader = ({
   checkedItems,
   onSearch,
   handleApplyFilter,
   patchOrder,
+  onClearSelection,
 }: AdminPageHeaderProps) => {
   const [isAuthModalOpen, setAuthModalOpen] = useState(false);
+  const [activePopover, setActivePopover] = useState<ActivePopover>(null);
+
+  const togglePopover = useCallback(
+    (popover: ActivePopover) => {
+      if (activePopover === popover) {
+        setActivePopover(null);
+      } else {
+        setActivePopover(popover);
+      }
+    },
+    [activePopover],
+  );
+
+  const handleStatusToggle = () => togglePopover('status');
+  const handleFiltersToggle = () => togglePopover('filters');
 
   const handleModalToggle = useCallback(() => {
+    setActivePopover(null);
     setAuthModalOpen((prev) => !prev);
   }, []);
 
@@ -53,9 +72,21 @@ export const AdminPageHeader = ({
             <AddNewUserIcon />
           </button>
 
-          <ChangeStatus patchOrder={patchOrder} checkedItems={checkedItems} />
+          <ChangeStatus
+            patchOrder={patchOrder}
+            checkedItems={checkedItems}
+            isOpen={activePopover === 'status'}
+            onToggle={handleStatusToggle}
+            onClose={() => setActivePopover(null)}
+            onStatusChanged={onClearSelection}
+          />
 
-          <Filters handleApplyFilter={handleApplyFilter} />
+          <Filters
+            handleApplyFilter={handleApplyFilter}
+            isOpen={activePopover === 'filters'}
+            onToggle={handleFiltersToggle}
+            onClose={() => setActivePopover(null)}
+          />
         </div>
       </header>
 

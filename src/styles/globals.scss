@@ -76,6 +76,10 @@ img {
   padding: 0px 0px;
   margin: 0 auto;
 
+  @media (width <= 1545px) {
+    padding: 0px 50px;
+  }
+
   @media (width <= 1445px) {
     padding: 0px 50px;
   }
@@ -278,9 +282,10 @@ img {
     }
   }
 }
+
 .ant-breadcrumb {
   font-size: rem(16px);
-  font-family: inherit; // Ensures it uses the global font-family
+  font-family: inherit;
 
   > ol li:first-child .ant-breadcrumb-link {
     font-size: rem(14px);
@@ -290,6 +295,61 @@ img {
 .ant-carousel .slick-slide a:focus-visible {
   border: 2px solid #1890ff;
   outline: none;
+}
+
+// Global Ant Design Input override for admin forms
+.ant-form-item {
+  .ant-form-item-label > label {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    color: var(--secondary-text-color);
+
+    &::first-letter {
+      text-transform: capitalize;
+    }
+  }
+
+  .ant-input {
+    border: 1px solid var(--secondary-background-color);
+    border-radius: 12px;
+    padding: 16px;
+    background-color: var(--bg-color);
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    color: var(--text-color);
+    transition: all 0.2s;
+
+    &:hover {
+      border-color: var(--theme-color) !important;
+      box-shadow: none !important;
+    }
+
+    &:focus,
+    &:focus-within {
+      border-color: var(--theme-color) !important;
+      box-shadow: none !important;
+      outline: none !important;
+    }
+
+    &:active {
+      border-color: var(--theme-color) !important;
+      box-shadow: none !important;
+    }
+  }
+
+  .ant-input-status-error {
+    border-color: var(--error-color) !important;
+
+    &:hover,
+    &:focus,
+    &:focus-within {
+      border-color: var(--error-color) !important;
+    }
+  }
 }
 
 .product-page-photo-modal {

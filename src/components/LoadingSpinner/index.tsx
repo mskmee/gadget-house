@@ -5,7 +5,7 @@ interface LoadingSpinnerProps {
   style?: CSSProperties;
 }
 
-const LoadingSpinner: FC = ({ style }: LoadingSpinnerProps) => {
+const LoadingSpinner: FC<LoadingSpinnerProps> = ({ style }) => {
   return (
     <div style={style} className={styles['spinner-container']}>
       <div className={styles['spinner']}></div>
