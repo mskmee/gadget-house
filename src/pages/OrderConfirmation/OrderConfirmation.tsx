@@ -12,12 +12,9 @@ import { useOrderConfirmation } from './libs/hooks/hooks';
 import { AppRoute } from '@/enums/Route';
 import { convertPriceToReadable } from '@/utils/helpers/product';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
-import { useAuthRequired } from '@/hooks/useAuthRequired';
-import { DataStatus } from '@/enums/data-status';
 import styles from './order-confirmation.module.scss';
 
 const OrderConfirmation: FC = () => {
-  const { triggerAuthRequired } = useAuthRequired();
   const {
     orderProcessStage,
     onContactsFormSubmit,
@@ -40,20 +37,7 @@ const OrderConfirmation: FC = () => {
   const { products, cardTotalAmount, currency, locale } = useTypedSelector(
     (state) => state.shopping_card,
   );
-  const {
-    user: initialUserData,
-    userToken,
-    dataStatus,
-  } = useTypedSelector((state) => state.auth);
-
-  const isLoading = dataStatus === DataStatus.PENDING;
-
-  useEffect(() => {
-    if (isLoading || userToken || initialUserData) {
-      return;
-    }
-    triggerAuthRequired('order');
-  }, [initialUserData, userToken, isLoading, triggerAuthRequired]);
+  const initialUserData = useTypedSelector((state) => state.auth.user);
 
   useEffect(() => {
     if (products.length === 0) {

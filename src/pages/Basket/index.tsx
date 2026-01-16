@@ -1,5 +1,5 @@
 import styles from './Basket.module.scss';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { LeftArrow } from '@/assets/constants';
 import BasketItem from '@/components/BasketItem/BasketItem.tsx';
 import { useTypedSelector } from '@/hooks/useTypedSelector.ts';
@@ -12,6 +12,8 @@ import Benefits from '@/components/benefitsList/benefits.tsx';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store';
 import { getAllProducts } from '@/store/products/actions';
+import { useAuthRequired } from '@/hooks/useAuthRequired';
+import { DataStatus } from '@/enums/data-status';
 import {
   DEFAULT_PAGE,
   DEFAULT_SIZE_ALL,
@@ -20,8 +22,12 @@ import {
 
 export const BasketPage = () => {
   const [isPopUpOpened, setIsPopUpOpened] = useState(false);
+  const [isRedirectPending, setIsRedirectPending] = useState(() => {
+    return sessionStorage.getItem('pendingOrderRedirect') === 'true';
+  });
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
+  const { triggerAuthRequired } = useAuthRequired();
 
   const { products, cardTotalAmount, currency, locale } = useTypedSelector(
     (state) => state.shopping_card,
@@ -31,11 +37,41 @@ export const BasketPage = () => {
     (state) => state.products,
   );
 
+  const { user, userToken, dataStatus } = useTypedSelector(
+    (state) => state.auth,
+  );
+  const isLoading = dataStatus === DataStatus.PENDING;
+  const isAuthorized = Boolean(user || userToken);
   const productsLength = products.reduce((acc, item) => acc + item.quantity, 0);
-
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
   const onPopUpClose = () => setIsPopUpOpened(false);
+
+  useEffect(() => {
+    if (isAuthorized && isRedirectPending) {
+      const timer = setTimeout(() => {
+        sessionStorage.removeItem('pendingOrderRedirect');
+        setIsRedirectPending(false);
+        navigate('/order');
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+    if (isAuthorized && !isRedirectPending) {
+      sessionStorage.removeItem('pendingOrderRedirect');
+    }
+  }, [isAuthorized, isRedirectPending, navigate]);
+
+  const handleCheckoutClick = () => {
+    if (isLoading) return;
+
+    if (!isAuthorized) {
+      sessionStorage.setItem('pendingOrderRedirect', 'true');
+      setIsRedirectPending(true);
+      triggerAuthRequired('order');
+    } else {
+      navigate('/order');
+    }
+  };
 
   useEffect(() => {
     if (!productsLoaded || !productsData) {
@@ -84,7 +120,12 @@ export const BasketPage = () => {
               </span>
             </h3>
             <div className={styles.orderBtnWrap}>
-              <Link to="/order">Place the order</Link>
+              <button
+                onClick={handleCheckoutClick}
+                className={styles.checkoutButton}
+              >
+                Place the order
+              </button>
             </div>
           </div>
         </section>

@@ -24,8 +24,6 @@ const modalContent: Record<'review' | 'favorite' | 'order', ModalContent> = {
     text: 'To keep track of your favorite, please create an account or log in.',
   },
   order: {
-    // title: 'To continue with your order',
-    // text: 'Please register or log in to complete your purchase.',
     title: 'Please register or log in',
     text: 'To continue with your order.',
   },

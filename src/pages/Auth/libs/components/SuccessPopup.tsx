@@ -42,7 +42,7 @@ const SuccessPopup: FC<SuccessPopupProps> = ({ type, onClose, emailValue }) => {
       ) {
         navigate(AppRoute.ROOT);
       }
-    }, 5000);
+    }, 3000);
 
     return () => clearTimeout(timeoutId);
   }, [navigate, onClose, type, redirectPath]);
