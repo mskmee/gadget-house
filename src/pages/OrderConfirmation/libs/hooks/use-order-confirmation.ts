@@ -18,7 +18,7 @@ import {
 import { OrderDto } from '@/utils/packages/orders/libs/types/order-item';
 import { AppDispatch } from '@/store';
 import { createOrder } from '@/store/shopping_cart/actions';
-import { getUserData } from '@/store/auth/actions';
+// import { getUserData } from '@/store/auth/actions';
 import { OrderStatus } from '@/enums/order-status';
 
 type Return = {
