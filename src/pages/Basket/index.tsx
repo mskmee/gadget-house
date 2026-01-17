@@ -11,12 +11,9 @@ import Carousels from '@/components/Carousel/Carousel.tsx';
 import Benefits from '@/components/benefitsList/benefits.tsx';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store';
-<<<<<<< Updated upstream
 import { getAllProducts } from '@/store/products/actions';
 import { useAuthRequired } from '@/hooks/useAuthRequired';
 import { DataStatus } from '@/enums/data-status';
-=======
->>>>>>> Stashed changes
 import {
   DEFAULT_PAGE,
   DEFAULT_SIZE_ALL,
@@ -46,15 +43,11 @@ export const BasketPage = () => {
   const isLoading = dataStatus === DataStatus.PENDING;
   const isAuthorized = Boolean(user || userToken);
   const productsLength = products.reduce((acc, item) => acc + item.quantity, 0);
-<<<<<<< Updated upstream
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-=======
->>>>>>> Stashed changes
 
   const onPopUpClose = () => setIsPopUpOpened(false);
 
   useEffect(() => {
-<<<<<<< Updated upstream
     if (isAuthorized && isRedirectPending) {
       const timer = setTimeout(() => {
         sessionStorage.removeItem('pendingOrderRedirect');
@@ -88,8 +81,6 @@ export const BasketPage = () => {
   }, [dispatch, productsLoaded, productsData, isMobile]);
 
   useEffect(() => {
-=======
->>>>>>> Stashed changes
     if (!productsLength) {
       navigate('/');
     }
