@@ -8,13 +8,13 @@ interface IAuthRequiredModalProps {
   onClose: () => void;
   onLoginClick: () => void;
   onRegisterClick: () => void;
-  type: 'review' | 'favorite';
+  type: 'review' | 'favorite' | 'order';
 }
 type ModalContent = {
   title: string;
   text?: string;
 };
-const modalContent: Record<'review' | 'favorite', ModalContent> = {
+const modalContent: Record<'review' | 'favorite' | 'order', ModalContent> = {
   review: {
     title: 'Log in to leave a review',
     text: 'You need to be logged in to share your feedback. Please sign in or create an account to continue.',
@@ -22,6 +22,10 @@ const modalContent: Record<'review' | 'favorite', ModalContent> = {
   favorite: {
     title: 'Save Your Favorites',
     text: 'To keep track of your favorite, please create an account or log in.',
+  },
+  order: {
+    title: 'Please register or log in',
+    text: 'To continue with your order.',
   },
 };
 

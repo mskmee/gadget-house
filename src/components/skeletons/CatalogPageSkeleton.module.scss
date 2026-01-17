@@ -1,0 +1,44 @@
+.skeleton {
+  flex-grow: 1;
+  padding-bottom: 135px;
+  border-radius: 20px;
+
+  &__mobileList {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 8px;
+    margin-bottom: 40px;
+    @media screen and (min-width: 500px) {
+      justify-items: center;
+      grid-gap: 34px;
+    }
+  }
+
+  &__deskList {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    grid-gap: 32px;
+    margin-bottom: 65px;
+
+    @media screen and (min-width: 1200px) {
+      grid-gap: 40px;
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  &__item {
+    width: 305px;
+    height: 480px;
+    border-radius: 20px;
+    overflow: hidden;
+
+    @media screen and (max-width: 767px) {
+      width: 100%;
+      max-width: 305px;
+      height: 288px;
+    }
+  }
+}

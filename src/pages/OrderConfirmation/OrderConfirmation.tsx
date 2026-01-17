@@ -12,7 +12,6 @@ import { useOrderConfirmation } from './libs/hooks/hooks';
 import { AppRoute } from '@/enums/Route';
 import { convertPriceToReadable } from '@/utils/helpers/product';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
-
 import styles from './order-confirmation.module.scss';
 
 const OrderConfirmation: FC = () => {
@@ -45,7 +44,7 @@ const OrderConfirmation: FC = () => {
       onResetOrderProcess();
       navigate(AppRoute.ALL_PRODUCTS);
     }
-  }, [products, navigate]);
+  }, [products, navigate, onResetOrderProcess]);
 
   const isOrderButtonDisabled = !isOrderReady || !isRulesAccepted || isEditing;
 

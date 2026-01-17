@@ -24,16 +24,17 @@
   }
 
   &__title {
-    font-family: "Inter", sans-serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 500;
     font-size: 42px;
     line-height: 150%;
+    text-align: center;
     color: var(--text-color);
     margin-bottom: 20px;
   }
 
   &__text {
-    font-family: "Inter", sans-serif;
+    font-family: 'Inter', sans-serif;
     font-weight: 400;
     font-size: 24px;
     line-height: 150%;
