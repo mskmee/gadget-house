@@ -46,6 +46,9 @@ const OrderConfirmation: FC = () => {
     }
   }, [products, navigate, onResetOrderProcess]);
 
+  console.log(isRulesAccepted);
+  
+
   const isOrderButtonDisabled = !isOrderReady || !isRulesAccepted || isEditing;
 
   const initialContactsValue = useMemo(
@@ -135,13 +138,13 @@ const OrderConfirmation: FC = () => {
               </div>
 
               <label className={styles.order__agreement}>
-                <input
+                 <input
                   className={styles.order__agreementInput}
                   type="checkbox"
                   name="agreement"
                   id="agreement"
                   onChange={onToggleRules}
-                />
+                /> 
                 <span className={styles.order__agreementIcon}></span>
                 <span className={styles.order__agreementText}>
                   I agree to the processing of my personal data
