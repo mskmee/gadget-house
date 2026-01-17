@@ -27,7 +27,6 @@ import {
   createUser,
   forgotPassword,
   getCredentials,
-  getUserData,
 } from '@/store/auth/actions';
 import { SuccessType } from '../types/successType';
 

@@ -25,7 +25,6 @@ export const DashboardLayout = () => {
     (state) => state.auth,
   );
   const userToken = useTypedSelector((state) => state.auth.userToken);
-  const { getAllProducts } = useActions();
 
   const isMobile767 = useMediaQuery({
     query: '(max-width: 767px)',
@@ -41,10 +40,6 @@ export const DashboardLayout = () => {
       setActiveSection('account');
     }
   }, [pathname]);
-
-  useEffect(() => {
-    getAllProducts({ page: DEFAULT_PAGE, size: DEFAULT_SIZE_ALL });
-  }, [getAllProducts]);
 
   const favoriteProducts = useTypedSelector(
     (state) => state.products.favoriteProducts,

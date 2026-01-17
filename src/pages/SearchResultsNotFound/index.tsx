@@ -8,7 +8,6 @@ import { AppRoute } from '@/enums/Route';
 import { outOfStockProductsList } from '@/constants/outOfStockProductsList';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../store';
-import { getAllProducts } from '@/store/products/actions';
 import { DEFAULT_PAGE, DEFAULT_SIZE_ALL } from '@/constants/pagination';
 
 export const SearchResultsNotFound = () => {
@@ -48,12 +47,6 @@ export const SearchResultsNotFound = () => {
       setIsFirstTime(true);
     }
   }, [isGlobalOverlayActive, isFirstTime, searchValue]);
-
-  useEffect(() => {
-    if (!productsLoaded || !productsData) {
-      dispatch(getAllProducts({ page: DEFAULT_PAGE, size: DEFAULT_SIZE_ALL }));
-    }
-  }, [dispatch, productsLoaded, productsData]);
 
   useEffect(() => {
     if (isSearchEmpty) {

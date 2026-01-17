@@ -116,19 +116,11 @@ const changePassword = createAsyncThunk(
   }),
 );
 
-const getUserData = createAsyncThunk<UserResponseDto, void>(
-  'auth/fetchUserProfile',
-  withAuthErrorHandler(async () => {
-    return await authService.fetchUserProfile();
-  }),
-);
-
 export {
   getCredentials,
   createUser,
   forgotPassword,
   changePassword,
-  getUserData,
   updateUserPersonalData,
   updateUserContacts,
 };

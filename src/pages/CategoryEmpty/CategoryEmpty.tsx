@@ -2,21 +2,11 @@ import { AppRoute } from '@/enums/Route';
 import styles from './CategoryEmpty.module.scss';
 import { Link, useLocation } from 'react-router-dom';
 import { Benefits, Carousels, SliderNav } from '@/components/components';
-import { useEffect } from 'react';
-import { getAllProducts } from '@/store/products/actions';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '@/store';
-import { DEFAULT_PAGE, DEFAULT_SIZE_ALL } from '@/constants/pagination';
 
 const CategoryEmpty = () => {
   const location = useLocation();
-  const dispatch = useDispatch<AppDispatch>();
 
   const categoryName = location?.state?.categoryName || 'This category';
-
-  useEffect(() => {
-    dispatch(getAllProducts({ page: DEFAULT_PAGE, size: DEFAULT_SIZE_ALL }));
-  }, [dispatch]);
 
   return (
     <main>

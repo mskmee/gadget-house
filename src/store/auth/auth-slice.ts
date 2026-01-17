@@ -7,7 +7,6 @@ import {
   createUser,
   forgotPassword,
   getCredentials,
-  getUserData,
   updateUserContacts,
   updateUserPersonalData,
 } from './actions';
@@ -56,6 +55,10 @@ const authSlice = createSlice({
         action.payload.refreshToken,
       );
     },
+    setUser: (state, action: PayloadAction<IUser>) => {
+      state.user = action.payload;
+      state.isAuthenticated = true;
+    },
     logout: (state) => {
       state.isAuthenticated = false;
       state.user = null;
@@ -83,10 +86,6 @@ const authSlice = createSlice({
     });
     builder.addCase(createUser.fulfilled, (state, { payload }) => {
       state.user = payload;
-    });
-    builder.addCase(getUserData.fulfilled, (state, { payload }) => {
-      state.user = payload;
-      state.isAuthenticated = true;
     });
     builder.addCase(forgotPassword.fulfilled, (state, { payload }) => {
       state.message = payload;
@@ -117,7 +116,6 @@ const authSlice = createSlice({
         getCredentials.fulfilled,
         createUser.fulfilled,
         forgotPassword.fulfilled,
-        getUserData.fulfilled,
       ),
       (state) => {
         state.dataStatus = DataStatus.FULFILLED;
@@ -128,7 +126,6 @@ const authSlice = createSlice({
         getCredentials.rejected,
         createUser.rejected,
         forgotPassword.rejected,
-        getUserData.rejected,
         updateUserPersonalData.rejected,
         updateUserContacts.rejected,
       ),
@@ -141,7 +138,6 @@ const authSlice = createSlice({
         getCredentials.pending,
         createUser.pending,
         forgotPassword.pending,
-        getUserData.pending,
         updateUserPersonalData.pending,
         updateUserContacts.pending,
       ),
@@ -152,6 +148,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { logout, setTokens } = authSlice.actions;
+export const { logout, setTokens, setUser } = authSlice.actions;
 
 export const { actions, reducer } = authSlice;
