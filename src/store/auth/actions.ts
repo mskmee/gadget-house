@@ -6,7 +6,7 @@ import {
   ChangePasswordRequestDto,
   UpdateContactsRequestDto,
   UpdatePersonalDataRequestDto,
-  UserResponseDto,
+  // UserResponseDto,
 } from '@/utils/packages/auth/libs/types/types';
 import {
   LocalStorageKey,

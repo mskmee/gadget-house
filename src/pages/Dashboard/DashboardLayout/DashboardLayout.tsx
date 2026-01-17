@@ -13,7 +13,7 @@ import { ChangeUserData } from '@/assets/icons/ChangeUserData';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { AppRoute } from '@/enums/Route';
 import { useActions } from '@/hooks/useActions';
-import { DEFAULT_PAGE, DEFAULT_SIZE_ALL } from '@/constants/pagination';
+// import { DEFAULT_PAGE, DEFAULT_SIZE_ALL } from '@/constants/pagination';
 import { useMediaQuery } from 'react-responsive';
 
 export const DashboardLayout = () => {

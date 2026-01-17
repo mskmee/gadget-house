@@ -30,6 +30,14 @@ export interface ProductsParams {
   size: number;
 }
 
+export interface ProductsSearchParams {
+  query: string;
+  pageable?: {
+    size?: number;
+    page?: number;
+  };
+}
+
 export const productsApi = createApi({
   reducerPath: 'productsApi',
   baseQuery: baseQuery,

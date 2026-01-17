@@ -148,7 +148,7 @@ const reducer: Reducer<State, ReducerAction> = (state, action) => {
 const useAuth = (): Return => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
   const dispatchApp: AppDispatch = useDispatch();
-  const { userToken, refreshToken } = useTypedSelector((state) => state.auth);
+  // const { userToken, refreshToken } = useTypedSelector((state) => state.auth);
   const [successType, setSuccessType] = useState<SuccessType>(null);
   const [authError, setAuthError] = useState<string | null>(null);
   const isLoading = useTypedSelector(
@@ -168,11 +168,11 @@ const useAuth = (): Return => {
     }
   }, [authError]);
 
-  useEffect(() => {
-    if (userToken && refreshToken) {
-      dispatchApp(getUserData());
-    }
-  }, [dispatchApp, refreshToken, userToken]);
+  // useEffect(() => {
+  //   if (userToken && refreshToken) {
+  //     // dispatchApp(getUserData());
+  //   }
+  // }, [dispatchApp, refreshToken, userToken]);
 
   const setCurrentForm = useCallback((form: FormEnum) => {
     setAuthError(null);

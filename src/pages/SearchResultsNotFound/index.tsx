@@ -6,23 +6,23 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { AppRoute } from '@/enums/Route';
 import { outOfStockProductsList } from '@/constants/outOfStockProductsList';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../store';
-import { DEFAULT_PAGE, DEFAULT_SIZE_ALL } from '@/constants/pagination';
+// import { useDispatch } from 'react-redux';
+// import { AppDispatch } from '../../store';
+// import { DEFAULT_PAGE, DEFAULT_SIZE_ALL } from '@/constants/pagination';
 
 export const SearchResultsNotFound = () => {
   useDocumentTitle(`Search results`);
   const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
+  // const dispatch = useDispatch<AppDispatch>();
   const { state } = useLocation();
   const searchValue = useTypedSelector((state) => state.search.searchValue);
   const isGlobalOverlayActive = useTypedSelector(
     (state) => state.search.isGlobalOverlayActive,
   );
 
-  const { productsData, loaded: productsLoaded } = useTypedSelector(
-    (state) => state.products,
-  );
+  // const { productsData, loaded: productsLoaded } = useTypedSelector(
+  //   (state) => state.products,
+  // );
 
   const [isFirstTime, setIsFirstTime] = useState(true);
   const [searchValueBeforeOverlay, setSearchValueBeforeOverlay] = useState(
