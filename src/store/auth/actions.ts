@@ -6,7 +6,7 @@ import {
   ChangePasswordRequestDto,
   UpdateContactsRequestDto,
   UpdatePersonalDataRequestDto,
-  UserResponseDto,
+  // UserResponseDto,
 } from '@/utils/packages/auth/libs/types/types';
 import {
   LocalStorageKey,
@@ -116,19 +116,11 @@ const changePassword = createAsyncThunk(
   }),
 );
 
-const getUserData = createAsyncThunk<UserResponseDto, void>(
-  'auth/fetchUserProfile',
-  withAuthErrorHandler(async () => {
-    return await authService.fetchUserProfile();
-  }),
-);
-
 export {
   getCredentials,
   createUser,
   forgotPassword,
   changePassword,
-  getUserData,
   updateUserPersonalData,
   updateUserContacts,
 };

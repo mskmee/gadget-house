@@ -25,6 +25,11 @@ export interface ProductsSearchResponse {
   totalPages: number;
 }
 
+export interface ProductsParams {
+  page: number;
+  size: number;
+}
+
 export interface ProductsSearchParams {
   query: string;
   pageable?: {
@@ -51,7 +56,15 @@ export const productsApi = createApi({
         providesTags: ['Product'],
       },
     ),
+    getAllProducts: builder.query<ProductsSearchResponse, ProductsParams>({
+      query: ({ page, size }) => ({
+        url: '/products',
+        method: 'GET',
+        params: { page, size },
+      }),
+      providesTags: ['Product'],
+    }),
   }),
 });
 
-export const { useSearchProductsQuery } = productsApi;
+export const { useSearchProductsQuery, useGetAllProductsQuery } = productsApi;

@@ -1,5 +1,6 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 import { baseQuery } from '../base-query';
+import { UserResponseDto } from '@/utils/packages/auth/libs/types/types';
 
 export interface ICreateNewAdmin {
   fullName: string;
@@ -25,7 +26,14 @@ export const authApi = createApi({
         body: data,
       }),
     }),
+    getUserProfile: builder.query<UserResponseDto, void>({
+      query: () => ({
+        url: '/user',
+        method: 'GET',
+      }),
+      providesTags: ['Auth'],
+    }),
   }),
 });
 
-export const { useCreateNewAdminMutation } = authApi;
+export const { useCreateNewAdminMutation, useGetUserProfileQuery } = authApi;
