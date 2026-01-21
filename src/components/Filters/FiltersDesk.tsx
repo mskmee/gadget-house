@@ -63,7 +63,7 @@ export const FiltersDesk = () => {
         colors: "colors",
         rams: "rams",
         cores: "cores",
-        fleshCard: "memorySlot",
+        flashCard: "memorySlot",
       };
   
       (Object.keys(map) as (keyof typeof map)[]).forEach((key) => {
