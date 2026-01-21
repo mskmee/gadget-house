@@ -6,9 +6,9 @@ export const saveReviews = async (
   const url = 'https://store-gadget-home.koyeb.app/api/v1/reviews/1';
 
   const data = {
-    userId: userId, // Replace with actual userId
-    productId: productId, // Replace with actual productId
-    body: reviewBody, // Replace with the review body content
+    userId: userId,
+    productId: productId,
+    body: reviewBody,
   };
 
   try {
@@ -31,5 +31,3 @@ export const saveReviews = async (
     console.error('Error:', error);
   }
 };
-
-// Example usage:
