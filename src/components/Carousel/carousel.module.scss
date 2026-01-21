@@ -206,11 +206,12 @@
 
 @media screen and (max-width: 450px) {
   .carousel {
-    padding: 16px 6px 7px 6px;
+    padding: 16px 6px 16px 6px;
   }
   .brands-carousel {
-    padding: 24px 16px 7px 16px;
+    padding: 24px 16px 0px 16px;
     .trackContainer {
+      padding: 0;
       .track {
         gap: 10px;
       }
