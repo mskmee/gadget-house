@@ -45,8 +45,8 @@ function UserReview({ productId }: { productId: number }) {
     <div className={style['review_users-review']} id="users-review">
       {reviews?.page.length ? (
         <ul className={style['review_users-review-list']}>
-          {visibleReviews?.map((review, index) => (
-            <li key={index}>
+          {visibleReviews?.map((review) => (
+            <li key={`${review?.createdAt}_${review?.user?.fullName}`}>
               <div>
                 <h3>{review?.user.fullName}</h3>
                 <span>{formatDate(review?.createdAt)}</span>
