@@ -29,6 +29,11 @@ export const selectFilteredAttributes = createSelector([selectAttributes], (sele
   if (!Array.isArray(selectedOptions)) return [];
 
   return selectedOptions.reduce<number[]>((ids, value) => {
+    const colorsFilter = Filters.COLORS;
+    if (colorsFilter.attributes[value] !== undefined) {
+      return ids;
+    }
+
     Object.values(Filters).forEach(({ attributes }) => {
       if (attributes[value] !== undefined) {
         ids.push(attributes[value]);
@@ -36,4 +41,19 @@ export const selectFilteredAttributes = createSelector([selectAttributes], (sele
     });
     return ids;
   }, []);
+});
+
+export const selectFilteredColors = createSelector([selectAttributes], (selectedOptions) => {
+  if (!Array.isArray(selectedOptions)) return [];
+
+  const colorNames: string[] = [];
+  
+  selectedOptions.forEach((value) => {
+    const colorOptions = ['Black', 'White', 'Red', 'Green', 'Blue', 'Purple ', 'Purple', 'Yellow', 'Gold', 'Orange', 'Pink', 'Grey', 'Gray'];
+    if (colorOptions.includes(value)) {
+      colorNames.push(value);
+    }
+  });
+
+  return colorNames;
 });

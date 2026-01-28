@@ -44,31 +44,57 @@ class ProductsApi implements IProductsApi {
   async getFilteredProducts(params: {
     page: number;
     size: number;
+    name?: string;
     categoryId?: number;
     brandIds?: number[];
     attributeValueIds?: number[];
     minPrice?: number;
     maxPrice?: number;
-    minCameraMP?: number;
-    maxCameraMP?: number;
-    sort?: string;
+    minMP?: string;
+    maxMP?: string;
+    colors?: string[];
+    sort?: string[];
   }): Promise<ProductsResponseDto> {
+    const queryParams: Record<string, any> = {};
+    
+    queryParams.pageable = {
+      page: params.page,
+      size: params.size,
+      ...(params.sort && params.sort.length > 0 ? { sort: params.sort } : { sort: [] }),
+    };
+
+    if (params.name) {
+      queryParams.name = params.name;
+    }
+    if (params.categoryId) {
+      queryParams.categoryId = params.categoryId;
+    }
+    if (params.brandIds && params.brandIds.length > 0) {
+      queryParams.brandIds = params.brandIds;
+    }
+    if (params.attributeValueIds && params.attributeValueIds.length > 0) {
+      queryParams.attributeValueIds = params.attributeValueIds;
+    }
+    if (params.minPrice !== undefined) {
+      queryParams.minPrice = params.minPrice;
+    }
+    if (params.maxPrice !== undefined) {
+      queryParams.maxPrice = params.maxPrice;
+    }
+    if (params.minMP) {
+      queryParams.minMP = params.minMP;
+    }
+    if (params.maxMP) {
+      queryParams.maxMP = params.maxMP;
+    }
+    if (params.colors && params.colors.length > 0) {
+      queryParams.colors = params.colors;
+    }
+
     return request({
       method: HttpMethod.GET,
       url: `${ApiEndpoint.PRODUCTS}`,
-      query: {
-        page: params.page,
-        size: params.size,
-        categoryId: params.categoryId,
-        brandIds: params.brandIds && params.brandIds.join(','),
-        attributeValueIds:
-          params.attributeValueIds && params.attributeValueIds.join(','),
-        minPrice: params.minPrice,
-        maxPrice: params.maxPrice,
-        minCameraMP: params.minCameraMP,
-        maxCameraMP: params.maxCameraMP,
-        sort: params.sort,
-      },
+      query: queryParams,
     });
   }
 

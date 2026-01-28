@@ -129,6 +129,7 @@ export const FiltersDesk = () => {
   const handleFilter = () => {
     dispatch(setPageNumber(0));
     dispatch(setSelectedBrands(selectedOptions.brands));
+    // Colors are included in selectedAttributes but will be extracted separately by the selector
     dispatch(
       setSelectedAttributes([
         ...(selectedOptions.screenType || []),
