@@ -36,7 +36,7 @@ function UserReview({ productId }: { productId: number }) {
   }
 
   useEffect(() => {
-    if (currentProductStatus === DataStatus.FULFILLED && productId && !isNaN(productId)) {
+    if (currentProductStatus === DataStatus.FULFILLED && productId !== null) {
       dispatch(getReviews({ productId, page: currentPage }));
     }
   }, [dispatch, productId, currentPage, currentProductStatus]);
