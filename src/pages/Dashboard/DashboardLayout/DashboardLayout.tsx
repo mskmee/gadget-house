@@ -13,7 +13,7 @@ import { ChangeUserData } from '@/assets/icons/ChangeUserData';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { AppRoute } from '@/enums/Route';
 import { useActions } from '@/hooks/useActions';
-// import { DEFAULT_PAGE, DEFAULT_SIZE_ALL } from '@/constants/pagination';
+import { DEFAULT_PAGE, DEFAULT_SIZE_ALL } from '@/constants/pagination';
 import { useMediaQuery } from 'react-responsive';
 
 export const DashboardLayout = () => {
@@ -25,6 +25,7 @@ export const DashboardLayout = () => {
     (state) => state.auth,
   );
   const userToken = useTypedSelector((state) => state.auth.userToken);
+  const { getAllProducts } = useActions();
 
   const isMobile767 = useMediaQuery({
     query: '(max-width: 767px)',
@@ -40,6 +41,10 @@ export const DashboardLayout = () => {
       setActiveSection('account');
     }
   }, [pathname]);
+
+  useEffect(() => {
+    getAllProducts({ page: DEFAULT_PAGE, size: DEFAULT_SIZE_ALL });
+  }, [getAllProducts]);
 
   const favoriteProducts = useTypedSelector(
     (state) => state.products.favoriteProducts,
