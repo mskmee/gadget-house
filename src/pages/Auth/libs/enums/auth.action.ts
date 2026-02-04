@@ -4,6 +4,7 @@ enum AuthAction {
   LOGIN_PERMISSION_FORM = 'submitLoginPermissionForm',
   REGISTER_FORM = 'submitRegisterForm',
   FORGOT_FORM = 'submitForgotForm',
+  CHANGE_PASSWORD_FORM = 'changePasswordForm',
   SET_FORM = 'setForm',
   RESET_FORM = 'resetForm',
 }

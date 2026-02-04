@@ -3,6 +3,7 @@ import { PopUp } from '@/components/components';
 import LoginForm from './libs/components/LoginForm';
 import RegisterForm from './libs/components/RegisterForm';
 import ForgotPasswordForm from './libs/components/ForgotPasswordForm';
+import ChangePasswordForm from './libs/components/ChangePasswordForm';
 import { useAuth } from './libs/hooks/use-auth';
 import SuccessPopup from './libs/components/SuccessPopup';
 import { FormEnum } from './libs/enums/form.enum';
@@ -13,15 +14,21 @@ interface IAuthModalProps {
   initialForm?: FormEnum;
 }
 
-const AuthModal: FC<IAuthModalProps> = ({ isOpen, onClose, initialForm }) => {
+const AuthModal: FC<IAuthModalProps> = ({
+  isOpen,
+  onClose,
+  initialForm = FormEnum.LOGIN,
+}) => {
   const {
     currentForm,
     setCurrentForm,
     loginFormValue,
     registerFormValue,
     forgotFormValue,
+    changePasswordFormValue,
     onLoginFormSubmit,
     onForgotFormSubmit,
+    onChangePasswordFormSubmit,
     onRegisterFormSubmit,
     successType,
     setSuccessType,
@@ -35,10 +42,16 @@ const AuthModal: FC<IAuthModalProps> = ({ isOpen, onClose, initialForm }) => {
   };
 
   useEffect(() => {
-    if (initialForm) {
+    if (isOpen) {
       setCurrentForm(initialForm);
+      setSuccessType(null);
+
+      if (initialForm) {
+        setCurrentForm(initialForm);
+      }
     }
-  }, [initialForm, setCurrentForm]);
+  }, [isOpen, setCurrentForm, setSuccessType, initialForm]);
+
   useEffect(() => {
     if (isOpen) {
       setModalKey((prev) => prev + 1);
@@ -81,6 +94,14 @@ const AuthModal: FC<IAuthModalProps> = ({ isOpen, onClose, initialForm }) => {
               onReset={onForgotFormSubmit}
               onSwitch={() => setCurrentForm(FormEnum.LOGIN)}
               isLoading={isLoading}
+            />
+          )}
+          {currentForm === FormEnum.CHANGE_PASSWORD && (
+            <ChangePasswordForm
+              initialValues={changePasswordFormValue}
+              onSubmit={onChangePasswordFormSubmit}
+              isLoading={isLoading}
+              serverError={authError}
             />
           )}
         </>
