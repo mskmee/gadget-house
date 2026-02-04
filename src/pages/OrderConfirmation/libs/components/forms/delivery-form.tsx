@@ -33,14 +33,36 @@ export const DeliveryForm: FC<Properties> = ({
   const [isEditable, setIsEditable] = useState(false);
   const isActive = stage === OrderStage.DELIVERY;
 
+  /** 🔽 HARD SCROLL FIX */
+  const forceScrollToTop = () => {
+    // Close keyboard
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+
+    requestAnimationFrame(() => {
+      console.log('salam');
+      setTimeout(() => {
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: 'auto',
+        });
+      }, 250);
+    });
+  };
+
   return (
     <div className={styles.form}>
       <Formik<DeliveryFormDto>
         initialValues={initialValues}
-        validateOnBlur={true}
-        validateOnChange={true}
+        validateOnBlur
+        validateOnChange
         validationSchema={deliveryFormValidationSchema}
         onSubmit={(values) => {
+          // 🔥 FIX IS HERE
+          forceScrollToTop();
+
           onSubmit(values);
           setIsEditable(false);
         }}
