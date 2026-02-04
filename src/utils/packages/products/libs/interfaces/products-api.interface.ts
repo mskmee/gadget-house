@@ -19,14 +19,16 @@ interface IProductsApi {
   getFilteredProducts: (params: {
     page: number;
     size: number;
+    name?: string;
     categoryId?: number;
     brandIds?: number[];
-    attributes?: number[];
+    attributeValueIds?: number[];
     minPrice?: number;
     maxPrice?: number;
-    minCameraMP?: number;
-    maxCameraMP?: number;
-    sort?: string;
+    minMP?: string;
+    maxMP?: string;
+    colors?: string[];
+    sort?: string[];
   }) => Promise<ProductsResponseDto>;
   getSuggestions(query: string): Promise<string[]>;
   searchProducts(
