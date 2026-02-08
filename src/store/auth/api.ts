@@ -4,6 +4,7 @@ import { baseQuery } from '../base-query';
 export interface ICreateNewAdmin {
   fullName: string;
   email: string;
+  phoneNumber: string;
   password: string;
 }
 
