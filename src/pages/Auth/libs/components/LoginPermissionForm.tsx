@@ -58,6 +58,14 @@ const LoginPermissionForm: FC<ILoginFormProps> = ({
               />
 
               <FormInput<LoginPermissionFormDto>
+                name="phoneNumber"
+                type="tel"
+                label="Phone number*"
+                placeholder="Phone number*"
+                disabled={isLoading}
+              />
+
+              <FormInput<LoginPermissionFormDto>
                 name="password"
                 type="password"
                 label="Password*"

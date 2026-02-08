@@ -21,6 +21,7 @@ const AddNewAdminModal: FC<IAddNewAdminModalProps> = ({ isOpen, onClose }) => {
     const result = await createNewAdmin({
       fullName: values.fullName,
       email: values.email,
+      phoneNumber: values.phoneNumber,
       password: values.password,
     }).unwrap();
 

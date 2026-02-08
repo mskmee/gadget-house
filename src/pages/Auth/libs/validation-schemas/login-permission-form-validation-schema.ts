@@ -1,11 +1,12 @@
 import * as Yup from 'yup';
 
-import { LoginFormDto } from '../types/form-dto';
+import { LoginPermissionFormDto } from '../types/form-dto';
 
 const regx = {
   name: /^[a-zA-Zа-яА-Я-ЯґєіїҐЄІЇ]+(([' -][a-zA-Zа-яА-Я-ЯґєіїҐЄІЇ ])?[a-zA-Zа-яА-Я-ЯґєіїҐЄІЇ]*)*$/,
   email:
     /^(?![ .])[\w!#$%&'*+/=?^_`{|}~.-]{4,63}(?<![ .])@[a-zA-Z\d.-]{2,9}(?<![ ])\.[a-zA-Z]{2,9}$/,
+  phone: /^(0\d{9}$)/,
   password:
     /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_\-+=[\]{};':"\\|,.<>/?])\S{8,24}$/,
 };
@@ -23,6 +24,13 @@ const email = Yup.string()
     value ? regx.email.test(value) : true,
   );
 
+const phoneNumber = Yup.string()
+  .trim()
+  .required('This field is required')
+  .test('is-valid-phone', 'Incorrect phone number', (value) =>
+    value ? regx.phone.test(value) : true,
+  );
+
 const password = Yup.string()
   .trim()
   .required('This field is required')
@@ -30,10 +38,11 @@ const password = Yup.string()
     value ? regx.password.test(value) : true,
   );
 
-const loginPermissionFormValidationSchema: Yup.Schema<LoginFormDto> =
+const loginPermissionFormValidationSchema: Yup.Schema<LoginPermissionFormDto> =
   Yup.object().shape({
     fullName,
     email,
+    phoneNumber,
     password,
   });
 
