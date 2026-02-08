@@ -93,7 +93,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
       laptops: getRandomItems(laptopsList, 8),
       otherProducts: otherProductsList,
     };
-  }, [productsKey]);
+  }, [products, productsKey]);
 
   const itemWidth = isLargerThan1440px
     ? responsiveCarouselSettings.itemWidth

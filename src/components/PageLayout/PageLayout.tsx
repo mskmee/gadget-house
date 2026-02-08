@@ -89,7 +89,14 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
         sort: selectedSort,
       }),
     );
-  }, [selectedSort]);
+  }, [
+    dispatch,
+    isInitialLoading,
+    isSearchPage,
+    pagination.currentPage,
+    searchInputValue,
+    selectedSort,
+  ]);
 
   useEffect(() => {
     if (categoryId !== null && categoryId === selectedCategoryId) {

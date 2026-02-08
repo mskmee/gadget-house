@@ -201,6 +201,7 @@ const useAuth = (): Return => {
     const val: LoginPermissionFormDto = {
       fullName: loginPermissionFormValue.fullName,
       email: loginPermissionFormValue.email,
+      phoneNumber: loginPermissionFormValue.phoneNumber,
       password: loginPermissionFormValue.password,
     };
 
