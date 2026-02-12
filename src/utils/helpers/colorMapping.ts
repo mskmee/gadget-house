@@ -9,17 +9,27 @@ export const mapColorToBackendEnum = (colorName: string): string | null => {
     'Red': 'RED',
     'Green': 'GREEN',
     'Blue': 'BLUE',
-    'Purple ': 'VIOLET', // Note: frontend has 'Purple ' with trailing space
+    'Purple ': 'VIOLET',
     'Purple': 'VIOLET',
     'Grey': 'GREY',
     'Gray': 'GREY',
     'Gold': 'GOLD',
     'Orange': 'ORANGE',
     'Pink': 'PINK',
-    'Yellow': 'GOLD', // Mapping Yellow to GOLD as per backend enum
+    'Yellow': 'GOLD',
+    'WHITE': 'WHITE',
+    'BLACK': 'BLACK',
+    'RED': 'RED',
+    'GREEN': 'GREEN',
+    'BLUE': 'BLUE',
+    'VIOLET': 'VIOLET',
+    'GREY': 'GREY',
+    'GOLD': 'GOLD',
+    'ORANGE': 'ORANGE',
+    'PINK': 'PINK',
   };
 
-  return colorMap[colorName] || null;
+  return colorMap[colorName] ?? null;
 };
 
 /**
