@@ -22,7 +22,7 @@ interface IProductsService {
     attributes?: number[];
     minPrice?: number;
     maxPrice?: number;
-    sort?: string;
+    sort?: string[] | undefined;
   }) => Promise<ProductsResponseDto>;
   getOneProductById: (id: string) => Promise<ProductItemResponseDto>;
   deleteProduct: (id: string) => Promise<void>;

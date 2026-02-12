@@ -29,6 +29,11 @@ export const selectFilteredAttributes = createSelector([selectAttributes], (sele
   if (!Array.isArray(selectedOptions)) return [];
 
   return selectedOptions.reduce<number[]>((ids, value) => {
+    const colorsFilter = Filters.COLORS;
+    if (colorsFilter.attributes[value] !== undefined) {
+      return ids;
+    }
+
     Object.values(Filters).forEach(({ attributes }) => {
       if (attributes[value] !== undefined) {
         ids.push(attributes[value]);
@@ -36,4 +41,19 @@ export const selectFilteredAttributes = createSelector([selectAttributes], (sele
     });
     return ids;
   }, []);
+});
+
+const FRONTEND_COLOR_NAMES = ['Black', 'White', 'Red', 'Green', 'Blue', 'Purple ', 'Purple', 'Yellow', 'Gold', 'Orange', 'Pink', 'Grey', 'Gray'];
+const BACKEND_COLOR_NAMES = ['WHITE', 'BLACK', 'RED', 'GREEN', 'BLUE', 'VIOLET', 'GREY', 'GOLD', 'ORANGE', 'PINK'];
+
+export const selectFilteredColors = createSelector([selectAttributes], (selectedOptions) => {
+  if (!Array.isArray(selectedOptions)) return [];
+
+  const colorNames: string[] = [];
+  selectedOptions.forEach((value) => {
+    if (FRONTEND_COLOR_NAMES.includes(value) || BACKEND_COLOR_NAMES.includes(value)) {
+      colorNames.push(value);
+    }
+  });
+  return colorNames;
 });
