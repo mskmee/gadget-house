@@ -1,7 +1,7 @@
-import React, { useRef, useState } from 'react';
+import  { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Row, Col, InputNumber, Slider } from 'antd';
-import cn from 'classnames';
+// import cn from 'classnames';
 import { filters } from './consts';
 import { AppDispatch } from '@/store';
 import {
@@ -14,12 +14,12 @@ import { setPageNumber } from '@/store/products/products_slice';
 import { useRangeFilter } from './hooks/useRangeFilter';
 import { handleKeyDown } from '@/utils/helpers/checkKeydownEvent';
 import { Option } from './Option';
-import ArrowUpSvg from '@/assets/icons/arrow-up.svg';
+// import ArrowUpSvg from '@/assets/icons/arrow-up.svg';
 import styles from './filters.module.scss';
 
 export const FiltersDesk = () => {
-  const inputMinCameraMPRef = useRef<HTMLInputElement | null>(null);
-  const inputMaxCameraMPRef = useRef<HTMLInputElement | null>(null);
+  // const inputMinCameraMPRef = useRef<HTMLInputElement | null>(null);
+  // const inputMaxCameraMPRef = useRef<HTMLInputElement | null>(null);
   const dispatch: AppDispatch = useDispatch();
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, string[]>
@@ -34,10 +34,10 @@ export const FiltersDesk = () => {
   const {
     minValue: minCameraMP,
     maxValue: maxCameraMP,
-    handleMinChange: handleMinMPChange,
-    handleMaxChange: handleMaxMPChange,
+    // handleMinChange: handleMinMPChange,
+    // handleMaxChange: handleMaxMPChange,
   } = useRangeFilter(0, 0);
-  const [showCategory, setShowCategory] = useState(true);
+  // const [showCategory, setShowCategory] = useState(true);
 
   const onMinInputChange = (value: number | null) => {
     if (value !== null && value <= maxPrice) {
@@ -53,9 +53,9 @@ export const FiltersDesk = () => {
     }
   };
 
-  const toggleShowCategory = () => {
-    setShowCategory(!showCategory);
-  };
+  // const toggleShowCategory = () => {
+  //   setShowCategory(!showCategory);
+  // };
 
   const handleSliderChange = (value: number[]) => {
     setPriceRange(value);
@@ -87,18 +87,18 @@ export const FiltersDesk = () => {
     }));
   };
 
-  const handleFocus = (inputRef: React.RefObject<HTMLInputElement>) => {
-    if (inputRef.current) {
-      inputRef.current.select();
-    }
-  };
+  // const handleFocus = (inputRef: React.RefObject<HTMLInputElement>) => {
+  //   if (inputRef.current) {
+  //     inputRef.current.select();
+  //   }
+  // };
 
-  const handleCameraHeaderKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      toggleShowCategory();
-    }
-  };
+  // const handleCameraHeaderKeyDown = (e: React.KeyboardEvent) => {
+  //   if (e.key === 'Enter' || e.key === ' ') {
+  //     e.preventDefault();
+  //     toggleShowCategory();
+  //   }
+  // };
 
   return (
     <aside className={styles.filtersDesk}>
@@ -192,7 +192,7 @@ export const FiltersDesk = () => {
               onOptionChange={handleFilterChange}
             />
           )}
-
+{/* 
           {filters.rams && (
             <Option
               options={filters.rams ?? []}
@@ -201,8 +201,8 @@ export const FiltersDesk = () => {
               selectedOptions={selectedOptions}
               onOptionChange={handleFilterChange}
             />
-          )}
-
+          )} */}
+{/* 
           {filters.fleshCard && (
             <Option
               options={filters.fleshCard ?? []}
@@ -211,8 +211,8 @@ export const FiltersDesk = () => {
               selectedOptions={selectedOptions}
               onOptionChange={handleFilterChange}
             />
-          )}
-
+          )} */}
+{/* 
           {filters.colors && (
             <Option
               options={filters.colors}
@@ -221,9 +221,9 @@ export const FiltersDesk = () => {
               selectedOptions={selectedOptions}
               onOptionChange={handleFilterChange}
             />
-          )}
+          )} */}
 
-          <div className={styles.filters__option}>
+          {/* <div className={styles.filters__option}>
             <div
               className={cn(
                 styles.filters__optionHeader,
@@ -334,7 +334,7 @@ export const FiltersDesk = () => {
               selectedOptions={selectedOptions}
               onOptionChange={handleFilterChange}
             />
-          )}
+          )} */}
         </div>
 
         <button
