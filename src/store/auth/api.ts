@@ -22,7 +22,7 @@ export const authApi = createApi({
     createNewAdmin: builder.mutation<IResponseCreateNewAdmin, ICreateNewAdmin>({
       query: (data) => ({
         url: '/create-new-admin',
-        method: 'GET',
+        method: 'POST',
         body: data,
       }),
     }),

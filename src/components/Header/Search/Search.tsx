@@ -160,30 +160,33 @@ export const Search: FC<ISearchProps> = ({
     currentPath.current = location.pathname;
   }, [location.pathname]);
 
-  const handleSuggestions = useCallback(async (inputValue: string) => {
-    const normalizedInput = inputValue.trim();
+  const handleSuggestions = useCallback(
+    async (inputValue: string) => {
+      const normalizedInput = inputValue.trim();
 
-    if (!normalizedInput) {
-      dispatch(clearSuggestions());
-      return;
-    }
+      if (!normalizedInput) {
+        dispatch(clearSuggestions());
+        return;
+      }
 
-    try {
-      const result = await dispatch(getSuggestions(normalizedInput)).unwrap();
+      try {
+        const result = await dispatch(getSuggestions(normalizedInput)).unwrap();
 
-      if (result.length > 0) {
-        setIsOverlayActive(true);
-        setIsGlobalOverlayActive(true);
-      } else {
+        if (result.length > 0) {
+          setIsOverlayActive(true);
+          setIsGlobalOverlayActive(true);
+        } else {
+          setIsOverlayActive(false);
+          setIsGlobalOverlayActive(false);
+        }
+      } catch (error) {
+        console.error('Error fetching suggestions:', error);
         setIsOverlayActive(false);
         setIsGlobalOverlayActive(false);
       }
-    } catch (error) {
-      console.error('Error fetching suggestions:', error);
-      setIsOverlayActive(false);
-      setIsGlobalOverlayActive(false);
-    }
-  }, [dispatch, setIsOverlayActive, setIsGlobalOverlayActive]);
+    },
+    [dispatch, setIsOverlayActive, setIsGlobalOverlayActive],
+  );
 
   const handleSaveSearchValueToStore = useCallback(
     (inputValue: string) => {
@@ -221,7 +224,12 @@ export const Search: FC<ISearchProps> = ({
     return () => {
       debouncedSuggestionHandler.cancel();
     };
-  }, [debouncedSuggestionHandler, dispatch, location.pathname, setIsOverlayActive]);
+  }, [
+    debouncedSuggestionHandler,
+    dispatch,
+    location.pathname,
+    setIsOverlayActive,
+  ]);
 
   const clearSearchInputValue = () => {
     setSearchInput({ value: '', hasError: false });
