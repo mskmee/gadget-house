@@ -4,6 +4,7 @@ import { baseQuery } from '../base-query';
 export interface ICreateNewAdmin {
   fullName: string;
   email: string;
+  phoneNumber: string;
   password: string;
 }
 
@@ -21,7 +22,7 @@ export const authApi = createApi({
     createNewAdmin: builder.mutation<IResponseCreateNewAdmin, ICreateNewAdmin>({
       query: (data) => ({
         url: '/create-new-admin',
-        method: 'GET',
+        method: 'POST',
         body: data,
       }),
     }),
