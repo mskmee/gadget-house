@@ -1,4 +1,3 @@
-
 type LoginFormDto = {
   email: string;
   password: string;
@@ -24,9 +23,17 @@ type ChangePasswordFormDto = {
 type LoginPermissionFormDto = {
   fullName: string;
   email: string;
+  phoneNumber: string;
   password: string;
 };
 
 type FormType = 'login' | 'register' | 'forgot';
 
-export type { LoginFormDto, RegisterFormDto, ForgotFormDto, ChangePasswordFormDto, FormType, LoginPermissionFormDto };
+export type {
+  LoginFormDto,
+  RegisterFormDto,
+  ForgotFormDto,
+  ChangePasswordFormDto,
+  FormType,
+  LoginPermissionFormDto,
+};

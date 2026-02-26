@@ -18,6 +18,8 @@ export const UserFavorites = () => {
   useEffect(() => {
     if (visibleCount >= favoriteProducts.length) return;
 
+    const currentLastCard = lastCardRef.current;
+
     observerRef.current = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && !loading) {
@@ -32,13 +34,13 @@ export const UserFavorites = () => {
       { threshold: 1.0 },
     );
 
-    if (lastCardRef.current) {
-      observerRef.current.observe(lastCardRef.current);
+    if (currentLastCard) {
+      observerRef.current.observe(currentLastCard);
     }
 
     return () => {
-      if (observerRef.current && lastCardRef.current) {
-        observerRef.current.unobserve(lastCardRef.current);
+      if (observerRef.current && currentLastCard) {
+        observerRef.current.unobserve(currentLastCard);
       }
     };
   }, [visibleCount, favoriteProducts.length, loading]);
