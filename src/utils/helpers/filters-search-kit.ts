@@ -29,6 +29,7 @@ export type SearchProductsPayload = {
   page: number;
   size: number;
   sort: string;
+  categoryId?: number;
   brandIds?: number[];
   attributeValueIds?: number[];
   minPrice?: number;
@@ -36,6 +37,75 @@ export type SearchProductsPayload = {
   minCameraMP?: number;
   maxCameraMP?: number;
 };
+
+type SmartCategoryAlias = {
+  categoryId: number;
+  aliases: string[];
+};
+
+export type SearchIntent = {
+  rawQuery: string;
+  normalizedQuery: string;
+  isNumericIdQuery: boolean;
+  numericId?: number;
+  detectedCategoryId?: number;
+  detectedBrandIds: number[];
+  detectedAttributeValueIds: number[];
+  residualQuery: string;
+};
+
+export type SmartSearchBuildParams = {
+  query: string;
+  page: number;
+  size: number;
+  sort: string;
+  selectedBrandIds?: NumberLikeArray;
+  selectedAttributeValueIds?: NumberLikeArray;
+  selectedPriceRange?: number[] | null;
+  allBrands?: unknown;
+  allAttributes?: unknown;
+  categoryAliases?: SmartCategoryAlias[];
+};
+
+export type SearchPlanStepName =
+  | 'strict'
+  | 'dropTextKeepFilters'
+  | 'brandOnly'
+  | 'categoryOnly'
+  | 'textOnly';
+
+export type SearchPlanStep = {
+  name: SearchPlanStepName;
+  payload: SearchProductsPayload;
+};
+
+const DEFAULT_CATEGORY_ALIASES: SmartCategoryAlias[] = [
+  {
+    categoryId: 1,
+    aliases: [
+      'phone',
+      'phones',
+      'smartphone',
+      'smartphones',
+      'cellphone',
+      'mobile',
+      'телефон',
+      'смартфон',
+    ],
+  },
+  {
+    categoryId: 2,
+    aliases: ['laptop', 'laptops', 'notebook', 'notebooks', 'ноутбук'],
+  },
+  {
+    categoryId: 3,
+    aliases: ['camera', 'cameras', 'фотоаппарат', 'камера'],
+  },
+  {
+    categoryId: 4,
+    aliases: ['headphone', 'headphones', 'earbuds', 'наушники'],
+  },
+];
 
 export type FilterVisibilityFlags = {
   price: boolean;
@@ -130,6 +200,273 @@ const buildLookupKeys = (value: string): string[] => {
   const normalized = normalizeFilterValue(value);
 
   return raw === normalized ? [raw] : [raw, normalized];
+};
+
+export const inferCategoryIdFromQuery = (
+  query: string,
+  aliases: SmartCategoryAlias[] = DEFAULT_CATEGORY_ALIASES,
+): number | undefined => {
+  const normalized = normalizeFilterValue(query);
+
+  if (!normalized) {
+    return undefined;
+  }
+
+  for (const group of aliases) {
+    if (group.aliases.map(normalizeFilterValue).includes(normalized)) {
+      return group.categoryId;
+    }
+  }
+
+  return undefined;
+};
+
+export const parseNumericProductIdFromQuery = (
+  query: string,
+): number | undefined => {
+  const normalized = normalizeSpaces(query);
+
+  if (!/^\d+$/.test(normalized)) {
+    return undefined;
+  }
+
+  const parsed = Number(normalized);
+  return Number.isFinite(parsed) && parsed > 0 ? parsed : undefined;
+};
+
+export const detectBrandIdsFromQuery = (
+  query: string,
+  allBrands: unknown,
+): number[] => {
+  const normalizedQuery = normalizeFilterValue(query);
+  if (!normalizedQuery) return [];
+
+  const detected = new Set<number>();
+
+  asBackendBrands(allBrands).forEach((brand) => {
+    const keys = buildLookupKeys(brand.name).map(normalizeFilterValue);
+    if (keys.some((key) => key && normalizedQuery.includes(key))) {
+      detected.add(brand.id);
+    }
+  });
+
+  return [...detected].sort((a, b) => a - b);
+};
+
+export const detectAttributeValueIdsFromQuery = (
+  query: string,
+  allAttributes: unknown,
+): number[] => {
+  const normalizedQuery = normalizeFilterValue(query);
+  if (!normalizedQuery) return [];
+
+  const detected = new Set<number>();
+
+  asBackendAttributes(allAttributes).forEach((attribute) => {
+    attribute.attributeValuesList.forEach((value) => {
+      const keys = buildLookupKeys(value.value).map(normalizeFilterValue);
+      if (keys.some((key) => key && normalizedQuery.includes(key))) {
+        detected.add(value.id);
+      }
+    });
+  });
+
+  return [...detected].sort((a, b) => a - b);
+};
+
+export const removeKnownTokensFromQuery = (
+  query: string,
+  tokensToStrip: string[],
+): string => {
+  const source = normalizeSpaces(query);
+  if (!source) return '';
+
+  let next = source;
+
+  tokensToStrip
+    .filter(Boolean)
+    .sort((a, b) => b.length - a.length)
+    .forEach((token) => {
+      const escaped = token.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(escaped, 'ig');
+      next = next.replace(regex, ' ');
+    });
+
+  return normalizeSpaces(next);
+};
+
+export const buildSearchIntent = (params: {
+  query: string;
+  allBrands?: unknown;
+  allAttributes?: unknown;
+  categoryAliases?: SmartCategoryAlias[];
+}): SearchIntent => {
+  const {
+    query,
+    allBrands,
+    allAttributes,
+    categoryAliases = DEFAULT_CATEGORY_ALIASES,
+  } = params;
+
+  const rawQuery = normalizeSpaces(query);
+  const normalizedQuery = normalizeFilterValue(rawQuery);
+  const numericId = parseNumericProductIdFromQuery(rawQuery);
+  const detectedCategoryId = inferCategoryIdFromQuery(
+    rawQuery,
+    categoryAliases,
+  );
+  const detectedBrandIds = detectBrandIdsFromQuery(rawQuery, allBrands);
+  const detectedAttributeValueIds = detectAttributeValueIdsFromQuery(
+    rawQuery,
+    allAttributes,
+  );
+
+  const brandTokens = asBackendBrands(allBrands).map((brand) => brand.name);
+  const categoryTokens = categoryAliases.flatMap((group) => group.aliases);
+  const residualQuery = removeKnownTokensFromQuery(rawQuery, [
+    ...brandTokens,
+    ...categoryTokens,
+  ]);
+
+  return {
+    rawQuery,
+    normalizedQuery,
+    isNumericIdQuery: numericId !== undefined,
+    numericId,
+    detectedCategoryId,
+    detectedBrandIds,
+    detectedAttributeValueIds,
+    residualQuery,
+  };
+};
+
+const mergeSearchIds = (
+  fromIntent: number[],
+  fromFilters: NumberLikeArray,
+): number[] | undefined => {
+  const merged = toUniqueSortedNumbers([
+    ...fromIntent,
+    ...((fromFilters ?? []) as number[]),
+  ]);
+
+  return merged;
+};
+
+export const buildSmartSearchPayload = (
+  params: SmartSearchBuildParams,
+): SearchProductsPayload => {
+  const {
+    query,
+    page,
+    size,
+    sort,
+    selectedBrandIds,
+    selectedAttributeValueIds,
+    selectedPriceRange,
+    allBrands,
+    allAttributes,
+    categoryAliases,
+  } = params;
+
+  const intent = buildSearchIntent({
+    query,
+    allBrands,
+    allAttributes,
+    categoryAliases,
+  });
+
+  const brandIds = mergeSearchIds(intent.detectedBrandIds, selectedBrandIds);
+  const attributeValueIds = mergeSearchIds(
+    intent.detectedAttributeValueIds,
+    selectedAttributeValueIds,
+  );
+
+  const shouldUseCategoryFallback =
+    intent.detectedCategoryId !== undefined &&
+    (!intent.residualQuery || Boolean(brandIds?.length));
+
+  const effectiveQuery = shouldUseCategoryFallback ? '' : intent.rawQuery;
+
+  const payload = buildSearchProductsPayload({
+    query: effectiveQuery,
+    page,
+    size,
+    sort,
+    brandIds,
+    attributeValueIds,
+    selectedPriceRange,
+  });
+
+  if (intent.detectedCategoryId !== undefined) {
+    payload.categoryId = intent.detectedCategoryId;
+  }
+
+  return payload;
+};
+
+export const buildSmartSearchFallbackPlan = (
+  strictPayload: SearchProductsPayload,
+): SearchPlanStep[] => {
+  const steps: SearchPlanStep[] = [{ name: 'strict', payload: strictPayload }];
+
+  const dropTextPayload: SearchProductsPayload = {
+    ...strictPayload,
+    query: '',
+  };
+
+  steps.push({ name: 'dropTextKeepFilters', payload: dropTextPayload });
+
+  if (strictPayload.brandIds?.length) {
+    steps.push({
+      name: 'brandOnly',
+      payload: {
+        query: '',
+        page: strictPayload.page,
+        size: strictPayload.size,
+        sort: strictPayload.sort,
+        categoryId: strictPayload.categoryId,
+        brandIds: [...strictPayload.brandIds],
+      },
+    });
+  }
+
+  if (strictPayload.categoryId !== undefined) {
+    steps.push({
+      name: 'categoryOnly',
+      payload: {
+        query: '',
+        page: strictPayload.page,
+        size: strictPayload.size,
+        sort: strictPayload.sort,
+        categoryId: strictPayload.categoryId,
+      },
+    });
+  }
+
+  if (strictPayload.query) {
+    steps.push({
+      name: 'textOnly',
+      payload: {
+        query: strictPayload.query,
+        page: strictPayload.page,
+        size: strictPayload.size,
+        sort: strictPayload.sort,
+      },
+    });
+  }
+
+  const dedup = new Map<string, SearchPlanStep>();
+  steps.forEach((step) => {
+    dedup.set(buildSearchRequestKey(step.payload), step);
+  });
+
+  return [...dedup.values()];
+};
+
+export const stringifySearchPlan = (plan: SearchPlanStep[]): string[] => {
+  return plan.map(
+    (step) => `${step.name}: ${buildSearchQueryParams(step.payload)}`,
+  );
 };
 
 const getRouteScope = (pathname: string): string => {
@@ -420,6 +757,10 @@ export const buildSearchQueryParams = (
   params.set('page', String(payload.page));
   params.set('size', String(payload.size));
   params.set('sort', payload.sort);
+
+  if (payload.categoryId !== undefined) {
+    params.set('categoryId', String(payload.categoryId));
+  }
 
   if (payload.brandIds?.length) {
     params.set('brandIds', payload.brandIds.join(','));

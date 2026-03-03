@@ -26,7 +26,8 @@ import { DataStatus } from '@/enums/data-status';
 import { formatCategoryUrlName } from '@/utils/helpers/formatCategoryUrlName';
 import { getAllAttributes, getAllBrands } from '@/store/filters/actions';
 import {
-  buildSearchProductsPayload,
+  buildSmartSearchFallbackPlan,
+  buildSmartSearchPayload,
   buildSearchRequestKey,
   shouldResetFiltersOnRouteChange,
 } from '@/utils/helpers/filters-search-kit';
@@ -126,15 +127,16 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
     if (!isSearchPage || !searchInputValue || !selectedSort || isInitialLoading)
       return;
 
-    const searchPayload = buildSearchProductsPayload({
+    const searchPayload = buildSmartSearchPayload({
       query: searchInputValue,
       page: pagination.currentPage,
       size: 20,
       sort: selectedSort,
-      brandIds,
-      attributeValueIds: attributesIds,
+      selectedBrandIds: brandIds,
+      selectedAttributeValueIds: attributesIds,
       selectedPriceRange,
-      // selectedCameraRange,
+      allBrands,
+      allAttributes,
     });
 
     const requestKey = buildSearchRequestKey(searchPayload);
@@ -145,7 +147,31 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
 
     lastSearchRequestKeyRef.current = requestKey;
 
-    dispatch(searchProducts(searchPayload));
+    let cancelled = false;
+
+    const runSearchPlan = async () => {
+      const plan = buildSmartSearchFallbackPlan(searchPayload);
+
+      for (const step of plan) {
+        if (cancelled) {
+          return;
+        }
+
+        const result = await dispatch(searchProducts(step.payload)).unwrap();
+
+        if (result?.page?.length) {
+          return;
+        }
+      }
+    };
+
+    runSearchPlan().catch((error) => {
+      console.error('Search fallback plan failed:', error);
+    });
+
+    return () => {
+      cancelled = true;
+    };
   }, [
     attributesIds,
     brandIds,
@@ -153,10 +179,11 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
     isInitialLoading,
     isSearchPage,
     pagination.currentPage,
-    selectedCameraRange,
     selectedPriceRange,
     searchInputValue,
     selectedSort,
+    allBrands,
+    allAttributes,
   ]);
 
   useEffect(() => {

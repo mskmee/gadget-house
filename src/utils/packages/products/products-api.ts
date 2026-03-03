@@ -105,6 +105,7 @@ class ProductsApi implements IProductsApi {
         page: params.page,
         size: params.size,
         sort: params.sort,
+        categoryId: params.categoryId,
         brandIds: params.brandIds?.join(','),
         attributeValueIds: params.attributeValueIds?.join(','),
         minPrice: params.minPrice,

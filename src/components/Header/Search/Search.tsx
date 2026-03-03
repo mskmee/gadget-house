@@ -26,6 +26,10 @@ import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { getSuggestions, searchProducts } from '@/store/products/actions';
 import { clearSuggestions } from '@/store/products/products_slice';
 import { DEFAULT_SIZE } from '@/constants/pagination';
+import {
+  buildSmartSearchFallbackPlan,
+  buildSmartSearchPayload,
+} from '@/utils/helpers/filters-search-kit';
 
 interface ISearchProps {
   isOverlayActive: boolean;
@@ -43,6 +47,9 @@ export const Search: FC<ISearchProps> = ({
 
   const suggestions = useTypedSelector((state) => state.products.suggestions);
   const selectedSort = useTypedSelector((state) => state.filters.selectedSort);
+  const { allBrands, allAttributes } = useTypedSelector(
+    (state) => state.filters,
+  );
   const { setSearchValue, setIsGlobalOverlayActive } = useActions();
 
   const [searchInput, setSearchInput] = useState({
@@ -60,15 +67,29 @@ export const Search: FC<ISearchProps> = ({
   const handleSearchProducts = async (query: string) => {
     try {
       setDisplayValue('');
-      const result = await dispatch(
-        searchProducts({
-          query,
-          page: 0,
-          size: DEFAULT_SIZE,
-          sort: selectedSort || 'rating,desc',
-        }),
-      ).unwrap();
-      return result;
+      const strictPayload = buildSmartSearchPayload({
+        query,
+        page: 0,
+        size: DEFAULT_SIZE,
+        sort: selectedSort || 'rating,desc',
+        allBrands,
+        allAttributes,
+      });
+
+      const plan = buildSmartSearchFallbackPlan(strictPayload);
+
+      let lastResult = null;
+
+      for (const step of plan) {
+        const result = await dispatch(searchProducts(step.payload)).unwrap();
+        lastResult = result;
+
+        if (result?.page?.length) {
+          return result;
+        }
+      }
+
+      return lastResult;
     } catch (error) {
       console.error('Error searching products:', error);
       return null;
