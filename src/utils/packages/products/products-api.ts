@@ -5,6 +5,7 @@ import {
   ProductItemResponseDto,
   ProductsResponseDto,
 } from './libs/types/types';
+import { SearchProductsPayload } from '@/utils/helpers/filters-search-kit';
 
 class ProductsApi implements IProductsApi {
   async getAll(page: number, size: number): Promise<ProductsResponseDto> {
@@ -94,15 +95,23 @@ class ProductsApi implements IProductsApi {
   }
 
   async searchProducts(
-    query: string,
-    page: number,
-    size: number,
-    sort?: string,
+    params: SearchProductsPayload,
   ): Promise<ProductsResponseDto> {
     return request({
       method: HttpMethod.GET,
       url: ApiEndpoint.PRODUCTS_SEARCH,
-      query: { query, page, size, sort },
+      query: {
+        query: params.query,
+        page: params.page,
+        size: params.size,
+        sort: params.sort,
+        brandIds: params.brandIds?.join(','),
+        attributeValueIds: params.attributeValueIds?.join(','),
+        minPrice: params.minPrice,
+        maxPrice: params.maxPrice,
+        minCameraMP: params.minCameraMP,
+        maxCameraMP: params.maxCameraMP,
+      },
     });
   }
 }

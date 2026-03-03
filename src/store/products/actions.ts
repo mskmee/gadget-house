@@ -1,15 +1,19 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { productsService } from '@/utils/packages/products';
 import { startGlobalLoading, stopGlobalLoading } from '@/store/ui/ui_slice';
+import { SearchProductsPayload } from '@/utils/helpers/filters-search-kit';
 
 interface IFilterParams {
   page: number;
   size: number;
   categoryId?: number;
   brandIds?: number[];
-  attributes?: number[];
+  attributeValueIds?: number[];
   minPrice?: number;
   maxPrice?: number;
+  minCameraMP?: number;
+  maxCameraMP?: number;
+  sort?: string;
 }
 
 const getAllProducts = createAsyncThunk(
@@ -169,18 +173,10 @@ const getSuggestions = createAsyncThunk(
 
 const searchProducts = createAsyncThunk(
   'products/searchProducts',
-  async (
-    {
-      query,
-      page,
-      size,
-      sort,
-    }: { query: string; page: number; size: number; sort: string },
-    thunkAPI,
-  ) => {
+  async (payload: SearchProductsPayload, thunkAPI) => {
     thunkAPI.dispatch(startGlobalLoading());
     try {
-      return await productsService.searchProducts(query, page, size, sort);
+      return await productsService.searchProducts(payload);
     } finally {
       thunkAPI.dispatch(stopGlobalLoading());
     }

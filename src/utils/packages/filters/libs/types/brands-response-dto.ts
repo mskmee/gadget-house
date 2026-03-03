@@ -1,6 +1,8 @@
-type BrandsResponseDto = {
+type BrandDto = {
   id: number;
   name: string;
 };
 
-export type { BrandsResponseDto };
+type BrandsResponseDto = BrandDto[];
+
+export type { BrandDto, BrandsResponseDto };

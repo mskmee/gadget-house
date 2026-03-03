@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { ProductItemResponseDto, ProductsResponseDto } from '../types/types';
+import { SearchProductsPayload } from '@/utils/helpers/filters-search-kit';
 
 interface IProductsApi {
   getAll: (page: number, size: number) => Promise<ProductsResponseDto>;
@@ -21,7 +22,7 @@ interface IProductsApi {
     size: number;
     categoryId?: number;
     brandIds?: number[];
-    attributes?: number[];
+    attributeValueIds?: number[];
     minPrice?: number;
     maxPrice?: number;
     minCameraMP?: number;
@@ -29,12 +30,7 @@ interface IProductsApi {
     sort?: string;
   }) => Promise<ProductsResponseDto>;
   getSuggestions(query: string): Promise<string[]>;
-  searchProducts(
-    query: string,
-    page: number,
-    size: number,
-    sort?: string,
-  ): Promise<ProductsResponseDto>;
+  searchProducts(params: SearchProductsPayload): Promise<ProductsResponseDto>;
 }
 
 export { type IProductsApi };

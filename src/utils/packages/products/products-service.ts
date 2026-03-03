@@ -3,6 +3,7 @@ import {
   ProductItemResponseDto,
   ProductsResponseDto,
 } from './libs/types/types';
+import { SearchProductsPayload } from '@/utils/helpers/filters-search-kit';
 
 class ProductsService implements IProductsService {
   private productsApi: IProductsApi;
@@ -61,12 +62,9 @@ class ProductsService implements IProductsService {
     return this.productsApi.getSuggestions(query);
   }
   async searchProducts(
-    query: string,
-    page: number,
-    size: number,
-    sort?: string,
+    params: SearchProductsPayload,
   ): Promise<ProductsResponseDto> {
-    return this.productsApi.searchProducts(query, page, size, sort);
+    return this.productsApi.searchProducts(params);
   }
 }
 

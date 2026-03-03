@@ -1,10 +1,12 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import { DEFAULT_SIZE, DEFAULT_SIZE_MOBILE } from '@/constants/pagination';
 import { AppDispatch, RootState } from '@/store';
 import { getFilteredProducts, searchProducts } from '@/store/products/actions';
+import { resetFilters } from '@/store/filters/filters_slice';
+import { setIsAppending, setPageNumber } from '@/store/products/products_slice';
 import {
   selectBrandIds,
   selectFilteredAttributes,
@@ -22,6 +24,12 @@ import { Filters } from '../Filters/Filters';
 import { SortingDesk } from '../Sort/SortingDesk';
 import { DataStatus } from '@/enums/data-status';
 import { formatCategoryUrlName } from '@/utils/helpers/formatCategoryUrlName';
+import { getAllAttributes, getAllBrands } from '@/store/filters/actions';
+import {
+  buildSearchProductsPayload,
+  buildSearchRequestKey,
+  shouldResetFiltersOnRouteChange,
+} from '@/utils/helpers/filters-search-kit';
 
 import CatalogPageSkeleton from '../skeletons/CatalogPageSkeleton';
 
@@ -46,6 +54,9 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   );
   const { selectedSort, selectedPriceRange, selectedCameraRange } =
     useTypedSelector((state: RootState) => state.filters);
+  const { allAttributes, allBrands } = useTypedSelector(
+    (state: RootState) => state.filters,
+  );
 
   const isMobile991 = useMediaQuery({
     query: '(max-width: 991px)',
@@ -59,6 +70,8 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
 
   const brandIds = useSelector(selectBrandIds);
   const attributesIds = useSelector(selectFilteredAttributes, shallowEqual);
+  const lastSearchRequestKeyRef = useRef<string>('');
+  const previousPathnameRef = useRef<string>(pathName);
 
   const size = isMobile767 ? DEFAULT_SIZE_MOBILE : DEFAULT_SIZE;
 
@@ -78,22 +91,70 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   }, [pathname]);
 
   useEffect(() => {
+    if (!allAttributes) {
+      dispatch(getAllAttributes());
+    }
+
+    if (!allBrands) {
+      dispatch(getAllBrands());
+    }
+  }, [allAttributes, allBrands, dispatch]);
+
+  useEffect(() => {
+    if (
+      shouldResetFiltersOnRouteChange(previousPathnameRef.current, pathName)
+    ) {
+      dispatch(resetFilters());
+      dispatch(setPageNumber(0));
+      dispatch(setIsAppending(false));
+      lastSearchRequestKeyRef.current = '';
+    }
+
+    previousPathnameRef.current = pathName;
+  }, [dispatch, pathName]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetFilters());
+      dispatch(setPageNumber(0));
+      dispatch(setIsAppending(false));
+      lastSearchRequestKeyRef.current = '';
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
     if (!isSearchPage || !searchInputValue || !selectedSort || isInitialLoading)
       return;
 
-    dispatch(
-      searchProducts({
-        query: searchInputValue,
-        page: pagination.currentPage,
-        size: 20,
-        sort: selectedSort,
-      }),
-    );
+    const searchPayload = buildSearchProductsPayload({
+      query: searchInputValue,
+      page: pagination.currentPage,
+      size: 20,
+      sort: selectedSort,
+      brandIds,
+      attributeValueIds: attributesIds,
+      selectedPriceRange,
+      // selectedCameraRange,
+    });
+
+    const requestKey = buildSearchRequestKey(searchPayload);
+
+    if (lastSearchRequestKeyRef.current === requestKey) {
+      return;
+    }
+
+    lastSearchRequestKeyRef.current = requestKey;
+
+    dispatch(searchProducts(searchPayload));
   }, [
+    attributesIds,
+    brandIds,
     dispatch,
     isInitialLoading,
     isSearchPage,
     pagination.currentPage,
+    selectedCameraRange,
+    selectedPriceRange,
     searchInputValue,
     selectedSort,
   ]);
