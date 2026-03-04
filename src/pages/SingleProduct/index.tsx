@@ -16,16 +16,30 @@ import { useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from '@/store';
 import { getOneProductById } from '@/store/products/actions';
 import ProductReviews from '@/components/SingleProduct/ProductReviews/ProductReviews';
+import NotFound from '@/pages/NotFound/NotFound';
+import { Category as CategoryENUM } from '@/enums/enums';
 
 export const SingleProductPage: FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
-  const { id } = useParams();
+  const { id, category } = useParams();
+
+  const categoryKey = category
+    ?.replace(/-/g, '_')
+    .toUpperCase() as keyof typeof CategoryENUM;
+
+  const isValidCategory =
+    categoryKey !== undefined && CategoryENUM[categoryKey] !== undefined;
+  const isValidId = id !== undefined && /^\d+$/.test(id);
 
   useEffect(() => {
+    if (!isValidCategory || !isValidId) {
+      return;
+    }
+
     dispatch(getOneProductById(String(id)));
-  }, [id, dispatch]);
+  }, [id, dispatch, isValidCategory, isValidId]);
 
   const dynamicCurrentProduct = useTypedSelector(
     (state: RootState) => state.products.activeProduct,
@@ -40,6 +54,10 @@ export const SingleProductPage: FC = () => {
   const isLargerThan768px = useMediaQuery({
     query: '(max-width: 768px)',
   });
+
+  if (!isValidCategory || !isValidId) {
+    return <NotFound />;
+  }
 
   return (
     <div className={style['single-product']}>
