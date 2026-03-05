@@ -32,8 +32,14 @@ const CatalogBlock = ({
   });
 
   const handleOpenCloseBurgerMenu = () => {
-    document.body.style.overflow = 'hidden';
-    setIsCatalogListOpen((prev) => !prev);
+    setIsCatalogListOpen((prev) => {
+      const next = !prev;
+      document.body.style.overflow = next ? 'hidden' : 'initial';
+      if (!next) {
+        document.body.style.paddingRight = '0px';
+      }
+      return next;
+    });
   };
 
   const handleCloseandNavigate = () => {
