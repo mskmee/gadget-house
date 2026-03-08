@@ -20,17 +20,8 @@ import { IProduct } from '@/interfaces/interfaces';
 
 export const filters = {
   'categories': ['Smartphones', 'Laptops', 'Tablets'],
-'brands': [
-  { id: 1, name: 'Apple' },
-  { id: 2, name: 'Samsung' },
-  { id: 3, name: 'Lenovo' },
-  { id: 4, name: 'Asus' },
-  { id: 5, name: 'Nikon' },
-  { id: 6, name: 'Fujifilm' },
-  { id: 7, name: 'Canon' },
-  { id: 8, name: 'JBL' },
-  { id: 9, name: 'Dell' },
-],
+'brands': ['Apple','Samsung','Lenovo','Asus','Nikon','Fujifilm','Canon','JBL','Dell'],
+  
   'builtInMemory': [
     // '16 GB',
     // '32 GB',
