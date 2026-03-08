@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import { DEFAULT_SIZE, DEFAULT_SIZE_MOBILE } from '@/constants/pagination';
@@ -52,6 +52,7 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   categoryId,
 }) => {
   const { pathname: pathName, state, search } = useLocation();
+  const navigate = useNavigate();
   const { searchInputValue, isSuggestion } = state ? state : {};
   const dispatch: AppDispatch = useDispatch();
 
@@ -59,8 +60,12 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   const { selectedCategoryId } = useTypedSelector(
     (state: RootState) => state.filters,
   );
-  const { selectedSort, selectedPriceRange, selectedCameraRange, selectedAttributes } =
-    useTypedSelector((state: RootState) => state.filters);
+  const {
+    selectedSort,
+    selectedPriceRange,
+    selectedCameraRange,
+    selectedAttributes,
+  } = useTypedSelector((state: RootState) => state.filters);
 
   const isMobile991 = useMediaQuery({
     query: '(max-width: 991px)',
@@ -99,7 +104,11 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
     return decodeURIComponent(text).replace(/-/g, ' ');
   }, [search]);
 
-  const activeSearchQuery = (searchInputValue || searchQueryFromUrl || '').trim();
+  const activeSearchQuery = (
+    searchInputValue ||
+    searchQueryFromUrl ||
+    ''
+  ).trim();
 
   const pathname = pathName.slice(1);
   let category = '';
@@ -117,7 +126,85 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   }, [pathname]);
 
   useEffect(() => {
-    if (!isSearchPage || !activeSearchQuery || !selectedSort || isInitialLoading)
+    if (!isSearchPage || !activeSearchQuery) {
+      return;
+    }
+
+    const nextSearchParams = new URLSearchParams();
+
+    nextSearchParams.set('text', activeSearchQuery.replace(/[\s/]/g, '-'));
+
+    if (selectedSort) {
+      nextSearchParams.set('sort', selectedSort);
+    }
+
+    if (pagination.currentPage > 0) {
+      nextSearchParams.set('page', String(pagination.currentPage));
+    }
+
+    if (brandIds.length > 0) {
+      nextSearchParams.set('brandIds', brandIds.join(','));
+    }
+
+    if (attributesIds.length > 0) {
+      nextSearchParams.set('attributeValueIds', attributesIds.join(','));
+    }
+
+    if (selectedPriceRange[0] > 0) {
+      nextSearchParams.set('minPrice', String(selectedPriceRange[0]));
+    }
+
+    if (selectedPriceRange[1] > 0 && selectedPriceRange[1] < 100000) {
+      nextSearchParams.set('maxPrice', String(selectedPriceRange[1]));
+    }
+
+    if (selectedCameraRange[0] > 0) {
+      nextSearchParams.set('minMP', String(selectedCameraRange[0]));
+    }
+
+    if (selectedCameraRange[1] > 0) {
+      nextSearchParams.set('maxMP', String(selectedCameraRange[1]));
+    }
+
+    if (selectedColors.length > 0) {
+      nextSearchParams.set('colors', selectedColors.join(','));
+    }
+
+    const currentParams = new URLSearchParams(search);
+    if (currentParams.toString() === nextSearchParams.toString()) {
+      return;
+    }
+
+    navigate(
+      {
+        pathname: pathName,
+        search: `?${nextSearchParams.toString()}`,
+      },
+      { replace: true, state },
+    );
+  }, [
+    activeSearchQuery,
+    attributesIds,
+    brandIds,
+    isSearchPage,
+    navigate,
+    pagination.currentPage,
+    pathName,
+    search,
+    selectedCameraRange,
+    selectedColors,
+    selectedPriceRange,
+    selectedSort,
+    state,
+  ]);
+
+  useEffect(() => {
+    if (
+      !isSearchPage ||
+      !activeSearchQuery ||
+      !selectedSort ||
+      isInitialLoading
+    )
       return;
 
     dispatch(
