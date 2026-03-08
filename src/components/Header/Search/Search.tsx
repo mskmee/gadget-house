@@ -9,8 +9,6 @@ import React, {
   useCallback,
   useMemo,
   KeyboardEvent,
-  useMemo,
-  useCallback,
 } from 'react';
 import styles from './search.module.scss';
 import { SearchIcon } from '@/assets/icons/SearchIcon';
