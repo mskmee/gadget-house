@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux';
 import { setPageNumber } from '@/store/products/products_slice';
 import { setSelectedCategory } from '@/store/filters/filters_slice';
 import { AppDispatch } from '@/store';
-import { AppRoute } from '@/enums/Route';
+
 interface IProductListProps {
   onAuthClick?: () => void;
   isCatalogListOpen?: boolean;
@@ -60,7 +60,6 @@ export const CatalogList: FC<IProductListProps> = ({
 
   const handleCatalogLinkClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
-    link: string,
     categoryId: number | null,
   ) => {
     // Reset pagination
@@ -80,9 +79,7 @@ export const CatalogList: FC<IProductListProps> = ({
             <Link
               to={item.link}
               className={styles.burgerMenuTopItem}
-              onClick={(e) =>
-                handleCatalogLinkClick(e, item.link, item.categoryId)
-              }
+              onClick={(e) => handleCatalogLinkClick(e, item.categoryId)}
             >
               <div className={styles.burgerMenuTopItemRight}>
                 <img src={item.img} alt={item.title} />

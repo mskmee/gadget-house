@@ -98,11 +98,7 @@ export const FiltersMobile = ({
   console.log(selectedOptions);
 
   const applyFilter = () => {
-    const brandIds = selectedOptions.brands
-      ?.map((brandName) => filters.brands.find((b) => b.name === brandName)?.id)
-      .filter(Boolean);
-
-    dispatch(setSelectedBrands(brandIds ?? []));
+    dispatch(setSelectedBrands(selectedOptions.brands));
 
     dispatch(
       setSelectedAttributes([
@@ -181,7 +177,7 @@ export const FiltersMobile = ({
         </button>
       </h2>
 
-      <div className={styles.filters__wrapper}>
+      <div /*className={styles.filters__wrapper}*/>
         <Col span={24} className={styles.filters__option}>
           <h4 className={styles.filters__optionName}>Price</h4>
           <Slider

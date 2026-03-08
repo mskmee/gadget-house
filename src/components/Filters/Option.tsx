@@ -65,9 +65,7 @@ export const Option = ({
         <>
           <Checkbox.Group
             value={selectedOptions[filterKey] || []}
-            onChange={(values) =>
-              onOptionChange(filterKey, values as string[] | number[])
-            }
+            onChange={(values) => onOptionChange(values as string[])}
             className={styles.filters__optionList}
           >
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
