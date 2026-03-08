@@ -93,16 +93,37 @@ class ProductsApi implements IProductsApi {
     });
   }
 
-  async searchProducts(
-    query: string,
-    page: number,
-    size: number,
-    sort?: string,
-  ): Promise<ProductsResponseDto> {
+  async searchProducts(params: {
+    query: string;
+    page: number;
+    size: number;
+    sort?: string;
+    brandIds?: number[];
+    categoryId?: number;
+    attributeValueIds?: number[];
+    minPrice?: number;
+    maxPrice?: number;
+    minMP?: number;
+    maxMP?: number;
+    colors?: string[];
+  }): Promise<ProductsResponseDto> {
     return request({
       method: HttpMethod.GET,
       url: ApiEndpoint.PRODUCTS_SEARCH,
-      query: { query, page, size, sort },
+      query: {
+        query: params.query,
+        page: params.page,
+        size: params.size,
+        sort: params.sort,
+        brandIds: params.brandIds,
+        categoryId: params.categoryId,
+        attributeValueIds: params.attributeValueIds,
+        minPrice: params.minPrice,
+        maxPrice: params.maxPrice,
+        minMP: params.minMP,
+        maxMP: params.maxMP,
+        colors: params.colors,
+      },
     });
   }
 }

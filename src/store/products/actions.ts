@@ -175,12 +175,48 @@ const searchProducts = createAsyncThunk(
       page,
       size,
       sort,
-    }: { query: string; page: number; size: number; sort: string },
+      brandIds,
+      categoryId,
+      attributeValueIds,
+      minPrice,
+      maxPrice,
+      minMP,
+      maxMP,
+      colors,
+    }: {
+      query: string;
+      page: number;
+      size: number;
+      sort?: string;
+      brandIds?: number[];
+      categoryId?: number;
+      attributeValueIds?: number[];
+      minPrice?: number;
+      maxPrice?: number;
+      minMP?: number;
+      maxMP?: number;
+      colors?: string[];
+    },
     thunkAPI,
   ) => {
     thunkAPI.dispatch(startGlobalLoading());
     try {
-      return await productsService.searchProducts(query, page, size, sort);
+      return await productsService.searchProducts({
+        query,
+        page,
+        size,
+        ...(sort ? { sort } : {}),
+        ...(brandIds && brandIds.length > 0 ? { brandIds } : {}),
+        ...(categoryId ? { categoryId } : {}),
+        ...(attributeValueIds && attributeValueIds.length > 0
+          ? { attributeValueIds }
+          : {}),
+        ...(minPrice !== undefined && minPrice > 0 ? { minPrice } : {}),
+        ...(maxPrice !== undefined && maxPrice > 0 ? { maxPrice } : {}),
+        ...(minMP !== undefined && minMP > 0 ? { minMP } : {}),
+        ...(maxMP !== undefined && maxMP > 0 ? { maxMP } : {}),
+        ...(colors && colors.length > 0 ? { colors } : {}),
+      });
     } finally {
       thunkAPI.dispatch(stopGlobalLoading());
     }

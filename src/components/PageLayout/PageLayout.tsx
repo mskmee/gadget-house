@@ -25,6 +25,21 @@ import { formatCategoryUrlName } from '@/utils/helpers/formatCategoryUrlName';
 
 import CatalogPageSkeleton from '../skeletons/CatalogPageSkeleton';
 
+const searchColorMap: Record<string, string> = {
+  white: 'WHITE',
+  black: 'BLACK',
+  red: 'RED',
+  green: 'GREEN',
+  blue: 'BLUE',
+  violet: 'VIOLET',
+  purple: 'VIOLET',
+  grey: 'GREY',
+  gray: 'GREY',
+  gold: 'GOLD',
+  orange: 'ORANGE',
+  pink: 'PINK',
+};
+
 interface IPageLayoutProps {
   products: IProductCard[];
   totalPages: number;
@@ -36,7 +51,7 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   totalPages,
   categoryId,
 }) => {
-  const { pathname: pathName, state } = useLocation();
+  const { pathname: pathName, state, search } = useLocation();
   const { searchInputValue, isSuggestion } = state ? state : {};
   const dispatch: AppDispatch = useDispatch();
 
@@ -44,7 +59,7 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   const { selectedCategoryId } = useTypedSelector(
     (state: RootState) => state.filters,
   );
-  const { selectedSort, selectedPriceRange, selectedCameraRange } =
+  const { selectedSort, selectedPriceRange, selectedCameraRange, selectedAttributes } =
     useTypedSelector((state: RootState) => state.filters);
 
   const isMobile991 = useMediaQuery({
@@ -60,15 +75,39 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   const brandIds = useSelector(selectBrandIds);
   const attributesIds = useSelector(selectFilteredAttributes, shallowEqual);
 
+  const selectedColors = useMemo(() => {
+    if (!selectedAttributes || selectedAttributes.length === 0) {
+      return [];
+    }
+
+    const mappedColors = selectedAttributes
+      .map((value) => searchColorMap[value.trim().toLowerCase()])
+      .filter((value): value is string => Boolean(value));
+
+    return Array.from(new Set(mappedColors));
+  }, [selectedAttributes]);
+
   const size = isMobile767 ? DEFAULT_SIZE_MOBILE : DEFAULT_SIZE;
+  const searchQueryFromUrl = useMemo(() => {
+    const searchParams = new URLSearchParams(search);
+    const text = searchParams.get('text');
+
+    if (!text) {
+      return '';
+    }
+
+    return decodeURIComponent(text).replace(/-/g, ' ');
+  }, [search]);
+
+  const activeSearchQuery = (searchInputValue || searchQueryFromUrl || '').trim();
 
   const pathname = pathName.slice(1);
   let category = '';
 
-  if (pathname.includes('search') && searchInputValue) {
+  if (pathname.includes('search') && activeSearchQuery) {
     category = isSuggestion
-      ? searchInputValue.split('-').join(' ')
-      : `Search results for "${searchInputValue}"`;
+      ? activeSearchQuery.split('-').join(' ')
+      : `Search results for "${activeSearchQuery}"`;
   } else {
     formatCategoryUrlName(pathname);
   }
@@ -78,24 +117,37 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   }, [pathname]);
 
   useEffect(() => {
-    if (!isSearchPage || !searchInputValue || !selectedSort || isInitialLoading)
+    if (!isSearchPage || !activeSearchQuery || !selectedSort || isInitialLoading)
       return;
 
     dispatch(
       searchProducts({
-        query: searchInputValue,
+        query: activeSearchQuery,
         page: pagination.currentPage,
-        size: 20,
+        size,
         sort: selectedSort,
+        brandIds,
+        attributeValueIds: attributesIds,
+        minPrice: selectedPriceRange[0],
+        maxPrice: selectedPriceRange[1],
+        minMP: selectedCameraRange[0],
+        maxMP: selectedCameraRange[1],
+        colors: selectedColors,
       }),
     );
   }, [
+    activeSearchQuery,
+    attributesIds,
+    brandIds,
     dispatch,
     isInitialLoading,
     isSearchPage,
     pagination.currentPage,
-    searchInputValue,
+    selectedCameraRange,
+    selectedColors,
+    selectedPriceRange,
     selectedSort,
+    size,
   ]);
 
   useEffect(() => {

@@ -60,13 +60,21 @@ class ProductsService implements IProductsService {
   async getSuggestions(query: string): Promise<string[]> {
     return this.productsApi.getSuggestions(query);
   }
-  async searchProducts(
-    query: string,
-    page: number,
-    size: number,
-    sort?: string,
-  ): Promise<ProductsResponseDto> {
-    return this.productsApi.searchProducts(query, page, size, sort);
+  async searchProducts(params: {
+    query: string;
+    page: number;
+    size: number;
+    sort?: string;
+    brandIds?: number[];
+    categoryId?: number;
+    attributeValueIds?: number[];
+    minPrice?: number;
+    maxPrice?: number;
+    minMP?: number;
+    maxMP?: number;
+    colors?: string[];
+  }): Promise<ProductsResponseDto> {
+    return this.productsApi.searchProducts(params);
   }
 }
 
