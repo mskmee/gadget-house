@@ -6,8 +6,9 @@ import React, {
   useRef,
   Dispatch,
   SetStateAction,
-  useCallback,
   KeyboardEvent,
+  useMemo,
+  useCallback,
 } from 'react';
 import styles from './search.module.scss';
 import { SearchIcon } from '@/assets/icons/SearchIcon';
@@ -159,37 +160,40 @@ export const Search: FC<ISearchProps> = ({
     currentPath.current = location.pathname;
   }, [location.pathname]);
 
-  const handleSuggestions = async (inputValue: string) => {
-    const normalizedInput = inputValue.trim();
+  const handleSuggestions = useCallback(
+    async (inputValue: string) => {
+      const normalizedInput = inputValue.trim();
 
-    if (!normalizedInput) {
-      dispatch(clearSuggestions());
-      return;
-    }
+      if (!normalizedInput) {
+        dispatch(clearSuggestions());
+        return;
+      }
 
-    try {
-      const result = await dispatch(getSuggestions(normalizedInput)).unwrap();
+      try {
+        const result = await dispatch(getSuggestions(normalizedInput)).unwrap();
 
-      if (result.length > 0) {
-        setIsOverlayActive(true);
-        setIsGlobalOverlayActive(true);
-      } else {
+        if (result.length > 0) {
+          setIsOverlayActive(true);
+          setIsGlobalOverlayActive(true);
+        } else {
+          setIsOverlayActive(false);
+          setIsGlobalOverlayActive(false);
+        }
+      } catch (error) {
+        console.error('Error fetching suggestions:', error);
         setIsOverlayActive(false);
         setIsGlobalOverlayActive(false);
       }
-    } catch (error) {
-      console.error('Error fetching suggestions:', error);
-      setIsOverlayActive(false);
-      setIsGlobalOverlayActive(false);
-    }
-  };
-
+    },
+    [dispatch, setIsOverlayActive, setIsGlobalOverlayActive],
+  );
   const handleSaveSearchValueToStore = (inputValue: string) => {
     setSearchValue(inputValue);
   };
-  const debouncedSuggestionHandler = useCallback(
-    debounce(handleSuggestions, 500),
-    [],
+
+  const debouncedSuggestionHandler = useMemo(
+    () => debounce(handleSuggestions, 500),
+    [handleSuggestions],
   );
 
   const handleChangeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
@@ -216,7 +220,12 @@ export const Search: FC<ISearchProps> = ({
     return () => {
       debouncedSuggestionHandler.cancel();
     };
-  }, [location.pathname]);
+  }, [
+    location.pathname,
+    dispatch,
+    setIsOverlayActive,
+    debouncedSuggestionHandler,
+  ]);
 
   const clearSearchInputValue = () => {
     setSearchInput({ value: '', hasError: false });

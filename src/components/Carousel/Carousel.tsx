@@ -58,11 +58,11 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
     (state) => state.products.productsData?.page,
   );
 
-  const productsKey = useMemo(() => {
+  /*const productsKey = useMemo(() => {
     if (!products || products.length === 0) return '';
 
     return products.map((p) => `${p.id}-${p.categoryId}`).join(',');
-  }, [products]);
+  }, [products]);*/
 
   const getRandomItems = (
     items: IProductCard[],
@@ -93,7 +93,7 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
       laptops: getRandomItems(laptopsList, 8),
       otherProducts: otherProductsList,
     };
-  }, [productsKey]);
+  }, [products]);
 
   const itemWidth = isLargerThan1440px
     ? responsiveCarouselSettings.itemWidth

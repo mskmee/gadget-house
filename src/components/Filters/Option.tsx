@@ -65,7 +65,7 @@ export const Option = ({
         <>
           <Checkbox.Group
             value={selectedOptions[filterKey] || []}
-            onChange={(values) => onOptionChange(values as string[])}
+            onChange={(values) => onOptionChange(filterKey, values as string[])}
             className={styles.filters__optionList}
           >
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -81,7 +81,7 @@ export const Option = ({
                     <Checkbox
                       key={`${value}-checkbox`}
                       value={value}
-                      className={styles.filters__optionItem}
+                      /* className={styles.filters__optionItem}*/
                     >
                       {label}
                     </Checkbox>

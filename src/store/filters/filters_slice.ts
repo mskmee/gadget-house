@@ -151,4 +151,5 @@ export const {
   resetFilters,
 } = filters_slice.actions;
 
+export const actions = filters_slice.actions; // add this
 export const { reducer } = filters_slice;

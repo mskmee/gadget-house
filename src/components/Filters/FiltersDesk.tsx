@@ -137,7 +137,7 @@ export const FiltersDesk = () => {
       <div className={styles.filtersDesk__wrapper}>
         <h2 className={styles.filtersDesk__title}>Filters</h2>
 
-        <div className={styles.filters__wrapper}>
+        <div>
           <Col span={24} className={styles.filters__option}>
             <h4 className={styles.filters__optionName}>Price</h4>
             <Slider
