@@ -5,6 +5,13 @@ import { IOption } from '@/interfaces/interfaces';
 import ArrowUpSvg from '@/assets/icons/arrow-up.svg';
 import styles from './filters.module.scss';
 
+type OptionType =
+  | string
+  | {
+      id: number;
+      name: string;
+    };
+
 export const Option = ({
   options,
   title,
@@ -23,40 +30,10 @@ export const Option = ({
     setShowCategory(!showCategory);
   };
 
-  const handleOptionChange = (checkedValues: string[]) => {
-    onOptionChange(filterKey, checkedValues);
-  };
-
   const handleHeaderKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       toggleShowCategory();
-    }
-  };
-
-  const handleMoreButtonKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      toggleShowMoreOptions();
-    }
-  };
-
-  const handleCheckboxKeyDown = (
-    e: React.KeyboardEvent<HTMLElement>,
-    optionValue: string,
-  ) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      const currentSelected = selectedOptions[filterKey] || [];
-      const isChecked = currentSelected.includes(optionValue);
-      let newSelected: string[];
-
-      if (isChecked) {
-        newSelected = currentSelected.filter((val) => val !== optionValue);
-      } else {
-        newSelected = [...currentSelected, optionValue];
-      }
-      handleOptionChange(newSelected);
     }
   };
 
@@ -71,19 +48,12 @@ export const Option = ({
         onKeyDown={handleHeaderKeyDown}
         role="button"
         tabIndex={0}
-        aria-expanded={showCategory}
-        aria-controls={`filter-${filterKey}`}
       >
-        <h4
-          className={styles.filters__optionName}
-          id={`filter-title-${filterKey}`}
-        >
-          {title}
-        </h4>
+        <h4 className={styles.filters__optionName}>{title}</h4>
 
         <img
           src={ArrowUpSvg}
-          alt={showCategory ? 'Collapse section' : 'Expand section'}
+          alt="Toggle"
           className={cn(
             styles.filters__optionArrow,
             !showCategory && styles.arrowDown,
@@ -92,38 +62,33 @@ export const Option = ({
       </div>
 
       {showCategory && (
-        <div id={`filter-${filterKey}`}>
+        <>
           <Checkbox.Group
             value={selectedOptions[filterKey] || []}
-            onChange={(values) => handleOptionChange(values as string[])}
-            className={cn(
-              styles.filters__optionList,
-              filterKey === 'memorySlot' ? 'filters__memorySlot' : '',
-            )}
+            onChange={(values) =>
+              onOptionChange(filterKey, values as string[] | number[])
+            }
+            className={styles.filters__optionList}
           >
-            <div
-              data-label={filterKey}
-              role="group"
-              aria-labelledby={`filter-title-${filterKey}`}
-              style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}
-            >
-              {options
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {(options as OptionType[])
                 .slice(0, showMoreOptions ? options.length : 5)
-                .map((option) => (
-                  <Checkbox
-                    key={`${option}-checkbox`}
-                    value={option}
-                    className={styles.filters__optionItem}
-                    style={
-                      {
-                        '--color-value': option.toLowerCase(),
-                      } as React.CSSProperties
-                    }
-                    onKeyDown={(e) => handleCheckboxKeyDown(e, option)}
-                  >
-                    {option}
-                  </Checkbox>
-                ))}
+                .map((option) => {
+                  const value = typeof option === 'object' ? option.id : option;
+
+                  const label =
+                    typeof option === 'object' ? option.name : option;
+
+                  return (
+                    <Checkbox
+                      key={`${value}-checkbox`}
+                      value={value}
+                      className={styles.filters__optionItem}
+                    >
+                      {label}
+                    </Checkbox>
+                  );
+                })}
             </div>
           </Checkbox.Group>
 
@@ -135,13 +100,11 @@ export const Option = ({
               )}
               type="button"
               onClick={toggleShowMoreOptions}
-              onKeyDown={handleMoreButtonKeyDown}
-              aria-expanded={showMoreOptions}
             >
               {showMoreOptions ? 'Show less' : 'Show more'}
             </button>
           )}
-        </div>
+        </>
       )}
     </div>
   );

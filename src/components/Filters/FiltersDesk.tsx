@@ -1,9 +1,10 @@
-import  { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Row, Col, InputNumber, Slider } from 'antd';
 // import cn from 'classnames';
 import { filters } from './consts';
 import { AppDispatch } from '@/store';
+
 import {
   setSelectedAttributes,
   setSelectedBrands,
@@ -11,6 +12,8 @@ import {
   setSelectedPriceRange,
 } from '@/store/filters/filters_slice';
 import { setPageNumber } from '@/store/products/products_slice';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+
 import { useRangeFilter } from './hooks/useRangeFilter';
 import { handleKeyDown } from '@/utils/helpers/checkKeydownEvent';
 import { Option } from './Option';
@@ -38,6 +41,9 @@ export const FiltersDesk = () => {
     // handleMaxChange: handleMaxMPChange,
   } = useRangeFilter(0, 0);
   // const [showCategory, setShowCategory] = useState(true);
+
+  const { selectedBrands, selectedAttributes, selectedPriceRange } =
+    useTypedSelector((state) => state.filters);
 
   const onMinInputChange = (value: number | null) => {
     if (value !== null && value <= maxPrice) {
@@ -79,6 +85,32 @@ export const FiltersDesk = () => {
     dispatch(setSelectedPriceRange(priceRange));
     dispatch(setSelectedCameraRange([minCameraMP, maxCameraMP]));
   };
+
+  useEffect(() => {
+    setSelectedOptions({
+      brands: selectedBrands || [],
+      builtInMemory:
+        selectedAttributes?.filter((attr) =>
+          filters.builtInMemory.includes(attr),
+        ) || [],
+      rams:
+        selectedAttributes?.filter((attr) => filters.rams.includes(attr)) || [],
+      colors:
+        selectedAttributes?.filter((attr) => filters.colors.includes(attr)) ||
+        [],
+      screens:
+        selectedAttributes?.filter((attr) => filters.screens.includes(attr)) ||
+        [],
+      cores:
+        selectedAttributes?.filter((attr) => filters.cores.includes(attr)) ||
+        [],
+      memorySlot:
+        selectedAttributes?.filter((attr) =>
+          filters.fleshCard.includes(attr),
+        ) || [],
+    });
+    setPriceRange(selectedPriceRange || [0, 100000]);
+  }, [selectedBrands, selectedAttributes, selectedPriceRange]);
 
   const handleFilterChange = (filterKey: string, checkedValues: string[]) => {
     setSelectedOptions((prev) => ({
@@ -192,7 +224,7 @@ export const FiltersDesk = () => {
               onOptionChange={handleFilterChange}
             />
           )}
-{/* 
+          {/* 
           {filters.rams && (
             <Option
               options={filters.rams ?? []}
@@ -202,7 +234,7 @@ export const FiltersDesk = () => {
               onOptionChange={handleFilterChange}
             />
           )} */}
-{/* 
+          {/* 
           {filters.fleshCard && (
             <Option
               options={filters.fleshCard ?? []}
@@ -212,7 +244,7 @@ export const FiltersDesk = () => {
               onOptionChange={handleFilterChange}
             />
           )} */}
-{/* 
+          {/* 
           {filters.colors && (
             <Option
               options={filters.colors}

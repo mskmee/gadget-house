@@ -10,6 +10,7 @@ import { RightArrow } from '@/assets/constants';
 import styles from './menu.module.scss';
 import { useDispatch } from 'react-redux';
 import { setPageNumber } from '@/store/products/products_slice';
+import { setSelectedCategory } from '@/store/filters/filters_slice';
 import { AppDispatch } from '@/store';
 import { AppRoute } from '@/enums/Route';
 interface IProductListProps {
@@ -56,15 +57,21 @@ export const CatalogList: FC<IProductListProps> = ({
       window.removeEventListener('resize', handleCatalogHeight);
     };
   }, [isCatalogListOpen]);
+
   const handleCatalogLinkClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
     link: string,
+    categoryId: number | null,
   ) => {
-    if (link === AppRoute.ALL_PRODUCTS || link === AppRoute.ROOT) {
-      dispatch(setPageNumber(0));
-    }
+    // Reset pagination
+    dispatch(setPageNumber(0));
+
+    // Set selected category (this will reset filters in your slice)
+    dispatch(setSelectedCategory(categoryId));
+
     closeCatalog?.(e);
   };
+
   return (
     <div ref={refCatalogWrap} id="catalog-list" className={styles.container}>
       <ul className={styles.burgerMenuTop}>
@@ -73,7 +80,9 @@ export const CatalogList: FC<IProductListProps> = ({
             <Link
               to={item.link}
               className={styles.burgerMenuTopItem}
-              onClick={(e) => handleCatalogLinkClick(e, item.link)}
+              onClick={(e) =>
+                handleCatalogLinkClick(e, item.link, item.categoryId)
+              }
             >
               <div className={styles.burgerMenuTopItemRight}>
                 <img src={item.img} alt={item.title} />

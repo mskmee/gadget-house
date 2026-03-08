@@ -5,7 +5,7 @@ import { actions as productCardsActions } from '../store/shopping_cart/shoppingC
 import { actions as searchActions } from '../store/search/search_slice';
 import { productsActions } from '../store/products';
 import { actions as authActions } from '../store/auth/auth-slice';
-import {actions as filters_slice} from "../store/filters/filters_slice"
+import * as filtersActions from '@/store/filters/filters_slice';
 import {actions as singleProductSlise} from "../store/singleProduct/singleProduct_slice"
 
 const rootActions = {
@@ -13,7 +13,7 @@ const rootActions = {
   ...searchActions,
   ...productsActions,
   ...authActions,
-  ...filters_slice,
+  ...filtersActions,
   ...singleProductSlise
 };
 

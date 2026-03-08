@@ -95,9 +95,15 @@ export const FiltersMobile = ({
       }
     }
   };
+  console.log(selectedOptions);
 
   const applyFilter = () => {
-    dispatch(setSelectedBrands(selectedOptions.brands));
+    const brandIds = selectedOptions.brands
+      ?.map((brandName) => filters.brands.find((b) => b.name === brandName)?.id)
+      .filter(Boolean);
+
+    dispatch(setSelectedBrands(brandIds ?? []));
+
     dispatch(
       setSelectedAttributes([
         ...(selectedOptions.screens || []),
@@ -295,7 +301,7 @@ export const FiltersMobile = ({
             onOptionChange={handleFilterChange}
           />
         )} */}
-{/* 
+        {/* 
         <div className={styles.filters__option}>
           <div
             className={cn(
