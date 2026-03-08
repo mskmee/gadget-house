@@ -6,6 +6,8 @@ import React, {
   useRef,
   Dispatch,
   SetStateAction,
+  useCallback,
+  useMemo,
   KeyboardEvent,
   useMemo,
   useCallback,
@@ -187,9 +189,11 @@ export const Search: FC<ISearchProps> = ({
     },
     [dispatch, setIsOverlayActive, setIsGlobalOverlayActive],
   );
+
   const handleSaveSearchValueToStore = (inputValue: string) => {
     setSearchValue(inputValue);
   };
+
 
   const debouncedSuggestionHandler = useMemo(
     () => debounce(handleSuggestions, 500),

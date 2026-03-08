@@ -5,7 +5,6 @@ import { convertPriceToReadable } from '@/utils/helpers/helpers';
 import { OrderItem } from '@/types/OrderItem';
 import { formatDateToDDMMYYYY } from '@/utils/helpers/format-date';
 import { formatPhoneDisplay } from '@/utils/helpers/formatPhoneNumber';
-
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { formatTitle } from '@/utils/helpers/formatTitle';
 import { useLocale } from '@/context/useLocale';
