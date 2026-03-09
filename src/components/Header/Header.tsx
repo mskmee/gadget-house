@@ -203,61 +203,54 @@ export const Header = () => {
           ref={fixedHeaderBlock}
         >
           <div
-            className={classNames({
-              [styles['hidden-header-bottom-wrapper']]: !isFixedHeader,
-              [styles['openn']]: isCatalogListOpen,
-            })}
+            className={styles['catalog-section']}
+            ref={catalogSectionRef}
+            onMouseLeave={!isLessThan992px ? closeCatalog : undefined}
           >
-            <div
-              className={styles['catalog-section']}
-              ref={catalogSectionRef}
-              onMouseLeave={closeCatalog}
-            >
-              {(isAuthPage || isUserDashboardPage) && !isCatalogListOpen && (
-                <button
-                  type="button"
-                  className={styles['auth-back-button']}
-                  onClick={() => navigate(-1)}
-                >
-                  <img src={LeftArrow} alt="Back" />
-                </button>
-              )}
+            {(isAuthPage || isUserDashboardPage) && !isCatalogListOpen && (
+              <button
+                type="button"
+                className={styles['auth-back-button']}
+                onClick={() => navigate(-1)}
+              >
+                <img src={LeftArrow} alt="Back" />
+              </button>
+            )}
 
-              <CatalogBlock
-                isCatalogListOpen={isCatalogListOpen}
-                setIsCatalogListOpen={setIsCatalogListOpen}
-                openCatalogOnFocus={openCatalogOnFocus}
-                openCatalog={openCatalog}
-                onAuthClick={handleAuthClick}
-                closeCatalog={closeCatalog}
-              />
-            </div>
-
-            <Search
-              isOverlayActive={isOverlayActive}
-              setIsOverlayActive={setIsOverlayActive}
+            <CatalogBlock
+              isCatalogListOpen={isCatalogListOpen}
+              setIsCatalogListOpen={setIsCatalogListOpen}
+              openCatalogOnFocus={openCatalogOnFocus}
+              openCatalog={openCatalog}
+              onAuthClick={handleAuthClick}
+              closeCatalog={closeCatalog}
             />
-            <div className={styles.headerBottomButtons}>
-              {buttonData.map((buttonData) => (
-                <NavButton
-                  key={buttonData.id}
-                  button={buttonData}
-                  onAuthClick={handleAuthClick}
-                />
-              ))}
+          </div>
 
-              {shouldShowCartTooltip && !isLessThan992px && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ ease: 'easeInOut', duration: 0.4 }}
-                  className={classNames(styles.tooltip, 'oo')}
-                >
-                  <CardTooltip />
-                </motion.div>
-              )}
-            </div>
+          <Search
+            isOverlayActive={isOverlayActive}
+            setIsOverlayActive={setIsOverlayActive}
+          />
+          <div className={styles.headerBottomButtons}>
+            {buttonData.map((buttonData) => (
+              <NavButton
+                key={buttonData.id}
+                button={buttonData}
+                onAuthClick={handleAuthClick}
+              />
+            ))}
+
+            {shouldShowCartTooltip && !isLessThan992px && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ ease: 'easeInOut', duration: 0.4 }}
+                className={classNames(styles.tooltip, 'oo')}
+              >
+                <CardTooltip />
+              </motion.div>
+            )}
           </div>
         </div>
       </div>
