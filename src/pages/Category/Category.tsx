@@ -11,6 +11,7 @@ import { setIsAppending, setPageNumber } from '@/store/products/products_slice';
 import { Category as CategoryENUM } from '@/enums/enums';
 import { AppRoute } from '@/enums/Route';
 import { DataStatus } from '@/enums/data-status';
+import NotFound from '@/pages/NotFound/NotFound';
 
 function Category() {
   const navigate = useNavigate();
@@ -64,7 +65,9 @@ function Category() {
   }, [isDataLoaded, productsData, isValidCategory, navigate, categoryName]);
 
   if (!isValidCategory) {
-    return <div>Invalid category</div>;
+    // old fallback left
+    // return <div>Invalid category</div>;
+    return <NotFound />;
   }
 
   return (
