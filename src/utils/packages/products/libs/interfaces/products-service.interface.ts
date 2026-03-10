@@ -27,12 +27,20 @@ interface IProductsService {
   getOneProductById: (id: string) => Promise<ProductItemResponseDto>;
   deleteProduct: (id: string) => Promise<void>;
   getSuggestions(query: string): Promise<string[]>;
-  searchProducts(
-    query: string,
-    page: number,
-    size: number,
-    sort?: string,
-  ): Promise<ProductsResponseDto>;
+  searchProducts(params: {
+    query: string;
+    page: number;
+    size: number;
+    sort?: string;
+    brandIds?: number[];
+    categoryId?: number;
+    attributeValueIds?: number[];
+    minPrice?: number;
+    maxPrice?: number;
+    minMP?: number;
+    maxMP?: number;
+    colors?: string[];
+  }): Promise<ProductsResponseDto>;
 }
 
 export { type IProductsService };

@@ -29,12 +29,20 @@ interface IProductsApi {
     sort?: string;
   }) => Promise<ProductsResponseDto>;
   getSuggestions(query: string): Promise<string[]>;
-  searchProducts(
-    query: string,
-    page: number,
-    size: number,
-    sort?: string,
-  ): Promise<ProductsResponseDto>;
+  searchProducts(params: {
+    query: string;
+    page: number;
+    size: number;
+    sort?: string;
+    brandIds?: number[];
+    categoryId?: number;
+    attributeValueIds?: number[];
+    minPrice?: number;
+    maxPrice?: number;
+    minMP?: number;
+    maxMP?: number;
+    colors?: string[];
+  }): Promise<ProductsResponseDto>;
 }
 
 export { type IProductsApi };
