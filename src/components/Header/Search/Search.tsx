@@ -192,7 +192,6 @@ export const Search: FC<ISearchProps> = ({
     setSearchValue(inputValue);
   };
 
-
   const debouncedSuggestionHandler = useMemo(
     () => debounce(handleSuggestions, 500),
     [handleSuggestions],
