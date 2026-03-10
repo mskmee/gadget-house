@@ -149,6 +149,13 @@ const products_slice = createSlice({
       state.activeProduct = payload;
     });
 
+    builder.addCase(getOneProductById.pending, (state) => {
+      state.activeProduct = null;
+    });
+    builder.addCase(getOneProductById.rejected, (state) => {
+      state.activeProduct = null;
+    });
+
     builder.addCase(getPaginatedProducts.fulfilled, (state, { payload }) => {
       state.productsData = payload;
       state.pagination = {

@@ -185,39 +185,32 @@ export const AdminHeader = () => {
           ref={fixedHeaderBlock}
         >
           <div
-            className={classNames({
-              [styles['hidden-header-bottom-wrapper']]: !isFixedHeader,
-              [styles['openn']]: isCatalogListOpen,
-            })}
+            className={styles['catalog-section']}
+            ref={catalogSectionRef}
+            onMouseLeave={!isLessThan992px ? closeCatalog : undefined}
           >
-            <div
-              className={styles['catalog-section']}
-              ref={catalogSectionRef}
-              onMouseLeave={closeCatalog}
-            >
-              {(isAuthPage || isUserDashboardPage) && !isCatalogListOpen && (
-                <button
-                  type="button"
-                  className={styles['auth-back-button']}
-                  onClick={() => navigate(-1)}
-                >
-                  <LeftArrow />
-                </button>
-              )}
+            {(isAuthPage || isUserDashboardPage) && !isCatalogListOpen && (
+              <button
+                type="button"
+                className={styles['auth-back-button']}
+                onClick={() => navigate(-1)}
+              >
+                <LeftArrow />
+              </button>
+            )}
 
-              <CatalogBlock
-                isCatalogListOpen={isCatalogListOpen}
-                setIsCatalogListOpen={setIsCatalogListOpen}
-                openCatalogOnFocus={openCatalogOnFocus}
-                openCatalog={openCatalog}
-                onAuthClick={handleAuthClick}
-                closeCatalog={closeCatalog}
-              />
-            </div>
-            <div className={styles.headerBottomButtons}>
-              <DashboardButton />
-              <LogoutButton />
-            </div>
+            <CatalogBlock
+              isCatalogListOpen={isCatalogListOpen}
+              setIsCatalogListOpen={setIsCatalogListOpen}
+              openCatalogOnFocus={openCatalogOnFocus}
+              openCatalog={openCatalog}
+              onAuthClick={handleAuthClick}
+              closeCatalog={closeCatalog}
+            />
+          </div>
+          <div className={styles.headerBottomButtons}>
+            <DashboardButton />
+            <LogoutButton />
           </div>
         </div>
       </div>
