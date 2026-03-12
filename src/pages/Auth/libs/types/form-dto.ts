@@ -26,8 +26,7 @@ type LoginPermissionFormDto = {
   phoneNumber: string;
   password: string;
 };
-
-type FormType = 'login' | 'register' | 'forgot';
+type FormType = 'login' | 'register' | 'forgot' | 'changePassword' | 'login-permission';
 
 export type {
   LoginFormDto,

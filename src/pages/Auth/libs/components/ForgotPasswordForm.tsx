@@ -70,8 +70,6 @@ const ForgotPasswordForm: FC<IForgotPasswordFormProps> = ({
                       styles.form__btn,
                     )}
                     type="submit"
-                    // temporary mock
-                    onClick={() => {}}
                     disabled={!isValid}
                   >
                     Submit
