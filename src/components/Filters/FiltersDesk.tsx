@@ -1,9 +1,9 @@
-import React, { useRef, useState } from 'react';
+import  { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Row, Col, InputNumber, Slider } from 'antd';
-import cn from 'classnames';
+// import cn from 'classnames';
 import { filters } from './consts';
-import { AppDispatch } from '@/store';
+import { AppDispatch, RootState } from '@/store';
 import {
   setSelectedAttributes,
   setSelectedBrands,
@@ -14,13 +14,18 @@ import { setPageNumber } from '@/store/products/products_slice';
 import { useRangeFilter } from './hooks/useRangeFilter';
 import { handleKeyDown } from '@/utils/helpers/checkKeydownEvent';
 import { Option } from './Option';
-import ArrowUpSvg from '@/assets/icons/arrow-up.svg';
+// import ArrowUpSvg from '@/assets/icons/arrow-up.svg';
 import styles from './filters.module.scss';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
 
 export const FiltersDesk = () => {
-  const inputMinCameraMPRef = useRef<HTMLInputElement | null>(null);
-  const inputMaxCameraMPRef = useRef<HTMLInputElement | null>(null);
+  // const inputMinCameraMPRef = useRef<HTMLInputElement | null>(null);
+  // const inputMaxCameraMPRef = useRef<HTMLInputElement | null>(null);
   const dispatch: AppDispatch = useDispatch();
+  
+  const { selectedBrands, selectedAttributes, selectedPriceRange, selectedCameraRange } = 
+    useTypedSelector((state: RootState) => state.filters);
+  
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, string[]>
   >({});
@@ -37,7 +42,65 @@ export const FiltersDesk = () => {
     handleMinChange: handleMinMPChange,
     handleMaxChange: handleMaxMPChange,
   } = useRangeFilter(0, 0);
-  const [showCategory, setShowCategory] = useState(true);
+  // const [showCategory, setShowCategory] = useState(true);
+
+  useEffect(() => {
+    const nextOptions: Record<string, string[]> = {};
+  
+    if (selectedBrands?.length) {
+      nextOptions.brands = selectedBrands;
+    }
+  
+    if (selectedAttributes?.length) {
+      const selectedSet = new Set(selectedAttributes);
+  
+      const pick = (values?: string[]) =>
+        (values ?? []).filter((v) => selectedSet.has(v));
+  
+      const map: Record<string, string> = {
+        screens: "screenType",
+        builtInMemory: "builtInMemory",
+        colors: "colors",
+        rams: "rams",
+        cores: "cores",
+        flashCard: "memorySlot",
+      };
+  
+      (Object.keys(map) as (keyof typeof map)[]).forEach((key) => {
+        const arr = (filters as any)?.[key];
+        if (Array.isArray(arr)) {
+          const picked = pick(arr);
+          if (picked.length) nextOptions[map[key]] = picked;
+        }
+      });
+    }
+  
+    if (Object.keys(nextOptions).length) {
+      setSelectedOptions((prev) => ({ ...prev, ...nextOptions }));
+    }
+  
+    if (selectedPriceRange?.length === 2) {
+      const [min, max] = selectedPriceRange;
+      const isDefault = min === 0 && max === 100000;
+  
+      if (!isDefault) {
+        setPriceRange([min, max]);
+        handleMinPriceChange(min);
+        handleMaxPriceChange(max);
+      }
+    }
+  
+    if (selectedCameraRange?.length === 2) {
+      const [min, max] = selectedCameraRange;
+      const isEmpty = min === 0 && max === 0;
+  
+      if (!isEmpty) {
+        handleMinMPChange(min);
+        handleMaxMPChange(max);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onMinInputChange = (value: number | null) => {
     if (value !== null && value <= maxPrice) {
@@ -53,9 +116,9 @@ export const FiltersDesk = () => {
     }
   };
 
-  const toggleShowCategory = () => {
-    setShowCategory(!showCategory);
-  };
+  // const toggleShowCategory = () => {
+  //   setShowCategory(!showCategory);
+  // };
 
   const handleSliderChange = (value: number[]) => {
     setPriceRange(value);
@@ -66,9 +129,10 @@ export const FiltersDesk = () => {
   const handleFilter = () => {
     dispatch(setPageNumber(0));
     dispatch(setSelectedBrands(selectedOptions.brands));
+    // Colors are included in selectedAttributes but will be extracted separately by the selector
     dispatch(
       setSelectedAttributes([
-        ...(selectedOptions.screens || []),
+        ...(selectedOptions.screenType || []),
         ...(selectedOptions.builtInMemory || []),
         ...(selectedOptions.colors || []),
         ...(selectedOptions.rams || []),
@@ -87,18 +151,18 @@ export const FiltersDesk = () => {
     }));
   };
 
-  const handleFocus = (inputRef: React.RefObject<HTMLInputElement>) => {
-    if (inputRef.current) {
-      inputRef.current.select();
-    }
-  };
+  // const handleFocus = (inputRef: React.RefObject<HTMLInputElement>) => {
+  //   if (inputRef.current) {
+  //     inputRef.current.select();
+  //   }
+  // };
 
-  const handleCameraHeaderKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      toggleShowCategory();
-    }
-  };
+  // const handleCameraHeaderKeyDown = (e: React.KeyboardEvent) => {
+  //   if (e.key === 'Enter' || e.key === ' ') {
+  //     e.preventDefault();
+  //     toggleShowCategory();
+  //   }
+  // };
 
   return (
     <aside className={styles.filtersDesk}>
@@ -193,7 +257,7 @@ export const FiltersDesk = () => {
             />
           )}
 
-          {filters.rams && (
+          {/* {filters.rams && (
             <Option
               options={filters.rams ?? []}
               title="RAM"
@@ -201,9 +265,9 @@ export const FiltersDesk = () => {
               selectedOptions={selectedOptions}
               onOptionChange={handleFilterChange}
             />
-          )}
+          )} */}
 
-          {filters.fleshCard && (
+          {/* {filters.fleshCard && (
             <Option
               options={filters.fleshCard ?? []}
               title="Separate slot for&nbsp;memory"
@@ -211,8 +275,8 @@ export const FiltersDesk = () => {
               selectedOptions={selectedOptions}
               onOptionChange={handleFilterChange}
             />
-          )}
-
+          )} */}
+{/* 
           {filters.colors && (
             <Option
               options={filters.colors}
@@ -221,9 +285,9 @@ export const FiltersDesk = () => {
               selectedOptions={selectedOptions}
               onOptionChange={handleFilterChange}
             />
-          )}
+          )} */}
 
-          <div className={styles.filters__option}>
+          {/* <div className={styles.filters__option}>
             <div
               className={cn(
                 styles.filters__optionHeader,
@@ -314,9 +378,9 @@ export const FiltersDesk = () => {
                 </Row>
               </div>
             )}
-          </div>
+          </div> */}
 
-          {filters.cores && (
+          {/* {filters.cores && (
             <Option
               options={filters.cores}
               title="Number of cores"
@@ -324,9 +388,9 @@ export const FiltersDesk = () => {
               selectedOptions={selectedOptions}
               onOptionChange={handleFilterChange}
             />
-          )}
+          )} */}
 
-          {filters.screens && (
+          {/* {filters.screens && (
             <Option
               options={filters.screens}
               title="Screen type"
@@ -334,7 +398,7 @@ export const FiltersDesk = () => {
               selectedOptions={selectedOptions}
               onOptionChange={handleFilterChange}
             />
-          )}
+          )} */}
         </div>
 
         <button

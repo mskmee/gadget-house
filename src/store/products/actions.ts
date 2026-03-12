@@ -1,16 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { productsService } from '@/utils/packages/products';
 import { startGlobalLoading, stopGlobalLoading } from '@/store/ui/ui_slice';
-
-interface IFilterParams {
-  page: number;
-  size: number;
-  categoryId?: number;
-  brandIds?: number[];
-  attributes?: number[];
-  minPrice?: number;
-  maxPrice?: number;
-}
+import { mapColorsToBackendEnums } from '@/utils/helpers/colorMapping';
 
 const getAllProducts = createAsyncThunk(
   'products/fetch',
@@ -84,6 +75,7 @@ const getFilteredProducts = createAsyncThunk(
       maxPrice,
       minCameraMP,
       maxCameraMP,
+      colors,
       sort,
     }: {
       page: number;
@@ -95,13 +87,26 @@ const getFilteredProducts = createAsyncThunk(
       maxPrice?: number;
       minCameraMP?: number;
       maxCameraMP?: number;
+      colors?: string[];
       sort?: string;
     },
     thunkAPI,
   ) => {
     thunkAPI.dispatch(startGlobalLoading());
     try {
-      const filteredParams: IFilterParams = {
+      const filteredParams: {
+        page: number;
+        size: number;
+        categoryId?: number;
+        brandIds?: number[];
+        attributeValueIds?: number[];
+        minPrice?: number;
+        maxPrice?: number;
+        minMP?: string;
+        maxMP?: string;
+        colors?: string[];
+        sort?: string[];
+      } = {
         page,
         size,
         ...(categoryId !== null && categoryId !== 0 ? { categoryId } : {}),
@@ -111,9 +116,18 @@ const getFilteredProducts = createAsyncThunk(
           : {}),
         ...(minPrice !== null && minPrice !== 0 ? { minPrice } : {}),
         ...(maxPrice !== null && maxPrice !== 0 ? { maxPrice } : {}),
-        ...(minCameraMP !== null && minCameraMP !== 0 ? { minCameraMP } : {}),
-        ...(maxCameraMP !== null && maxCameraMP !== 0 ? { maxCameraMP } : {}),
-        ...(sort !== null ? { sort } : {}),
+        ...(minCameraMP !== null && minCameraMP !== 0
+          ? { minMP: String(minCameraMP) }
+          : {}),
+        ...(maxCameraMP !== null && maxCameraMP !== 0
+          ? { maxMP: String(maxCameraMP) }
+          : {}),
+        ...(colors && colors.length > 0
+          ? { colors: mapColorsToBackendEnums(colors) }
+          : {}),
+        ...(sort !== null && sort !== undefined
+          ? { sort: [sort] }
+          : { sort: [] }),
       };
 
       const res = await productsService.getFilteredProducts(filteredParams);

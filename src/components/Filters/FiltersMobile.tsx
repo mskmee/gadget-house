@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Drawer, Row, Col, Slider, InputNumber } from 'antd';
 import { DrawerStyles } from 'antd/es/drawer/DrawerPanel';
-import cn from 'classnames';
+// import cn from 'classnames';
 
 import { IFilterProps } from '@/interfaces/interfaces';
 import { AppDispatch } from '@/store';
@@ -19,7 +19,7 @@ import { Header } from '../components';
 import { Option } from './Option';
 
 import CloseSvg from '@/assets/icons/close.svg';
-import ArrowUpSvg from '@/assets/icons/arrow-up.svg';
+// import ArrowUpSvg from '@/assets/icons/arrow-up.svg';
 
 import styles from './filters.module.scss';
 
@@ -28,8 +28,8 @@ export const FiltersMobile = ({
   drawerVisible,
   toggleDrawer,
 }: IFilterProps) => {
-  const inputMinCameraMPRef = useRef<HTMLInputElement | null>(null);
-  const inputMaxCameraMPRef = useRef<HTMLInputElement | null>(null);
+  // const inputMinCameraMPRef = useRef<HTMLInputElement | null>(null);
+  // const inputMaxCameraMPRef = useRef<HTMLInputElement | null>(null);
   const inputMinPriceRef = useRef<HTMLInputElement | null>(null);
   const inputMaxPriceRef = useRef<HTMLInputElement | null>(null);
   const dispatch: AppDispatch = useDispatch();
@@ -47,15 +47,15 @@ export const FiltersMobile = ({
   const {
     minValueCamera: minCameraMP,
     maxValueCamera: maxCameraMP,
-    handleMinChangeCamera: handleMinMPChange,
-    handleMaxChangeCamera: handleMaxMPChange,
+    // handleMinChangeCamera: handleMinMPChange,
+    // handleMaxChangeCamera: handleMaxMPChange,
   } = useRangeFilter(0, 0);
 
-  const [showCategory, setShowCategory] = useState(true);
+  // const [showCategory, setShowCategory] = useState(true);
 
-  const toggleShowCategory = () => {
-    setShowCategory(!showCategory);
-  };
+  // const toggleShowCategory = () => {
+  //   setShowCategory(!showCategory);
+  // };
 
   const onMinInputChange = (value: number | null) => {
     if (value !== null && value <= maxPrice) {
@@ -267,7 +267,7 @@ export const FiltersMobile = ({
             onOptionChange={handleFilterChange}
           />
         )}
-
+{/* 
         {filters.rams && (
           <Option
             options={filters.rams ?? []}
@@ -276,17 +276,17 @@ export const FiltersMobile = ({
             selectedOptions={selectedOptions}
             onOptionChange={handleFilterChange}
           />
-        )}
+        )} */}
 
-        <Option
+        {/* <Option
           options={['Yes', 'No']}
           title="Separate slot for memory"
           filterKey="memorySlot"
           selectedOptions={selectedOptions}
           onOptionChange={handleFilterChange}
-        />
+        /> */}
 
-        {filters.colors && (
+        {/* {filters.colors && (
           <Option
             options={filters.colors}
             title="Color"
@@ -294,9 +294,9 @@ export const FiltersMobile = ({
             selectedOptions={selectedOptions}
             onOptionChange={handleFilterChange}
           />
-        )}
+        )} */}
 
-        <div className={styles.filters__option}>
+        {/* <div className={styles.filters__option}>
           <div
             className={cn(
               styles.filters__optionHeader,
@@ -396,7 +396,7 @@ export const FiltersMobile = ({
             selectedOptions={selectedOptions}
             onOptionChange={handleFilterChange}
           />
-        )}
+        )} */}
       </div>
 
       <button

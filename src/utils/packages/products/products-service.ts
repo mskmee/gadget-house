@@ -36,14 +36,16 @@ class ProductsService implements IProductsService {
   async getFilteredProducts(params: {
     page: number;
     size: number;
+    name?: string;
     categoryId?: number;
     brandIds?: number[];
     attributeValueIds?: number[];
     minPrice?: number;
     maxPrice?: number;
-    minCameraMP?: number;
-    maxCameraMP?: number;
-    sort?: string;
+    minMP?: string;
+    maxMP?: string;
+    colors?: string[];
+    sort?: string[] | undefined;
   }): Promise<ProductsResponseDto> {
     return this.productsApi.getFilteredProducts(params);
   }

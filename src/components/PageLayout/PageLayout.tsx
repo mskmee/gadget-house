@@ -8,6 +8,7 @@ import { getFilteredProducts, searchProducts } from '@/store/products/actions';
 import {
   selectBrandIds,
   selectFilteredAttributes,
+  selectFilteredColors,
 } from '@/store/filters/selectors';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { IProductCard } from '@/interfaces/interfaces';
@@ -59,6 +60,7 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
 
   const brandIds = useSelector(selectBrandIds);
   const attributesIds = useSelector(selectFilteredAttributes, shallowEqual);
+  const colors = useSelector(selectFilteredColors, shallowEqual);
 
   const size = isMobile767 ? DEFAULT_SIZE_MOBILE : DEFAULT_SIZE;
 
@@ -111,6 +113,7 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
           maxPrice: selectedPriceRange[1],
           minCameraMP: selectedCameraRange[0],
           maxCameraMP: selectedCameraRange[1],
+          colors: colors,
           sort: selectedSort as string,
         }),
       );
@@ -120,6 +123,7 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
     pagination.currentPage,
     brandIds,
     attributesIds,
+    colors,
     selectedCameraRange,
     selectedPriceRange,
     selectedSort,
