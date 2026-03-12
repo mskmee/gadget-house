@@ -29,7 +29,7 @@ const Layout = () => {
 
   return (
     <>
-      <Header />
+      <Header isFixedHeader={isFixedHeader} />
       <main
         className={classNames(styles['main-content'], {
           [styles.isFixedHeader]: isFixedHeader,

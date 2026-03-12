@@ -1,24 +1,30 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 export const useIsFixedHeader = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
-    const headerTopSectionHeight =
-      document.getElementById('header-top-section')?.clientHeight;
+    const handleHeaderState = () => {
+      const headerTopSectionHeight =
+        document.getElementById('header-top-section')?.getBoundingClientRect()
+          .height ?? 0;
 
-    const handleScroll = () => {
-      if (headerTopSectionHeight) {
-        setIsScrolled(window.scrollY > headerTopSectionHeight);
-      }
+      setIsScrolled(window.scrollY >= headerTopSectionHeight);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    const frameId = window.requestAnimationFrame(handleHeaderState);
 
-    handleScroll();
+    window.addEventListener('scroll', handleHeaderState, { passive: true });
+    window.addEventListener('resize', handleHeaderState);
 
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    return () => {
+      window.cancelAnimationFrame(frameId);
+      window.removeEventListener('scroll', handleHeaderState);
+      window.removeEventListener('resize', handleHeaderState);
+    };
+  }, [location.pathname]);
 
   return isScrolled;
 };

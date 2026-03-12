@@ -19,17 +19,19 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { CardTooltip } from '../CartTooltip/CartTooltip';
-import { useIsFixedHeader } from '@/hooks/useIsFixedHeader';
 import { useMediaQuery } from 'react-responsive';
 import AuthModal from '@/pages/Auth/AuthModal';
 import CatalogBlock from './CatalogBlock/CatalogBlock';
 import { isAuthRoute } from '@/pages/Auth/libs/utils/isAuthRoute';
 import { LeftArrow } from '@/assets/constants';
 
-export const Header = () => {
+interface HeaderProps {
+  isFixedHeader?: boolean;
+}
+
+export const Header = ({ isFixedHeader = false }: HeaderProps) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const isFixedHeader = useIsFixedHeader();
 
   const [isCatalogListOpen, setIsCatalogListOpen] = useState(false);
   const [isOverlayActive, setIsOverlayActive] = useState(false);

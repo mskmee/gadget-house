@@ -14,7 +14,6 @@ import { AppRoute } from '@/enums/Route';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { useTypedSelector } from '@/hooks/useTypedSelector';
-import { useIsFixedHeader } from '@/hooks/useIsFixedHeader';
 import { useMediaQuery } from 'react-responsive';
 import CatalogBlock from '../Header/CatalogBlock/CatalogBlock';
 import { isAuthRoute } from '@/pages/Auth/libs/utils/isAuthRoute';
@@ -22,10 +21,13 @@ import { LeftArrow } from '@/assets/icons';
 import { DashboardButton } from './components/DashboardButton';
 import { LogoutButton } from './components/LogoutButton';
 
-export const AdminHeader = () => {
+interface AdminHeaderProps {
+  isFixedHeader?: boolean;
+}
+
+export const AdminHeader = ({ isFixedHeader = false }: AdminHeaderProps) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const isFixedHeader = useIsFixedHeader();
 
   const [isCatalogListOpen, setIsCatalogListOpen] = useState(false);
   const [isOverlayActive, setIsOverlayActive] = useState(false);

@@ -225,6 +225,8 @@
 .catalogListWrap {
   position: absolute;
   z-index: 3;
+  top: 100%;
+  left: 0;
   @media (max-width: 991px) {
     top: 80px;
     left: 0;
@@ -481,6 +483,7 @@
 
 .catalog-section {
   display: block;
+  position: relative;
   align-items: center;
   justify-content: center;
   // gap: 16px;
@@ -517,5 +520,6 @@
 
   @media (max-width: 992px) {
     display: flex;
+    position: static;
   }
 }
