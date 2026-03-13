@@ -5,7 +5,13 @@
   width: 100%;
 }
 .isFixedHeader {
-  padding-top: 90px;
+  padding-top: 80px;
+}
+
+@media (max-width: 768px) {
+  .isFixedHeader {
+    padding-top: 64px;
+  }
 }
 // .basket-modal__mobile {
 //   align-items: flex-end;

@@ -197,22 +197,6 @@
   left: 0;
   z-index: 9999;
   width: 100%;
-  > div {
-    max-width: 1540px;
-    margin: 0 auto;
-    padding-left: 50px;
-    background-color: initial;
-    > div {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      gap: 40px;
-      flex-direction: row;
-      padding-right: 50px;
-      background-color: var(--carousel-theme-color);
-    }
-  }
 }
 
 .overlay {
@@ -241,6 +225,8 @@
 .catalogListWrap {
   position: absolute;
   z-index: 3;
+  top: 100%;
+  left: 0;
   @media (max-width: 991px) {
     top: 80px;
     left: 0;
@@ -293,6 +279,7 @@
       max-width: 1540px;
       justify-content: space-between;
       margin: 0 auto;
+      padding: 0 50px;
     }
   }
 }
@@ -314,16 +301,6 @@
       }
     }
   }
-  .fixedHeader {
-    .headerBottom {
-      padding-right: 0;
-      > div {
-        justify-content: space-between;
-        gap: 25px;
-      }
-    }
-  }
-
   .catalogListWrap {
     > div {
       width: 340.18px;
@@ -339,15 +316,13 @@
 //   }
 // }
 @media (max-width: 1250px) {
-  .fixedHeader {
-    > div {
-      padding: 0 20px;
-      > div {
-        padding-right: 0;
+  .headerBottomWrap {
+    &.fixedHeader {
+      > .headerBottom {
+        padding: 0 20px;
       }
     }
-  }
-  .headerBottomWrap {
+
     .headerBottom {
       justify-content: space-between;
       padding: 0 20px;
@@ -376,14 +351,11 @@
 }
 
 @media (max-width: 992px) {
-  .fixedHeader {
-    > div {
-      > div {
-        gap: 20px;
-        padding-right: 0;
-      }
-    }
+  .headerBottomWrap.fixedHeader > .headerBottom {
+    padding-left: 20px;
+    padding-right: 30px;
   }
+
   .headerBottom {
     padding-right: 30px;
     gap: 20px;
@@ -446,6 +418,13 @@
     background-color: #fff;
     padding: 0;
     box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.08);
+
+    &.fixedHeader {
+      > .headerBottom {
+        padding: 0 16px;
+      }
+    }
+
     .headerBottom {
       min-height: 64px;
       background-color: inherit;
@@ -469,22 +448,6 @@
     }
     button:not(:nth-child(4)) {
       display: none;
-    }
-  }
-  .fixedHeader > div > div {
-    background-color: #fff;
-  }
-}
-
-@media screen and (max-width: 450px) {
-  .fixedHeader {
-    > div {
-      padding: 0 16px;
-    }
-    .headerBottom {
-      > div {
-        gap: 9px;
-      }
     }
   }
 }
@@ -520,6 +483,7 @@
 
 .catalog-section {
   display: block;
+  position: relative;
   align-items: center;
   justify-content: center;
   // gap: 16px;
@@ -556,5 +520,6 @@
 
   @media (max-width: 992px) {
     display: flex;
+    position: static;
   }
 }
