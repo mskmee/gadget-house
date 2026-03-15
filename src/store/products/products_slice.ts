@@ -42,6 +42,7 @@ export interface IInitialState {
 const loadProductsFromStorage = (): ProductsResponseDto | null => {
   try {
     const saved = localStorage.getItem('productsData');
+    
     return saved ? JSON.parse(saved) : null;
   } catch (error) {
     console.error('Error loading products from localStorage:', error);

@@ -95,6 +95,8 @@ const CustomCarousel: React.FC<CustomCarouselProps> = ({
     };
   }, [productsKey]);
 
+
+
   const itemWidth = isLargerThan1440px
     ? responsiveCarouselSettings.itemWidth
     : classname === 'brands-carousel'

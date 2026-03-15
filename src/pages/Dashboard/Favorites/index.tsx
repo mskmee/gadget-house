@@ -12,10 +12,10 @@ export const UserFavorites = () => {
 
   const [visibleCount, setVisibleCount] = useState(5);
   const [loading, setLoading] = useState(false);
-  const observerRef = useRef<IntersectionObserver | null>(null);
+
   const lastCardRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
+  /*   useEffect(() => {
     if (visibleCount >= favoriteProducts.length) return;
 
     const currentLastCard = lastCardRef.current;
@@ -41,6 +41,35 @@ export const UserFavorites = () => {
     return () => {
       if (observerRef.current && currentLastCard) {
         observerRef.current.unobserve(currentLastCard);
+      }
+    };
+  }, [visibleCount, favoriteProducts.length, loading]); */
+
+  useEffect(() => {
+    if (visibleCount >= favoriteProducts.length) return;
+
+    const node = lastCardRef.current; // capture current DOM node
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !loading) {
+          setLoading(true);
+
+          setTimeout(() => {
+            setVisibleCount((prev) => prev + 5);
+            setLoading(false);
+          }, 2000);
+        }
+      },
+      { threshold: 1.0 },
+    );
+
+    if (node) {
+      observer.observe(node);
+    }
+
+    return () => {
+      if (node) {
+        observer.unobserve(node);
       }
     };
   }, [visibleCount, favoriteProducts.length, loading]);

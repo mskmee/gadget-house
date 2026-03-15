@@ -2,7 +2,7 @@ import { RouterProvider } from 'react-router-dom';
 import { routes } from './routes';
 import './styles/globals.scss';
 import { StorageProvider } from './providers/providers';
-import { LocaleProvider } from './context/localeContext.tsx';
+import { LocaleProvider } from './context/LocaleProvider';
 import { useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from './store';
 import { useTypedSelector } from './hooks/useTypedSelector';
