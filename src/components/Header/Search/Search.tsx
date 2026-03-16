@@ -188,12 +188,9 @@ export const Search: FC<ISearchProps> = ({
     [dispatch, setIsOverlayActive, setIsGlobalOverlayActive],
   );
 
-  const handleSaveSearchValueToStore = useCallback(
-    (inputValue: string) => {
-      setSearchValue(inputValue);
-    },
-    [setSearchValue],
-  );
+  const handleSaveSearchValueToStore = (inputValue: string) => {
+    setSearchValue(inputValue);
+  };
 
   const debouncedSuggestionHandler = useMemo(
     () => debounce(handleSuggestions, 500),
@@ -225,10 +222,10 @@ export const Search: FC<ISearchProps> = ({
       debouncedSuggestionHandler.cancel();
     };
   }, [
-    debouncedSuggestionHandler,
-    dispatch,
     location.pathname,
+    dispatch,
     setIsOverlayActive,
+    debouncedSuggestionHandler,
   ]);
 
   const clearSearchInputValue = () => {

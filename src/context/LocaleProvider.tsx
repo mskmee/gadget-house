@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { getUserLocale } from '@/utils/helpers/getUserLocale';
+import { getUserLocale } from '../utils/helpers/getUserLocale';
 import { LocaleContext } from './LocaleContext';
 
 export const LocaleProvider = ({ children }: { children: ReactNode }) => {

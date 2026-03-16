@@ -20,24 +20,12 @@ import { IProduct } from '@/interfaces/interfaces';
 
 export const filters = {
   'categories': ['Smartphones', 'Laptops', 'Tablets'],
-  'brands': [
-    'Apple',
-    'Samsung',
-    'Xiaomi',
-    'OPPO',
-    'Nokia',
-    'Realme',
-    'Honor',
-    'Sony',
-    'Google',
-    'LG',
-    'Huawei',
-    'OnePlus',
-  ],
+'brands': ['Apple','Samsung','Lenovo','Asus','Nikon','Fujifilm','Canon','JBL','Dell'],
+  
   'builtInMemory': [
-    '16 GB',
-    '32 GB',
-    '64 GB',
+    // '16 GB',
+    // '32 GB',
+    // '64 GB',
     '128 GB',
     '256 GB',
     '512 GB and more',

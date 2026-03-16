@@ -87,6 +87,7 @@ export const Catalog: FC<ICatalogProps> = ({ data, totalPages }) => {
       {isMobile767 ? (
         <div className={styles.catalog__mobile}>
           <div className={styles.catalog__mobileList}>
+            3
             {data.map((product: IProductCard) => (
               <MyCard
                 key={product.id}
