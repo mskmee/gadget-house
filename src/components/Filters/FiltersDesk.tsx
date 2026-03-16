@@ -1,9 +1,10 @@
-import React, { useRef, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Row, Col, InputNumber, Slider } from 'antd';
-import cn from 'classnames';
+// import cn from 'classnames';
 import { filters } from './consts';
 import { AppDispatch } from '@/store';
+
 import {
   setSelectedAttributes,
   setSelectedBrands,
@@ -11,15 +12,17 @@ import {
   setSelectedPriceRange,
 } from '@/store/filters/filters_slice';
 import { setPageNumber } from '@/store/products/products_slice';
+import { useTypedSelector } from '@/hooks/useTypedSelector';
+
 import { useRangeFilter } from './hooks/useRangeFilter';
 import { handleKeyDown } from '@/utils/helpers/checkKeydownEvent';
 import { Option } from './Option';
-import ArrowUpSvg from '@/assets/icons/arrow-up.svg';
+// import ArrowUpSvg from '@/assets/icons/arrow-up.svg';
 import styles from './filters.module.scss';
 
 export const FiltersDesk = () => {
-  const inputMinCameraMPRef = useRef<HTMLInputElement | null>(null);
-  const inputMaxCameraMPRef = useRef<HTMLInputElement | null>(null);
+  // const inputMinCameraMPRef = useRef<HTMLInputElement | null>(null);
+  // const inputMaxCameraMPRef = useRef<HTMLInputElement | null>(null);
   const dispatch: AppDispatch = useDispatch();
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, string[]>
@@ -34,10 +37,13 @@ export const FiltersDesk = () => {
   const {
     minValue: minCameraMP,
     maxValue: maxCameraMP,
-    handleMinChange: handleMinMPChange,
-    handleMaxChange: handleMaxMPChange,
+    // handleMinChange: handleMinMPChange,
+    // handleMaxChange: handleMaxMPChange,
   } = useRangeFilter(0, 0);
-  const [showCategory, setShowCategory] = useState(true);
+  // const [showCategory, setShowCategory] = useState(true);
+
+  const { selectedBrands, selectedAttributes, selectedPriceRange } =
+    useTypedSelector((state) => state.filters);
 
   const onMinInputChange = (value: number | null) => {
     if (value !== null && value <= maxPrice) {
@@ -53,9 +59,9 @@ export const FiltersDesk = () => {
     }
   };
 
-  const toggleShowCategory = () => {
-    setShowCategory(!showCategory);
-  };
+  // const toggleShowCategory = () => {
+  //   setShowCategory(!showCategory);
+  // };
 
   const handleSliderChange = (value: number[]) => {
     setPriceRange(value);
@@ -80,6 +86,32 @@ export const FiltersDesk = () => {
     dispatch(setSelectedCameraRange([minCameraMP, maxCameraMP]));
   };
 
+  useEffect(() => {
+    setSelectedOptions({
+      brands: selectedBrands || [],
+      builtInMemory:
+        selectedAttributes?.filter((attr) =>
+          filters.builtInMemory.includes(attr),
+        ) || [],
+      rams:
+        selectedAttributes?.filter((attr) => filters.rams.includes(attr)) || [],
+      colors:
+        selectedAttributes?.filter((attr) => filters.colors.includes(attr)) ||
+        [],
+      screens:
+        selectedAttributes?.filter((attr) => filters.screens.includes(attr)) ||
+        [],
+      cores:
+        selectedAttributes?.filter((attr) => filters.cores.includes(attr)) ||
+        [],
+      memorySlot:
+        selectedAttributes?.filter((attr) =>
+          filters.fleshCard.includes(attr),
+        ) || [],
+    });
+    setPriceRange(selectedPriceRange || [0, 100000]);
+  }, [selectedBrands, selectedAttributes, selectedPriceRange]);
+
   const handleFilterChange = (filterKey: string, checkedValues: string[]) => {
     setSelectedOptions((prev) => ({
       ...prev,
@@ -87,25 +119,25 @@ export const FiltersDesk = () => {
     }));
   };
 
-  const handleFocus = (inputRef: React.RefObject<HTMLInputElement>) => {
-    if (inputRef.current) {
-      inputRef.current.select();
-    }
-  };
+  // const handleFocus = (inputRef: React.RefObject<HTMLInputElement>) => {
+  //   if (inputRef.current) {
+  //     inputRef.current.select();
+  //   }
+  // };
 
-  const handleCameraHeaderKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      toggleShowCategory();
-    }
-  };
+  // const handleCameraHeaderKeyDown = (e: React.KeyboardEvent) => {
+  //   if (e.key === 'Enter' || e.key === ' ') {
+  //     e.preventDefault();
+  //     toggleShowCategory();
+  //   }
+  // };
 
   return (
     <aside className={styles.filtersDesk}>
       <div className={styles.filtersDesk__wrapper}>
         <h2 className={styles.filtersDesk__title}>Filters</h2>
 
-        <div className={styles.filters__wrapper}>
+        <div>
           <Col span={24} className={styles.filters__option}>
             <h4 className={styles.filters__optionName}>Price</h4>
             <Slider
@@ -192,7 +224,7 @@ export const FiltersDesk = () => {
               onOptionChange={handleFilterChange}
             />
           )}
-
+          {/* 
           {filters.rams && (
             <Option
               options={filters.rams ?? []}
@@ -201,8 +233,8 @@ export const FiltersDesk = () => {
               selectedOptions={selectedOptions}
               onOptionChange={handleFilterChange}
             />
-          )}
-
+          )} */}
+          {/* 
           {filters.fleshCard && (
             <Option
               options={filters.fleshCard ?? []}
@@ -211,8 +243,8 @@ export const FiltersDesk = () => {
               selectedOptions={selectedOptions}
               onOptionChange={handleFilterChange}
             />
-          )}
-
+          )} */}
+          {/* 
           {filters.colors && (
             <Option
               options={filters.colors}
@@ -221,9 +253,9 @@ export const FiltersDesk = () => {
               selectedOptions={selectedOptions}
               onOptionChange={handleFilterChange}
             />
-          )}
+          )} */}
 
-          <div className={styles.filters__option}>
+          {/* <div className={styles.filters__option}>
             <div
               className={cn(
                 styles.filters__optionHeader,
@@ -334,7 +366,7 @@ export const FiltersDesk = () => {
               selectedOptions={selectedOptions}
               onOptionChange={handleFilterChange}
             />
-          )}
+          )} */}
         </div>
 
         <button

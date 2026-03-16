@@ -1,5 +1,5 @@
 import { ExitIcon } from '@/assets/icons';
-import styles from '../NavButton/navbutton.module.scss';
+//import styles from '../NavButton/navbutton.module.scss';
 import { NavButton } from '../NavButton/NavButton';
 import { useActions } from '@/hooks/useActions';
 import { useNavigate } from 'react-router-dom';
@@ -15,7 +15,7 @@ export function LogoutButton() {
   };
 
   return (
-    <NavButton className={styles.navbutton} onClick={handleLogout}>
+    <NavButton /*  className={styles.navbutton} */ onClick={handleLogout}>
       <ExitIcon />
       <span>Exit</span>
     </NavButton>
