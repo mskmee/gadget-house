@@ -74,7 +74,7 @@ export const FiltersDesk = () => {
     dispatch(setSelectedBrands(selectedOptions.brands));
     dispatch(
       setSelectedAttributes([
-        ...(selectedOptions.screens || []),
+        ...(selectedOptions.screenType || []),
         ...(selectedOptions.builtInMemory || []),
         ...(selectedOptions.colors || []),
         ...(selectedOptions.rams || []),
