@@ -319,7 +319,7 @@
   .headerBottomWrap {
     &.fixedHeader {
       > .headerBottom {
-        padding: 0 20px;
+        padding: 0 50px;
       }
     }
 
@@ -389,6 +389,14 @@
 }
 
 @media (max-width: 1070px) {
+  .headerBottomWrap {
+    &.fixedHeader {
+      > .headerBottom {
+        padding: 0 30px;
+      }
+    }
+  }
+
   .badgeCount {
     background: var(--theme-color);
     color: var(--white-color);

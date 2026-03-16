@@ -58,6 +58,7 @@ export const AdminHeader = ({ isFixedHeader = false }: AdminHeaderProps) => {
       setIsCatalogListOpen(false);
       document.body.style.overflow = 'initial';
       document.body.style.paddingRight = `0px`;
+      headerBottomRef.current?.style.removeProperty('padding-right');
     }
     if (isMobile767) {
       navigate(AppRoute.SIGN_IN);
@@ -68,14 +69,13 @@ export const AdminHeader = ({ isFixedHeader = false }: AdminHeaderProps) => {
     setIsCatalogListOpen(false);
     document.body.style.overflow = 'initial';
     document.body.style.paddingRight = `0px`;
+    headerBottomRef.current?.style.removeProperty('padding-right');
   }, [location.pathname]);
 
   const scrollbarWidthRef = useRef<number | null>(null);
   const fixedHeaderBlock = useRef<HTMLDivElement | null>(null);
 
   const getScrollbarWidth = () => {
-    if (scrollbarWidthRef.current !== null) return scrollbarWidthRef.current;
-
     scrollbarWidthRef.current =
       window.innerWidth - document.documentElement.clientWidth;
 
@@ -91,7 +91,11 @@ export const AdminHeader = ({ isFixedHeader = false }: AdminHeaderProps) => {
         document.body.style.paddingRight = `${scrollbarWidth}px`;
       }
       if (isFixedHeader && scrollbarWidth > 0 && headerBottomRef.current) {
-        headerBottomRef.current.style.paddingRight = `${scrollbarWidth}px`;
+        headerBottomRef.current.style.setProperty(
+          'padding-right',
+          `${scrollbarWidth}px`,
+          'important',
+        );
       }
 
       setIsCatalogListOpen(true);
@@ -114,7 +118,7 @@ export const AdminHeader = ({ isFixedHeader = false }: AdminHeaderProps) => {
       document.body.style.paddingRight = `0px`;
 
       if (headerBottomRef.current && isFixedHeader) {
-        headerBottomRef.current.style.paddingRight = `revert-layer`;
+        headerBottomRef.current.style.removeProperty('padding-right');
       }
       setIsCatalogListOpen(false);
     }
