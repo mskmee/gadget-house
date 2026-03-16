@@ -78,6 +78,13 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   }, [pathname]);
 
   useEffect(() => {
+    document.body.classList.add('has-filters');
+    return () => {
+      document.body.classList.remove('has-filters');
+    };
+  }, []);
+
+  useEffect(() => {
     if (!isSearchPage || !searchInputValue || !selectedSort || isInitialLoading)
       return;
 

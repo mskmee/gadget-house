@@ -316,10 +316,18 @@
 //   }
 // }
 @media (max-width: 1250px) {
-  .headerBottomWrap {
+  :global(body.has-filters) .headerBottomWrap {
     &.fixedHeader {
       > .headerBottom {
         padding: 0 50px;
+      }
+    }
+  }
+
+  .headerBottomWrap {
+    &.fixedHeader {
+      > .headerBottom {
+        padding: 0 20px;
       }
     }
 
@@ -389,7 +397,7 @@
 }
 
 @media (max-width: 1070px) {
-  .headerBottomWrap {
+  :global(body.has-filters) .headerBottomWrap {
     &.fixedHeader {
       > .headerBottom {
         padding: 0 30px;
