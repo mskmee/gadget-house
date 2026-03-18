@@ -87,6 +87,10 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
         page: pagination.currentPage,
         size: 20,
         sort: selectedSort,
+        brandIds,
+        attributes: attributesIds,
+        minPrice: selectedPriceRange[0],
+        maxPrice: selectedPriceRange[1],
       }),
     );
   }, [
@@ -96,6 +100,9 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
     pagination.currentPage,
     searchInputValue,
     selectedSort,
+    brandIds,
+    attributesIds,
+    selectedPriceRange,
   ]);
 
   useEffect(() => {
