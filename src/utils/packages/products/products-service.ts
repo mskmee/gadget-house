@@ -65,8 +65,12 @@ class ProductsService implements IProductsService {
     page: number,
     size: number,
     sort?: string,
+    brandIds?: number[],
+    attributeValueIds?: number[],
+    minPrice?: number,
+    maxPrice?: number,
   ): Promise<ProductsResponseDto> {
-    return this.productsApi.searchProducts(query, page, size, sort);
+    return this.productsApi.searchProducts(query, page, size, sort, brandIds, attributeValueIds, minPrice, maxPrice);
   }
 }
 

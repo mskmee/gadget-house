@@ -78,8 +78,7 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   }, [pathname]);
 
   useEffect(() => {
-    if (!isSearchPage || !searchInputValue || !selectedSort || isInitialLoading)
-      return;
+    if (!isSearchPage || !searchInputValue || !selectedSort) return;
 
     dispatch(
       searchProducts({
@@ -87,15 +86,21 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
         page: pagination.currentPage,
         size: 20,
         sort: selectedSort,
+        brandIds,
+        attributes: attributesIds,
+        minPrice: selectedPriceRange[0],
+        maxPrice: selectedPriceRange[1],
       }),
     );
   }, [
     dispatch,
-    isInitialLoading,
     isSearchPage,
     pagination.currentPage,
     searchInputValue,
     selectedSort,
+    brandIds,
+    attributesIds,
+    selectedPriceRange,
   ]);
 
   useEffect(() => {
