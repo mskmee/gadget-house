@@ -78,8 +78,7 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   }, [pathname]);
 
   useEffect(() => {
-    if (!isSearchPage || !searchInputValue || !selectedSort || isInitialLoading)
-      return;
+    if (!isSearchPage || !searchInputValue || !selectedSort) return;
 
     dispatch(
       searchProducts({
@@ -95,7 +94,6 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
     );
   }, [
     dispatch,
-    isInitialLoading,
     isSearchPage,
     pagination.currentPage,
     searchInputValue,
