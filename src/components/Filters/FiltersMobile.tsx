@@ -15,7 +15,6 @@ import {
 import { setIsAppending, setPageNumber } from '@/store/products/products_slice';
 import { useRangeFilter } from './hooks/useRangeFilter';
 import { handleKeyDown } from '@/utils/helpers/checkKeydownEvent';
-import { Header } from '../components';
 import { Option } from './Option';
 
 import CloseSvg from '@/assets/icons/close.svg';
@@ -149,7 +148,7 @@ export const FiltersMobile = ({
 
   return (
     <Drawer
-      title={<Header />}
+      title={null}
       placement="left"
       closable={false}
       onClose={toggleDrawer}

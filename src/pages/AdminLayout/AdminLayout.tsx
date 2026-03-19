@@ -11,7 +11,7 @@ const AdminLayout = () => {
 
   return (
     <>
-      <AdminHeader />
+      <AdminHeader isFixedHeader={isFixedHeader} />
       <main
         className={classNames(styles['main-content'], {
           [styles.isFixedHeader]: isFixedHeader,

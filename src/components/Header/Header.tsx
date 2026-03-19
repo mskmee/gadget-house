@@ -19,17 +19,19 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { CardTooltip } from '../CartTooltip/CartTooltip';
-import { useIsFixedHeader } from '@/hooks/useIsFixedHeader';
 import { useMediaQuery } from 'react-responsive';
 import AuthModal from '@/pages/Auth/AuthModal';
 import CatalogBlock from './CatalogBlock/CatalogBlock';
 import { isAuthRoute } from '@/pages/Auth/libs/utils/isAuthRoute';
 import { LeftArrow } from '@/assets/constants';
 
-export const Header = () => {
+interface HeaderProps {
+  isFixedHeader?: boolean;
+}
+
+export const Header = ({ isFixedHeader = false }: HeaderProps) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const isFixedHeader = useIsFixedHeader();
 
   const [isCatalogListOpen, setIsCatalogListOpen] = useState(false);
   const [isOverlayActive, setIsOverlayActive] = useState(false);
@@ -62,6 +64,7 @@ export const Header = () => {
       setIsCatalogListOpen(false);
       document.body.style.overflow = 'initial';
       document.body.style.paddingRight = `0px`;
+      headerBottomRef.current?.style.removeProperty('padding-right');
     }
     if (isMobile767) {
       navigate(AppRoute.SIGN_IN);
@@ -80,6 +83,7 @@ export const Header = () => {
     setIsCatalogListOpen(false);
     document.body.style.overflow = 'initial';
     document.body.style.paddingRight = `0px`;
+    headerBottomRef.current?.style.removeProperty('padding-right');
   }, [location.pathname]);
   // pop-up basket
 
@@ -88,8 +92,6 @@ export const Header = () => {
   const fixedHeaderBlock = useRef<HTMLDivElement | null>(null);
 
   const getScrollbarWidth = () => {
-    if (scrollbarWidthRef.current !== null) return scrollbarWidthRef.current;
-
     scrollbarWidthRef.current =
       window.innerWidth - document.documentElement.clientWidth;
 
@@ -105,7 +107,11 @@ export const Header = () => {
         document.body.style.paddingRight = `${scrollbarWidth}px`;
       }
       if (isFixedHeader && scrollbarWidth > 0 && headerBottomRef.current) {
-        headerBottomRef.current.style.paddingRight = `${scrollbarWidth}px`;
+        headerBottomRef.current.style.setProperty(
+          'padding-right',
+          `${scrollbarWidth}px`,
+          'important',
+        );
       }
 
       setIsCatalogListOpen(true);
@@ -128,7 +134,7 @@ export const Header = () => {
       document.body.style.paddingRight = `0px`;
 
       if (headerBottomRef.current && isFixedHeader) {
-        headerBottomRef.current.style.paddingRight = `revert-layer`;
+        headerBottomRef.current.style.removeProperty('padding-right');
       }
       setIsCatalogListOpen(false);
     }
