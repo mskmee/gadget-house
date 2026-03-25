@@ -36,8 +36,11 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   totalPages,
   categoryId,
 }) => {
-  const { pathname: pathName, state } = useLocation();
-  const { searchInputValue, isSuggestion } = state ? state : {};
+  const { pathname: pathName, state, search } = useLocation();
+  const { isSuggestion } = state ? state : {};
+  const searchInputValue = decodeURIComponent(
+    new URLSearchParams(search).get('text') || '',
+  );
   const dispatch: AppDispatch = useDispatch();
 
   const { pagination } = useTypedSelector((state: RootState) => state.products);

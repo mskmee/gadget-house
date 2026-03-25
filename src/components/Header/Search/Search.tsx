@@ -109,12 +109,15 @@ export const Search: FC<ISearchProps> = ({
       const result = await handleSearchProducts(query);
 
       if (!result?.page.length) {
-        navigate(AppRoute.SEARCH_RESULTS_NOT_FOUND, {
-          state: { searchInputValue: query },
-        });
+        navigate(
+          `${AppRoute.SEARCH_RESULTS_NOT_FOUND}?text=${encodeURIComponent(query)}`,
+          {
+            state: { searchInputValue: query },
+          },
+        );
       } else {
         navigate(
-          `${AppRoute.SEARCH_RESULTS_FOUND}/?text=${query.replace(/[\s/]/g, '-')}`,
+          `${AppRoute.SEARCH_RESULTS_FOUND}/?text=${encodeURIComponent(query)}`,
           {
             state: { searchInputValue: query, isSuggestion },
           },
@@ -139,12 +142,15 @@ export const Search: FC<ISearchProps> = ({
     const result = await handleSearchProducts(trend);
 
     if (!result?.page.length) {
-      navigate(AppRoute.SEARCH_RESULTS_NOT_FOUND, {
-        state: { searchInputValue: trend },
-      });
+      navigate(
+        `${AppRoute.SEARCH_RESULTS_NOT_FOUND}?text=${encodeURIComponent(trend)}`,
+        {
+          state: { searchInputValue: trend },
+        },
+      );
     } else {
       navigate(
-        `${AppRoute.SEARCH_RESULTS_FOUND}/?text=${trend.replace(/[\s/]/g, '-')}`,
+        `${AppRoute.SEARCH_RESULTS_FOUND}/?text=${encodeURIComponent(trend)}`,
         {
           state: { searchInputValue: trend, isSuggestion: true },
         },
@@ -280,7 +286,7 @@ export const Search: FC<ISearchProps> = ({
                       >
                         {startIndex !== -1 && (
                           <Link
-                            to={`${AppRoute.SEARCH_RESULTS_FOUND}/?text=${trend.replace(/[\s/]/g, '-')}`}
+                            to={`${AppRoute.SEARCH_RESULTS_FOUND}/?text=${encodeURIComponent(trend)}`}
                             state={{
                               searchInputValue: trend,
                               isSuggestion: true,
@@ -330,12 +336,15 @@ export const Search: FC<ISearchProps> = ({
               const result = await handleSearchProducts(query);
 
               if (!result?.page.length) {
-                navigate(AppRoute.SEARCH_RESULTS_NOT_FOUND, {
-                  state: { searchInputValue: query },
-                });
+                navigate(
+                  `${AppRoute.SEARCH_RESULTS_NOT_FOUND}?text=${encodeURIComponent(query)}`,
+                  {
+                    state: { searchInputValue: query },
+                  },
+                );
               } else {
                 navigate(
-                  `${AppRoute.SEARCH_RESULTS_FOUND}/?text=${query.replace(/[\s/]/g, '-')}`,
+                  `${AppRoute.SEARCH_RESULTS_FOUND}/?text=${encodeURIComponent(query)}`,
                   {
                     state: { searchInputValue: query, isSuggestion: false },
                   },
