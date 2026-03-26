@@ -36,8 +36,11 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   totalPages,
   categoryId,
 }) => {
-  const { pathname: pathName, state } = useLocation();
-  const { searchInputValue, isSuggestion } = state ? state : {};
+  const { pathname: pathName, state, search } = useLocation();
+  const { isSuggestion } = state ? state : {};
+  const searchInputValue = decodeURIComponent(
+    new URLSearchParams(search).get('text') || '',
+  );
   const dispatch: AppDispatch = useDispatch();
 
   const { pagination } = useTypedSelector((state: RootState) => state.products);
@@ -85,8 +88,7 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
   }, []);
 
   useEffect(() => {
-    if (!isSearchPage || !searchInputValue || !selectedSort || isInitialLoading)
-      return;
+    if (!isSearchPage || !searchInputValue || !selectedSort) return;
 
     dispatch(
       searchProducts({
@@ -94,15 +96,21 @@ export const PageLayout: React.FC<IPageLayoutProps> = ({
         page: pagination.currentPage,
         size: 20,
         sort: selectedSort,
+        brandIds,
+        attributes: attributesIds,
+        minPrice: selectedPriceRange[0],
+        maxPrice: selectedPriceRange[1],
       }),
     );
   }, [
     dispatch,
-    isInitialLoading,
     isSearchPage,
     pagination.currentPage,
     searchInputValue,
     selectedSort,
+    brandIds,
+    attributesIds,
+    selectedPriceRange,
   ]);
 
   useEffect(() => {

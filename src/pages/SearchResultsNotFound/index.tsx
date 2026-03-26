@@ -15,8 +15,14 @@ export const SearchResultsNotFound = () => {
   useDocumentTitle(`Search results`);
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const { state } = useLocation();
-  const searchValue = useTypedSelector((state) => state.search.searchValue);
+  const { state, search } = useLocation();
+  const searchValueFromUrl = decodeURIComponent(
+    new URLSearchParams(search).get('text') || '',
+  );
+  const searchValueFromRedux = useTypedSelector(
+    (state) => state.search.searchValue,
+  );
+  const searchValue = searchValueFromUrl || searchValueFromRedux;
   const isGlobalOverlayActive = useTypedSelector(
     (state) => state.search.isGlobalOverlayActive,
   );
@@ -27,7 +33,7 @@ export const SearchResultsNotFound = () => {
 
   const [isFirstTime, setIsFirstTime] = useState(true);
   const [searchValueBeforeOverlay, setSearchValueBeforeOverlay] = useState(
-    state?.inputValue || '',
+    state?.searchInputValue || searchValue || '',
   );
 
   const searchValueLength = useMemo(() => searchValue.length, [searchValue]);
