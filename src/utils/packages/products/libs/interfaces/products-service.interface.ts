@@ -32,6 +32,10 @@ interface IProductsService {
     page: number,
     size: number,
     sort?: string,
+    brandIds?: number[],
+    attributeValueIds?: number[],
+    minPrice?: number,
+    maxPrice?: number,
   ): Promise<ProductsResponseDto>;
 }
 

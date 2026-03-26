@@ -98,11 +98,24 @@ class ProductsApi implements IProductsApi {
     page: number,
     size: number,
     sort?: string,
+    brandIds?: number[],
+    attributeValueIds?: number[],
+    minPrice?: number,
+    maxPrice?: number,
   ): Promise<ProductsResponseDto> {
     return request({
       method: HttpMethod.GET,
       url: ApiEndpoint.PRODUCTS_SEARCH,
-      query: { query, page, size, sort },
+      query: {
+        query,
+        page,
+        size,
+        sort,
+        brandIds: brandIds && brandIds.length > 0 ? brandIds.join(',') : undefined,
+        attributeValueIds: attributeValueIds && attributeValueIds.length > 0 ? attributeValueIds.join(',') : undefined,
+        minPrice: minPrice && minPrice > 0 ? minPrice : undefined,
+        maxPrice: maxPrice && maxPrice > 0 ? maxPrice : undefined,
+      },
     });
   }
 }

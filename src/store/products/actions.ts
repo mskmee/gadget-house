@@ -175,12 +175,34 @@ const searchProducts = createAsyncThunk(
       page,
       size,
       sort,
-    }: { query: string; page: number; size: number; sort: string },
+      brandIds,
+      attributes,
+      minPrice,
+      maxPrice,
+    }: {
+      query: string;
+      page: number;
+      size: number;
+      sort: string;
+      brandIds?: number[];
+      attributes?: number[];
+      minPrice?: number;
+      maxPrice?: number;
+    },
     thunkAPI,
   ) => {
     thunkAPI.dispatch(startGlobalLoading());
     try {
-      return await productsService.searchProducts(query, page, size, sort);
+      return await productsService.searchProducts(
+        query,
+        page,
+        size,
+        sort,
+        brandIds && brandIds.length > 0 ? brandIds : undefined,
+        attributes && attributes.length > 0 ? attributes : undefined,
+        minPrice && minPrice > 0 ? minPrice : undefined,
+        maxPrice && maxPrice > 0 ? maxPrice : undefined,
+      );
     } finally {
       thunkAPI.dispatch(stopGlobalLoading());
     }
