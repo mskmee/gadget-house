@@ -38,7 +38,12 @@ export const CatalogList: FC<IProductListProps> = ({
 
   useEffect(() => {
     function handleCatalogHeight() {
-      const headerHeight = document.querySelector('header')?.clientHeight || 0;
+      const headerHeight =
+        document
+          .getElementById('header-bottom-section')
+          ?.getBoundingClientRect().bottom ||
+        document.querySelector('header')?.getBoundingClientRect().bottom ||
+        0;
       const windowHeight = window.innerHeight;
 
       const catalogListHeight = windowHeight - headerHeight;

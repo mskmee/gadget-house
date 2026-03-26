@@ -14,7 +14,6 @@ import { AppRoute } from '@/enums/Route';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { useTypedSelector } from '@/hooks/useTypedSelector';
-import { useIsFixedHeader } from '@/hooks/useIsFixedHeader';
 import { useMediaQuery } from 'react-responsive';
 import CatalogBlock from '../Header/CatalogBlock/CatalogBlock';
 import { isAuthRoute } from '@/pages/Auth/libs/utils/isAuthRoute';
@@ -22,10 +21,13 @@ import { LeftArrow } from '@/assets/icons';
 import { DashboardButton } from './components/DashboardButton';
 import { LogoutButton } from './components/LogoutButton';
 
-export const AdminHeader = () => {
+interface AdminHeaderProps {
+  isFixedHeader?: boolean;
+}
+
+export const AdminHeader = ({ isFixedHeader = false }: AdminHeaderProps) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const isFixedHeader = useIsFixedHeader();
 
   const [isCatalogListOpen, setIsCatalogListOpen] = useState(false);
   const [isOverlayActive, setIsOverlayActive] = useState(false);
@@ -56,6 +58,7 @@ export const AdminHeader = () => {
       setIsCatalogListOpen(false);
       document.body.style.overflow = 'initial';
       document.body.style.paddingRight = `0px`;
+      headerBottomRef.current?.style.removeProperty('padding-right');
     }
     if (isMobile767) {
       navigate(AppRoute.SIGN_IN);
@@ -66,14 +69,13 @@ export const AdminHeader = () => {
     setIsCatalogListOpen(false);
     document.body.style.overflow = 'initial';
     document.body.style.paddingRight = `0px`;
+    headerBottomRef.current?.style.removeProperty('padding-right');
   }, [location.pathname]);
 
   const scrollbarWidthRef = useRef<number | null>(null);
   const fixedHeaderBlock = useRef<HTMLDivElement | null>(null);
 
   const getScrollbarWidth = () => {
-    if (scrollbarWidthRef.current !== null) return scrollbarWidthRef.current;
-
     scrollbarWidthRef.current =
       window.innerWidth - document.documentElement.clientWidth;
 
@@ -89,7 +91,11 @@ export const AdminHeader = () => {
         document.body.style.paddingRight = `${scrollbarWidth}px`;
       }
       if (isFixedHeader && scrollbarWidth > 0 && headerBottomRef.current) {
-        headerBottomRef.current.style.paddingRight = `${scrollbarWidth}px`;
+        headerBottomRef.current.style.setProperty(
+          'padding-right',
+          `${scrollbarWidth}px`,
+          'important',
+        );
       }
 
       setIsCatalogListOpen(true);
@@ -112,7 +118,7 @@ export const AdminHeader = () => {
       document.body.style.paddingRight = `0px`;
 
       if (headerBottomRef.current && isFixedHeader) {
-        headerBottomRef.current.style.paddingRight = `revert-layer`;
+        headerBottomRef.current.style.removeProperty('padding-right');
       }
       setIsCatalogListOpen(false);
     }
