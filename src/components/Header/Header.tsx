@@ -17,6 +17,8 @@ import { AppRoute } from '@/enums/Route';
 
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
+import { useDispatch } from 'react-redux';
+import { setSortPopoverOpen } from '@/store/filters/filters_slice';
 import { useTypedSelector } from '@/hooks/useTypedSelector';
 import { CardTooltip } from '../CartTooltip/CartTooltip';
 import { useMediaQuery } from 'react-responsive';
@@ -33,6 +35,7 @@ export const Header = ({ isFixedHeader = false }: HeaderProps) => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
   const [isCatalogListOpen, setIsCatalogListOpen] = useState(false);
   const [isOverlayActive, setIsOverlayActive] = useState(false);
   const [isAuthModalOpen, setAuthModalOpen] = useState(false);
@@ -115,6 +118,7 @@ export const Header = ({ isFixedHeader = false }: HeaderProps) => {
       }
 
       setIsCatalogListOpen(true);
+      dispatch(setSortPopoverOpen(false));
     }
   };
 
